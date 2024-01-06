@@ -18,27 +18,30 @@ public sealed class DesignerElementInfo
 
 static class DesignerHelper
 {
-    public static void Override(Element component, Element rootNode)
+    static IReadOnlyList<DesignerComponentInfo> ReadFromAssembly(Assembly assembly)
     {
-
-        Type componentType = component.GetType();
-            
-        var designerType = componentType.Assembly.GetType("ReactWithDotNet.__designer__.Designer");
+        var designerType = assembly.GetType("ReactWithDotNet.__designer__.Designer");
         if (designerType == null)
         {
-            return;
+            return null;
         }
-        
 
-        var getStyleMethodInfo = designerType.GetMethod("GetStyle", BindingFlags.Static | BindingFlags.Public);
+        var componentInformationListPropertyInfo = designerType.GetProperty("ComponentInformationList", BindingFlags.Static | BindingFlags.Public);
 
-        if (getStyleMethodInfo == null)
+        if (componentInformationListPropertyInfo == null)
         {
-            throw new MissingMethodException("GetStyle");
+            throw new MissingMemberException("componentInformationListPropertyInfo");
         }
         
 
-        var records = (IReadOnlyList<DesignerComponentInfo>)getStyleMethodInfo.Invoke(null, [componentType]);
+        return (IReadOnlyList<DesignerComponentInfo>)componentInformationListPropertyInfo.GetValue(null);
+    }
+    
+    public static void Override(Element component, Element rootNode)
+    {
+        Type componentType = component.GetType();
+
+        var records = ReadFromAssembly(componentType.Assembly);
         if (records == null)
         {
             return;

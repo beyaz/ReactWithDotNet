@@ -561,41 +561,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
         var path = @"C:\github\ReactWithDotNet\ReactWithDotNet.WebSite\$.cs";
         
-        await File.WriteAllTextAsync(path, """
-                                     namespace ReactWithDotNet.__designer__; // ReSharper disable All
-                                     
-                                     static class Designer
-                                     {
-                                         public static IReadOnlyList<DesignerComponentInfo> GetStyle(Type type)
-                                         {
-                                             return new DesignerComponentInfo[]
-                                             {
-                                                 new()
-                                                 {
-                                                     TargetType = typeof(ReactWithDotNet.WebSite.Components.ElementTreeTestcomponent),
-                                     
-                                                     VisualTree =
-                                                     [
-                                                         new ()
-                                                         {
-                                                             VisualTreePath = [0],
-                                     
-                                                             Modifiers = new[]
-                                                             {
-                                                                 Background("yellow"),
-                                                                 Padding(0)
-                                                             }
-                                                         }
-                                                     ]
-                                                 }
-                                             };
-                                         }
-                                     }
-                                     
-                                     
-                                     
-                                     
-                                     """);
+       
         
         
         SaveState();
