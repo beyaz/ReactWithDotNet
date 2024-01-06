@@ -566,17 +566,13 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                                      {
                                          public static List<(List<int> treePath, List<StyleModifier> modifiers)> GetStyle(Type type)
                                          {
-                                             if (type == typeof(ReactWithDotNet.WebSite.Components.GetStartedButton))
+                                             if (type == typeof(ReactWithDotNet.WebSite.Components.ElementTreeTestcomponent))
                                              {
                                                  return 
                                                  [
                                                      ([0],
                                                      [
-                                                         TextAlignCenter,
-                                                         DisplayBlock,
-                                                         DisplayBlock,
-                                                         BorderRadius(10),
-                                                         Hover(BorderRadius(5))
+                                                         Background("yellow")
                                                      ])
                                                  ];
                                              }
