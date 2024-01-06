@@ -557,7 +557,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
     {
         state.ComponentElementTreeSelectedNodePath = e.currentTarget.data["path"];
 
-        var path = @"C:\github\ReactWithDotNet\ReactWithDotNet.WebSite\A.cs";
+        var path = @"C:\github\ReactWithDotNet\ReactWithDotNet.WebSite\$.cs";
         
         await File.WriteAllTextAsync(path, """
                                      namespace ReactWithDotNet.__designer__; // ReSharper disable All
