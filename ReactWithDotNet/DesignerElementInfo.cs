@@ -19,17 +19,22 @@ static class DesignerHelper
 {
     static readonly LinkedList<CacheItem> Cache = new();
 
-    public static void Override(Element component, Element rootNode)
+    public static DesignerComponentInfo GetComponentInfo(Element component)
     {
         var componentType = component.GetType();
 
         var records = ReadFromAssembly(componentType.Assembly);
         if (records == null)
         {
-            return;
+            return null;
         }
 
-        var record = records.FirstOrDefault(x => x.TargetType == componentType);
+        return records.FirstOrDefault(x => x.TargetType == componentType);
+    }
+    
+    public static void Override(Element component, Element rootNode)
+    {
+        var record = GetComponentInfo(component);
         if (record == null)
         {
             return;

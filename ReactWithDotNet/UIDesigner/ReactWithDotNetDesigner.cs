@@ -452,14 +452,20 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
     async Task<Element> ComponentInspector()
     {
+        
+        Element component;
         Element rootNode;
         
         try
         {
-            rootNode = ReactWithDotNetDesignerComponentPreview.CreateElement(state, Context);
-            if (rootNode is PureComponent pureComponent)
+            component = ReactWithDotNetDesignerComponentPreview.CreateElement(state, Context);
+            if (component is PureComponent pureComponent)
             {
                 rootNode = await pureComponent.InvokeRender();
+            }
+            else
+            {
+                throw new("todo");
             }
         }
         catch (Exception exception)
@@ -476,11 +482,50 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         
         Element CreateStyleEditor()
         {
+            var designerComponentInfo = DesignerHelper.GetComponentInfo(component) ?? new DesignerComponentInfo
+            {
+                TargetType = component.GetType(),
+                VisualTree = new List<DesignerElementInfo>()
+            };
+
+            var node = designerComponentInfo.VisualTree.FirstOrDefault(x=>string.Join(",",x.VisualTreePath) == state.ComponentElementTreeSelectedNodePath);
+
+            if (node is null)
+            {
+                node = new DesignerElementInfo
+                {
+                    VisualTreePath = state.ComponentElementTreeSelectedNodePath.Split(',').Select(int.Parse).ToList(),
+                    Modifiers      = new List<StyleModifier>()
+                };
+
+                var list =  designerComponentInfo.VisualTree.ToList();
+
+                designerComponentInfo.VisualTree = list;
+                
+                list.Add(node);
+            }
+
+            var str = "a";
+            
+            foreach (var styleModifier in node.Modifiers)
+            {
+                var a = new Style();
+                
+                a.Apply(styleModifier);
+
+                var dictionary = a.ToDictionary();
+
+                str = dictionary.Keys.Count() + "";
+
+            }
+            
             return new FlexColumn(BorderTop("1px dotted #d9d9d9"))
             {
                 new FlexColumn(Gap(5), JustifyContentFlexStart)
                 {
-                    new input{type = "text", value = "abc2"},
+                    
+                    
+                    new input{type = "text", value = str},
                 
                     new StyleSearchInput()
                 }
