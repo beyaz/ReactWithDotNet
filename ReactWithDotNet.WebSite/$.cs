@@ -9,7 +9,8 @@ static class Designer
         {
             return
             [
-                TextAlignCenter
+                TextAlignCenter,
+                DisplayBlock
             ];
         }
         
