@@ -950,7 +950,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 },
                 new FlexColumn
                 {
-                    GetProperties().Select(render)
+                    GetProperties().Select(ToOption)
                 }
             };
         }
@@ -967,13 +967,18 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 .Take(5).ToList();
         }
         
-        Element render(PropertyInfo p)
+        Element ToOption(PropertyInfo p, int index)
         {
-            return new div { p.Name };
+            return new div
+            {
+                p.Name,
+                
+                index == SelectedSuggestionOffset ? Background("green") : null
+            };
         }
         
         
-        [ReactKeyboardEventCallOnly("ArrowDown")]
+        [ReactKeyboardEventCallOnly("ArrowDown","ArrowUp","Enter")]
         Task OnKeyDown(KeyboardEvent e)
         {
             if (e.key == "ArrowDown")
@@ -990,12 +995,20 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 SelectedSuggestionOffset--;
             }
             
+            if (e.key == "Enter")
+            {
+                SelectedSuggestionOffset = null;
+
+                SelectedSuggestionOffset--;
+            }
+            
             
             return Task.CompletedTask;
         }
 
         Task OnTypingFinished()
         {
+            SelectedSuggestionOffset = null;
             
             return Task.CompletedTask;
         }
