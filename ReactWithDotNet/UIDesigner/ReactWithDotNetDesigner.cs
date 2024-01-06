@@ -452,14 +452,14 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
     async Task<Element> ComponentInspector()
     {
-        Element elementInstance = null;
+        Element rootNode = null;
         
         try
         {
-            elementInstance = ReactWithDotNetDesignerComponentPreview.CreateElement(state, Context);
-            if (elementInstance is PureComponent pureComponent)
+            rootNode = ReactWithDotNetDesignerComponentPreview.CreateElement(state, Context);
+            if (rootNode is PureComponent pureComponent)
             {
-                elementInstance = await pureComponent.InvokeRender();
+                rootNode = await pureComponent.InvokeRender();
             }
         }
         catch (Exception exception)
@@ -469,28 +469,23 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         
         return new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionFixed, Right(0), Top(0), Height100vh, Background("yellow"))
         {
-            CreateElementTree(elementInstance)
+            CreateElementTree(rootNode)
         };
-        
-      
-        
     }
 
-    Element CreateElementTree(Element element)
+    Element CreateElementTree(Element rootNode)
     {
-        if (element is null)
+        if (rootNode is null)
         {
             return "-";
         }
-
-       
         
-        var tree = new FlexColumnCentered
+        var tree = new FlexColumn
         {
             
         };
 
-        addNode(element,2);
+        addNode(rootNode,2);
         
         return tree;
         
