@@ -582,7 +582,10 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                                      }
                                      """);
         
+        
         SaveState();
+        
+        Client.RefreshComponentPreview();
         
     }
     
