@@ -1031,5 +1031,26 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         public string Value { get; set; }
     }
     
+    List<(List<int> treePath, List<StyleModifier> modifiers)> GetStyle()
+    {
+        var type = ReactWithDotNetDesignerComponentPreview.CreateElement(state, Context).GetType();
+
+        var designerType = type.Assembly.GetType("ReactWithDotNet.__designer__.Designer");
+
+        var getStyleMethodInfo = designerType.GetMethod("GetStyle", BindingFlags.Static | BindingFlags.Public);
+
+        var abc = (List<(List<int> treePath, List<StyleModifier> modifiers)>)getStyleMethodInfo.Invoke(null, [type]);
+
+
+        return abc;
+    }
+    
+    
+    List<StyleModifier> GetSelectedStyle()
+    {
+        var record = GetStyle().FirstOrDefault(x => string.Join(",", x.treePath) == state.ComponentElementTreeSelectedNodePath);
+
+        return record.modifiers;
+    }
     
 }
