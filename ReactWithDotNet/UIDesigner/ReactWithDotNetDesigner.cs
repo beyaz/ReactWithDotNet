@@ -477,11 +477,14 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
     Element CreateStyleEditor()
     {
+        var abc = GetSelectedStyle();
+        
+        
         return new FlexColumn(BorderTop("1px dotted #d9d9d9"))
         {
             new FlexColumn(Gap(5), JustifyContentFlexStart)
             {
-                new input{type = "text", value = "abc"},
+                new input{type = "text", value = new Style(abc).ToCss()},
                 new input{type = "text", value = "abc2"},
                 
                 new StyleSearchInput()
