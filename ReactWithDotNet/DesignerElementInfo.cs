@@ -17,6 +17,34 @@ public sealed class DesignerElementInfo
 
 static class DesignerHelper
 {
+    public static List<string> ToCsharpCode(IReadOnlyList<StyleModifier> styleModifierList)
+    {
+        var code = new List<string>();
+        
+        foreach (var styleModifier in styleModifierList)
+        {
+            code.AddRange(ToCsharpCode(styleModifier));
+        }
+
+        return code;
+    }
+    public static List<string> ToCsharpCode(StyleModifier styleModifier)
+    {
+        var code = new List<string>();
+        
+        var style = new Style();
+                
+        style.Apply(styleModifier);
+
+        foreach (var (key, value) in style.ToDictionary())
+        {
+            code.Add($"{key} : {value}");
+        }
+
+        return code;
+
+    }
+    
     static readonly LinkedList<CacheItem> Cache = new();
 
     public static DesignerComponentInfo GetComponentInfo(Element component)

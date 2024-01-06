@@ -505,27 +505,15 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 list.Add(node);
             }
 
-            var str = "a";
             
-            foreach (var styleModifier in node.Modifiers)
-            {
-                var a = new Style();
-                
-                a.Apply(styleModifier);
-
-                var dictionary = a.ToDictionary();
-
-                str = dictionary.Keys.Count() + "";
-
-            }
             
             return new FlexColumn(BorderTop("1px dotted #d9d9d9"))
             {
                 new FlexColumn(Gap(5), JustifyContentFlexStart)
                 {
+                    DesignerHelper.ToCsharpCode(node.Modifiers).Select(line=>new input{type = "text", value = line}),
                     
                     
-                    new input{type = "text", value = str},
                 
                     new StyleSearchInput()
                 }
