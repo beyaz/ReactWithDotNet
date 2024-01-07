@@ -65,24 +65,6 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         return Task.CompletedTask;
     }
 
-    Task OnCommonSizeClicked(MouseEvent e)
-    {
-        state.ScreenWidth = e.currentTarget.data["value"] switch
-        {
-            "M"  => 320,
-            "SM"  => 640,
-            "MD"  => 768,
-            "LG"  => 1024,
-            "XL"  => 1280,
-            "XXL" => 1536,
-            _     => throw new ArgumentOutOfRangeException()
-        };
-        
-        SaveState();
-        
-        return Task.CompletedTask; 
-    }
-
     protected override Element render()
     {
         Element createJsonEditor()
@@ -174,7 +156,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 {
                     createLabel($"Media Size: {state.ScreenWidth}px") + MarginTop(-2)
                 },
-                new FlexRowCentered(ClassName("reactwithdotnet_designer_slider"), PaddingLeftRight(5), PaddingTop(4),  PaddingBottom(10))
+                new FlexRowCentered(ClassName("reactwithdotnet_designer_slider"), PaddingLeftRight(5), PaddingTop(4), PaddingBottom(10))
                 {
                     new style
                     {
@@ -210,32 +192,31 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                         style                    = { Height(10), WidthMaximized, BorderRadius(38) }
                     }
                 },
-                
+
                 new FlexRow(JustifyContentSpaceAround, AlignItemsCenter)
                 {
-                    new[]{"M","SM","MD","LG","XL","XXL"}.Select(x=>new FlexRowCentered
+                    new[] { "M", "SM", "MD", "LG", "XL", "XXL" }.Select(x => new FlexRowCentered
                     {
                         x,
                         FontSize13,
                         CursorDefault,
                         PaddingTopBottom(3),
                         FlexGrow(1),
-                        
-                        Data("value",x),
+
+                        Data("value", x),
                         OnClick(OnCommonSizeClicked),
                         Hover(Color("#2196f3"), FontSize16),
-                        
-                        x=="M" && state.ScreenWidth ==320||
-                        x=="SM" && state.ScreenWidth ==640||
-                        x=="MD" && state.ScreenWidth ==768||
-                        x=="LG" && state.ScreenWidth ==1024||
-                        x=="XL" && state.ScreenWidth ==1280||
-                        x=="XXL" && state.ScreenWidth ==1536
-                            ?
-                            FontWeight600 + Color("#2196f3") + FontSize16 : null
+
+                        (x == "M" && state.ScreenWidth == 320) ||
+                        (x == "SM" && state.ScreenWidth == 640) ||
+                        (x == "MD" && state.ScreenWidth == 768) ||
+                        (x == "LG" && state.ScreenWidth == 1024) ||
+                        (x == "XL" && state.ScreenWidth == 1280) ||
+                        (x == "XXL" && state.ScreenWidth == 1536)
+                            ? FontWeight600 + Color("#2196f3") + FontSize16
+                            : null
                     })
                 }
-                
             },
 
             new FlexColumn(FlexGrow(1))
@@ -492,12 +473,6 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         };
     }
 
-    
-
-    
-    
-    
-
     bool canShowInstanceEditor()
     {
         if (state.SelectedMethod?.IsStatic == true)
@@ -521,6 +496,24 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
     Task ClosePropertyPanel(MouseEvent _)
     {
         state.PropertyPanelIsClosed = true;
+        SaveState();
+
+        return Task.CompletedTask;
+    }
+
+    Task OnCommonSizeClicked(MouseEvent e)
+    {
+        state.ScreenWidth = e.currentTarget.data["value"] switch
+        {
+            "M"   => 320,
+            "SM"  => 640,
+            "MD"  => 768,
+            "LG"  => 1024,
+            "XL"  => 1280,
+            "XXL" => 1536,
+            _     => throw new ArgumentOutOfRangeException()
+        };
+
         SaveState();
 
         return Task.CompletedTask;
@@ -590,7 +583,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         }
 
         SaveState();
-        
+
         Client.RefreshComponentPreview();
 
         return Task.CompletedTask;
@@ -607,11 +600,11 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             var map = DeserializeJsonBySystemTextJson<Dictionary<string, object>>(state.JsonTextForDotNetInstanceProperties ?? string.Empty) ?? new Dictionary<string, object>();
 
             var instanceType = MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(typeOfInstance);
-            
+
             if (instanceType is not null)
             {
                 var instance = Activator.CreateInstance(instanceType);
-                
+
                 foreach (var propertyInfo in instanceType.GetProperties(BindingFlags.Instance | BindingFlags.Public))
                 {
                     var name = propertyInfo.Name;
@@ -671,31 +664,31 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                             continue;
                         }
                     }
-                
+
                     if (!map.ContainsKey(name))
                     {
                         map.Add(name, ReflectionHelper.CreateDummyValue(propertyType));
                     }
-                }    
+                }
             }
-            
-            
 
             state.JsonTextForDotNetInstanceProperties = JsonSerializer.Serialize(map, new JsonSerializerOptions
             {
                 WriteIndented          = true,
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             });
-            
-            static bool isNumberType(Type type) =>
-                type == typeof(int) ||
-                type == typeof(long) ||
-                type == typeof(decimal) ||
-                type == typeof(byte) ||
-                type == typeof(short) ||
-                type == typeof(decimal) ||
-                type == typeof(double) ||
-                type == typeof(float);
+
+            static bool isNumberType(Type type)
+            {
+                return type == typeof(int) ||
+                       type == typeof(long) ||
+                       type == typeof(decimal) ||
+                       type == typeof(byte) ||
+                       type == typeof(short) ||
+                       type == typeof(decimal) ||
+                       type == typeof(double) ||
+                       type == typeof(float);
+            }
         }
 
         void initializeParametersJson()
@@ -813,11 +806,4 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             };
         }
     }
-
-
-    
-
- 
-
 }
-
