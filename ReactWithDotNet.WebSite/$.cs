@@ -14,20 +14,22 @@ static class Designer
                 {
                     VisualTreePath = [0],
 
-                    Modifiers = new DesignerStyleModifierInfo[]
-                    {
+                    Modifiers = 
+                    [
                         new()
                         {
-                            StyleModifier = Background("green"),
-                            Text = "background: green"
+                            Text = "background: green",
+                                
+                            StyleModifier = Background("green")
                         },
                         
                         new()
                         {
-                            StyleModifier = PaddingLeft(0),
-                            Text          = "padding-left: 0"
+                            Text = "padding-left: 0",
+                            
+                            StyleModifier = PaddingLeft(0)
                         }
-                    }
+                    ]
                 }
             ]
         }

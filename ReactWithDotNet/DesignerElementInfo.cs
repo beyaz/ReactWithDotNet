@@ -11,7 +11,7 @@ public sealed class DesignerComponentInfo
 
 public sealed class DesignerElementInfo
 {
-    public IReadOnlyList<DesignerStyleModifierInfo> Modifiers { get; set; }
+    public List<DesignerStyleModifierInfo> Modifiers { get; set; }
     public IReadOnlyList<int> VisualTreePath { get; set; }
 }
 
