@@ -107,6 +107,7 @@ static class DesignerHelper
                     
                     if (pseudoInfo.Text is "hover")
                     {
+                        // todo: optimize here
                         var hover = Hover(pseudoInfo.Modifiers.Select(x => x.StyleModifier).ToArray());
                         
                         ModifyHelper.ProcessModifier(node, hover);        
