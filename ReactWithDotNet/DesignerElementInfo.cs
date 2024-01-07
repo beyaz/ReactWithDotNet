@@ -6,15 +6,15 @@ public sealed class DesignerComponentInfo
 {
     public Type TargetType { get; set; }
 
-    public IReadOnlyList<DesignerElementInfo> VisualTree { get; set; }
+    public IReadOnlyList<ElementInfo> VisualTree { get; set; }
     
     
-    public sealed class DesignerElementInfo
+    public sealed class ElementInfo
     {
-        public List<DesignerStyleModifierInfo> Modifiers { get; set; }
+        public List<StyleModifierInfo> Modifiers { get; set; }
         public IReadOnlyList<int> VisualTreePath { get; set; }
     
-        public sealed class DesignerStyleModifierInfo
+        public sealed class StyleModifierInfo
         {
             public StyleModifier StyleModifier { get; set; }
             public string Text { get; set; }
@@ -28,7 +28,7 @@ public sealed class DesignerComponentInfo
 
 static class DesignerHelper
 {
-    public static List<string> ToCsharpCode(IReadOnlyList<DesignerComponentInfo.DesignerElementInfo.DesignerStyleModifierInfo> styleModifierList)
+    public static List<string> ToCsharpCode(IReadOnlyList<DesignerComponentInfo.ElementInfo.StyleModifierInfo> styleModifierList)
     {
         var code = new List<string>();
         
@@ -39,7 +39,7 @@ static class DesignerHelper
 
         return code;
     }
-    public static List<string> ToCsharpCode(DesignerComponentInfo.DesignerElementInfo.DesignerStyleModifierInfo styleModifier)
+    public static List<string> ToCsharpCode(DesignerComponentInfo.ElementInfo.StyleModifierInfo styleModifier)
     {
         var code = new List<string>();
         
