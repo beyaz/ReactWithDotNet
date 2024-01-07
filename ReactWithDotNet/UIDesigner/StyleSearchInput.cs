@@ -60,7 +60,7 @@ class StyleSearchInput : Component
                     autoFocus = true
                 },
                  
-                new FlexRowCentered(PaddingLeftRight(4), CursorDefault)
+                new FlexRowCentered(PaddingLeftRight(4), CursorDefault, OnClick(OnDeleteClicked))
                 {
                     new DeleteIcon(),
                     Index < 0 ? VisibilityCollapse : null
@@ -68,6 +68,12 @@ class StyleSearchInput : Component
             },
             Suggestions
         };
+    }
+
+    Task OnDeleteClicked(MouseEvent e)
+    {
+        Client.DispatchEvent<OnDesignerManagedStyleChanged>(Media, Pseudo, Index,"Remove",null);
+        return Task.CompletedTask;
     }
 
     IReadOnlyList<string> GetCurrentSuggestions()
@@ -113,7 +119,7 @@ class StyleSearchInput : Component
             {
                 Value = GetCurrentSuggestions()[SelectedSuggestionOffset.Value];
 
-                Client.DispatchEvent<OnDesignerManagedStyleChanged>(Media, Pseudo, Index, Value);
+                Client.DispatchEvent<OnDesignerManagedStyleChanged>(Media, Pseudo, Index,"ValueChange", Value);
 
 
             }
@@ -168,6 +174,8 @@ class StyleSearchInput : Component
 
     class DeleteIcon : Component
     {
+       
+        
         public bool IsMouseEnter { get; set; }
 
         protected override Element render()
@@ -199,4 +207,4 @@ class StyleSearchInput : Component
     }
 }
 
-delegate Task OnDesignerManagedStyleChanged(string Media, string Pseudo,int Index, string newValue);
+delegate Task OnDesignerManagedStyleChanged(string Media, string Pseudo,int Index, string operation, string newValue);

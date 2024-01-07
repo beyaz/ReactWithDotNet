@@ -65,10 +65,11 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
         Client.ListenEvent<OnDesignerManagedStyleChanged>(OnDesignerManagedStyleChangeHandler);
         
+        
         return Task.CompletedTask;
     }
 
-    Task OnDesignerManagedStyleChangeHandler(string Media, string Pseudo,int index, string newValue)
+    Task OnDesignerManagedStyleChangeHandler(string Media, string Pseudo,int index, string operation, string newValue)
     {
 
         var component = ReactWithDotNetDesignerComponentPreview.CreateElement(state, Context);
@@ -83,6 +84,12 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 {
                     if (index >= 0)
                     {
+                        if (operation == "Remove")
+                        {
+                            pseudoInfo.Modifiers.RemoveAt(index);
+                            return Task.CompletedTask;
+                        }
+                        
                         pseudoInfo.Modifiers[index].Text = newValue;
 
                         pseudoInfo.Modifiers[index].StyleModifier = BackgroundWhite;
