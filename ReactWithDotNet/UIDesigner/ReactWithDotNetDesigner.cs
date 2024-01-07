@@ -571,6 +571,17 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                             }
                         });
                     }
+                    
+                    editors.Add(new FlexRow(WidthFull)
+                    {
+                        SpaceX(indent),
+                        new StyleSearchInput
+                        {
+                            Media  = mediaInfo.Text,
+                            Pseudo = pseudoInfo.Text,
+                            Index  = -1
+                        }
+                    });
                 }
             }
             
