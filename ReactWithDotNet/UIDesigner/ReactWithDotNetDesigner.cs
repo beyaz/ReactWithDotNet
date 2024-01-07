@@ -75,8 +75,16 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
         var r = DesignerHelper.GetComponentInfo(component);
 
-        r.VisualTree[0].Modifiers = new List<StyleModifier>{   Background("blue"),
-            PaddingLeft(0)};
+        r.VisualTree[0].Modifiers = new List<DesignerStyleModifierInfo>
+        {
+            new ()
+            {
+                StyleModifier = Background("blue"),
+                Text          = "background: blue"
+            }
+        };
+        
+        
         
         Client.RefreshComponentPreview();
         
@@ -513,7 +521,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 node = new DesignerElementInfo
                 {
                     VisualTreePath = state.ComponentElementTreeSelectedNodePath.Split(',').Select(int.Parse).ToList(),
-                    Modifiers      = new List<StyleModifier>()
+                    Modifiers      = new List<DesignerStyleModifierInfo>()
                 };
 
                 var list =  designerComponentInfo.VisualTree.ToList();
@@ -527,17 +535,24 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             
             return new FlexColumn(BorderTop("1px dotted #d9d9d9"))
             {
-                new FlexRowCentered(Gap(5), Padding(4))
+                new FlexRowCentered(Padding(4),CursorDefault)
                 {
-                    new FlexRowCentered(PaddingTopBottom(1),PaddingLeftRight(10),BackgroundWhite, BorderRadius(5))
+                    new FlexRowCentered(PaddingTopBottom(1),PaddingLeftRight(10),BackgroundWhite)
                     {
                         "normal",
-                        Border(Solid(1,"#ccf7fc"))
+                        Border(Solid(1,"#ccf7fc")),
+                        BorderTopLeftRadius(5),BorderBottomLeftRadius(5),
+                        Hover(Background("#ccf7fc")),
+                        FontWeight600
                     },
                     
-                    new FlexRowCentered(PaddingTopBottom(1),PaddingLeftRight(10),BackgroundWhite, BorderRadius(5))
+                    new FlexRowCentered(PaddingTopBottom(1),PaddingLeftRight(10),BackgroundWhite)
                     {
-                        "hover"
+                        "hover",
+                        
+                        BorderTopRightRadius(5),BorderBottomRightRadius(5),
+                        Border(Solid(1,"#ccf7fc")),
+                        Hover(Background("#ccf7fc"))
                     }
                 },
                 

@@ -11,13 +11,19 @@ public sealed class DesignerComponentInfo
 
 public sealed class DesignerElementInfo
 {
-    public IReadOnlyList<StyleModifier> Modifiers { get; set; }
+    public IReadOnlyList<DesignerStyleModifierInfo> Modifiers { get; set; }
     public IReadOnlyList<int> VisualTreePath { get; set; }
+}
+
+public sealed class DesignerStyleModifierInfo
+{
+    public StyleModifier StyleModifier { get; set; }
+    public string Text { get; set; }
 }
 
 static class DesignerHelper
 {
-    public static List<string> ToCsharpCode(IReadOnlyList<StyleModifier> styleModifierList)
+    public static List<string> ToCsharpCode(IReadOnlyList<DesignerStyleModifierInfo> styleModifierList)
     {
         var code = new List<string>();
         
@@ -28,13 +34,13 @@ static class DesignerHelper
 
         return code;
     }
-    public static List<string> ToCsharpCode(StyleModifier styleModifier)
+    public static List<string> ToCsharpCode(DesignerStyleModifierInfo styleModifier)
     {
         var code = new List<string>();
         
         var style = new Style();
                 
-        style.Apply(styleModifier);
+        style.Apply(styleModifier.StyleModifier);
 
         foreach (var (key, value) in style.ToDictionary())
         {
@@ -68,15 +74,15 @@ static class DesignerHelper
             return;
         }
 
-        foreach (var item in record.VisualTree)
+        foreach (var designerElementInfo in record.VisualTree)
         {
             var node = rootNode;
             var i = 1;
-            var len = item.VisualTreePath.Count;
+            var len = designerElementInfo.VisualTreePath.Count;
 
             while (i < len)
             {
-                var offset = item.VisualTreePath[i];
+                var offset = designerElementInfo.VisualTreePath[i];
 
                 if (node is null)
                 {
@@ -93,9 +99,9 @@ static class DesignerHelper
                 break;
             }
 
-            foreach (var styleModifier in item.Modifiers)
+            foreach (var modifierInfo in designerElementInfo.Modifiers)
             {
-                ModifyHelper.ProcessModifier(node, styleModifier);
+                ModifyHelper.ProcessModifier(node, modifierInfo.StyleModifier);
             }
         }
     }
