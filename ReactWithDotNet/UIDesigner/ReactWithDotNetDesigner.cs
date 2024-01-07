@@ -535,28 +535,9 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             
             return new FlexColumn(BorderTop("1px dotted #d9d9d9"))
             {
-                new FlexRowCentered(Padding(4),CursorDefault)
-                {
-                    new FlexRowCentered(PaddingTopBottom(1),PaddingLeftRight(10),BackgroundWhite)
-                    {
-                        "normal",
-                        Border(Solid(1,"#ccf7fc")),
-                        BorderTopLeftRadius(5),BorderBottomLeftRadius(5),
-                        Hover(Background("#ccf7fc")),
-                        FontWeight600
-                    },
-                    
-                    new FlexRowCentered(PaddingTopBottom(1),PaddingLeftRight(10),BackgroundWhite)
-                    {
-                        "hover",
-                        
-                        BorderTopRightRadius(5),BorderBottomRightRadius(5),
-                        Border(Solid(1,"#ccf7fc")),
-                        Hover(Background("#ccf7fc"))
-                    }
-                },
-                
-                new FlexColumn(Gap(5), JustifyContentFlexStart,Padding(5))
+               SpaceY(5),
+                new FlexColumn(Gap(5), JustifyContentFlexStart,Padding(5), BackgroundWhite, BorderRadius(5),
+                               BoxShadow(0, 6, 6, 0, rgba(22,45,61,.06)))
                 {
                     DesignerHelper.ToCsharpCode(node.Modifiers).Select(toElement),
                     
@@ -1012,22 +993,25 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                         onKeyDown = OnKeyDown,
                         style                    =
                         {
-                            BackgroundWhite, Border(Solid(1, "#dbdde5")), Height(30),  BorderRadius(3),
-                            
-                            PaddingLeft(3), FlexGrow(1), FontFamily("inherit"), FontSize("inherit")
+                            BackgroundWhite, 
+                            Border(Solid(0.1,"#bcc4e3")),
+                            BorderRadius(3),
+                            PaddingLeft(3),
+                            PaddingTopBottom(5),
+                            FlexGrow(1), FontFamily("inherit"), FontSize("inherit")
                         }
                     },
                     
-                    //IconSearch,
-                    new FlexRowCentered(PaddingLeftRight(10), CursorDefault)
-                    {
-                        "-",
+                    ////IconSearch,
+                    //new FlexRowCentered(PaddingLeftRight(10), CursorDefault)
+                    //{
+                    //    "-",
                         
-                        FontSize19,
-                        FontWeight600,
-                        Border(Solid(1, "#dbdde5")),
-                        Hover(Border(Solid(1, "#bcc4e3")))
-                    }
+                    //    FontSize19,
+                    //    FontWeight600,
+                    //    Border(Solid(1, "#dbdde5")),
+                    //    Hover(Border(Solid(1, "#bcc4e3")))
+                    //}
 
 
                 },
