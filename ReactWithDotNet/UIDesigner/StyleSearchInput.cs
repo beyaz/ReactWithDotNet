@@ -21,6 +21,9 @@ class StyleSearchInput : Component
     public bool ShowSuggestions { get; set; }
 
     public string Value { get; set; }
+    
+    public string Media { get; init; }
+    public string Pseudo { get; init; }
 
     protected override Element render()
     {

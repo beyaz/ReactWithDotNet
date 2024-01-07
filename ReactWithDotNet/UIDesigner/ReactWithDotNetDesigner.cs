@@ -559,11 +559,16 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
                     foreach (var modifierInfo in pseudoInfo.Modifiers)
                     {
-                        
                         editors.Add(new FlexRow(WidthFull)
                         {
                             SpaceX(indent),
-                            new StyleSearchInput { Value = modifierInfo.Text }
+                            new StyleSearchInput
+                            {
+                                Value = modifierInfo.Text,
+                                
+                                Media      = mediaInfo.Text,
+                                Pseudo = pseudoInfo.Text
+                            }
                         });
                     }
                 }
