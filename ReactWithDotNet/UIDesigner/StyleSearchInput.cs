@@ -57,7 +57,7 @@ class StyleSearchInput : Component
                         Border(Solid(0.1, "#bcc4e3")),
                         BorderRadius(3),
                         PaddingLeft(3),
-                        PaddingTopBottom(5),
+                        PaddingTopBottom(4),
                         FlexGrow(1), FontFamily("Arial"), FontSize12,
                         Color(rgb(0, 6, 36)),
                         LetterSpacing(0.3)

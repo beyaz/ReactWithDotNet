@@ -8,7 +8,6 @@ public sealed class DesignerComponentInfo
 
     public IReadOnlyList<ElementInfo> VisualTree { get; set; }
     
-    
     public sealed class ElementInfo
     {
         public IReadOnlyList<int> VisualTreePath { get; set; }
@@ -16,36 +15,8 @@ public sealed class DesignerComponentInfo
         public List<string> Lines { get; set; }
 
         public Style CompiledLines { get; set; }
-        
-        public IReadOnlyList<MediaInfo> Medias { get; set; }
-        
-        public sealed class MediaInfo
-        {
-            public string Text { get; set; }
-            
-            public IReadOnlyList<PseudoInfo> Pseudos { get; set; }
-            
-            public sealed class PseudoInfo
-            {
-                public string Text { get; set; }
-            
-                public List<StyleModifierInfo> Modifiers { get; set; }
-                
-                public sealed class StyleModifierInfo
-                {
-                    public StyleModifier StyleModifier { get; set; }
-                    public string Text { get; set; }
-                }
-            }
-        }
-        
-        
     }
 }
-
-
-
-
 
 static class DesignerHelper
 {
@@ -118,30 +89,7 @@ static class DesignerHelper
                 break;
             }
 
-            foreach (var mediaInfo in designerElementInfo.Medias)
-            {
-                foreach (var pseudoInfo in mediaInfo.Pseudos)
-                {
-                    if (pseudoInfo.Text is null)
-                    {
-                        foreach (var styleModifierInfo in pseudoInfo.Modifiers)
-                        {
-                            ModifyHelper.ProcessModifier(node, styleModifierInfo.StyleModifier);        
-                        }
-                    }
-                    else if (pseudoInfo.Text is ":hover")
-                    {
-                        // todo: optimize here
-                        var hover = Hover(pseudoInfo.Modifiers.Select(x => x.StyleModifier).ToArray());
-                        
-                        ModifyHelper.ProcessModifier(node, hover);        
-                    }
-                    else
-                    {
-                        throw new NotImplementedException(pseudoInfo.Text);
-                    }
-                }
-            }
+            ModifyHelper.ProcessModifier(node, designerElementInfo.CompiledLines);
         }
     }
 

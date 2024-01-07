@@ -79,42 +79,20 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         {
             if (string.Join(",",elementInfo.VisualTreePath) == state.ComponentElementTreeSelectedNodePath)
             {
-                foreach (var mediaInfo in elementInfo.Medias)
+                if (index >= 0)
                 {
-                    if (mediaInfo.Text == Media)
+                    if (operation == "Remove")
                     {
-                        foreach (var pseudoInfo in mediaInfo.Pseudos)
-                        {
-                            if (pseudoInfo.Text == Pseudo)
-                            {
-                                if (index >= 0)
-                                {
-                                    if (operation == "Remove")
-                                    {
-                                        pseudoInfo.Modifiers.RemoveAt(index);
-                                        return Task.CompletedTask;
-                                    }
-                        
-                                    pseudoInfo.Modifiers[index].Text = newValue;
-
-                                    pseudoInfo.Modifiers[index].StyleModifier = BackgroundWhite;
-                                }
-                                else
-                                {
-                                    pseudoInfo.Modifiers.Add(new ()
-                                    {
-                                        Text          = newValue,
-                                        StyleModifier = BackgroundWhite
-                                    });
-                                }
-                    
-                                break;
-                            }
-                            
-                            
-                        }
+                        elementInfo.Lines.RemoveAt(index);
                     }
-                    
+                    else
+                    {
+                        elementInfo.Lines[index] = newValue;
+                    }
+                }
+                else
+                {
+                    elementInfo.Lines.Add(newValue);
                 }
             }
         }
@@ -555,13 +533,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 node = new()
                 {
                     VisualTreePath = state.ComponentElementTreeSelectedNodePath.Split(',').Select(int.Parse).ToList(),
-                    Medias =
-                    [
-                        new()
-                        {
-                            Pseudos = []
-                        }
-                    ]
+                    Lines = []
                 };
 
                 designerComponentInfo.VisualTree = designerComponentInfo.VisualTree.NewListWith(node);
@@ -570,51 +542,50 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             var editors = new List<Element>();
 
             var indent = 0;
-            foreach (var mediaInfo in node.Medias)
+            for (var index = 0; index < node.Lines.Count; index++)
             {
-                if (mediaInfo.Text != null)
+                var line = node.Lines[index];
+                
+                
+
+                if (line?.StartsWith("@") is true)
                 {
-                    editors.Add(new StyleSearchInput { Value = mediaInfo.Text } + PaddingLeft(indent));
+                    indent = 0;
+                }
+
+                var editor = new FlexRow(WidthFull)
+                {
+                    SpaceX(indent),
+                    new StyleSearchInput
+                    {
+                        Index = index,
+                        Value = line
+                    }
+                };
+                
+                editors.Add(editor);
+                
+                if (line?.StartsWith("@") is true)
+                {
+                    indent += 8;
+                }
+                
+                if (line?.StartsWith(":") is true)
+                {
                     indent += 8;
                 }
 
-                foreach (var pseudoInfo in mediaInfo.Pseudos)
-                {
-                    if (pseudoInfo.Text != null)
-                    {
-                        editors.Add(new StyleSearchInput { Value = pseudoInfo.Text }+ PaddingLeft(indent));
-                        indent += 8;
-                    }
-
-                    for (var i = 0; i < pseudoInfo.Modifiers.Count; i++)
-                    {
-                        var modifierInfo = pseudoInfo.Modifiers[i];
-                        editors.Add(new FlexRow(WidthFull)
-                        {
-                            SpaceX(indent),
-                            new StyleSearchInput
-                            {
-                                Value = modifierInfo.Text,
-
-                                Media  = mediaInfo.Text,
-                                Pseudo = pseudoInfo.Text,
-                                Index= i
-                            }
-                        });
-                    }
-                    
-                    editors.Add(new FlexRow(WidthFull)
-                    {
-                        SpaceX(indent),
-                        new StyleSearchInput
-                        {
-                            Media  = mediaInfo.Text,
-                            Pseudo = pseudoInfo.Text,
-                            Index  = -1
-                        }
-                    });
-                }
+                
             }
+
+            editors.Add(new FlexRow(WidthFull)
+            {
+                SpaceX(indent),
+                new StyleSearchInput
+                {
+                    Index = -1
+                }
+            });
             
             
             return new FlexColumn(BorderTop("1px dotted #d9d9d9"))
