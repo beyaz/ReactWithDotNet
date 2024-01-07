@@ -8,6 +8,11 @@ class StyleSearchInput : Component
 
     static StyleSearchInput()
     {
+        foreach (var item in Style.Names.AllNames)
+        {
+            AllSuggestions.Add(item.NameInKebabCase);
+        }
+        
         foreach (var propertyInfo in typeof(Mixin).GetProperties(BindingFlags.Static | BindingFlags.Public))
         {
             AllSuggestions.Add(propertyInfo.Name);

@@ -2,7 +2,7 @@ namespace ReactWithDotNet;
 
 partial class Style
 {
-    static class Names
+    internal static class Names
     {
         public static readonly StyleAttributeNameInfo accentColor = new ("accentColor", "accent-color");
         public static readonly StyleAttributeNameInfo additiveSymbols = new ("additiveSymbols", "additive-symbols");

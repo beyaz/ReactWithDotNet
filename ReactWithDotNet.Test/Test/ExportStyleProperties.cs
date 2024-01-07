@@ -22,7 +22,7 @@ public class ExportStyleProperties
             "",
             "partial class Style",
             "{",
-            $"{indent}static class Names",
+            $"{indent}internal static class Names",
             $"{indent}{{"
             
         };
