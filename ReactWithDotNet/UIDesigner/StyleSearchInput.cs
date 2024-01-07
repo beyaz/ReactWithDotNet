@@ -64,7 +64,7 @@ class StyleSearchInput : Component
             return null;
         }
 
-        var suggestionItemList = GetProperties();
+        var suggestionItemList = GetCurrentSuggestions();
 
         if (suggestionItemList.Count == 0)
         {
@@ -93,9 +93,11 @@ class StyleSearchInput : Component
         {
             AllSuggestions.Add(propertyInfo.Name);
         }
+        
+        AllSuggestions.Add("@Media Screen > 400");
     }
 
-    IReadOnlyList<string> GetProperties()
+    IReadOnlyList<string> GetCurrentSuggestions()
     {
         return AllSuggestions.Where(x => x.Contains(Value + "", StringComparison.OrdinalIgnoreCase))
             .Take(5).ToList();
@@ -141,7 +143,7 @@ class StyleSearchInput : Component
 
             Client.DispatchEvent<OnDesignerManagedStyleChanged>("Background(\"yellow\")");
                 
-            Value = GetProperties()[SelectedSuggestionOffset.Value];
+            Value = GetCurrentSuggestions()[SelectedSuggestionOffset.Value];
         }
             
             
