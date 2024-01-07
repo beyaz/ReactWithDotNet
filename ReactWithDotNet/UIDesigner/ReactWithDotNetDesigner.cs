@@ -71,39 +71,50 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
     Task OnDesignerManagedStyleChangeHandler(string Media, string Pseudo,int index, string operation, string newValue)
     {
-
         var component = ReactWithDotNetDesignerComponentPreview.CreateElement(state, Context);
 
         var componentInfo = DesignerHelper.GetComponentInfo(component);
         
         foreach (var elementInfo in componentInfo.VisualTree)
         {
-            foreach (var mediaInfo in elementInfo.Medias)
+            if (string.Join(",",elementInfo.VisualTreePath) == state.ComponentElementTreeSelectedNodePath)
             {
-                foreach (var pseudoInfo in mediaInfo.Pseudos)
+                foreach (var mediaInfo in elementInfo.Medias)
                 {
-                    if (index >= 0)
+                    if (mediaInfo.Text == Media)
                     {
-                        if (operation == "Remove")
+                        foreach (var pseudoInfo in mediaInfo.Pseudos)
                         {
-                            pseudoInfo.Modifiers.RemoveAt(index);
-                            return Task.CompletedTask;
-                        }
+                            if (pseudoInfo.Text == Pseudo)
+                            {
+                                if (index >= 0)
+                                {
+                                    if (operation == "Remove")
+                                    {
+                                        pseudoInfo.Modifiers.RemoveAt(index);
+                                        return Task.CompletedTask;
+                                    }
                         
-                        pseudoInfo.Modifiers[index].Text = newValue;
+                                    pseudoInfo.Modifiers[index].Text = newValue;
 
-                        pseudoInfo.Modifiers[index].StyleModifier = BackgroundWhite;
-                    }
-                    else
-                    {
-                        pseudoInfo.Modifiers.Add(new ()
-                        {
-                            Text = newValue,
-                            StyleModifier = BackgroundWhite
-                        });
+                                    pseudoInfo.Modifiers[index].StyleModifier = BackgroundWhite;
+                                }
+                                else
+                                {
+                                    pseudoInfo.Modifiers.Add(new ()
+                                    {
+                                        Text          = newValue,
+                                        StyleModifier = BackgroundWhite
+                                    });
+                                }
+                    
+                                break;
+                            }
+                            
+                            
+                        }
                     }
                     
-                    break;
                 }
             }
         }
