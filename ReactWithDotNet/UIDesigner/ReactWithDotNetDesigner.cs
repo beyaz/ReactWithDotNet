@@ -81,9 +81,22 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             {
                 foreach (var pseudoInfo in mediaInfo.Pseudos)
                 {
-                    pseudoInfo.Modifiers[index].Text = newValue;
+                    if (index >= 0)
+                    {
+                        pseudoInfo.Modifiers[index].Text = newValue;
 
-                    pseudoInfo.Modifiers[index].StyleModifier = BackgroundWhite;
+                        pseudoInfo.Modifiers[index].StyleModifier = BackgroundWhite;
+                    }
+                    else
+                    {
+                        pseudoInfo.Modifiers.Add(new ()
+                        {
+                            Text = newValue,
+                            StyleModifier = BackgroundWhite
+                        });
+                    }
+                    
+                    break;
                 }
             }
         }
