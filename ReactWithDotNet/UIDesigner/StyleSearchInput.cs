@@ -20,9 +20,6 @@ class StyleSearchInput : Component
             },
             new FlexRow(AlignItemsCenter)
             {
-
-                    
-                    
                 new input
                 {
                     type                     = "text",
@@ -42,7 +39,6 @@ class StyleSearchInput : Component
                     }
                 },
                     
-                ////IconSearch,
                 new FlexRowCentered(PaddingLeftRight(4), CursorDefault)
                 {
                     new DeleteIcon()
