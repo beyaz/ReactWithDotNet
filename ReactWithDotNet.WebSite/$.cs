@@ -21,6 +21,18 @@ static class Designer
                             [
                                 new ()
                                 {
+                                    Modifiers = 
+                                    [
+                                        new()
+                                        {
+                                            Text = "border-radius: 5",
+                                
+                                            StyleModifier = BorderRadius(5)
+                                        }
+                                    ]
+                                },
+                                new ()
+                                {
                                     Text = ":hover",
                                     Modifiers = 
                                     [
