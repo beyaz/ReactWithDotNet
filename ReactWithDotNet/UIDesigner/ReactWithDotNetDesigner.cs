@@ -75,7 +75,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
         var r = DesignerHelper.GetComponentInfo(component);
 
-        r.VisualTree[0].Modifiers = new List<DesignerStyleModifierInfo>
+        r.VisualTree[0].Modifiers = new List<DesignerComponentInfo.DesignerElementInfo.DesignerStyleModifierInfo>
         {
             new ()
             {
@@ -511,17 +511,17 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             var designerComponentInfo = DesignerHelper.GetComponentInfo(component) ?? new DesignerComponentInfo
             {
                 TargetType = component.GetType(),
-                VisualTree = new List<DesignerElementInfo>()
+                VisualTree = new List<DesignerComponentInfo.DesignerElementInfo>()
             };
 
             var node = designerComponentInfo.VisualTree.FirstOrDefault(x=>string.Join(",",x.VisualTreePath) == state.ComponentElementTreeSelectedNodePath);
 
             if (node is null)
             {
-                node = new DesignerElementInfo
+                node = new DesignerComponentInfo.DesignerElementInfo
                 {
                     VisualTreePath = state.ComponentElementTreeSelectedNodePath.Split(',').Select(int.Parse).ToList(),
-                    Modifiers      = new List<DesignerStyleModifierInfo>()
+                    Modifiers      = new List<DesignerComponentInfo.DesignerElementInfo.DesignerStyleModifierInfo>()
                 };
 
                 var list =  designerComponentInfo.VisualTree.ToList();
