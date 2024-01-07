@@ -97,10 +97,21 @@ static class DesignerHelper
             {
                 foreach (var pseudoInfo in mediaInfo.Pseudos)
                 {
-                    foreach (var styleModifierInfo in pseudoInfo.Modifiers)
+                    if (pseudoInfo.Text is null)
                     {
-                        ModifyHelper.ProcessModifier(node, styleModifierInfo.StyleModifier);        
+                        foreach (var styleModifierInfo in pseudoInfo.Modifiers)
+                        {
+                            ModifyHelper.ProcessModifier(node, styleModifierInfo.StyleModifier);        
+                        }
                     }
+                    
+                    if (pseudoInfo.Text is "hover")
+                    {
+                        var hover = Hover(pseudoInfo.Modifiers.Select(x => x.StyleModifier).ToArray());
+                        
+                        ModifyHelper.ProcessModifier(node, hover);        
+                    }
+                   
                 }
 
                 
