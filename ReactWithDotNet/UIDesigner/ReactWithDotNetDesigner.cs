@@ -68,23 +68,25 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         return Task.CompletedTask;
     }
 
-    Task OnDesignerManagedStyleChangeHandler(string newvalue)
+    Task OnDesignerManagedStyleChangeHandler(string Media, string Pseudo,int index, string newValue)
     {
 
         var component = ReactWithDotNetDesignerComponentPreview.CreateElement(state, Context);
 
-        var r = DesignerHelper.GetComponentInfo(component);
+        var componentInfo = DesignerHelper.GetComponentInfo(component);
+        
+        foreach (var elementInfo in componentInfo.VisualTree)
+        {
+            foreach (var mediaInfo in elementInfo.Medias)
+            {
+                foreach (var pseudoInfo in mediaInfo.Pseudos)
+                {
+                    pseudoInfo.Modifiers[index].Text = newValue;
 
-        //r.VisualTree[0].Modifiers = new List<DesignerComponentInfo.ElementInfo.StyleModifierInfo>
-        //{
-        //    new ()
-        //    {
-        //        StyleModifier = Background("blue"),
-        //        Text          = "background: blue"
-        //    }
-        //};
-        
-        
+                    pseudoInfo.Modifiers[index].StyleModifier = BackgroundWhite;
+                }
+            }
+        }
         
         Client.RefreshComponentPreview();
         
@@ -512,11 +514,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
             if (designerComponentInfo is null)
             {
-                designerComponentInfo = new()
-                {
-                    TargetType = component.GetType(),
-                    VisualTree = []
-                };
+                designerComponentInfo = DesignerHelper.CreateNewDesignerComponentInfoForType(component.GetType());
             }
 
             var node = designerComponentInfo.VisualTree.FirstOrDefault(x=>string.Join(",",x.VisualTreePath) == state.ComponentElementTreeSelectedNodePath);
@@ -557,17 +555,19 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                         indent += 8;
                     }
 
-                    foreach (var modifierInfo in pseudoInfo.Modifiers)
+                    for (var i = 0; i < pseudoInfo.Modifiers.Count; i++)
                     {
+                        var modifierInfo = pseudoInfo.Modifiers[i];
                         editors.Add(new FlexRow(WidthFull)
                         {
                             SpaceX(indent),
                             new StyleSearchInput
                             {
                                 Value = modifierInfo.Text,
-                                
-                                Media      = mediaInfo.Text,
-                                Pseudo = pseudoInfo.Text
+
+                                Media  = mediaInfo.Text,
+                                Pseudo = pseudoInfo.Text,
+                                Index= i
                             }
                         });
                     }

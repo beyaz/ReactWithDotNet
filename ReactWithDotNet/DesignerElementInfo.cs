@@ -47,6 +47,27 @@ static class DesignerHelper
 {
     static readonly LinkedList<CacheItem> Cache = new();
 
+    public static DesignerComponentInfo CreateNewDesignerComponentInfoForType(Type targetType)
+    {
+        DesignerComponentInfo newItem = new()
+        {
+            TargetType = targetType,
+            VisualTree = []
+        };
+        
+        var cacheKey = targetType.Assembly.GetName().Name;
+
+        var node = Cache.FirstOrDefault(x => x.assemblyFullName == cacheKey);
+        if (node == null)
+        {
+            throw new InvalidOperationException("// todo:?");
+        }
+
+        node.value = node.value.NewListWith(newItem);
+        
+        return newItem;
+    }
+
     public static DesignerComponentInfo GetComponentInfo(Element component)
     {
         var componentType = component.GetType();
@@ -128,7 +149,7 @@ static class DesignerHelper
 
         if (item == null)
         {
-            item = new(cacheKey, ReadFromAssemblyNoCache(assembly));
+            item = new CacheItem(){assemblyFullName = cacheKey, value = ReadFromAssemblyNoCache(assembly)};
 
             Cache.AddLast(item);
         }
@@ -140,7 +161,7 @@ static class DesignerHelper
             var designerType = assembly.GetType("ReactWithDotNet.__designer__.Designer");
             if (designerType == null)
             {
-                return null;
+                return [];
             }
 
             var componentInformationListPropertyInfo = designerType.GetProperty("ComponentInformationList", BindingFlags.Static | BindingFlags.Public);
@@ -154,5 +175,11 @@ static class DesignerHelper
         }
     }
 
-    record CacheItem(string assemblyFullName, IReadOnlyList<DesignerComponentInfo> value);
+    
 }
+
+    class CacheItem
+    {
+        public string assemblyFullName;
+        public IReadOnlyList<DesignerComponentInfo> value;
+    }

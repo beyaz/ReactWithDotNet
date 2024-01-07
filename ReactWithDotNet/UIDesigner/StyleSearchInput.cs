@@ -24,6 +24,7 @@ class StyleSearchInput : Component
     
     public string Media { get; init; }
     public string Pseudo { get; init; }
+    public int Index { get; init; }
 
     protected override Element render()
     {
@@ -108,9 +109,11 @@ class StyleSearchInput : Component
 
             if (GetCurrentSuggestions().Count > SelectedSuggestionOffset.Value)
             {
-                Client.DispatchEvent<OnDesignerManagedStyleChanged>("background : yellow");
-
                 Value = GetCurrentSuggestions()[SelectedSuggestionOffset.Value];
+
+                Client.DispatchEvent<OnDesignerManagedStyleChanged>(Media, Pseudo, Index, Value);
+
+
             }
         }
 
@@ -194,4 +197,4 @@ class StyleSearchInput : Component
     }
 }
 
-delegate Task OnDesignerManagedStyleChanged(string newValue);
+delegate Task OnDesignerManagedStyleChanged(string Media, string Pseudo,int Index, string newValue);
