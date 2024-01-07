@@ -35,7 +35,9 @@ class StyleSearchInput : Component
                         BorderRadius(3),
                         PaddingLeft(3),
                         PaddingTopBottom(5),
-                        FlexGrow(1), FontFamily("inherit"), FontSize("inherit")
+                        FlexGrow(1), FontFamily("Arial"), FontSize12,
+                        Color(rgb(0, 6, 36)),
+                        LetterSpacing(0.3)
                     }
                 },
                     
