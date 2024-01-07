@@ -236,4 +236,29 @@ public sealed partial class textarea
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
     public Expression<Func<InputValueBinder>> valueBind { get; set; }
+    
+    
+    /// <summary>
+    ///     Occurs when an element loses focus.
+    /// </summary>
+    [ReactProp]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments")]
+    public FocusEventHandler onBlur { get; set; }
+    
+    
+    /// <summary>
+    ///     if you want to handle when user iteraction finished see example below<br />
+    ///     component.valueBind = ()=>state.UserInfo.Name<br />
+    ///     component.valueBindDebounceTimeout = 600 // milliseconds<br />
+    ///     component.valueBindDebounceHandler = OnUserIterationFinished<br />
+    /// </summary>
+    public Func<Task> valueBindDebounceHandler { get; set; }
+
+    /// <summary>
+    ///     if you want to handle when user iteraction finished see example below<br />
+    ///     component.valueBind = ()=>state.UserInfo.Name<br />
+    ///     component.valueBindDebounceTimeout = 600 // milliseconds<br />
+    ///     component.valueBindDebounceHandler = OnUserIterationFinished<br />
+    /// </summary>
+    public int? valueBindDebounceTimeout { get; set; }
 }
