@@ -84,21 +84,28 @@ class StyleSearchInput : Component
         
     public int? SelectedSuggestionOffset { get; set; }
 
-      
-        
 
-    IReadOnlyList<PropertyInfo> GetProperties()
+    static readonly List<string> AllSuggestions = new();
+
+    static StyleSearchInput()
     {
-        return typeof(Mixin).GetProperties(BindingFlags.Static | BindingFlags.Public)
-            .Where(p => p.Name.Contains(Value + "", StringComparison.OrdinalIgnoreCase))
+        foreach (var propertyInfo in typeof(Mixin).GetProperties(BindingFlags.Static | BindingFlags.Public))
+        {
+            AllSuggestions.Add(propertyInfo.Name);
+        }
+    }
+
+    IReadOnlyList<string> GetProperties()
+    {
+        return AllSuggestions.Where(x => x.Contains(Value + "", StringComparison.OrdinalIgnoreCase))
             .Take(5).ToList();
     }
         
-    Element ToOption(PropertyInfo p, int index)
+    Element ToOption(string code, int index)
     {
         return new div
         {
-            p.Name,
+            code,
             PaddingLeft(5),
             Color(rgb(0, 6, 36)),
                 
@@ -134,7 +141,7 @@ class StyleSearchInput : Component
 
             Client.DispatchEvent<OnDesignerManagedStyleChanged>("Background(\"yellow\")");
                 
-            Value = GetProperties()[SelectedSuggestionOffset.Value].Name;
+            Value = GetProperties()[SelectedSuggestionOffset.Value];
         }
             
             
