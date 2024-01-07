@@ -59,10 +59,11 @@ class StyleSearchInput : Component
                     },
                     autoFocus = true
                 },
-
+                 
                 new FlexRowCentered(PaddingLeftRight(4), CursorDefault)
                 {
-                    new DeleteIcon()
+                    new DeleteIcon(),
+                    Index < 0 ? VisibilityCollapse : null
                 }
             },
             Suggestions
