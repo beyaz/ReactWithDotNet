@@ -13,49 +13,24 @@ static class Designer
                 new()
                 {
                     VisualTreePath = [0],
-                    Medias = 
+                    Lines = 
                     [
-                        new ()
-                        {
-                            Pseudos = 
-                            [
-                                new ()
-                                {
-                                    Modifiers = 
-                                    [
-                                        new()
-                                        {
-                                            Text = "border-radius: 5",
-                                
-                                            StyleModifier = BorderRadius(5)
-                                        }
-                                    ]
-                                },
-                                new ()
-                                {
-                                    Text = ":hover",
-                                    Modifiers = 
-                                    [
-                                        new()
-                                        {
-                                            Text = "background: green",
-                                
-                                            StyleModifier = Background("green")
-                                        },
+                        "border-radius: 5",
+                        "background: green",
+                        ":hover",
+                        "  border-radius: 3",
+                        "  background: yellow",
                         
-                                        new()
-                                        {
-                                            Text = "padding-left: 0",
-                            
-                                            StyleModifier = PaddingLeft(0)
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    
                     ],
-                    
+                    CompiledLines = 
+                    [
+                        BorderRadius(5),
+                        Background("green"),
+                        Hover([
+                            BorderRadius(3),
+                            Background("yellow")
+                        ])
+                    ]
                 }
             ]
         }

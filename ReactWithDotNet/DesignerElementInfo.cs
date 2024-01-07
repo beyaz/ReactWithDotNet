@@ -12,6 +12,10 @@ public sealed class DesignerComponentInfo
     public sealed class ElementInfo
     {
         public IReadOnlyList<int> VisualTreePath { get; set; }
+
+        public List<string> Lines { get; set; }
+
+        public Style CompiledLines { get; set; }
         
         public IReadOnlyList<MediaInfo> Medias { get; set; }
         
