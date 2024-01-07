@@ -223,7 +223,7 @@ public sealed partial class Style
         };
     }
 
-    sealed class StyleAttributeNameInfo
+    internal sealed class StyleAttributeNameInfo
     {
         public readonly string NameInCamelCase;
         public readonly string NameInKebabCase;
