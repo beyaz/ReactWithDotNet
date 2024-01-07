@@ -56,7 +56,8 @@ class StyleSearchInput : Component
                         FlexGrow(1), FontFamily("Arial"), FontSize12,
                         Color(rgb(0, 6, 36)),
                         LetterSpacing(0.3)
-                    }
+                    },
+                    autoFocus = true
                 },
 
                 new FlexRowCentered(PaddingLeftRight(4), CursorDefault)
