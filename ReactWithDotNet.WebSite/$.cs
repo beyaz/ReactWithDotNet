@@ -28,10 +28,10 @@ static class Designer
                     [
                         BorderRadius(5),
                         Background("green"),
-                        Hover([
+                        Hover(
                             BorderRadius(3),
                             Background("yellow")
-                        ]),
+                        ),
                         MediaQuery("(min-width: 768px)",
                           BorderRadius(9)
                         )
