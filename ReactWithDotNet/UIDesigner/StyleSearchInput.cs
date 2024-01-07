@@ -4,15 +4,18 @@ namespace ReactWithDotNet.UIDesigner;
 
 class StyleSearchInput : Component
 {
-    Element IconSearch => new svg(svg.Size(18), ViewBox(0, 0, 18, 18),MarginLeftRight(5))
-    {
-        new path { fill ="#dbdde5",  d = "M14.8539503,14.1467096 C15.0478453,14.3412138 15.0475893,14.6560006 14.8533783,14.8501892 C14.6592498,15.0442953 14.3445263,15.0442862 14.1504091,14.8501689 L12.020126,12.7261364 C11.066294,13.5214883 9.8390282,14 8.5,14 C5.46243388,14 3,11.5375661 3,8.5 C3,5.46243388 5.46243388,3 8.5,3 C11.5375661,3 14,5.46243388 14,8.5 C14,9.83874333 13.5216919,11.0657718 12.726644,12.0195172 L14.8539503,14.1467096 Z M8.5,13 C10.9852814,13 13,10.9852814 13,8.5 C13,6.01471863 10.9852814,4 8.5,4 C6.01471863,4 4,6.01471863 4,8.5 C4,10.9852814 6.01471863,13 8.5,13 Z" }
-    };
 
-    Element IconClose => new svg(svg.Size(18), ViewBox(0, 0, 18, 18))
+    class DeleteIcon : Component
     {
-        new path { fill ="#65676b", d = "M8.44 9.5L6 7.06A.75.75 0 1 1 7.06 6L9.5 8.44 11.94 6A.75.75 0 0 1 13 7.06L10.56 9.5 13 11.94A.75.75 0 0 1 11.94 13L9.5 10.56 7.06 13A.75.75 0 0 1 6 11.94L8.44 9.5z" }
-    };
+        protected override Element render()
+        {
+            return new svg(svg.Size(24), ViewBox(0, 0, 24, 24))
+            {
+                new path { fill="#bcc4e3", d = "M17,17 C17,18.6568542 15.6568542,20 14,20 L9,20 C7.34314575,20 6,18.6568542 6,17 L6,7 L5,7 L5,6 L18,6 L18,7 L17,7 L17,17 Z M9,9 L10,9 L10,16 L9,16 L9,9 Z M11,9 L12,9 L12,16 L11,16 L11,9 Z M13,9 L14,9 L14,16 L13,16 L13,9 Z M7,17 C7,18.1045695 7.8954305,19 9,19 L14,19 C15.1045695,19 16,18.1045695 16,17 L16,7 L7,7 L7,17 Z M13,6 L13,5 L10,5 L10,6 L9,6 L9,5 C9,4.44771525 9.44771525,4 10,4 L13,4 C13.5522847,4 14,4.44771525 14,5 L14,6 L13,6 Z" }
+            };
+        }
+    }
+    
     protected override Element render()
     {
 
@@ -24,7 +27,7 @@ class StyleSearchInput : Component
                 input:focus { outline:none; }
                 """
             },
-            new FlexRow
+            new FlexRow(AlignItemsCenter)
             {
 
                     
@@ -49,15 +52,10 @@ class StyleSearchInput : Component
                 },
                     
                 ////IconSearch,
-                //new FlexRowCentered(PaddingLeftRight(10), CursorDefault)
-                //{
-                //    "-",
-                        
-                //    FontSize19,
-                //    FontWeight600,
-                //    Border(Solid(1, "#dbdde5")),
-                //    Hover(Border(Solid(1, "#bcc4e3")))
-                //}
+                new FlexRowCentered(PaddingLeftRight(4), CursorDefault)
+                {
+                    new DeleteIcon()
+                }
 
 
             },
