@@ -13,7 +13,7 @@ public class ReactWithDotNetDesignerModel
 
     public string MethodFilter { get; set; }
 
-    public double ScreenWidth { get; set; } = 900;
+    public int ScreenWidth { get; set; } = 900;
 
     public string SelectedAssemblyFilePath { get; set; }
 
@@ -24,7 +24,5 @@ public class ReactWithDotNetDesignerModel
     public TypeReference SelectedType { get; set; }
     
     public bool PropertyPanelIsClosed { get; set; }
-    
-    public string ComponentElementTreeSelectedNodePath { get; set; }
 }
 

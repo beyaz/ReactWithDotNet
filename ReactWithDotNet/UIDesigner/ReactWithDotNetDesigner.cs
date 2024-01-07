@@ -65,7 +65,23 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         return Task.CompletedTask;
     }
 
-    
+    Task OnCommonSizeClicked(MouseEvent e)
+    {
+        state.ScreenWidth = e.currentTarget.data["value"] switch
+        {
+            "M"  => 320,
+            "SM"  => 640,
+            "MD"  => 768,
+            "LG"  => 1024,
+            "XL"  => 1280,
+            "XXL" => 1536,
+            _     => throw new ArgumentOutOfRangeException()
+        };
+        
+        SaveState();
+        
+        return Task.CompletedTask; 
+    }
 
     protected override Element render()
     {
@@ -167,7 +183,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                           -webkit-appearance:none !important;
                           width:200px;
                           height:1px;
-                          background:#00acee;
+                          background:#7cc8e5;
                           border:none;
                           outline:none;
                         }
@@ -176,7 +192,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                           width:20px;
                           height:20px;
                           background:#f5f5f5;
-                          border:2px solid #00acee;
+                          border:2px solid #7cc8e5;
                           border-radius:50%;
                           cursor:pointer;
                         }
@@ -193,6 +209,31 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                         valueBindDebounceHandler = OnMediaSizeChanged,
                         style                    = { Height(10), WidthMaximized, BorderRadius(38) }
                     }
+                },
+                
+                new FlexRow(JustifyContentSpaceAround, AlignItemsCenter)
+                {
+                    new[]{"M","SM","MD","LG","XL","XXL"}.Select(x=>new FlexRowCentered
+                    {
+                        x,
+                        FontSize13,
+                        CursorDefault,
+                        PaddingTopBottom(3),
+                        FlexGrow(1),
+                        
+                        Data("value",x),
+                        OnClick(OnCommonSizeClicked),
+                        Hover(Color("#2196f3"), FontSize16),
+                        
+                        x=="M" && state.ScreenWidth ==320||
+                        x=="SM" && state.ScreenWidth ==640||
+                        x=="MD" && state.ScreenWidth ==768||
+                        x=="LG" && state.ScreenWidth ==1024||
+                        x=="XL" && state.ScreenWidth ==1280||
+                        x=="XXL" && state.ScreenWidth ==1536
+                            ?
+                            FontWeight600 + Color("#2196f3") + FontSize16 : null
+                    })
                 }
                 
             },
@@ -353,7 +394,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
             return new FlexRow(PositionRelative, WidthMaximized, Height(20))
             {
-                Enumerable.Range(0, (int)max).Select(number => new div(PositionAbsolute)
+                Enumerable.Range(0, max).Select(number => new div(PositionAbsolute)
                 {
                     Bottom(3), Left(number * step),
                     new FlexColumn(FontSize8, LineHeight6, FontWeight500, Gap(4))
