@@ -104,18 +104,18 @@ static class DesignerHelper
                             ModifyHelper.ProcessModifier(node, styleModifierInfo.StyleModifier);        
                         }
                     }
-                    
-                    if (pseudoInfo.Text is "hover")
+                    else if (pseudoInfo.Text is "hover")
                     {
                         // todo: optimize here
                         var hover = Hover(pseudoInfo.Modifiers.Select(x => x.StyleModifier).ToArray());
                         
                         ModifyHelper.ProcessModifier(node, hover);        
                     }
-                   
+                    else
+                    {
+                        throw new NotImplementedException(pseudoInfo.Text);
+                    }
                 }
-
-                
             }
         }
     }
