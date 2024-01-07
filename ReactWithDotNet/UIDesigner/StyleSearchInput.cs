@@ -103,7 +103,7 @@ class StyleSearchInput : Component
 
             ShowSuggestions = false;
 
-            if (GetCurrentSuggestions().Count < SelectedSuggestionOffset.Value)
+            if (GetCurrentSuggestions().Count > SelectedSuggestionOffset.Value)
             {
                 Client.DispatchEvent<OnDesignerManagedStyleChanged>("background : yellow");
 

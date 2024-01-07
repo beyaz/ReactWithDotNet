@@ -922,6 +922,8 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
                 return;
             }
 
+            eventArguments[0].preventDefault();
+
             eventArguments[0] = ConvertToSyntheticKeyboardEvent(eventArguments[0]);
         }
 
