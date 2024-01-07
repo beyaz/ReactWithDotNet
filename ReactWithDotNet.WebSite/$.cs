@@ -21,7 +21,7 @@ static class Designer
                             [
                                 new ()
                                 {
-                                    Text = "hover",
+                                    Text = ":hover",
                                     Modifiers = 
                                     [
                                         new()
