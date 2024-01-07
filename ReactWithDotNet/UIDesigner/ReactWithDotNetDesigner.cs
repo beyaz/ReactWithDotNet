@@ -198,14 +198,15 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                     new[] { "M", "SM", "MD", "LG", "XL", "XXL" }.Select(x => new FlexRowCentered
                     {
                         x,
-                        FontSize13,
+                        FontSize16,
+                        FontWeight300,
                         CursorDefault,
                         PaddingTopBottom(3),
                         FlexGrow(1),
 
                         Data("value", x),
                         OnClick(OnCommonSizeClicked),
-                        Hover(Color("#2196f3"), FontSize16),
+                        Hover(Color("#2196f3")),
 
                         (x == "M" && state.ScreenWidth == 320) ||
                         (x == "SM" && state.ScreenWidth == 640) ||
@@ -213,7 +214,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                         (x == "LG" && state.ScreenWidth == 1024) ||
                         (x == "XL" && state.ScreenWidth == 1280) ||
                         (x == "XXL" && state.ScreenWidth == 1536)
-                            ? FontWeight600 + Color("#2196f3") + FontSize16
+                            ? FontWeight500 + Color("#2196f3")
                             : null
                     })
                 }
