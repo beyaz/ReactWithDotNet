@@ -229,6 +229,16 @@ static class Extensions
 
         return null;
     }
+    
+    public static IReadOnlyList<T> NewListWith<T>(this IReadOnlyList<T> readOnlyList, T newValue)
+    {
+        if (readOnlyList == null)
+        {
+            throw new ArgumentNullException(nameof(readOnlyList));
+        }
+
+        return new List<T>(readOnlyList) { newValue };
+    }
 }
 
 [Serializable]

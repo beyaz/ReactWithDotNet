@@ -24,7 +24,7 @@ class StyleSearchInput : Component
 
     protected override Element render()
     {
-        return new FlexColumn
+        return new FlexColumn(SizeFull)
         {
             new style
             {

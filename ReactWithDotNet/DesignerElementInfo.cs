@@ -11,15 +11,31 @@ public sealed class DesignerComponentInfo
     
     public sealed class ElementInfo
     {
-        public List<StyleModifierInfo> Modifiers { get; set; }
-        
         public IReadOnlyList<int> VisualTreePath { get; set; }
-    
-        public sealed class StyleModifierInfo
+        
+        public IReadOnlyList<MediaInfo> Medias { get; set; }
+        
+        public sealed class MediaInfo
         {
-            public StyleModifier StyleModifier { get; set; }
             public string Text { get; set; }
+            
+            public IReadOnlyList<PseudoInfo> Pseudos { get; set; }
+            
+            public sealed class PseudoInfo
+            {
+                public string Text { get; set; }
+            
+                public List<StyleModifierInfo> Modifiers { get; set; }
+                
+                public sealed class StyleModifierInfo
+                {
+                    public StyleModifier StyleModifier { get; set; }
+                    public string Text { get; set; }
+                }
+            }
         }
+        
+        
     }
 }
 
@@ -29,34 +45,6 @@ public sealed class DesignerComponentInfo
 
 static class DesignerHelper
 {
-    public static List<string> ToCsharpCode(IReadOnlyList<DesignerComponentInfo.ElementInfo.StyleModifierInfo> styleModifierList)
-    {
-        var code = new List<string>();
-        
-        foreach (var styleModifier in styleModifierList)
-        {
-            code.AddRange(ToCsharpCode(styleModifier));
-        }
-
-        return code;
-    }
-    public static List<string> ToCsharpCode(DesignerComponentInfo.ElementInfo.StyleModifierInfo styleModifier)
-    {
-        var code = new List<string>();
-        
-        var style = new Style();
-                
-        style.Apply(styleModifier.StyleModifier);
-
-        foreach (var (key, value) in style.ToDictionary())
-        {
-            code.Add($"{key} : {value}");
-        }
-
-        return code;
-
-    }
-    
     static readonly LinkedList<CacheItem> Cache = new();
 
     public static DesignerComponentInfo GetComponentInfo(Element component)
@@ -105,9 +93,17 @@ static class DesignerHelper
                 break;
             }
 
-            foreach (var modifierInfo in designerElementInfo.Modifiers)
+            foreach (var mediaInfo in designerElementInfo.Medias)
             {
-                ModifyHelper.ProcessModifier(node, modifierInfo.StyleModifier);
+                foreach (var pseudoInfo in mediaInfo.Pseudos)
+                {
+                    foreach (var styleModifierInfo in pseudoInfo.Modifiers)
+                    {
+                        ModifyHelper.ProcessModifier(node, styleModifierInfo.StyleModifier);        
+                    }
+                }
+
+                
             }
         }
     }

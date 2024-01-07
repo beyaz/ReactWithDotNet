@@ -75,14 +75,14 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
         var r = DesignerHelper.GetComponentInfo(component);
 
-        r.VisualTree[0].Modifiers = new List<DesignerComponentInfo.ElementInfo.StyleModifierInfo>
-        {
-            new ()
-            {
-                StyleModifier = Background("blue"),
-                Text          = "background: blue"
-            }
-        };
+        //r.VisualTree[0].Modifiers = new List<DesignerComponentInfo.ElementInfo.StyleModifierInfo>
+        //{
+        //    new ()
+        //    {
+        //        StyleModifier = Background("blue"),
+        //        Text          = "background: blue"
+        //    }
+        //};
         
         
         
@@ -508,29 +508,66 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         
         Element CreateStyleEditor()
         {
-            var designerComponentInfo = DesignerHelper.GetComponentInfo(component) ?? new DesignerComponentInfo
+            var designerComponentInfo = DesignerHelper.GetComponentInfo(component);
+
+            if (designerComponentInfo is null)
             {
-                TargetType = component.GetType(),
-                VisualTree = new List<DesignerComponentInfo.ElementInfo>()
-            };
+                designerComponentInfo = new()
+                {
+                    TargetType = component.GetType(),
+                    VisualTree = []
+                };
+            }
 
             var node = designerComponentInfo.VisualTree.FirstOrDefault(x=>string.Join(",",x.VisualTreePath) == state.ComponentElementTreeSelectedNodePath);
 
             if (node is null)
             {
-                node = new DesignerComponentInfo.ElementInfo
+                node = new()
                 {
                     VisualTreePath = state.ComponentElementTreeSelectedNodePath.Split(',').Select(int.Parse).ToList(),
-                    Modifiers      = new List<DesignerComponentInfo.ElementInfo.StyleModifierInfo>()
+                    Medias =
+                    [
+                        new()
+                        {
+                            Pseudos = []
+                        }
+                    ]
                 };
 
-                var list =  designerComponentInfo.VisualTree.ToList();
-
-                designerComponentInfo.VisualTree = list;
-                
-                list.Add(node);
+                designerComponentInfo.VisualTree = designerComponentInfo.VisualTree.NewListWith(node);
             }
 
+            var editors = new List<Element>();
+
+            var indent = 0;
+            foreach (var mediaInfo in node.Medias)
+            {
+                if (mediaInfo.Text != null)
+                {
+                    editors.Add(new StyleSearchInput { Value = mediaInfo.Text } + PaddingLeft(indent));
+                    indent += 8;
+                }
+
+                foreach (var pseudoInfo in mediaInfo.Pseudos)
+                {
+                    if (pseudoInfo.Text != null)
+                    {
+                        editors.Add(new StyleSearchInput { Value = pseudoInfo.Text }+ PaddingLeft(indent));
+                        indent += 8;
+                    }
+
+                    foreach (var modifierInfo in pseudoInfo.Modifiers)
+                    {
+                        
+                        editors.Add(new FlexRow(WidthFull)
+                        {
+                            SpaceX(indent),
+                            new StyleSearchInput { Value = modifierInfo.Text }
+                        });
+                    }
+                }
+            }
             
             
             return new FlexColumn(BorderTop("1px dotted #d9d9d9"))
@@ -539,18 +576,9 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 new FlexColumn(Gap(5), JustifyContentFlexStart,Padding(5), BackgroundWhite, BorderRadius(5),
                                BoxShadow(0, 6, 6, 0, rgba(22,45,61,.06)))
                 {
-                    DesignerHelper.ToCsharpCode(node.Modifiers).Select(toElement),
-                    
-                    
-                
-                    new StyleSearchInput()
+                    editors
                 }
             };
-
-            Element toElement(string csharpLine)
-            {
-                return new StyleSearchInput { Value = csharpLine };
-            }
         }
     }
 

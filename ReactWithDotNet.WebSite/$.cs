@@ -13,23 +13,37 @@ static class Designer
                 new()
                 {
                     VisualTreePath = [0],
-
-                    Modifiers = 
+                    Medias = 
                     [
-                        new()
+                        new ()
                         {
-                            Text = "background: green",
+                            Pseudos = 
+                            [
+                                new ()
+                                {
+                                    Text = "hover",
+                                    Modifiers = 
+                                    [
+                                        new()
+                                        {
+                                            Text = "background: green",
                                 
-                            StyleModifier = Background("green")
-                        },
+                                            StyleModifier = Background("green")
+                                        },
                         
-                        new()
-                        {
-                            Text = "padding-left: 0",
+                                        new()
+                                        {
+                                            Text = "padding-left: 0",
                             
-                            StyleModifier = PaddingLeft(0)
+                                            StyleModifier = PaddingLeft(0)
+                                        }
+                                    ]
+                                }
+                            ]
                         }
-                    ]
+                    
+                    ],
+                    
                 }
             ]
         }
