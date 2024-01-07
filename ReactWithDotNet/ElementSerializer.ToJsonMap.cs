@@ -223,8 +223,6 @@ partial class ElementSerializer
                                 ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, modifier);
                             }
                         }
-                        
-                        DesignerHelper.Override(node.Element, node.DotNetComponentRootElement);
                     }
 
                     node.DotNetComponentRootNode = ConvertToNode(node.DotNetComponentRootElement);

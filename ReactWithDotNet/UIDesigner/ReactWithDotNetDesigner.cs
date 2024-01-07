@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Reflection.Metadata;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -63,44 +62,10 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
         Client.ListenEvent("ComponentPreviewRefreshed", OnComponentPreviewRefreshed);
 
-        Client.ListenEvent<OnDesignerManagedStyleChanged>(OnDesignerManagedStyleChangeHandler);
-        
-        
         return Task.CompletedTask;
     }
 
-    Task OnDesignerManagedStyleChangeHandler(string Media, string Pseudo,int index, string operation, string newValue)
-    {
-        var component = ReactWithDotNetDesignerComponentPreview.CreateElement(state, Context);
-
-        var componentInfo = DesignerHelper.GetComponentInfo(component);
-        
-        foreach (var elementInfo in componentInfo.VisualTree)
-        {
-            if (string.Join(",",elementInfo.VisualTreePath) == state.ComponentElementTreeSelectedNodePath)
-            {
-                if (index >= 0)
-                {
-                    if (operation == "Remove")
-                    {
-                        elementInfo.Lines.RemoveAt(index);
-                    }
-                    else
-                    {
-                        elementInfo.Lines[index] = newValue;
-                    }
-                }
-                else
-                {
-                    elementInfo.Lines.Add(newValue);
-                }
-            }
-        }
-        
-        Client.RefreshComponentPreview();
-        
-        return Task.CompletedTask;
-    }
+    
 
     protected override Element render()
     {
@@ -482,207 +447,14 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             new div(DisplayFlex, JustifyContentCenter, FlexGrow(1), Padding(7), MarginLeft(40))
             {
                 outputPanel
-            },
-            ComponentInspector
+            }
         };
-    }
-
-    async Task<Element> ComponentInspector()
-    {
-        
-        Element component;
-        Element rootNode;
-        
-        try
-        {
-            component = ReactWithDotNetDesignerComponentPreview.CreateElement(state, Context);
-            if (component is PureComponent pureComponent)
-            {
-                rootNode = await pureComponent.InvokeRender();
-            }
-            else
-            {
-                throw new("todo");
-            }
-        }
-        catch (Exception exception)
-        {
-            return exception.ToString();
-        }
-        
-        return new FlexColumn(BorderLeft("1px dotted #d9d9d9"), Width(300), PositionFixed, Right(0), Top(0), Height100vh,
-                              FontFamily("consolas, sans-serif"), FontSize11, Padding(5))
-        {
-            CreateElementTree(rootNode) + FlexGrow(1),
-            CreateStyleEditor() + FlexGrow(3)
-        };
-        
-        Element CreateStyleEditor()
-        {
-            var designerComponentInfo = DesignerHelper.GetComponentInfo(component);
-
-            if (designerComponentInfo is null)
-            {
-                designerComponentInfo = DesignerHelper.CreateNewDesignerComponentInfoForType(component.GetType());
-            }
-
-            var node = designerComponentInfo.VisualTree.FirstOrDefault(x=>string.Join(",",x.VisualTreePath) == state.ComponentElementTreeSelectedNodePath);
-
-            if (node is null)
-            {
-                node = new()
-                {
-                    VisualTreePath = state.ComponentElementTreeSelectedNodePath.Split(',').Select(int.Parse).ToList(),
-                    Lines = []
-                };
-
-                designerComponentInfo.VisualTree = designerComponentInfo.VisualTree.NewListWith(node);
-            }
-
-            var editors = new List<Element>();
-
-            var indent = 0;
-            for (var index = 0; index < node.Lines.Count; index++)
-            {
-                var line = node.Lines[index];
-                
-                
-
-                if (line?.StartsWith("@") is true)
-                {
-                    indent = 0;
-                }
-
-                var editor = new FlexRow(WidthFull)
-                {
-                    SpaceX(indent),
-                    new StyleSearchInput
-                    {
-                        Index = index,
-                        Value = line
-                    }
-                };
-                
-                editors.Add(editor);
-                
-                if (line?.StartsWith("@") is true)
-                {
-                    indent += 8;
-                }
-                
-                if (line?.StartsWith(":") is true)
-                {
-                    indent += 8;
-                }
-
-                
-            }
-
-            editors.Add(new FlexRow(WidthFull)
-            {
-                SpaceX(indent),
-                new StyleSearchInput
-                {
-                    Index = -1
-                }
-            });
-            
-            
-            return new FlexColumn(BorderTop("1px dotted #d9d9d9"))
-            {
-               SpaceY(5),
-                new FlexColumn(Gap(5), JustifyContentFlexStart,Padding(5), BackgroundWhite, BorderRadius(5),
-                               BoxShadow(0, 6, 6, 0, rgba(22,45,61,.06)))
-                {
-                    editors
-                }
-            };
-        }
     }
 
     
-    Element CreateElementTree(Element rootNode)
-    {
-        if (rootNode is null)
-        {
-            return "-";
-        }
-        
-        var tree = new FlexColumn
-        {
-             CursorDefault, FontWeight500, FontStyleItalic
-        };
 
-        addNode(rootNode,"0",2);
-        
-        return tree;
-        
-        void addNode(Element node, string path, int leftIndent)
-        {
-            if (node is null)
-            {
-                tree.Add(new div(PaddingLeft(leftIndent)){"null"});
-                return;
-            }
-
-            var name = node.GetType().Name;
-
-            var treeNode = createNewTreeNode(name);
-
-            treeNode.Add(Data("path", path));
-            treeNode.onClick = OnComponentElementTreeNodeClicked;
-
-            if (path == state.ComponentElementTreeSelectedNodePath)
-            {
-                treeNode.Add(BackgroundColor("#e7eaff"));
-            }
-            
-            treeNode.Add(PaddingLeft(leftIndent));
-            
-            tree.Add(treeNode);
-
-            if (node._children is null)
-            {
-                return;
-            }
-
-            var childIndex = 0;
-            foreach (var child in node._children)
-            {
-                var newPath = path + "," + childIndex;
-                
-                addNode(child, newPath, leftIndent + 8);
-                
-                childIndex++;
-            }
-
-            static HtmlElement createNewTreeNode(string label)
-            {
-                return new div
-                {
-                    label,
-                    Hover(BackgroundColor("#f4f5fe"))
-                };
-            }
-            
-
-        }
-    }
-
-    async Task OnComponentElementTreeNodeClicked(MouseEvent e)
-    {
-        state.ComponentElementTreeSelectedNodePath = e.currentTarget.data["path"];
-
-        var path = @"C:\github\ReactWithDotNet\ReactWithDotNet.WebSite\$.cs";
-        
-       
-        
-        
-        SaveState();
-        
-        Client.RefreshComponentPreview();
-        
-    }
+    
+    
     
 
     bool canShowInstanceEditor()
@@ -889,7 +661,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         {
             var map = DeserializeJsonBySystemTextJson<Dictionary<string, object>>(state.JsonTextForDotNetMethodParameters ?? string.Empty) ?? new Dictionary<string, object>();
 
-            foreach (var parameterInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(state.SelectedMethod)?.GetParameters() ?? new ParameterInfo[] { })
+            foreach (var parameterInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(state.SelectedMethod)?.GetParameters() ?? [])
             {
                 var name = parameterInfo.Name;
                 if (name == null || map.ContainsKey(name))
