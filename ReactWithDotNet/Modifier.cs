@@ -13,18 +13,12 @@ public sealed class StyleModifier : IModifier
 
     public static StyleModifier operator +(StyleModifier a, StyleModifier b)
     {
-        void modify(Style style)
-        {
-            a.ModifyStyle(style);
-            b.ModifyStyle(style);
-        }
-
-        return new StyleModifier(modify);
+        return new Style(a, b);
     }
 
     public static implicit operator StyleModifier(Style style)
     {
-        return new StyleModifier(x => x.Import(style));
+        return new(x => x.Import(style));
     }
     
     
@@ -60,7 +54,7 @@ public sealed class ElementModifier : IModifier
             ModifyHelper.ProcessModifier(element, b);
         }
 
-        return new ElementModifier(modify);
+        return new(modify);
     }
 }
 
@@ -210,7 +204,7 @@ partial class Mixin
 
     public static StyleModifier CreateStyleModifier(Action<Style> modifyAction)
     {
-        return new StyleModifier(modifyAction);
+        return new(modifyAction);
     }
 
     public static IModifier CreateThirdPartyReactComponentModifier<TComponent>(Action<TComponent> modifyAction)
@@ -285,13 +279,13 @@ static class ModifyHelper
 
         if (element is PureComponent reactPureComponent)
         {
-            (reactPureComponent.Modifiers ??= new List<IModifier>()).Add(modifier);
+            (reactPureComponent.Modifiers ??= []).Add(modifier);
             return;
         }
 
         if (element is Fragment fragment)
         {
-            fragment.Modifiers ??= new List<IModifier>();
+            fragment.Modifiers ??= [];
 
             fragment.Modifiers.Add(modifier);
             return;
@@ -310,7 +304,7 @@ static class ModifyHelper
                 return;
             }
 
-            reactStatefulComponent.Modifiers ??= new List<IModifier>();
+            reactStatefulComponent.Modifiers ??= [];
 
             reactStatefulComponent.Modifiers.Add(modifier);
 
