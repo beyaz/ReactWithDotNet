@@ -178,17 +178,17 @@ partial class Mixin
     ///     <br />
     ///     height: 100%
     /// </summary>
-    public static StyleModifier SizeFull = WidthHeightMaximized;
+    public static StyleModifier SizeFull => WidthHeightMaximized;
     
     /// <summary>
     ///     height: 100%
     /// </summary>
-    public static StyleModifier HeightFull = HeightMaximized;
+    public static StyleModifier HeightFull => HeightMaximized;
     
     /// <summary>
     ///     width: 100%
     /// </summary>
-    public static StyleModifier WidthFull = WidthMaximized;
+    public static StyleModifier WidthFull => WidthMaximized;
 
 
     /// <summary>
