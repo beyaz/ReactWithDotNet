@@ -158,7 +158,7 @@ partial class Mixin
     ///     <br/>Example:<br/>
     ///     Height(3, 4) means Height("75%")
     /// </summary>
-    public static StyleModifier Height(double percentOfTotal, double total) => Height(total / percentOfTotal * 100 + "%");
+    public static StyleModifier Height(double percentOfTotal, double total) => Height(percentOfTotal / total * 100 + "%");
     
     
     /// <summary>
