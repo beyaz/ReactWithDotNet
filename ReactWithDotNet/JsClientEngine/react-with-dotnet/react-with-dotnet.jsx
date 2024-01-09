@@ -2330,14 +2330,17 @@ RegisterCoreFunction("CalculateSyntheticFocusEventArguments", (argumentsAsArray)
 
 });
 
-function SetCookie(cookieNameAsStringNotNull, cookieValueAsStringNotNull, expiredaysAsNumberNotNull)
+function SetCookie(cookieName_StringNotNull, cookieValue_StringNotNull, expireDays_NumberNotNull)
 {
     var exdate = new Date();
-    
-    exdate.setDate(exdate.getDate() + expiredaysAsNumberNotNull);
 
-    document.cookie = cookieNameAsStringNotNull + "=" + encodeURI(cookieValueAsStringNotNull) +
-        "; expires=" + exdate.toUTCString();
+    exdate.setDate(exdate.getDate() + expireDays_NumberNotNull);
+
+    document.cookie = [
+        cookieName_StringNotNull + "=" + encodeURI(cookieValue_StringNotNull),
+        "expires" + "=" + exdate.toUTCString(),
+        "path=/"
+    ].join(";");
 }
 
 function GetCookie(cookieName)
