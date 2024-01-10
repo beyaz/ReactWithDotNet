@@ -984,8 +984,10 @@ partial class ElementSerializer
         return typeInfo;
     }
 
-    static async Task<JsonMap> LeafToMap_HtmlElement(HtmlElement htmlElement, ElementSerializerContext context)
+    static async Task<JsonMap> LeafToMap_HtmlElement(Node node, ElementSerializerContext context)
     {
+        var htmlElement = node.ElementAsHtmlElement;
+        
         var map = new JsonMap();
         map.Add("$tag", htmlElement.__type__);
         map.Add("key", htmlElement.key);
@@ -1076,7 +1078,7 @@ partial class ElementSerializer
     {
         if (node.ElementIsHtmlElement)
         {
-            return await LeafToMap_HtmlElement(node.ElementAsHtmlElement, context);
+            return await LeafToMap_HtmlElement(node, context);
         }
 
         if (node.ElementIsThirdPartyReactComponent)
