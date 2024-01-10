@@ -269,15 +269,18 @@ partial class ElementSerializer
                     node.Stopwatch.Start();
                 }
 
-                if (context.ComponentStack.Count == 0)
+                // ComponentStack.Push
                 {
-                    context.ComponentStack.Push(reactStatefulComponent);
-                }
-                else if (context.ComponentStack.TryPeek(out var top))
-                {
-                    if (!ReferenceEquals(top, reactStatefulComponent))
+                    if (context.ComponentStack.Count == 0)
                     {
                         context.ComponentStack.Push(reactStatefulComponent);
+                    }
+                    else if (context.ComponentStack.TryPeek(out var top))
+                    {
+                        if (!ReferenceEquals(top, reactStatefulComponent))
+                        {
+                            context.ComponentStack.Push(reactStatefulComponent);
+                        }
                     }
                 }
 
