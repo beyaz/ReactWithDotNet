@@ -147,6 +147,21 @@ static partial class ElementSerializer
         }
     }
 
+    static int UpclimbForComponentUniqueIdentifier(Node node)
+    {
+        while (node is not null)
+        {
+            if (node.ElementIsDotNetReactComponent)
+            {
+                return node.ElementAsDotNetReactComponent.ComponentUniqueIdentifier.GetValueOrDefault();
+            }
+            
+            node = node.Parent;
+        }
+
+        throw FatalError("CannotFindComponentUniqueIdentifier");
+    }
+    
     static (bool needToExport, string cssClassName) ConvertStyleToCssClass(Node node, Style style,
         bool fullExport,
         int? componentUniqueIdentifier,
@@ -174,6 +189,8 @@ static partial class ElementSerializer
             }
         }
 
+        //var todo = UpclimbForComponentUniqueIdentifier(node);
+        
         componentUniqueIdentifier ??= 1;
 
         var cssClassInfo = new CssClassInfo
