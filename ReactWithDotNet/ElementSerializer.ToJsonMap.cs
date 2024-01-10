@@ -717,7 +717,7 @@ partial class ElementSerializer
 
         foreach (var item in reactProperties)
         {
-            var valueExportInfo = await GetPropertyValue(typeInfo, element, item, context);
+            var valueExportInfo = await GetPropertyValue(context, typeInfo, element, item);
             if (valueExportInfo.NeedToExport)
             {
                 jsonMap.Add(GetPropertyName(item), valueExportInfo.Value);

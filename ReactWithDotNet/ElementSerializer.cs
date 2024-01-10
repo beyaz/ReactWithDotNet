@@ -259,7 +259,7 @@ static partial class ElementSerializer
         return propertyAccessInfo.PropertyInfo.Name;
     }
 
-    static async Task<ValueExportInfo<object>> GetPropertyValue(TypeInfo typeInfo, object instance, PropertyAccessInfo property, ElementSerializerContext context)
+    static async Task<ValueExportInfo<object>> GetPropertyValue(ElementSerializerContext context, TypeInfo typeInfo, object instance, PropertyAccessInfo property)
     {
         var propertyInfo = property.PropertyInfo;
 
