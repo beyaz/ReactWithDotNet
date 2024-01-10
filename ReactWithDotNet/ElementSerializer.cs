@@ -147,7 +147,7 @@ static partial class ElementSerializer
         }
     }
 
-    static (bool needToExport, string cssClassName) ConvertStyleToCssClass(Style style,
+    static (bool needToExport, string cssClassName) ConvertStyleToCssClass(Node node, Style style,
         bool fullExport,
         int? componentUniqueIdentifier,
         Func<CssClassInfo, string> getCssClassName)
@@ -284,7 +284,7 @@ static partial class ElementSerializer
         {
             string convertStyleToCssClass(Style style)
             {
-                var (needToExport, cssClassName) = ConvertStyleToCssClass(style, true, context.ComponentStack.PeekForComponentUniqueIdentifier(), context.DynamicStyles.GetClassName);
+                var (needToExport, cssClassName) = ConvertStyleToCssClass(node, style, true, context.ComponentStack.PeekForComponentUniqueIdentifier(), context.DynamicStyles.GetClassName);
                 if (needToExport)
                 {
                     return cssClassName;
@@ -579,7 +579,7 @@ static partial class ElementSerializer
 
     static ValueExportInfo<object> GetStylePropertyValueOfHtmlElementForSerialize(ElementSerializerContext context, Node node, object instance, Style style)
     {
-        var response = ConvertStyleToCssClass(style, false, context.ComponentStack.PeekForComponentUniqueIdentifier(), context.DynamicStyles.GetClassName);
+        var response = ConvertStyleToCssClass(node, style, false, context.ComponentStack.PeekForComponentUniqueIdentifier(), context.DynamicStyles.GetClassName);
         if (response.needToExport is false)
         {
             if (style.IsEmpty == false)

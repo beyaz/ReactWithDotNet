@@ -1005,7 +1005,7 @@ partial class ElementSerializer
         {
             foreach (var style in htmlElement.classNameList)
             {
-                var response = ConvertStyleToCssClass(style, true, context.ComponentStack.PeekForComponentUniqueIdentifier(), context.DynamicStyles.GetClassName);
+                var response = ConvertStyleToCssClass(node, style, true, context.ComponentStack.PeekForComponentUniqueIdentifier(), context.DynamicStyles.GetClassName);
                 if (response.needToExport)
                 {
                     htmlElement.AddClass(response.cssClassName);
