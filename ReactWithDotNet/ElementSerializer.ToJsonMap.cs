@@ -984,7 +984,7 @@ partial class ElementSerializer
         return typeInfo;
     }
 
-    static async Task<JsonMap> LeafToMap(HtmlElement htmlElement, ElementSerializerContext context)
+    static async Task<JsonMap> LeafToMap_HtmlElement(HtmlElement htmlElement, ElementSerializerContext context)
     {
         var map = new JsonMap();
         map.Add("$tag", htmlElement.__type__);
@@ -1037,7 +1037,7 @@ partial class ElementSerializer
         return map;
     }
 
-    static JsonMap LeafToMap(Fragment fragment)
+    static JsonMap LeafToMap_Fragment(Fragment fragment)
     {
         var map = new JsonMap();
 
@@ -1047,7 +1047,7 @@ partial class ElementSerializer
         return map;
     }
 
-    static async Task<JsonMap> LeafToMap(Node node, ThirdPartyReactComponent thirdPartyReactComponent, ElementSerializerContext context)
+    static async Task<JsonMap> LeafToMap_ThirdPartyReactComponent(Node node, ThirdPartyReactComponent thirdPartyReactComponent, ElementSerializerContext context)
     {
         var map = new JsonMap();
         map.Add("$tag", thirdPartyReactComponent.Type);
@@ -1076,17 +1076,17 @@ partial class ElementSerializer
     {
         if (node.ElementIsHtmlElement)
         {
-            return await LeafToMap(node.ElementAsHtmlElement, context);
+            return await LeafToMap_HtmlElement(node.ElementAsHtmlElement, context);
         }
 
         if (node.ElementIsThirdPartyReactComponent)
         {
-            return await LeafToMap(node, node.ElementAsThirdPartyReactComponent, context);
+            return await LeafToMap_ThirdPartyReactComponent(node, node.ElementAsThirdPartyReactComponent, context);
         }
 
         if (node.ElementIsFragment)
         {
-            return LeafToMap(node.ElementAsFragment);
+            return LeafToMap_Fragment(node.ElementAsFragment);
         }
 
         throw FatalError("Wrong Leaf");
