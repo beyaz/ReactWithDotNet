@@ -65,21 +65,21 @@ static partial class ElementSerializer
 
         if (style._hover is not null)
         {
-            // ReSharper disable once UseObjectOrCollectionInitializer
-            pseudos = new List<CssPseudoCodeInfo>();
-
-            pseudos.Add(new CssPseudoCodeInfo
-            {
-                Name      = "hover",
-                BodyOfCss = style._hover.ToCssWithImportant()
-            });
+            pseudos =
+            [
+                new()
+                {
+                    Name      = "hover",
+                    BodyOfCss = style._hover.ToCssWithImportant()
+                }
+            ];
         }
 
         if (style._before is not null)
         {
-            pseudos ??= new List<CssPseudoCodeInfo>();
+            pseudos ??= [];
 
-            pseudos.Add(new CssPseudoCodeInfo
+            pseudos.Add(new()
             {
                 Name      = "before",
                 BodyOfCss = style._before.ToCssWithImportant()
@@ -88,9 +88,9 @@ static partial class ElementSerializer
 
         if (style._after is not null)
         {
-            pseudos ??= new List<CssPseudoCodeInfo>();
+            pseudos ??= [];
 
-            pseudos.Add(new CssPseudoCodeInfo
+            pseudos.Add(new()
             {
                 Name      = "after",
                 BodyOfCss = style._after.ToCssWithImportant()
@@ -99,9 +99,9 @@ static partial class ElementSerializer
 
         if (style._active is not null)
         {
-            pseudos ??= new List<CssPseudoCodeInfo>();
+            pseudos ??= [];
 
-            pseudos.Add(new CssPseudoCodeInfo
+            pseudos.Add(new()
             {
                 Name      = "active",
                 BodyOfCss = style._active.ToCssWithImportant()
@@ -110,9 +110,9 @@ static partial class ElementSerializer
 
         if (style._focus is not null)
         {
-            pseudos ??= new List<CssPseudoCodeInfo>();
+            pseudos ??= [];
 
-            pseudos.Add(new CssPseudoCodeInfo
+            pseudos.Add(new()
             {
                 Name      = "focus",
                 BodyOfCss = style._focus.ToCssWithImportant()
