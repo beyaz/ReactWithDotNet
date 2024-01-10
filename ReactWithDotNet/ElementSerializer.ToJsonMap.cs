@@ -170,7 +170,7 @@ partial class ElementSerializer
 
                 context.TryCallBeforeSerializeElementToClient(node.Element, node.Parent?.Element);
 
-                node.ElementAsJsonMap = await LeafToMap(node, context);
+                node.ElementAsJsonMap = await LeafToMap_Node(node, context);
 
                 node.IsCompleted = true;
 
@@ -747,7 +747,7 @@ partial class ElementSerializer
             child = child.NextSibling;
         }
 
-        var map = await LeafToMap(node, context);
+        var map = await LeafToMap_Node(node, context);
 
         if (childElements is not null)
         {
@@ -1072,7 +1072,7 @@ partial class ElementSerializer
         return map;
     }
 
-    static async Task<JsonMap> LeafToMap(Node node, ElementSerializerContext context)
+    static async Task<JsonMap> LeafToMap_Node(Node node, ElementSerializerContext context)
     {
         if (node.ElementIsHtmlElement)
         {
