@@ -709,7 +709,7 @@ partial class ElementSerializer
         return null;
     }
 
-    static async Task AddReactAttributes(Action<string, object> add, Element element, ElementSerializerContext context)
+    static async Task AddReactAttributes(JsonMap jsonMap, Element element, ElementSerializerContext context)
     {
         var typeInfo = GetTypeInfo(element.GetType());
 
@@ -720,7 +720,7 @@ partial class ElementSerializer
             var valueExportInfo = await GetPropertyValue(typeInfo, element, item, context);
             if (valueExportInfo.NeedToExport)
             {
-                add(GetPropertyName(item), valueExportInfo.Value);
+                jsonMap.Add(GetPropertyName(item), valueExportInfo.Value);
             }
         }
     }
@@ -1013,7 +1013,7 @@ partial class ElementSerializer
             }
         }
 
-        await AddReactAttributes(map.Add, htmlElement, context);
+        await AddReactAttributes(map, htmlElement, context);
 
         if (htmlElement.innerText is not null)
         {
@@ -1064,7 +1064,7 @@ partial class ElementSerializer
             }
         }
 
-        await AddReactAttributes(map.Add, thirdPartyReactComponent, context);
+        await AddReactAttributes(map, thirdPartyReactComponent, context);
 
         if (context.CalculateSuspenseFallbackForThirdPartyReactComponents)
         {
