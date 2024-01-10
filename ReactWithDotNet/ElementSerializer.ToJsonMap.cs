@@ -994,7 +994,7 @@ partial class ElementSerializer
 
         if (htmlElement._style is not null)
         {
-            var valueExportInfo = GetStylePropertyValueOfHtmlElementForSerialize(htmlElement, htmlElement._style, context);
+            var valueExportInfo = GetStylePropertyValueOfHtmlElementForSerialize(context, node, htmlElement, htmlElement._style);
             if (valueExportInfo.NeedToExport)
             {
                 map.Add("style", valueExportInfo.Value);
@@ -1057,7 +1057,7 @@ partial class ElementSerializer
 
         if (thirdPartyReactComponent.HasStyle)
         {
-            var valueExportInfo = GetStylePropertyValueOfHtmlElementForSerialize(thirdPartyReactComponent, thirdPartyReactComponent.style, context);
+            var valueExportInfo = GetStylePropertyValueOfHtmlElementForSerialize(context, node, thirdPartyReactComponent, thirdPartyReactComponent.style);
             if (valueExportInfo.NeedToExport)
             {
                 map.Add("style", valueExportInfo.Value);

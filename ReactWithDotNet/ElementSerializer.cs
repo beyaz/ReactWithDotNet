@@ -308,7 +308,7 @@ static partial class ElementSerializer
         {
             if (propertyValue is Style style)
             {
-                return GetStylePropertyValueOfHtmlElementForSerialize(instance, style, context);
+                return GetStylePropertyValueOfHtmlElementForSerialize(context, node, instance, style);
             }
         }
 
@@ -577,7 +577,7 @@ static partial class ElementSerializer
         return reactStatefulComponent.GetType().GetFullName();
     }
 
-    static ValueExportInfo<object> GetStylePropertyValueOfHtmlElementForSerialize(object instance, Style style, ElementSerializerContext context)
+    static ValueExportInfo<object> GetStylePropertyValueOfHtmlElementForSerialize(ElementSerializerContext context, Node node, object instance, Style style)
     {
         var response = ConvertStyleToCssClass(style, false, context.ComponentStack.PeekForComponentUniqueIdentifier(), context.DynamicStyles.GetClassName);
         if (response.needToExport is false)
