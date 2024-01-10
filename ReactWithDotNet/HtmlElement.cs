@@ -40,7 +40,7 @@ partial class Mixin
     /// </summary>
     public static TElement WithClass<TElement>(this TElement element, Style cssBody) where TElement : HtmlElement
     {
-        (element.classNameList ??= new List<Style>()).Add(cssBody);
+        (element.classNameList ??= []).Add(cssBody);
 
         return element;
     }
