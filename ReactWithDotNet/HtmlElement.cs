@@ -58,9 +58,9 @@ partial class Mixin
     /// })
     /// </code>
     /// </summary>
-    public static TElement WithClass<TElement>(this TElement element, StyleModifier[] styleModifiers) where TElement : HtmlElement
+    public static TElement WithClass<TElement>(this TElement element, IEnumerable<StyleModifier> styleModifiers) where TElement : HtmlElement
     {
-        return element.WithClass(new Style(styleModifiers));
+        return element.WithClass(new(styleModifiers));
     }
 }
 
