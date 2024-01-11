@@ -3888,6 +3888,14 @@ public  partial class HtmlElement
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
     public MouseEventHandler onClick { get; set; }
 
+    [ReactProp]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
+    public MouseEventHandler onMouseEnter { get; set; }
+
+    [ReactProp]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
+    public MouseEventHandler onMouseLeave { get; set; }
+
 
     public static HtmlElementModifier Modify(Action<HtmlElement> modifyAction) => CreateHtmlElementModifier(modifyAction);
     public static HtmlElementModifier Accesskey(string value) => Modify(x => x.accesskey = value);
@@ -3919,6 +3927,10 @@ public  partial class HtmlElement
     public static HtmlElementModifier Translate(string value) => Modify(x => x.translate = value);
 
     public static HtmlElementModifier OnClick(MouseEventHandler value) => Modify(x => x.onClick = value);
+
+    public static HtmlElementModifier OnMouseEnter(MouseEventHandler value) => Modify(x => x.onMouseEnter = value);
+
+    public static HtmlElementModifier OnMouseLeave(MouseEventHandler value) => Modify(x => x.onMouseLeave = value);
 
 }
 

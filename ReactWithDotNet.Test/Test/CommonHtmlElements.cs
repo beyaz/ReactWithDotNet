@@ -1598,6 +1598,18 @@ public class ExportingCommonHtmlElements
                         Name = "onClick",
                         Type = "MouseEventHandler",
                         GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments"
+                    },
+                    new ()
+                    {
+                        Name                              = "onMouseEnter",
+                        Type                              = "MouseEventHandler",
+                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments"
+                    },
+                    new ()
+                    {
+                        Name                              = "onMouseLeave",
+                        Type                              = "MouseEventHandler",
+                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments"
                     }
                 ],
                 EnableCastFromString = false

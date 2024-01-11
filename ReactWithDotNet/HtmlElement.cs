@@ -156,13 +156,7 @@ abstract partial class HtmlElement : Element
     [JsonPropertyName("$onClickPreview")]
     public Action onClickPreview { get; set; }
 
-    [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
-    public MouseEventHandler onMouseEnter { get; set; }
-
-    [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
-    public MouseEventHandler onMouseLeave { get; set; }
+    
 
     [ReactProp]
     public ScrollEventHandler onScroll { get; set; }
