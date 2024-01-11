@@ -129,13 +129,7 @@ public sealed class HtmlTextNode : HtmlElement
 
 sealed class br : HtmlElement;
 
-public sealed class iframe : HtmlElement
-{
-    [ReactProp]
-    public string src { get; set; }
 
-    public static HtmlElementModifier Src(string value) => CreateHtmlElementModifier<iframe>(element => element.src = value);
-}
 
 public sealed class select : HtmlElement
 {

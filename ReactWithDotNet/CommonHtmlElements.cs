@@ -3708,3 +3708,21 @@ public sealed class link : HtmlElement
 
 }
 
+public sealed class iframe : HtmlElement
+{
+    [ReactProp]
+    public string src { get; set; }
+
+    public iframe() { }
+
+    public iframe(params IModifier[] modifiers) : base(modifiers) { }
+
+    public iframe(Style style) : base(style) { }
+
+    public iframe(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<iframe> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    public static HtmlElementModifier Src(string value) => Modify(x => x.src = value);
+
+}
+

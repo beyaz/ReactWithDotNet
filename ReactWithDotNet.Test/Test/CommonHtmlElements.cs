@@ -1423,6 +1423,19 @@ public class ExportingCommonHtmlElements
                 ],
                 EnableCastFromString = false
             },
+            
+            new()
+            {
+                Tag                  = "iframe",
+                CreateClassAsPartial = false,
+                Attributes = [
+                    new ()
+                    {
+                        Name = "src"
+                    }
+                ],
+                EnableCastFromString = false
+            }
         };
 
         var list = new List<string>
