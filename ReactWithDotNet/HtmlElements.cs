@@ -199,36 +199,7 @@ public sealed class CssClass
     }
 }
 
-public sealed class link : HtmlElement
-{
-    [ReactProp]
-    public string href { get; set; }
 
-    [ReactProp]
-    public string media { get; set; }
-
-    [ReactProp]
-    public string rel { get; set; }
-    
-    [ReactProp]
-    public string sizes { get; set; }
-    
-
-    [ReactProp]
-    public string type { get; set; }
-
-    [ReactProp]
-    public string @as { get; set; }
-
-    [ReactProp]
-    public string integrity { get; set; }
-
-    [ReactProp]
-    public string crossorigin { get; set; }
-
-    [ReactProp]
-    public string referrerpolicy { get; set; }
-}
 
 public sealed partial class textarea
 {

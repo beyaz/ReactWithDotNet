@@ -1510,7 +1510,7 @@ public class ExportingCommonHtmlElements
                         list.Add($"{padding}/// </summary>");
                     }
 
-                    list.Add($"    public static HtmlElementModifier {UpperCaseFirstChar(CamelCase(attribute.Name))}({attribute.Type} value) => Modify(x => x.{CamelCase(attribute.Name)} = value);");
+                    list.Add($"    public static HtmlElementModifier {UpperCaseFirstChar(CamelCase(attribute.Name.RemoveFromStart("@")))}({attribute.Type} value) => Modify(x => x.{CamelCase(attribute.Name)} = value);");
                     list.Add(Empty);
                 }
             }

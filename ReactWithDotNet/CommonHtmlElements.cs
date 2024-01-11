@@ -3650,3 +3650,61 @@ public sealed partial class textarea : HtmlElement
 
 }
 
+public sealed class link : HtmlElement
+{
+    [ReactProp]
+    public string href { get; set; }
+
+    [ReactProp]
+    public string media { get; set; }
+
+    [ReactProp]
+    public string rel { get; set; }
+
+    [ReactProp]
+    public string sizes { get; set; }
+
+    [ReactProp]
+    public string type { get; set; }
+
+    [ReactProp]
+    public string @as { get; set; }
+
+    [ReactProp]
+    public string integrity { get; set; }
+
+    [ReactProp]
+    public string crossorigin { get; set; }
+
+    [ReactProp]
+    public string referrerpolicy { get; set; }
+
+    public link() { }
+
+    public link(params IModifier[] modifiers) : base(modifiers) { }
+
+    public link(Style style) : base(style) { }
+
+    public link(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<link> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    public static HtmlElementModifier Href(string value) => Modify(x => x.href = value);
+
+    public static HtmlElementModifier Media(string value) => Modify(x => x.media = value);
+
+    public static HtmlElementModifier Rel(string value) => Modify(x => x.rel = value);
+
+    public static HtmlElementModifier Sizes(string value) => Modify(x => x.sizes = value);
+
+    public static HtmlElementModifier Type(string value) => Modify(x => x.type = value);
+
+    public static HtmlElementModifier As(string value) => Modify(x => x.@as = value);
+
+    public static HtmlElementModifier Integrity(string value) => Modify(x => x.integrity = value);
+
+    public static HtmlElementModifier Crossorigin(string value) => Modify(x => x.crossorigin = value);
+
+    public static HtmlElementModifier Referrerpolicy(string value) => Modify(x => x.referrerpolicy = value);
+
+}
+
