@@ -3,71 +3,6 @@ using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
-partial class Mixin
-{
-    public static HtmlElementModifier Aria(string ariaName, string ariaValue)
-    {
-        return CreateHtmlElementModifier<HtmlElement>(el => el.aria.Add(ariaName, ariaValue));
-    }
-
-    public static HtmlElementModifier Data(string dataName, string dataValue)
-    {
-        return CreateHtmlElementModifier<HtmlElement>(el => el.data.Add(dataName, dataValue));
-    }
-
-    public static HtmlElementModifier Data(string dataName, int dataValue)
-    {
-        return CreateHtmlElementModifier<HtmlElement>(el => el.data.Add(dataName, dataValue.ToString()));
-    }
-
-    public static HtmlElementModifier Data(string dataName, long dataValue)
-    {
-        return CreateHtmlElementModifier<HtmlElement>(el => el.data.Add(dataName, dataValue.ToString()));
-    }
-
-    /// <summary>
-    ///     Automatically generates a css class then adds class name to element.
-    ///     <br />
-    ///     You can use transition css
-    ///     <br />
-    ///     Generated css class will be automatically remove when component destroyed.
-    ///     <br />
-    ///     Example:
-    ///     <code>
-    ///     arrowDown.WithStyle(new Style
-    ///     {
-    ///        Transform("rotate(-180deg)")
-    ///     })
-    ///     </code>
-    /// </summary>
-    public static TElement WithStyle<TElement>(this TElement element, Style cssBody) where TElement : HtmlElement
-    {
-        (element.classNameList ??= []).Add(cssBody);
-
-        return element;
-    }
-
-    /// <summary>
-    ///     Automatically generates a css class then adds class name to element.
-    ///     <br />
-    ///     You can use transition css
-    ///     <br />
-    ///     Generated css class will be automatically remove when component destroyed.
-    ///     <br />
-    ///     Example:
-    ///     <code>
-    ///     arrowDown.WithStyle(new []
-    ///     {
-    ///        Transform("rotate(-180deg)")
-    ///     })
-    ///     </code>
-    /// </summary>
-    public static TElement WithStyle<TElement>(this TElement element, IEnumerable<StyleModifier> styleModifiers) where TElement : HtmlElement
-    {
-        return element.WithStyle(new(styleModifiers));
-    }
-}
-
 abstract partial class HtmlElement : Element
 {
     internal Dictionary<string, string> _aria;
@@ -293,5 +228,70 @@ public sealed class dangerouslySetInnerHTML
     public static implicit operator dangerouslySetInnerHTML(string html)
     {
         return new() { __html = html };
+    }
+}
+
+partial class Mixin
+{
+    public static HtmlElementModifier Aria(string ariaName, string ariaValue)
+    {
+        return CreateHtmlElementModifier<HtmlElement>(el => el.aria.Add(ariaName, ariaValue));
+    }
+
+    public static HtmlElementModifier Data(string dataName, string dataValue)
+    {
+        return CreateHtmlElementModifier<HtmlElement>(el => el.data.Add(dataName, dataValue));
+    }
+
+    public static HtmlElementModifier Data(string dataName, int dataValue)
+    {
+        return CreateHtmlElementModifier<HtmlElement>(el => el.data.Add(dataName, dataValue.ToString()));
+    }
+
+    public static HtmlElementModifier Data(string dataName, long dataValue)
+    {
+        return CreateHtmlElementModifier<HtmlElement>(el => el.data.Add(dataName, dataValue.ToString()));
+    }
+
+    /// <summary>
+    ///     Automatically generates a css class then adds class name to element.
+    ///     <br />
+    ///     You can use transition css
+    ///     <br />
+    ///     Generated css class will be automatically remove when component destroyed.
+    ///     <br />
+    ///     Example:
+    ///     <code>
+    ///     arrowDown.WithStyle(new Style
+    ///     {
+    ///        Transform("rotate(-180deg)")
+    ///     })
+    ///     </code>
+    /// </summary>
+    public static TElement WithStyle<TElement>(this TElement element, Style cssBody) where TElement : HtmlElement
+    {
+        (element.classNameList ??= []).Add(cssBody);
+
+        return element;
+    }
+
+    /// <summary>
+    ///     Automatically generates a css class then adds class name to element.
+    ///     <br />
+    ///     You can use transition css
+    ///     <br />
+    ///     Generated css class will be automatically remove when component destroyed.
+    ///     <br />
+    ///     Example:
+    ///     <code>
+    ///     arrowDown.WithStyle(new []
+    ///     {
+    ///        Transform("rotate(-180deg)")
+    ///     })
+    ///     </code>
+    /// </summary>
+    public static TElement WithStyle<TElement>(this TElement element, IEnumerable<StyleModifier> styleModifiers) where TElement : HtmlElement
+    {
+        return element.WithStyle(new(styleModifiers));
     }
 }
