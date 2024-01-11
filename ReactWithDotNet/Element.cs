@@ -181,7 +181,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
 
     public string ToHtml()
     {
-        return CalculateComponentHtmlText(new CalculateComponentHtmlTextInput
+        return CalculateComponentHtmlText(new()
         {
             Component = new ToStringHandlerComponent(this)
         }).GetAwaiter().GetResult().ToString();
