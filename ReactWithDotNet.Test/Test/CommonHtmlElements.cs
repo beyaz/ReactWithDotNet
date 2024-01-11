@@ -1539,6 +1539,59 @@ public class ExportingCommonHtmlElements
                     new ()
                     {
                         Name = "accesskey"
+                    },
+                    new ()
+                    {
+                        Name = "draggable"
+                    },
+                    new ()
+                    {
+                        Name = "contenteditable"
+                    },
+                    new ()
+                    {
+                        Name = "className"
+                    },
+                    new ()
+                    {
+                        Name = "dangerouslySetInnerHTML",
+                        Type = "dangerouslySetInnerHTML"
+                    },
+                    new ()
+                    {
+                        Name = "dir"
+                    },
+                    new ()
+                    {
+                        Name = "id"
+                    },
+                    new ()
+                    {
+                        Name = "lang"
+                    },
+                    new ()
+                    {
+                        Name = "part"
+                    },
+                    new ()
+                    {
+                        Name = "role"
+                    },
+                    new ()
+                    {
+                        Name = "spellcheck"
+                    },
+                    new ()
+                    {
+                        Name = "tabIndex"
+                    },
+                    new ()
+                    {
+                        Name = "title"
+                    },
+                    new ()
+                    {
+                        Name = "translate"
                     }
                 ],
                 EnableCastFromString = false

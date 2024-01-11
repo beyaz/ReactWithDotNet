@@ -258,7 +258,7 @@ abstract partial class HtmlElement : Element
     {
         get
         {
-            _style ??= new Style();
+            _style ??= new();
 
             return _style;
         }
