@@ -1490,7 +1490,8 @@ public class ExportingCommonHtmlElements
                     new ()
                     {
                         Name = "autoFocus",
-                        Type = "bool?"
+                        Type = "bool?",
+                        Comment = "Element must automatically get focus when the page loads."
                     },
                     new ()
                     {

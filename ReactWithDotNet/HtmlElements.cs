@@ -7,58 +7,30 @@ public sealed class InputValueBinder
 {
     public static implicit operator InputValueBinder(string value)
     {
-        return new InputValueBinder();
+        return new();
     }
     public static implicit operator InputValueBinder(double value)
     {
-        return new InputValueBinder();
+        return new();
     }
 }
 
-public sealed class input : HtmlElement
+partial class input
 {
-    public input()
-    {
-    }
-
-    public input(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-    public input(StyleModifier[] styleModifiers)
-    {
-        style.Apply(styleModifiers);
-    }
-
-    [ReactProp]
-    public string required { get; set; }
     
-    [ReactProp]
-    public string autoComplete { get; set; }
 
-    [ReactProp]
-    public bool? @checked { get; set; }
+
+    
+
 
     [ReactProp]
     [ReactBind(targetProp = nameof(@checked), jsValueAccess = "e.target.checked", eventName = "onChange")]
     public Expression<Func<bool>> checkedBind { get; set; }
 
-    [ReactProp]
-    public bool? defaultChecked { get; set; }
+   
 
-    [ReactProp]
-    public string defaultValue { get; set; }
 
-    [ReactProp]
-    public bool? disabled { get; set; }
-    
-    /// <summary>
-    ///     Element must automatically get focus when the page loads.
-    /// </summary>
-    [ReactProp]
-    public bool? autoFocus  { get; set; }
 
-    [ReactProp]
-    public string name { get; set; }
 
     /// <summary>
     ///     Occurs when an element loses focus.
@@ -78,14 +50,11 @@ public sealed class input : HtmlElement
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments")]
     public FocusEventHandler onFocus { get; set; } // TODO: give FocusEvent react
 
-    [ReactProp]
-    public string placeholder { get; set; }
+  
 
-    [ReactProp]
-    public bool? readOnly { get; set; }
 
-    [ReactProp]
-    public string type { get; set; }
+
+
 
     [ReactProp]
     [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
@@ -112,14 +81,7 @@ public sealed class input : HtmlElement
     /// </summary>
     public int? valueBindDebounceTimeout { get; set; }
 
-    [ReactProp]
-    public int? max { get; set; }
     
-    [ReactProp]
-    public int? min { get; set; }
-    
-    [ReactProp]
-    public int? step { get; set; }
 }
 
 public sealed class HtmlTextNode : HtmlElement

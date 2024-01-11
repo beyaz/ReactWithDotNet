@@ -3749,3 +3749,86 @@ public sealed partial class select : HtmlElement
 
 }
 
+public sealed partial class input : HtmlElement
+{
+    [ReactProp]
+    public string required { get; set; }
+
+    [ReactProp]
+    public string autoComplete { get; set; }
+
+    [ReactProp]
+    public bool? @checked { get; set; }
+
+    [ReactProp]
+    public bool? defaultChecked { get; set; }
+
+    [ReactProp]
+    public string defaultValue { get; set; }
+
+    [ReactProp]
+    public bool? disabled { get; set; }
+
+    [ReactProp]
+    public bool? autoFocus { get; set; }
+
+    [ReactProp]
+    public string name { get; set; }
+
+    [ReactProp]
+    public string placeholder { get; set; }
+
+    [ReactProp]
+    public bool? readOnly { get; set; }
+
+    [ReactProp]
+    public string type { get; set; }
+
+    [ReactProp]
+    public int? max { get; set; }
+
+    [ReactProp]
+    public int? min { get; set; }
+
+    [ReactProp]
+    public int? step { get; set; }
+
+    public input() { }
+
+    public input(params IModifier[] modifiers) : base(modifiers) { }
+
+    public input(Style style) : base(style) { }
+
+    public input(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<input> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    public static HtmlElementModifier Required(string value) => Modify(x => x.required = value);
+
+    public static HtmlElementModifier AutoComplete(string value) => Modify(x => x.autoComplete = value);
+
+    public static HtmlElementModifier Checked(bool? value) => Modify(x => x.@checked = value);
+
+    public static HtmlElementModifier DefaultChecked(bool? value) => Modify(x => x.defaultChecked = value);
+
+    public static HtmlElementModifier DefaultValue(string value) => Modify(x => x.defaultValue = value);
+
+    public static HtmlElementModifier Disabled(bool? value) => Modify(x => x.disabled = value);
+
+    public static HtmlElementModifier AutoFocus(bool? value) => Modify(x => x.autoFocus = value);
+
+    public static HtmlElementModifier Name(string value) => Modify(x => x.name = value);
+
+    public static HtmlElementModifier Placeholder(string value) => Modify(x => x.placeholder = value);
+
+    public static HtmlElementModifier ReadOnly(bool? value) => Modify(x => x.readOnly = value);
+
+    public static HtmlElementModifier Type(string value) => Modify(x => x.type = value);
+
+    public static HtmlElementModifier Max(int? value) => Modify(x => x.max = value);
+
+    public static HtmlElementModifier Min(int? value) => Modify(x => x.min = value);
+
+    public static HtmlElementModifier Step(int? value) => Modify(x => x.step = value);
+
+}
+
