@@ -112,31 +112,9 @@ abstract partial class HtmlElement : Element
         }
     }
 
-    /// <summary>
-    /// Specifies whether an element is draggable or not.
-    /// <br/>
-    /// Tip: Links and images are draggable by default.
-    /// </summary>
-    [ReactProp]
-    public string draggable { get; set; }
     
     
-    /// <summary>
-    ///     Specifies whether the content of an element is editable or not.
-    /// <br/>
-    ///     true|false
-    /// </summary>
-    [ReactProp]
-    public string contenteditable { get; set; }
     
-    /// <summary>
-    ///     Gets or sets the name of the class.
-    /// </summary>
-    [ReactProp]
-    public string className { get; set; }
-
-    [ReactProp]
-    public dangerouslySetInnerHTML dangerouslySetInnerHTML { get; set; }
 
     /// <summary>
     ///     The data-* attribute is used to store custom data private to the page or application.
@@ -164,14 +142,6 @@ abstract partial class HtmlElement : Element
         }
     }
 
-    /// <summary>
-    ///     Specifies the text direction for the content in an element
-    /// </summary>
-    [ReactProp]
-    public string dir { get; set; }
-
-    [ReactProp]
-    public  string id { get; set; }
 
     [JsonIgnore]
     public string innerHTML
@@ -184,14 +154,7 @@ abstract partial class HtmlElement : Element
     /// </summary>
     public string innerText { get; set; }
 
-    /// <summary>
-    ///     Helps define the language of an element: the language that non-editable elements are in, or the language that
-    ///     editable elements should be written in by the user. The attribute contains one "language tag" (made of
-    ///     hyphen-separated "language subtags") in the format defined in RFC 5646: Tags for Identifying Languages (also known
-    ///     as BCP 47). xml:lang has priority over it.
-    /// </summary>
-    [ReactProp]
-    public string lang { get; set; }
+ 
 
     /// <summary>
     ///     Gets or sets the on click.
@@ -227,28 +190,10 @@ abstract partial class HtmlElement : Element
     /// </summary>
     public int? onScrollDebounceTimeout { get; set; } = 400;
 
-    /// <summary>
-    ///     A space-separated list of the part names of the element. Part names allows CSS to select and style specific
-    ///     elements in a shadow tree via the ::part pseudo-element.
-    /// </summary>
-    [ReactProp]
-    public string part { get; set; }
+   
 
-    /// <summary>
-    ///     Roles define the semantic meaning of content, allowing screen readers and other tools to present and support
-    ///     interaction with an object in a way that is consistent with user expectations of that type of object.
-    /// </summary>
-    [ReactProp]
-    public string role { get; set; }
+ 
 
-    /// <summary>
-    ///     An enumerated attribute defines whether the element may be checked for spelling errors. It may have the following
-    ///     values:<br />
-    ///     empty string or true, which indicates that the element should be, if possible, checked for spelling errors;<br />
-    ///     false, which indicates that the element should not be checked for spelling errors.
-    /// </summary>
-    [ReactProp]
-    public string spellcheck { get; set; }
 
     /// <summary>
     ///     Gets the style.
@@ -273,8 +218,7 @@ abstract partial class HtmlElement : Element
         set => style.Import(value);
     }
 
-    [ReactProp]
-    public string tabIndex { get; set; }
+   
 
     /// <summary>
     ///     'innerText' property of element.
@@ -285,20 +229,8 @@ abstract partial class HtmlElement : Element
         get => innerText;
     }
 
-    [ReactProp]
-    public string title { get; set; }
 
-    /// <summary>
-    ///     An enumerated attribute that is used to specify whether an element's attribute values and the values of its Text
-    ///     node children are to be translated when the page is localized, or whether to leave them unchanged. It can have the
-    ///     following values:
-    ///     <br />
-    ///     empty string or yes, which indicates that the element will be translated.
-    ///     <br />
-    ///     no, which indicates that the element will not be translated.
-    /// </summary>
-    [ReactProp]
-    public string translate { get; set; }
+    
 
     [JsonPropertyName("$type")]
     public virtual string __type__ => GetType().Name.ToLower();

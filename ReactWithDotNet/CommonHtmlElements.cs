@@ -3845,9 +3845,74 @@ public  partial class HtmlElement
     [ReactProp]
     public string accesskey { get; set; }
 
+    [ReactProp]
+    public string draggable { get; set; }
+
+    [ReactProp]
+    public string contenteditable { get; set; }
+
+    [ReactProp]
+    public string className { get; set; }
+
+    [ReactProp]
+    public dangerouslySetInnerHTML dangerouslySetInnerHTML { get; set; }
+
+    [ReactProp]
+    public string dir { get; set; }
+
+    [ReactProp]
+    public string id { get; set; }
+
+    [ReactProp]
+    public string lang { get; set; }
+
+    [ReactProp]
+    public string part { get; set; }
+
+    [ReactProp]
+    public string role { get; set; }
+
+    [ReactProp]
+    public string spellcheck { get; set; }
+
+    [ReactProp]
+    public string tabIndex { get; set; }
+
+    [ReactProp]
+    public string title { get; set; }
+
+    [ReactProp]
+    public string translate { get; set; }
+
 
     public static HtmlElementModifier Modify(Action<HtmlElement> modifyAction) => CreateHtmlElementModifier(modifyAction);
     public static HtmlElementModifier Accesskey(string value) => Modify(x => x.accesskey = value);
+
+    public static HtmlElementModifier Draggable(string value) => Modify(x => x.draggable = value);
+
+    public static HtmlElementModifier Contenteditable(string value) => Modify(x => x.contenteditable = value);
+
+    public static HtmlElementModifier ClassName(string value) => Modify(x => x.className = value);
+
+    public static HtmlElementModifier DangerouslySetInnerHTML(dangerouslySetInnerHTML value) => Modify(x => x.dangerouslySetInnerHTML = value);
+
+    public static HtmlElementModifier Dir(string value) => Modify(x => x.dir = value);
+
+    public static HtmlElementModifier Id(string value) => Modify(x => x.id = value);
+
+    public static HtmlElementModifier Lang(string value) => Modify(x => x.lang = value);
+
+    public static HtmlElementModifier Part(string value) => Modify(x => x.part = value);
+
+    public static HtmlElementModifier Role(string value) => Modify(x => x.role = value);
+
+    public static HtmlElementModifier Spellcheck(string value) => Modify(x => x.spellcheck = value);
+
+    public static HtmlElementModifier TabIndex(string value) => Modify(x => x.tabIndex = value);
+
+    public static HtmlElementModifier Title(string value) => Modify(x => x.title = value);
+
+    public static HtmlElementModifier Translate(string value) => Modify(x => x.translate = value);
 
 }
 
