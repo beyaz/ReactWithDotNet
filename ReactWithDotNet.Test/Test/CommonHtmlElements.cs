@@ -1813,3 +1813,22 @@ public class ExportingCommonHtmlElements
 //     Name    = "#name",
 //     Comment = "#description"
 // },
+
+
+
+/*
+  #region string href
+   PropertyValueNode<string> __href;
+   
+   static readonly PropertyValueDefinition _href = new() { name = nameof(href) };
+   
+   /// <summary>
+   ///     The URL of the linked resource.
+   /// </summary>
+   public string href
+   {
+       get => __href?.value;
+       set => SetValue(ref __href, _href, value);
+   }
+   #endregion
+ */

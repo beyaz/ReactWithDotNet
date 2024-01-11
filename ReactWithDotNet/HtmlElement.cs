@@ -219,16 +219,20 @@ abstract partial class HtmlElement : Element
         public string name;
     }
 
-    [DebuggerDisplay("{propertyDefinition}: {valueAsString}")]
-    internal sealed class PropertyValueNode
+    
+    internal class PropertyValueNode
     {
         public PropertyValueNode next, prev;
         public PropertyValueDefinition propertyDefinition;
-
-        public string valueAsString;
+    }
+    
+    [DebuggerDisplay("{propertyDefinition}: {value}")]
+    internal sealed class PropertyValueNode<T> : PropertyValueNode
+    {
+        public T value;
     }
 
-    internal void SetValue(ref PropertyValueNode valueNode, PropertyValueDefinition propertyDefinition, string value)
+    internal void SetValue<T>(ref PropertyValueNode<T> valueNode, PropertyValueDefinition propertyDefinition, T value)
     {
         var shouldRemove = value is null;
 
@@ -242,7 +246,8 @@ abstract partial class HtmlElement : Element
             valueNode = new()
             {
                 propertyDefinition = propertyDefinition,
-                valueAsString      = value
+                
+                value = value
             };
 
             if (_head is null)
@@ -306,7 +311,7 @@ abstract partial class HtmlElement : Element
             return;
         }
 
-        valueNode.valueAsString = value;
+        valueNode.value = value;
     }
 
     internal PropertyValueNode _head, _tail;
