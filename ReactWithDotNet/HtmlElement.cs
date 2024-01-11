@@ -26,19 +26,21 @@ partial class Mixin
     }
     
     /// <summary>
-    /// Automatically generates a css class then adds class name to element.
-    /// <br/>
-    /// css class will be automatically remove when component destroyed.
-    /// <br/>
-    /// Example:
-    /// <code>
-    /// arrowDown.WithClass(new Style
-    /// {
-    ///    Transform("rotate(-180deg)")
-    /// })
-    /// </code>
+    ///     Automatically generates a css class then adds class name to element.
+    ///     <br/>
+    ///     You can use transition css
+    ///     <br/>
+    ///     Generated css class will be automatically remove when component destroyed.
+    ///     <br/>
+    ///     Example:
+    ///     <code>
+    ///     arrowDown.WithStyle(new Style
+    ///     {
+    ///        Transform("rotate(-180deg)")
+    ///     })
+    ///     </code>
     /// </summary>
-    public static TElement WithClass<TElement>(this TElement element, Style cssBody) where TElement : HtmlElement
+    public static TElement WithStyle<TElement>(this TElement element, Style cssBody) where TElement : HtmlElement
     {
         (element.classNameList ??= []).Add(cssBody);
 
@@ -46,21 +48,23 @@ partial class Mixin
     }
     
     /// <summary>
-    /// Automatically generates a css class then adds class name to element.
-    /// <br/>
-    /// css class will be automatically remove when component destroyed.
-    /// <br/>
-    /// Example:
-    /// <code>
-    /// arrowDown.WithClass(new []
-    /// {
-    ///    Transform("rotate(-180deg)")
-    /// })
-    /// </code>
+    ///     Automatically generates a css class then adds class name to element.
+    ///     <br/>
+    ///     You can use transition css
+    ///     <br/>
+    ///     Generated css class will be automatically remove when component destroyed.
+    ///     <br/>
+    ///     Example:
+    ///     <code>
+    ///     arrowDown.WithStyle(new []
+    ///     {
+    ///        Transform("rotate(-180deg)")
+    ///     })
+    ///     </code>
     /// </summary>
-    public static TElement WithClass<TElement>(this TElement element, IEnumerable<StyleModifier> styleModifiers) where TElement : HtmlElement
+    public static TElement WithStyle<TElement>(this TElement element, IEnumerable<StyleModifier> styleModifiers) where TElement : HtmlElement
     {
-        return element.WithClass(new(styleModifiers));
+        return element.WithStyle(new(styleModifiers));
     }
 }
 
