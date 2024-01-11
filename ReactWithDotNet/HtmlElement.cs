@@ -229,9 +229,11 @@ abstract partial class HtmlElement : Element
     
     internal void SetValue(ref PropertyValueNode valueNode, PropertyValueDefinition propertyDefinition, string value)
     {
+        var shouldRemove = value is null;
+        
         if (valueNode == null)
         {
-            if (value is null)
+            if (shouldRemove)
             {
                 return;
             }
@@ -258,11 +260,11 @@ abstract partial class HtmlElement : Element
             return;
         }
 
-        if (value is null)
+        if (shouldRemove)
         {
             // R E M O V E
             
-            // from start
+            // head
             if (ReferenceEquals(_head,valueNode))
             {
                 // has only one node
@@ -282,7 +284,7 @@ abstract partial class HtmlElement : Element
                 return;
             }
             
-            // remmove from tail
+            // tail
             if (ReferenceEquals(_tail,valueNode))
             {
                 _tail = _tail.prev;
