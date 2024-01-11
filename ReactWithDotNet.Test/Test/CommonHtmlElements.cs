@@ -1610,6 +1610,16 @@ public class ExportingCommonHtmlElements
                         Name                              = "onMouseLeave",
                         Type                              = "MouseEventHandler",
                         GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments"
+                    },
+                    new ()
+                    {
+                        Name = "onScroll",
+                        Type = "ScrollEventHandler"
+                    },
+                    new ()
+                    {
+                        Name = "onKeyDown",
+                        Type = "KeyboardEventHandler"
                     }
                 ],
                 EnableCastFromString = false

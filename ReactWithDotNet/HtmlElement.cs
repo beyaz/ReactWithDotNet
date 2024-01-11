@@ -158,11 +158,7 @@ abstract partial class HtmlElement : Element
 
     
 
-    [ReactProp]
-    public ScrollEventHandler onScroll { get; set; }
-    
-    [ReactProp]
-    public KeyboardEventHandler onKeyDown { get; set; }
+  
 
     /// <summary>
     ///     Default value: 400 <br />
