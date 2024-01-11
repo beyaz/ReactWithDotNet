@@ -217,6 +217,7 @@ abstract partial class HtmlElement : Element
     {
         public string name;
     }
+    
     internal sealed class PropertyValueNode
     {
         public PropertyValueDefinition propertyDefinition;
@@ -247,7 +248,10 @@ abstract partial class HtmlElement : Element
                 return;
             }
             
+            // push end
             _tail.next = valueNode;
+            
+            valueNode.prev = _tail;
             
             _tail = valueNode;
              
@@ -256,17 +260,45 @@ abstract partial class HtmlElement : Element
 
         if (value is null)
         {
-            // remove
-
-            if (valueNode.prev is not null)
+            // R E M O V E
+            
+            // from start
+            if (ReferenceEquals(_head,valueNode))
             {
-                valueNode.prev.next = valueNode.next;
-
-                if (valueNode.next is not null)
+                // has only one node
+                if (ReferenceEquals(_tail,valueNode))
                 {
-                    valueNode.next.prev = valueNode.prev;    
+                    _head = _tail = valueNode = null;
+                    return;
                 }
+                
+                // remove head
+                _head = _head.next;
+                
+                _head.prev = null;
+                
+                valueNode = null;
+                
+                return;
             }
+            
+            // remmove from tail
+            if (ReferenceEquals(_tail,valueNode))
+            {
+                _tail = _tail.prev;
+
+                _tail.next = null;
+                
+                valueNode = null;
+                
+                return;
+            }
+          
+            // between
+            valueNode.prev.next = valueNode.next;
+            valueNode.next.prev = valueNode.prev;
+            
+            valueNode = null;
             
             return;
  
@@ -276,10 +308,6 @@ abstract partial class HtmlElement : Element
     }
 
     internal PropertyValueNode _head, _tail;
-
-
-
-
     #endregion
 }
 
