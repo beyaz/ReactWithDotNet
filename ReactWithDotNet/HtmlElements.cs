@@ -131,29 +131,18 @@ sealed class br : HtmlElement;
 
 
 
-public sealed class select : HtmlElement
+partial class select
 {
-    public select()
-    {
-    }
-
-    public select(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-
+    
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments")]
     public Func<ChangeEvent,Task> onChange { get; set; }
-
-    [ReactProp]
-    public string value { get; set; }
+    
 
     [ReactProp]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = nameof(onChange))]
     public Expression<Func<string>> valueBind { get; set; }
     
-    [ReactProp]
-    public string disabled { get; set; }
 }
 
 

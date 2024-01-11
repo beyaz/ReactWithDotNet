@@ -3726,3 +3726,26 @@ public sealed class iframe : HtmlElement
 
 }
 
+public sealed partial class select : HtmlElement
+{
+    [ReactProp]
+    public string value { get; set; }
+
+    [ReactProp]
+    public string disabled { get; set; }
+
+    public select() { }
+
+    public select(params IModifier[] modifiers) : base(modifiers) { }
+
+    public select(Style style) : base(style) { }
+
+    public select(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<select> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    public static HtmlElementModifier Value(string value) => Modify(x => x.value = value);
+
+    public static HtmlElementModifier Disabled(string value) => Modify(x => x.disabled = value);
+
+}
+

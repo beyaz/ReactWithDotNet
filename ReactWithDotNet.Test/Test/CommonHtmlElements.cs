@@ -1435,6 +1435,97 @@ public class ExportingCommonHtmlElements
                     }
                 ],
                 EnableCastFromString = false
+            },
+            
+            new()
+            {
+                Tag = "select",
+                
+                CreateClassAsPartial = true,
+                Attributes = [
+                    new ()
+                    {
+                        Name = "value"
+                    },
+                    new ()
+                    {
+                        Name = "disabled"
+                    }
+                ],
+                EnableCastFromString = false
+            },
+            new()
+            {
+                Tag = "input",
+                
+                CreateClassAsPartial = true,
+                Attributes = [
+                    new ()
+                    {
+                        Name = "required"
+                    },
+                    new ()
+                    {
+                        Name = "autoComplete"
+                    },
+                    new ()
+                    {
+                        Name = "@checked",
+                        Type = "bool?"
+                    },
+                    new ()
+                    {
+                        Name = "defaultChecked",
+                        Type = "bool?"
+                    },
+                    new ()
+                    {
+                    Name = "defaultValue"
+                    },
+                    new ()
+                    {
+                        Name = "disabled",
+                        Type = "bool?"
+                    },
+                    new ()
+                    {
+                        Name = "autoFocus",
+                        Type = "bool?"
+                    },
+                    new ()
+                    {
+                        Name = "name"
+                    },
+                    new ()
+                    {
+                        Name = "placeholder"
+                    },
+                    new ()
+                    {
+                        Name = "readOnly",
+                        Type = "bool?"
+                    },
+                    new ()
+                    {
+                        Name = "type"
+                    },
+                    new ()
+                    {
+                        Name = "max",
+                        Type = "int?"
+                    },
+                    new ()
+                    {
+                        Name = "min",
+                        Type = "int?"
+                    },
+                    new ()
+                    {
+                        Name = "step",
+                        Type = "int?"
+                    }
+                ],
+                EnableCastFromString = false
             }
         };
 
