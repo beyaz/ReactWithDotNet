@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
@@ -212,11 +213,13 @@ abstract partial class HtmlElement : Element
 
     #region ValueManagement
 
+    [DebuggerDisplay("{name}")]
     internal sealed class PropertyValueDefinition
     {
         public string name;
     }
 
+    [DebuggerDisplay("{propertyDefinition}: {valueAsString}")]
     internal sealed class PropertyValueNode
     {
         public PropertyValueNode next, prev;
