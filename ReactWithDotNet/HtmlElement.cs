@@ -14,24 +14,24 @@ partial class Mixin
     {
         return CreateHtmlElementModifier<HtmlElement>(el => el.data.Add(dataName, dataValue));
     }
-    
+
     public static HtmlElementModifier Data(string dataName, int dataValue)
     {
         return CreateHtmlElementModifier<HtmlElement>(el => el.data.Add(dataName, dataValue.ToString()));
     }
-    
+
     public static HtmlElementModifier Data(string dataName, long dataValue)
     {
         return CreateHtmlElementModifier<HtmlElement>(el => el.data.Add(dataName, dataValue.ToString()));
     }
-    
+
     /// <summary>
     ///     Automatically generates a css class then adds class name to element.
-    ///     <br/>
+    ///     <br />
     ///     You can use transition css
-    ///     <br/>
+    ///     <br />
     ///     Generated css class will be automatically remove when component destroyed.
-    ///     <br/>
+    ///     <br />
     ///     Example:
     ///     <code>
     ///     arrowDown.WithStyle(new Style
@@ -46,14 +46,14 @@ partial class Mixin
 
         return element;
     }
-    
+
     /// <summary>
     ///     Automatically generates a css class then adds class name to element.
-    ///     <br/>
+    ///     <br />
     ///     You can use transition css
-    ///     <br/>
+    ///     <br />
     ///     Generated css class will be automatically remove when component destroyed.
-    ///     <br/>
+    ///     <br />
     ///     Example:
     ///     <code>
     ///     arrowDown.WithStyle(new []
@@ -75,6 +75,8 @@ abstract partial class HtmlElement : Element
 
     internal Style _style;
 
+    internal List<Style> classNameList;
+
     protected HtmlElement()
     {
     }
@@ -83,7 +85,7 @@ abstract partial class HtmlElement : Element
     {
         this.Apply(styleModifiers);
     }
-    
+
     protected HtmlElement(params IModifier[] modifiers)
     {
         this.Apply(modifiers);
@@ -98,6 +100,9 @@ abstract partial class HtmlElement : Element
     {
         this.style.Import(style);
     }
+
+    [JsonPropertyName("$type")]
+    public virtual string __type__ => GetType().Name.ToLower();
 
     [JsonIgnore]
     public Dictionary<string, string> aria
@@ -147,18 +152,12 @@ abstract partial class HtmlElement : Element
     /// </summary>
     public string innerText { get; set; }
 
-    
-    
     /// <summary>
     ///     Gets or sets the on click.
     /// </summary>
     [ReactProp]
     [JsonPropertyName("$onClickPreview")]
     public Action onClickPreview { get; set; }
-
-    
-
-  
 
     /// <summary>
     ///     Default value: 400 <br />
@@ -197,9 +196,6 @@ abstract partial class HtmlElement : Element
         get => innerText;
     }
 
-    [JsonPropertyName("$type")]
-    public virtual string __type__ => GetType().Name.ToLower();
-
     /// <summary>
     ///     Adds given cssClassName ot class attribute of html element
     /// </summary>
@@ -214,8 +210,6 @@ abstract partial class HtmlElement : Element
         className += " " + cssClassName;
     }
 
-    internal List<Style> classNameList;
-    
     #region Operators
 
     public static HtmlElement operator +(HtmlElement element, Style style)
@@ -224,7 +218,7 @@ abstract partial class HtmlElement : Element
 
         return element;
     }
-    
+
     public static HtmlElement operator +(HtmlElement element, StyleModifier[] styleModifiers)
     {
         element.Apply(styleModifiers);
@@ -238,7 +232,7 @@ abstract partial class HtmlElement : Element
 
         return htmlElement;
     }
-    
+
     public static HtmlElement operator +(HtmlElement htmlElement, IModifier modifier)
     {
         ModifyHelper.ProcessModifier(htmlElement, modifier);
@@ -262,17 +256,16 @@ abstract partial class HtmlElement : Element
     {
         htmlElementModifier?.Process(this);
     }
-    
+
     public void Add(Action<HtmlElement> modifyHtmlElement)
     {
         if (modifyHtmlElement == null)
         {
             return;
         }
-        
+
         modifyHtmlElement(this);
     }
-    
 
     [SuppressMessage("ReSharper", "ParameterHidesMember")]
     public void Add(Style style)
@@ -299,6 +292,6 @@ public sealed class dangerouslySetInnerHTML
 
     public static implicit operator dangerouslySetInnerHTML(string html)
     {
-        return new dangerouslySetInnerHTML { __html = html };
+        return new() { __html = html };
     }
 }
