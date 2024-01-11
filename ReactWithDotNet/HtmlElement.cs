@@ -209,6 +209,78 @@ abstract partial class HtmlElement : Element
     }
 
     #endregion
+
+
+    #region ValueManagement
+    
+    internal sealed class PropertyValueDefinition
+    {
+        public string name;
+    }
+    internal sealed class PropertyValueNode
+    {
+        public PropertyValueDefinition propertyDefinition;
+        
+        public string valueAsString;
+        
+        public PropertyValueNode next, prev;
+    }
+    
+    internal void SetValue(ref PropertyValueNode valueNode, PropertyValueDefinition propertyDefinition, string value)
+    {
+        if (valueNode == null)
+        {
+            if (value is null)
+            {
+                return;
+            }
+             
+            valueNode = new()
+            {
+                propertyDefinition = propertyDefinition,
+                valueAsString = value
+            };
+
+            if (_head is null)
+            {
+                _head = _tail = valueNode;
+                return;
+            }
+            
+            _tail.next = valueNode;
+            
+            _tail = valueNode;
+             
+            return;
+        }
+
+        if (value is null)
+        {
+            // remove
+
+            if (valueNode.prev is not null)
+            {
+                valueNode.prev.next = valueNode.next;
+
+                if (valueNode.next is not null)
+                {
+                    valueNode.next.prev = valueNode.prev;    
+                }
+            }
+            
+            return;
+ 
+        }
+         
+        valueNode.valueAsString = value;
+    }
+
+    internal PropertyValueNode _head, _tail;
+
+
+
+
+    #endregion
 }
 
 [Serializable]
