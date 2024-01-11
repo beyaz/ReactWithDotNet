@@ -26,8 +26,6 @@ sealed class Tracer
 
 sealed class ElementSerializerContext
 {
-    internal readonly Stack<ReactComponentBase> ComponentStack = new();
-
     internal readonly DynamicStyleContentForEmbedInClient DynamicStyles = new();
 
     public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; init; }

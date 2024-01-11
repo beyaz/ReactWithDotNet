@@ -274,21 +274,6 @@ partial class ElementSerializer
                     node.Stopwatch.Start();
                 }
 
-                // ComponentStack.Push
-                {
-                    if (context.ComponentStack.Count == 0)
-                    {
-                        context.ComponentStack.Push(reactStatefulComponent);
-                    }
-                    else if (context.ComponentStack.TryPeek(out var top))
-                    {
-                        if (!ReferenceEquals(top, reactStatefulComponent))
-                        {
-                            context.ComponentStack.Push(reactStatefulComponent);
-                        }
-                    }
-                }
-
                 var stateTree = context.StateTree;
 
                 var dotNetTypeOfReactComponent = reactStatefulComponent.GetType();
@@ -508,11 +493,6 @@ partial class ElementSerializer
                             }
                         };
 
-                        if (context.ComponentStack.TryPeek(out var top2))
-                        {
-                            elementSerializerContext.ComponentStack.Push(top2);
-                        }
-
                         elementSerializerContext.DynamicStyles.ListOfClasses.AddRange(context.DynamicStyles.ListOfClasses);
 
                         return elementSerializerContext;
@@ -658,15 +638,6 @@ partial class ElementSerializer
                     if (cachedMethods?.Count > 0)
                     {
                         map.Add("$CachedMethods", cachedMethods);
-                    }
-                }
-
-                if (context.ComponentStack.Count > 0)
-                {
-                    var componentAtTopOfStack = context.ComponentStack.Pop();
-                    if (!ReferenceEquals(componentAtTopOfStack, reactStatefulComponent))
-                    {
-                        throw FatalError("component stack problem");
                     }
                 }
 
