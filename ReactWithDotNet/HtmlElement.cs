@@ -177,7 +177,7 @@ public abstract class HtmlElement : Element
     public string dir { get; set; }
 
     [ReactProp]
-    public virtual string id { get; set; }
+    public  string id { get; set; }
 
     [JsonIgnore]
     public string innerHTML
