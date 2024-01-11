@@ -68,7 +68,7 @@ partial class Mixin
     }
 }
 
-public abstract class HtmlElement : Element
+abstract partial class HtmlElement : Element
 {
     internal Dictionary<string, string> _aria;
     internal Dictionary<string, string> _data;
@@ -99,13 +99,7 @@ public abstract class HtmlElement : Element
         this.style.Import(style);
     }
 
-    /// <summary>
-    ///     Provides a hint for generating a keyboard shortcut for the current element. This attribute consists of a
-    ///     space-separated list of characters. The browser should use the first one that exists on the computer keyboard
-    ///     layout.
-    /// </summary>
-    [ReactProp]
-    public string accesskey { get; set; }
+  
 
     [JsonIgnore]
     public Dictionary<string, string> aria

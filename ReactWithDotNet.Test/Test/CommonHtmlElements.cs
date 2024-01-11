@@ -1527,7 +1527,22 @@ public class ExportingCommonHtmlElements
                     }
                 ],
                 EnableCastFromString = false
-            }
+            },
+            
+            
+            new()
+            {
+                Tag = "HtmlElement",
+                
+                CreateClassAsPartial = true,
+                Attributes = [
+                    new ()
+                    {
+                        Name = "accesskey"
+                    }
+                ],
+                EnableCastFromString = false
+            },
         };
 
         var list = new List<string>
@@ -1541,13 +1556,29 @@ public class ExportingCommonHtmlElements
         {
             addComment(null);
 
+            var isRootHtmlElement = item.Tag == "HtmlElement";
+            
             var partialModifier = "";
             if (item.CreateClassAsPartial)
             {
                 partialModifier = " partial";
             }
 
-            list.Add($"public sealed{partialModifier} class {item.Tag} : HtmlElement");
+            var inheritPart = " : HtmlElement";
+            
+            if (isRootHtmlElement)
+            {
+                inheritPart = "";
+            }
+
+            var sealedModifier = "sealed";
+            if (isRootHtmlElement)
+            {
+                sealedModifier = "";
+            }
+            
+            
+            list.Add($"public {sealedModifier}{partialModifier} class {item.Tag}{inheritPart}");
             list.Add("{");
 
             if (item.Attributes is not null)
@@ -1573,12 +1604,8 @@ public class ExportingCommonHtmlElements
                 }
             }
 
-            addComment();
-            list.Add($"    public {item.Tag}() {{ }}");
-
-            list.Add(Empty);
-            addComment();
-            list.Add($"    public {item.Tag}(params IModifier[] modifiers) : base(modifiers) {{ }}");
+            
+           
 
             if (item.EnableCastFromString)
             {
@@ -1590,14 +1617,26 @@ public class ExportingCommonHtmlElements
                 addComment();
                 list.Add($"    public static implicit operator {item.Tag}(string text) => new() {{ text = text }};");
             }
+            
+            if (!isRootHtmlElement)
+            {
+                addComment();
+                list.Add($"    public {item.Tag}() {{ }}");
 
-            list.Add(Empty);
-            addComment();
-            list.Add($"    public {item.Tag}(Style style) : base(style) {{ }}");
+                list.Add(Empty);
+                addComment();
+                list.Add($"    public {item.Tag}(params IModifier[] modifiers) : base(modifiers) {{ }}");
+                
+                list.Add(Empty);
+                addComment();
+                list.Add($"    public {item.Tag}(Style style) : base(style) {{ }}");
 
-            list.Add(Empty);
-            addComment();
-            list.Add($"    public {item.Tag}(StyleModifier[] styleModifiers) : base(styleModifiers) {{ }}");
+                list.Add(Empty);
+                addComment();
+                list.Add($"    public {item.Tag}(StyleModifier[] styleModifiers) : base(styleModifiers) {{ }}");
+            }
+
+           
 
             list.Add(Empty);
             list.Add($"    public static HtmlElementModifier Modify(Action<{item.Tag}> modifyAction) => CreateHtmlElementModifier(modifyAction);");
