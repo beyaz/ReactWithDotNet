@@ -99,8 +99,6 @@ abstract partial class HtmlElement : Element
         this.style.Import(style);
     }
 
-  
-
     [JsonIgnore]
     public Dictionary<string, string> aria
     {
@@ -111,10 +109,6 @@ abstract partial class HtmlElement : Element
             return _aria;
         }
     }
-
-    
-    
-    
 
     /// <summary>
     ///     The data-* attribute is used to store custom data private to the page or application.
@@ -142,7 +136,6 @@ abstract partial class HtmlElement : Element
         }
     }
 
-
     [JsonIgnore]
     public string innerHTML
     {
@@ -153,8 +146,6 @@ abstract partial class HtmlElement : Element
     ///     'innerText' property of element.
     /// </summary>
     public string innerText { get; set; }
-
- 
 
     /// <summary>
     ///     Gets or sets the on click.
@@ -169,7 +160,6 @@ abstract partial class HtmlElement : Element
     [ReactProp]
     [JsonPropertyName("$onClickPreview")]
     public Action onClickPreview { get; set; }
-    
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
@@ -189,11 +179,6 @@ abstract partial class HtmlElement : Element
     ///     Default value: 400 <br />
     /// </summary>
     public int? onScrollDebounceTimeout { get; set; } = 400;
-
-   
-
- 
-
 
     /// <summary>
     ///     Gets the style.
@@ -218,8 +203,6 @@ abstract partial class HtmlElement : Element
         set => style.Import(value);
     }
 
-   
-
     /// <summary>
     ///     'innerText' property of element.
     /// </summary>
@@ -228,9 +211,6 @@ abstract partial class HtmlElement : Element
         set => innerText = value;
         get => innerText;
     }
-
-
-    
 
     [JsonPropertyName("$type")]
     public virtual string __type__ => GetType().Name.ToLower();
