@@ -210,38 +210,36 @@ abstract partial class HtmlElement : Element
 
     #endregion
 
-
     #region ValueManagement
-    
+
     internal sealed class PropertyValueDefinition
     {
         public string name;
     }
-    
+
     internal sealed class PropertyValueNode
     {
-        public PropertyValueDefinition propertyDefinition;
-        
-        public string valueAsString;
-        
         public PropertyValueNode next, prev;
+        public PropertyValueDefinition propertyDefinition;
+
+        public string valueAsString;
     }
-    
+
     internal void SetValue(ref PropertyValueNode valueNode, PropertyValueDefinition propertyDefinition, string value)
     {
         var shouldRemove = value is null;
-        
+
         if (valueNode == null)
         {
             if (shouldRemove)
             {
                 return;
             }
-             
+
             valueNode = new()
             {
                 propertyDefinition = propertyDefinition,
-                valueAsString = value
+                valueAsString      = value
             };
 
             if (_head is null)
@@ -249,67 +247,67 @@ abstract partial class HtmlElement : Element
                 _head = _tail = valueNode;
                 return;
             }
-            
+
             // push end
             _tail.next = valueNode;
-            
+
             valueNode.prev = _tail;
-            
+
             _tail = valueNode;
-             
+
             return;
         }
 
         if (shouldRemove)
         {
             // R E M O V E
-            
+
             // head
-            if (ReferenceEquals(_head,valueNode))
+            if (ReferenceEquals(_head, valueNode))
             {
                 // has only one node
-                if (ReferenceEquals(_tail,valueNode))
+                if (ReferenceEquals(_tail, valueNode))
                 {
                     _head = _tail = valueNode = null;
                     return;
                 }
-                
+
                 // remove head
                 _head = _head.next;
-                
+
                 _head.prev = null;
-                
+
                 valueNode = null;
-                
+
                 return;
             }
-            
+
             // tail
-            if (ReferenceEquals(_tail,valueNode))
+            if (ReferenceEquals(_tail, valueNode))
             {
                 _tail = _tail.prev;
 
                 _tail.next = null;
-                
+
                 valueNode = null;
-                
+
                 return;
             }
-          
+
             // between
             valueNode.prev.next = valueNode.next;
             valueNode.next.prev = valueNode.prev;
-            
+
             valueNode = null;
-            
+
             return;
- 
         }
-         
+
         valueNode.valueAsString = value;
     }
 
     internal PropertyValueNode _head, _tail;
+
     #endregion
 }
 
