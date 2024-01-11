@@ -108,12 +108,12 @@ partial class Mixin
     {
         if (func.Target is ReactComponentBase target)
         {
-            if (target.ComponentUniqueIdentifier is null)
+            if (target.ComponentUniqueIdentifier == 0)
             {
                 throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + target.GetType().FullName);
             }
 
-            client.CallJsFunction(Core + nameof(OnOutsideClicked), idOfElement, func.Method.GetNameWithToken(), target.ComponentUniqueIdentifier.Value);
+            client.CallJsFunction(Core + nameof(OnOutsideClicked), idOfElement, func.Method.GetNameWithToken(), target.ComponentUniqueIdentifier);
         }
         else
         {

@@ -147,25 +147,36 @@ static partial class ElementSerializer
         }
     }
 
-    static int UpclimbForComponentUniqueIdentifier(Node node)
+    static int UpclimbForComponentUniqueIdentifier(ElementSerializerContext context,Node node)
     {
         while (node is not null)
         {
+            if (node.ElementIsDotNetReactPureComponent)
+            {
+                return CheckComponentUniqueIdentifierHasValue(node.ElementAsDotNetReactPureComponent.ComponentUniqueIdentifier);
+            }
             if (node.ElementIsDotNetReactComponent)
             {
-                return node.ElementAsDotNetReactComponent.ComponentUniqueIdentifier.GetValueOrDefault();
+                return CheckComponentUniqueIdentifierHasValue(node.ElementAsDotNetReactComponent.ComponentUniqueIdentifier);
             }
             
             node = node.Parent;
         }
 
-        throw FatalError("CannotFindComponentUniqueIdentifier");
+        return context.ComponentUniqueIdentifierNextValue++;
+
+        static int CheckComponentUniqueIdentifierHasValue(int componentUniqueIdentifier)
+        {
+            if (componentUniqueIdentifier == 0)
+            {
+                throw FatalError("componentUniqueIdentifier should be initialize before usage");
+            }
+                
+            return componentUniqueIdentifier;
+        }
     }
     
-    static (bool needToExport, string cssClassName) ConvertStyleToCssClass(Node node, Style style,
-        bool fullExport,
-        int? componentUniqueIdentifier,
-        Func<CssClassInfo, string> getCssClassName)
+    static (bool needToExport, string cssClassName) ConvertStyleToCssClass(ElementSerializerContext context, Node node, Style style, bool fullExport, Func<CssClassInfo, string> getCssClassName)
     {
         if (style is null)
         {
@@ -189,10 +200,8 @@ static partial class ElementSerializer
             }
         }
 
-        //var todo = UpclimbForComponentUniqueIdentifier(node);
+        var componentUniqueIdentifier = UpclimbForComponentUniqueIdentifier(context, node);
         
-        componentUniqueIdentifier ??= 1;
-
         var cssClassInfo = new CssClassInfo
         {
             ComponentUniqueIdentifier = componentUniqueIdentifier,
@@ -301,7 +310,7 @@ static partial class ElementSerializer
         {
             string convertStyleToCssClass(Style style)
             {
-                var (needToExport, cssClassName) = ConvertStyleToCssClass(node, style, true, context.ComponentStack.PeekForComponentUniqueIdentifier(), context.DynamicStyles.GetClassName);
+                var (needToExport, cssClassName) = ConvertStyleToCssClass(context, node, style, true, context.DynamicStyles.GetClassName);
                 if (needToExport)
                 {
                     return cssClassName;
@@ -596,7 +605,7 @@ static partial class ElementSerializer
 
     static ValueExportInfo<object> GetStylePropertyValueOfHtmlElementForSerialize(ElementSerializerContext context, Node node, object instance, Style style)
     {
-        var response = ConvertStyleToCssClass(node, style, false, context.ComponentStack.PeekForComponentUniqueIdentifier(), context.DynamicStyles.GetClassName);
+        var response = ConvertStyleToCssClass(context, node, style, false, context.DynamicStyles.GetClassName);
         if (response.needToExport is false)
         {
             if (style.IsEmpty == false)

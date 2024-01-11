@@ -10,7 +10,7 @@ static partial class Mixin
 {
     internal static EventSenderInfo GetEventSenderInfo(ReactComponentBase reactComponent, string propertyName)
     {
-        if (reactComponent.ComponentUniqueIdentifier is null)
+        if (reactComponent.ComponentUniqueIdentifier == 0)
         {
             throw DeveloperException("ComponentUniqueIdentifier cannot be null");
         }
@@ -18,7 +18,7 @@ static partial class Mixin
         return new EventSenderInfo
         {
             SenderPropertyFullName          = $"{reactComponent.GetType().FullName}::{propertyName}",
-            SenderComponentUniqueIdentifier = reactComponent.ComponentUniqueIdentifier.Value
+            SenderComponentUniqueIdentifier = reactComponent.ComponentUniqueIdentifier
         };
     }
     

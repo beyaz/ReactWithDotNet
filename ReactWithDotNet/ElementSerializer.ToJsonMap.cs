@@ -183,6 +183,11 @@ partial class ElementSerializer
 
                 var reactPureComponent = node.ElementAsDotNetReactPureComponent;
 
+                if (reactPureComponent.ComponentUniqueIdentifier == 0)
+                {
+                    reactPureComponent.ComponentUniqueIdentifier = context.ComponentUniqueIdentifierNextValue++;    
+                }
+
                 if (node.DotNetComponentRenderMethodInvoked is false)
                 {
                     reactPureComponent.Context = context.ReactContext;
@@ -325,7 +330,10 @@ partial class ElementSerializer
 
                 reactStatefulComponent.Context = context.ReactContext;
 
-                reactStatefulComponent.ComponentUniqueIdentifier ??= context.ComponentUniqueIdentifierNextValue++;
+                if (reactStatefulComponent.ComponentUniqueIdentifier == 0)
+                {
+                    reactStatefulComponent.ComponentUniqueIdentifier = context.ComponentUniqueIdentifierNextValue++;   
+                }
 
                 var state = stateProperty.GetValueFunc(reactStatefulComponent);
                 if (state == null)
@@ -780,7 +788,7 @@ partial class ElementSerializer
 
             if (@delegate.Target is ReactComponentBase target)
             {
-                if (target.ComponentUniqueIdentifier is null)
+                if (target.ComponentUniqueIdentifier == 0)
                 {
                     throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + target.GetType().FullName);
                 }
@@ -789,7 +797,7 @@ partial class ElementSerializer
 
                 propertyInfo.SetValue(reactComponent, null);
 
-                reactComponent.Client.InitializeDotnetComponentEventListener(GetEventSenderInfo(reactComponent, propertyInfo.Name), @delegate.Method.GetNameWithToken(), target.ComponentUniqueIdentifier.GetValueOrDefault());
+                reactComponent.Client.InitializeDotnetComponentEventListener(GetEventSenderInfo(reactComponent, propertyInfo.Name), @delegate.Method.GetNameWithToken(), target.ComponentUniqueIdentifier);
             }
             else
             {
@@ -1005,7 +1013,7 @@ partial class ElementSerializer
         {
             foreach (var style in htmlElement.classNameList)
             {
-                var response = ConvertStyleToCssClass(node, style, true, context.ComponentStack.PeekForComponentUniqueIdentifier(), context.DynamicStyles.GetClassName);
+                var response = ConvertStyleToCssClass(context,node, style, true, context.DynamicStyles.GetClassName);
                 if (response.needToExport)
                 {
                     htmlElement.AddClass(response.cssClassName);

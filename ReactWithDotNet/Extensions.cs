@@ -145,16 +145,6 @@ static class Extensions
         return $"{methodInfo.MetadataToken}|{methodInfo.Name}";
     }
 
-    public static int? PeekForComponentUniqueIdentifier(this Stack<ReactComponentBase> stack)
-    {
-        if (stack.Count == 0)
-        {
-            return null;
-        }
-
-        return stack.Peek().ComponentUniqueIdentifier;
-    }
-
     /// <summary>
     ///     Removes value from end of str
     /// </summary>

@@ -27,8 +27,7 @@ public abstract class ReactComponentBase : Element
     [System.Text.Json.Serialization.JsonIgnore]
     public Client Client { get; internal set; } = new();
 
-    [System.Text.Json.Serialization.JsonIgnore]
-    protected internal int? ComponentUniqueIdentifier { get; set; }
+    internal int ComponentUniqueIdentifier;
 
     [System.Text.Json.Serialization.JsonIgnore]
     public ReactContext Context { get; internal set; }

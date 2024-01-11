@@ -29,6 +29,8 @@ public abstract class PureComponent : Element
     [JsonIgnore]
     protected internal ReactContext Context { get; internal set; }
 
+    internal int ComponentUniqueIdentifier;
+
     internal async Task<Element> InvokeRender()
     {
         try

@@ -144,8 +144,9 @@ static class ComponentRequestHandler
             }
             else if (instance is PureComponent reactPureComponent)
             {
-                reactPureComponent.key     = "0";
-                reactPureComponent.Context = context;
+                reactPureComponent.ComponentUniqueIdentifier = request.ComponentUniqueIdentifier++;
+                reactPureComponent.key                       = "0";
+                reactPureComponent.Context                   = context;
             }
             else
             {
