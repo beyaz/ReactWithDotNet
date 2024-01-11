@@ -1377,7 +1377,52 @@ public class ExportingCommonHtmlElements
                     }
                 },
                 EnableCastFromString = false
-            }
+            },
+             
+            new()
+            {
+                Tag                  = "link",
+                CreateClassAsPartial = false,
+                Attributes           = [
+                    new ()
+                    {
+                        Name = "href"
+                    },
+                    new ()
+                    {
+                        Name = "media"
+                    },
+                    new ()
+                    {
+                        Name = "rel"
+                    },
+                    new ()
+                    {
+                        Name = "sizes"
+                    },
+                    new ()
+                    {
+                        Name = "type"
+                    },
+                    new ()
+                    {
+                        Name = "@as"
+                    },
+                    new ()
+                    {
+                        Name = "integrity"
+                    },
+                    new ()
+                    {
+                        Name = "crossorigin"
+                    },
+                    new ()
+                    {
+                        Name = "referrerpolicy"
+                    }
+                ],
+                EnableCastFromString = false
+            },
         };
 
         var list = new List<string>
