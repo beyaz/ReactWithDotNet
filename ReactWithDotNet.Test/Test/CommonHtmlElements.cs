@@ -1195,6 +1195,50 @@ public class ExportingCommonHtmlElements
             
             new()
             {
+                Tag                  = "stop",
+                CreateClassAsPartial = false,
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name = "offset"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "stopColor"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "stopOpacity"
+                    }
+                },
+                EnableCastFromString = false
+            },
+            
+            new()
+            {
+                Tag                  = "linearGradient",
+                CreateClassAsPartial = false,
+                Attributes = [],
+                EnableCastFromString = false
+            },
+            new()
+            {
+                Tag                  = "noscript",
+                CreateClassAsPartial = false,
+                Attributes           = [],
+                EnableCastFromString = false
+            },
+            new()
+            {
+                Tag                  = "defs",
+                CreateClassAsPartial = false,
+                Attributes           = [],
+                EnableCastFromString = false
+            },
+            
+            new()
+            {
                 Tag = "form",
                 CreateClassAsPartial = false,
                 Attributes = new[]

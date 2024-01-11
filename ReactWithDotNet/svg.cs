@@ -54,32 +54,3 @@ partial class Mixin
     public static HtmlElementModifier ViewBox(double  minX, double minY, double width, double height) 
         => svg.ViewBox(  minX,  minY,  width,  height);
 }
-
-
-
-
-
-
-public sealed class defs : HtmlElement;
-
-
-public sealed class linearGradient : HtmlElement;
-public sealed class stop : HtmlElement
-{
-    [ReactProp]
-    public string offset { get; set; }
-
-
-    [ReactProp]
-    public string stopColor { get; set; }
-
-
-    [ReactProp]
-    public string stopOpacity { get; set; }
-    
-}
-
-public sealed class noscript : HtmlElement;
-
-
-

@@ -3274,6 +3274,73 @@ public sealed partial class svg : HtmlElement
 
 }
 
+public sealed class stop : HtmlElement
+{
+    [ReactProp]
+    public string offset { get; set; }
+
+    [ReactProp]
+    public string stopColor { get; set; }
+
+    [ReactProp]
+    public string stopOpacity { get; set; }
+
+    public stop() { }
+
+    public stop(params IModifier[] modifiers) : base(modifiers) { }
+
+    public stop(Style style) : base(style) { }
+
+    public stop(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<stop> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    public static HtmlElementModifier Offset(string value) => Modify(x => x.offset = value);
+
+    public static HtmlElementModifier StopColor(string value) => Modify(x => x.stopColor = value);
+
+    public static HtmlElementModifier StopOpacity(string value) => Modify(x => x.stopOpacity = value);
+
+}
+
+public sealed class linearGradient : HtmlElement
+{
+    public linearGradient() { }
+
+    public linearGradient(params IModifier[] modifiers) : base(modifiers) { }
+
+    public linearGradient(Style style) : base(style) { }
+
+    public linearGradient(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<linearGradient> modifyAction) => CreateHtmlElementModifier(modifyAction);
+}
+
+public sealed class noscript : HtmlElement
+{
+    public noscript() { }
+
+    public noscript(params IModifier[] modifiers) : base(modifiers) { }
+
+    public noscript(Style style) : base(style) { }
+
+    public noscript(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<noscript> modifyAction) => CreateHtmlElementModifier(modifyAction);
+}
+
+public sealed class defs : HtmlElement
+{
+    public defs() { }
+
+    public defs(params IModifier[] modifiers) : base(modifiers) { }
+
+    public defs(Style style) : base(style) { }
+
+    public defs(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<defs> modifyAction) => CreateHtmlElementModifier(modifyAction);
+}
+
 public sealed class form : HtmlElement
 {
     /// <summary>
