@@ -147,12 +147,7 @@ abstract partial class HtmlElement : Element
     /// </summary>
     public string innerText { get; set; }
 
-    /// <summary>
-    ///     Gets or sets the on click.
-    /// </summary>
-    [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
-    public MouseEventHandler onClick { get; set; }
+    
     
     /// <summary>
     ///     Gets or sets the on click.

@@ -1592,6 +1592,12 @@ public class ExportingCommonHtmlElements
                     new ()
                     {
                         Name = "translate"
+                    },
+                    new ()
+                    {
+                        Name = "onClick",
+                        Type = "MouseEventHandler",
+                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments"
                     }
                 ],
                 EnableCastFromString = false
@@ -1652,6 +1658,12 @@ public class ExportingCommonHtmlElements
                     }
 
                     list.Add("    [ReactProp]");
+
+                    if (attribute.GrabEventArgumentsByUsingFunction is not null)
+                    {
+                        list.Add($"    [ReactGrabEventArgumentsByUsingFunction(\"{attribute.GrabEventArgumentsByUsingFunction}\")]");
+                    }
+                    
                     list.Add($"    public {attribute.Type} {CamelCase(attribute.Name)} {{ get; set; }}{partDefaultValueAssignment}");
                     list.Add(Empty);
                 }
@@ -1760,6 +1772,7 @@ public class ExportingCommonHtmlElements
         public string DefaultValue { get; set; }
         public string Name { get; init; }
         public string Type { get; init; } = "string";
+        public string GrabEventArgumentsByUsingFunction { get; init; }
     }
 
     class TagInfo

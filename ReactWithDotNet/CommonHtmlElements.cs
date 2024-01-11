@@ -3884,6 +3884,10 @@ public  partial class HtmlElement
     [ReactProp]
     public string translate { get; set; }
 
+    [ReactProp]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
+    public MouseEventHandler onClick { get; set; }
+
 
     public static HtmlElementModifier Modify(Action<HtmlElement> modifyAction) => CreateHtmlElementModifier(modifyAction);
     public static HtmlElementModifier Accesskey(string value) => Modify(x => x.accesskey = value);
@@ -3913,6 +3917,8 @@ public  partial class HtmlElement
     public static HtmlElementModifier Title(string value) => Modify(x => x.title = value);
 
     public static HtmlElementModifier Translate(string value) => Modify(x => x.translate = value);
+
+    public static HtmlElementModifier OnClick(MouseEventHandler value) => Modify(x => x.onClick = value);
 
 }
 
