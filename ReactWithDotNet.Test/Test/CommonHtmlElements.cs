@@ -1441,7 +1441,7 @@ public class ExportingCommonHtmlElements
             {
                 Tag = "select",
                 
-                CreateClassAsPartial = true,
+                CreateClassAsPartial = false,
                 Attributes = [
                     new ()
                     {
@@ -1450,7 +1450,25 @@ public class ExportingCommonHtmlElements
                     new ()
                     {
                         Name = "disabled"
-                    }
+                    },
+                    new ()
+                    {
+                        Name                   = "valueBind",
+                        Type                   = "Expression<Func<string>>", // TODO: check int and other types
+                        IsBindingExpression    = true,
+                        Bind =new ()
+                        {
+                            targetProp = "value", jsValueAccess = "e.target.value", eventName = "onChange"
+                        }
+                    },
+                    
+                    new ()
+                    {
+                        Name                              = "onChange",
+                        Type                              = "Func<ChangeEvent, Task>", // TODO: changeEvent delegate
+                        IsIsVoidTaskDelegate              = true,
+                        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments"
+                    },
                 ],
                 EnableCastFromString = false
             },

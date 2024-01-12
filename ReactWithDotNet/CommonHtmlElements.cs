@@ -5860,7 +5860,7 @@ public sealed class iframe : HtmlElement
 
 }
 
-public sealed partial class select : HtmlElement
+public sealed class select : HtmlElement
 {
     #region string value
     PropertyValueNode<string> _value;
@@ -5890,6 +5890,38 @@ public sealed partial class select : HtmlElement
     #endregion
 
 
+    #region string valueBind
+    PropertyValueNode<Expression<Func<string>>> _valueBind;
+    static readonly PropertyValueDefinition _valueBind_ = new()
+    {
+        name = nameof(valueBind),
+        isBindingExpression = true,
+        bind = new(){ targetProp = "value", jsValueAccess = "e.target.value", eventName = "onChange" }
+    };
+    public Expression<Func<string>> valueBind
+    {
+        get => _valueBind?.value;
+        set => SetValue(_valueBind_, ref _valueBind, value);
+    }
+    #endregion
+
+
+    #region string onChange
+    PropertyValueNode<Func<ChangeEvent, Task>> _onChange;
+    static readonly PropertyValueDefinition _onChange_ = new()
+    {
+        name = nameof(onChange),
+        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments",
+        isIsVoidTaskDelegate = true
+    };
+    public Func<ChangeEvent, Task> onChange
+    {
+        get => _onChange?.value;
+        set => SetValue(_onChange_, ref _onChange, value);
+    }
+    #endregion
+
+
     public select() { }
 
     public select(params IModifier[] modifiers) : base(modifiers) { }
@@ -5902,6 +5934,10 @@ public sealed partial class select : HtmlElement
     public static HtmlElementModifier Value(string value) => Modify(x => x.value = value);
 
     public static HtmlElementModifier Disabled(string value) => Modify(x => x.disabled = value);
+
+    public static HtmlElementModifier ValueBind(Expression<Func<string>> value) => Modify(x => x.valueBind = value);
+
+    public static HtmlElementModifier OnChange(Func<ChangeEvent, Task> value) => Modify(x => x.onChange = value);
 
 }
 

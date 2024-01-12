@@ -42,16 +42,7 @@ public sealed class HtmlTextNode : HtmlElement
 
 sealed class br : HtmlElement;
 
-partial class select
-{
-    [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments")]
-    public Func<ChangeEvent, Task> onChange { get; set; }
 
-    [ReactProp]
-    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = nameof(onChange))]
-    public Expression<Func<string>> valueBind { get; set; }
-}
 
 public sealed class style : HtmlElement
 {
