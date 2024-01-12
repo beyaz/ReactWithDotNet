@@ -1595,21 +1595,24 @@ public class ExportingCommonHtmlElements
                     },
                     new ()
                     {
-                        Name = "onClick",
-                        Type = "MouseEventHandler",
-                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments"
+                        Name                              = "onClick",
+                        Type                              = "MouseEventHandler",
+                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+                        IsIsVoidTaskDelegate              = true,
                     },
                     new ()
                     {
                         Name                              = "onMouseEnter",
                         Type                              = "MouseEventHandler",
-                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments"
+                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+                        IsIsVoidTaskDelegate              = true,
                     },
                     new ()
                     {
                         Name                              = "onMouseLeave",
                         Type                              = "MouseEventHandler",
-                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments"
+                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+                        IsIsVoidTaskDelegate              = true,
                     },
                     new ()
                     {
@@ -1620,8 +1623,9 @@ public class ExportingCommonHtmlElements
                     },
                     new ()
                     {
-                        Name = "onKeyDown",
-                        Type = "KeyboardEventHandler"
+                        Name                 = "onKeyDown",
+                        Type                 = "KeyboardEventHandler",
+                        IsIsVoidTaskDelegate = true,
                     }
                 ],
                 EnableCastFromString = false
