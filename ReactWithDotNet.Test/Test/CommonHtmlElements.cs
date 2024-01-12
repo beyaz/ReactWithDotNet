@@ -1524,6 +1524,18 @@ public class ExportingCommonHtmlElements
                     {
                         Name = "step",
                         Type = "int?"
+                    },
+                    
+                    new ()
+                    {
+                        Name                   = "valueBind",
+                        Type                   = "Expression<Func<InputValueBinder>>",
+                        IsBindingExpression    = true,
+                        TransformValueInClient = "ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull",
+                        Bind =new ()
+                        {
+                            targetProp = "value", jsValueAccess = "e.target.value", eventName = "onChange"
+                        }
                     }
                 ],
                 EnableCastFromString = false
@@ -1696,6 +1708,24 @@ public class ExportingCommonHtmlElements
                         list[^1] += ",";
                         list.Add($"{padding}{padding}isScrollEvent = true");
                     }
+                    if (attribute.IsBindingExpression)
+                    {
+                        list[^1] += ",";
+                        list.Add($"{padding}{padding}isBindingExpression = true");
+                    }
+                    if (attribute.TransformValueInClient is not null)
+                    {
+                        list[^1] += ",";
+                        list.Add($"{padding}{padding}transformValueInClient = \"{attribute.TransformValueInClient}\"");
+                    }
+                    
+                    if (attribute.Bind is not null)
+                    {
+                        list[^1] += ",";
+                        list.Add($"{padding}{padding}bind = new(){{ targetProp = \"{attribute.Bind.targetProp}\", jsValueAccess = \"{attribute.Bind.jsValueAccess}\", eventName = \"{attribute.Bind.eventName}\" }}");
+                    }
+                    
+                    
                     
                     
                     list.Add($"{padding}}};");
@@ -1849,6 +1879,9 @@ public class ExportingCommonHtmlElements
         public string GrabEventArgumentsByUsingFunction { get; init; }
         public bool IsIsVoidTaskDelegate { get; init; }
         public bool isScrollEvent { get; init; }
+        public bool IsBindingExpression { get; init; }
+        public string TransformValueInClient { get; init; }
+        public ReactBindAttribute Bind{ get; init; }
     }
 
     class TagInfo

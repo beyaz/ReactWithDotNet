@@ -56,7 +56,7 @@ partial class input
     {
         name                   = nameof(valueBind),
         isBindingExpression    = true,
-        transformValueInClient = "ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull",
+            transformValueInClient = "ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull",
         bind =new ()
         {
             targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange"
