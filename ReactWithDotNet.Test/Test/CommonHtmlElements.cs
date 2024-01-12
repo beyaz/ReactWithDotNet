@@ -1666,6 +1666,27 @@ public class ExportingCommonHtmlElements
             {
                 foreach (var attribute in item.Attributes)
                 {
+                    
+                    list.Add($"{padding}#region string {CamelCase(attribute.Name)}");
+                    list.Add($"{padding}PropertyValueNode<{attribute.Type}> __{CamelCase(attribute.Name).RemoveFromStart("@")};");
+                    
+                    
+                    list.Add($"{padding}static readonly PropertyValueDefinition _{CamelCase(attribute.Name).RemoveFromStart("@")} = new()");
+                    list.Add($"{padding}{{");
+                    list.Add($"{padding}{padding}name = nameof({CamelCase(attribute.Name)})");
+                    
+                    if (attribute.GrabEventArgumentsByUsingFunction is not null)
+                    {
+                        list[^1] += ",";
+                        list.Add($"{padding}{padding}GrabEventArgumentsByUsingFunction = \"{attribute.GrabEventArgumentsByUsingFunction}\"");
+                    }
+                    
+                    
+                    list.Add($"{padding}}};");
+                    list.Add($"{padding}#endregion");
+                    
+                    
+                    
                     if (IsNullOrWhiteSpace(attribute.Comment) == false)
                     {
                         list.Add($"{padding}/// <summary>");
@@ -1679,6 +1700,13 @@ public class ExportingCommonHtmlElements
                         partDefaultValueAssignment = $" = \"{attribute.DefaultValue}\";";
                     }
 
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     list.Add("    [ReactProp]");
 
                     if (attribute.GrabEventArgumentsByUsingFunction is not null)

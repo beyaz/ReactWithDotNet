@@ -217,6 +217,7 @@ abstract partial class HtmlElement : Element
     internal sealed class PropertyValueDefinition
     {
         public string name;
+        public string GrabEventArgumentsByUsingFunction;
     }
 
     
