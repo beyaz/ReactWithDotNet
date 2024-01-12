@@ -94,7 +94,8 @@ abstract partial class HtmlElement : Element
     PropertyValueNode<Action> _onClickPreview;
     static readonly PropertyValueDefinition _onClickPreview_ = new()
     {
-        isOnClickPreview = true
+        isOnClickPreview = true,
+        name = "$onClickPreview"
     };
     /// <summary>
     /// TODO: comment here
