@@ -1384,6 +1384,18 @@ public class ExportingCommonHtmlElements
                         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments",
                         Comment                           = "Occurs when an element loses focus."
                     },
+                    
+                    new ()
+                    {
+                        Name                = "valueBind",
+                        Type                = "Expression<Func<InputValueBinder>>",
+                        IsBindingExpression = true,
+                        TransformValueInClient = "ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull",
+                        Bind =new ()
+                        {
+                            targetProp = "value", jsValueAccess = "e.target.value", eventName = "onChange"
+                        }
+                    },
                 },
                 EnableCastFromString = false
             },

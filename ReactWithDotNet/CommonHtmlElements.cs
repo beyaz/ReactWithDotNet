@@ -5580,6 +5580,23 @@ public sealed partial class textarea : HtmlElement
     #endregion
 
 
+    #region string valueBind
+    PropertyValueNode<Expression<Func<InputValueBinder>>> _valueBind;
+    static readonly PropertyValueDefinition _valueBind_ = new()
+    {
+        name = nameof(valueBind),
+        isBindingExpression = true,
+        transformValueInClient = "ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull",
+        bind = new(){ targetProp = "value", jsValueAccess = "e.target.value", eventName = "onChange" }
+    };
+    public Expression<Func<InputValueBinder>> valueBind
+    {
+        get => _valueBind?.value;
+        set => SetValue(_valueBind_, ref _valueBind, value);
+    }
+    #endregion
+
+
     public textarea() { }
 
     public textarea(params IModifier[] modifiers) : base(modifiers) { }
@@ -5697,6 +5714,8 @@ public sealed partial class textarea : HtmlElement
     ///     Occurs when an element loses focus.
     /// </summary>
     public static HtmlElementModifier OnBlur(FocusEventHandler value) => Modify(x => x.onBlur = value);
+
+    public static HtmlElementModifier ValueBind(Expression<Func<InputValueBinder>> value) => Modify(x => x.valueBind = value);
 
 }
 
