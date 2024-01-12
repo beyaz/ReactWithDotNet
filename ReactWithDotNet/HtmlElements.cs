@@ -18,15 +18,6 @@ public sealed class InputValueBinder
 
 partial class input
 {
-    [ReactProp]
-    [ReactBind(targetProp = nameof(@checked), jsValueAccess = "e.target.checked", eventName = "onChange")]
-    public Expression<Func<bool>> checkedBind { get; set; }
-
-    
-    
-
-  
-
     /// <summary>
     ///     if you want to handle when user iteraction finished see example below<br />
     ///     component.valueBind = ()=>state.UserInfo.Name<br />

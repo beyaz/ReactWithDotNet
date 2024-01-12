@@ -1540,6 +1540,17 @@ public class ExportingCommonHtmlElements
                     
                     new ()
                     {
+                        Name                   = "checkedBind",
+                        Type                   = "Expression<Func<bool>>",
+                        IsBindingExpression    = true,
+                        Bind =new ()
+                        {
+                            targetProp = "checked", jsValueAccess = "e.target.value", eventName = "onChange"
+                        }
+                    },
+                    
+                    new ()
+                    {
                         Name                   = "value",
                         Type                   = "string",
                         TransformValueInClient = "ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull"

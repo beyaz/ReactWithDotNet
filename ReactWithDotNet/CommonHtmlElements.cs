@@ -6123,6 +6123,22 @@ public sealed partial class input : HtmlElement
     #endregion
 
 
+    #region string checkedBind
+    PropertyValueNode<Expression<Func<bool>>> _checkedBind;
+    static readonly PropertyValueDefinition _checkedBind_ = new()
+    {
+        name = nameof(checkedBind),
+        isBindingExpression = true,
+        bind = new(){ targetProp = "checked", jsValueAccess = "e.target.value", eventName = "onChange" }
+    };
+    public Expression<Func<bool>> checkedBind
+    {
+        get => _checkedBind?.value;
+        set => SetValue(_checkedBind_, ref _checkedBind, value);
+    }
+    #endregion
+
+
     #region string value
     PropertyValueNode<string> _value;
     static readonly PropertyValueDefinition _value_ = new()
@@ -6232,6 +6248,8 @@ public sealed partial class input : HtmlElement
     public static HtmlElementModifier Step(int? value) => Modify(x => x.step = value);
 
     public static HtmlElementModifier ValueBind(Expression<Func<InputValueBinder>> value) => Modify(x => x.valueBind = value);
+
+    public static HtmlElementModifier CheckedBind(Expression<Func<bool>> value) => Modify(x => x.checkedBind = value);
 
     public static HtmlElementModifier Value(string value) => Modify(x => x.value = value);
 
