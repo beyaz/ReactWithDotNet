@@ -1704,7 +1704,7 @@ public class ExportingCommonHtmlElements
                     list.Add($"{padding}public {attribute.Type} {CamelCase(attribute.Name)}");
                     list.Add($"{padding}{{");
                     list.Add($"{padding}{padding}get => _{CamelCase(attribute.Name).RemoveFromStart("@")}?.value;");
-                    list.Add($"{padding}{padding}set => SetValue(ref _{CamelCase(attribute.Name).RemoveFromStart("@")}, _{CamelCase(attribute.Name).RemoveFromStart("@")}_, value);");
+                    list.Add($"{padding}{padding}set => SetValue(_{CamelCase(attribute.Name).RemoveFromStart("@")}_, ref _{CamelCase(attribute.Name).RemoveFromStart("@")}, value);");
                     list.Add($"{padding}}}");
                     list.Add($"{padding}#endregion");
                     list.Add(Empty);
