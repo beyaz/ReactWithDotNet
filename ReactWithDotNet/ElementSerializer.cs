@@ -596,6 +596,208 @@ static partial class ElementSerializer
         return propertyValue;
     }
 
+    static async Task<ValueExportInfo<object>> GetPropertyValue(ElementSerializerContext context, Node node, TypeInfo typeInfo, HtmlElement instance, HtmlElement.PropertyValueNode propertyValueNode, 
+        PropertyAccessInfo property)
+    {
+        // every value need to serialize. Because default value handled in property set function
+        var propertyInfo = property.PropertyInfo;
+
+        var propertyValue = propertyValueNode.value;
+        
+        if (propertyValue is Delegate @delegate)
+        {
+            if (propertyValue is Action)
+            {
+                if (@delegate.Target is ReactComponentBase target)
+                {
+                    // special case
+                    if (propertyInfo.Name == "onClickPreview" && propertyInfo.DeclaringType== typeof(HtmlElement))
+                    {
+                        if (context.IsCapturingPreview)
+                        {
+                            return NotExportableObject;
+                        }
+                    
+                        var newTarget = (ReactComponentBase)target.Clone();
+
+                        var newTargetTypeInfo = GetTypeInfo(target.GetType());
+                        if (newTargetTypeInfo.StateProperty is not null)
+                        {
+                            var targetState = newTargetTypeInfo.StateProperty.GetValueFunc(target);
+                            if (targetState is EmptyState == false)
+                            {
+                                newTargetTypeInfo.StateProperty.SetValueFunc(newTarget, ReflectionHelper.DeepCopy(targetState));
+                            }
+                        }
+                    
+                        @delegate.Method.Invoke(newTarget, null);
+                        
+                        await newTarget.InvokeRender();
+
+                        context.IsCapturingPreview = true;
+                        var newMap = await ToJsonMap(newTarget, context);
+                        context.IsCapturingPreview = false;
+
+                        return (JsonMap)newMap;
+                    }
+                
+                    propertyValue = new RemoteMethodInfo
+                    {
+                        IsRemoteMethod                   = true,
+                        remoteMethodName                 = @delegate.Method.GetNameWithToken(),
+                        HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier
+                    };
+                }
+                else
+                {
+                    throw HandlerMethodShouldBelongToReactComponent(propertyInfo, @delegate.Target);
+                }
+            }
+            
+            if (property.PropertyTypeIsIsVoidTaskDelegate)
+            {
+                if (@delegate.Target is ReactComponentBase target)
+                {
+                    int? htmlElementScrollDebounceTimeout = null;
+                    if (propertyInfo.Name == nameof(HtmlElement.onScroll) && propertyInfo.DeclaringType == typeof(HtmlElement))
+                    {
+                        htmlElementScrollDebounceTimeout = ((HtmlElement)instance).onScrollDebounceTimeout;
+                    }
+                    
+                    propertyValue = new RemoteMethodInfo
+                    {
+                        IsRemoteMethod                      = true,
+                        remoteMethodName                    = @delegate.Method.GetNameWithToken(),
+                        HandlerComponentUniqueIdentifier    = target.ComponentUniqueIdentifier,
+                        FunctionNameOfGrabEventArguments    = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
+                        StopPropagation                     = @delegate.Method.GetCustomAttribute<ReactStopPropagationAttribute>() is not null,
+                        HtmlElementScrollDebounceTimeout    = htmlElementScrollDebounceTimeout,
+                        KeyboardEventCallOnly = @delegate.Method.GetCustomAttribute<ReactKeyboardEventCallOnlyAttribute>()?.Keys
+                    };
+                }
+                else
+                {
+                    throw HandlerMethodShouldBelongToReactComponent(propertyInfo, @delegate.Target);
+                }
+            }
+        }
+        
+        // todo init from definition
+        if (propertyValue is Expression<Func<int>> ||
+            propertyValue is Expression<Func<double>> ||
+            propertyValue is Expression<Func<string>> ||
+            propertyValue is Expression<Func<bool>>||
+            propertyValue is Expression<Func<InputValueBinder>>)
+        {
+            static object getTargetValueFromExpression(PropertyInfo pi, LambdaExpression lambdaExpression)
+            {
+                var expression = lambdaExpression.Body;
+                while (true)
+                {
+                    if (expression is UnaryExpression unaryExpression)
+                    {
+                        expression = unaryExpression.Operand;
+
+                        continue;
+                    }
+                    
+                    if (expression is MemberExpression memberExpression)
+                    {
+                        expression = memberExpression.Expression;
+                        continue;
+                    }
+
+                    if (expression is ConstantExpression constantExpression)
+                    {
+                        return constantExpression.Value;
+                    }
+
+                    if (expression is MethodCallExpression methodCallExpression)
+                    {
+                        expression = methodCallExpression.Object;
+                        continue;
+                    }
+
+                    throw HandlerMethodShouldBelongToReactComponent(pi, lambdaExpression.ToString());
+                }
+            }
+
+            (IReadOnlyList<string> path, bool isConnectedToState) calculateSourcePathFunc()
+            {
+                if (propertyValue is Expression<Func<string>> bindingExpressionAsString)
+                {
+                    return bindingExpressionAsString.AsBindingPath();
+                }
+
+                if (propertyValue is Expression<Func<int>> bindingExpressionAsInt32)
+                {
+                    return bindingExpressionAsInt32.AsBindingPath();
+                }
+
+                if (propertyValue is Expression<Func<bool>> bindingExpressionAsBoolean)
+                {
+                    return bindingExpressionAsBoolean.AsBindingPath();
+                }
+
+                if (propertyValue is Expression<Func<double>> bindingExpressionAsDouble)
+                {
+                    return bindingExpressionAsDouble.AsBindingPath();
+                }
+                
+                if (propertyValue is Expression<Func<InputValueBinder>> bindingExpressionAsInputValueBinder)
+                {
+                    return bindingExpressionAsInputValueBinder.AsBindingPath();
+                }
+
+                throw new NotImplementedException();
+            }
+
+            var bindInfo = GetExpressionAsBindingInfo(propertyInfo, calculateSourcePathFunc);
+            if (bindInfo == null)
+            {
+                return NotExportableObject;
+            }
+
+            if (getTargetValueFromExpression(propertyInfo, propertyValue as LambdaExpression) is ReactComponentBase target)
+            {
+                bindInfo.HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier;
+            }
+
+            var debounceTimeout = instance.GetType().GetProperty(propertyInfo.Name + "DebounceTimeout")?.GetValue(instance) as int?;
+            if (debounceTimeout > 0)
+            {
+                if (instance.GetType().GetProperty(propertyInfo.Name + "DebounceHandler")?.GetValue(instance) is Func<Task> debounceHandler)
+                {
+                    bindInfo.DebounceTimeout = debounceTimeout;
+                    bindInfo.DebounceHandler = debounceHandler.Method.GetNameWithToken();
+                }
+            }
+
+            return bindInfo;
+        }
+
+        if (propertyValue is HtmlTextNode htmlTextNode)
+        {
+            return htmlTextNode.innerText;
+        }
+
+        if (property.TransformValueInClientFunction is not null)
+        {
+            var jsonMap = new JsonMap();
+
+            jsonMap.Add("$transformValueFunction", property.TransformValueInClientFunction);
+            jsonMap.Add("RawValue", propertyValue);
+
+            return jsonMap;
+        }
+
+        return propertyValue;
+    }
+
+    
+    
+    
+    
     static string GetReactComponentTypeInfo(object reactStatefulComponent)
     {
         return reactStatefulComponent.GetType().GetFullName();

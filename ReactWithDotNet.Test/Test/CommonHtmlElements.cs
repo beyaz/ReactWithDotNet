@@ -1683,7 +1683,7 @@ public class ExportingCommonHtmlElements
                     
                     
                     list.Add($"{padding}}};");
-                    list.Add($"{padding}#endregion");
+                    
                     
                     
                     
@@ -1694,28 +1694,36 @@ public class ExportingCommonHtmlElements
                         list.Add($"{padding}/// </summary>");
                     }
 
+                    // todo: default value only xmlns fix in constructor
                     var partDefaultValueAssignment = "";
                     if (attribute.DefaultValue is not null)
                     {
-                        partDefaultValueAssignment = $" = \"{attribute.DefaultValue}\";";
+                        partDefaultValueAssignment = $" ?? \"{attribute.DefaultValue}\";";
                     }
 
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    list.Add("    [ReactProp]");
-
-                    if (attribute.GrabEventArgumentsByUsingFunction is not null)
-                    {
-                        list.Add($"    [ReactGrabEventArgumentsByUsingFunction(\"{attribute.GrabEventArgumentsByUsingFunction}\")]");
-                    }
-                    
-                    list.Add($"    public {attribute.Type} {CamelCase(attribute.Name)} {{ get; set; }}{partDefaultValueAssignment}");
+                    list.Add($"{padding}public {attribute.Type} {CamelCase(attribute.Name)}");
+                    list.Add($"{padding}{{");
+                    list.Add($"{padding}{padding}get => __{CamelCase(attribute.Name).RemoveFromStart("@")}?.value;");
+                    list.Add($"{padding}{padding}set => SetValue(ref __{CamelCase(attribute.Name).RemoveFromStart("@")}, _{CamelCase(attribute.Name).RemoveFromStart("@")}, value);");
+                    list.Add($"{padding}}}");
+                    list.Add($"{padding}#endregion");
                     list.Add(Empty);
+                    list.Add(Empty);
+                    
+                    
+                    
+                    
+                    
+                    // O L D
+                    //list.Add("    [ReactProp]");
+
+                    //if (attribute.GrabEventArgumentsByUsingFunction is not null)
+                    //{
+                    //    list.Add($"    [ReactGrabEventArgumentsByUsingFunction(\"{attribute.GrabEventArgumentsByUsingFunction}\")]");
+                    //}
+                    
+                    //list.Add($"    public {attribute.Type} {CamelCase(attribute.Name)} {{ get; set; }}{partDefaultValueAssignment}");
+                    //list.Add(Empty);
                 }
             }
 

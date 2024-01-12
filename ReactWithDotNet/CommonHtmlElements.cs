@@ -45,12 +45,16 @@ public sealed class button : HtmlElement
     {
         name = nameof(type)
     };
-    #endregion
     /// <summary>
     ///     Specifies the type of button. button, reset, submit
     /// </summary>
-    [ReactProp]
-    public string type { get; set; }
+    public string type
+    {
+        get => __type?.value;
+        set => SetValue(ref __type, _type, value);
+    }
+    #endregion
+
 
     #region string value
     PropertyValueNode<string> __value;
@@ -58,12 +62,16 @@ public sealed class button : HtmlElement
     {
         name = nameof(value)
     };
-    #endregion
     /// <summary>
     ///     Specifies an initial value for the button
     /// </summary>
-    [ReactProp]
-    public string value { get; set; }
+    public string value
+    {
+        get => __value?.value;
+        set => SetValue(ref __value, _value, value);
+    }
+    #endregion
+
 
     #region string autofocus
     PropertyValueNode<string> __autofocus;
@@ -71,12 +79,16 @@ public sealed class button : HtmlElement
     {
         name = nameof(autofocus)
     };
-    #endregion
     /// <summary>
     ///     Specifies that the button should have input focus when the page loads. Only one element in a document can have this attribute.
     /// </summary>
-    [ReactProp]
-    public string autofocus { get; set; }
+    public string autofocus
+    {
+        get => __autofocus?.value;
+        set => SetValue(ref __autofocus, _autofocus, value);
+    }
+    #endregion
+
 
     #region string disabled
     PropertyValueNode<string> __disabled;
@@ -84,12 +96,16 @@ public sealed class button : HtmlElement
     {
         name = nameof(disabled)
     };
-    #endregion
     /// <summary>
     ///     Specifies that the button should be disabled. A disabled button cannot be clicked.
     /// </summary>
-    [ReactProp]
-    public string disabled { get; set; }
+    public string disabled
+    {
+        get => __disabled?.value;
+        set => SetValue(ref __disabled, _disabled, value);
+    }
+    #endregion
+
 
     #region string form
     PropertyValueNode<string> __form;
@@ -97,12 +113,16 @@ public sealed class button : HtmlElement
     {
         name = nameof(form)
     };
-    #endregion
     /// <summary>
     ///     Specifies the form that the button is associated with.
     /// </summary>
-    [ReactProp]
-    public string form { get; set; }
+    public string form
+    {
+        get => __form?.value;
+        set => SetValue(ref __form, _form, value);
+    }
+    #endregion
+
 
     #region string formaction
     PropertyValueNode<string> __formaction;
@@ -110,12 +130,16 @@ public sealed class button : HtmlElement
     {
         name = nameof(formaction)
     };
-    #endregion
     /// <summary>
     ///     Specifies the URL of the form action when the button is clicked.
     /// </summary>
-    [ReactProp]
-    public string formaction { get; set; }
+    public string formaction
+    {
+        get => __formaction?.value;
+        set => SetValue(ref __formaction, _formaction, value);
+    }
+    #endregion
+
 
     #region string formenctype
     PropertyValueNode<string> __formenctype;
@@ -123,12 +147,16 @@ public sealed class button : HtmlElement
     {
         name = nameof(formenctype)
     };
-    #endregion
     /// <summary>
     ///     Specifies the form encoding method (e.g., application/x-www-form-urlencoded, multipart/form-data) when the button is clicked.
     /// </summary>
-    [ReactProp]
-    public string formenctype { get; set; }
+    public string formenctype
+    {
+        get => __formenctype?.value;
+        set => SetValue(ref __formenctype, _formenctype, value);
+    }
+    #endregion
+
 
     #region string formmethod
     PropertyValueNode<string> __formmethod;
@@ -136,12 +164,16 @@ public sealed class button : HtmlElement
     {
         name = nameof(formmethod)
     };
-    #endregion
     /// <summary>
     ///     Specifies the form submission method (e.g., GET, POST) when the button is clicked.
     /// </summary>
-    [ReactProp]
-    public string formmethod { get; set; }
+    public string formmethod
+    {
+        get => __formmethod?.value;
+        set => SetValue(ref __formmethod, _formmethod, value);
+    }
+    #endregion
+
 
     #region string formnovalidate
     PropertyValueNode<string> __formnovalidate;
@@ -149,12 +181,16 @@ public sealed class button : HtmlElement
     {
         name = nameof(formnovalidate)
     };
-    #endregion
     /// <summary>
     ///     Specifies that the form should not be validated before submission when the button is clicked.
     /// </summary>
-    [ReactProp]
-    public string formnovalidate { get; set; }
+    public string formnovalidate
+    {
+        get => __formnovalidate?.value;
+        set => SetValue(ref __formnovalidate, _formnovalidate, value);
+    }
+    #endregion
+
 
     #region string name
     PropertyValueNode<string> __name;
@@ -162,12 +198,16 @@ public sealed class button : HtmlElement
     {
         name = nameof(name)
     };
-    #endregion
     /// <summary>
     ///     Specifies a name for the button. The name attribute is used to reference form-data after the form has been submitted, or to reference the element in JavaScript.
     /// </summary>
-    [ReactProp]
-    public string name { get; set; }
+    public string name
+    {
+        get => __name?.value;
+        set => SetValue(ref __name, _name, value);
+    }
+    #endregion
+
 
     public button() { }
 
@@ -1227,9 +1267,13 @@ public sealed class table : HtmlElement
     {
         name = nameof(cellSpacing)
     };
+    public double? cellSpacing
+    {
+        get => __cellSpacing?.value;
+        set => SetValue(ref __cellSpacing, _cellSpacing, value);
+    }
     #endregion
-    [ReactProp]
-    public double? cellSpacing { get; set; }
+
 
     #region string cellPadding
     PropertyValueNode<double?> __cellPadding;
@@ -1237,9 +1281,13 @@ public sealed class table : HtmlElement
     {
         name = nameof(cellPadding)
     };
+    public double? cellPadding
+    {
+        get => __cellPadding?.value;
+        set => SetValue(ref __cellPadding, _cellPadding, value);
+    }
     #endregion
-    [ReactProp]
-    public double? cellPadding { get; set; }
+
 
     public table() { }
 
@@ -1303,9 +1351,13 @@ public sealed class th : HtmlElement
     {
         name = nameof(colSpan)
     };
+    public int? colSpan
+    {
+        get => __colSpan?.value;
+        set => SetValue(ref __colSpan, _colSpan, value);
+    }
     #endregion
-    [ReactProp]
-    public int? colSpan { get; set; }
+
 
     #region string rowSpan
     PropertyValueNode<int?> __rowSpan;
@@ -1313,9 +1365,13 @@ public sealed class th : HtmlElement
     {
         name = nameof(rowSpan)
     };
+    public int? rowSpan
+    {
+        get => __rowSpan?.value;
+        set => SetValue(ref __rowSpan, _rowSpan, value);
+    }
     #endregion
-    [ReactProp]
-    public int? rowSpan { get; set; }
+
 
     public th() { }
 
@@ -1340,9 +1396,13 @@ public sealed class td : HtmlElement
     {
         name = nameof(colSpan)
     };
+    public int? colSpan
+    {
+        get => __colSpan?.value;
+        set => SetValue(ref __colSpan, _colSpan, value);
+    }
     #endregion
-    [ReactProp]
-    public int? colSpan { get; set; }
+
 
     #region string rowSpan
     PropertyValueNode<int?> __rowSpan;
@@ -1350,9 +1410,13 @@ public sealed class td : HtmlElement
     {
         name = nameof(rowSpan)
     };
+    public int? rowSpan
+    {
+        get => __rowSpan?.value;
+        set => SetValue(ref __rowSpan, _rowSpan, value);
+    }
     #endregion
-    [ReactProp]
-    public int? rowSpan { get; set; }
+
 
 
     public td(string innerText) : base(innerText) {  }
@@ -1381,9 +1445,13 @@ public sealed class tr : HtmlElement
     {
         name = nameof(colSpan)
     };
+    public int? colSpan
+    {
+        get => __colSpan?.value;
+        set => SetValue(ref __colSpan, _colSpan, value);
+    }
     #endregion
-    [ReactProp]
-    public int? colSpan { get; set; }
+
 
     #region string rowSpan
     PropertyValueNode<int?> __rowSpan;
@@ -1391,9 +1459,13 @@ public sealed class tr : HtmlElement
     {
         name = nameof(rowSpan)
     };
+    public int? rowSpan
+    {
+        get => __rowSpan?.value;
+        set => SetValue(ref __rowSpan, _rowSpan, value);
+    }
     #endregion
-    [ReactProp]
-    public int? rowSpan { get; set; }
+
 
     public tr() { }
 
@@ -1418,9 +1490,13 @@ public sealed class option : HtmlElement
     {
         name = nameof(selected)
     };
+    public bool? selected
+    {
+        get => __selected?.value;
+        set => SetValue(ref __selected, _selected, value);
+    }
     #endregion
-    [ReactProp]
-    public bool? selected { get; set; }
+
 
     #region string disabled
     PropertyValueNode<string> __disabled;
@@ -1428,9 +1504,13 @@ public sealed class option : HtmlElement
     {
         name = nameof(disabled)
     };
+    public string disabled
+    {
+        get => __disabled?.value;
+        set => SetValue(ref __disabled, _disabled, value);
+    }
     #endregion
-    [ReactProp]
-    public string disabled { get; set; }
+
 
     #region string value
     PropertyValueNode<string> __value;
@@ -1438,9 +1518,13 @@ public sealed class option : HtmlElement
     {
         name = nameof(value)
     };
+    public string value
+    {
+        get => __value?.value;
+        set => SetValue(ref __value, _value, value);
+    }
     #endregion
-    [ReactProp]
-    public string value { get; set; }
+
 
     public option() { }
 
@@ -1467,12 +1551,16 @@ public sealed class ellipse : HtmlElement
     {
         name = nameof(cx)
     };
-    #endregion
     /// <summary>
     ///     The x-coordinate of the center of the ellipse.
     /// </summary>
-    [ReactProp]
-    public string cx { get; set; }
+    public string cx
+    {
+        get => __cx?.value;
+        set => SetValue(ref __cx, _cx, value);
+    }
+    #endregion
+
 
     #region string cy
     PropertyValueNode<string> __cy;
@@ -1480,12 +1568,16 @@ public sealed class ellipse : HtmlElement
     {
         name = nameof(cy)
     };
-    #endregion
     /// <summary>
     ///     The y-coordinate of the center of the ellipse.
     /// </summary>
-    [ReactProp]
-    public string cy { get; set; }
+    public string cy
+    {
+        get => __cy?.value;
+        set => SetValue(ref __cy, _cy, value);
+    }
+    #endregion
+
 
     #region string rx
     PropertyValueNode<string> __rx;
@@ -1493,12 +1585,16 @@ public sealed class ellipse : HtmlElement
     {
         name = nameof(rx)
     };
-    #endregion
     /// <summary>
     ///     The radius of the ellipse along the x-axis.
     /// </summary>
-    [ReactProp]
-    public string rx { get; set; }
+    public string rx
+    {
+        get => __rx?.value;
+        set => SetValue(ref __rx, _rx, value);
+    }
+    #endregion
+
 
     #region string ry
     PropertyValueNode<string> __ry;
@@ -1506,12 +1602,16 @@ public sealed class ellipse : HtmlElement
     {
         name = nameof(ry)
     };
-    #endregion
     /// <summary>
     ///     The radius of the ellipse along the y-axis.
     /// </summary>
-    [ReactProp]
-    public string ry { get; set; }
+    public string ry
+    {
+        get => __ry?.value;
+        set => SetValue(ref __ry, _ry, value);
+    }
+    #endregion
+
 
     #region string fill
     PropertyValueNode<string> __fill;
@@ -1519,12 +1619,16 @@ public sealed class ellipse : HtmlElement
     {
         name = nameof(fill)
     };
-    #endregion
     /// <summary>
     ///     The fill color of the ellipse.
     /// </summary>
-    [ReactProp]
-    public string fill { get; set; }
+    public string fill
+    {
+        get => __fill?.value;
+        set => SetValue(ref __fill, _fill, value);
+    }
+    #endregion
+
 
     #region string stroke
     PropertyValueNode<string> __stroke;
@@ -1532,12 +1636,16 @@ public sealed class ellipse : HtmlElement
     {
         name = nameof(stroke)
     };
-    #endregion
     /// <summary>
     ///     The stroke color of the ellipse.
     /// </summary>
-    [ReactProp]
-    public string stroke { get; set; }
+    public string stroke
+    {
+        get => __stroke?.value;
+        set => SetValue(ref __stroke, _stroke, value);
+    }
+    #endregion
+
 
     #region string strokeWidth
     PropertyValueNode<string> __strokeWidth;
@@ -1545,12 +1653,16 @@ public sealed class ellipse : HtmlElement
     {
         name = nameof(strokeWidth)
     };
-    #endregion
     /// <summary>
     ///     The width of the stroke.
     /// </summary>
-    [ReactProp]
-    public string strokeWidth { get; set; }
+    public string strokeWidth
+    {
+        get => __strokeWidth?.value;
+        set => SetValue(ref __strokeWidth, _strokeWidth, value);
+    }
+    #endregion
+
 
     public ellipse() { }
 
@@ -1620,12 +1732,16 @@ public sealed class line : HtmlElement
     {
         name = nameof(x1)
     };
-    #endregion
     /// <summary>
     ///     The x-coordinate of the start point of the line.
     /// </summary>
-    [ReactProp]
-    public string x1 { get; set; }
+    public string x1
+    {
+        get => __x1?.value;
+        set => SetValue(ref __x1, _x1, value);
+    }
+    #endregion
+
 
     #region string y1
     PropertyValueNode<string> __y1;
@@ -1633,12 +1749,16 @@ public sealed class line : HtmlElement
     {
         name = nameof(y1)
     };
-    #endregion
     /// <summary>
     ///     The y-coordinate of the start point of the line.
     /// </summary>
-    [ReactProp]
-    public string y1 { get; set; }
+    public string y1
+    {
+        get => __y1?.value;
+        set => SetValue(ref __y1, _y1, value);
+    }
+    #endregion
+
 
     #region string x2
     PropertyValueNode<string> __x2;
@@ -1646,12 +1766,16 @@ public sealed class line : HtmlElement
     {
         name = nameof(x2)
     };
-    #endregion
     /// <summary>
     ///     The x-coordinate of the end point of the line.
     /// </summary>
-    [ReactProp]
-    public string x2 { get; set; }
+    public string x2
+    {
+        get => __x2?.value;
+        set => SetValue(ref __x2, _x2, value);
+    }
+    #endregion
+
 
     #region string y2
     PropertyValueNode<string> __y2;
@@ -1659,12 +1783,16 @@ public sealed class line : HtmlElement
     {
         name = nameof(y2)
     };
-    #endregion
     /// <summary>
     ///     The y-coordinate of the end point of the line.
     /// </summary>
-    [ReactProp]
-    public string y2 { get; set; }
+    public string y2
+    {
+        get => __y2?.value;
+        set => SetValue(ref __y2, _y2, value);
+    }
+    #endregion
+
 
     #region string stroke
     PropertyValueNode<string> __stroke;
@@ -1672,12 +1800,16 @@ public sealed class line : HtmlElement
     {
         name = nameof(stroke)
     };
-    #endregion
     /// <summary>
     ///     The stroke (outline) color of the line.
     /// </summary>
-    [ReactProp]
-    public string stroke { get; set; }
+    public string stroke
+    {
+        get => __stroke?.value;
+        set => SetValue(ref __stroke, _stroke, value);
+    }
+    #endregion
+
 
     #region string strokeWidth
     PropertyValueNode<string> __strokeWidth;
@@ -1685,12 +1817,16 @@ public sealed class line : HtmlElement
     {
         name = nameof(strokeWidth)
     };
-    #endregion
     /// <summary>
     ///     The width of the line's outline.
     /// </summary>
-    [ReactProp]
-    public string strokeWidth { get; set; }
+    public string strokeWidth
+    {
+        get => __strokeWidth?.value;
+        set => SetValue(ref __strokeWidth, _strokeWidth, value);
+    }
+    #endregion
+
 
     #region string strokeDasharray
     PropertyValueNode<string> __strokeDasharray;
@@ -1698,12 +1834,16 @@ public sealed class line : HtmlElement
     {
         name = nameof(strokeDasharray)
     };
-    #endregion
     /// <summary>
     ///     Pattern of dashes and gaps used in the line's stroke.
     /// </summary>
-    [ReactProp]
-    public string strokeDasharray { get; set; }
+    public string strokeDasharray
+    {
+        get => __strokeDasharray?.value;
+        set => SetValue(ref __strokeDasharray, _strokeDasharray, value);
+    }
+    #endregion
+
 
     #region string strokeLinecap
     PropertyValueNode<string> __strokeLinecap;
@@ -1711,12 +1851,16 @@ public sealed class line : HtmlElement
     {
         name = nameof(strokeLinecap)
     };
-    #endregion
     /// <summary>
     ///     The style of the line's endpoints.
     /// </summary>
-    [ReactProp]
-    public string strokeLinecap { get; set; }
+    public string strokeLinecap
+    {
+        get => __strokeLinecap?.value;
+        set => SetValue(ref __strokeLinecap, _strokeLinecap, value);
+    }
+    #endregion
+
 
     #region string strokeLinejoin
     PropertyValueNode<string> __strokeLinejoin;
@@ -1724,12 +1868,16 @@ public sealed class line : HtmlElement
     {
         name = nameof(strokeLinejoin)
     };
-    #endregion
     /// <summary>
     ///     The style of the line's corners.
     /// </summary>
-    [ReactProp]
-    public string strokeLinejoin { get; set; }
+    public string strokeLinejoin
+    {
+        get => __strokeLinejoin?.value;
+        set => SetValue(ref __strokeLinejoin, _strokeLinejoin, value);
+    }
+    #endregion
+
 
     #region string strokeOpacity
     PropertyValueNode<string> __strokeOpacity;
@@ -1737,12 +1885,16 @@ public sealed class line : HtmlElement
     {
         name = nameof(strokeOpacity)
     };
-    #endregion
     /// <summary>
     ///     The opacity (transparency) of the line's stroke.
     /// </summary>
-    [ReactProp]
-    public string strokeOpacity { get; set; }
+    public string strokeOpacity
+    {
+        get => __strokeOpacity?.value;
+        set => SetValue(ref __strokeOpacity, _strokeOpacity, value);
+    }
+    #endregion
+
 
     public line() { }
 
@@ -1833,12 +1985,16 @@ public sealed class polyline : HtmlElement
     {
         name = nameof(points)
     };
-    #endregion
     /// <summary>
     ///     A list of points defining the vertices of the polyline.
     /// </summary>
-    [ReactProp]
-    public string points { get; set; }
+    public string points
+    {
+        get => __points?.value;
+        set => SetValue(ref __points, _points, value);
+    }
+    #endregion
+
 
     #region string fill
     PropertyValueNode<string> __fill;
@@ -1846,12 +2002,16 @@ public sealed class polyline : HtmlElement
     {
         name = nameof(fill)
     };
-    #endregion
     /// <summary>
     ///     The fill color of the polyline.
     /// </summary>
-    [ReactProp]
-    public string fill { get; set; }
+    public string fill
+    {
+        get => __fill?.value;
+        set => SetValue(ref __fill, _fill, value);
+    }
+    #endregion
+
 
     #region string stroke
     PropertyValueNode<string> __stroke;
@@ -1859,12 +2019,16 @@ public sealed class polyline : HtmlElement
     {
         name = nameof(stroke)
     };
-    #endregion
     /// <summary>
     ///     The stroke (outline) color of the polyline.
     /// </summary>
-    [ReactProp]
-    public string stroke { get; set; }
+    public string stroke
+    {
+        get => __stroke?.value;
+        set => SetValue(ref __stroke, _stroke, value);
+    }
+    #endregion
+
 
     #region string strokeWidth
     PropertyValueNode<string> __strokeWidth;
@@ -1872,12 +2036,16 @@ public sealed class polyline : HtmlElement
     {
         name = nameof(strokeWidth)
     };
-    #endregion
     /// <summary>
     ///     The width of the polyline's outline.
     /// </summary>
-    [ReactProp]
-    public string strokeWidth { get; set; }
+    public string strokeWidth
+    {
+        get => __strokeWidth?.value;
+        set => SetValue(ref __strokeWidth, _strokeWidth, value);
+    }
+    #endregion
+
 
     public polyline() { }
 
@@ -1926,12 +2094,16 @@ public sealed class circle : HtmlElement
     {
         name = nameof(cx)
     };
-    #endregion
     /// <summary>
     ///     The x-coordinate of the center of the circle.
     /// </summary>
-    [ReactProp]
-    public UnionProp<string,double> cx { get; set; }
+    public UnionProp<string,double> cx
+    {
+        get => __cx?.value;
+        set => SetValue(ref __cx, _cx, value);
+    }
+    #endregion
+
 
     #region string cy
     PropertyValueNode<UnionProp<string,double>> __cy;
@@ -1939,12 +2111,16 @@ public sealed class circle : HtmlElement
     {
         name = nameof(cy)
     };
-    #endregion
     /// <summary>
     ///     The y-coordinate of the center of the circle.
     /// </summary>
-    [ReactProp]
-    public UnionProp<string,double> cy { get; set; }
+    public UnionProp<string,double> cy
+    {
+        get => __cy?.value;
+        set => SetValue(ref __cy, _cy, value);
+    }
+    #endregion
+
 
     #region string r
     PropertyValueNode<UnionProp<string,double>> __r;
@@ -1952,12 +2128,16 @@ public sealed class circle : HtmlElement
     {
         name = nameof(r)
     };
-    #endregion
     /// <summary>
     ///     The radius of the circle.
     /// </summary>
-    [ReactProp]
-    public UnionProp<string,double> r { get; set; }
+    public UnionProp<string,double> r
+    {
+        get => __r?.value;
+        set => SetValue(ref __r, _r, value);
+    }
+    #endregion
+
 
     #region string fill
     PropertyValueNode<string> __fill;
@@ -1965,12 +2145,16 @@ public sealed class circle : HtmlElement
     {
         name = nameof(fill)
     };
-    #endregion
     /// <summary>
     ///     The fill color of the circle.
     /// </summary>
-    [ReactProp]
-    public string fill { get; set; }
+    public string fill
+    {
+        get => __fill?.value;
+        set => SetValue(ref __fill, _fill, value);
+    }
+    #endregion
+
 
     #region string stroke
     PropertyValueNode<string> __stroke;
@@ -1978,12 +2162,16 @@ public sealed class circle : HtmlElement
     {
         name = nameof(stroke)
     };
-    #endregion
     /// <summary>
     ///     The stroke color of the circle.
     /// </summary>
-    [ReactProp]
-    public string stroke { get; set; }
+    public string stroke
+    {
+        get => __stroke?.value;
+        set => SetValue(ref __stroke, _stroke, value);
+    }
+    #endregion
+
 
     #region string strokeWidth
     PropertyValueNode<string> __strokeWidth;
@@ -1991,12 +2179,16 @@ public sealed class circle : HtmlElement
     {
         name = nameof(strokeWidth)
     };
-    #endregion
     /// <summary>
     ///     The width of the stroke of the circle.
     /// </summary>
-    [ReactProp]
-    public string strokeWidth { get; set; }
+    public string strokeWidth
+    {
+        get => __strokeWidth?.value;
+        set => SetValue(ref __strokeWidth, _strokeWidth, value);
+    }
+    #endregion
+
 
     public circle() { }
 
@@ -2059,12 +2251,16 @@ public sealed class polygon : HtmlElement
     {
         name = nameof(points)
     };
-    #endregion
     /// <summary>
     ///     Specifies the coordinates of the polygon's vertices, in (x, y) pairs, separated by commas.
     /// </summary>
-    [ReactProp]
-    public string points { get; set; }
+    public string points
+    {
+        get => __points?.value;
+        set => SetValue(ref __points, _points, value);
+    }
+    #endregion
+
 
     #region string fill
     PropertyValueNode<string> __fill;
@@ -2072,12 +2268,16 @@ public sealed class polygon : HtmlElement
     {
         name = nameof(fill)
     };
-    #endregion
     /// <summary>
     ///     Specifies the fill color of the polygon.
     /// </summary>
-    [ReactProp]
-    public string fill { get; set; }
+    public string fill
+    {
+        get => __fill?.value;
+        set => SetValue(ref __fill, _fill, value);
+    }
+    #endregion
+
 
     #region string stroke
     PropertyValueNode<string> __stroke;
@@ -2085,12 +2285,16 @@ public sealed class polygon : HtmlElement
     {
         name = nameof(stroke)
     };
-    #endregion
     /// <summary>
     ///     Specifies the stroke color of the polygon.
     /// </summary>
-    [ReactProp]
-    public string stroke { get; set; }
+    public string stroke
+    {
+        get => __stroke?.value;
+        set => SetValue(ref __stroke, _stroke, value);
+    }
+    #endregion
+
 
     #region string strokeWidth
     PropertyValueNode<string> __strokeWidth;
@@ -2098,12 +2302,16 @@ public sealed class polygon : HtmlElement
     {
         name = nameof(strokeWidth)
     };
-    #endregion
     /// <summary>
     ///     Specifies the width of the polygon's stroke, in pixels.
     /// </summary>
-    [ReactProp]
-    public string strokeWidth { get; set; }
+    public string strokeWidth
+    {
+        get => __strokeWidth?.value;
+        set => SetValue(ref __strokeWidth, _strokeWidth, value);
+    }
+    #endregion
+
 
     #region string strokeLinecap
     PropertyValueNode<string> __strokeLinecap;
@@ -2111,12 +2319,16 @@ public sealed class polygon : HtmlElement
     {
         name = nameof(strokeLinecap)
     };
-    #endregion
     /// <summary>
     ///     Specifies the type of line cap used for the polygon's stroke.
     /// </summary>
-    [ReactProp]
-    public string strokeLinecap { get; set; }
+    public string strokeLinecap
+    {
+        get => __strokeLinecap?.value;
+        set => SetValue(ref __strokeLinecap, _strokeLinecap, value);
+    }
+    #endregion
+
 
     #region string strokeLinejoin
     PropertyValueNode<string> __strokeLinejoin;
@@ -2124,12 +2336,16 @@ public sealed class polygon : HtmlElement
     {
         name = nameof(strokeLinejoin)
     };
-    #endregion
     /// <summary>
     ///     Specifies the type of line join used for the polygon's stroke.
     /// </summary>
-    [ReactProp]
-    public string strokeLinejoin { get; set; }
+    public string strokeLinejoin
+    {
+        get => __strokeLinejoin?.value;
+        set => SetValue(ref __strokeLinejoin, _strokeLinejoin, value);
+    }
+    #endregion
+
 
     #region string fillRule
     PropertyValueNode<string> __fillRule;
@@ -2137,12 +2353,16 @@ public sealed class polygon : HtmlElement
     {
         name = nameof(fillRule)
     };
-    #endregion
     /// <summary>
     ///     Specifies how the polygon is filled.
     /// </summary>
-    [ReactProp]
-    public string fillRule { get; set; }
+    public string fillRule
+    {
+        get => __fillRule?.value;
+        set => SetValue(ref __fillRule, _fillRule, value);
+    }
+    #endregion
+
 
     public polygon() { }
 
@@ -2212,12 +2432,16 @@ public sealed class rect : HtmlElement
     {
         name = nameof(x)
     };
-    #endregion
     /// <summary>
     ///     The x-coordinate of the top-left corner of the rectangle.
     /// </summary>
-    [ReactProp]
-    public UnionProp<string,double> x { get; set; }
+    public UnionProp<string,double> x
+    {
+        get => __x?.value;
+        set => SetValue(ref __x, _x, value);
+    }
+    #endregion
+
 
     #region string y
     PropertyValueNode<UnionProp<string,double>> __y;
@@ -2225,12 +2449,16 @@ public sealed class rect : HtmlElement
     {
         name = nameof(y)
     };
-    #endregion
     /// <summary>
     ///     The y-coordinate of the top-left corner of the rectangle.
     /// </summary>
-    [ReactProp]
-    public UnionProp<string,double> y { get; set; }
+    public UnionProp<string,double> y
+    {
+        get => __y?.value;
+        set => SetValue(ref __y, _y, value);
+    }
+    #endregion
+
 
     #region string width
     PropertyValueNode<UnionProp<string,double>> __width;
@@ -2238,12 +2466,16 @@ public sealed class rect : HtmlElement
     {
         name = nameof(width)
     };
-    #endregion
     /// <summary>
     ///     The width of the rectangle.
     /// </summary>
-    [ReactProp]
-    public UnionProp<string,double> width { get; set; }
+    public UnionProp<string,double> width
+    {
+        get => __width?.value;
+        set => SetValue(ref __width, _width, value);
+    }
+    #endregion
+
 
     #region string height
     PropertyValueNode<UnionProp<string,double>> __height;
@@ -2251,12 +2483,16 @@ public sealed class rect : HtmlElement
     {
         name = nameof(height)
     };
-    #endregion
     /// <summary>
     ///     The height of the rectangle.
     /// </summary>
-    [ReactProp]
-    public UnionProp<string,double> height { get; set; }
+    public UnionProp<string,double> height
+    {
+        get => __height?.value;
+        set => SetValue(ref __height, _height, value);
+    }
+    #endregion
+
 
     #region string rx
     PropertyValueNode<UnionProp<string,double>> __rx;
@@ -2264,12 +2500,16 @@ public sealed class rect : HtmlElement
     {
         name = nameof(rx)
     };
-    #endregion
     /// <summary>
     ///     The border radius of the rectangle on the horizontal axis.
     /// </summary>
-    [ReactProp]
-    public UnionProp<string,double> rx { get; set; }
+    public UnionProp<string,double> rx
+    {
+        get => __rx?.value;
+        set => SetValue(ref __rx, _rx, value);
+    }
+    #endregion
+
 
     #region string ry
     PropertyValueNode<UnionProp<string,double>> __ry;
@@ -2277,12 +2517,16 @@ public sealed class rect : HtmlElement
     {
         name = nameof(ry)
     };
-    #endregion
     /// <summary>
     ///     The border radius of the rectangle on the vertical axis.
     /// </summary>
-    [ReactProp]
-    public UnionProp<string,double> ry { get; set; }
+    public UnionProp<string,double> ry
+    {
+        get => __ry?.value;
+        set => SetValue(ref __ry, _ry, value);
+    }
+    #endregion
+
 
     #region string fill
     PropertyValueNode<string> __fill;
@@ -2290,12 +2534,16 @@ public sealed class rect : HtmlElement
     {
         name = nameof(fill)
     };
-    #endregion
     /// <summary>
     ///     The fill color of the rectangle.
     /// </summary>
-    [ReactProp]
-    public string fill { get; set; }
+    public string fill
+    {
+        get => __fill?.value;
+        set => SetValue(ref __fill, _fill, value);
+    }
+    #endregion
+
 
     #region string stroke
     PropertyValueNode<string> __stroke;
@@ -2303,12 +2551,16 @@ public sealed class rect : HtmlElement
     {
         name = nameof(stroke)
     };
-    #endregion
     /// <summary>
     ///     The stroke color of the rectangle.
     /// </summary>
-    [ReactProp]
-    public string stroke { get; set; }
+    public string stroke
+    {
+        get => __stroke?.value;
+        set => SetValue(ref __stroke, _stroke, value);
+    }
+    #endregion
+
 
     #region string strokeWidth
     PropertyValueNode<UnionProp<string,double>> __strokeWidth;
@@ -2316,12 +2568,16 @@ public sealed class rect : HtmlElement
     {
         name = nameof(strokeWidth)
     };
-    #endregion
     /// <summary>
     ///     The width of the rectangle's stroke.
     /// </summary>
-    [ReactProp]
-    public UnionProp<string,double> strokeWidth { get; set; }
+    public UnionProp<string,double> strokeWidth
+    {
+        get => __strokeWidth?.value;
+        set => SetValue(ref __strokeWidth, _strokeWidth, value);
+    }
+    #endregion
+
 
     #region string strokeLinecap
     PropertyValueNode<string> __strokeLinecap;
@@ -2329,12 +2585,16 @@ public sealed class rect : HtmlElement
     {
         name = nameof(strokeLinecap)
     };
-    #endregion
     /// <summary>
     ///     The linecap style of the rectangle's stroke.
     /// </summary>
-    [ReactProp]
-    public string strokeLinecap { get; set; }
+    public string strokeLinecap
+    {
+        get => __strokeLinecap?.value;
+        set => SetValue(ref __strokeLinecap, _strokeLinecap, value);
+    }
+    #endregion
+
 
     #region string strokeLinejoin
     PropertyValueNode<string> __strokeLinejoin;
@@ -2342,12 +2602,16 @@ public sealed class rect : HtmlElement
     {
         name = nameof(strokeLinejoin)
     };
-    #endregion
     /// <summary>
     ///     The linejoin style of the rectangle's stroke.
     /// </summary>
-    [ReactProp]
-    public string strokeLinejoin { get; set; }
+    public string strokeLinejoin
+    {
+        get => __strokeLinejoin?.value;
+        set => SetValue(ref __strokeLinejoin, _strokeLinejoin, value);
+    }
+    #endregion
+
 
     public rect() { }
 
@@ -2445,12 +2709,16 @@ public sealed class radialGradient : HtmlElement
     {
         name = nameof(cx)
     };
-    #endregion
     /// <summary>
     ///     The x-coordinate of the center of the gradient.
     /// </summary>
-    [ReactProp]
-    public string cx { get; set; }
+    public string cx
+    {
+        get => __cx?.value;
+        set => SetValue(ref __cx, _cx, value);
+    }
+    #endregion
+
 
     #region string cy
     PropertyValueNode<string> __cy;
@@ -2458,12 +2726,16 @@ public sealed class radialGradient : HtmlElement
     {
         name = nameof(cy)
     };
-    #endregion
     /// <summary>
     ///     The y-coordinate of the center of the gradient.
     /// </summary>
-    [ReactProp]
-    public string cy { get; set; }
+    public string cy
+    {
+        get => __cy?.value;
+        set => SetValue(ref __cy, _cy, value);
+    }
+    #endregion
+
 
     #region string fx
     PropertyValueNode<string> __fx;
@@ -2471,12 +2743,16 @@ public sealed class radialGradient : HtmlElement
     {
         name = nameof(fx)
     };
-    #endregion
     /// <summary>
     ///     The x-coordinate of the focal point of the gradient.
     /// </summary>
-    [ReactProp]
-    public string fx { get; set; }
+    public string fx
+    {
+        get => __fx?.value;
+        set => SetValue(ref __fx, _fx, value);
+    }
+    #endregion
+
 
     #region string fy
     PropertyValueNode<string> __fy;
@@ -2484,12 +2760,16 @@ public sealed class radialGradient : HtmlElement
     {
         name = nameof(fy)
     };
-    #endregion
     /// <summary>
     ///     The y-coordinate of the focal point of the gradient.
     /// </summary>
-    [ReactProp]
-    public string fy { get; set; }
+    public string fy
+    {
+        get => __fy?.value;
+        set => SetValue(ref __fy, _fy, value);
+    }
+    #endregion
+
 
     #region string r
     PropertyValueNode<string> __r;
@@ -2497,12 +2777,16 @@ public sealed class radialGradient : HtmlElement
     {
         name = nameof(r)
     };
-    #endregion
     /// <summary>
     ///     The radius of the gradient.
     /// </summary>
-    [ReactProp]
-    public string r { get; set; }
+    public string r
+    {
+        get => __r?.value;
+        set => SetValue(ref __r, _r, value);
+    }
+    #endregion
+
 
     #region string spreadMethod
     PropertyValueNode<string> __spreadMethod;
@@ -2510,12 +2794,16 @@ public sealed class radialGradient : HtmlElement
     {
         name = nameof(spreadMethod)
     };
-    #endregion
     /// <summary>
     ///     The method used to spread the gradient.
     /// </summary>
-    [ReactProp]
-    public string spreadMethod { get; set; }
+    public string spreadMethod
+    {
+        get => __spreadMethod?.value;
+        set => SetValue(ref __spreadMethod, _spreadMethod, value);
+    }
+    #endregion
+
 
     #region string gradientUnits
     PropertyValueNode<string> __gradientUnits;
@@ -2523,12 +2811,16 @@ public sealed class radialGradient : HtmlElement
     {
         name = nameof(gradientUnits)
     };
-    #endregion
     /// <summary>
     ///     The units used to specify the gradient.
     /// </summary>
-    [ReactProp]
-    public string gradientUnits { get; set; }
+    public string gradientUnits
+    {
+        get => __gradientUnits?.value;
+        set => SetValue(ref __gradientUnits, _gradientUnits, value);
+    }
+    #endregion
+
 
     #region string gradientTransform
     PropertyValueNode<string> __gradientTransform;
@@ -2536,12 +2828,16 @@ public sealed class radialGradient : HtmlElement
     {
         name = nameof(gradientTransform)
     };
-    #endregion
     /// <summary>
     ///     A transform to apply to the gradient.
     /// </summary>
-    [ReactProp]
-    public string gradientTransform { get; set; }
+    public string gradientTransform
+    {
+        get => __gradientTransform?.value;
+        set => SetValue(ref __gradientTransform, _gradientTransform, value);
+    }
+    #endregion
+
 
     public radialGradient() { }
 
@@ -2618,12 +2914,16 @@ public sealed class clipPath : HtmlElement
     {
         name = nameof(clipRule)
     };
-    #endregion
     /// <summary>
     ///     Specifies the fill rule for the clipping path.
     /// </summary>
-    [ReactProp]
-    public string clipRule { get; set; }
+    public string clipRule
+    {
+        get => __clipRule?.value;
+        set => SetValue(ref __clipRule, _clipRule, value);
+    }
+    #endregion
+
 
     #region string clipBox
     PropertyValueNode<string> __clipBox;
@@ -2631,12 +2931,16 @@ public sealed class clipPath : HtmlElement
     {
         name = nameof(clipBox)
     };
-    #endregion
     /// <summary>
     ///     Specifies the reference box for the clipping path.
     /// </summary>
-    [ReactProp]
-    public string clipBox { get; set; }
+    public string clipBox
+    {
+        get => __clipBox?.value;
+        set => SetValue(ref __clipBox, _clipBox, value);
+    }
+    #endregion
+
 
     public clipPath() { }
 
@@ -2671,12 +2975,16 @@ public sealed class path : HtmlElement
     {
         name = nameof(d)
     };
-    #endregion
     /// <summary>
     ///     Path data
     /// </summary>
-    [ReactProp]
-    public string d { get; set; }
+    public string d
+    {
+        get => __d?.value;
+        set => SetValue(ref __d, _d, value);
+    }
+    #endregion
+
 
     #region string fill
     PropertyValueNode<string> __fill;
@@ -2684,12 +2992,16 @@ public sealed class path : HtmlElement
     {
         name = nameof(fill)
     };
-    #endregion
     /// <summary>
     ///     Fill color
     /// </summary>
-    [ReactProp]
-    public string fill { get; set; }
+    public string fill
+    {
+        get => __fill?.value;
+        set => SetValue(ref __fill, _fill, value);
+    }
+    #endregion
+
 
     #region string stroke
     PropertyValueNode<string> __stroke;
@@ -2697,12 +3009,16 @@ public sealed class path : HtmlElement
     {
         name = nameof(stroke)
     };
-    #endregion
     /// <summary>
     ///     Stroke color
     /// </summary>
-    [ReactProp]
-    public string stroke { get; set; }
+    public string stroke
+    {
+        get => __stroke?.value;
+        set => SetValue(ref __stroke, _stroke, value);
+    }
+    #endregion
+
 
     #region string strokeWidth
     PropertyValueNode<string> __strokeWidth;
@@ -2710,12 +3026,16 @@ public sealed class path : HtmlElement
     {
         name = nameof(strokeWidth)
     };
-    #endregion
     /// <summary>
     ///     Stroke width
     /// </summary>
-    [ReactProp]
-    public string strokeWidth { get; set; }
+    public string strokeWidth
+    {
+        get => __strokeWidth?.value;
+        set => SetValue(ref __strokeWidth, _strokeWidth, value);
+    }
+    #endregion
+
 
     #region string fillRule
     PropertyValueNode<string> __fillRule;
@@ -2723,9 +3043,13 @@ public sealed class path : HtmlElement
     {
         name = nameof(fillRule)
     };
+    public string fillRule
+    {
+        get => __fillRule?.value;
+        set => SetValue(ref __fillRule, _fillRule, value);
+    }
     #endregion
-    [ReactProp]
-    public string fillRule { get; set; }
+
 
     #region string clipRule
     PropertyValueNode<string> __clipRule;
@@ -2733,9 +3057,13 @@ public sealed class path : HtmlElement
     {
         name = nameof(clipRule)
     };
+    public string clipRule
+    {
+        get => __clipRule?.value;
+        set => SetValue(ref __clipRule, _clipRule, value);
+    }
     #endregion
-    [ReactProp]
-    public string clipRule { get; set; }
+
 
     #region string strokeLinecap
     PropertyValueNode<string> __strokeLinecap;
@@ -2743,9 +3071,13 @@ public sealed class path : HtmlElement
     {
         name = nameof(strokeLinecap)
     };
+    public string strokeLinecap
+    {
+        get => __strokeLinecap?.value;
+        set => SetValue(ref __strokeLinecap, _strokeLinecap, value);
+    }
     #endregion
-    [ReactProp]
-    public string strokeLinecap { get; set; }
+
 
     #region string strokeLinejoin
     PropertyValueNode<string> __strokeLinejoin;
@@ -2753,9 +3085,13 @@ public sealed class path : HtmlElement
     {
         name = nameof(strokeLinejoin)
     };
+    public string strokeLinejoin
+    {
+        get => __strokeLinejoin?.value;
+        set => SetValue(ref __strokeLinejoin, _strokeLinejoin, value);
+    }
     #endregion
-    [ReactProp]
-    public string strokeLinejoin { get; set; }
+
 
     public path() { }
 
@@ -2812,9 +3148,13 @@ public sealed class g : HtmlElement
     {
         name = nameof(opacity)
     };
+    public string opacity
+    {
+        get => __opacity?.value;
+        set => SetValue(ref __opacity, _opacity, value);
+    }
     #endregion
-    [ReactProp]
-    public string opacity { get; set; }
+
 
     #region string clipPath
     PropertyValueNode<string> __clipPath;
@@ -2822,9 +3162,13 @@ public sealed class g : HtmlElement
     {
         name = nameof(clipPath)
     };
+    public string clipPath
+    {
+        get => __clipPath?.value;
+        set => SetValue(ref __clipPath, _clipPath, value);
+    }
     #endregion
-    [ReactProp]
-    public string clipPath { get; set; }
+
 
     #region string transform
     PropertyValueNode<string> __transform;
@@ -2832,9 +3176,13 @@ public sealed class g : HtmlElement
     {
         name = nameof(transform)
     };
+    public string transform
+    {
+        get => __transform?.value;
+        set => SetValue(ref __transform, _transform, value);
+    }
     #endregion
-    [ReactProp]
-    public string transform { get; set; }
+
 
     public g() { }
 
@@ -2861,12 +3209,16 @@ public sealed class mask : HtmlElement
     {
         name = nameof(height)
     };
-    #endregion
     /// <summary>
     ///     This attribute defines the height of the masking area. Value type: length ; Default value: 120%; Animatable: yes
     /// </summary>
-    [ReactProp]
-    public string height { get; set; }
+    public string height
+    {
+        get => __height?.value;
+        set => SetValue(ref __height, _height, value);
+    }
+    #endregion
+
 
     #region string maskContentUnits
     PropertyValueNode<string> __maskContentUnits;
@@ -2874,12 +3226,16 @@ public sealed class mask : HtmlElement
     {
         name = nameof(maskContentUnits)
     };
-    #endregion
     /// <summary>
     ///     This attribute defines the coordinate system for the contents of the mask. Value type: userSpaceOnUse|objectBoundingBox ; Default value: userSpaceOnUse; Animatable: yes
     /// </summary>
-    [ReactProp]
-    public string maskContentUnits { get; set; }
+    public string maskContentUnits
+    {
+        get => __maskContentUnits?.value;
+        set => SetValue(ref __maskContentUnits, _maskContentUnits, value);
+    }
+    #endregion
+
 
     #region string maskUnits
     PropertyValueNode<string> __maskUnits;
@@ -2887,12 +3243,16 @@ public sealed class mask : HtmlElement
     {
         name = nameof(maskUnits)
     };
-    #endregion
     /// <summary>
     ///     This attribute defines the coordinate system for attributes x, y, width and height on the mask. Value type: userSpaceOnUse|objectBoundingBox ; Default value: objectBoundingBox; Animatable: yes
     /// </summary>
-    [ReactProp]
-    public string maskUnits { get; set; }
+    public string maskUnits
+    {
+        get => __maskUnits?.value;
+        set => SetValue(ref __maskUnits, _maskUnits, value);
+    }
+    #endregion
+
 
     #region string x
     PropertyValueNode<string> __x;
@@ -2900,12 +3260,16 @@ public sealed class mask : HtmlElement
     {
         name = nameof(x)
     };
-    #endregion
     /// <summary>
     ///     This attribute defines the x-axis coordinate of the top-left corner of the masking area. Value type: 'coordinate' ; Default value: -10%; Animatable: yes
     /// </summary>
-    [ReactProp]
-    public string x { get; set; }
+    public string x
+    {
+        get => __x?.value;
+        set => SetValue(ref __x, _x, value);
+    }
+    #endregion
+
 
     #region string y
     PropertyValueNode<string> __y;
@@ -2913,12 +3277,16 @@ public sealed class mask : HtmlElement
     {
         name = nameof(y)
     };
-    #endregion
     /// <summary>
     ///     This attribute defines the y-axis coordinate of the top-left corner of the masking area. Value type: 'coordinate' ; Default value: -10%; Animatable: yes
     /// </summary>
-    [ReactProp]
-    public string y { get; set; }
+    public string y
+    {
+        get => __y?.value;
+        set => SetValue(ref __y, _y, value);
+    }
+    #endregion
+
 
     #region string width
     PropertyValueNode<string> __width;
@@ -2926,12 +3294,16 @@ public sealed class mask : HtmlElement
     {
         name = nameof(width)
     };
-    #endregion
     /// <summary>
     ///     This attribute defines the width of the masking area. Value type: 'length' ; Default value: 120%; Animatable: yes
     /// </summary>
-    [ReactProp]
-    public string width { get; set; }
+    public string width
+    {
+        get => __width?.value;
+        set => SetValue(ref __width, _width, value);
+    }
+    #endregion
+
 
     public mask() { }
 
@@ -2994,12 +3366,16 @@ public sealed class meta : HtmlElement
     {
         name = nameof(charset)
     };
-    #endregion
     /// <summary>
     ///     Specifies the character encoding of the document.
     /// </summary>
-    [ReactProp]
-    public string charset { get; set; }
+    public string charset
+    {
+        get => __charset?.value;
+        set => SetValue(ref __charset, _charset, value);
+    }
+    #endregion
+
 
     #region string httpEquiv
     PropertyValueNode<string> __httpEquiv;
@@ -3007,12 +3383,16 @@ public sealed class meta : HtmlElement
     {
         name = nameof(httpEquiv)
     };
-    #endregion
     /// <summary>
     ///     Specifies the name of the HTTP header that the meta tag should be equivalent to.
     /// </summary>
-    [ReactProp]
-    public string httpEquiv { get; set; }
+    public string httpEquiv
+    {
+        get => __httpEquiv?.value;
+        set => SetValue(ref __httpEquiv, _httpEquiv, value);
+    }
+    #endregion
+
 
     #region string name
     PropertyValueNode<string> __name;
@@ -3020,12 +3400,16 @@ public sealed class meta : HtmlElement
     {
         name = nameof(name)
     };
-    #endregion
     /// <summary>
     ///     Specifies the name of the metadata property.
     /// </summary>
-    [ReactProp]
-    public string name { get; set; }
+    public string name
+    {
+        get => __name?.value;
+        set => SetValue(ref __name, _name, value);
+    }
+    #endregion
+
 
     #region string content
     PropertyValueNode<string> __content;
@@ -3033,12 +3417,16 @@ public sealed class meta : HtmlElement
     {
         name = nameof(content)
     };
-    #endregion
     /// <summary>
     ///     Specifies the value of the metadata property.
     /// </summary>
-    [ReactProp]
-    public string content { get; set; }
+    public string content
+    {
+        get => __content?.value;
+        set => SetValue(ref __content, _content, value);
+    }
+    #endregion
+
 
     #region string scheme
     PropertyValueNode<string> __scheme;
@@ -3046,12 +3434,16 @@ public sealed class meta : HtmlElement
     {
         name = nameof(scheme)
     };
-    #endregion
     /// <summary>
     ///     Specifies the URL scheme for the content attribute of the meta tag.
     /// </summary>
-    [ReactProp]
-    public string scheme { get; set; }
+    public string scheme
+    {
+        get => __scheme?.value;
+        set => SetValue(ref __scheme, _scheme, value);
+    }
+    #endregion
+
 
     #region string itemprop
     PropertyValueNode<string> __itemprop;
@@ -3059,12 +3451,16 @@ public sealed class meta : HtmlElement
     {
         name = nameof(itemprop)
     };
-    #endregion
     /// <summary>
     ///     Specifies the Microdata item property that the meta tag represents.
     /// </summary>
-    [ReactProp]
-    public string itemprop { get; set; }
+    public string itemprop
+    {
+        get => __itemprop?.value;
+        set => SetValue(ref __itemprop, _itemprop, value);
+    }
+    #endregion
+
 
     #region string property
     PropertyValueNode<string> __property;
@@ -3072,12 +3468,16 @@ public sealed class meta : HtmlElement
     {
         name = nameof(property)
     };
-    #endregion
     /// <summary>
     ///     Specifies the schema.org property that the meta tag represents.
     /// </summary>
-    [ReactProp]
-    public string property { get; set; }
+    public string property
+    {
+        get => __property?.value;
+        set => SetValue(ref __property, _property, value);
+    }
+    #endregion
+
 
     #region string src
     PropertyValueNode<string> __src;
@@ -3085,12 +3485,16 @@ public sealed class meta : HtmlElement
     {
         name = nameof(src)
     };
-    #endregion
     /// <summary>
     ///     Specifies the URL for a resource associated with the meta tag.
     /// </summary>
-    [ReactProp]
-    public string src { get; set; }
+    public string src
+    {
+        get => __src?.value;
+        set => SetValue(ref __src, _src, value);
+    }
+    #endregion
+
 
     public meta() { }
 
@@ -3167,12 +3571,16 @@ public sealed class body : HtmlElement
     {
         name = nameof(background)
     };
-    #endregion
     /// <summary>
     ///     Specifies the URL of a background image to be displayed behind the document's content.
     /// </summary>
-    [ReactProp]
-    public string background { get; set; }
+    public string background
+    {
+        get => __background?.value;
+        set => SetValue(ref __background, _background, value);
+    }
+    #endregion
+
 
     #region string bgcolor
     PropertyValueNode<string> __bgcolor;
@@ -3180,12 +3588,16 @@ public sealed class body : HtmlElement
     {
         name = nameof(bgcolor)
     };
-    #endregion
     /// <summary>
     ///     Specifies the background color of the document's body.
     /// </summary>
-    [ReactProp]
-    public string bgcolor { get; set; }
+    public string bgcolor
+    {
+        get => __bgcolor?.value;
+        set => SetValue(ref __bgcolor, _bgcolor, value);
+    }
+    #endregion
+
 
     #region string link
     PropertyValueNode<string> __link;
@@ -3193,12 +3605,16 @@ public sealed class body : HtmlElement
     {
         name = nameof(link)
     };
-    #endregion
     /// <summary>
     ///     Specifies the color of unvisited links in the document's body.
     /// </summary>
-    [ReactProp]
-    public string link { get; set; }
+    public string link
+    {
+        get => __link?.value;
+        set => SetValue(ref __link, _link, value);
+    }
+    #endregion
+
 
     public body() { }
 
@@ -3240,12 +3656,16 @@ public sealed class script : HtmlElement
     {
         name = nameof(async)
     };
-    #endregion
     /// <summary>
     ///     Specifies that the script should be executed asynchronously. This means that the browser will not wait for the script to finish executing before continuing to parse the rest of the HTML.
     /// </summary>
-    [ReactProp]
-    public string async { get; set; }
+    public string async
+    {
+        get => __async?.value;
+        set => SetValue(ref __async, _async, value);
+    }
+    #endregion
+
 
     #region string defer
     PropertyValueNode<string> __defer;
@@ -3253,12 +3673,16 @@ public sealed class script : HtmlElement
     {
         name = nameof(defer)
     };
-    #endregion
     /// <summary>
     ///     Specifies that the script should be executed after the browser has finished parsing the rest of the HTML. This is similar to async, but it ensures that scripts are executed in the order they are specified in the HTML.
     /// </summary>
-    [ReactProp]
-    public string defer { get; set; }
+    public string defer
+    {
+        get => __defer?.value;
+        set => SetValue(ref __defer, _defer, value);
+    }
+    #endregion
+
 
     #region string integrity
     PropertyValueNode<string> __integrity;
@@ -3266,12 +3690,16 @@ public sealed class script : HtmlElement
     {
         name = nameof(integrity)
     };
-    #endregion
     /// <summary>
     ///     Specifies a subresource integrity (SRI) hash for the script. This helps to protect against man-in-the-middle attacks.
     /// </summary>
-    [ReactProp]
-    public string integrity { get; set; }
+    public string integrity
+    {
+        get => __integrity?.value;
+        set => SetValue(ref __integrity, _integrity, value);
+    }
+    #endregion
+
 
     #region string language
     PropertyValueNode<string> __language;
@@ -3279,12 +3707,16 @@ public sealed class script : HtmlElement
     {
         name = nameof(language)
     };
-    #endregion
     /// <summary>
     ///     Specifies the scripting language of the script. This is deprecated, but is still supported by most browsers.
     /// </summary>
-    [ReactProp]
-    public string language { get; set; }
+    public string language
+    {
+        get => __language?.value;
+        set => SetValue(ref __language, _language, value);
+    }
+    #endregion
+
 
     #region string nomodule
     PropertyValueNode<string> __nomodule;
@@ -3292,12 +3724,16 @@ public sealed class script : HtmlElement
     {
         name = nameof(nomodule)
     };
-    #endregion
     /// <summary>
     ///     Specifies that the script should be ignored if the browser does not support modules.
     /// </summary>
-    [ReactProp]
-    public string nomodule { get; set; }
+    public string nomodule
+    {
+        get => __nomodule?.value;
+        set => SetValue(ref __nomodule, _nomodule, value);
+    }
+    #endregion
+
 
     #region string src
     PropertyValueNode<string> __src;
@@ -3305,12 +3741,16 @@ public sealed class script : HtmlElement
     {
         name = nameof(src)
     };
-    #endregion
     /// <summary>
     ///     Specifies the URL of an external script file.
     /// </summary>
-    [ReactProp]
-    public string src { get; set; }
+    public string src
+    {
+        get => __src?.value;
+        set => SetValue(ref __src, _src, value);
+    }
+    #endregion
+
 
     #region string type
     PropertyValueNode<string> __type;
@@ -3318,12 +3758,16 @@ public sealed class script : HtmlElement
     {
         name = nameof(type)
     };
-    #endregion
     /// <summary>
     ///     Specifies the type of the script. The most common value is application/javascript.
     /// </summary>
-    [ReactProp]
-    public string type { get; set; }
+    public string type
+    {
+        get => __type?.value;
+        set => SetValue(ref __type, _type, value);
+    }
+    #endregion
+
 
     public script() { }
 
@@ -3393,12 +3837,16 @@ public sealed class title : HtmlElement
     {
         name = nameof(language)
     };
-    #endregion
     /// <summary>
     ///     Specifies the language of the title.
     /// </summary>
-    [ReactProp]
-    public string language { get; set; }
+    public string language
+    {
+        get => __language?.value;
+        set => SetValue(ref __language, _language, value);
+    }
+    #endregion
+
 
     public title() { }
 
@@ -3426,12 +3874,16 @@ public sealed class head : HtmlElement
     {
         name = nameof(profile)
     };
-    #endregion
     /// <summary>
     ///     Provides a URL to a profile document for the current document.
     /// </summary>
-    [ReactProp]
-    public string profile { get; set; }
+    public string profile
+    {
+        get => __profile?.value;
+        set => SetValue(ref __profile, _profile, value);
+    }
+    #endregion
+
 
     #region string link
     PropertyValueNode<string> __link;
@@ -3439,12 +3891,16 @@ public sealed class head : HtmlElement
     {
         name = nameof(link)
     };
-    #endregion
     /// <summary>
     ///     Provides a link to an external resource, such as a stylesheet or script file.
     /// </summary>
-    [ReactProp]
-    public string link { get; set; }
+    public string link
+    {
+        get => __link?.value;
+        set => SetValue(ref __link, _link, value);
+    }
+    #endregion
+
 
     #region string meta
     PropertyValueNode<string> __meta;
@@ -3452,12 +3908,16 @@ public sealed class head : HtmlElement
     {
         name = nameof(meta)
     };
-    #endregion
     /// <summary>
     ///     Provides metadata about the document, such as the character encoding, author, and keywords.
     /// </summary>
-    [ReactProp]
-    public string meta { get; set; }
+    public string meta
+    {
+        get => __meta?.value;
+        set => SetValue(ref __meta, _meta, value);
+    }
+    #endregion
+
 
     #region string script
     PropertyValueNode<string> __script;
@@ -3465,12 +3925,16 @@ public sealed class head : HtmlElement
     {
         name = nameof(script)
     };
-    #endregion
     /// <summary>
     ///     Provides JavaScript code to be executed in the browser.
     /// </summary>
-    [ReactProp]
-    public string script { get; set; }
+    public string script
+    {
+        get => __script?.value;
+        set => SetValue(ref __script, _script, value);
+    }
+    #endregion
+
 
     #region string noscript
     PropertyValueNode<string> __noscript;
@@ -3478,12 +3942,16 @@ public sealed class head : HtmlElement
     {
         name = nameof(noscript)
     };
-    #endregion
     /// <summary>
     ///     Provides content to be displayed if the browser does not support JavaScript.
     /// </summary>
-    [ReactProp]
-    public string noscript { get; set; }
+    public string noscript
+    {
+        get => __noscript?.value;
+        set => SetValue(ref __noscript, _noscript, value);
+    }
+    #endregion
+
 
     public head() { }
 
@@ -3539,12 +4007,16 @@ public sealed class html : HtmlElement
     {
         name = nameof(hidden)
     };
-    #endregion
     /// <summary>
     ///     Hides the element from display.
     /// </summary>
-    [ReactProp]
-    public string hidden { get; set; }
+    public string hidden
+    {
+        get => __hidden?.value;
+        set => SetValue(ref __hidden, _hidden, value);
+    }
+    #endregion
+
 
     #region string manifest
     PropertyValueNode<string> __manifest;
@@ -3552,12 +4024,16 @@ public sealed class html : HtmlElement
     {
         name = nameof(manifest)
     };
-    #endregion
     /// <summary>
     ///     Specifies the URL of a manifest file, which provides information about the web app.
     /// </summary>
-    [ReactProp]
-    public string manifest { get; set; }
+    public string manifest
+    {
+        get => __manifest?.value;
+        set => SetValue(ref __manifest, _manifest, value);
+    }
+    #endregion
+
 
     #region string xmlns
     PropertyValueNode<string> __xmlns;
@@ -3565,12 +4041,16 @@ public sealed class html : HtmlElement
     {
         name = nameof(xmlns)
     };
-    #endregion
     /// <summary>
     ///     Specifies the namespace of the element.
     /// </summary>
-    [ReactProp]
-    public string xmlns { get; set; } = "http://www.w3.org/1999/xhtml";
+    public string xmlns
+    {
+        get => __xmlns?.value;
+        set => SetValue(ref __xmlns, _xmlns, value);
+    }
+    #endregion
+
 
     #region string prefix
     PropertyValueNode<string> __prefix;
@@ -3578,12 +4058,16 @@ public sealed class html : HtmlElement
     {
         name = nameof(prefix)
     };
-    #endregion
     /// <summary>
     ///     Specifies the prefix of the element.
     /// </summary>
-    [ReactProp]
-    public string prefix { get; set; }
+    public string prefix
+    {
+        get => __prefix?.value;
+        set => SetValue(ref __prefix, _prefix, value);
+    }
+    #endregion
+
 
     #region string version
     PropertyValueNode<string> __version;
@@ -3591,12 +4075,16 @@ public sealed class html : HtmlElement
     {
         name = nameof(version)
     };
-    #endregion
     /// <summary>
     ///     Specifies the version of the HTML specification to which the element conforms.
     /// </summary>
-    [ReactProp]
-    public string version { get; set; }
+    public string version
+    {
+        get => __version?.value;
+        set => SetValue(ref __version, _version, value);
+    }
+    #endregion
+
 
     public html() { }
 
@@ -3652,12 +4140,16 @@ public sealed class label : HtmlElement
     {
         name = nameof(htmlFor)
     };
-    #endregion
     /// <summary>
     ///     Specifies which form element a label is bound to.
     /// </summary>
-    [ReactProp]
-    public string htmlFor { get; set; }
+    public string htmlFor
+    {
+        get => __htmlFor?.value;
+        set => SetValue(ref __htmlFor, _htmlFor, value);
+    }
+    #endregion
+
 
     #region string dropzone
     PropertyValueNode<string> __dropzone;
@@ -3665,12 +4157,16 @@ public sealed class label : HtmlElement
     {
         name = nameof(dropzone)
     };
-    #endregion
     /// <summary>
     ///     Specifies whether the element is a drop target.
     /// </summary>
-    [ReactProp]
-    public string dropzone { get; set; }
+    public string dropzone
+    {
+        get => __dropzone?.value;
+        set => SetValue(ref __dropzone, _dropzone, value);
+    }
+    #endregion
+
 
     #region string hidden
     PropertyValueNode<string> __hidden;
@@ -3678,12 +4174,16 @@ public sealed class label : HtmlElement
     {
         name = nameof(hidden)
     };
-    #endregion
     /// <summary>
     ///     Hides the element from view.
     /// </summary>
-    [ReactProp]
-    public string hidden { get; set; }
+    public string hidden
+    {
+        get => __hidden?.value;
+        set => SetValue(ref __hidden, _hidden, value);
+    }
+    #endregion
+
 
     #region string tabindex
     PropertyValueNode<string> __tabindex;
@@ -3691,12 +4191,16 @@ public sealed class label : HtmlElement
     {
         name = nameof(tabindex)
     };
-    #endregion
     /// <summary>
     ///     Specifies the element's position in the tab order.
     /// </summary>
-    [ReactProp]
-    public string tabindex { get; set; }
+    public string tabindex
+    {
+        get => __tabindex?.value;
+        set => SetValue(ref __tabindex, _tabindex, value);
+    }
+    #endregion
+
 
 
     public label(string innerText) : base(innerText) {  }
@@ -3749,12 +4253,16 @@ public sealed class a : HtmlElement
     {
         name = nameof(href)
     };
-    #endregion
     /// <summary>
     ///     The URL of the linked resource.
     /// </summary>
-    [ReactProp]
-    public string href { get; set; }
+    public string href
+    {
+        get => __href?.value;
+        set => SetValue(ref __href, _href, value);
+    }
+    #endregion
+
 
     #region string target
     PropertyValueNode<string> __target;
@@ -3762,12 +4270,16 @@ public sealed class a : HtmlElement
     {
         name = nameof(target)
     };
-    #endregion
     /// <summary>
     ///     Specifies where the linked resource should be opened. Can be `_blank`, `_self`, `_parent`, or `_top`.
     /// </summary>
-    [ReactProp]
-    public string target { get; set; }
+    public string target
+    {
+        get => __target?.value;
+        set => SetValue(ref __target, _target, value);
+    }
+    #endregion
+
 
     #region string rel
     PropertyValueNode<string> __rel;
@@ -3775,12 +4287,16 @@ public sealed class a : HtmlElement
     {
         name = nameof(rel)
     };
-    #endregion
     /// <summary>
     ///     Specifies the relationship between the current document and the linked resource. Can be `alternate`, `author`, `bookmark`, `canonical`, `external`, `help`, `license`, `next`, `nofollow`, `noreferrer`, `noopener`, `prev`, `search`, `sponsored`, or `stylesheet`.
     /// </summary>
-    [ReactProp]
-    public string rel { get; set; }
+    public string rel
+    {
+        get => __rel?.value;
+        set => SetValue(ref __rel, _rel, value);
+    }
+    #endregion
+
 
     #region string type
     PropertyValueNode<string> __type;
@@ -3788,12 +4304,16 @@ public sealed class a : HtmlElement
     {
         name = nameof(type)
     };
-    #endregion
     /// <summary>
     ///     Specifies the MIME type of the linked resource, if applicable.
     /// </summary>
-    [ReactProp]
-    public string type { get; set; }
+    public string type
+    {
+        get => __type?.value;
+        set => SetValue(ref __type, _type, value);
+    }
+    #endregion
+
 
     #region string download
     PropertyValueNode<string> __download;
@@ -3801,12 +4321,16 @@ public sealed class a : HtmlElement
     {
         name = nameof(download)
     };
-    #endregion
     /// <summary>
     ///     Specifies whether the linked resource should be downloaded or opened in a new browser tab.
     /// </summary>
-    [ReactProp]
-    public string download { get; set; }
+    public string download
+    {
+        get => __download?.value;
+        set => SetValue(ref __download, _download, value);
+    }
+    #endregion
+
 
     #region string ping
     PropertyValueNode<string> __ping;
@@ -3814,12 +4338,16 @@ public sealed class a : HtmlElement
     {
         name = nameof(ping)
     };
-    #endregion
     /// <summary>
     ///     A list of URLs to which a ping should be sent when the user clicks on the link.
     /// </summary>
-    [ReactProp]
-    public string ping { get; set; }
+    public string ping
+    {
+        get => __ping?.value;
+        set => SetValue(ref __ping, _ping, value);
+    }
+    #endregion
+
 
     #region string media
     PropertyValueNode<string> __media;
@@ -3827,12 +4355,16 @@ public sealed class a : HtmlElement
     {
         name = nameof(media)
     };
-    #endregion
     /// <summary>
     ///     Specifies the media types for which the link is relevant.
     /// </summary>
-    [ReactProp]
-    public string media { get; set; }
+    public string media
+    {
+        get => __media?.value;
+        set => SetValue(ref __media, _media, value);
+    }
+    #endregion
+
 
     #region string hreflang
     PropertyValueNode<string> __hreflang;
@@ -3840,12 +4372,16 @@ public sealed class a : HtmlElement
     {
         name = nameof(hreflang)
     };
-    #endregion
     /// <summary>
     ///     Specifies the language of the linked resource.
     /// </summary>
-    [ReactProp]
-    public string hreflang { get; set; }
+    public string hreflang
+    {
+        get => __hreflang?.value;
+        set => SetValue(ref __hreflang, _hreflang, value);
+    }
+    #endregion
+
 
     #region string name
     PropertyValueNode<string> __name;
@@ -3853,12 +4389,16 @@ public sealed class a : HtmlElement
     {
         name = nameof(name)
     };
-    #endregion
     /// <summary>
     ///     Specifies a name for the link. This can be used to target the link with JavaScript.
     /// </summary>
-    [ReactProp]
-    public string name { get; set; }
+    public string name
+    {
+        get => __name?.value;
+        set => SetValue(ref __name, _name, value);
+    }
+    #endregion
+
 
     #region string tabindex
     PropertyValueNode<string> __tabindex;
@@ -3866,12 +4406,16 @@ public sealed class a : HtmlElement
     {
         name = nameof(tabindex)
     };
-    #endregion
     /// <summary>
     ///     Specifies the tab order of the link.
     /// </summary>
-    [ReactProp]
-    public string tabindex { get; set; }
+    public string tabindex
+    {
+        get => __tabindex?.value;
+        set => SetValue(ref __tabindex, _tabindex, value);
+    }
+    #endregion
+
 
     public a() { }
 
@@ -3962,12 +4506,16 @@ public sealed class img : HtmlElement
     {
         name = nameof(src)
     };
-    #endregion
     /// <summary>
     ///     The URL of the image file.
     /// </summary>
-    [ReactProp]
-    public string src { get; set; }
+    public string src
+    {
+        get => __src?.value;
+        set => SetValue(ref __src, _src, value);
+    }
+    #endregion
+
 
     #region string srcset
     PropertyValueNode<string> __srcset;
@@ -3975,12 +4523,16 @@ public sealed class img : HtmlElement
     {
         name = nameof(srcset)
     };
-    #endregion
     /// <summary>
     ///     A list of image files to use in different situations, such as different screen sizes or device types.
     /// </summary>
-    [ReactProp]
-    public string srcset { get; set; }
+    public string srcset
+    {
+        get => __srcset?.value;
+        set => SetValue(ref __srcset, _srcset, value);
+    }
+    #endregion
+
 
     #region string usemap
     PropertyValueNode<string> __usemap;
@@ -3988,12 +4540,16 @@ public sealed class img : HtmlElement
     {
         name = nameof(usemap)
     };
-    #endregion
     /// <summary>
     ///     Specifies an image as a client-side image map.
     /// </summary>
-    [ReactProp]
-    public string usemap { get; set; }
+    public string usemap
+    {
+        get => __usemap?.value;
+        set => SetValue(ref __usemap, _usemap, value);
+    }
+    #endregion
+
 
     #region string alt
     PropertyValueNode<string> __alt;
@@ -4001,12 +4557,16 @@ public sealed class img : HtmlElement
     {
         name = nameof(alt)
     };
-    #endregion
     /// <summary>
     ///     An alternate text for the image, if the image for some reason cannot be displayed.
     /// </summary>
-    [ReactProp]
-    public string alt { get; set; }
+    public string alt
+    {
+        get => __alt?.value;
+        set => SetValue(ref __alt, _alt, value);
+    }
+    #endregion
+
 
     #region string width
     PropertyValueNode<UnionProp<string,double?>> __width;
@@ -4014,12 +4574,16 @@ public sealed class img : HtmlElement
     {
         name = nameof(width)
     };
-    #endregion
     /// <summary>
     ///     The width of the image, in pixels.
     /// </summary>
-    [ReactProp]
-    public UnionProp<string,double?> width { get; set; }
+    public UnionProp<string,double?> width
+    {
+        get => __width?.value;
+        set => SetValue(ref __width, _width, value);
+    }
+    #endregion
+
 
     #region string height
     PropertyValueNode<UnionProp<string,double?>> __height;
@@ -4027,12 +4591,16 @@ public sealed class img : HtmlElement
     {
         name = nameof(height)
     };
-    #endregion
     /// <summary>
     ///     The height of the image, in pixels.
     /// </summary>
-    [ReactProp]
-    public UnionProp<string,double?> height { get; set; }
+    public UnionProp<string,double?> height
+    {
+        get => __height?.value;
+        set => SetValue(ref __height, _height, value);
+    }
+    #endregion
+
 
     #region string ismap
     PropertyValueNode<string> __ismap;
@@ -4040,12 +4608,16 @@ public sealed class img : HtmlElement
     {
         name = nameof(ismap)
     };
-    #endregion
     /// <summary>
     ///     A Boolean attribute that indicates whether the image is an image map.
     /// </summary>
-    [ReactProp]
-    public string ismap { get; set; }
+    public string ismap
+    {
+        get => __ismap?.value;
+        set => SetValue(ref __ismap, _ismap, value);
+    }
+    #endregion
+
 
     #region string longdesc
     PropertyValueNode<string> __longdesc;
@@ -4053,12 +4625,16 @@ public sealed class img : HtmlElement
     {
         name = nameof(longdesc)
     };
-    #endregion
     /// <summary>
     ///     A longer description of the image, for use by screen readers and other assistive technologies.
     /// </summary>
-    [ReactProp]
-    public string longdesc { get; set; }
+    public string longdesc
+    {
+        get => __longdesc?.value;
+        set => SetValue(ref __longdesc, _longdesc, value);
+    }
+    #endregion
+
 
     #region string crossorigin
     PropertyValueNode<string> __crossorigin;
@@ -4066,12 +4642,16 @@ public sealed class img : HtmlElement
     {
         name = nameof(crossorigin)
     };
-    #endregion
     /// <summary>
     ///     A string that specifies the CORS setting for the image.
     /// </summary>
-    [ReactProp]
-    public string crossorigin { get; set; }
+    public string crossorigin
+    {
+        get => __crossorigin?.value;
+        set => SetValue(ref __crossorigin, _crossorigin, value);
+    }
+    #endregion
+
 
     #region string loading
     PropertyValueNode<string> __loading;
@@ -4079,12 +4659,16 @@ public sealed class img : HtmlElement
     {
         name = nameof(loading)
     };
-    #endregion
     /// <summary>
     ///     A string that specifies how the image should be loaded.
     /// </summary>
-    [ReactProp]
-    public string loading { get; set; }
+    public string loading
+    {
+        get => __loading?.value;
+        set => SetValue(ref __loading, _loading, value);
+    }
+    #endregion
+
 
     #region string decoding
     PropertyValueNode<string> __decoding;
@@ -4092,12 +4676,16 @@ public sealed class img : HtmlElement
     {
         name = nameof(decoding)
     };
-    #endregion
     /// <summary>
     ///     A string that specifies how the image should be decoded.
     /// </summary>
-    [ReactProp]
-    public string decoding { get; set; }
+    public string decoding
+    {
+        get => __decoding?.value;
+        set => SetValue(ref __decoding, _decoding, value);
+    }
+    #endregion
+
 
     #region string referrerpolicy
     PropertyValueNode<string> __referrerpolicy;
@@ -4105,12 +4693,16 @@ public sealed class img : HtmlElement
     {
         name = nameof(referrerpolicy)
     };
-    #endregion
     /// <summary>
     ///     A string that specifies how much referrer information is sent with requests for the image.
     /// </summary>
-    [ReactProp]
-    public string referrerpolicy { get; set; }
+    public string referrerpolicy
+    {
+        get => __referrerpolicy?.value;
+        set => SetValue(ref __referrerpolicy, _referrerpolicy, value);
+    }
+    #endregion
+
 
     public img() { }
 
@@ -4215,9 +4807,13 @@ public sealed partial class svg : HtmlElement
     {
         name = nameof(focusable)
     };
+    public string focusable
+    {
+        get => __focusable?.value;
+        set => SetValue(ref __focusable, _focusable, value);
+    }
     #endregion
-    [ReactProp]
-    public string focusable { get; set; }
+
 
     #region string xlinkHref
     PropertyValueNode<string> __xlinkHref;
@@ -4225,9 +4821,13 @@ public sealed partial class svg : HtmlElement
     {
         name = nameof(xlinkHref)
     };
+    public string xlinkHref
+    {
+        get => __xlinkHref?.value;
+        set => SetValue(ref __xlinkHref, _xlinkHref, value);
+    }
     #endregion
-    [ReactProp]
-    public string xlinkHref { get; set; }
+
 
     #region string xmlnsXlink
     PropertyValueNode<string> __xmlnsXlink;
@@ -4235,9 +4835,13 @@ public sealed partial class svg : HtmlElement
     {
         name = nameof(xmlnsXlink)
     };
+    public string xmlnsXlink
+    {
+        get => __xmlnsXlink?.value;
+        set => SetValue(ref __xmlnsXlink, _xmlnsXlink, value);
+    }
     #endregion
-    [ReactProp]
-    public string xmlnsXlink { get; set; }
+
 
     #region string preserveAspectRatio
     PropertyValueNode<string> __preserveAspectRatio;
@@ -4245,12 +4849,16 @@ public sealed partial class svg : HtmlElement
     {
         name = nameof(preserveAspectRatio)
     };
-    #endregion
     /// <summary>
     ///     Specifies how the SVG element should be scaled and aligned to fit its viewport.
     /// </summary>
-    [ReactProp]
-    public string preserveAspectRatio { get; set; }
+    public string preserveAspectRatio
+    {
+        get => __preserveAspectRatio?.value;
+        set => SetValue(ref __preserveAspectRatio, _preserveAspectRatio, value);
+    }
+    #endregion
+
 
     #region string width
     PropertyValueNode<string> __width;
@@ -4258,12 +4866,16 @@ public sealed partial class svg : HtmlElement
     {
         name = nameof(width)
     };
-    #endregion
     /// <summary>
     ///     The width of the SVG element in pixels.
     /// </summary>
-    [ReactProp]
-    public string width { get; set; }
+    public string width
+    {
+        get => __width?.value;
+        set => SetValue(ref __width, _width, value);
+    }
+    #endregion
+
 
     #region string height
     PropertyValueNode<string> __height;
@@ -4271,12 +4883,16 @@ public sealed partial class svg : HtmlElement
     {
         name = nameof(height)
     };
-    #endregion
     /// <summary>
     ///     The height of the SVG element in pixels.
     /// </summary>
-    [ReactProp]
-    public string height { get; set; }
+    public string height
+    {
+        get => __height?.value;
+        set => SetValue(ref __height, _height, value);
+    }
+    #endregion
+
 
     #region string xmlns
     PropertyValueNode<string> __xmlns;
@@ -4284,12 +4900,16 @@ public sealed partial class svg : HtmlElement
     {
         name = nameof(xmlns)
     };
-    #endregion
     /// <summary>
     ///     The namespace URI for the SVG element.
     /// </summary>
-    [ReactProp]
-    public string xmlns { get; set; } = "http://www.w3.org/2000/svg";
+    public string xmlns
+    {
+        get => __xmlns?.value;
+        set => SetValue(ref __xmlns, _xmlns, value);
+    }
+    #endregion
+
 
     #region string version
     PropertyValueNode<string> __version;
@@ -4297,12 +4917,16 @@ public sealed partial class svg : HtmlElement
     {
         name = nameof(version)
     };
-    #endregion
     /// <summary>
     ///     The SVG version of the element.
     /// </summary>
-    [ReactProp]
-    public string version { get; set; }
+    public string version
+    {
+        get => __version?.value;
+        set => SetValue(ref __version, _version, value);
+    }
+    #endregion
+
 
     #region string viewBox
     PropertyValueNode<string> __viewBox;
@@ -4310,9 +4934,13 @@ public sealed partial class svg : HtmlElement
     {
         name = nameof(viewBox)
     };
+    public string viewBox
+    {
+        get => __viewBox?.value;
+        set => SetValue(ref __viewBox, _viewBox, value);
+    }
     #endregion
-    [ReactProp]
-    public string viewBox { get; set; }
+
 
     #region string fill
     PropertyValueNode<string> __fill;
@@ -4320,9 +4948,13 @@ public sealed partial class svg : HtmlElement
     {
         name = nameof(fill)
     };
+    public string fill
+    {
+        get => __fill?.value;
+        set => SetValue(ref __fill, _fill, value);
+    }
     #endregion
-    [ReactProp]
-    public string fill { get; set; }
+
 
     public svg() { }
 
@@ -4388,9 +5020,13 @@ public sealed class stop : HtmlElement
     {
         name = nameof(offset)
     };
+    public string offset
+    {
+        get => __offset?.value;
+        set => SetValue(ref __offset, _offset, value);
+    }
     #endregion
-    [ReactProp]
-    public string offset { get; set; }
+
 
     #region string stopColor
     PropertyValueNode<string> __stopColor;
@@ -4398,9 +5034,13 @@ public sealed class stop : HtmlElement
     {
         name = nameof(stopColor)
     };
+    public string stopColor
+    {
+        get => __stopColor?.value;
+        set => SetValue(ref __stopColor, _stopColor, value);
+    }
     #endregion
-    [ReactProp]
-    public string stopColor { get; set; }
+
 
     #region string stopOpacity
     PropertyValueNode<string> __stopOpacity;
@@ -4408,9 +5048,13 @@ public sealed class stop : HtmlElement
     {
         name = nameof(stopOpacity)
     };
+    public string stopOpacity
+    {
+        get => __stopOpacity?.value;
+        set => SetValue(ref __stopOpacity, _stopOpacity, value);
+    }
     #endregion
-    [ReactProp]
-    public string stopOpacity { get; set; }
+
 
     public stop() { }
 
@@ -4476,12 +5120,16 @@ public sealed class form : HtmlElement
     {
         name = nameof(action)
     };
-    #endregion
     /// <summary>
     ///     Specifies the URL of the page where the form data will be submitted.
     /// </summary>
-    [ReactProp]
-    public string action { get; set; }
+    public string action
+    {
+        get => __action?.value;
+        set => SetValue(ref __action, _action, value);
+    }
+    #endregion
+
 
     #region string method
     PropertyValueNode<string> __method;
@@ -4489,12 +5137,16 @@ public sealed class form : HtmlElement
     {
         name = nameof(method)
     };
-    #endregion
     /// <summary>
     ///     Specifies how the form data will be sent to the server. Possible values are 'get' and 'post'.
     /// </summary>
-    [ReactProp]
-    public string method { get; set; }
+    public string method
+    {
+        get => __method?.value;
+        set => SetValue(ref __method, _method, value);
+    }
+    #endregion
+
 
     #region string enctype
     PropertyValueNode<string> __enctype;
@@ -4502,12 +5154,16 @@ public sealed class form : HtmlElement
     {
         name = nameof(enctype)
     };
-    #endregion
     /// <summary>
     ///     Specifies the encoding type for form data. Possible values are 'application/x-www-form-urlencoded' and 'multipart/form-data'.
     /// </summary>
-    [ReactProp]
-    public string enctype { get; set; }
+    public string enctype
+    {
+        get => __enctype?.value;
+        set => SetValue(ref __enctype, _enctype, value);
+    }
+    #endregion
+
 
     #region string target
     PropertyValueNode<string> __target;
@@ -4515,12 +5171,16 @@ public sealed class form : HtmlElement
     {
         name = nameof(target)
     };
-    #endregion
     /// <summary>
     ///     Specifies the name of the frame where the form will be submitted. The default value is '_self', which means the form will be submitted in the current frame.
     /// </summary>
-    [ReactProp]
-    public string target { get; set; }
+    public string target
+    {
+        get => __target?.value;
+        set => SetValue(ref __target, _target, value);
+    }
+    #endregion
+
 
     #region string name
     PropertyValueNode<string> __name;
@@ -4528,12 +5188,16 @@ public sealed class form : HtmlElement
     {
         name = nameof(name)
     };
-    #endregion
     /// <summary>
     ///     Specifies a name for the form. This name is used to reference the form in JavaScript or to reference form data after a form is submitted.
     /// </summary>
-    [ReactProp]
-    public string name { get; set; }
+    public string name
+    {
+        get => __name?.value;
+        set => SetValue(ref __name, _name, value);
+    }
+    #endregion
+
 
     #region string novalidate
     PropertyValueNode<string> __novalidate;
@@ -4541,12 +5205,16 @@ public sealed class form : HtmlElement
     {
         name = nameof(novalidate)
     };
-    #endregion
     /// <summary>
     ///     Disables form validation. This attribute is useful when you want to submit the form without validating the user input.
     /// </summary>
-    [ReactProp]
-    public string novalidate { get; set; }
+    public string novalidate
+    {
+        get => __novalidate?.value;
+        set => SetValue(ref __novalidate, _novalidate, value);
+    }
+    #endregion
+
 
     #region string autocomplete
     PropertyValueNode<string> __autocomplete;
@@ -4554,12 +5222,16 @@ public sealed class form : HtmlElement
     {
         name = nameof(autocomplete)
     };
-    #endregion
     /// <summary>
     ///     Specifies whether the browser should automatically fill in form fields based on the user's past input.
     /// </summary>
-    [ReactProp]
-    public string autocomplete { get; set; }
+    public string autocomplete
+    {
+        get => __autocomplete?.value;
+        set => SetValue(ref __autocomplete, _autocomplete, value);
+    }
+    #endregion
+
 
     public form() { }
 
@@ -4629,12 +5301,16 @@ public sealed partial class textarea : HtmlElement
     {
         name = nameof(name)
     };
-    #endregion
     /// <summary>
     ///     Specifies a name for the textarea element.
     /// </summary>
-    [ReactProp]
-    public string name { get; set; }
+    public string name
+    {
+        get => __name?.value;
+        set => SetValue(ref __name, _name, value);
+    }
+    #endregion
+
 
     #region string cols
     PropertyValueNode<UnionProp<string,int?>> __cols;
@@ -4642,12 +5318,16 @@ public sealed partial class textarea : HtmlElement
     {
         name = nameof(cols)
     };
-    #endregion
     /// <summary>
     ///     Specifies the visible width of the textarea element in characters.
     /// </summary>
-    [ReactProp]
-    public UnionProp<string,int?> cols { get; set; }
+    public UnionProp<string,int?> cols
+    {
+        get => __cols?.value;
+        set => SetValue(ref __cols, _cols, value);
+    }
+    #endregion
+
 
     #region string rows
     PropertyValueNode<UnionProp<string,int?>> __rows;
@@ -4655,12 +5335,16 @@ public sealed partial class textarea : HtmlElement
     {
         name = nameof(rows)
     };
-    #endregion
     /// <summary>
     ///     Specifies the number of visible lines in the textarea element.
     /// </summary>
-    [ReactProp]
-    public UnionProp<string,int?> rows { get; set; }
+    public UnionProp<string,int?> rows
+    {
+        get => __rows?.value;
+        set => SetValue(ref __rows, _rows, value);
+    }
+    #endregion
+
 
     #region string placeholder
     PropertyValueNode<string> __placeholder;
@@ -4668,12 +5352,16 @@ public sealed partial class textarea : HtmlElement
     {
         name = nameof(placeholder)
     };
-    #endregion
     /// <summary>
     ///     Specifies a short hint that describes the expected value of the textarea element.
     /// </summary>
-    [ReactProp]
-    public string placeholder { get; set; }
+    public string placeholder
+    {
+        get => __placeholder?.value;
+        set => SetValue(ref __placeholder, _placeholder, value);
+    }
+    #endregion
+
 
     #region string readOnly
     PropertyValueNode<UnionProp<string,bool>> __readOnly;
@@ -4681,12 +5369,16 @@ public sealed partial class textarea : HtmlElement
     {
         name = nameof(readOnly)
     };
-    #endregion
     /// <summary>
     ///     Disables user input in the textarea element.
     /// </summary>
-    [ReactProp]
-    public UnionProp<string,bool> readOnly { get; set; }
+    public UnionProp<string,bool> readOnly
+    {
+        get => __readOnly?.value;
+        set => SetValue(ref __readOnly, _readOnly, value);
+    }
+    #endregion
+
 
     #region string required
     PropertyValueNode<string> __required;
@@ -4694,12 +5386,16 @@ public sealed partial class textarea : HtmlElement
     {
         name = nameof(required)
     };
-    #endregion
     /// <summary>
     ///     Indicates that the textarea element must be filled out before the form is submitted.
     /// </summary>
-    [ReactProp]
-    public string required { get; set; }
+    public string required
+    {
+        get => __required?.value;
+        set => SetValue(ref __required, _required, value);
+    }
+    #endregion
+
 
     #region string autofocus
     PropertyValueNode<string> __autofocus;
@@ -4707,12 +5403,16 @@ public sealed partial class textarea : HtmlElement
     {
         name = nameof(autofocus)
     };
-    #endregion
     /// <summary>
     ///     Automatically gives focus to the textarea element when the page loads.
     /// </summary>
-    [ReactProp]
-    public string autofocus { get; set; }
+    public string autofocus
+    {
+        get => __autofocus?.value;
+        set => SetValue(ref __autofocus, _autofocus, value);
+    }
+    #endregion
+
 
     #region string autocomplete
     PropertyValueNode<string> __autocomplete;
@@ -4720,12 +5420,16 @@ public sealed partial class textarea : HtmlElement
     {
         name = nameof(autocomplete)
     };
-    #endregion
     /// <summary>
     ///     Specifies that the user's browser should automatically complete the textarea element's value.
     /// </summary>
-    [ReactProp]
-    public string autocomplete { get; set; }
+    public string autocomplete
+    {
+        get => __autocomplete?.value;
+        set => SetValue(ref __autocomplete, _autocomplete, value);
+    }
+    #endregion
+
 
     #region string dirname
     PropertyValueNode<string> __dirname;
@@ -4733,12 +5437,16 @@ public sealed partial class textarea : HtmlElement
     {
         name = nameof(dirname)
     };
-    #endregion
     /// <summary>
     ///     Specifies the directory to use as the default value for the 'file' input type.
     /// </summary>
-    [ReactProp]
-    public string dirname { get; set; }
+    public string dirname
+    {
+        get => __dirname?.value;
+        set => SetValue(ref __dirname, _dirname, value);
+    }
+    #endregion
+
 
     #region string form
     PropertyValueNode<string> __form;
@@ -4746,12 +5454,16 @@ public sealed partial class textarea : HtmlElement
     {
         name = nameof(form)
     };
-    #endregion
     /// <summary>
     ///     Specifies the ID of the form that the textarea element belongs to.
     /// </summary>
-    [ReactProp]
-    public string form { get; set; }
+    public string form
+    {
+        get => __form?.value;
+        set => SetValue(ref __form, _form, value);
+    }
+    #endregion
+
 
     #region string maxlength
     PropertyValueNode<string> __maxlength;
@@ -4759,12 +5471,16 @@ public sealed partial class textarea : HtmlElement
     {
         name = nameof(maxlength)
     };
-    #endregion
     /// <summary>
     ///     Specifies the maximum number of characters that can be entered into the textarea element.
     /// </summary>
-    [ReactProp]
-    public string maxlength { get; set; }
+    public string maxlength
+    {
+        get => __maxlength?.value;
+        set => SetValue(ref __maxlength, _maxlength, value);
+    }
+    #endregion
+
 
     #region string minlength
     PropertyValueNode<string> __minlength;
@@ -4772,12 +5488,16 @@ public sealed partial class textarea : HtmlElement
     {
         name = nameof(minlength)
     };
-    #endregion
     /// <summary>
     ///     Specifies the minimum number of characters that must be entered into the textarea element.
     /// </summary>
-    [ReactProp]
-    public string minlength { get; set; }
+    public string minlength
+    {
+        get => __minlength?.value;
+        set => SetValue(ref __minlength, _minlength, value);
+    }
+    #endregion
+
 
     #region string wrap
     PropertyValueNode<string> __wrap;
@@ -4785,12 +5505,16 @@ public sealed partial class textarea : HtmlElement
     {
         name = nameof(wrap)
     };
-    #endregion
     /// <summary>
     ///     Specifies whether the text in the textarea element should wrap to the next line when it reaches the end of the visible area.
     /// </summary>
-    [ReactProp]
-    public string wrap { get; set; }
+    public string wrap
+    {
+        get => __wrap?.value;
+        set => SetValue(ref __wrap, _wrap, value);
+    }
+    #endregion
+
 
     #region string defaultValue
     PropertyValueNode<string> __defaultValue;
@@ -4798,12 +5522,16 @@ public sealed partial class textarea : HtmlElement
     {
         name = nameof(defaultValue)
     };
-    #endregion
     /// <summary>
     ///     A string. Specifies the initial value for a text area.
     /// </summary>
-    [ReactProp]
-    public string defaultValue { get; set; }
+    public string defaultValue
+    {
+        get => __defaultValue?.value;
+        set => SetValue(ref __defaultValue, _defaultValue, value);
+    }
+    #endregion
+
 
     #region string value
     PropertyValueNode<string> __value;
@@ -4811,9 +5539,13 @@ public sealed partial class textarea : HtmlElement
     {
         name = nameof(value)
     };
+    public string value
+    {
+        get => __value?.value;
+        set => SetValue(ref __value, _value, value);
+    }
     #endregion
-    [ReactProp]
-    public string value { get; set; }
+
 
     #region string disabled
     PropertyValueNode<string> __disabled;
@@ -4821,9 +5553,13 @@ public sealed partial class textarea : HtmlElement
     {
         name = nameof(disabled)
     };
+    public string disabled
+    {
+        get => __disabled?.value;
+        set => SetValue(ref __disabled, _disabled, value);
+    }
     #endregion
-    [ReactProp]
-    public string disabled { get; set; }
+
 
     public textarea() { }
 
@@ -4946,9 +5682,13 @@ public sealed class link : HtmlElement
     {
         name = nameof(href)
     };
+    public string href
+    {
+        get => __href?.value;
+        set => SetValue(ref __href, _href, value);
+    }
     #endregion
-    [ReactProp]
-    public string href { get; set; }
+
 
     #region string media
     PropertyValueNode<string> __media;
@@ -4956,9 +5696,13 @@ public sealed class link : HtmlElement
     {
         name = nameof(media)
     };
+    public string media
+    {
+        get => __media?.value;
+        set => SetValue(ref __media, _media, value);
+    }
     #endregion
-    [ReactProp]
-    public string media { get; set; }
+
 
     #region string rel
     PropertyValueNode<string> __rel;
@@ -4966,9 +5710,13 @@ public sealed class link : HtmlElement
     {
         name = nameof(rel)
     };
+    public string rel
+    {
+        get => __rel?.value;
+        set => SetValue(ref __rel, _rel, value);
+    }
     #endregion
-    [ReactProp]
-    public string rel { get; set; }
+
 
     #region string sizes
     PropertyValueNode<string> __sizes;
@@ -4976,9 +5724,13 @@ public sealed class link : HtmlElement
     {
         name = nameof(sizes)
     };
+    public string sizes
+    {
+        get => __sizes?.value;
+        set => SetValue(ref __sizes, _sizes, value);
+    }
     #endregion
-    [ReactProp]
-    public string sizes { get; set; }
+
 
     #region string type
     PropertyValueNode<string> __type;
@@ -4986,9 +5738,13 @@ public sealed class link : HtmlElement
     {
         name = nameof(type)
     };
+    public string type
+    {
+        get => __type?.value;
+        set => SetValue(ref __type, _type, value);
+    }
     #endregion
-    [ReactProp]
-    public string type { get; set; }
+
 
     #region string @as
     PropertyValueNode<string> __as;
@@ -4996,9 +5752,13 @@ public sealed class link : HtmlElement
     {
         name = nameof(@as)
     };
+    public string @as
+    {
+        get => __as?.value;
+        set => SetValue(ref __as, _as, value);
+    }
     #endregion
-    [ReactProp]
-    public string @as { get; set; }
+
 
     #region string integrity
     PropertyValueNode<string> __integrity;
@@ -5006,9 +5766,13 @@ public sealed class link : HtmlElement
     {
         name = nameof(integrity)
     };
+    public string integrity
+    {
+        get => __integrity?.value;
+        set => SetValue(ref __integrity, _integrity, value);
+    }
     #endregion
-    [ReactProp]
-    public string integrity { get; set; }
+
 
     #region string crossorigin
     PropertyValueNode<string> __crossorigin;
@@ -5016,9 +5780,13 @@ public sealed class link : HtmlElement
     {
         name = nameof(crossorigin)
     };
+    public string crossorigin
+    {
+        get => __crossorigin?.value;
+        set => SetValue(ref __crossorigin, _crossorigin, value);
+    }
     #endregion
-    [ReactProp]
-    public string crossorigin { get; set; }
+
 
     #region string referrerpolicy
     PropertyValueNode<string> __referrerpolicy;
@@ -5026,9 +5794,13 @@ public sealed class link : HtmlElement
     {
         name = nameof(referrerpolicy)
     };
+    public string referrerpolicy
+    {
+        get => __referrerpolicy?.value;
+        set => SetValue(ref __referrerpolicy, _referrerpolicy, value);
+    }
     #endregion
-    [ReactProp]
-    public string referrerpolicy { get; set; }
+
 
     public link() { }
 
@@ -5067,9 +5839,13 @@ public sealed class iframe : HtmlElement
     {
         name = nameof(src)
     };
+    public string src
+    {
+        get => __src?.value;
+        set => SetValue(ref __src, _src, value);
+    }
     #endregion
-    [ReactProp]
-    public string src { get; set; }
+
 
     public iframe() { }
 
@@ -5092,9 +5868,13 @@ public sealed partial class select : HtmlElement
     {
         name = nameof(value)
     };
+    public string value
+    {
+        get => __value?.value;
+        set => SetValue(ref __value, _value, value);
+    }
     #endregion
-    [ReactProp]
-    public string value { get; set; }
+
 
     #region string disabled
     PropertyValueNode<string> __disabled;
@@ -5102,9 +5882,13 @@ public sealed partial class select : HtmlElement
     {
         name = nameof(disabled)
     };
+    public string disabled
+    {
+        get => __disabled?.value;
+        set => SetValue(ref __disabled, _disabled, value);
+    }
     #endregion
-    [ReactProp]
-    public string disabled { get; set; }
+
 
     public select() { }
 
@@ -5129,9 +5913,13 @@ public sealed partial class input : HtmlElement
     {
         name = nameof(required)
     };
+    public string required
+    {
+        get => __required?.value;
+        set => SetValue(ref __required, _required, value);
+    }
     #endregion
-    [ReactProp]
-    public string required { get; set; }
+
 
     #region string autoComplete
     PropertyValueNode<string> __autoComplete;
@@ -5139,9 +5927,13 @@ public sealed partial class input : HtmlElement
     {
         name = nameof(autoComplete)
     };
+    public string autoComplete
+    {
+        get => __autoComplete?.value;
+        set => SetValue(ref __autoComplete, _autoComplete, value);
+    }
     #endregion
-    [ReactProp]
-    public string autoComplete { get; set; }
+
 
     #region string @checked
     PropertyValueNode<bool?> __checked;
@@ -5149,9 +5941,13 @@ public sealed partial class input : HtmlElement
     {
         name = nameof(@checked)
     };
+    public bool? @checked
+    {
+        get => __checked?.value;
+        set => SetValue(ref __checked, _checked, value);
+    }
     #endregion
-    [ReactProp]
-    public bool? @checked { get; set; }
+
 
     #region string defaultChecked
     PropertyValueNode<bool?> __defaultChecked;
@@ -5159,9 +5955,13 @@ public sealed partial class input : HtmlElement
     {
         name = nameof(defaultChecked)
     };
+    public bool? defaultChecked
+    {
+        get => __defaultChecked?.value;
+        set => SetValue(ref __defaultChecked, _defaultChecked, value);
+    }
     #endregion
-    [ReactProp]
-    public bool? defaultChecked { get; set; }
+
 
     #region string defaultValue
     PropertyValueNode<string> __defaultValue;
@@ -5169,9 +5969,13 @@ public sealed partial class input : HtmlElement
     {
         name = nameof(defaultValue)
     };
+    public string defaultValue
+    {
+        get => __defaultValue?.value;
+        set => SetValue(ref __defaultValue, _defaultValue, value);
+    }
     #endregion
-    [ReactProp]
-    public string defaultValue { get; set; }
+
 
     #region string disabled
     PropertyValueNode<bool?> __disabled;
@@ -5179,9 +5983,13 @@ public sealed partial class input : HtmlElement
     {
         name = nameof(disabled)
     };
+    public bool? disabled
+    {
+        get => __disabled?.value;
+        set => SetValue(ref __disabled, _disabled, value);
+    }
     #endregion
-    [ReactProp]
-    public bool? disabled { get; set; }
+
 
     #region string autoFocus
     PropertyValueNode<bool?> __autoFocus;
@@ -5189,12 +5997,16 @@ public sealed partial class input : HtmlElement
     {
         name = nameof(autoFocus)
     };
-    #endregion
     /// <summary>
     ///     Element must automatically get focus when the page loads.
     /// </summary>
-    [ReactProp]
-    public bool? autoFocus { get; set; }
+    public bool? autoFocus
+    {
+        get => __autoFocus?.value;
+        set => SetValue(ref __autoFocus, _autoFocus, value);
+    }
+    #endregion
+
 
     #region string name
     PropertyValueNode<string> __name;
@@ -5202,9 +6014,13 @@ public sealed partial class input : HtmlElement
     {
         name = nameof(name)
     };
+    public string name
+    {
+        get => __name?.value;
+        set => SetValue(ref __name, _name, value);
+    }
     #endregion
-    [ReactProp]
-    public string name { get; set; }
+
 
     #region string placeholder
     PropertyValueNode<string> __placeholder;
@@ -5212,9 +6028,13 @@ public sealed partial class input : HtmlElement
     {
         name = nameof(placeholder)
     };
+    public string placeholder
+    {
+        get => __placeholder?.value;
+        set => SetValue(ref __placeholder, _placeholder, value);
+    }
     #endregion
-    [ReactProp]
-    public string placeholder { get; set; }
+
 
     #region string readOnly
     PropertyValueNode<bool?> __readOnly;
@@ -5222,9 +6042,13 @@ public sealed partial class input : HtmlElement
     {
         name = nameof(readOnly)
     };
+    public bool? readOnly
+    {
+        get => __readOnly?.value;
+        set => SetValue(ref __readOnly, _readOnly, value);
+    }
     #endregion
-    [ReactProp]
-    public bool? readOnly { get; set; }
+
 
     #region string type
     PropertyValueNode<string> __type;
@@ -5232,9 +6056,13 @@ public sealed partial class input : HtmlElement
     {
         name = nameof(type)
     };
+    public string type
+    {
+        get => __type?.value;
+        set => SetValue(ref __type, _type, value);
+    }
     #endregion
-    [ReactProp]
-    public string type { get; set; }
+
 
     #region string max
     PropertyValueNode<int?> __max;
@@ -5242,9 +6070,13 @@ public sealed partial class input : HtmlElement
     {
         name = nameof(max)
     };
+    public int? max
+    {
+        get => __max?.value;
+        set => SetValue(ref __max, _max, value);
+    }
     #endregion
-    [ReactProp]
-    public int? max { get; set; }
+
 
     #region string min
     PropertyValueNode<int?> __min;
@@ -5252,9 +6084,13 @@ public sealed partial class input : HtmlElement
     {
         name = nameof(min)
     };
+    public int? min
+    {
+        get => __min?.value;
+        set => SetValue(ref __min, _min, value);
+    }
     #endregion
-    [ReactProp]
-    public int? min { get; set; }
+
 
     #region string step
     PropertyValueNode<int?> __step;
@@ -5262,9 +6098,13 @@ public sealed partial class input : HtmlElement
     {
         name = nameof(step)
     };
+    public int? step
+    {
+        get => __step?.value;
+        set => SetValue(ref __step, _step, value);
+    }
     #endregion
-    [ReactProp]
-    public int? step { get; set; }
+
 
     public input() { }
 
@@ -5318,9 +6158,13 @@ public  partial class HtmlElement
     {
         name = nameof(accesskey)
     };
+    public string accesskey
+    {
+        get => __accesskey?.value;
+        set => SetValue(ref __accesskey, _accesskey, value);
+    }
     #endregion
-    [ReactProp]
-    public string accesskey { get; set; }
+
 
     #region string draggable
     PropertyValueNode<string> __draggable;
@@ -5328,9 +6172,13 @@ public  partial class HtmlElement
     {
         name = nameof(draggable)
     };
+    public string draggable
+    {
+        get => __draggable?.value;
+        set => SetValue(ref __draggable, _draggable, value);
+    }
     #endregion
-    [ReactProp]
-    public string draggable { get; set; }
+
 
     #region string contenteditable
     PropertyValueNode<string> __contenteditable;
@@ -5338,9 +6186,13 @@ public  partial class HtmlElement
     {
         name = nameof(contenteditable)
     };
+    public string contenteditable
+    {
+        get => __contenteditable?.value;
+        set => SetValue(ref __contenteditable, _contenteditable, value);
+    }
     #endregion
-    [ReactProp]
-    public string contenteditable { get; set; }
+
 
     #region string className
     PropertyValueNode<string> __className;
@@ -5348,9 +6200,13 @@ public  partial class HtmlElement
     {
         name = nameof(className)
     };
+    public string className
+    {
+        get => __className?.value;
+        set => SetValue(ref __className, _className, value);
+    }
     #endregion
-    [ReactProp]
-    public string className { get; set; }
+
 
     #region string dangerouslySetInnerHTML
     PropertyValueNode<dangerouslySetInnerHTML> __dangerouslySetInnerHTML;
@@ -5358,9 +6214,13 @@ public  partial class HtmlElement
     {
         name = nameof(dangerouslySetInnerHTML)
     };
+    public dangerouslySetInnerHTML dangerouslySetInnerHTML
+    {
+        get => __dangerouslySetInnerHTML?.value;
+        set => SetValue(ref __dangerouslySetInnerHTML, _dangerouslySetInnerHTML, value);
+    }
     #endregion
-    [ReactProp]
-    public dangerouslySetInnerHTML dangerouslySetInnerHTML { get; set; }
+
 
     #region string dir
     PropertyValueNode<string> __dir;
@@ -5368,9 +6228,13 @@ public  partial class HtmlElement
     {
         name = nameof(dir)
     };
+    public string dir
+    {
+        get => __dir?.value;
+        set => SetValue(ref __dir, _dir, value);
+    }
     #endregion
-    [ReactProp]
-    public string dir { get; set; }
+
 
     #region string id
     PropertyValueNode<string> __id;
@@ -5378,9 +6242,13 @@ public  partial class HtmlElement
     {
         name = nameof(id)
     };
+    public string id
+    {
+        get => __id?.value;
+        set => SetValue(ref __id, _id, value);
+    }
     #endregion
-    [ReactProp]
-    public string id { get; set; }
+
 
     #region string lang
     PropertyValueNode<string> __lang;
@@ -5388,9 +6256,13 @@ public  partial class HtmlElement
     {
         name = nameof(lang)
     };
+    public string lang
+    {
+        get => __lang?.value;
+        set => SetValue(ref __lang, _lang, value);
+    }
     #endregion
-    [ReactProp]
-    public string lang { get; set; }
+
 
     #region string part
     PropertyValueNode<string> __part;
@@ -5398,9 +6270,13 @@ public  partial class HtmlElement
     {
         name = nameof(part)
     };
+    public string part
+    {
+        get => __part?.value;
+        set => SetValue(ref __part, _part, value);
+    }
     #endregion
-    [ReactProp]
-    public string part { get; set; }
+
 
     #region string role
     PropertyValueNode<string> __role;
@@ -5408,9 +6284,13 @@ public  partial class HtmlElement
     {
         name = nameof(role)
     };
+    public string role
+    {
+        get => __role?.value;
+        set => SetValue(ref __role, _role, value);
+    }
     #endregion
-    [ReactProp]
-    public string role { get; set; }
+
 
     #region string spellcheck
     PropertyValueNode<string> __spellcheck;
@@ -5418,9 +6298,13 @@ public  partial class HtmlElement
     {
         name = nameof(spellcheck)
     };
+    public string spellcheck
+    {
+        get => __spellcheck?.value;
+        set => SetValue(ref __spellcheck, _spellcheck, value);
+    }
     #endregion
-    [ReactProp]
-    public string spellcheck { get; set; }
+
 
     #region string tabIndex
     PropertyValueNode<string> __tabIndex;
@@ -5428,9 +6312,13 @@ public  partial class HtmlElement
     {
         name = nameof(tabIndex)
     };
+    public string tabIndex
+    {
+        get => __tabIndex?.value;
+        set => SetValue(ref __tabIndex, _tabIndex, value);
+    }
     #endregion
-    [ReactProp]
-    public string tabIndex { get; set; }
+
 
     #region string title
     PropertyValueNode<string> __title;
@@ -5438,9 +6326,13 @@ public  partial class HtmlElement
     {
         name = nameof(title)
     };
+    public string title
+    {
+        get => __title?.value;
+        set => SetValue(ref __title, _title, value);
+    }
     #endregion
-    [ReactProp]
-    public string title { get; set; }
+
 
     #region string translate
     PropertyValueNode<string> __translate;
@@ -5448,9 +6340,13 @@ public  partial class HtmlElement
     {
         name = nameof(translate)
     };
+    public string translate
+    {
+        get => __translate?.value;
+        set => SetValue(ref __translate, _translate, value);
+    }
     #endregion
-    [ReactProp]
-    public string translate { get; set; }
+
 
     #region string onClick
     PropertyValueNode<MouseEventHandler> __onClick;
@@ -5459,10 +6355,13 @@ public  partial class HtmlElement
         name = nameof(onClick),
         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments"
     };
+    public MouseEventHandler onClick
+    {
+        get => __onClick?.value;
+        set => SetValue(ref __onClick, _onClick, value);
+    }
     #endregion
-    [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
-    public MouseEventHandler onClick { get; set; }
+
 
     #region string onMouseEnter
     PropertyValueNode<MouseEventHandler> __onMouseEnter;
@@ -5471,10 +6370,13 @@ public  partial class HtmlElement
         name = nameof(onMouseEnter),
         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments"
     };
+    public MouseEventHandler onMouseEnter
+    {
+        get => __onMouseEnter?.value;
+        set => SetValue(ref __onMouseEnter, _onMouseEnter, value);
+    }
     #endregion
-    [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
-    public MouseEventHandler onMouseEnter { get; set; }
+
 
     #region string onMouseLeave
     PropertyValueNode<MouseEventHandler> __onMouseLeave;
@@ -5483,10 +6385,13 @@ public  partial class HtmlElement
         name = nameof(onMouseLeave),
         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments"
     };
+    public MouseEventHandler onMouseLeave
+    {
+        get => __onMouseLeave?.value;
+        set => SetValue(ref __onMouseLeave, _onMouseLeave, value);
+    }
     #endregion
-    [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
-    public MouseEventHandler onMouseLeave { get; set; }
+
 
     #region string onScroll
     PropertyValueNode<ScrollEventHandler> __onScroll;
@@ -5494,9 +6399,13 @@ public  partial class HtmlElement
     {
         name = nameof(onScroll)
     };
+    public ScrollEventHandler onScroll
+    {
+        get => __onScroll?.value;
+        set => SetValue(ref __onScroll, _onScroll, value);
+    }
     #endregion
-    [ReactProp]
-    public ScrollEventHandler onScroll { get; set; }
+
 
     #region string onKeyDown
     PropertyValueNode<KeyboardEventHandler> __onKeyDown;
@@ -5504,9 +6413,13 @@ public  partial class HtmlElement
     {
         name = nameof(onKeyDown)
     };
+    public KeyboardEventHandler onKeyDown
+    {
+        get => __onKeyDown?.value;
+        set => SetValue(ref __onKeyDown, _onKeyDown, value);
+    }
     #endregion
-    [ReactProp]
-    public KeyboardEventHandler onKeyDown { get; set; }
+
 
 
     public static HtmlElementModifier Modify(Action<HtmlElement> modifyAction) => CreateHtmlElementModifier(modifyAction);

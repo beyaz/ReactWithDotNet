@@ -225,12 +225,13 @@ abstract partial class HtmlElement : Element
     {
         public PropertyValueNode next, prev;
         public PropertyValueDefinition propertyDefinition;
+        public object value;
     }
     
     [DebuggerDisplay("{propertyDefinition}: {value}")]
     internal sealed class PropertyValueNode<T> : PropertyValueNode
     {
-        public T value;
+        public new T value;
     }
 
     internal void SetValue<T>(ref PropertyValueNode<T> valueNode, PropertyValueDefinition propertyDefinition, T value)
