@@ -6353,7 +6353,8 @@ public  partial class HtmlElement
     static readonly PropertyValueDefinition _onClick_ = new()
     {
         name = nameof(onClick),
-        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments"
+        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+        isIsVoidTaskDelegate = true
     };
     public MouseEventHandler onClick
     {
@@ -6368,7 +6369,8 @@ public  partial class HtmlElement
     static readonly PropertyValueDefinition _onMouseEnter_ = new()
     {
         name = nameof(onMouseEnter),
-        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments"
+        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+        isIsVoidTaskDelegate = true
     };
     public MouseEventHandler onMouseEnter
     {
@@ -6383,7 +6385,8 @@ public  partial class HtmlElement
     static readonly PropertyValueDefinition _onMouseLeave_ = new()
     {
         name = nameof(onMouseLeave),
-        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments"
+        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+        isIsVoidTaskDelegate = true
     };
     public MouseEventHandler onMouseLeave
     {
@@ -6413,7 +6416,8 @@ public  partial class HtmlElement
     PropertyValueNode<KeyboardEventHandler> _onKeyDown;
     static readonly PropertyValueDefinition _onKeyDown_ = new()
     {
-        name = nameof(onKeyDown)
+        name = nameof(onKeyDown),
+        isIsVoidTaskDelegate = true
     };
     public KeyboardEventHandler onKeyDown
     {
