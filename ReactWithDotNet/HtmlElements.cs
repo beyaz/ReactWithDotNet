@@ -22,24 +22,7 @@ partial class input
     [ReactBind(targetProp = nameof(@checked), jsValueAccess = "e.target.checked", eventName = "onChange")]
     public Expression<Func<bool>> checkedBind { get; set; }
 
-    /// <summary>
-    ///     Occurs when an element loses focus.
-    /// </summary>
-    [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments")]
-    public FocusEventHandler onBlur { get; set; }
-
-    [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments")]
-    public Func<ChangeEvent, Task> onChange { get; set; }
-
-    /// <summary>
-    ///     occurs when an element gets focus.
-    /// </summary>
-    [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments")]
-    public FocusEventHandler onFocus { get; set; } // TODO: give FocusEvent react
-
+    
     
 
   

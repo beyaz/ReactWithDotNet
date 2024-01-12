@@ -1543,6 +1543,29 @@ public class ExportingCommonHtmlElements
                         Name                   = "value",
                         Type                   = "string",
                         TransformValueInClient = "ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull"
+                    },
+                    
+                    new ()
+                    {
+                        Name                 = "onBlur",
+                        Type                 = "FocusEventHandler",
+                        IsIsVoidTaskDelegate = true,
+                        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments",
+                        Comment = "Occurs when an element loses focus."
+                    },
+                    new ()
+                    {
+                        Name                              = "onChange",
+                        Type                              = "Func<ChangeEvent, Task>", // TODO: changeEvent delegate
+                        IsIsVoidTaskDelegate              = true,
+                        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments"
+                    },
+                    new ()
+                    {
+                        Name                              = "onFocus",
+                        Type                              = "FocusEventHandler",
+                        IsIsVoidTaskDelegate              = true,
+                        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments"
                     }
                 ],
                 EnableCastFromString = false

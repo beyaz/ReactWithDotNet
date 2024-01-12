@@ -6138,6 +6138,57 @@ public sealed partial class input : HtmlElement
     #endregion
 
 
+    #region string onBlur
+    PropertyValueNode<FocusEventHandler> _onBlur;
+    static readonly PropertyValueDefinition _onBlur_ = new()
+    {
+        name = nameof(onBlur),
+        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments",
+        isIsVoidTaskDelegate = true
+    };
+    /// <summary>
+    ///     Occurs when an element loses focus.
+    /// </summary>
+    public FocusEventHandler onBlur
+    {
+        get => _onBlur?.value;
+        set => SetValue(_onBlur_, ref _onBlur, value);
+    }
+    #endregion
+
+
+    #region string onChange
+    PropertyValueNode<Func<ChangeEvent, Task>> _onChange;
+    static readonly PropertyValueDefinition _onChange_ = new()
+    {
+        name = nameof(onChange),
+        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments",
+        isIsVoidTaskDelegate = true
+    };
+    public Func<ChangeEvent, Task> onChange
+    {
+        get => _onChange?.value;
+        set => SetValue(_onChange_, ref _onChange, value);
+    }
+    #endregion
+
+
+    #region string onFocus
+    PropertyValueNode<FocusEventHandler> _onFocus;
+    static readonly PropertyValueDefinition _onFocus_ = new()
+    {
+        name = nameof(onFocus),
+        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments",
+        isIsVoidTaskDelegate = true
+    };
+    public FocusEventHandler onFocus
+    {
+        get => _onFocus?.value;
+        set => SetValue(_onFocus_, ref _onFocus, value);
+    }
+    #endregion
+
+
     public input() { }
 
     public input(params IModifier[] modifiers) : base(modifiers) { }
@@ -6183,6 +6234,17 @@ public sealed partial class input : HtmlElement
     public static HtmlElementModifier ValueBind(Expression<Func<InputValueBinder>> value) => Modify(x => x.valueBind = value);
 
     public static HtmlElementModifier Value(string value) => Modify(x => x.value = value);
+
+    /// <summary>
+    ///     onBlur = <paramref name="value"/>
+    /// <br/>
+    ///     Occurs when an element loses focus.
+    /// </summary>
+    public static HtmlElementModifier OnBlur(FocusEventHandler value) => Modify(x => x.onBlur = value);
+
+    public static HtmlElementModifier OnChange(Func<ChangeEvent, Task> value) => Modify(x => x.onChange = value);
+
+    public static HtmlElementModifier OnFocus(FocusEventHandler value) => Modify(x => x.onFocus = value);
 
 }
 
