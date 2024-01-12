@@ -1536,6 +1536,13 @@ public class ExportingCommonHtmlElements
                         {
                             targetProp = "value", jsValueAccess = "e.target.value", eventName = "onChange"
                         }
+                    },
+                    
+                    new ()
+                    {
+                        Name                   = "value",
+                        Type                   = "string",
+                        TransformValueInClient = "ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull"
                     }
                 ],
                 EnableCastFromString = false

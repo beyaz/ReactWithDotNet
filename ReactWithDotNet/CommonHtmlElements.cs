@@ -6123,6 +6123,21 @@ public sealed partial class input : HtmlElement
     #endregion
 
 
+    #region string value
+    PropertyValueNode<string> _value;
+    static readonly PropertyValueDefinition _value_ = new()
+    {
+        name = nameof(value),
+        transformValueInClient = "ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull"
+    };
+    public string value
+    {
+        get => _value?.value;
+        set => SetValue(_value_, ref _value, value);
+    }
+    #endregion
+
+
     public input() { }
 
     public input(params IModifier[] modifiers) : base(modifiers) { }
@@ -6166,6 +6181,8 @@ public sealed partial class input : HtmlElement
     public static HtmlElementModifier Step(int? value) => Modify(x => x.step = value);
 
     public static HtmlElementModifier ValueBind(Expression<Func<InputValueBinder>> value) => Modify(x => x.valueBind = value);
+
+    public static HtmlElementModifier Value(string value) => Modify(x => x.value = value);
 
 }
 

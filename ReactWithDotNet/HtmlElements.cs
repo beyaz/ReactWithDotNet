@@ -40,19 +40,9 @@ partial class input
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments")]
     public FocusEventHandler onFocus { get; set; } // TODO: give FocusEvent react
 
-    [ReactProp]
-    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
-    public string value { get; set; }
+    
 
-    //[ReactProp]
-    //[ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
-    //[ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
-    //public Expression<Func<InputValueBinder>> valueBind { get; set; }
-    
-    
-    
-    
-    
+  
 
     /// <summary>
     ///     if you want to handle when user iteraction finished see example below<br />
