@@ -1668,10 +1668,10 @@ public class ExportingCommonHtmlElements
                 {
                     
                     list.Add($"{padding}#region string {CamelCase(attribute.Name)}");
-                    list.Add($"{padding}PropertyValueNode<{attribute.Type}> __{CamelCase(attribute.Name).RemoveFromStart("@")};");
+                    list.Add($"{padding}PropertyValueNode<{attribute.Type}> _{CamelCase(attribute.Name).RemoveFromStart("@")};");
                     
                     
-                    list.Add($"{padding}static readonly PropertyValueDefinition _{CamelCase(attribute.Name).RemoveFromStart("@")} = new()");
+                    list.Add($"{padding}static readonly PropertyValueDefinition _{CamelCase(attribute.Name).RemoveFromStart("@")}_ = new()");
                     list.Add($"{padding}{{");
                     list.Add($"{padding}{padding}name = nameof({CamelCase(attribute.Name)})");
                     
@@ -1703,8 +1703,8 @@ public class ExportingCommonHtmlElements
 
                     list.Add($"{padding}public {attribute.Type} {CamelCase(attribute.Name)}");
                     list.Add($"{padding}{{");
-                    list.Add($"{padding}{padding}get => __{CamelCase(attribute.Name).RemoveFromStart("@")}?.value;");
-                    list.Add($"{padding}{padding}set => SetValue(ref __{CamelCase(attribute.Name).RemoveFromStart("@")}, _{CamelCase(attribute.Name).RemoveFromStart("@")}, value);");
+                    list.Add($"{padding}{padding}get => _{CamelCase(attribute.Name).RemoveFromStart("@")}?.value;");
+                    list.Add($"{padding}{padding}set => SetValue(ref _{CamelCase(attribute.Name).RemoveFromStart("@")}, _{CamelCase(attribute.Name).RemoveFromStart("@")}_, value);");
                     list.Add($"{padding}}}");
                     list.Add($"{padding}#endregion");
                     list.Add(Empty);

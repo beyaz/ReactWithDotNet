@@ -40,8 +40,8 @@ public sealed class article : HtmlElement
 public sealed class button : HtmlElement
 {
     #region string type
-    PropertyValueNode<string> __type;
-    static readonly PropertyValueDefinition _type = new()
+    PropertyValueNode<string> _type;
+    static readonly PropertyValueDefinition _type_ = new()
     {
         name = nameof(type)
     };
@@ -50,15 +50,15 @@ public sealed class button : HtmlElement
     /// </summary>
     public string type
     {
-        get => __type?.value;
-        set => SetValue(ref __type, _type, value);
+        get => _type?.value;
+        set => SetValue(ref _type, _type_, value);
     }
     #endregion
 
 
     #region string value
-    PropertyValueNode<string> __value;
-    static readonly PropertyValueDefinition _value = new()
+    PropertyValueNode<string> _value;
+    static readonly PropertyValueDefinition _value_ = new()
     {
         name = nameof(value)
     };
@@ -67,15 +67,15 @@ public sealed class button : HtmlElement
     /// </summary>
     public string value
     {
-        get => __value?.value;
-        set => SetValue(ref __value, _value, value);
+        get => _value?.value;
+        set => SetValue(ref _value, _value_, value);
     }
     #endregion
 
 
     #region string autofocus
-    PropertyValueNode<string> __autofocus;
-    static readonly PropertyValueDefinition _autofocus = new()
+    PropertyValueNode<string> _autofocus;
+    static readonly PropertyValueDefinition _autofocus_ = new()
     {
         name = nameof(autofocus)
     };
@@ -84,15 +84,15 @@ public sealed class button : HtmlElement
     /// </summary>
     public string autofocus
     {
-        get => __autofocus?.value;
-        set => SetValue(ref __autofocus, _autofocus, value);
+        get => _autofocus?.value;
+        set => SetValue(ref _autofocus, _autofocus_, value);
     }
     #endregion
 
 
     #region string disabled
-    PropertyValueNode<string> __disabled;
-    static readonly PropertyValueDefinition _disabled = new()
+    PropertyValueNode<string> _disabled;
+    static readonly PropertyValueDefinition _disabled_ = new()
     {
         name = nameof(disabled)
     };
@@ -101,15 +101,15 @@ public sealed class button : HtmlElement
     /// </summary>
     public string disabled
     {
-        get => __disabled?.value;
-        set => SetValue(ref __disabled, _disabled, value);
+        get => _disabled?.value;
+        set => SetValue(ref _disabled, _disabled_, value);
     }
     #endregion
 
 
     #region string form
-    PropertyValueNode<string> __form;
-    static readonly PropertyValueDefinition _form = new()
+    PropertyValueNode<string> _form;
+    static readonly PropertyValueDefinition _form_ = new()
     {
         name = nameof(form)
     };
@@ -118,15 +118,15 @@ public sealed class button : HtmlElement
     /// </summary>
     public string form
     {
-        get => __form?.value;
-        set => SetValue(ref __form, _form, value);
+        get => _form?.value;
+        set => SetValue(ref _form, _form_, value);
     }
     #endregion
 
 
     #region string formaction
-    PropertyValueNode<string> __formaction;
-    static readonly PropertyValueDefinition _formaction = new()
+    PropertyValueNode<string> _formaction;
+    static readonly PropertyValueDefinition _formaction_ = new()
     {
         name = nameof(formaction)
     };
@@ -135,15 +135,15 @@ public sealed class button : HtmlElement
     /// </summary>
     public string formaction
     {
-        get => __formaction?.value;
-        set => SetValue(ref __formaction, _formaction, value);
+        get => _formaction?.value;
+        set => SetValue(ref _formaction, _formaction_, value);
     }
     #endregion
 
 
     #region string formenctype
-    PropertyValueNode<string> __formenctype;
-    static readonly PropertyValueDefinition _formenctype = new()
+    PropertyValueNode<string> _formenctype;
+    static readonly PropertyValueDefinition _formenctype_ = new()
     {
         name = nameof(formenctype)
     };
@@ -152,15 +152,15 @@ public sealed class button : HtmlElement
     /// </summary>
     public string formenctype
     {
-        get => __formenctype?.value;
-        set => SetValue(ref __formenctype, _formenctype, value);
+        get => _formenctype?.value;
+        set => SetValue(ref _formenctype, _formenctype_, value);
     }
     #endregion
 
 
     #region string formmethod
-    PropertyValueNode<string> __formmethod;
-    static readonly PropertyValueDefinition _formmethod = new()
+    PropertyValueNode<string> _formmethod;
+    static readonly PropertyValueDefinition _formmethod_ = new()
     {
         name = nameof(formmethod)
     };
@@ -169,15 +169,15 @@ public sealed class button : HtmlElement
     /// </summary>
     public string formmethod
     {
-        get => __formmethod?.value;
-        set => SetValue(ref __formmethod, _formmethod, value);
+        get => _formmethod?.value;
+        set => SetValue(ref _formmethod, _formmethod_, value);
     }
     #endregion
 
 
     #region string formnovalidate
-    PropertyValueNode<string> __formnovalidate;
-    static readonly PropertyValueDefinition _formnovalidate = new()
+    PropertyValueNode<string> _formnovalidate;
+    static readonly PropertyValueDefinition _formnovalidate_ = new()
     {
         name = nameof(formnovalidate)
     };
@@ -186,15 +186,15 @@ public sealed class button : HtmlElement
     /// </summary>
     public string formnovalidate
     {
-        get => __formnovalidate?.value;
-        set => SetValue(ref __formnovalidate, _formnovalidate, value);
+        get => _formnovalidate?.value;
+        set => SetValue(ref _formnovalidate, _formnovalidate_, value);
     }
     #endregion
 
 
     #region string name
-    PropertyValueNode<string> __name;
-    static readonly PropertyValueDefinition _name = new()
+    PropertyValueNode<string> _name;
+    static readonly PropertyValueDefinition _name_ = new()
     {
         name = nameof(name)
     };
@@ -203,8 +203,8 @@ public sealed class button : HtmlElement
     /// </summary>
     public string name
     {
-        get => __name?.value;
-        set => SetValue(ref __name, _name, value);
+        get => _name?.value;
+        set => SetValue(ref _name, _name_, value);
     }
     #endregion
 
@@ -1262,29 +1262,29 @@ public sealed class figcaption : HtmlElement
 public sealed class table : HtmlElement
 {
     #region string cellSpacing
-    PropertyValueNode<double?> __cellSpacing;
-    static readonly PropertyValueDefinition _cellSpacing = new()
+    PropertyValueNode<double?> _cellSpacing;
+    static readonly PropertyValueDefinition _cellSpacing_ = new()
     {
         name = nameof(cellSpacing)
     };
     public double? cellSpacing
     {
-        get => __cellSpacing?.value;
-        set => SetValue(ref __cellSpacing, _cellSpacing, value);
+        get => _cellSpacing?.value;
+        set => SetValue(ref _cellSpacing, _cellSpacing_, value);
     }
     #endregion
 
 
     #region string cellPadding
-    PropertyValueNode<double?> __cellPadding;
-    static readonly PropertyValueDefinition _cellPadding = new()
+    PropertyValueNode<double?> _cellPadding;
+    static readonly PropertyValueDefinition _cellPadding_ = new()
     {
         name = nameof(cellPadding)
     };
     public double? cellPadding
     {
-        get => __cellPadding?.value;
-        set => SetValue(ref __cellPadding, _cellPadding, value);
+        get => _cellPadding?.value;
+        set => SetValue(ref _cellPadding, _cellPadding_, value);
     }
     #endregion
 
@@ -1346,29 +1346,29 @@ public sealed class tfoot : HtmlElement
 public sealed class th : HtmlElement
 {
     #region string colSpan
-    PropertyValueNode<int?> __colSpan;
-    static readonly PropertyValueDefinition _colSpan = new()
+    PropertyValueNode<int?> _colSpan;
+    static readonly PropertyValueDefinition _colSpan_ = new()
     {
         name = nameof(colSpan)
     };
     public int? colSpan
     {
-        get => __colSpan?.value;
-        set => SetValue(ref __colSpan, _colSpan, value);
+        get => _colSpan?.value;
+        set => SetValue(ref _colSpan, _colSpan_, value);
     }
     #endregion
 
 
     #region string rowSpan
-    PropertyValueNode<int?> __rowSpan;
-    static readonly PropertyValueDefinition _rowSpan = new()
+    PropertyValueNode<int?> _rowSpan;
+    static readonly PropertyValueDefinition _rowSpan_ = new()
     {
         name = nameof(rowSpan)
     };
     public int? rowSpan
     {
-        get => __rowSpan?.value;
-        set => SetValue(ref __rowSpan, _rowSpan, value);
+        get => _rowSpan?.value;
+        set => SetValue(ref _rowSpan, _rowSpan_, value);
     }
     #endregion
 
@@ -1391,29 +1391,29 @@ public sealed class th : HtmlElement
 public sealed class td : HtmlElement
 {
     #region string colSpan
-    PropertyValueNode<int?> __colSpan;
-    static readonly PropertyValueDefinition _colSpan = new()
+    PropertyValueNode<int?> _colSpan;
+    static readonly PropertyValueDefinition _colSpan_ = new()
     {
         name = nameof(colSpan)
     };
     public int? colSpan
     {
-        get => __colSpan?.value;
-        set => SetValue(ref __colSpan, _colSpan, value);
+        get => _colSpan?.value;
+        set => SetValue(ref _colSpan, _colSpan_, value);
     }
     #endregion
 
 
     #region string rowSpan
-    PropertyValueNode<int?> __rowSpan;
-    static readonly PropertyValueDefinition _rowSpan = new()
+    PropertyValueNode<int?> _rowSpan;
+    static readonly PropertyValueDefinition _rowSpan_ = new()
     {
         name = nameof(rowSpan)
     };
     public int? rowSpan
     {
-        get => __rowSpan?.value;
-        set => SetValue(ref __rowSpan, _rowSpan, value);
+        get => _rowSpan?.value;
+        set => SetValue(ref _rowSpan, _rowSpan_, value);
     }
     #endregion
 
@@ -1440,29 +1440,29 @@ public sealed class td : HtmlElement
 public sealed class tr : HtmlElement
 {
     #region string colSpan
-    PropertyValueNode<int?> __colSpan;
-    static readonly PropertyValueDefinition _colSpan = new()
+    PropertyValueNode<int?> _colSpan;
+    static readonly PropertyValueDefinition _colSpan_ = new()
     {
         name = nameof(colSpan)
     };
     public int? colSpan
     {
-        get => __colSpan?.value;
-        set => SetValue(ref __colSpan, _colSpan, value);
+        get => _colSpan?.value;
+        set => SetValue(ref _colSpan, _colSpan_, value);
     }
     #endregion
 
 
     #region string rowSpan
-    PropertyValueNode<int?> __rowSpan;
-    static readonly PropertyValueDefinition _rowSpan = new()
+    PropertyValueNode<int?> _rowSpan;
+    static readonly PropertyValueDefinition _rowSpan_ = new()
     {
         name = nameof(rowSpan)
     };
     public int? rowSpan
     {
-        get => __rowSpan?.value;
-        set => SetValue(ref __rowSpan, _rowSpan, value);
+        get => _rowSpan?.value;
+        set => SetValue(ref _rowSpan, _rowSpan_, value);
     }
     #endregion
 
@@ -1485,43 +1485,43 @@ public sealed class tr : HtmlElement
 public sealed class option : HtmlElement
 {
     #region string selected
-    PropertyValueNode<bool?> __selected;
-    static readonly PropertyValueDefinition _selected = new()
+    PropertyValueNode<bool?> _selected;
+    static readonly PropertyValueDefinition _selected_ = new()
     {
         name = nameof(selected)
     };
     public bool? selected
     {
-        get => __selected?.value;
-        set => SetValue(ref __selected, _selected, value);
+        get => _selected?.value;
+        set => SetValue(ref _selected, _selected_, value);
     }
     #endregion
 
 
     #region string disabled
-    PropertyValueNode<string> __disabled;
-    static readonly PropertyValueDefinition _disabled = new()
+    PropertyValueNode<string> _disabled;
+    static readonly PropertyValueDefinition _disabled_ = new()
     {
         name = nameof(disabled)
     };
     public string disabled
     {
-        get => __disabled?.value;
-        set => SetValue(ref __disabled, _disabled, value);
+        get => _disabled?.value;
+        set => SetValue(ref _disabled, _disabled_, value);
     }
     #endregion
 
 
     #region string value
-    PropertyValueNode<string> __value;
-    static readonly PropertyValueDefinition _value = new()
+    PropertyValueNode<string> _value;
+    static readonly PropertyValueDefinition _value_ = new()
     {
         name = nameof(value)
     };
     public string value
     {
-        get => __value?.value;
-        set => SetValue(ref __value, _value, value);
+        get => _value?.value;
+        set => SetValue(ref _value, _value_, value);
     }
     #endregion
 
@@ -1546,8 +1546,8 @@ public sealed class option : HtmlElement
 public sealed class ellipse : HtmlElement
 {
     #region string cx
-    PropertyValueNode<string> __cx;
-    static readonly PropertyValueDefinition _cx = new()
+    PropertyValueNode<string> _cx;
+    static readonly PropertyValueDefinition _cx_ = new()
     {
         name = nameof(cx)
     };
@@ -1556,15 +1556,15 @@ public sealed class ellipse : HtmlElement
     /// </summary>
     public string cx
     {
-        get => __cx?.value;
-        set => SetValue(ref __cx, _cx, value);
+        get => _cx?.value;
+        set => SetValue(ref _cx, _cx_, value);
     }
     #endregion
 
 
     #region string cy
-    PropertyValueNode<string> __cy;
-    static readonly PropertyValueDefinition _cy = new()
+    PropertyValueNode<string> _cy;
+    static readonly PropertyValueDefinition _cy_ = new()
     {
         name = nameof(cy)
     };
@@ -1573,15 +1573,15 @@ public sealed class ellipse : HtmlElement
     /// </summary>
     public string cy
     {
-        get => __cy?.value;
-        set => SetValue(ref __cy, _cy, value);
+        get => _cy?.value;
+        set => SetValue(ref _cy, _cy_, value);
     }
     #endregion
 
 
     #region string rx
-    PropertyValueNode<string> __rx;
-    static readonly PropertyValueDefinition _rx = new()
+    PropertyValueNode<string> _rx;
+    static readonly PropertyValueDefinition _rx_ = new()
     {
         name = nameof(rx)
     };
@@ -1590,15 +1590,15 @@ public sealed class ellipse : HtmlElement
     /// </summary>
     public string rx
     {
-        get => __rx?.value;
-        set => SetValue(ref __rx, _rx, value);
+        get => _rx?.value;
+        set => SetValue(ref _rx, _rx_, value);
     }
     #endregion
 
 
     #region string ry
-    PropertyValueNode<string> __ry;
-    static readonly PropertyValueDefinition _ry = new()
+    PropertyValueNode<string> _ry;
+    static readonly PropertyValueDefinition _ry_ = new()
     {
         name = nameof(ry)
     };
@@ -1607,15 +1607,15 @@ public sealed class ellipse : HtmlElement
     /// </summary>
     public string ry
     {
-        get => __ry?.value;
-        set => SetValue(ref __ry, _ry, value);
+        get => _ry?.value;
+        set => SetValue(ref _ry, _ry_, value);
     }
     #endregion
 
 
     #region string fill
-    PropertyValueNode<string> __fill;
-    static readonly PropertyValueDefinition _fill = new()
+    PropertyValueNode<string> _fill;
+    static readonly PropertyValueDefinition _fill_ = new()
     {
         name = nameof(fill)
     };
@@ -1624,15 +1624,15 @@ public sealed class ellipse : HtmlElement
     /// </summary>
     public string fill
     {
-        get => __fill?.value;
-        set => SetValue(ref __fill, _fill, value);
+        get => _fill?.value;
+        set => SetValue(ref _fill, _fill_, value);
     }
     #endregion
 
 
     #region string stroke
-    PropertyValueNode<string> __stroke;
-    static readonly PropertyValueDefinition _stroke = new()
+    PropertyValueNode<string> _stroke;
+    static readonly PropertyValueDefinition _stroke_ = new()
     {
         name = nameof(stroke)
     };
@@ -1641,15 +1641,15 @@ public sealed class ellipse : HtmlElement
     /// </summary>
     public string stroke
     {
-        get => __stroke?.value;
-        set => SetValue(ref __stroke, _stroke, value);
+        get => _stroke?.value;
+        set => SetValue(ref _stroke, _stroke_, value);
     }
     #endregion
 
 
     #region string strokeWidth
-    PropertyValueNode<string> __strokeWidth;
-    static readonly PropertyValueDefinition _strokeWidth = new()
+    PropertyValueNode<string> _strokeWidth;
+    static readonly PropertyValueDefinition _strokeWidth_ = new()
     {
         name = nameof(strokeWidth)
     };
@@ -1658,8 +1658,8 @@ public sealed class ellipse : HtmlElement
     /// </summary>
     public string strokeWidth
     {
-        get => __strokeWidth?.value;
-        set => SetValue(ref __strokeWidth, _strokeWidth, value);
+        get => _strokeWidth?.value;
+        set => SetValue(ref _strokeWidth, _strokeWidth_, value);
     }
     #endregion
 
@@ -1727,8 +1727,8 @@ public sealed class ellipse : HtmlElement
 public sealed class line : HtmlElement
 {
     #region string x1
-    PropertyValueNode<string> __x1;
-    static readonly PropertyValueDefinition _x1 = new()
+    PropertyValueNode<string> _x1;
+    static readonly PropertyValueDefinition _x1_ = new()
     {
         name = nameof(x1)
     };
@@ -1737,15 +1737,15 @@ public sealed class line : HtmlElement
     /// </summary>
     public string x1
     {
-        get => __x1?.value;
-        set => SetValue(ref __x1, _x1, value);
+        get => _x1?.value;
+        set => SetValue(ref _x1, _x1_, value);
     }
     #endregion
 
 
     #region string y1
-    PropertyValueNode<string> __y1;
-    static readonly PropertyValueDefinition _y1 = new()
+    PropertyValueNode<string> _y1;
+    static readonly PropertyValueDefinition _y1_ = new()
     {
         name = nameof(y1)
     };
@@ -1754,15 +1754,15 @@ public sealed class line : HtmlElement
     /// </summary>
     public string y1
     {
-        get => __y1?.value;
-        set => SetValue(ref __y1, _y1, value);
+        get => _y1?.value;
+        set => SetValue(ref _y1, _y1_, value);
     }
     #endregion
 
 
     #region string x2
-    PropertyValueNode<string> __x2;
-    static readonly PropertyValueDefinition _x2 = new()
+    PropertyValueNode<string> _x2;
+    static readonly PropertyValueDefinition _x2_ = new()
     {
         name = nameof(x2)
     };
@@ -1771,15 +1771,15 @@ public sealed class line : HtmlElement
     /// </summary>
     public string x2
     {
-        get => __x2?.value;
-        set => SetValue(ref __x2, _x2, value);
+        get => _x2?.value;
+        set => SetValue(ref _x2, _x2_, value);
     }
     #endregion
 
 
     #region string y2
-    PropertyValueNode<string> __y2;
-    static readonly PropertyValueDefinition _y2 = new()
+    PropertyValueNode<string> _y2;
+    static readonly PropertyValueDefinition _y2_ = new()
     {
         name = nameof(y2)
     };
@@ -1788,15 +1788,15 @@ public sealed class line : HtmlElement
     /// </summary>
     public string y2
     {
-        get => __y2?.value;
-        set => SetValue(ref __y2, _y2, value);
+        get => _y2?.value;
+        set => SetValue(ref _y2, _y2_, value);
     }
     #endregion
 
 
     #region string stroke
-    PropertyValueNode<string> __stroke;
-    static readonly PropertyValueDefinition _stroke = new()
+    PropertyValueNode<string> _stroke;
+    static readonly PropertyValueDefinition _stroke_ = new()
     {
         name = nameof(stroke)
     };
@@ -1805,15 +1805,15 @@ public sealed class line : HtmlElement
     /// </summary>
     public string stroke
     {
-        get => __stroke?.value;
-        set => SetValue(ref __stroke, _stroke, value);
+        get => _stroke?.value;
+        set => SetValue(ref _stroke, _stroke_, value);
     }
     #endregion
 
 
     #region string strokeWidth
-    PropertyValueNode<string> __strokeWidth;
-    static readonly PropertyValueDefinition _strokeWidth = new()
+    PropertyValueNode<string> _strokeWidth;
+    static readonly PropertyValueDefinition _strokeWidth_ = new()
     {
         name = nameof(strokeWidth)
     };
@@ -1822,15 +1822,15 @@ public sealed class line : HtmlElement
     /// </summary>
     public string strokeWidth
     {
-        get => __strokeWidth?.value;
-        set => SetValue(ref __strokeWidth, _strokeWidth, value);
+        get => _strokeWidth?.value;
+        set => SetValue(ref _strokeWidth, _strokeWidth_, value);
     }
     #endregion
 
 
     #region string strokeDasharray
-    PropertyValueNode<string> __strokeDasharray;
-    static readonly PropertyValueDefinition _strokeDasharray = new()
+    PropertyValueNode<string> _strokeDasharray;
+    static readonly PropertyValueDefinition _strokeDasharray_ = new()
     {
         name = nameof(strokeDasharray)
     };
@@ -1839,15 +1839,15 @@ public sealed class line : HtmlElement
     /// </summary>
     public string strokeDasharray
     {
-        get => __strokeDasharray?.value;
-        set => SetValue(ref __strokeDasharray, _strokeDasharray, value);
+        get => _strokeDasharray?.value;
+        set => SetValue(ref _strokeDasharray, _strokeDasharray_, value);
     }
     #endregion
 
 
     #region string strokeLinecap
-    PropertyValueNode<string> __strokeLinecap;
-    static readonly PropertyValueDefinition _strokeLinecap = new()
+    PropertyValueNode<string> _strokeLinecap;
+    static readonly PropertyValueDefinition _strokeLinecap_ = new()
     {
         name = nameof(strokeLinecap)
     };
@@ -1856,15 +1856,15 @@ public sealed class line : HtmlElement
     /// </summary>
     public string strokeLinecap
     {
-        get => __strokeLinecap?.value;
-        set => SetValue(ref __strokeLinecap, _strokeLinecap, value);
+        get => _strokeLinecap?.value;
+        set => SetValue(ref _strokeLinecap, _strokeLinecap_, value);
     }
     #endregion
 
 
     #region string strokeLinejoin
-    PropertyValueNode<string> __strokeLinejoin;
-    static readonly PropertyValueDefinition _strokeLinejoin = new()
+    PropertyValueNode<string> _strokeLinejoin;
+    static readonly PropertyValueDefinition _strokeLinejoin_ = new()
     {
         name = nameof(strokeLinejoin)
     };
@@ -1873,15 +1873,15 @@ public sealed class line : HtmlElement
     /// </summary>
     public string strokeLinejoin
     {
-        get => __strokeLinejoin?.value;
-        set => SetValue(ref __strokeLinejoin, _strokeLinejoin, value);
+        get => _strokeLinejoin?.value;
+        set => SetValue(ref _strokeLinejoin, _strokeLinejoin_, value);
     }
     #endregion
 
 
     #region string strokeOpacity
-    PropertyValueNode<string> __strokeOpacity;
-    static readonly PropertyValueDefinition _strokeOpacity = new()
+    PropertyValueNode<string> _strokeOpacity;
+    static readonly PropertyValueDefinition _strokeOpacity_ = new()
     {
         name = nameof(strokeOpacity)
     };
@@ -1890,8 +1890,8 @@ public sealed class line : HtmlElement
     /// </summary>
     public string strokeOpacity
     {
-        get => __strokeOpacity?.value;
-        set => SetValue(ref __strokeOpacity, _strokeOpacity, value);
+        get => _strokeOpacity?.value;
+        set => SetValue(ref _strokeOpacity, _strokeOpacity_, value);
     }
     #endregion
 
@@ -1980,8 +1980,8 @@ public sealed class line : HtmlElement
 public sealed class polyline : HtmlElement
 {
     #region string points
-    PropertyValueNode<string> __points;
-    static readonly PropertyValueDefinition _points = new()
+    PropertyValueNode<string> _points;
+    static readonly PropertyValueDefinition _points_ = new()
     {
         name = nameof(points)
     };
@@ -1990,15 +1990,15 @@ public sealed class polyline : HtmlElement
     /// </summary>
     public string points
     {
-        get => __points?.value;
-        set => SetValue(ref __points, _points, value);
+        get => _points?.value;
+        set => SetValue(ref _points, _points_, value);
     }
     #endregion
 
 
     #region string fill
-    PropertyValueNode<string> __fill;
-    static readonly PropertyValueDefinition _fill = new()
+    PropertyValueNode<string> _fill;
+    static readonly PropertyValueDefinition _fill_ = new()
     {
         name = nameof(fill)
     };
@@ -2007,15 +2007,15 @@ public sealed class polyline : HtmlElement
     /// </summary>
     public string fill
     {
-        get => __fill?.value;
-        set => SetValue(ref __fill, _fill, value);
+        get => _fill?.value;
+        set => SetValue(ref _fill, _fill_, value);
     }
     #endregion
 
 
     #region string stroke
-    PropertyValueNode<string> __stroke;
-    static readonly PropertyValueDefinition _stroke = new()
+    PropertyValueNode<string> _stroke;
+    static readonly PropertyValueDefinition _stroke_ = new()
     {
         name = nameof(stroke)
     };
@@ -2024,15 +2024,15 @@ public sealed class polyline : HtmlElement
     /// </summary>
     public string stroke
     {
-        get => __stroke?.value;
-        set => SetValue(ref __stroke, _stroke, value);
+        get => _stroke?.value;
+        set => SetValue(ref _stroke, _stroke_, value);
     }
     #endregion
 
 
     #region string strokeWidth
-    PropertyValueNode<string> __strokeWidth;
-    static readonly PropertyValueDefinition _strokeWidth = new()
+    PropertyValueNode<string> _strokeWidth;
+    static readonly PropertyValueDefinition _strokeWidth_ = new()
     {
         name = nameof(strokeWidth)
     };
@@ -2041,8 +2041,8 @@ public sealed class polyline : HtmlElement
     /// </summary>
     public string strokeWidth
     {
-        get => __strokeWidth?.value;
-        set => SetValue(ref __strokeWidth, _strokeWidth, value);
+        get => _strokeWidth?.value;
+        set => SetValue(ref _strokeWidth, _strokeWidth_, value);
     }
     #endregion
 
@@ -2089,8 +2089,8 @@ public sealed class polyline : HtmlElement
 public sealed class circle : HtmlElement
 {
     #region string cx
-    PropertyValueNode<UnionProp<string,double>> __cx;
-    static readonly PropertyValueDefinition _cx = new()
+    PropertyValueNode<UnionProp<string,double>> _cx;
+    static readonly PropertyValueDefinition _cx_ = new()
     {
         name = nameof(cx)
     };
@@ -2099,15 +2099,15 @@ public sealed class circle : HtmlElement
     /// </summary>
     public UnionProp<string,double> cx
     {
-        get => __cx?.value;
-        set => SetValue(ref __cx, _cx, value);
+        get => _cx?.value;
+        set => SetValue(ref _cx, _cx_, value);
     }
     #endregion
 
 
     #region string cy
-    PropertyValueNode<UnionProp<string,double>> __cy;
-    static readonly PropertyValueDefinition _cy = new()
+    PropertyValueNode<UnionProp<string,double>> _cy;
+    static readonly PropertyValueDefinition _cy_ = new()
     {
         name = nameof(cy)
     };
@@ -2116,15 +2116,15 @@ public sealed class circle : HtmlElement
     /// </summary>
     public UnionProp<string,double> cy
     {
-        get => __cy?.value;
-        set => SetValue(ref __cy, _cy, value);
+        get => _cy?.value;
+        set => SetValue(ref _cy, _cy_, value);
     }
     #endregion
 
 
     #region string r
-    PropertyValueNode<UnionProp<string,double>> __r;
-    static readonly PropertyValueDefinition _r = new()
+    PropertyValueNode<UnionProp<string,double>> _r;
+    static readonly PropertyValueDefinition _r_ = new()
     {
         name = nameof(r)
     };
@@ -2133,15 +2133,15 @@ public sealed class circle : HtmlElement
     /// </summary>
     public UnionProp<string,double> r
     {
-        get => __r?.value;
-        set => SetValue(ref __r, _r, value);
+        get => _r?.value;
+        set => SetValue(ref _r, _r_, value);
     }
     #endregion
 
 
     #region string fill
-    PropertyValueNode<string> __fill;
-    static readonly PropertyValueDefinition _fill = new()
+    PropertyValueNode<string> _fill;
+    static readonly PropertyValueDefinition _fill_ = new()
     {
         name = nameof(fill)
     };
@@ -2150,15 +2150,15 @@ public sealed class circle : HtmlElement
     /// </summary>
     public string fill
     {
-        get => __fill?.value;
-        set => SetValue(ref __fill, _fill, value);
+        get => _fill?.value;
+        set => SetValue(ref _fill, _fill_, value);
     }
     #endregion
 
 
     #region string stroke
-    PropertyValueNode<string> __stroke;
-    static readonly PropertyValueDefinition _stroke = new()
+    PropertyValueNode<string> _stroke;
+    static readonly PropertyValueDefinition _stroke_ = new()
     {
         name = nameof(stroke)
     };
@@ -2167,15 +2167,15 @@ public sealed class circle : HtmlElement
     /// </summary>
     public string stroke
     {
-        get => __stroke?.value;
-        set => SetValue(ref __stroke, _stroke, value);
+        get => _stroke?.value;
+        set => SetValue(ref _stroke, _stroke_, value);
     }
     #endregion
 
 
     #region string strokeWidth
-    PropertyValueNode<string> __strokeWidth;
-    static readonly PropertyValueDefinition _strokeWidth = new()
+    PropertyValueNode<string> _strokeWidth;
+    static readonly PropertyValueDefinition _strokeWidth_ = new()
     {
         name = nameof(strokeWidth)
     };
@@ -2184,8 +2184,8 @@ public sealed class circle : HtmlElement
     /// </summary>
     public string strokeWidth
     {
-        get => __strokeWidth?.value;
-        set => SetValue(ref __strokeWidth, _strokeWidth, value);
+        get => _strokeWidth?.value;
+        set => SetValue(ref _strokeWidth, _strokeWidth_, value);
     }
     #endregion
 
@@ -2246,8 +2246,8 @@ public sealed class circle : HtmlElement
 public sealed class polygon : HtmlElement
 {
     #region string points
-    PropertyValueNode<string> __points;
-    static readonly PropertyValueDefinition _points = new()
+    PropertyValueNode<string> _points;
+    static readonly PropertyValueDefinition _points_ = new()
     {
         name = nameof(points)
     };
@@ -2256,15 +2256,15 @@ public sealed class polygon : HtmlElement
     /// </summary>
     public string points
     {
-        get => __points?.value;
-        set => SetValue(ref __points, _points, value);
+        get => _points?.value;
+        set => SetValue(ref _points, _points_, value);
     }
     #endregion
 
 
     #region string fill
-    PropertyValueNode<string> __fill;
-    static readonly PropertyValueDefinition _fill = new()
+    PropertyValueNode<string> _fill;
+    static readonly PropertyValueDefinition _fill_ = new()
     {
         name = nameof(fill)
     };
@@ -2273,15 +2273,15 @@ public sealed class polygon : HtmlElement
     /// </summary>
     public string fill
     {
-        get => __fill?.value;
-        set => SetValue(ref __fill, _fill, value);
+        get => _fill?.value;
+        set => SetValue(ref _fill, _fill_, value);
     }
     #endregion
 
 
     #region string stroke
-    PropertyValueNode<string> __stroke;
-    static readonly PropertyValueDefinition _stroke = new()
+    PropertyValueNode<string> _stroke;
+    static readonly PropertyValueDefinition _stroke_ = new()
     {
         name = nameof(stroke)
     };
@@ -2290,15 +2290,15 @@ public sealed class polygon : HtmlElement
     /// </summary>
     public string stroke
     {
-        get => __stroke?.value;
-        set => SetValue(ref __stroke, _stroke, value);
+        get => _stroke?.value;
+        set => SetValue(ref _stroke, _stroke_, value);
     }
     #endregion
 
 
     #region string strokeWidth
-    PropertyValueNode<string> __strokeWidth;
-    static readonly PropertyValueDefinition _strokeWidth = new()
+    PropertyValueNode<string> _strokeWidth;
+    static readonly PropertyValueDefinition _strokeWidth_ = new()
     {
         name = nameof(strokeWidth)
     };
@@ -2307,15 +2307,15 @@ public sealed class polygon : HtmlElement
     /// </summary>
     public string strokeWidth
     {
-        get => __strokeWidth?.value;
-        set => SetValue(ref __strokeWidth, _strokeWidth, value);
+        get => _strokeWidth?.value;
+        set => SetValue(ref _strokeWidth, _strokeWidth_, value);
     }
     #endregion
 
 
     #region string strokeLinecap
-    PropertyValueNode<string> __strokeLinecap;
-    static readonly PropertyValueDefinition _strokeLinecap = new()
+    PropertyValueNode<string> _strokeLinecap;
+    static readonly PropertyValueDefinition _strokeLinecap_ = new()
     {
         name = nameof(strokeLinecap)
     };
@@ -2324,15 +2324,15 @@ public sealed class polygon : HtmlElement
     /// </summary>
     public string strokeLinecap
     {
-        get => __strokeLinecap?.value;
-        set => SetValue(ref __strokeLinecap, _strokeLinecap, value);
+        get => _strokeLinecap?.value;
+        set => SetValue(ref _strokeLinecap, _strokeLinecap_, value);
     }
     #endregion
 
 
     #region string strokeLinejoin
-    PropertyValueNode<string> __strokeLinejoin;
-    static readonly PropertyValueDefinition _strokeLinejoin = new()
+    PropertyValueNode<string> _strokeLinejoin;
+    static readonly PropertyValueDefinition _strokeLinejoin_ = new()
     {
         name = nameof(strokeLinejoin)
     };
@@ -2341,15 +2341,15 @@ public sealed class polygon : HtmlElement
     /// </summary>
     public string strokeLinejoin
     {
-        get => __strokeLinejoin?.value;
-        set => SetValue(ref __strokeLinejoin, _strokeLinejoin, value);
+        get => _strokeLinejoin?.value;
+        set => SetValue(ref _strokeLinejoin, _strokeLinejoin_, value);
     }
     #endregion
 
 
     #region string fillRule
-    PropertyValueNode<string> __fillRule;
-    static readonly PropertyValueDefinition _fillRule = new()
+    PropertyValueNode<string> _fillRule;
+    static readonly PropertyValueDefinition _fillRule_ = new()
     {
         name = nameof(fillRule)
     };
@@ -2358,8 +2358,8 @@ public sealed class polygon : HtmlElement
     /// </summary>
     public string fillRule
     {
-        get => __fillRule?.value;
-        set => SetValue(ref __fillRule, _fillRule, value);
+        get => _fillRule?.value;
+        set => SetValue(ref _fillRule, _fillRule_, value);
     }
     #endregion
 
@@ -2427,8 +2427,8 @@ public sealed class polygon : HtmlElement
 public sealed class rect : HtmlElement
 {
     #region string x
-    PropertyValueNode<UnionProp<string,double>> __x;
-    static readonly PropertyValueDefinition _x = new()
+    PropertyValueNode<UnionProp<string,double>> _x;
+    static readonly PropertyValueDefinition _x_ = new()
     {
         name = nameof(x)
     };
@@ -2437,15 +2437,15 @@ public sealed class rect : HtmlElement
     /// </summary>
     public UnionProp<string,double> x
     {
-        get => __x?.value;
-        set => SetValue(ref __x, _x, value);
+        get => _x?.value;
+        set => SetValue(ref _x, _x_, value);
     }
     #endregion
 
 
     #region string y
-    PropertyValueNode<UnionProp<string,double>> __y;
-    static readonly PropertyValueDefinition _y = new()
+    PropertyValueNode<UnionProp<string,double>> _y;
+    static readonly PropertyValueDefinition _y_ = new()
     {
         name = nameof(y)
     };
@@ -2454,15 +2454,15 @@ public sealed class rect : HtmlElement
     /// </summary>
     public UnionProp<string,double> y
     {
-        get => __y?.value;
-        set => SetValue(ref __y, _y, value);
+        get => _y?.value;
+        set => SetValue(ref _y, _y_, value);
     }
     #endregion
 
 
     #region string width
-    PropertyValueNode<UnionProp<string,double>> __width;
-    static readonly PropertyValueDefinition _width = new()
+    PropertyValueNode<UnionProp<string,double>> _width;
+    static readonly PropertyValueDefinition _width_ = new()
     {
         name = nameof(width)
     };
@@ -2471,15 +2471,15 @@ public sealed class rect : HtmlElement
     /// </summary>
     public UnionProp<string,double> width
     {
-        get => __width?.value;
-        set => SetValue(ref __width, _width, value);
+        get => _width?.value;
+        set => SetValue(ref _width, _width_, value);
     }
     #endregion
 
 
     #region string height
-    PropertyValueNode<UnionProp<string,double>> __height;
-    static readonly PropertyValueDefinition _height = new()
+    PropertyValueNode<UnionProp<string,double>> _height;
+    static readonly PropertyValueDefinition _height_ = new()
     {
         name = nameof(height)
     };
@@ -2488,15 +2488,15 @@ public sealed class rect : HtmlElement
     /// </summary>
     public UnionProp<string,double> height
     {
-        get => __height?.value;
-        set => SetValue(ref __height, _height, value);
+        get => _height?.value;
+        set => SetValue(ref _height, _height_, value);
     }
     #endregion
 
 
     #region string rx
-    PropertyValueNode<UnionProp<string,double>> __rx;
-    static readonly PropertyValueDefinition _rx = new()
+    PropertyValueNode<UnionProp<string,double>> _rx;
+    static readonly PropertyValueDefinition _rx_ = new()
     {
         name = nameof(rx)
     };
@@ -2505,15 +2505,15 @@ public sealed class rect : HtmlElement
     /// </summary>
     public UnionProp<string,double> rx
     {
-        get => __rx?.value;
-        set => SetValue(ref __rx, _rx, value);
+        get => _rx?.value;
+        set => SetValue(ref _rx, _rx_, value);
     }
     #endregion
 
 
     #region string ry
-    PropertyValueNode<UnionProp<string,double>> __ry;
-    static readonly PropertyValueDefinition _ry = new()
+    PropertyValueNode<UnionProp<string,double>> _ry;
+    static readonly PropertyValueDefinition _ry_ = new()
     {
         name = nameof(ry)
     };
@@ -2522,15 +2522,15 @@ public sealed class rect : HtmlElement
     /// </summary>
     public UnionProp<string,double> ry
     {
-        get => __ry?.value;
-        set => SetValue(ref __ry, _ry, value);
+        get => _ry?.value;
+        set => SetValue(ref _ry, _ry_, value);
     }
     #endregion
 
 
     #region string fill
-    PropertyValueNode<string> __fill;
-    static readonly PropertyValueDefinition _fill = new()
+    PropertyValueNode<string> _fill;
+    static readonly PropertyValueDefinition _fill_ = new()
     {
         name = nameof(fill)
     };
@@ -2539,15 +2539,15 @@ public sealed class rect : HtmlElement
     /// </summary>
     public string fill
     {
-        get => __fill?.value;
-        set => SetValue(ref __fill, _fill, value);
+        get => _fill?.value;
+        set => SetValue(ref _fill, _fill_, value);
     }
     #endregion
 
 
     #region string stroke
-    PropertyValueNode<string> __stroke;
-    static readonly PropertyValueDefinition _stroke = new()
+    PropertyValueNode<string> _stroke;
+    static readonly PropertyValueDefinition _stroke_ = new()
     {
         name = nameof(stroke)
     };
@@ -2556,15 +2556,15 @@ public sealed class rect : HtmlElement
     /// </summary>
     public string stroke
     {
-        get => __stroke?.value;
-        set => SetValue(ref __stroke, _stroke, value);
+        get => _stroke?.value;
+        set => SetValue(ref _stroke, _stroke_, value);
     }
     #endregion
 
 
     #region string strokeWidth
-    PropertyValueNode<UnionProp<string,double>> __strokeWidth;
-    static readonly PropertyValueDefinition _strokeWidth = new()
+    PropertyValueNode<UnionProp<string,double>> _strokeWidth;
+    static readonly PropertyValueDefinition _strokeWidth_ = new()
     {
         name = nameof(strokeWidth)
     };
@@ -2573,15 +2573,15 @@ public sealed class rect : HtmlElement
     /// </summary>
     public UnionProp<string,double> strokeWidth
     {
-        get => __strokeWidth?.value;
-        set => SetValue(ref __strokeWidth, _strokeWidth, value);
+        get => _strokeWidth?.value;
+        set => SetValue(ref _strokeWidth, _strokeWidth_, value);
     }
     #endregion
 
 
     #region string strokeLinecap
-    PropertyValueNode<string> __strokeLinecap;
-    static readonly PropertyValueDefinition _strokeLinecap = new()
+    PropertyValueNode<string> _strokeLinecap;
+    static readonly PropertyValueDefinition _strokeLinecap_ = new()
     {
         name = nameof(strokeLinecap)
     };
@@ -2590,15 +2590,15 @@ public sealed class rect : HtmlElement
     /// </summary>
     public string strokeLinecap
     {
-        get => __strokeLinecap?.value;
-        set => SetValue(ref __strokeLinecap, _strokeLinecap, value);
+        get => _strokeLinecap?.value;
+        set => SetValue(ref _strokeLinecap, _strokeLinecap_, value);
     }
     #endregion
 
 
     #region string strokeLinejoin
-    PropertyValueNode<string> __strokeLinejoin;
-    static readonly PropertyValueDefinition _strokeLinejoin = new()
+    PropertyValueNode<string> _strokeLinejoin;
+    static readonly PropertyValueDefinition _strokeLinejoin_ = new()
     {
         name = nameof(strokeLinejoin)
     };
@@ -2607,8 +2607,8 @@ public sealed class rect : HtmlElement
     /// </summary>
     public string strokeLinejoin
     {
-        get => __strokeLinejoin?.value;
-        set => SetValue(ref __strokeLinejoin, _strokeLinejoin, value);
+        get => _strokeLinejoin?.value;
+        set => SetValue(ref _strokeLinejoin, _strokeLinejoin_, value);
     }
     #endregion
 
@@ -2704,8 +2704,8 @@ public sealed class rect : HtmlElement
 public sealed class radialGradient : HtmlElement
 {
     #region string cx
-    PropertyValueNode<string> __cx;
-    static readonly PropertyValueDefinition _cx = new()
+    PropertyValueNode<string> _cx;
+    static readonly PropertyValueDefinition _cx_ = new()
     {
         name = nameof(cx)
     };
@@ -2714,15 +2714,15 @@ public sealed class radialGradient : HtmlElement
     /// </summary>
     public string cx
     {
-        get => __cx?.value;
-        set => SetValue(ref __cx, _cx, value);
+        get => _cx?.value;
+        set => SetValue(ref _cx, _cx_, value);
     }
     #endregion
 
 
     #region string cy
-    PropertyValueNode<string> __cy;
-    static readonly PropertyValueDefinition _cy = new()
+    PropertyValueNode<string> _cy;
+    static readonly PropertyValueDefinition _cy_ = new()
     {
         name = nameof(cy)
     };
@@ -2731,15 +2731,15 @@ public sealed class radialGradient : HtmlElement
     /// </summary>
     public string cy
     {
-        get => __cy?.value;
-        set => SetValue(ref __cy, _cy, value);
+        get => _cy?.value;
+        set => SetValue(ref _cy, _cy_, value);
     }
     #endregion
 
 
     #region string fx
-    PropertyValueNode<string> __fx;
-    static readonly PropertyValueDefinition _fx = new()
+    PropertyValueNode<string> _fx;
+    static readonly PropertyValueDefinition _fx_ = new()
     {
         name = nameof(fx)
     };
@@ -2748,15 +2748,15 @@ public sealed class radialGradient : HtmlElement
     /// </summary>
     public string fx
     {
-        get => __fx?.value;
-        set => SetValue(ref __fx, _fx, value);
+        get => _fx?.value;
+        set => SetValue(ref _fx, _fx_, value);
     }
     #endregion
 
 
     #region string fy
-    PropertyValueNode<string> __fy;
-    static readonly PropertyValueDefinition _fy = new()
+    PropertyValueNode<string> _fy;
+    static readonly PropertyValueDefinition _fy_ = new()
     {
         name = nameof(fy)
     };
@@ -2765,15 +2765,15 @@ public sealed class radialGradient : HtmlElement
     /// </summary>
     public string fy
     {
-        get => __fy?.value;
-        set => SetValue(ref __fy, _fy, value);
+        get => _fy?.value;
+        set => SetValue(ref _fy, _fy_, value);
     }
     #endregion
 
 
     #region string r
-    PropertyValueNode<string> __r;
-    static readonly PropertyValueDefinition _r = new()
+    PropertyValueNode<string> _r;
+    static readonly PropertyValueDefinition _r_ = new()
     {
         name = nameof(r)
     };
@@ -2782,15 +2782,15 @@ public sealed class radialGradient : HtmlElement
     /// </summary>
     public string r
     {
-        get => __r?.value;
-        set => SetValue(ref __r, _r, value);
+        get => _r?.value;
+        set => SetValue(ref _r, _r_, value);
     }
     #endregion
 
 
     #region string spreadMethod
-    PropertyValueNode<string> __spreadMethod;
-    static readonly PropertyValueDefinition _spreadMethod = new()
+    PropertyValueNode<string> _spreadMethod;
+    static readonly PropertyValueDefinition _spreadMethod_ = new()
     {
         name = nameof(spreadMethod)
     };
@@ -2799,15 +2799,15 @@ public sealed class radialGradient : HtmlElement
     /// </summary>
     public string spreadMethod
     {
-        get => __spreadMethod?.value;
-        set => SetValue(ref __spreadMethod, _spreadMethod, value);
+        get => _spreadMethod?.value;
+        set => SetValue(ref _spreadMethod, _spreadMethod_, value);
     }
     #endregion
 
 
     #region string gradientUnits
-    PropertyValueNode<string> __gradientUnits;
-    static readonly PropertyValueDefinition _gradientUnits = new()
+    PropertyValueNode<string> _gradientUnits;
+    static readonly PropertyValueDefinition _gradientUnits_ = new()
     {
         name = nameof(gradientUnits)
     };
@@ -2816,15 +2816,15 @@ public sealed class radialGradient : HtmlElement
     /// </summary>
     public string gradientUnits
     {
-        get => __gradientUnits?.value;
-        set => SetValue(ref __gradientUnits, _gradientUnits, value);
+        get => _gradientUnits?.value;
+        set => SetValue(ref _gradientUnits, _gradientUnits_, value);
     }
     #endregion
 
 
     #region string gradientTransform
-    PropertyValueNode<string> __gradientTransform;
-    static readonly PropertyValueDefinition _gradientTransform = new()
+    PropertyValueNode<string> _gradientTransform;
+    static readonly PropertyValueDefinition _gradientTransform_ = new()
     {
         name = nameof(gradientTransform)
     };
@@ -2833,8 +2833,8 @@ public sealed class radialGradient : HtmlElement
     /// </summary>
     public string gradientTransform
     {
-        get => __gradientTransform?.value;
-        set => SetValue(ref __gradientTransform, _gradientTransform, value);
+        get => _gradientTransform?.value;
+        set => SetValue(ref _gradientTransform, _gradientTransform_, value);
     }
     #endregion
 
@@ -2909,8 +2909,8 @@ public sealed class radialGradient : HtmlElement
 public sealed class clipPath : HtmlElement
 {
     #region string clipRule
-    PropertyValueNode<string> __clipRule;
-    static readonly PropertyValueDefinition _clipRule = new()
+    PropertyValueNode<string> _clipRule;
+    static readonly PropertyValueDefinition _clipRule_ = new()
     {
         name = nameof(clipRule)
     };
@@ -2919,15 +2919,15 @@ public sealed class clipPath : HtmlElement
     /// </summary>
     public string clipRule
     {
-        get => __clipRule?.value;
-        set => SetValue(ref __clipRule, _clipRule, value);
+        get => _clipRule?.value;
+        set => SetValue(ref _clipRule, _clipRule_, value);
     }
     #endregion
 
 
     #region string clipBox
-    PropertyValueNode<string> __clipBox;
-    static readonly PropertyValueDefinition _clipBox = new()
+    PropertyValueNode<string> _clipBox;
+    static readonly PropertyValueDefinition _clipBox_ = new()
     {
         name = nameof(clipBox)
     };
@@ -2936,8 +2936,8 @@ public sealed class clipPath : HtmlElement
     /// </summary>
     public string clipBox
     {
-        get => __clipBox?.value;
-        set => SetValue(ref __clipBox, _clipBox, value);
+        get => _clipBox?.value;
+        set => SetValue(ref _clipBox, _clipBox_, value);
     }
     #endregion
 
@@ -2970,8 +2970,8 @@ public sealed class clipPath : HtmlElement
 public sealed class path : HtmlElement
 {
     #region string d
-    PropertyValueNode<string> __d;
-    static readonly PropertyValueDefinition _d = new()
+    PropertyValueNode<string> _d;
+    static readonly PropertyValueDefinition _d_ = new()
     {
         name = nameof(d)
     };
@@ -2980,15 +2980,15 @@ public sealed class path : HtmlElement
     /// </summary>
     public string d
     {
-        get => __d?.value;
-        set => SetValue(ref __d, _d, value);
+        get => _d?.value;
+        set => SetValue(ref _d, _d_, value);
     }
     #endregion
 
 
     #region string fill
-    PropertyValueNode<string> __fill;
-    static readonly PropertyValueDefinition _fill = new()
+    PropertyValueNode<string> _fill;
+    static readonly PropertyValueDefinition _fill_ = new()
     {
         name = nameof(fill)
     };
@@ -2997,15 +2997,15 @@ public sealed class path : HtmlElement
     /// </summary>
     public string fill
     {
-        get => __fill?.value;
-        set => SetValue(ref __fill, _fill, value);
+        get => _fill?.value;
+        set => SetValue(ref _fill, _fill_, value);
     }
     #endregion
 
 
     #region string stroke
-    PropertyValueNode<string> __stroke;
-    static readonly PropertyValueDefinition _stroke = new()
+    PropertyValueNode<string> _stroke;
+    static readonly PropertyValueDefinition _stroke_ = new()
     {
         name = nameof(stroke)
     };
@@ -3014,15 +3014,15 @@ public sealed class path : HtmlElement
     /// </summary>
     public string stroke
     {
-        get => __stroke?.value;
-        set => SetValue(ref __stroke, _stroke, value);
+        get => _stroke?.value;
+        set => SetValue(ref _stroke, _stroke_, value);
     }
     #endregion
 
 
     #region string strokeWidth
-    PropertyValueNode<string> __strokeWidth;
-    static readonly PropertyValueDefinition _strokeWidth = new()
+    PropertyValueNode<string> _strokeWidth;
+    static readonly PropertyValueDefinition _strokeWidth_ = new()
     {
         name = nameof(strokeWidth)
     };
@@ -3031,64 +3031,64 @@ public sealed class path : HtmlElement
     /// </summary>
     public string strokeWidth
     {
-        get => __strokeWidth?.value;
-        set => SetValue(ref __strokeWidth, _strokeWidth, value);
+        get => _strokeWidth?.value;
+        set => SetValue(ref _strokeWidth, _strokeWidth_, value);
     }
     #endregion
 
 
     #region string fillRule
-    PropertyValueNode<string> __fillRule;
-    static readonly PropertyValueDefinition _fillRule = new()
+    PropertyValueNode<string> _fillRule;
+    static readonly PropertyValueDefinition _fillRule_ = new()
     {
         name = nameof(fillRule)
     };
     public string fillRule
     {
-        get => __fillRule?.value;
-        set => SetValue(ref __fillRule, _fillRule, value);
+        get => _fillRule?.value;
+        set => SetValue(ref _fillRule, _fillRule_, value);
     }
     #endregion
 
 
     #region string clipRule
-    PropertyValueNode<string> __clipRule;
-    static readonly PropertyValueDefinition _clipRule = new()
+    PropertyValueNode<string> _clipRule;
+    static readonly PropertyValueDefinition _clipRule_ = new()
     {
         name = nameof(clipRule)
     };
     public string clipRule
     {
-        get => __clipRule?.value;
-        set => SetValue(ref __clipRule, _clipRule, value);
+        get => _clipRule?.value;
+        set => SetValue(ref _clipRule, _clipRule_, value);
     }
     #endregion
 
 
     #region string strokeLinecap
-    PropertyValueNode<string> __strokeLinecap;
-    static readonly PropertyValueDefinition _strokeLinecap = new()
+    PropertyValueNode<string> _strokeLinecap;
+    static readonly PropertyValueDefinition _strokeLinecap_ = new()
     {
         name = nameof(strokeLinecap)
     };
     public string strokeLinecap
     {
-        get => __strokeLinecap?.value;
-        set => SetValue(ref __strokeLinecap, _strokeLinecap, value);
+        get => _strokeLinecap?.value;
+        set => SetValue(ref _strokeLinecap, _strokeLinecap_, value);
     }
     #endregion
 
 
     #region string strokeLinejoin
-    PropertyValueNode<string> __strokeLinejoin;
-    static readonly PropertyValueDefinition _strokeLinejoin = new()
+    PropertyValueNode<string> _strokeLinejoin;
+    static readonly PropertyValueDefinition _strokeLinejoin_ = new()
     {
         name = nameof(strokeLinejoin)
     };
     public string strokeLinejoin
     {
-        get => __strokeLinejoin?.value;
-        set => SetValue(ref __strokeLinejoin, _strokeLinejoin, value);
+        get => _strokeLinejoin?.value;
+        set => SetValue(ref _strokeLinejoin, _strokeLinejoin_, value);
     }
     #endregion
 
@@ -3143,43 +3143,43 @@ public sealed class path : HtmlElement
 public sealed class g : HtmlElement
 {
     #region string opacity
-    PropertyValueNode<string> __opacity;
-    static readonly PropertyValueDefinition _opacity = new()
+    PropertyValueNode<string> _opacity;
+    static readonly PropertyValueDefinition _opacity_ = new()
     {
         name = nameof(opacity)
     };
     public string opacity
     {
-        get => __opacity?.value;
-        set => SetValue(ref __opacity, _opacity, value);
+        get => _opacity?.value;
+        set => SetValue(ref _opacity, _opacity_, value);
     }
     #endregion
 
 
     #region string clipPath
-    PropertyValueNode<string> __clipPath;
-    static readonly PropertyValueDefinition _clipPath = new()
+    PropertyValueNode<string> _clipPath;
+    static readonly PropertyValueDefinition _clipPath_ = new()
     {
         name = nameof(clipPath)
     };
     public string clipPath
     {
-        get => __clipPath?.value;
-        set => SetValue(ref __clipPath, _clipPath, value);
+        get => _clipPath?.value;
+        set => SetValue(ref _clipPath, _clipPath_, value);
     }
     #endregion
 
 
     #region string transform
-    PropertyValueNode<string> __transform;
-    static readonly PropertyValueDefinition _transform = new()
+    PropertyValueNode<string> _transform;
+    static readonly PropertyValueDefinition _transform_ = new()
     {
         name = nameof(transform)
     };
     public string transform
     {
-        get => __transform?.value;
-        set => SetValue(ref __transform, _transform, value);
+        get => _transform?.value;
+        set => SetValue(ref _transform, _transform_, value);
     }
     #endregion
 
@@ -3204,8 +3204,8 @@ public sealed class g : HtmlElement
 public sealed class mask : HtmlElement
 {
     #region string height
-    PropertyValueNode<string> __height;
-    static readonly PropertyValueDefinition _height = new()
+    PropertyValueNode<string> _height;
+    static readonly PropertyValueDefinition _height_ = new()
     {
         name = nameof(height)
     };
@@ -3214,15 +3214,15 @@ public sealed class mask : HtmlElement
     /// </summary>
     public string height
     {
-        get => __height?.value;
-        set => SetValue(ref __height, _height, value);
+        get => _height?.value;
+        set => SetValue(ref _height, _height_, value);
     }
     #endregion
 
 
     #region string maskContentUnits
-    PropertyValueNode<string> __maskContentUnits;
-    static readonly PropertyValueDefinition _maskContentUnits = new()
+    PropertyValueNode<string> _maskContentUnits;
+    static readonly PropertyValueDefinition _maskContentUnits_ = new()
     {
         name = nameof(maskContentUnits)
     };
@@ -3231,15 +3231,15 @@ public sealed class mask : HtmlElement
     /// </summary>
     public string maskContentUnits
     {
-        get => __maskContentUnits?.value;
-        set => SetValue(ref __maskContentUnits, _maskContentUnits, value);
+        get => _maskContentUnits?.value;
+        set => SetValue(ref _maskContentUnits, _maskContentUnits_, value);
     }
     #endregion
 
 
     #region string maskUnits
-    PropertyValueNode<string> __maskUnits;
-    static readonly PropertyValueDefinition _maskUnits = new()
+    PropertyValueNode<string> _maskUnits;
+    static readonly PropertyValueDefinition _maskUnits_ = new()
     {
         name = nameof(maskUnits)
     };
@@ -3248,15 +3248,15 @@ public sealed class mask : HtmlElement
     /// </summary>
     public string maskUnits
     {
-        get => __maskUnits?.value;
-        set => SetValue(ref __maskUnits, _maskUnits, value);
+        get => _maskUnits?.value;
+        set => SetValue(ref _maskUnits, _maskUnits_, value);
     }
     #endregion
 
 
     #region string x
-    PropertyValueNode<string> __x;
-    static readonly PropertyValueDefinition _x = new()
+    PropertyValueNode<string> _x;
+    static readonly PropertyValueDefinition _x_ = new()
     {
         name = nameof(x)
     };
@@ -3265,15 +3265,15 @@ public sealed class mask : HtmlElement
     /// </summary>
     public string x
     {
-        get => __x?.value;
-        set => SetValue(ref __x, _x, value);
+        get => _x?.value;
+        set => SetValue(ref _x, _x_, value);
     }
     #endregion
 
 
     #region string y
-    PropertyValueNode<string> __y;
-    static readonly PropertyValueDefinition _y = new()
+    PropertyValueNode<string> _y;
+    static readonly PropertyValueDefinition _y_ = new()
     {
         name = nameof(y)
     };
@@ -3282,15 +3282,15 @@ public sealed class mask : HtmlElement
     /// </summary>
     public string y
     {
-        get => __y?.value;
-        set => SetValue(ref __y, _y, value);
+        get => _y?.value;
+        set => SetValue(ref _y, _y_, value);
     }
     #endregion
 
 
     #region string width
-    PropertyValueNode<string> __width;
-    static readonly PropertyValueDefinition _width = new()
+    PropertyValueNode<string> _width;
+    static readonly PropertyValueDefinition _width_ = new()
     {
         name = nameof(width)
     };
@@ -3299,8 +3299,8 @@ public sealed class mask : HtmlElement
     /// </summary>
     public string width
     {
-        get => __width?.value;
-        set => SetValue(ref __width, _width, value);
+        get => _width?.value;
+        set => SetValue(ref _width, _width_, value);
     }
     #endregion
 
@@ -3361,8 +3361,8 @@ public sealed class mask : HtmlElement
 public sealed class meta : HtmlElement
 {
     #region string charset
-    PropertyValueNode<string> __charset;
-    static readonly PropertyValueDefinition _charset = new()
+    PropertyValueNode<string> _charset;
+    static readonly PropertyValueDefinition _charset_ = new()
     {
         name = nameof(charset)
     };
@@ -3371,15 +3371,15 @@ public sealed class meta : HtmlElement
     /// </summary>
     public string charset
     {
-        get => __charset?.value;
-        set => SetValue(ref __charset, _charset, value);
+        get => _charset?.value;
+        set => SetValue(ref _charset, _charset_, value);
     }
     #endregion
 
 
     #region string httpEquiv
-    PropertyValueNode<string> __httpEquiv;
-    static readonly PropertyValueDefinition _httpEquiv = new()
+    PropertyValueNode<string> _httpEquiv;
+    static readonly PropertyValueDefinition _httpEquiv_ = new()
     {
         name = nameof(httpEquiv)
     };
@@ -3388,15 +3388,15 @@ public sealed class meta : HtmlElement
     /// </summary>
     public string httpEquiv
     {
-        get => __httpEquiv?.value;
-        set => SetValue(ref __httpEquiv, _httpEquiv, value);
+        get => _httpEquiv?.value;
+        set => SetValue(ref _httpEquiv, _httpEquiv_, value);
     }
     #endregion
 
 
     #region string name
-    PropertyValueNode<string> __name;
-    static readonly PropertyValueDefinition _name = new()
+    PropertyValueNode<string> _name;
+    static readonly PropertyValueDefinition _name_ = new()
     {
         name = nameof(name)
     };
@@ -3405,15 +3405,15 @@ public sealed class meta : HtmlElement
     /// </summary>
     public string name
     {
-        get => __name?.value;
-        set => SetValue(ref __name, _name, value);
+        get => _name?.value;
+        set => SetValue(ref _name, _name_, value);
     }
     #endregion
 
 
     #region string content
-    PropertyValueNode<string> __content;
-    static readonly PropertyValueDefinition _content = new()
+    PropertyValueNode<string> _content;
+    static readonly PropertyValueDefinition _content_ = new()
     {
         name = nameof(content)
     };
@@ -3422,15 +3422,15 @@ public sealed class meta : HtmlElement
     /// </summary>
     public string content
     {
-        get => __content?.value;
-        set => SetValue(ref __content, _content, value);
+        get => _content?.value;
+        set => SetValue(ref _content, _content_, value);
     }
     #endregion
 
 
     #region string scheme
-    PropertyValueNode<string> __scheme;
-    static readonly PropertyValueDefinition _scheme = new()
+    PropertyValueNode<string> _scheme;
+    static readonly PropertyValueDefinition _scheme_ = new()
     {
         name = nameof(scheme)
     };
@@ -3439,15 +3439,15 @@ public sealed class meta : HtmlElement
     /// </summary>
     public string scheme
     {
-        get => __scheme?.value;
-        set => SetValue(ref __scheme, _scheme, value);
+        get => _scheme?.value;
+        set => SetValue(ref _scheme, _scheme_, value);
     }
     #endregion
 
 
     #region string itemprop
-    PropertyValueNode<string> __itemprop;
-    static readonly PropertyValueDefinition _itemprop = new()
+    PropertyValueNode<string> _itemprop;
+    static readonly PropertyValueDefinition _itemprop_ = new()
     {
         name = nameof(itemprop)
     };
@@ -3456,15 +3456,15 @@ public sealed class meta : HtmlElement
     /// </summary>
     public string itemprop
     {
-        get => __itemprop?.value;
-        set => SetValue(ref __itemprop, _itemprop, value);
+        get => _itemprop?.value;
+        set => SetValue(ref _itemprop, _itemprop_, value);
     }
     #endregion
 
 
     #region string property
-    PropertyValueNode<string> __property;
-    static readonly PropertyValueDefinition _property = new()
+    PropertyValueNode<string> _property;
+    static readonly PropertyValueDefinition _property_ = new()
     {
         name = nameof(property)
     };
@@ -3473,15 +3473,15 @@ public sealed class meta : HtmlElement
     /// </summary>
     public string property
     {
-        get => __property?.value;
-        set => SetValue(ref __property, _property, value);
+        get => _property?.value;
+        set => SetValue(ref _property, _property_, value);
     }
     #endregion
 
 
     #region string src
-    PropertyValueNode<string> __src;
-    static readonly PropertyValueDefinition _src = new()
+    PropertyValueNode<string> _src;
+    static readonly PropertyValueDefinition _src_ = new()
     {
         name = nameof(src)
     };
@@ -3490,8 +3490,8 @@ public sealed class meta : HtmlElement
     /// </summary>
     public string src
     {
-        get => __src?.value;
-        set => SetValue(ref __src, _src, value);
+        get => _src?.value;
+        set => SetValue(ref _src, _src_, value);
     }
     #endregion
 
@@ -3566,8 +3566,8 @@ public sealed class meta : HtmlElement
 public sealed class body : HtmlElement
 {
     #region string background
-    PropertyValueNode<string> __background;
-    static readonly PropertyValueDefinition _background = new()
+    PropertyValueNode<string> _background;
+    static readonly PropertyValueDefinition _background_ = new()
     {
         name = nameof(background)
     };
@@ -3576,15 +3576,15 @@ public sealed class body : HtmlElement
     /// </summary>
     public string background
     {
-        get => __background?.value;
-        set => SetValue(ref __background, _background, value);
+        get => _background?.value;
+        set => SetValue(ref _background, _background_, value);
     }
     #endregion
 
 
     #region string bgcolor
-    PropertyValueNode<string> __bgcolor;
-    static readonly PropertyValueDefinition _bgcolor = new()
+    PropertyValueNode<string> _bgcolor;
+    static readonly PropertyValueDefinition _bgcolor_ = new()
     {
         name = nameof(bgcolor)
     };
@@ -3593,15 +3593,15 @@ public sealed class body : HtmlElement
     /// </summary>
     public string bgcolor
     {
-        get => __bgcolor?.value;
-        set => SetValue(ref __bgcolor, _bgcolor, value);
+        get => _bgcolor?.value;
+        set => SetValue(ref _bgcolor, _bgcolor_, value);
     }
     #endregion
 
 
     #region string link
-    PropertyValueNode<string> __link;
-    static readonly PropertyValueDefinition _link = new()
+    PropertyValueNode<string> _link;
+    static readonly PropertyValueDefinition _link_ = new()
     {
         name = nameof(link)
     };
@@ -3610,8 +3610,8 @@ public sealed class body : HtmlElement
     /// </summary>
     public string link
     {
-        get => __link?.value;
-        set => SetValue(ref __link, _link, value);
+        get => _link?.value;
+        set => SetValue(ref _link, _link_, value);
     }
     #endregion
 
@@ -3651,8 +3651,8 @@ public sealed class body : HtmlElement
 public sealed class script : HtmlElement
 {
     #region string async
-    PropertyValueNode<string> __async;
-    static readonly PropertyValueDefinition _async = new()
+    PropertyValueNode<string> _async;
+    static readonly PropertyValueDefinition _async_ = new()
     {
         name = nameof(async)
     };
@@ -3661,15 +3661,15 @@ public sealed class script : HtmlElement
     /// </summary>
     public string async
     {
-        get => __async?.value;
-        set => SetValue(ref __async, _async, value);
+        get => _async?.value;
+        set => SetValue(ref _async, _async_, value);
     }
     #endregion
 
 
     #region string defer
-    PropertyValueNode<string> __defer;
-    static readonly PropertyValueDefinition _defer = new()
+    PropertyValueNode<string> _defer;
+    static readonly PropertyValueDefinition _defer_ = new()
     {
         name = nameof(defer)
     };
@@ -3678,15 +3678,15 @@ public sealed class script : HtmlElement
     /// </summary>
     public string defer
     {
-        get => __defer?.value;
-        set => SetValue(ref __defer, _defer, value);
+        get => _defer?.value;
+        set => SetValue(ref _defer, _defer_, value);
     }
     #endregion
 
 
     #region string integrity
-    PropertyValueNode<string> __integrity;
-    static readonly PropertyValueDefinition _integrity = new()
+    PropertyValueNode<string> _integrity;
+    static readonly PropertyValueDefinition _integrity_ = new()
     {
         name = nameof(integrity)
     };
@@ -3695,15 +3695,15 @@ public sealed class script : HtmlElement
     /// </summary>
     public string integrity
     {
-        get => __integrity?.value;
-        set => SetValue(ref __integrity, _integrity, value);
+        get => _integrity?.value;
+        set => SetValue(ref _integrity, _integrity_, value);
     }
     #endregion
 
 
     #region string language
-    PropertyValueNode<string> __language;
-    static readonly PropertyValueDefinition _language = new()
+    PropertyValueNode<string> _language;
+    static readonly PropertyValueDefinition _language_ = new()
     {
         name = nameof(language)
     };
@@ -3712,15 +3712,15 @@ public sealed class script : HtmlElement
     /// </summary>
     public string language
     {
-        get => __language?.value;
-        set => SetValue(ref __language, _language, value);
+        get => _language?.value;
+        set => SetValue(ref _language, _language_, value);
     }
     #endregion
 
 
     #region string nomodule
-    PropertyValueNode<string> __nomodule;
-    static readonly PropertyValueDefinition _nomodule = new()
+    PropertyValueNode<string> _nomodule;
+    static readonly PropertyValueDefinition _nomodule_ = new()
     {
         name = nameof(nomodule)
     };
@@ -3729,15 +3729,15 @@ public sealed class script : HtmlElement
     /// </summary>
     public string nomodule
     {
-        get => __nomodule?.value;
-        set => SetValue(ref __nomodule, _nomodule, value);
+        get => _nomodule?.value;
+        set => SetValue(ref _nomodule, _nomodule_, value);
     }
     #endregion
 
 
     #region string src
-    PropertyValueNode<string> __src;
-    static readonly PropertyValueDefinition _src = new()
+    PropertyValueNode<string> _src;
+    static readonly PropertyValueDefinition _src_ = new()
     {
         name = nameof(src)
     };
@@ -3746,15 +3746,15 @@ public sealed class script : HtmlElement
     /// </summary>
     public string src
     {
-        get => __src?.value;
-        set => SetValue(ref __src, _src, value);
+        get => _src?.value;
+        set => SetValue(ref _src, _src_, value);
     }
     #endregion
 
 
     #region string type
-    PropertyValueNode<string> __type;
-    static readonly PropertyValueDefinition _type = new()
+    PropertyValueNode<string> _type;
+    static readonly PropertyValueDefinition _type_ = new()
     {
         name = nameof(type)
     };
@@ -3763,8 +3763,8 @@ public sealed class script : HtmlElement
     /// </summary>
     public string type
     {
-        get => __type?.value;
-        set => SetValue(ref __type, _type, value);
+        get => _type?.value;
+        set => SetValue(ref _type, _type_, value);
     }
     #endregion
 
@@ -3832,8 +3832,8 @@ public sealed class script : HtmlElement
 public sealed class title : HtmlElement
 {
     #region string language
-    PropertyValueNode<string> __language;
-    static readonly PropertyValueDefinition _language = new()
+    PropertyValueNode<string> _language;
+    static readonly PropertyValueDefinition _language_ = new()
     {
         name = nameof(language)
     };
@@ -3842,8 +3842,8 @@ public sealed class title : HtmlElement
     /// </summary>
     public string language
     {
-        get => __language?.value;
-        set => SetValue(ref __language, _language, value);
+        get => _language?.value;
+        set => SetValue(ref _language, _language_, value);
     }
     #endregion
 
@@ -3869,8 +3869,8 @@ public sealed class title : HtmlElement
 public sealed class head : HtmlElement
 {
     #region string profile
-    PropertyValueNode<string> __profile;
-    static readonly PropertyValueDefinition _profile = new()
+    PropertyValueNode<string> _profile;
+    static readonly PropertyValueDefinition _profile_ = new()
     {
         name = nameof(profile)
     };
@@ -3879,15 +3879,15 @@ public sealed class head : HtmlElement
     /// </summary>
     public string profile
     {
-        get => __profile?.value;
-        set => SetValue(ref __profile, _profile, value);
+        get => _profile?.value;
+        set => SetValue(ref _profile, _profile_, value);
     }
     #endregion
 
 
     #region string link
-    PropertyValueNode<string> __link;
-    static readonly PropertyValueDefinition _link = new()
+    PropertyValueNode<string> _link;
+    static readonly PropertyValueDefinition _link_ = new()
     {
         name = nameof(link)
     };
@@ -3896,15 +3896,15 @@ public sealed class head : HtmlElement
     /// </summary>
     public string link
     {
-        get => __link?.value;
-        set => SetValue(ref __link, _link, value);
+        get => _link?.value;
+        set => SetValue(ref _link, _link_, value);
     }
     #endregion
 
 
     #region string meta
-    PropertyValueNode<string> __meta;
-    static readonly PropertyValueDefinition _meta = new()
+    PropertyValueNode<string> _meta;
+    static readonly PropertyValueDefinition _meta_ = new()
     {
         name = nameof(meta)
     };
@@ -3913,15 +3913,15 @@ public sealed class head : HtmlElement
     /// </summary>
     public string meta
     {
-        get => __meta?.value;
-        set => SetValue(ref __meta, _meta, value);
+        get => _meta?.value;
+        set => SetValue(ref _meta, _meta_, value);
     }
     #endregion
 
 
     #region string script
-    PropertyValueNode<string> __script;
-    static readonly PropertyValueDefinition _script = new()
+    PropertyValueNode<string> _script;
+    static readonly PropertyValueDefinition _script_ = new()
     {
         name = nameof(script)
     };
@@ -3930,15 +3930,15 @@ public sealed class head : HtmlElement
     /// </summary>
     public string script
     {
-        get => __script?.value;
-        set => SetValue(ref __script, _script, value);
+        get => _script?.value;
+        set => SetValue(ref _script, _script_, value);
     }
     #endregion
 
 
     #region string noscript
-    PropertyValueNode<string> __noscript;
-    static readonly PropertyValueDefinition _noscript = new()
+    PropertyValueNode<string> _noscript;
+    static readonly PropertyValueDefinition _noscript_ = new()
     {
         name = nameof(noscript)
     };
@@ -3947,8 +3947,8 @@ public sealed class head : HtmlElement
     /// </summary>
     public string noscript
     {
-        get => __noscript?.value;
-        set => SetValue(ref __noscript, _noscript, value);
+        get => _noscript?.value;
+        set => SetValue(ref _noscript, _noscript_, value);
     }
     #endregion
 
@@ -4002,8 +4002,8 @@ public sealed class head : HtmlElement
 public sealed class html : HtmlElement
 {
     #region string hidden
-    PropertyValueNode<string> __hidden;
-    static readonly PropertyValueDefinition _hidden = new()
+    PropertyValueNode<string> _hidden;
+    static readonly PropertyValueDefinition _hidden_ = new()
     {
         name = nameof(hidden)
     };
@@ -4012,15 +4012,15 @@ public sealed class html : HtmlElement
     /// </summary>
     public string hidden
     {
-        get => __hidden?.value;
-        set => SetValue(ref __hidden, _hidden, value);
+        get => _hidden?.value;
+        set => SetValue(ref _hidden, _hidden_, value);
     }
     #endregion
 
 
     #region string manifest
-    PropertyValueNode<string> __manifest;
-    static readonly PropertyValueDefinition _manifest = new()
+    PropertyValueNode<string> _manifest;
+    static readonly PropertyValueDefinition _manifest_ = new()
     {
         name = nameof(manifest)
     };
@@ -4029,15 +4029,15 @@ public sealed class html : HtmlElement
     /// </summary>
     public string manifest
     {
-        get => __manifest?.value;
-        set => SetValue(ref __manifest, _manifest, value);
+        get => _manifest?.value;
+        set => SetValue(ref _manifest, _manifest_, value);
     }
     #endregion
 
 
     #region string xmlns
-    PropertyValueNode<string> __xmlns;
-    static readonly PropertyValueDefinition _xmlns = new()
+    PropertyValueNode<string> _xmlns;
+    static readonly PropertyValueDefinition _xmlns_ = new()
     {
         name = nameof(xmlns)
     };
@@ -4046,15 +4046,15 @@ public sealed class html : HtmlElement
     /// </summary>
     public string xmlns
     {
-        get => __xmlns?.value;
-        set => SetValue(ref __xmlns, _xmlns, value);
+        get => _xmlns?.value;
+        set => SetValue(ref _xmlns, _xmlns_, value);
     }
     #endregion
 
 
     #region string prefix
-    PropertyValueNode<string> __prefix;
-    static readonly PropertyValueDefinition _prefix = new()
+    PropertyValueNode<string> _prefix;
+    static readonly PropertyValueDefinition _prefix_ = new()
     {
         name = nameof(prefix)
     };
@@ -4063,15 +4063,15 @@ public sealed class html : HtmlElement
     /// </summary>
     public string prefix
     {
-        get => __prefix?.value;
-        set => SetValue(ref __prefix, _prefix, value);
+        get => _prefix?.value;
+        set => SetValue(ref _prefix, _prefix_, value);
     }
     #endregion
 
 
     #region string version
-    PropertyValueNode<string> __version;
-    static readonly PropertyValueDefinition _version = new()
+    PropertyValueNode<string> _version;
+    static readonly PropertyValueDefinition _version_ = new()
     {
         name = nameof(version)
     };
@@ -4080,8 +4080,8 @@ public sealed class html : HtmlElement
     /// </summary>
     public string version
     {
-        get => __version?.value;
-        set => SetValue(ref __version, _version, value);
+        get => _version?.value;
+        set => SetValue(ref _version, _version_, value);
     }
     #endregion
 
@@ -4135,8 +4135,8 @@ public sealed class html : HtmlElement
 public sealed class label : HtmlElement
 {
     #region string htmlFor
-    PropertyValueNode<string> __htmlFor;
-    static readonly PropertyValueDefinition _htmlFor = new()
+    PropertyValueNode<string> _htmlFor;
+    static readonly PropertyValueDefinition _htmlFor_ = new()
     {
         name = nameof(htmlFor)
     };
@@ -4145,15 +4145,15 @@ public sealed class label : HtmlElement
     /// </summary>
     public string htmlFor
     {
-        get => __htmlFor?.value;
-        set => SetValue(ref __htmlFor, _htmlFor, value);
+        get => _htmlFor?.value;
+        set => SetValue(ref _htmlFor, _htmlFor_, value);
     }
     #endregion
 
 
     #region string dropzone
-    PropertyValueNode<string> __dropzone;
-    static readonly PropertyValueDefinition _dropzone = new()
+    PropertyValueNode<string> _dropzone;
+    static readonly PropertyValueDefinition _dropzone_ = new()
     {
         name = nameof(dropzone)
     };
@@ -4162,15 +4162,15 @@ public sealed class label : HtmlElement
     /// </summary>
     public string dropzone
     {
-        get => __dropzone?.value;
-        set => SetValue(ref __dropzone, _dropzone, value);
+        get => _dropzone?.value;
+        set => SetValue(ref _dropzone, _dropzone_, value);
     }
     #endregion
 
 
     #region string hidden
-    PropertyValueNode<string> __hidden;
-    static readonly PropertyValueDefinition _hidden = new()
+    PropertyValueNode<string> _hidden;
+    static readonly PropertyValueDefinition _hidden_ = new()
     {
         name = nameof(hidden)
     };
@@ -4179,15 +4179,15 @@ public sealed class label : HtmlElement
     /// </summary>
     public string hidden
     {
-        get => __hidden?.value;
-        set => SetValue(ref __hidden, _hidden, value);
+        get => _hidden?.value;
+        set => SetValue(ref _hidden, _hidden_, value);
     }
     #endregion
 
 
     #region string tabindex
-    PropertyValueNode<string> __tabindex;
-    static readonly PropertyValueDefinition _tabindex = new()
+    PropertyValueNode<string> _tabindex;
+    static readonly PropertyValueDefinition _tabindex_ = new()
     {
         name = nameof(tabindex)
     };
@@ -4196,8 +4196,8 @@ public sealed class label : HtmlElement
     /// </summary>
     public string tabindex
     {
-        get => __tabindex?.value;
-        set => SetValue(ref __tabindex, _tabindex, value);
+        get => _tabindex?.value;
+        set => SetValue(ref _tabindex, _tabindex_, value);
     }
     #endregion
 
@@ -4248,8 +4248,8 @@ public sealed class label : HtmlElement
 public sealed class a : HtmlElement
 {
     #region string href
-    PropertyValueNode<string> __href;
-    static readonly PropertyValueDefinition _href = new()
+    PropertyValueNode<string> _href;
+    static readonly PropertyValueDefinition _href_ = new()
     {
         name = nameof(href)
     };
@@ -4258,15 +4258,15 @@ public sealed class a : HtmlElement
     /// </summary>
     public string href
     {
-        get => __href?.value;
-        set => SetValue(ref __href, _href, value);
+        get => _href?.value;
+        set => SetValue(ref _href, _href_, value);
     }
     #endregion
 
 
     #region string target
-    PropertyValueNode<string> __target;
-    static readonly PropertyValueDefinition _target = new()
+    PropertyValueNode<string> _target;
+    static readonly PropertyValueDefinition _target_ = new()
     {
         name = nameof(target)
     };
@@ -4275,15 +4275,15 @@ public sealed class a : HtmlElement
     /// </summary>
     public string target
     {
-        get => __target?.value;
-        set => SetValue(ref __target, _target, value);
+        get => _target?.value;
+        set => SetValue(ref _target, _target_, value);
     }
     #endregion
 
 
     #region string rel
-    PropertyValueNode<string> __rel;
-    static readonly PropertyValueDefinition _rel = new()
+    PropertyValueNode<string> _rel;
+    static readonly PropertyValueDefinition _rel_ = new()
     {
         name = nameof(rel)
     };
@@ -4292,15 +4292,15 @@ public sealed class a : HtmlElement
     /// </summary>
     public string rel
     {
-        get => __rel?.value;
-        set => SetValue(ref __rel, _rel, value);
+        get => _rel?.value;
+        set => SetValue(ref _rel, _rel_, value);
     }
     #endregion
 
 
     #region string type
-    PropertyValueNode<string> __type;
-    static readonly PropertyValueDefinition _type = new()
+    PropertyValueNode<string> _type;
+    static readonly PropertyValueDefinition _type_ = new()
     {
         name = nameof(type)
     };
@@ -4309,15 +4309,15 @@ public sealed class a : HtmlElement
     /// </summary>
     public string type
     {
-        get => __type?.value;
-        set => SetValue(ref __type, _type, value);
+        get => _type?.value;
+        set => SetValue(ref _type, _type_, value);
     }
     #endregion
 
 
     #region string download
-    PropertyValueNode<string> __download;
-    static readonly PropertyValueDefinition _download = new()
+    PropertyValueNode<string> _download;
+    static readonly PropertyValueDefinition _download_ = new()
     {
         name = nameof(download)
     };
@@ -4326,15 +4326,15 @@ public sealed class a : HtmlElement
     /// </summary>
     public string download
     {
-        get => __download?.value;
-        set => SetValue(ref __download, _download, value);
+        get => _download?.value;
+        set => SetValue(ref _download, _download_, value);
     }
     #endregion
 
 
     #region string ping
-    PropertyValueNode<string> __ping;
-    static readonly PropertyValueDefinition _ping = new()
+    PropertyValueNode<string> _ping;
+    static readonly PropertyValueDefinition _ping_ = new()
     {
         name = nameof(ping)
     };
@@ -4343,15 +4343,15 @@ public sealed class a : HtmlElement
     /// </summary>
     public string ping
     {
-        get => __ping?.value;
-        set => SetValue(ref __ping, _ping, value);
+        get => _ping?.value;
+        set => SetValue(ref _ping, _ping_, value);
     }
     #endregion
 
 
     #region string media
-    PropertyValueNode<string> __media;
-    static readonly PropertyValueDefinition _media = new()
+    PropertyValueNode<string> _media;
+    static readonly PropertyValueDefinition _media_ = new()
     {
         name = nameof(media)
     };
@@ -4360,15 +4360,15 @@ public sealed class a : HtmlElement
     /// </summary>
     public string media
     {
-        get => __media?.value;
-        set => SetValue(ref __media, _media, value);
+        get => _media?.value;
+        set => SetValue(ref _media, _media_, value);
     }
     #endregion
 
 
     #region string hreflang
-    PropertyValueNode<string> __hreflang;
-    static readonly PropertyValueDefinition _hreflang = new()
+    PropertyValueNode<string> _hreflang;
+    static readonly PropertyValueDefinition _hreflang_ = new()
     {
         name = nameof(hreflang)
     };
@@ -4377,15 +4377,15 @@ public sealed class a : HtmlElement
     /// </summary>
     public string hreflang
     {
-        get => __hreflang?.value;
-        set => SetValue(ref __hreflang, _hreflang, value);
+        get => _hreflang?.value;
+        set => SetValue(ref _hreflang, _hreflang_, value);
     }
     #endregion
 
 
     #region string name
-    PropertyValueNode<string> __name;
-    static readonly PropertyValueDefinition _name = new()
+    PropertyValueNode<string> _name;
+    static readonly PropertyValueDefinition _name_ = new()
     {
         name = nameof(name)
     };
@@ -4394,15 +4394,15 @@ public sealed class a : HtmlElement
     /// </summary>
     public string name
     {
-        get => __name?.value;
-        set => SetValue(ref __name, _name, value);
+        get => _name?.value;
+        set => SetValue(ref _name, _name_, value);
     }
     #endregion
 
 
     #region string tabindex
-    PropertyValueNode<string> __tabindex;
-    static readonly PropertyValueDefinition _tabindex = new()
+    PropertyValueNode<string> _tabindex;
+    static readonly PropertyValueDefinition _tabindex_ = new()
     {
         name = nameof(tabindex)
     };
@@ -4411,8 +4411,8 @@ public sealed class a : HtmlElement
     /// </summary>
     public string tabindex
     {
-        get => __tabindex?.value;
-        set => SetValue(ref __tabindex, _tabindex, value);
+        get => _tabindex?.value;
+        set => SetValue(ref _tabindex, _tabindex_, value);
     }
     #endregion
 
@@ -4501,8 +4501,8 @@ public sealed class a : HtmlElement
 public sealed class img : HtmlElement
 {
     #region string src
-    PropertyValueNode<string> __src;
-    static readonly PropertyValueDefinition _src = new()
+    PropertyValueNode<string> _src;
+    static readonly PropertyValueDefinition _src_ = new()
     {
         name = nameof(src)
     };
@@ -4511,15 +4511,15 @@ public sealed class img : HtmlElement
     /// </summary>
     public string src
     {
-        get => __src?.value;
-        set => SetValue(ref __src, _src, value);
+        get => _src?.value;
+        set => SetValue(ref _src, _src_, value);
     }
     #endregion
 
 
     #region string srcset
-    PropertyValueNode<string> __srcset;
-    static readonly PropertyValueDefinition _srcset = new()
+    PropertyValueNode<string> _srcset;
+    static readonly PropertyValueDefinition _srcset_ = new()
     {
         name = nameof(srcset)
     };
@@ -4528,15 +4528,15 @@ public sealed class img : HtmlElement
     /// </summary>
     public string srcset
     {
-        get => __srcset?.value;
-        set => SetValue(ref __srcset, _srcset, value);
+        get => _srcset?.value;
+        set => SetValue(ref _srcset, _srcset_, value);
     }
     #endregion
 
 
     #region string usemap
-    PropertyValueNode<string> __usemap;
-    static readonly PropertyValueDefinition _usemap = new()
+    PropertyValueNode<string> _usemap;
+    static readonly PropertyValueDefinition _usemap_ = new()
     {
         name = nameof(usemap)
     };
@@ -4545,15 +4545,15 @@ public sealed class img : HtmlElement
     /// </summary>
     public string usemap
     {
-        get => __usemap?.value;
-        set => SetValue(ref __usemap, _usemap, value);
+        get => _usemap?.value;
+        set => SetValue(ref _usemap, _usemap_, value);
     }
     #endregion
 
 
     #region string alt
-    PropertyValueNode<string> __alt;
-    static readonly PropertyValueDefinition _alt = new()
+    PropertyValueNode<string> _alt;
+    static readonly PropertyValueDefinition _alt_ = new()
     {
         name = nameof(alt)
     };
@@ -4562,15 +4562,15 @@ public sealed class img : HtmlElement
     /// </summary>
     public string alt
     {
-        get => __alt?.value;
-        set => SetValue(ref __alt, _alt, value);
+        get => _alt?.value;
+        set => SetValue(ref _alt, _alt_, value);
     }
     #endregion
 
 
     #region string width
-    PropertyValueNode<UnionProp<string,double?>> __width;
-    static readonly PropertyValueDefinition _width = new()
+    PropertyValueNode<UnionProp<string,double?>> _width;
+    static readonly PropertyValueDefinition _width_ = new()
     {
         name = nameof(width)
     };
@@ -4579,15 +4579,15 @@ public sealed class img : HtmlElement
     /// </summary>
     public UnionProp<string,double?> width
     {
-        get => __width?.value;
-        set => SetValue(ref __width, _width, value);
+        get => _width?.value;
+        set => SetValue(ref _width, _width_, value);
     }
     #endregion
 
 
     #region string height
-    PropertyValueNode<UnionProp<string,double?>> __height;
-    static readonly PropertyValueDefinition _height = new()
+    PropertyValueNode<UnionProp<string,double?>> _height;
+    static readonly PropertyValueDefinition _height_ = new()
     {
         name = nameof(height)
     };
@@ -4596,15 +4596,15 @@ public sealed class img : HtmlElement
     /// </summary>
     public UnionProp<string,double?> height
     {
-        get => __height?.value;
-        set => SetValue(ref __height, _height, value);
+        get => _height?.value;
+        set => SetValue(ref _height, _height_, value);
     }
     #endregion
 
 
     #region string ismap
-    PropertyValueNode<string> __ismap;
-    static readonly PropertyValueDefinition _ismap = new()
+    PropertyValueNode<string> _ismap;
+    static readonly PropertyValueDefinition _ismap_ = new()
     {
         name = nameof(ismap)
     };
@@ -4613,15 +4613,15 @@ public sealed class img : HtmlElement
     /// </summary>
     public string ismap
     {
-        get => __ismap?.value;
-        set => SetValue(ref __ismap, _ismap, value);
+        get => _ismap?.value;
+        set => SetValue(ref _ismap, _ismap_, value);
     }
     #endregion
 
 
     #region string longdesc
-    PropertyValueNode<string> __longdesc;
-    static readonly PropertyValueDefinition _longdesc = new()
+    PropertyValueNode<string> _longdesc;
+    static readonly PropertyValueDefinition _longdesc_ = new()
     {
         name = nameof(longdesc)
     };
@@ -4630,15 +4630,15 @@ public sealed class img : HtmlElement
     /// </summary>
     public string longdesc
     {
-        get => __longdesc?.value;
-        set => SetValue(ref __longdesc, _longdesc, value);
+        get => _longdesc?.value;
+        set => SetValue(ref _longdesc, _longdesc_, value);
     }
     #endregion
 
 
     #region string crossorigin
-    PropertyValueNode<string> __crossorigin;
-    static readonly PropertyValueDefinition _crossorigin = new()
+    PropertyValueNode<string> _crossorigin;
+    static readonly PropertyValueDefinition _crossorigin_ = new()
     {
         name = nameof(crossorigin)
     };
@@ -4647,15 +4647,15 @@ public sealed class img : HtmlElement
     /// </summary>
     public string crossorigin
     {
-        get => __crossorigin?.value;
-        set => SetValue(ref __crossorigin, _crossorigin, value);
+        get => _crossorigin?.value;
+        set => SetValue(ref _crossorigin, _crossorigin_, value);
     }
     #endregion
 
 
     #region string loading
-    PropertyValueNode<string> __loading;
-    static readonly PropertyValueDefinition _loading = new()
+    PropertyValueNode<string> _loading;
+    static readonly PropertyValueDefinition _loading_ = new()
     {
         name = nameof(loading)
     };
@@ -4664,15 +4664,15 @@ public sealed class img : HtmlElement
     /// </summary>
     public string loading
     {
-        get => __loading?.value;
-        set => SetValue(ref __loading, _loading, value);
+        get => _loading?.value;
+        set => SetValue(ref _loading, _loading_, value);
     }
     #endregion
 
 
     #region string decoding
-    PropertyValueNode<string> __decoding;
-    static readonly PropertyValueDefinition _decoding = new()
+    PropertyValueNode<string> _decoding;
+    static readonly PropertyValueDefinition _decoding_ = new()
     {
         name = nameof(decoding)
     };
@@ -4681,15 +4681,15 @@ public sealed class img : HtmlElement
     /// </summary>
     public string decoding
     {
-        get => __decoding?.value;
-        set => SetValue(ref __decoding, _decoding, value);
+        get => _decoding?.value;
+        set => SetValue(ref _decoding, _decoding_, value);
     }
     #endregion
 
 
     #region string referrerpolicy
-    PropertyValueNode<string> __referrerpolicy;
-    static readonly PropertyValueDefinition _referrerpolicy = new()
+    PropertyValueNode<string> _referrerpolicy;
+    static readonly PropertyValueDefinition _referrerpolicy_ = new()
     {
         name = nameof(referrerpolicy)
     };
@@ -4698,8 +4698,8 @@ public sealed class img : HtmlElement
     /// </summary>
     public string referrerpolicy
     {
-        get => __referrerpolicy?.value;
-        set => SetValue(ref __referrerpolicy, _referrerpolicy, value);
+        get => _referrerpolicy?.value;
+        set => SetValue(ref _referrerpolicy, _referrerpolicy_, value);
     }
     #endregion
 
@@ -4802,50 +4802,50 @@ public sealed class img : HtmlElement
 public sealed partial class svg : HtmlElement
 {
     #region string focusable
-    PropertyValueNode<string> __focusable;
-    static readonly PropertyValueDefinition _focusable = new()
+    PropertyValueNode<string> _focusable;
+    static readonly PropertyValueDefinition _focusable_ = new()
     {
         name = nameof(focusable)
     };
     public string focusable
     {
-        get => __focusable?.value;
-        set => SetValue(ref __focusable, _focusable, value);
+        get => _focusable?.value;
+        set => SetValue(ref _focusable, _focusable_, value);
     }
     #endregion
 
 
     #region string xlinkHref
-    PropertyValueNode<string> __xlinkHref;
-    static readonly PropertyValueDefinition _xlinkHref = new()
+    PropertyValueNode<string> _xlinkHref;
+    static readonly PropertyValueDefinition _xlinkHref_ = new()
     {
         name = nameof(xlinkHref)
     };
     public string xlinkHref
     {
-        get => __xlinkHref?.value;
-        set => SetValue(ref __xlinkHref, _xlinkHref, value);
+        get => _xlinkHref?.value;
+        set => SetValue(ref _xlinkHref, _xlinkHref_, value);
     }
     #endregion
 
 
     #region string xmlnsXlink
-    PropertyValueNode<string> __xmlnsXlink;
-    static readonly PropertyValueDefinition _xmlnsXlink = new()
+    PropertyValueNode<string> _xmlnsXlink;
+    static readonly PropertyValueDefinition _xmlnsXlink_ = new()
     {
         name = nameof(xmlnsXlink)
     };
     public string xmlnsXlink
     {
-        get => __xmlnsXlink?.value;
-        set => SetValue(ref __xmlnsXlink, _xmlnsXlink, value);
+        get => _xmlnsXlink?.value;
+        set => SetValue(ref _xmlnsXlink, _xmlnsXlink_, value);
     }
     #endregion
 
 
     #region string preserveAspectRatio
-    PropertyValueNode<string> __preserveAspectRatio;
-    static readonly PropertyValueDefinition _preserveAspectRatio = new()
+    PropertyValueNode<string> _preserveAspectRatio;
+    static readonly PropertyValueDefinition _preserveAspectRatio_ = new()
     {
         name = nameof(preserveAspectRatio)
     };
@@ -4854,15 +4854,15 @@ public sealed partial class svg : HtmlElement
     /// </summary>
     public string preserveAspectRatio
     {
-        get => __preserveAspectRatio?.value;
-        set => SetValue(ref __preserveAspectRatio, _preserveAspectRatio, value);
+        get => _preserveAspectRatio?.value;
+        set => SetValue(ref _preserveAspectRatio, _preserveAspectRatio_, value);
     }
     #endregion
 
 
     #region string width
-    PropertyValueNode<string> __width;
-    static readonly PropertyValueDefinition _width = new()
+    PropertyValueNode<string> _width;
+    static readonly PropertyValueDefinition _width_ = new()
     {
         name = nameof(width)
     };
@@ -4871,15 +4871,15 @@ public sealed partial class svg : HtmlElement
     /// </summary>
     public string width
     {
-        get => __width?.value;
-        set => SetValue(ref __width, _width, value);
+        get => _width?.value;
+        set => SetValue(ref _width, _width_, value);
     }
     #endregion
 
 
     #region string height
-    PropertyValueNode<string> __height;
-    static readonly PropertyValueDefinition _height = new()
+    PropertyValueNode<string> _height;
+    static readonly PropertyValueDefinition _height_ = new()
     {
         name = nameof(height)
     };
@@ -4888,15 +4888,15 @@ public sealed partial class svg : HtmlElement
     /// </summary>
     public string height
     {
-        get => __height?.value;
-        set => SetValue(ref __height, _height, value);
+        get => _height?.value;
+        set => SetValue(ref _height, _height_, value);
     }
     #endregion
 
 
     #region string xmlns
-    PropertyValueNode<string> __xmlns;
-    static readonly PropertyValueDefinition _xmlns = new()
+    PropertyValueNode<string> _xmlns;
+    static readonly PropertyValueDefinition _xmlns_ = new()
     {
         name = nameof(xmlns)
     };
@@ -4905,15 +4905,15 @@ public sealed partial class svg : HtmlElement
     /// </summary>
     public string xmlns
     {
-        get => __xmlns?.value;
-        set => SetValue(ref __xmlns, _xmlns, value);
+        get => _xmlns?.value;
+        set => SetValue(ref _xmlns, _xmlns_, value);
     }
     #endregion
 
 
     #region string version
-    PropertyValueNode<string> __version;
-    static readonly PropertyValueDefinition _version = new()
+    PropertyValueNode<string> _version;
+    static readonly PropertyValueDefinition _version_ = new()
     {
         name = nameof(version)
     };
@@ -4922,36 +4922,36 @@ public sealed partial class svg : HtmlElement
     /// </summary>
     public string version
     {
-        get => __version?.value;
-        set => SetValue(ref __version, _version, value);
+        get => _version?.value;
+        set => SetValue(ref _version, _version_, value);
     }
     #endregion
 
 
     #region string viewBox
-    PropertyValueNode<string> __viewBox;
-    static readonly PropertyValueDefinition _viewBox = new()
+    PropertyValueNode<string> _viewBox;
+    static readonly PropertyValueDefinition _viewBox_ = new()
     {
         name = nameof(viewBox)
     };
     public string viewBox
     {
-        get => __viewBox?.value;
-        set => SetValue(ref __viewBox, _viewBox, value);
+        get => _viewBox?.value;
+        set => SetValue(ref _viewBox, _viewBox_, value);
     }
     #endregion
 
 
     #region string fill
-    PropertyValueNode<string> __fill;
-    static readonly PropertyValueDefinition _fill = new()
+    PropertyValueNode<string> _fill;
+    static readonly PropertyValueDefinition _fill_ = new()
     {
         name = nameof(fill)
     };
     public string fill
     {
-        get => __fill?.value;
-        set => SetValue(ref __fill, _fill, value);
+        get => _fill?.value;
+        set => SetValue(ref _fill, _fill_, value);
     }
     #endregion
 
@@ -5015,43 +5015,43 @@ public sealed partial class svg : HtmlElement
 public sealed class stop : HtmlElement
 {
     #region string offset
-    PropertyValueNode<string> __offset;
-    static readonly PropertyValueDefinition _offset = new()
+    PropertyValueNode<string> _offset;
+    static readonly PropertyValueDefinition _offset_ = new()
     {
         name = nameof(offset)
     };
     public string offset
     {
-        get => __offset?.value;
-        set => SetValue(ref __offset, _offset, value);
+        get => _offset?.value;
+        set => SetValue(ref _offset, _offset_, value);
     }
     #endregion
 
 
     #region string stopColor
-    PropertyValueNode<string> __stopColor;
-    static readonly PropertyValueDefinition _stopColor = new()
+    PropertyValueNode<string> _stopColor;
+    static readonly PropertyValueDefinition _stopColor_ = new()
     {
         name = nameof(stopColor)
     };
     public string stopColor
     {
-        get => __stopColor?.value;
-        set => SetValue(ref __stopColor, _stopColor, value);
+        get => _stopColor?.value;
+        set => SetValue(ref _stopColor, _stopColor_, value);
     }
     #endregion
 
 
     #region string stopOpacity
-    PropertyValueNode<string> __stopOpacity;
-    static readonly PropertyValueDefinition _stopOpacity = new()
+    PropertyValueNode<string> _stopOpacity;
+    static readonly PropertyValueDefinition _stopOpacity_ = new()
     {
         name = nameof(stopOpacity)
     };
     public string stopOpacity
     {
-        get => __stopOpacity?.value;
-        set => SetValue(ref __stopOpacity, _stopOpacity, value);
+        get => _stopOpacity?.value;
+        set => SetValue(ref _stopOpacity, _stopOpacity_, value);
     }
     #endregion
 
@@ -5115,8 +5115,8 @@ public sealed class defs : HtmlElement
 public sealed class form : HtmlElement
 {
     #region string action
-    PropertyValueNode<string> __action;
-    static readonly PropertyValueDefinition _action = new()
+    PropertyValueNode<string> _action;
+    static readonly PropertyValueDefinition _action_ = new()
     {
         name = nameof(action)
     };
@@ -5125,15 +5125,15 @@ public sealed class form : HtmlElement
     /// </summary>
     public string action
     {
-        get => __action?.value;
-        set => SetValue(ref __action, _action, value);
+        get => _action?.value;
+        set => SetValue(ref _action, _action_, value);
     }
     #endregion
 
 
     #region string method
-    PropertyValueNode<string> __method;
-    static readonly PropertyValueDefinition _method = new()
+    PropertyValueNode<string> _method;
+    static readonly PropertyValueDefinition _method_ = new()
     {
         name = nameof(method)
     };
@@ -5142,15 +5142,15 @@ public sealed class form : HtmlElement
     /// </summary>
     public string method
     {
-        get => __method?.value;
-        set => SetValue(ref __method, _method, value);
+        get => _method?.value;
+        set => SetValue(ref _method, _method_, value);
     }
     #endregion
 
 
     #region string enctype
-    PropertyValueNode<string> __enctype;
-    static readonly PropertyValueDefinition _enctype = new()
+    PropertyValueNode<string> _enctype;
+    static readonly PropertyValueDefinition _enctype_ = new()
     {
         name = nameof(enctype)
     };
@@ -5159,15 +5159,15 @@ public sealed class form : HtmlElement
     /// </summary>
     public string enctype
     {
-        get => __enctype?.value;
-        set => SetValue(ref __enctype, _enctype, value);
+        get => _enctype?.value;
+        set => SetValue(ref _enctype, _enctype_, value);
     }
     #endregion
 
 
     #region string target
-    PropertyValueNode<string> __target;
-    static readonly PropertyValueDefinition _target = new()
+    PropertyValueNode<string> _target;
+    static readonly PropertyValueDefinition _target_ = new()
     {
         name = nameof(target)
     };
@@ -5176,15 +5176,15 @@ public sealed class form : HtmlElement
     /// </summary>
     public string target
     {
-        get => __target?.value;
-        set => SetValue(ref __target, _target, value);
+        get => _target?.value;
+        set => SetValue(ref _target, _target_, value);
     }
     #endregion
 
 
     #region string name
-    PropertyValueNode<string> __name;
-    static readonly PropertyValueDefinition _name = new()
+    PropertyValueNode<string> _name;
+    static readonly PropertyValueDefinition _name_ = new()
     {
         name = nameof(name)
     };
@@ -5193,15 +5193,15 @@ public sealed class form : HtmlElement
     /// </summary>
     public string name
     {
-        get => __name?.value;
-        set => SetValue(ref __name, _name, value);
+        get => _name?.value;
+        set => SetValue(ref _name, _name_, value);
     }
     #endregion
 
 
     #region string novalidate
-    PropertyValueNode<string> __novalidate;
-    static readonly PropertyValueDefinition _novalidate = new()
+    PropertyValueNode<string> _novalidate;
+    static readonly PropertyValueDefinition _novalidate_ = new()
     {
         name = nameof(novalidate)
     };
@@ -5210,15 +5210,15 @@ public sealed class form : HtmlElement
     /// </summary>
     public string novalidate
     {
-        get => __novalidate?.value;
-        set => SetValue(ref __novalidate, _novalidate, value);
+        get => _novalidate?.value;
+        set => SetValue(ref _novalidate, _novalidate_, value);
     }
     #endregion
 
 
     #region string autocomplete
-    PropertyValueNode<string> __autocomplete;
-    static readonly PropertyValueDefinition _autocomplete = new()
+    PropertyValueNode<string> _autocomplete;
+    static readonly PropertyValueDefinition _autocomplete_ = new()
     {
         name = nameof(autocomplete)
     };
@@ -5227,8 +5227,8 @@ public sealed class form : HtmlElement
     /// </summary>
     public string autocomplete
     {
-        get => __autocomplete?.value;
-        set => SetValue(ref __autocomplete, _autocomplete, value);
+        get => _autocomplete?.value;
+        set => SetValue(ref _autocomplete, _autocomplete_, value);
     }
     #endregion
 
@@ -5296,8 +5296,8 @@ public sealed class form : HtmlElement
 public sealed partial class textarea : HtmlElement
 {
     #region string name
-    PropertyValueNode<string> __name;
-    static readonly PropertyValueDefinition _name = new()
+    PropertyValueNode<string> _name;
+    static readonly PropertyValueDefinition _name_ = new()
     {
         name = nameof(name)
     };
@@ -5306,15 +5306,15 @@ public sealed partial class textarea : HtmlElement
     /// </summary>
     public string name
     {
-        get => __name?.value;
-        set => SetValue(ref __name, _name, value);
+        get => _name?.value;
+        set => SetValue(ref _name, _name_, value);
     }
     #endregion
 
 
     #region string cols
-    PropertyValueNode<UnionProp<string,int?>> __cols;
-    static readonly PropertyValueDefinition _cols = new()
+    PropertyValueNode<UnionProp<string,int?>> _cols;
+    static readonly PropertyValueDefinition _cols_ = new()
     {
         name = nameof(cols)
     };
@@ -5323,15 +5323,15 @@ public sealed partial class textarea : HtmlElement
     /// </summary>
     public UnionProp<string,int?> cols
     {
-        get => __cols?.value;
-        set => SetValue(ref __cols, _cols, value);
+        get => _cols?.value;
+        set => SetValue(ref _cols, _cols_, value);
     }
     #endregion
 
 
     #region string rows
-    PropertyValueNode<UnionProp<string,int?>> __rows;
-    static readonly PropertyValueDefinition _rows = new()
+    PropertyValueNode<UnionProp<string,int?>> _rows;
+    static readonly PropertyValueDefinition _rows_ = new()
     {
         name = nameof(rows)
     };
@@ -5340,15 +5340,15 @@ public sealed partial class textarea : HtmlElement
     /// </summary>
     public UnionProp<string,int?> rows
     {
-        get => __rows?.value;
-        set => SetValue(ref __rows, _rows, value);
+        get => _rows?.value;
+        set => SetValue(ref _rows, _rows_, value);
     }
     #endregion
 
 
     #region string placeholder
-    PropertyValueNode<string> __placeholder;
-    static readonly PropertyValueDefinition _placeholder = new()
+    PropertyValueNode<string> _placeholder;
+    static readonly PropertyValueDefinition _placeholder_ = new()
     {
         name = nameof(placeholder)
     };
@@ -5357,15 +5357,15 @@ public sealed partial class textarea : HtmlElement
     /// </summary>
     public string placeholder
     {
-        get => __placeholder?.value;
-        set => SetValue(ref __placeholder, _placeholder, value);
+        get => _placeholder?.value;
+        set => SetValue(ref _placeholder, _placeholder_, value);
     }
     #endregion
 
 
     #region string readOnly
-    PropertyValueNode<UnionProp<string,bool>> __readOnly;
-    static readonly PropertyValueDefinition _readOnly = new()
+    PropertyValueNode<UnionProp<string,bool>> _readOnly;
+    static readonly PropertyValueDefinition _readOnly_ = new()
     {
         name = nameof(readOnly)
     };
@@ -5374,15 +5374,15 @@ public sealed partial class textarea : HtmlElement
     /// </summary>
     public UnionProp<string,bool> readOnly
     {
-        get => __readOnly?.value;
-        set => SetValue(ref __readOnly, _readOnly, value);
+        get => _readOnly?.value;
+        set => SetValue(ref _readOnly, _readOnly_, value);
     }
     #endregion
 
 
     #region string required
-    PropertyValueNode<string> __required;
-    static readonly PropertyValueDefinition _required = new()
+    PropertyValueNode<string> _required;
+    static readonly PropertyValueDefinition _required_ = new()
     {
         name = nameof(required)
     };
@@ -5391,15 +5391,15 @@ public sealed partial class textarea : HtmlElement
     /// </summary>
     public string required
     {
-        get => __required?.value;
-        set => SetValue(ref __required, _required, value);
+        get => _required?.value;
+        set => SetValue(ref _required, _required_, value);
     }
     #endregion
 
 
     #region string autofocus
-    PropertyValueNode<string> __autofocus;
-    static readonly PropertyValueDefinition _autofocus = new()
+    PropertyValueNode<string> _autofocus;
+    static readonly PropertyValueDefinition _autofocus_ = new()
     {
         name = nameof(autofocus)
     };
@@ -5408,15 +5408,15 @@ public sealed partial class textarea : HtmlElement
     /// </summary>
     public string autofocus
     {
-        get => __autofocus?.value;
-        set => SetValue(ref __autofocus, _autofocus, value);
+        get => _autofocus?.value;
+        set => SetValue(ref _autofocus, _autofocus_, value);
     }
     #endregion
 
 
     #region string autocomplete
-    PropertyValueNode<string> __autocomplete;
-    static readonly PropertyValueDefinition _autocomplete = new()
+    PropertyValueNode<string> _autocomplete;
+    static readonly PropertyValueDefinition _autocomplete_ = new()
     {
         name = nameof(autocomplete)
     };
@@ -5425,15 +5425,15 @@ public sealed partial class textarea : HtmlElement
     /// </summary>
     public string autocomplete
     {
-        get => __autocomplete?.value;
-        set => SetValue(ref __autocomplete, _autocomplete, value);
+        get => _autocomplete?.value;
+        set => SetValue(ref _autocomplete, _autocomplete_, value);
     }
     #endregion
 
 
     #region string dirname
-    PropertyValueNode<string> __dirname;
-    static readonly PropertyValueDefinition _dirname = new()
+    PropertyValueNode<string> _dirname;
+    static readonly PropertyValueDefinition _dirname_ = new()
     {
         name = nameof(dirname)
     };
@@ -5442,15 +5442,15 @@ public sealed partial class textarea : HtmlElement
     /// </summary>
     public string dirname
     {
-        get => __dirname?.value;
-        set => SetValue(ref __dirname, _dirname, value);
+        get => _dirname?.value;
+        set => SetValue(ref _dirname, _dirname_, value);
     }
     #endregion
 
 
     #region string form
-    PropertyValueNode<string> __form;
-    static readonly PropertyValueDefinition _form = new()
+    PropertyValueNode<string> _form;
+    static readonly PropertyValueDefinition _form_ = new()
     {
         name = nameof(form)
     };
@@ -5459,15 +5459,15 @@ public sealed partial class textarea : HtmlElement
     /// </summary>
     public string form
     {
-        get => __form?.value;
-        set => SetValue(ref __form, _form, value);
+        get => _form?.value;
+        set => SetValue(ref _form, _form_, value);
     }
     #endregion
 
 
     #region string maxlength
-    PropertyValueNode<string> __maxlength;
-    static readonly PropertyValueDefinition _maxlength = new()
+    PropertyValueNode<string> _maxlength;
+    static readonly PropertyValueDefinition _maxlength_ = new()
     {
         name = nameof(maxlength)
     };
@@ -5476,15 +5476,15 @@ public sealed partial class textarea : HtmlElement
     /// </summary>
     public string maxlength
     {
-        get => __maxlength?.value;
-        set => SetValue(ref __maxlength, _maxlength, value);
+        get => _maxlength?.value;
+        set => SetValue(ref _maxlength, _maxlength_, value);
     }
     #endregion
 
 
     #region string minlength
-    PropertyValueNode<string> __minlength;
-    static readonly PropertyValueDefinition _minlength = new()
+    PropertyValueNode<string> _minlength;
+    static readonly PropertyValueDefinition _minlength_ = new()
     {
         name = nameof(minlength)
     };
@@ -5493,15 +5493,15 @@ public sealed partial class textarea : HtmlElement
     /// </summary>
     public string minlength
     {
-        get => __minlength?.value;
-        set => SetValue(ref __minlength, _minlength, value);
+        get => _minlength?.value;
+        set => SetValue(ref _minlength, _minlength_, value);
     }
     #endregion
 
 
     #region string wrap
-    PropertyValueNode<string> __wrap;
-    static readonly PropertyValueDefinition _wrap = new()
+    PropertyValueNode<string> _wrap;
+    static readonly PropertyValueDefinition _wrap_ = new()
     {
         name = nameof(wrap)
     };
@@ -5510,15 +5510,15 @@ public sealed partial class textarea : HtmlElement
     /// </summary>
     public string wrap
     {
-        get => __wrap?.value;
-        set => SetValue(ref __wrap, _wrap, value);
+        get => _wrap?.value;
+        set => SetValue(ref _wrap, _wrap_, value);
     }
     #endregion
 
 
     #region string defaultValue
-    PropertyValueNode<string> __defaultValue;
-    static readonly PropertyValueDefinition _defaultValue = new()
+    PropertyValueNode<string> _defaultValue;
+    static readonly PropertyValueDefinition _defaultValue_ = new()
     {
         name = nameof(defaultValue)
     };
@@ -5527,36 +5527,36 @@ public sealed partial class textarea : HtmlElement
     /// </summary>
     public string defaultValue
     {
-        get => __defaultValue?.value;
-        set => SetValue(ref __defaultValue, _defaultValue, value);
+        get => _defaultValue?.value;
+        set => SetValue(ref _defaultValue, _defaultValue_, value);
     }
     #endregion
 
 
     #region string value
-    PropertyValueNode<string> __value;
-    static readonly PropertyValueDefinition _value = new()
+    PropertyValueNode<string> _value;
+    static readonly PropertyValueDefinition _value_ = new()
     {
         name = nameof(value)
     };
     public string value
     {
-        get => __value?.value;
-        set => SetValue(ref __value, _value, value);
+        get => _value?.value;
+        set => SetValue(ref _value, _value_, value);
     }
     #endregion
 
 
     #region string disabled
-    PropertyValueNode<string> __disabled;
-    static readonly PropertyValueDefinition _disabled = new()
+    PropertyValueNode<string> _disabled;
+    static readonly PropertyValueDefinition _disabled_ = new()
     {
         name = nameof(disabled)
     };
     public string disabled
     {
-        get => __disabled?.value;
-        set => SetValue(ref __disabled, _disabled, value);
+        get => _disabled?.value;
+        set => SetValue(ref _disabled, _disabled_, value);
     }
     #endregion
 
@@ -5677,127 +5677,127 @@ public sealed partial class textarea : HtmlElement
 public sealed class link : HtmlElement
 {
     #region string href
-    PropertyValueNode<string> __href;
-    static readonly PropertyValueDefinition _href = new()
+    PropertyValueNode<string> _href;
+    static readonly PropertyValueDefinition _href_ = new()
     {
         name = nameof(href)
     };
     public string href
     {
-        get => __href?.value;
-        set => SetValue(ref __href, _href, value);
+        get => _href?.value;
+        set => SetValue(ref _href, _href_, value);
     }
     #endregion
 
 
     #region string media
-    PropertyValueNode<string> __media;
-    static readonly PropertyValueDefinition _media = new()
+    PropertyValueNode<string> _media;
+    static readonly PropertyValueDefinition _media_ = new()
     {
         name = nameof(media)
     };
     public string media
     {
-        get => __media?.value;
-        set => SetValue(ref __media, _media, value);
+        get => _media?.value;
+        set => SetValue(ref _media, _media_, value);
     }
     #endregion
 
 
     #region string rel
-    PropertyValueNode<string> __rel;
-    static readonly PropertyValueDefinition _rel = new()
+    PropertyValueNode<string> _rel;
+    static readonly PropertyValueDefinition _rel_ = new()
     {
         name = nameof(rel)
     };
     public string rel
     {
-        get => __rel?.value;
-        set => SetValue(ref __rel, _rel, value);
+        get => _rel?.value;
+        set => SetValue(ref _rel, _rel_, value);
     }
     #endregion
 
 
     #region string sizes
-    PropertyValueNode<string> __sizes;
-    static readonly PropertyValueDefinition _sizes = new()
+    PropertyValueNode<string> _sizes;
+    static readonly PropertyValueDefinition _sizes_ = new()
     {
         name = nameof(sizes)
     };
     public string sizes
     {
-        get => __sizes?.value;
-        set => SetValue(ref __sizes, _sizes, value);
+        get => _sizes?.value;
+        set => SetValue(ref _sizes, _sizes_, value);
     }
     #endregion
 
 
     #region string type
-    PropertyValueNode<string> __type;
-    static readonly PropertyValueDefinition _type = new()
+    PropertyValueNode<string> _type;
+    static readonly PropertyValueDefinition _type_ = new()
     {
         name = nameof(type)
     };
     public string type
     {
-        get => __type?.value;
-        set => SetValue(ref __type, _type, value);
+        get => _type?.value;
+        set => SetValue(ref _type, _type_, value);
     }
     #endregion
 
 
     #region string @as
-    PropertyValueNode<string> __as;
-    static readonly PropertyValueDefinition _as = new()
+    PropertyValueNode<string> _as;
+    static readonly PropertyValueDefinition _as_ = new()
     {
         name = nameof(@as)
     };
     public string @as
     {
-        get => __as?.value;
-        set => SetValue(ref __as, _as, value);
+        get => _as?.value;
+        set => SetValue(ref _as, _as_, value);
     }
     #endregion
 
 
     #region string integrity
-    PropertyValueNode<string> __integrity;
-    static readonly PropertyValueDefinition _integrity = new()
+    PropertyValueNode<string> _integrity;
+    static readonly PropertyValueDefinition _integrity_ = new()
     {
         name = nameof(integrity)
     };
     public string integrity
     {
-        get => __integrity?.value;
-        set => SetValue(ref __integrity, _integrity, value);
+        get => _integrity?.value;
+        set => SetValue(ref _integrity, _integrity_, value);
     }
     #endregion
 
 
     #region string crossorigin
-    PropertyValueNode<string> __crossorigin;
-    static readonly PropertyValueDefinition _crossorigin = new()
+    PropertyValueNode<string> _crossorigin;
+    static readonly PropertyValueDefinition _crossorigin_ = new()
     {
         name = nameof(crossorigin)
     };
     public string crossorigin
     {
-        get => __crossorigin?.value;
-        set => SetValue(ref __crossorigin, _crossorigin, value);
+        get => _crossorigin?.value;
+        set => SetValue(ref _crossorigin, _crossorigin_, value);
     }
     #endregion
 
 
     #region string referrerpolicy
-    PropertyValueNode<string> __referrerpolicy;
-    static readonly PropertyValueDefinition _referrerpolicy = new()
+    PropertyValueNode<string> _referrerpolicy;
+    static readonly PropertyValueDefinition _referrerpolicy_ = new()
     {
         name = nameof(referrerpolicy)
     };
     public string referrerpolicy
     {
-        get => __referrerpolicy?.value;
-        set => SetValue(ref __referrerpolicy, _referrerpolicy, value);
+        get => _referrerpolicy?.value;
+        set => SetValue(ref _referrerpolicy, _referrerpolicy_, value);
     }
     #endregion
 
@@ -5834,15 +5834,15 @@ public sealed class link : HtmlElement
 public sealed class iframe : HtmlElement
 {
     #region string src
-    PropertyValueNode<string> __src;
-    static readonly PropertyValueDefinition _src = new()
+    PropertyValueNode<string> _src;
+    static readonly PropertyValueDefinition _src_ = new()
     {
         name = nameof(src)
     };
     public string src
     {
-        get => __src?.value;
-        set => SetValue(ref __src, _src, value);
+        get => _src?.value;
+        set => SetValue(ref _src, _src_, value);
     }
     #endregion
 
@@ -5863,29 +5863,29 @@ public sealed class iframe : HtmlElement
 public sealed partial class select : HtmlElement
 {
     #region string value
-    PropertyValueNode<string> __value;
-    static readonly PropertyValueDefinition _value = new()
+    PropertyValueNode<string> _value;
+    static readonly PropertyValueDefinition _value_ = new()
     {
         name = nameof(value)
     };
     public string value
     {
-        get => __value?.value;
-        set => SetValue(ref __value, _value, value);
+        get => _value?.value;
+        set => SetValue(ref _value, _value_, value);
     }
     #endregion
 
 
     #region string disabled
-    PropertyValueNode<string> __disabled;
-    static readonly PropertyValueDefinition _disabled = new()
+    PropertyValueNode<string> _disabled;
+    static readonly PropertyValueDefinition _disabled_ = new()
     {
         name = nameof(disabled)
     };
     public string disabled
     {
-        get => __disabled?.value;
-        set => SetValue(ref __disabled, _disabled, value);
+        get => _disabled?.value;
+        set => SetValue(ref _disabled, _disabled_, value);
     }
     #endregion
 
@@ -5908,92 +5908,92 @@ public sealed partial class select : HtmlElement
 public sealed partial class input : HtmlElement
 {
     #region string required
-    PropertyValueNode<string> __required;
-    static readonly PropertyValueDefinition _required = new()
+    PropertyValueNode<string> _required;
+    static readonly PropertyValueDefinition _required_ = new()
     {
         name = nameof(required)
     };
     public string required
     {
-        get => __required?.value;
-        set => SetValue(ref __required, _required, value);
+        get => _required?.value;
+        set => SetValue(ref _required, _required_, value);
     }
     #endregion
 
 
     #region string autoComplete
-    PropertyValueNode<string> __autoComplete;
-    static readonly PropertyValueDefinition _autoComplete = new()
+    PropertyValueNode<string> _autoComplete;
+    static readonly PropertyValueDefinition _autoComplete_ = new()
     {
         name = nameof(autoComplete)
     };
     public string autoComplete
     {
-        get => __autoComplete?.value;
-        set => SetValue(ref __autoComplete, _autoComplete, value);
+        get => _autoComplete?.value;
+        set => SetValue(ref _autoComplete, _autoComplete_, value);
     }
     #endregion
 
 
     #region string @checked
-    PropertyValueNode<bool?> __checked;
-    static readonly PropertyValueDefinition _checked = new()
+    PropertyValueNode<bool?> _checked;
+    static readonly PropertyValueDefinition _checked_ = new()
     {
         name = nameof(@checked)
     };
     public bool? @checked
     {
-        get => __checked?.value;
-        set => SetValue(ref __checked, _checked, value);
+        get => _checked?.value;
+        set => SetValue(ref _checked, _checked_, value);
     }
     #endregion
 
 
     #region string defaultChecked
-    PropertyValueNode<bool?> __defaultChecked;
-    static readonly PropertyValueDefinition _defaultChecked = new()
+    PropertyValueNode<bool?> _defaultChecked;
+    static readonly PropertyValueDefinition _defaultChecked_ = new()
     {
         name = nameof(defaultChecked)
     };
     public bool? defaultChecked
     {
-        get => __defaultChecked?.value;
-        set => SetValue(ref __defaultChecked, _defaultChecked, value);
+        get => _defaultChecked?.value;
+        set => SetValue(ref _defaultChecked, _defaultChecked_, value);
     }
     #endregion
 
 
     #region string defaultValue
-    PropertyValueNode<string> __defaultValue;
-    static readonly PropertyValueDefinition _defaultValue = new()
+    PropertyValueNode<string> _defaultValue;
+    static readonly PropertyValueDefinition _defaultValue_ = new()
     {
         name = nameof(defaultValue)
     };
     public string defaultValue
     {
-        get => __defaultValue?.value;
-        set => SetValue(ref __defaultValue, _defaultValue, value);
+        get => _defaultValue?.value;
+        set => SetValue(ref _defaultValue, _defaultValue_, value);
     }
     #endregion
 
 
     #region string disabled
-    PropertyValueNode<bool?> __disabled;
-    static readonly PropertyValueDefinition _disabled = new()
+    PropertyValueNode<bool?> _disabled;
+    static readonly PropertyValueDefinition _disabled_ = new()
     {
         name = nameof(disabled)
     };
     public bool? disabled
     {
-        get => __disabled?.value;
-        set => SetValue(ref __disabled, _disabled, value);
+        get => _disabled?.value;
+        set => SetValue(ref _disabled, _disabled_, value);
     }
     #endregion
 
 
     #region string autoFocus
-    PropertyValueNode<bool?> __autoFocus;
-    static readonly PropertyValueDefinition _autoFocus = new()
+    PropertyValueNode<bool?> _autoFocus;
+    static readonly PropertyValueDefinition _autoFocus_ = new()
     {
         name = nameof(autoFocus)
     };
@@ -6002,106 +6002,106 @@ public sealed partial class input : HtmlElement
     /// </summary>
     public bool? autoFocus
     {
-        get => __autoFocus?.value;
-        set => SetValue(ref __autoFocus, _autoFocus, value);
+        get => _autoFocus?.value;
+        set => SetValue(ref _autoFocus, _autoFocus_, value);
     }
     #endregion
 
 
     #region string name
-    PropertyValueNode<string> __name;
-    static readonly PropertyValueDefinition _name = new()
+    PropertyValueNode<string> _name;
+    static readonly PropertyValueDefinition _name_ = new()
     {
         name = nameof(name)
     };
     public string name
     {
-        get => __name?.value;
-        set => SetValue(ref __name, _name, value);
+        get => _name?.value;
+        set => SetValue(ref _name, _name_, value);
     }
     #endregion
 
 
     #region string placeholder
-    PropertyValueNode<string> __placeholder;
-    static readonly PropertyValueDefinition _placeholder = new()
+    PropertyValueNode<string> _placeholder;
+    static readonly PropertyValueDefinition _placeholder_ = new()
     {
         name = nameof(placeholder)
     };
     public string placeholder
     {
-        get => __placeholder?.value;
-        set => SetValue(ref __placeholder, _placeholder, value);
+        get => _placeholder?.value;
+        set => SetValue(ref _placeholder, _placeholder_, value);
     }
     #endregion
 
 
     #region string readOnly
-    PropertyValueNode<bool?> __readOnly;
-    static readonly PropertyValueDefinition _readOnly = new()
+    PropertyValueNode<bool?> _readOnly;
+    static readonly PropertyValueDefinition _readOnly_ = new()
     {
         name = nameof(readOnly)
     };
     public bool? readOnly
     {
-        get => __readOnly?.value;
-        set => SetValue(ref __readOnly, _readOnly, value);
+        get => _readOnly?.value;
+        set => SetValue(ref _readOnly, _readOnly_, value);
     }
     #endregion
 
 
     #region string type
-    PropertyValueNode<string> __type;
-    static readonly PropertyValueDefinition _type = new()
+    PropertyValueNode<string> _type;
+    static readonly PropertyValueDefinition _type_ = new()
     {
         name = nameof(type)
     };
     public string type
     {
-        get => __type?.value;
-        set => SetValue(ref __type, _type, value);
+        get => _type?.value;
+        set => SetValue(ref _type, _type_, value);
     }
     #endregion
 
 
     #region string max
-    PropertyValueNode<int?> __max;
-    static readonly PropertyValueDefinition _max = new()
+    PropertyValueNode<int?> _max;
+    static readonly PropertyValueDefinition _max_ = new()
     {
         name = nameof(max)
     };
     public int? max
     {
-        get => __max?.value;
-        set => SetValue(ref __max, _max, value);
+        get => _max?.value;
+        set => SetValue(ref _max, _max_, value);
     }
     #endregion
 
 
     #region string min
-    PropertyValueNode<int?> __min;
-    static readonly PropertyValueDefinition _min = new()
+    PropertyValueNode<int?> _min;
+    static readonly PropertyValueDefinition _min_ = new()
     {
         name = nameof(min)
     };
     public int? min
     {
-        get => __min?.value;
-        set => SetValue(ref __min, _min, value);
+        get => _min?.value;
+        set => SetValue(ref _min, _min_, value);
     }
     #endregion
 
 
     #region string step
-    PropertyValueNode<int?> __step;
-    static readonly PropertyValueDefinition _step = new()
+    PropertyValueNode<int?> _step;
+    static readonly PropertyValueDefinition _step_ = new()
     {
         name = nameof(step)
     };
     public int? step
     {
-        get => __step?.value;
-        set => SetValue(ref __step, _step, value);
+        get => _step?.value;
+        set => SetValue(ref _step, _step_, value);
     }
     #endregion
 
@@ -6153,270 +6153,270 @@ public sealed partial class input : HtmlElement
 public  partial class HtmlElement
 {
     #region string accesskey
-    PropertyValueNode<string> __accesskey;
-    static readonly PropertyValueDefinition _accesskey = new()
+    PropertyValueNode<string> _accesskey;
+    static readonly PropertyValueDefinition _accesskey_ = new()
     {
         name = nameof(accesskey)
     };
     public string accesskey
     {
-        get => __accesskey?.value;
-        set => SetValue(ref __accesskey, _accesskey, value);
+        get => _accesskey?.value;
+        set => SetValue(ref _accesskey, _accesskey_, value);
     }
     #endregion
 
 
     #region string draggable
-    PropertyValueNode<string> __draggable;
-    static readonly PropertyValueDefinition _draggable = new()
+    PropertyValueNode<string> _draggable;
+    static readonly PropertyValueDefinition _draggable_ = new()
     {
         name = nameof(draggable)
     };
     public string draggable
     {
-        get => __draggable?.value;
-        set => SetValue(ref __draggable, _draggable, value);
+        get => _draggable?.value;
+        set => SetValue(ref _draggable, _draggable_, value);
     }
     #endregion
 
 
     #region string contenteditable
-    PropertyValueNode<string> __contenteditable;
-    static readonly PropertyValueDefinition _contenteditable = new()
+    PropertyValueNode<string> _contenteditable;
+    static readonly PropertyValueDefinition _contenteditable_ = new()
     {
         name = nameof(contenteditable)
     };
     public string contenteditable
     {
-        get => __contenteditable?.value;
-        set => SetValue(ref __contenteditable, _contenteditable, value);
+        get => _contenteditable?.value;
+        set => SetValue(ref _contenteditable, _contenteditable_, value);
     }
     #endregion
 
 
     #region string className
-    PropertyValueNode<string> __className;
-    static readonly PropertyValueDefinition _className = new()
+    PropertyValueNode<string> _className;
+    static readonly PropertyValueDefinition _className_ = new()
     {
         name = nameof(className)
     };
     public string className
     {
-        get => __className?.value;
-        set => SetValue(ref __className, _className, value);
+        get => _className?.value;
+        set => SetValue(ref _className, _className_, value);
     }
     #endregion
 
 
     #region string dangerouslySetInnerHTML
-    PropertyValueNode<dangerouslySetInnerHTML> __dangerouslySetInnerHTML;
-    static readonly PropertyValueDefinition _dangerouslySetInnerHTML = new()
+    PropertyValueNode<dangerouslySetInnerHTML> _dangerouslySetInnerHTML;
+    static readonly PropertyValueDefinition _dangerouslySetInnerHTML_ = new()
     {
         name = nameof(dangerouslySetInnerHTML)
     };
     public dangerouslySetInnerHTML dangerouslySetInnerHTML
     {
-        get => __dangerouslySetInnerHTML?.value;
-        set => SetValue(ref __dangerouslySetInnerHTML, _dangerouslySetInnerHTML, value);
+        get => _dangerouslySetInnerHTML?.value;
+        set => SetValue(ref _dangerouslySetInnerHTML, _dangerouslySetInnerHTML_, value);
     }
     #endregion
 
 
     #region string dir
-    PropertyValueNode<string> __dir;
-    static readonly PropertyValueDefinition _dir = new()
+    PropertyValueNode<string> _dir;
+    static readonly PropertyValueDefinition _dir_ = new()
     {
         name = nameof(dir)
     };
     public string dir
     {
-        get => __dir?.value;
-        set => SetValue(ref __dir, _dir, value);
+        get => _dir?.value;
+        set => SetValue(ref _dir, _dir_, value);
     }
     #endregion
 
 
     #region string id
-    PropertyValueNode<string> __id;
-    static readonly PropertyValueDefinition _id = new()
+    PropertyValueNode<string> _id;
+    static readonly PropertyValueDefinition _id_ = new()
     {
         name = nameof(id)
     };
     public string id
     {
-        get => __id?.value;
-        set => SetValue(ref __id, _id, value);
+        get => _id?.value;
+        set => SetValue(ref _id, _id_, value);
     }
     #endregion
 
 
     #region string lang
-    PropertyValueNode<string> __lang;
-    static readonly PropertyValueDefinition _lang = new()
+    PropertyValueNode<string> _lang;
+    static readonly PropertyValueDefinition _lang_ = new()
     {
         name = nameof(lang)
     };
     public string lang
     {
-        get => __lang?.value;
-        set => SetValue(ref __lang, _lang, value);
+        get => _lang?.value;
+        set => SetValue(ref _lang, _lang_, value);
     }
     #endregion
 
 
     #region string part
-    PropertyValueNode<string> __part;
-    static readonly PropertyValueDefinition _part = new()
+    PropertyValueNode<string> _part;
+    static readonly PropertyValueDefinition _part_ = new()
     {
         name = nameof(part)
     };
     public string part
     {
-        get => __part?.value;
-        set => SetValue(ref __part, _part, value);
+        get => _part?.value;
+        set => SetValue(ref _part, _part_, value);
     }
     #endregion
 
 
     #region string role
-    PropertyValueNode<string> __role;
-    static readonly PropertyValueDefinition _role = new()
+    PropertyValueNode<string> _role;
+    static readonly PropertyValueDefinition _role_ = new()
     {
         name = nameof(role)
     };
     public string role
     {
-        get => __role?.value;
-        set => SetValue(ref __role, _role, value);
+        get => _role?.value;
+        set => SetValue(ref _role, _role_, value);
     }
     #endregion
 
 
     #region string spellcheck
-    PropertyValueNode<string> __spellcheck;
-    static readonly PropertyValueDefinition _spellcheck = new()
+    PropertyValueNode<string> _spellcheck;
+    static readonly PropertyValueDefinition _spellcheck_ = new()
     {
         name = nameof(spellcheck)
     };
     public string spellcheck
     {
-        get => __spellcheck?.value;
-        set => SetValue(ref __spellcheck, _spellcheck, value);
+        get => _spellcheck?.value;
+        set => SetValue(ref _spellcheck, _spellcheck_, value);
     }
     #endregion
 
 
     #region string tabIndex
-    PropertyValueNode<string> __tabIndex;
-    static readonly PropertyValueDefinition _tabIndex = new()
+    PropertyValueNode<string> _tabIndex;
+    static readonly PropertyValueDefinition _tabIndex_ = new()
     {
         name = nameof(tabIndex)
     };
     public string tabIndex
     {
-        get => __tabIndex?.value;
-        set => SetValue(ref __tabIndex, _tabIndex, value);
+        get => _tabIndex?.value;
+        set => SetValue(ref _tabIndex, _tabIndex_, value);
     }
     #endregion
 
 
     #region string title
-    PropertyValueNode<string> __title;
-    static readonly PropertyValueDefinition _title = new()
+    PropertyValueNode<string> _title;
+    static readonly PropertyValueDefinition _title_ = new()
     {
         name = nameof(title)
     };
     public string title
     {
-        get => __title?.value;
-        set => SetValue(ref __title, _title, value);
+        get => _title?.value;
+        set => SetValue(ref _title, _title_, value);
     }
     #endregion
 
 
     #region string translate
-    PropertyValueNode<string> __translate;
-    static readonly PropertyValueDefinition _translate = new()
+    PropertyValueNode<string> _translate;
+    static readonly PropertyValueDefinition _translate_ = new()
     {
         name = nameof(translate)
     };
     public string translate
     {
-        get => __translate?.value;
-        set => SetValue(ref __translate, _translate, value);
+        get => _translate?.value;
+        set => SetValue(ref _translate, _translate_, value);
     }
     #endregion
 
 
     #region string onClick
-    PropertyValueNode<MouseEventHandler> __onClick;
-    static readonly PropertyValueDefinition _onClick = new()
+    PropertyValueNode<MouseEventHandler> _onClick;
+    static readonly PropertyValueDefinition _onClick_ = new()
     {
         name = nameof(onClick),
         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments"
     };
     public MouseEventHandler onClick
     {
-        get => __onClick?.value;
-        set => SetValue(ref __onClick, _onClick, value);
+        get => _onClick?.value;
+        set => SetValue(ref _onClick, _onClick_, value);
     }
     #endregion
 
 
     #region string onMouseEnter
-    PropertyValueNode<MouseEventHandler> __onMouseEnter;
-    static readonly PropertyValueDefinition _onMouseEnter = new()
+    PropertyValueNode<MouseEventHandler> _onMouseEnter;
+    static readonly PropertyValueDefinition _onMouseEnter_ = new()
     {
         name = nameof(onMouseEnter),
         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments"
     };
     public MouseEventHandler onMouseEnter
     {
-        get => __onMouseEnter?.value;
-        set => SetValue(ref __onMouseEnter, _onMouseEnter, value);
+        get => _onMouseEnter?.value;
+        set => SetValue(ref _onMouseEnter, _onMouseEnter_, value);
     }
     #endregion
 
 
     #region string onMouseLeave
-    PropertyValueNode<MouseEventHandler> __onMouseLeave;
-    static readonly PropertyValueDefinition _onMouseLeave = new()
+    PropertyValueNode<MouseEventHandler> _onMouseLeave;
+    static readonly PropertyValueDefinition _onMouseLeave_ = new()
     {
         name = nameof(onMouseLeave),
         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments"
     };
     public MouseEventHandler onMouseLeave
     {
-        get => __onMouseLeave?.value;
-        set => SetValue(ref __onMouseLeave, _onMouseLeave, value);
+        get => _onMouseLeave?.value;
+        set => SetValue(ref _onMouseLeave, _onMouseLeave_, value);
     }
     #endregion
 
 
     #region string onScroll
-    PropertyValueNode<ScrollEventHandler> __onScroll;
-    static readonly PropertyValueDefinition _onScroll = new()
+    PropertyValueNode<ScrollEventHandler> _onScroll;
+    static readonly PropertyValueDefinition _onScroll_ = new()
     {
         name = nameof(onScroll)
     };
     public ScrollEventHandler onScroll
     {
-        get => __onScroll?.value;
-        set => SetValue(ref __onScroll, _onScroll, value);
+        get => _onScroll?.value;
+        set => SetValue(ref _onScroll, _onScroll_, value);
     }
     #endregion
 
 
     #region string onKeyDown
-    PropertyValueNode<KeyboardEventHandler> __onKeyDown;
-    static readonly PropertyValueDefinition _onKeyDown = new()
+    PropertyValueNode<KeyboardEventHandler> _onKeyDown;
+    static readonly PropertyValueDefinition _onKeyDown_ = new()
     {
         name = nameof(onKeyDown)
     };
     public KeyboardEventHandler onKeyDown
     {
-        get => __onKeyDown?.value;
-        set => SetValue(ref __onKeyDown, _onKeyDown, value);
+        get => _onKeyDown?.value;
+        set => SetValue(ref _onKeyDown, _onKeyDown_, value);
     }
     #endregion
 
