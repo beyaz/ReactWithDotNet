@@ -51,7 +51,7 @@ public sealed class button : HtmlElement
     public string type
     {
         get => _type?.value;
-        set => SetValue(ref _type, _type_, value);
+        set => SetValue(_type_, ref _type, value);
     }
     #endregion
 
@@ -68,7 +68,7 @@ public sealed class button : HtmlElement
     public string value
     {
         get => _value?.value;
-        set => SetValue(ref _value, _value_, value);
+        set => SetValue(_value_, ref _value, value);
     }
     #endregion
 
@@ -85,7 +85,7 @@ public sealed class button : HtmlElement
     public string autofocus
     {
         get => _autofocus?.value;
-        set => SetValue(ref _autofocus, _autofocus_, value);
+        set => SetValue(_autofocus_, ref _autofocus, value);
     }
     #endregion
 
@@ -102,7 +102,7 @@ public sealed class button : HtmlElement
     public string disabled
     {
         get => _disabled?.value;
-        set => SetValue(ref _disabled, _disabled_, value);
+        set => SetValue(_disabled_, ref _disabled, value);
     }
     #endregion
 
@@ -119,7 +119,7 @@ public sealed class button : HtmlElement
     public string form
     {
         get => _form?.value;
-        set => SetValue(ref _form, _form_, value);
+        set => SetValue(_form_, ref _form, value);
     }
     #endregion
 
@@ -136,7 +136,7 @@ public sealed class button : HtmlElement
     public string formaction
     {
         get => _formaction?.value;
-        set => SetValue(ref _formaction, _formaction_, value);
+        set => SetValue(_formaction_, ref _formaction, value);
     }
     #endregion
 
@@ -153,7 +153,7 @@ public sealed class button : HtmlElement
     public string formenctype
     {
         get => _formenctype?.value;
-        set => SetValue(ref _formenctype, _formenctype_, value);
+        set => SetValue(_formenctype_, ref _formenctype, value);
     }
     #endregion
 
@@ -170,7 +170,7 @@ public sealed class button : HtmlElement
     public string formmethod
     {
         get => _formmethod?.value;
-        set => SetValue(ref _formmethod, _formmethod_, value);
+        set => SetValue(_formmethod_, ref _formmethod, value);
     }
     #endregion
 
@@ -187,7 +187,7 @@ public sealed class button : HtmlElement
     public string formnovalidate
     {
         get => _formnovalidate?.value;
-        set => SetValue(ref _formnovalidate, _formnovalidate_, value);
+        set => SetValue(_formnovalidate_, ref _formnovalidate, value);
     }
     #endregion
 
@@ -204,7 +204,7 @@ public sealed class button : HtmlElement
     public string name
     {
         get => _name?.value;
-        set => SetValue(ref _name, _name_, value);
+        set => SetValue(_name_, ref _name, value);
     }
     #endregion
 
@@ -1270,7 +1270,7 @@ public sealed class table : HtmlElement
     public double? cellSpacing
     {
         get => _cellSpacing?.value;
-        set => SetValue(ref _cellSpacing, _cellSpacing_, value);
+        set => SetValue(_cellSpacing_, ref _cellSpacing, value);
     }
     #endregion
 
@@ -1284,7 +1284,7 @@ public sealed class table : HtmlElement
     public double? cellPadding
     {
         get => _cellPadding?.value;
-        set => SetValue(ref _cellPadding, _cellPadding_, value);
+        set => SetValue(_cellPadding_, ref _cellPadding, value);
     }
     #endregion
 
@@ -1354,7 +1354,7 @@ public sealed class th : HtmlElement
     public int? colSpan
     {
         get => _colSpan?.value;
-        set => SetValue(ref _colSpan, _colSpan_, value);
+        set => SetValue(_colSpan_, ref _colSpan, value);
     }
     #endregion
 
@@ -1368,7 +1368,7 @@ public sealed class th : HtmlElement
     public int? rowSpan
     {
         get => _rowSpan?.value;
-        set => SetValue(ref _rowSpan, _rowSpan_, value);
+        set => SetValue(_rowSpan_, ref _rowSpan, value);
     }
     #endregion
 
@@ -1399,7 +1399,7 @@ public sealed class td : HtmlElement
     public int? colSpan
     {
         get => _colSpan?.value;
-        set => SetValue(ref _colSpan, _colSpan_, value);
+        set => SetValue(_colSpan_, ref _colSpan, value);
     }
     #endregion
 
@@ -1413,7 +1413,7 @@ public sealed class td : HtmlElement
     public int? rowSpan
     {
         get => _rowSpan?.value;
-        set => SetValue(ref _rowSpan, _rowSpan_, value);
+        set => SetValue(_rowSpan_, ref _rowSpan, value);
     }
     #endregion
 
@@ -1448,7 +1448,7 @@ public sealed class tr : HtmlElement
     public int? colSpan
     {
         get => _colSpan?.value;
-        set => SetValue(ref _colSpan, _colSpan_, value);
+        set => SetValue(_colSpan_, ref _colSpan, value);
     }
     #endregion
 
@@ -1462,7 +1462,7 @@ public sealed class tr : HtmlElement
     public int? rowSpan
     {
         get => _rowSpan?.value;
-        set => SetValue(ref _rowSpan, _rowSpan_, value);
+        set => SetValue(_rowSpan_, ref _rowSpan, value);
     }
     #endregion
 
@@ -1493,7 +1493,7 @@ public sealed class option : HtmlElement
     public bool? selected
     {
         get => _selected?.value;
-        set => SetValue(ref _selected, _selected_, value);
+        set => SetValue(_selected_, ref _selected, value);
     }
     #endregion
 
@@ -1507,7 +1507,7 @@ public sealed class option : HtmlElement
     public string disabled
     {
         get => _disabled?.value;
-        set => SetValue(ref _disabled, _disabled_, value);
+        set => SetValue(_disabled_, ref _disabled, value);
     }
     #endregion
 
@@ -1521,7 +1521,7 @@ public sealed class option : HtmlElement
     public string value
     {
         get => _value?.value;
-        set => SetValue(ref _value, _value_, value);
+        set => SetValue(_value_, ref _value, value);
     }
     #endregion
 
@@ -1557,7 +1557,7 @@ public sealed class ellipse : HtmlElement
     public string cx
     {
         get => _cx?.value;
-        set => SetValue(ref _cx, _cx_, value);
+        set => SetValue(_cx_, ref _cx, value);
     }
     #endregion
 
@@ -1574,7 +1574,7 @@ public sealed class ellipse : HtmlElement
     public string cy
     {
         get => _cy?.value;
-        set => SetValue(ref _cy, _cy_, value);
+        set => SetValue(_cy_, ref _cy, value);
     }
     #endregion
 
@@ -1591,7 +1591,7 @@ public sealed class ellipse : HtmlElement
     public string rx
     {
         get => _rx?.value;
-        set => SetValue(ref _rx, _rx_, value);
+        set => SetValue(_rx_, ref _rx, value);
     }
     #endregion
 
@@ -1608,7 +1608,7 @@ public sealed class ellipse : HtmlElement
     public string ry
     {
         get => _ry?.value;
-        set => SetValue(ref _ry, _ry_, value);
+        set => SetValue(_ry_, ref _ry, value);
     }
     #endregion
 
@@ -1625,7 +1625,7 @@ public sealed class ellipse : HtmlElement
     public string fill
     {
         get => _fill?.value;
-        set => SetValue(ref _fill, _fill_, value);
+        set => SetValue(_fill_, ref _fill, value);
     }
     #endregion
 
@@ -1642,7 +1642,7 @@ public sealed class ellipse : HtmlElement
     public string stroke
     {
         get => _stroke?.value;
-        set => SetValue(ref _stroke, _stroke_, value);
+        set => SetValue(_stroke_, ref _stroke, value);
     }
     #endregion
 
@@ -1659,7 +1659,7 @@ public sealed class ellipse : HtmlElement
     public string strokeWidth
     {
         get => _strokeWidth?.value;
-        set => SetValue(ref _strokeWidth, _strokeWidth_, value);
+        set => SetValue(_strokeWidth_, ref _strokeWidth, value);
     }
     #endregion
 
@@ -1738,7 +1738,7 @@ public sealed class line : HtmlElement
     public string x1
     {
         get => _x1?.value;
-        set => SetValue(ref _x1, _x1_, value);
+        set => SetValue(_x1_, ref _x1, value);
     }
     #endregion
 
@@ -1755,7 +1755,7 @@ public sealed class line : HtmlElement
     public string y1
     {
         get => _y1?.value;
-        set => SetValue(ref _y1, _y1_, value);
+        set => SetValue(_y1_, ref _y1, value);
     }
     #endregion
 
@@ -1772,7 +1772,7 @@ public sealed class line : HtmlElement
     public string x2
     {
         get => _x2?.value;
-        set => SetValue(ref _x2, _x2_, value);
+        set => SetValue(_x2_, ref _x2, value);
     }
     #endregion
 
@@ -1789,7 +1789,7 @@ public sealed class line : HtmlElement
     public string y2
     {
         get => _y2?.value;
-        set => SetValue(ref _y2, _y2_, value);
+        set => SetValue(_y2_, ref _y2, value);
     }
     #endregion
 
@@ -1806,7 +1806,7 @@ public sealed class line : HtmlElement
     public string stroke
     {
         get => _stroke?.value;
-        set => SetValue(ref _stroke, _stroke_, value);
+        set => SetValue(_stroke_, ref _stroke, value);
     }
     #endregion
 
@@ -1823,7 +1823,7 @@ public sealed class line : HtmlElement
     public string strokeWidth
     {
         get => _strokeWidth?.value;
-        set => SetValue(ref _strokeWidth, _strokeWidth_, value);
+        set => SetValue(_strokeWidth_, ref _strokeWidth, value);
     }
     #endregion
 
@@ -1840,7 +1840,7 @@ public sealed class line : HtmlElement
     public string strokeDasharray
     {
         get => _strokeDasharray?.value;
-        set => SetValue(ref _strokeDasharray, _strokeDasharray_, value);
+        set => SetValue(_strokeDasharray_, ref _strokeDasharray, value);
     }
     #endregion
 
@@ -1857,7 +1857,7 @@ public sealed class line : HtmlElement
     public string strokeLinecap
     {
         get => _strokeLinecap?.value;
-        set => SetValue(ref _strokeLinecap, _strokeLinecap_, value);
+        set => SetValue(_strokeLinecap_, ref _strokeLinecap, value);
     }
     #endregion
 
@@ -1874,7 +1874,7 @@ public sealed class line : HtmlElement
     public string strokeLinejoin
     {
         get => _strokeLinejoin?.value;
-        set => SetValue(ref _strokeLinejoin, _strokeLinejoin_, value);
+        set => SetValue(_strokeLinejoin_, ref _strokeLinejoin, value);
     }
     #endregion
 
@@ -1891,7 +1891,7 @@ public sealed class line : HtmlElement
     public string strokeOpacity
     {
         get => _strokeOpacity?.value;
-        set => SetValue(ref _strokeOpacity, _strokeOpacity_, value);
+        set => SetValue(_strokeOpacity_, ref _strokeOpacity, value);
     }
     #endregion
 
@@ -1991,7 +1991,7 @@ public sealed class polyline : HtmlElement
     public string points
     {
         get => _points?.value;
-        set => SetValue(ref _points, _points_, value);
+        set => SetValue(_points_, ref _points, value);
     }
     #endregion
 
@@ -2008,7 +2008,7 @@ public sealed class polyline : HtmlElement
     public string fill
     {
         get => _fill?.value;
-        set => SetValue(ref _fill, _fill_, value);
+        set => SetValue(_fill_, ref _fill, value);
     }
     #endregion
 
@@ -2025,7 +2025,7 @@ public sealed class polyline : HtmlElement
     public string stroke
     {
         get => _stroke?.value;
-        set => SetValue(ref _stroke, _stroke_, value);
+        set => SetValue(_stroke_, ref _stroke, value);
     }
     #endregion
 
@@ -2042,7 +2042,7 @@ public sealed class polyline : HtmlElement
     public string strokeWidth
     {
         get => _strokeWidth?.value;
-        set => SetValue(ref _strokeWidth, _strokeWidth_, value);
+        set => SetValue(_strokeWidth_, ref _strokeWidth, value);
     }
     #endregion
 
@@ -2100,7 +2100,7 @@ public sealed class circle : HtmlElement
     public UnionProp<string,double> cx
     {
         get => _cx?.value;
-        set => SetValue(ref _cx, _cx_, value);
+        set => SetValue(_cx_, ref _cx, value);
     }
     #endregion
 
@@ -2117,7 +2117,7 @@ public sealed class circle : HtmlElement
     public UnionProp<string,double> cy
     {
         get => _cy?.value;
-        set => SetValue(ref _cy, _cy_, value);
+        set => SetValue(_cy_, ref _cy, value);
     }
     #endregion
 
@@ -2134,7 +2134,7 @@ public sealed class circle : HtmlElement
     public UnionProp<string,double> r
     {
         get => _r?.value;
-        set => SetValue(ref _r, _r_, value);
+        set => SetValue(_r_, ref _r, value);
     }
     #endregion
 
@@ -2151,7 +2151,7 @@ public sealed class circle : HtmlElement
     public string fill
     {
         get => _fill?.value;
-        set => SetValue(ref _fill, _fill_, value);
+        set => SetValue(_fill_, ref _fill, value);
     }
     #endregion
 
@@ -2168,7 +2168,7 @@ public sealed class circle : HtmlElement
     public string stroke
     {
         get => _stroke?.value;
-        set => SetValue(ref _stroke, _stroke_, value);
+        set => SetValue(_stroke_, ref _stroke, value);
     }
     #endregion
 
@@ -2185,7 +2185,7 @@ public sealed class circle : HtmlElement
     public string strokeWidth
     {
         get => _strokeWidth?.value;
-        set => SetValue(ref _strokeWidth, _strokeWidth_, value);
+        set => SetValue(_strokeWidth_, ref _strokeWidth, value);
     }
     #endregion
 
@@ -2257,7 +2257,7 @@ public sealed class polygon : HtmlElement
     public string points
     {
         get => _points?.value;
-        set => SetValue(ref _points, _points_, value);
+        set => SetValue(_points_, ref _points, value);
     }
     #endregion
 
@@ -2274,7 +2274,7 @@ public sealed class polygon : HtmlElement
     public string fill
     {
         get => _fill?.value;
-        set => SetValue(ref _fill, _fill_, value);
+        set => SetValue(_fill_, ref _fill, value);
     }
     #endregion
 
@@ -2291,7 +2291,7 @@ public sealed class polygon : HtmlElement
     public string stroke
     {
         get => _stroke?.value;
-        set => SetValue(ref _stroke, _stroke_, value);
+        set => SetValue(_stroke_, ref _stroke, value);
     }
     #endregion
 
@@ -2308,7 +2308,7 @@ public sealed class polygon : HtmlElement
     public string strokeWidth
     {
         get => _strokeWidth?.value;
-        set => SetValue(ref _strokeWidth, _strokeWidth_, value);
+        set => SetValue(_strokeWidth_, ref _strokeWidth, value);
     }
     #endregion
 
@@ -2325,7 +2325,7 @@ public sealed class polygon : HtmlElement
     public string strokeLinecap
     {
         get => _strokeLinecap?.value;
-        set => SetValue(ref _strokeLinecap, _strokeLinecap_, value);
+        set => SetValue(_strokeLinecap_, ref _strokeLinecap, value);
     }
     #endregion
 
@@ -2342,7 +2342,7 @@ public sealed class polygon : HtmlElement
     public string strokeLinejoin
     {
         get => _strokeLinejoin?.value;
-        set => SetValue(ref _strokeLinejoin, _strokeLinejoin_, value);
+        set => SetValue(_strokeLinejoin_, ref _strokeLinejoin, value);
     }
     #endregion
 
@@ -2359,7 +2359,7 @@ public sealed class polygon : HtmlElement
     public string fillRule
     {
         get => _fillRule?.value;
-        set => SetValue(ref _fillRule, _fillRule_, value);
+        set => SetValue(_fillRule_, ref _fillRule, value);
     }
     #endregion
 
@@ -2438,7 +2438,7 @@ public sealed class rect : HtmlElement
     public UnionProp<string,double> x
     {
         get => _x?.value;
-        set => SetValue(ref _x, _x_, value);
+        set => SetValue(_x_, ref _x, value);
     }
     #endregion
 
@@ -2455,7 +2455,7 @@ public sealed class rect : HtmlElement
     public UnionProp<string,double> y
     {
         get => _y?.value;
-        set => SetValue(ref _y, _y_, value);
+        set => SetValue(_y_, ref _y, value);
     }
     #endregion
 
@@ -2472,7 +2472,7 @@ public sealed class rect : HtmlElement
     public UnionProp<string,double> width
     {
         get => _width?.value;
-        set => SetValue(ref _width, _width_, value);
+        set => SetValue(_width_, ref _width, value);
     }
     #endregion
 
@@ -2489,7 +2489,7 @@ public sealed class rect : HtmlElement
     public UnionProp<string,double> height
     {
         get => _height?.value;
-        set => SetValue(ref _height, _height_, value);
+        set => SetValue(_height_, ref _height, value);
     }
     #endregion
 
@@ -2506,7 +2506,7 @@ public sealed class rect : HtmlElement
     public UnionProp<string,double> rx
     {
         get => _rx?.value;
-        set => SetValue(ref _rx, _rx_, value);
+        set => SetValue(_rx_, ref _rx, value);
     }
     #endregion
 
@@ -2523,7 +2523,7 @@ public sealed class rect : HtmlElement
     public UnionProp<string,double> ry
     {
         get => _ry?.value;
-        set => SetValue(ref _ry, _ry_, value);
+        set => SetValue(_ry_, ref _ry, value);
     }
     #endregion
 
@@ -2540,7 +2540,7 @@ public sealed class rect : HtmlElement
     public string fill
     {
         get => _fill?.value;
-        set => SetValue(ref _fill, _fill_, value);
+        set => SetValue(_fill_, ref _fill, value);
     }
     #endregion
 
@@ -2557,7 +2557,7 @@ public sealed class rect : HtmlElement
     public string stroke
     {
         get => _stroke?.value;
-        set => SetValue(ref _stroke, _stroke_, value);
+        set => SetValue(_stroke_, ref _stroke, value);
     }
     #endregion
 
@@ -2574,7 +2574,7 @@ public sealed class rect : HtmlElement
     public UnionProp<string,double> strokeWidth
     {
         get => _strokeWidth?.value;
-        set => SetValue(ref _strokeWidth, _strokeWidth_, value);
+        set => SetValue(_strokeWidth_, ref _strokeWidth, value);
     }
     #endregion
 
@@ -2591,7 +2591,7 @@ public sealed class rect : HtmlElement
     public string strokeLinecap
     {
         get => _strokeLinecap?.value;
-        set => SetValue(ref _strokeLinecap, _strokeLinecap_, value);
+        set => SetValue(_strokeLinecap_, ref _strokeLinecap, value);
     }
     #endregion
 
@@ -2608,7 +2608,7 @@ public sealed class rect : HtmlElement
     public string strokeLinejoin
     {
         get => _strokeLinejoin?.value;
-        set => SetValue(ref _strokeLinejoin, _strokeLinejoin_, value);
+        set => SetValue(_strokeLinejoin_, ref _strokeLinejoin, value);
     }
     #endregion
 
@@ -2715,7 +2715,7 @@ public sealed class radialGradient : HtmlElement
     public string cx
     {
         get => _cx?.value;
-        set => SetValue(ref _cx, _cx_, value);
+        set => SetValue(_cx_, ref _cx, value);
     }
     #endregion
 
@@ -2732,7 +2732,7 @@ public sealed class radialGradient : HtmlElement
     public string cy
     {
         get => _cy?.value;
-        set => SetValue(ref _cy, _cy_, value);
+        set => SetValue(_cy_, ref _cy, value);
     }
     #endregion
 
@@ -2749,7 +2749,7 @@ public sealed class radialGradient : HtmlElement
     public string fx
     {
         get => _fx?.value;
-        set => SetValue(ref _fx, _fx_, value);
+        set => SetValue(_fx_, ref _fx, value);
     }
     #endregion
 
@@ -2766,7 +2766,7 @@ public sealed class radialGradient : HtmlElement
     public string fy
     {
         get => _fy?.value;
-        set => SetValue(ref _fy, _fy_, value);
+        set => SetValue(_fy_, ref _fy, value);
     }
     #endregion
 
@@ -2783,7 +2783,7 @@ public sealed class radialGradient : HtmlElement
     public string r
     {
         get => _r?.value;
-        set => SetValue(ref _r, _r_, value);
+        set => SetValue(_r_, ref _r, value);
     }
     #endregion
 
@@ -2800,7 +2800,7 @@ public sealed class radialGradient : HtmlElement
     public string spreadMethod
     {
         get => _spreadMethod?.value;
-        set => SetValue(ref _spreadMethod, _spreadMethod_, value);
+        set => SetValue(_spreadMethod_, ref _spreadMethod, value);
     }
     #endregion
 
@@ -2817,7 +2817,7 @@ public sealed class radialGradient : HtmlElement
     public string gradientUnits
     {
         get => _gradientUnits?.value;
-        set => SetValue(ref _gradientUnits, _gradientUnits_, value);
+        set => SetValue(_gradientUnits_, ref _gradientUnits, value);
     }
     #endregion
 
@@ -2834,7 +2834,7 @@ public sealed class radialGradient : HtmlElement
     public string gradientTransform
     {
         get => _gradientTransform?.value;
-        set => SetValue(ref _gradientTransform, _gradientTransform_, value);
+        set => SetValue(_gradientTransform_, ref _gradientTransform, value);
     }
     #endregion
 
@@ -2920,7 +2920,7 @@ public sealed class clipPath : HtmlElement
     public string clipRule
     {
         get => _clipRule?.value;
-        set => SetValue(ref _clipRule, _clipRule_, value);
+        set => SetValue(_clipRule_, ref _clipRule, value);
     }
     #endregion
 
@@ -2937,7 +2937,7 @@ public sealed class clipPath : HtmlElement
     public string clipBox
     {
         get => _clipBox?.value;
-        set => SetValue(ref _clipBox, _clipBox_, value);
+        set => SetValue(_clipBox_, ref _clipBox, value);
     }
     #endregion
 
@@ -2981,7 +2981,7 @@ public sealed class path : HtmlElement
     public string d
     {
         get => _d?.value;
-        set => SetValue(ref _d, _d_, value);
+        set => SetValue(_d_, ref _d, value);
     }
     #endregion
 
@@ -2998,7 +2998,7 @@ public sealed class path : HtmlElement
     public string fill
     {
         get => _fill?.value;
-        set => SetValue(ref _fill, _fill_, value);
+        set => SetValue(_fill_, ref _fill, value);
     }
     #endregion
 
@@ -3015,7 +3015,7 @@ public sealed class path : HtmlElement
     public string stroke
     {
         get => _stroke?.value;
-        set => SetValue(ref _stroke, _stroke_, value);
+        set => SetValue(_stroke_, ref _stroke, value);
     }
     #endregion
 
@@ -3032,7 +3032,7 @@ public sealed class path : HtmlElement
     public string strokeWidth
     {
         get => _strokeWidth?.value;
-        set => SetValue(ref _strokeWidth, _strokeWidth_, value);
+        set => SetValue(_strokeWidth_, ref _strokeWidth, value);
     }
     #endregion
 
@@ -3046,7 +3046,7 @@ public sealed class path : HtmlElement
     public string fillRule
     {
         get => _fillRule?.value;
-        set => SetValue(ref _fillRule, _fillRule_, value);
+        set => SetValue(_fillRule_, ref _fillRule, value);
     }
     #endregion
 
@@ -3060,7 +3060,7 @@ public sealed class path : HtmlElement
     public string clipRule
     {
         get => _clipRule?.value;
-        set => SetValue(ref _clipRule, _clipRule_, value);
+        set => SetValue(_clipRule_, ref _clipRule, value);
     }
     #endregion
 
@@ -3074,7 +3074,7 @@ public sealed class path : HtmlElement
     public string strokeLinecap
     {
         get => _strokeLinecap?.value;
-        set => SetValue(ref _strokeLinecap, _strokeLinecap_, value);
+        set => SetValue(_strokeLinecap_, ref _strokeLinecap, value);
     }
     #endregion
 
@@ -3088,7 +3088,7 @@ public sealed class path : HtmlElement
     public string strokeLinejoin
     {
         get => _strokeLinejoin?.value;
-        set => SetValue(ref _strokeLinejoin, _strokeLinejoin_, value);
+        set => SetValue(_strokeLinejoin_, ref _strokeLinejoin, value);
     }
     #endregion
 
@@ -3151,7 +3151,7 @@ public sealed class g : HtmlElement
     public string opacity
     {
         get => _opacity?.value;
-        set => SetValue(ref _opacity, _opacity_, value);
+        set => SetValue(_opacity_, ref _opacity, value);
     }
     #endregion
 
@@ -3165,7 +3165,7 @@ public sealed class g : HtmlElement
     public string clipPath
     {
         get => _clipPath?.value;
-        set => SetValue(ref _clipPath, _clipPath_, value);
+        set => SetValue(_clipPath_, ref _clipPath, value);
     }
     #endregion
 
@@ -3179,7 +3179,7 @@ public sealed class g : HtmlElement
     public string transform
     {
         get => _transform?.value;
-        set => SetValue(ref _transform, _transform_, value);
+        set => SetValue(_transform_, ref _transform, value);
     }
     #endregion
 
@@ -3215,7 +3215,7 @@ public sealed class mask : HtmlElement
     public string height
     {
         get => _height?.value;
-        set => SetValue(ref _height, _height_, value);
+        set => SetValue(_height_, ref _height, value);
     }
     #endregion
 
@@ -3232,7 +3232,7 @@ public sealed class mask : HtmlElement
     public string maskContentUnits
     {
         get => _maskContentUnits?.value;
-        set => SetValue(ref _maskContentUnits, _maskContentUnits_, value);
+        set => SetValue(_maskContentUnits_, ref _maskContentUnits, value);
     }
     #endregion
 
@@ -3249,7 +3249,7 @@ public sealed class mask : HtmlElement
     public string maskUnits
     {
         get => _maskUnits?.value;
-        set => SetValue(ref _maskUnits, _maskUnits_, value);
+        set => SetValue(_maskUnits_, ref _maskUnits, value);
     }
     #endregion
 
@@ -3266,7 +3266,7 @@ public sealed class mask : HtmlElement
     public string x
     {
         get => _x?.value;
-        set => SetValue(ref _x, _x_, value);
+        set => SetValue(_x_, ref _x, value);
     }
     #endregion
 
@@ -3283,7 +3283,7 @@ public sealed class mask : HtmlElement
     public string y
     {
         get => _y?.value;
-        set => SetValue(ref _y, _y_, value);
+        set => SetValue(_y_, ref _y, value);
     }
     #endregion
 
@@ -3300,7 +3300,7 @@ public sealed class mask : HtmlElement
     public string width
     {
         get => _width?.value;
-        set => SetValue(ref _width, _width_, value);
+        set => SetValue(_width_, ref _width, value);
     }
     #endregion
 
@@ -3372,7 +3372,7 @@ public sealed class meta : HtmlElement
     public string charset
     {
         get => _charset?.value;
-        set => SetValue(ref _charset, _charset_, value);
+        set => SetValue(_charset_, ref _charset, value);
     }
     #endregion
 
@@ -3389,7 +3389,7 @@ public sealed class meta : HtmlElement
     public string httpEquiv
     {
         get => _httpEquiv?.value;
-        set => SetValue(ref _httpEquiv, _httpEquiv_, value);
+        set => SetValue(_httpEquiv_, ref _httpEquiv, value);
     }
     #endregion
 
@@ -3406,7 +3406,7 @@ public sealed class meta : HtmlElement
     public string name
     {
         get => _name?.value;
-        set => SetValue(ref _name, _name_, value);
+        set => SetValue(_name_, ref _name, value);
     }
     #endregion
 
@@ -3423,7 +3423,7 @@ public sealed class meta : HtmlElement
     public string content
     {
         get => _content?.value;
-        set => SetValue(ref _content, _content_, value);
+        set => SetValue(_content_, ref _content, value);
     }
     #endregion
 
@@ -3440,7 +3440,7 @@ public sealed class meta : HtmlElement
     public string scheme
     {
         get => _scheme?.value;
-        set => SetValue(ref _scheme, _scheme_, value);
+        set => SetValue(_scheme_, ref _scheme, value);
     }
     #endregion
 
@@ -3457,7 +3457,7 @@ public sealed class meta : HtmlElement
     public string itemprop
     {
         get => _itemprop?.value;
-        set => SetValue(ref _itemprop, _itemprop_, value);
+        set => SetValue(_itemprop_, ref _itemprop, value);
     }
     #endregion
 
@@ -3474,7 +3474,7 @@ public sealed class meta : HtmlElement
     public string property
     {
         get => _property?.value;
-        set => SetValue(ref _property, _property_, value);
+        set => SetValue(_property_, ref _property, value);
     }
     #endregion
 
@@ -3491,7 +3491,7 @@ public sealed class meta : HtmlElement
     public string src
     {
         get => _src?.value;
-        set => SetValue(ref _src, _src_, value);
+        set => SetValue(_src_, ref _src, value);
     }
     #endregion
 
@@ -3577,7 +3577,7 @@ public sealed class body : HtmlElement
     public string background
     {
         get => _background?.value;
-        set => SetValue(ref _background, _background_, value);
+        set => SetValue(_background_, ref _background, value);
     }
     #endregion
 
@@ -3594,7 +3594,7 @@ public sealed class body : HtmlElement
     public string bgcolor
     {
         get => _bgcolor?.value;
-        set => SetValue(ref _bgcolor, _bgcolor_, value);
+        set => SetValue(_bgcolor_, ref _bgcolor, value);
     }
     #endregion
 
@@ -3611,7 +3611,7 @@ public sealed class body : HtmlElement
     public string link
     {
         get => _link?.value;
-        set => SetValue(ref _link, _link_, value);
+        set => SetValue(_link_, ref _link, value);
     }
     #endregion
 
@@ -3662,7 +3662,7 @@ public sealed class script : HtmlElement
     public string async
     {
         get => _async?.value;
-        set => SetValue(ref _async, _async_, value);
+        set => SetValue(_async_, ref _async, value);
     }
     #endregion
 
@@ -3679,7 +3679,7 @@ public sealed class script : HtmlElement
     public string defer
     {
         get => _defer?.value;
-        set => SetValue(ref _defer, _defer_, value);
+        set => SetValue(_defer_, ref _defer, value);
     }
     #endregion
 
@@ -3696,7 +3696,7 @@ public sealed class script : HtmlElement
     public string integrity
     {
         get => _integrity?.value;
-        set => SetValue(ref _integrity, _integrity_, value);
+        set => SetValue(_integrity_, ref _integrity, value);
     }
     #endregion
 
@@ -3713,7 +3713,7 @@ public sealed class script : HtmlElement
     public string language
     {
         get => _language?.value;
-        set => SetValue(ref _language, _language_, value);
+        set => SetValue(_language_, ref _language, value);
     }
     #endregion
 
@@ -3730,7 +3730,7 @@ public sealed class script : HtmlElement
     public string nomodule
     {
         get => _nomodule?.value;
-        set => SetValue(ref _nomodule, _nomodule_, value);
+        set => SetValue(_nomodule_, ref _nomodule, value);
     }
     #endregion
 
@@ -3747,7 +3747,7 @@ public sealed class script : HtmlElement
     public string src
     {
         get => _src?.value;
-        set => SetValue(ref _src, _src_, value);
+        set => SetValue(_src_, ref _src, value);
     }
     #endregion
 
@@ -3764,7 +3764,7 @@ public sealed class script : HtmlElement
     public string type
     {
         get => _type?.value;
-        set => SetValue(ref _type, _type_, value);
+        set => SetValue(_type_, ref _type, value);
     }
     #endregion
 
@@ -3843,7 +3843,7 @@ public sealed class title : HtmlElement
     public string language
     {
         get => _language?.value;
-        set => SetValue(ref _language, _language_, value);
+        set => SetValue(_language_, ref _language, value);
     }
     #endregion
 
@@ -3880,7 +3880,7 @@ public sealed class head : HtmlElement
     public string profile
     {
         get => _profile?.value;
-        set => SetValue(ref _profile, _profile_, value);
+        set => SetValue(_profile_, ref _profile, value);
     }
     #endregion
 
@@ -3897,7 +3897,7 @@ public sealed class head : HtmlElement
     public string link
     {
         get => _link?.value;
-        set => SetValue(ref _link, _link_, value);
+        set => SetValue(_link_, ref _link, value);
     }
     #endregion
 
@@ -3914,7 +3914,7 @@ public sealed class head : HtmlElement
     public string meta
     {
         get => _meta?.value;
-        set => SetValue(ref _meta, _meta_, value);
+        set => SetValue(_meta_, ref _meta, value);
     }
     #endregion
 
@@ -3931,7 +3931,7 @@ public sealed class head : HtmlElement
     public string script
     {
         get => _script?.value;
-        set => SetValue(ref _script, _script_, value);
+        set => SetValue(_script_, ref _script, value);
     }
     #endregion
 
@@ -3948,7 +3948,7 @@ public sealed class head : HtmlElement
     public string noscript
     {
         get => _noscript?.value;
-        set => SetValue(ref _noscript, _noscript_, value);
+        set => SetValue(_noscript_, ref _noscript, value);
     }
     #endregion
 
@@ -4013,7 +4013,7 @@ public sealed class html : HtmlElement
     public string hidden
     {
         get => _hidden?.value;
-        set => SetValue(ref _hidden, _hidden_, value);
+        set => SetValue(_hidden_, ref _hidden, value);
     }
     #endregion
 
@@ -4030,7 +4030,7 @@ public sealed class html : HtmlElement
     public string manifest
     {
         get => _manifest?.value;
-        set => SetValue(ref _manifest, _manifest_, value);
+        set => SetValue(_manifest_, ref _manifest, value);
     }
     #endregion
 
@@ -4047,7 +4047,7 @@ public sealed class html : HtmlElement
     public string xmlns
     {
         get => _xmlns?.value;
-        set => SetValue(ref _xmlns, _xmlns_, value);
+        set => SetValue(_xmlns_, ref _xmlns, value);
     }
     #endregion
 
@@ -4064,7 +4064,7 @@ public sealed class html : HtmlElement
     public string prefix
     {
         get => _prefix?.value;
-        set => SetValue(ref _prefix, _prefix_, value);
+        set => SetValue(_prefix_, ref _prefix, value);
     }
     #endregion
 
@@ -4081,7 +4081,7 @@ public sealed class html : HtmlElement
     public string version
     {
         get => _version?.value;
-        set => SetValue(ref _version, _version_, value);
+        set => SetValue(_version_, ref _version, value);
     }
     #endregion
 
@@ -4146,7 +4146,7 @@ public sealed class label : HtmlElement
     public string htmlFor
     {
         get => _htmlFor?.value;
-        set => SetValue(ref _htmlFor, _htmlFor_, value);
+        set => SetValue(_htmlFor_, ref _htmlFor, value);
     }
     #endregion
 
@@ -4163,7 +4163,7 @@ public sealed class label : HtmlElement
     public string dropzone
     {
         get => _dropzone?.value;
-        set => SetValue(ref _dropzone, _dropzone_, value);
+        set => SetValue(_dropzone_, ref _dropzone, value);
     }
     #endregion
 
@@ -4180,7 +4180,7 @@ public sealed class label : HtmlElement
     public string hidden
     {
         get => _hidden?.value;
-        set => SetValue(ref _hidden, _hidden_, value);
+        set => SetValue(_hidden_, ref _hidden, value);
     }
     #endregion
 
@@ -4197,7 +4197,7 @@ public sealed class label : HtmlElement
     public string tabindex
     {
         get => _tabindex?.value;
-        set => SetValue(ref _tabindex, _tabindex_, value);
+        set => SetValue(_tabindex_, ref _tabindex, value);
     }
     #endregion
 
@@ -4259,7 +4259,7 @@ public sealed class a : HtmlElement
     public string href
     {
         get => _href?.value;
-        set => SetValue(ref _href, _href_, value);
+        set => SetValue(_href_, ref _href, value);
     }
     #endregion
 
@@ -4276,7 +4276,7 @@ public sealed class a : HtmlElement
     public string target
     {
         get => _target?.value;
-        set => SetValue(ref _target, _target_, value);
+        set => SetValue(_target_, ref _target, value);
     }
     #endregion
 
@@ -4293,7 +4293,7 @@ public sealed class a : HtmlElement
     public string rel
     {
         get => _rel?.value;
-        set => SetValue(ref _rel, _rel_, value);
+        set => SetValue(_rel_, ref _rel, value);
     }
     #endregion
 
@@ -4310,7 +4310,7 @@ public sealed class a : HtmlElement
     public string type
     {
         get => _type?.value;
-        set => SetValue(ref _type, _type_, value);
+        set => SetValue(_type_, ref _type, value);
     }
     #endregion
 
@@ -4327,7 +4327,7 @@ public sealed class a : HtmlElement
     public string download
     {
         get => _download?.value;
-        set => SetValue(ref _download, _download_, value);
+        set => SetValue(_download_, ref _download, value);
     }
     #endregion
 
@@ -4344,7 +4344,7 @@ public sealed class a : HtmlElement
     public string ping
     {
         get => _ping?.value;
-        set => SetValue(ref _ping, _ping_, value);
+        set => SetValue(_ping_, ref _ping, value);
     }
     #endregion
 
@@ -4361,7 +4361,7 @@ public sealed class a : HtmlElement
     public string media
     {
         get => _media?.value;
-        set => SetValue(ref _media, _media_, value);
+        set => SetValue(_media_, ref _media, value);
     }
     #endregion
 
@@ -4378,7 +4378,7 @@ public sealed class a : HtmlElement
     public string hreflang
     {
         get => _hreflang?.value;
-        set => SetValue(ref _hreflang, _hreflang_, value);
+        set => SetValue(_hreflang_, ref _hreflang, value);
     }
     #endregion
 
@@ -4395,7 +4395,7 @@ public sealed class a : HtmlElement
     public string name
     {
         get => _name?.value;
-        set => SetValue(ref _name, _name_, value);
+        set => SetValue(_name_, ref _name, value);
     }
     #endregion
 
@@ -4412,7 +4412,7 @@ public sealed class a : HtmlElement
     public string tabindex
     {
         get => _tabindex?.value;
-        set => SetValue(ref _tabindex, _tabindex_, value);
+        set => SetValue(_tabindex_, ref _tabindex, value);
     }
     #endregion
 
@@ -4512,7 +4512,7 @@ public sealed class img : HtmlElement
     public string src
     {
         get => _src?.value;
-        set => SetValue(ref _src, _src_, value);
+        set => SetValue(_src_, ref _src, value);
     }
     #endregion
 
@@ -4529,7 +4529,7 @@ public sealed class img : HtmlElement
     public string srcset
     {
         get => _srcset?.value;
-        set => SetValue(ref _srcset, _srcset_, value);
+        set => SetValue(_srcset_, ref _srcset, value);
     }
     #endregion
 
@@ -4546,7 +4546,7 @@ public sealed class img : HtmlElement
     public string usemap
     {
         get => _usemap?.value;
-        set => SetValue(ref _usemap, _usemap_, value);
+        set => SetValue(_usemap_, ref _usemap, value);
     }
     #endregion
 
@@ -4563,7 +4563,7 @@ public sealed class img : HtmlElement
     public string alt
     {
         get => _alt?.value;
-        set => SetValue(ref _alt, _alt_, value);
+        set => SetValue(_alt_, ref _alt, value);
     }
     #endregion
 
@@ -4580,7 +4580,7 @@ public sealed class img : HtmlElement
     public UnionProp<string,double?> width
     {
         get => _width?.value;
-        set => SetValue(ref _width, _width_, value);
+        set => SetValue(_width_, ref _width, value);
     }
     #endregion
 
@@ -4597,7 +4597,7 @@ public sealed class img : HtmlElement
     public UnionProp<string,double?> height
     {
         get => _height?.value;
-        set => SetValue(ref _height, _height_, value);
+        set => SetValue(_height_, ref _height, value);
     }
     #endregion
 
@@ -4614,7 +4614,7 @@ public sealed class img : HtmlElement
     public string ismap
     {
         get => _ismap?.value;
-        set => SetValue(ref _ismap, _ismap_, value);
+        set => SetValue(_ismap_, ref _ismap, value);
     }
     #endregion
 
@@ -4631,7 +4631,7 @@ public sealed class img : HtmlElement
     public string longdesc
     {
         get => _longdesc?.value;
-        set => SetValue(ref _longdesc, _longdesc_, value);
+        set => SetValue(_longdesc_, ref _longdesc, value);
     }
     #endregion
 
@@ -4648,7 +4648,7 @@ public sealed class img : HtmlElement
     public string crossorigin
     {
         get => _crossorigin?.value;
-        set => SetValue(ref _crossorigin, _crossorigin_, value);
+        set => SetValue(_crossorigin_, ref _crossorigin, value);
     }
     #endregion
 
@@ -4665,7 +4665,7 @@ public sealed class img : HtmlElement
     public string loading
     {
         get => _loading?.value;
-        set => SetValue(ref _loading, _loading_, value);
+        set => SetValue(_loading_, ref _loading, value);
     }
     #endregion
 
@@ -4682,7 +4682,7 @@ public sealed class img : HtmlElement
     public string decoding
     {
         get => _decoding?.value;
-        set => SetValue(ref _decoding, _decoding_, value);
+        set => SetValue(_decoding_, ref _decoding, value);
     }
     #endregion
 
@@ -4699,7 +4699,7 @@ public sealed class img : HtmlElement
     public string referrerpolicy
     {
         get => _referrerpolicy?.value;
-        set => SetValue(ref _referrerpolicy, _referrerpolicy_, value);
+        set => SetValue(_referrerpolicy_, ref _referrerpolicy, value);
     }
     #endregion
 
@@ -4810,7 +4810,7 @@ public sealed partial class svg : HtmlElement
     public string focusable
     {
         get => _focusable?.value;
-        set => SetValue(ref _focusable, _focusable_, value);
+        set => SetValue(_focusable_, ref _focusable, value);
     }
     #endregion
 
@@ -4824,7 +4824,7 @@ public sealed partial class svg : HtmlElement
     public string xlinkHref
     {
         get => _xlinkHref?.value;
-        set => SetValue(ref _xlinkHref, _xlinkHref_, value);
+        set => SetValue(_xlinkHref_, ref _xlinkHref, value);
     }
     #endregion
 
@@ -4838,7 +4838,7 @@ public sealed partial class svg : HtmlElement
     public string xmlnsXlink
     {
         get => _xmlnsXlink?.value;
-        set => SetValue(ref _xmlnsXlink, _xmlnsXlink_, value);
+        set => SetValue(_xmlnsXlink_, ref _xmlnsXlink, value);
     }
     #endregion
 
@@ -4855,7 +4855,7 @@ public sealed partial class svg : HtmlElement
     public string preserveAspectRatio
     {
         get => _preserveAspectRatio?.value;
-        set => SetValue(ref _preserveAspectRatio, _preserveAspectRatio_, value);
+        set => SetValue(_preserveAspectRatio_, ref _preserveAspectRatio, value);
     }
     #endregion
 
@@ -4872,7 +4872,7 @@ public sealed partial class svg : HtmlElement
     public string width
     {
         get => _width?.value;
-        set => SetValue(ref _width, _width_, value);
+        set => SetValue(_width_, ref _width, value);
     }
     #endregion
 
@@ -4889,7 +4889,7 @@ public sealed partial class svg : HtmlElement
     public string height
     {
         get => _height?.value;
-        set => SetValue(ref _height, _height_, value);
+        set => SetValue(_height_, ref _height, value);
     }
     #endregion
 
@@ -4906,7 +4906,7 @@ public sealed partial class svg : HtmlElement
     public string xmlns
     {
         get => _xmlns?.value;
-        set => SetValue(ref _xmlns, _xmlns_, value);
+        set => SetValue(_xmlns_, ref _xmlns, value);
     }
     #endregion
 
@@ -4923,7 +4923,7 @@ public sealed partial class svg : HtmlElement
     public string version
     {
         get => _version?.value;
-        set => SetValue(ref _version, _version_, value);
+        set => SetValue(_version_, ref _version, value);
     }
     #endregion
 
@@ -4937,7 +4937,7 @@ public sealed partial class svg : HtmlElement
     public string viewBox
     {
         get => _viewBox?.value;
-        set => SetValue(ref _viewBox, _viewBox_, value);
+        set => SetValue(_viewBox_, ref _viewBox, value);
     }
     #endregion
 
@@ -4951,7 +4951,7 @@ public sealed partial class svg : HtmlElement
     public string fill
     {
         get => _fill?.value;
-        set => SetValue(ref _fill, _fill_, value);
+        set => SetValue(_fill_, ref _fill, value);
     }
     #endregion
 
@@ -5023,7 +5023,7 @@ public sealed class stop : HtmlElement
     public string offset
     {
         get => _offset?.value;
-        set => SetValue(ref _offset, _offset_, value);
+        set => SetValue(_offset_, ref _offset, value);
     }
     #endregion
 
@@ -5037,7 +5037,7 @@ public sealed class stop : HtmlElement
     public string stopColor
     {
         get => _stopColor?.value;
-        set => SetValue(ref _stopColor, _stopColor_, value);
+        set => SetValue(_stopColor_, ref _stopColor, value);
     }
     #endregion
 
@@ -5051,7 +5051,7 @@ public sealed class stop : HtmlElement
     public string stopOpacity
     {
         get => _stopOpacity?.value;
-        set => SetValue(ref _stopOpacity, _stopOpacity_, value);
+        set => SetValue(_stopOpacity_, ref _stopOpacity, value);
     }
     #endregion
 
@@ -5126,7 +5126,7 @@ public sealed class form : HtmlElement
     public string action
     {
         get => _action?.value;
-        set => SetValue(ref _action, _action_, value);
+        set => SetValue(_action_, ref _action, value);
     }
     #endregion
 
@@ -5143,7 +5143,7 @@ public sealed class form : HtmlElement
     public string method
     {
         get => _method?.value;
-        set => SetValue(ref _method, _method_, value);
+        set => SetValue(_method_, ref _method, value);
     }
     #endregion
 
@@ -5160,7 +5160,7 @@ public sealed class form : HtmlElement
     public string enctype
     {
         get => _enctype?.value;
-        set => SetValue(ref _enctype, _enctype_, value);
+        set => SetValue(_enctype_, ref _enctype, value);
     }
     #endregion
 
@@ -5177,7 +5177,7 @@ public sealed class form : HtmlElement
     public string target
     {
         get => _target?.value;
-        set => SetValue(ref _target, _target_, value);
+        set => SetValue(_target_, ref _target, value);
     }
     #endregion
 
@@ -5194,7 +5194,7 @@ public sealed class form : HtmlElement
     public string name
     {
         get => _name?.value;
-        set => SetValue(ref _name, _name_, value);
+        set => SetValue(_name_, ref _name, value);
     }
     #endregion
 
@@ -5211,7 +5211,7 @@ public sealed class form : HtmlElement
     public string novalidate
     {
         get => _novalidate?.value;
-        set => SetValue(ref _novalidate, _novalidate_, value);
+        set => SetValue(_novalidate_, ref _novalidate, value);
     }
     #endregion
 
@@ -5228,7 +5228,7 @@ public sealed class form : HtmlElement
     public string autocomplete
     {
         get => _autocomplete?.value;
-        set => SetValue(ref _autocomplete, _autocomplete_, value);
+        set => SetValue(_autocomplete_, ref _autocomplete, value);
     }
     #endregion
 
@@ -5307,7 +5307,7 @@ public sealed partial class textarea : HtmlElement
     public string name
     {
         get => _name?.value;
-        set => SetValue(ref _name, _name_, value);
+        set => SetValue(_name_, ref _name, value);
     }
     #endregion
 
@@ -5324,7 +5324,7 @@ public sealed partial class textarea : HtmlElement
     public UnionProp<string,int?> cols
     {
         get => _cols?.value;
-        set => SetValue(ref _cols, _cols_, value);
+        set => SetValue(_cols_, ref _cols, value);
     }
     #endregion
 
@@ -5341,7 +5341,7 @@ public sealed partial class textarea : HtmlElement
     public UnionProp<string,int?> rows
     {
         get => _rows?.value;
-        set => SetValue(ref _rows, _rows_, value);
+        set => SetValue(_rows_, ref _rows, value);
     }
     #endregion
 
@@ -5358,7 +5358,7 @@ public sealed partial class textarea : HtmlElement
     public string placeholder
     {
         get => _placeholder?.value;
-        set => SetValue(ref _placeholder, _placeholder_, value);
+        set => SetValue(_placeholder_, ref _placeholder, value);
     }
     #endregion
 
@@ -5375,7 +5375,7 @@ public sealed partial class textarea : HtmlElement
     public UnionProp<string,bool> readOnly
     {
         get => _readOnly?.value;
-        set => SetValue(ref _readOnly, _readOnly_, value);
+        set => SetValue(_readOnly_, ref _readOnly, value);
     }
     #endregion
 
@@ -5392,7 +5392,7 @@ public sealed partial class textarea : HtmlElement
     public string required
     {
         get => _required?.value;
-        set => SetValue(ref _required, _required_, value);
+        set => SetValue(_required_, ref _required, value);
     }
     #endregion
 
@@ -5409,7 +5409,7 @@ public sealed partial class textarea : HtmlElement
     public string autofocus
     {
         get => _autofocus?.value;
-        set => SetValue(ref _autofocus, _autofocus_, value);
+        set => SetValue(_autofocus_, ref _autofocus, value);
     }
     #endregion
 
@@ -5426,7 +5426,7 @@ public sealed partial class textarea : HtmlElement
     public string autocomplete
     {
         get => _autocomplete?.value;
-        set => SetValue(ref _autocomplete, _autocomplete_, value);
+        set => SetValue(_autocomplete_, ref _autocomplete, value);
     }
     #endregion
 
@@ -5443,7 +5443,7 @@ public sealed partial class textarea : HtmlElement
     public string dirname
     {
         get => _dirname?.value;
-        set => SetValue(ref _dirname, _dirname_, value);
+        set => SetValue(_dirname_, ref _dirname, value);
     }
     #endregion
 
@@ -5460,7 +5460,7 @@ public sealed partial class textarea : HtmlElement
     public string form
     {
         get => _form?.value;
-        set => SetValue(ref _form, _form_, value);
+        set => SetValue(_form_, ref _form, value);
     }
     #endregion
 
@@ -5477,7 +5477,7 @@ public sealed partial class textarea : HtmlElement
     public string maxlength
     {
         get => _maxlength?.value;
-        set => SetValue(ref _maxlength, _maxlength_, value);
+        set => SetValue(_maxlength_, ref _maxlength, value);
     }
     #endregion
 
@@ -5494,7 +5494,7 @@ public sealed partial class textarea : HtmlElement
     public string minlength
     {
         get => _minlength?.value;
-        set => SetValue(ref _minlength, _minlength_, value);
+        set => SetValue(_minlength_, ref _minlength, value);
     }
     #endregion
 
@@ -5511,7 +5511,7 @@ public sealed partial class textarea : HtmlElement
     public string wrap
     {
         get => _wrap?.value;
-        set => SetValue(ref _wrap, _wrap_, value);
+        set => SetValue(_wrap_, ref _wrap, value);
     }
     #endregion
 
@@ -5528,7 +5528,7 @@ public sealed partial class textarea : HtmlElement
     public string defaultValue
     {
         get => _defaultValue?.value;
-        set => SetValue(ref _defaultValue, _defaultValue_, value);
+        set => SetValue(_defaultValue_, ref _defaultValue, value);
     }
     #endregion
 
@@ -5542,7 +5542,7 @@ public sealed partial class textarea : HtmlElement
     public string value
     {
         get => _value?.value;
-        set => SetValue(ref _value, _value_, value);
+        set => SetValue(_value_, ref _value, value);
     }
     #endregion
 
@@ -5556,7 +5556,7 @@ public sealed partial class textarea : HtmlElement
     public string disabled
     {
         get => _disabled?.value;
-        set => SetValue(ref _disabled, _disabled_, value);
+        set => SetValue(_disabled_, ref _disabled, value);
     }
     #endregion
 
@@ -5685,7 +5685,7 @@ public sealed class link : HtmlElement
     public string href
     {
         get => _href?.value;
-        set => SetValue(ref _href, _href_, value);
+        set => SetValue(_href_, ref _href, value);
     }
     #endregion
 
@@ -5699,7 +5699,7 @@ public sealed class link : HtmlElement
     public string media
     {
         get => _media?.value;
-        set => SetValue(ref _media, _media_, value);
+        set => SetValue(_media_, ref _media, value);
     }
     #endregion
 
@@ -5713,7 +5713,7 @@ public sealed class link : HtmlElement
     public string rel
     {
         get => _rel?.value;
-        set => SetValue(ref _rel, _rel_, value);
+        set => SetValue(_rel_, ref _rel, value);
     }
     #endregion
 
@@ -5727,7 +5727,7 @@ public sealed class link : HtmlElement
     public string sizes
     {
         get => _sizes?.value;
-        set => SetValue(ref _sizes, _sizes_, value);
+        set => SetValue(_sizes_, ref _sizes, value);
     }
     #endregion
 
@@ -5741,7 +5741,7 @@ public sealed class link : HtmlElement
     public string type
     {
         get => _type?.value;
-        set => SetValue(ref _type, _type_, value);
+        set => SetValue(_type_, ref _type, value);
     }
     #endregion
 
@@ -5755,7 +5755,7 @@ public sealed class link : HtmlElement
     public string @as
     {
         get => _as?.value;
-        set => SetValue(ref _as, _as_, value);
+        set => SetValue(_as_, ref _as, value);
     }
     #endregion
 
@@ -5769,7 +5769,7 @@ public sealed class link : HtmlElement
     public string integrity
     {
         get => _integrity?.value;
-        set => SetValue(ref _integrity, _integrity_, value);
+        set => SetValue(_integrity_, ref _integrity, value);
     }
     #endregion
 
@@ -5783,7 +5783,7 @@ public sealed class link : HtmlElement
     public string crossorigin
     {
         get => _crossorigin?.value;
-        set => SetValue(ref _crossorigin, _crossorigin_, value);
+        set => SetValue(_crossorigin_, ref _crossorigin, value);
     }
     #endregion
 
@@ -5797,7 +5797,7 @@ public sealed class link : HtmlElement
     public string referrerpolicy
     {
         get => _referrerpolicy?.value;
-        set => SetValue(ref _referrerpolicy, _referrerpolicy_, value);
+        set => SetValue(_referrerpolicy_, ref _referrerpolicy, value);
     }
     #endregion
 
@@ -5842,7 +5842,7 @@ public sealed class iframe : HtmlElement
     public string src
     {
         get => _src?.value;
-        set => SetValue(ref _src, _src_, value);
+        set => SetValue(_src_, ref _src, value);
     }
     #endregion
 
@@ -5871,7 +5871,7 @@ public sealed partial class select : HtmlElement
     public string value
     {
         get => _value?.value;
-        set => SetValue(ref _value, _value_, value);
+        set => SetValue(_value_, ref _value, value);
     }
     #endregion
 
@@ -5885,7 +5885,7 @@ public sealed partial class select : HtmlElement
     public string disabled
     {
         get => _disabled?.value;
-        set => SetValue(ref _disabled, _disabled_, value);
+        set => SetValue(_disabled_, ref _disabled, value);
     }
     #endregion
 
@@ -5916,7 +5916,7 @@ public sealed partial class input : HtmlElement
     public string required
     {
         get => _required?.value;
-        set => SetValue(ref _required, _required_, value);
+        set => SetValue(_required_, ref _required, value);
     }
     #endregion
 
@@ -5930,7 +5930,7 @@ public sealed partial class input : HtmlElement
     public string autoComplete
     {
         get => _autoComplete?.value;
-        set => SetValue(ref _autoComplete, _autoComplete_, value);
+        set => SetValue(_autoComplete_, ref _autoComplete, value);
     }
     #endregion
 
@@ -5944,7 +5944,7 @@ public sealed partial class input : HtmlElement
     public bool? @checked
     {
         get => _checked?.value;
-        set => SetValue(ref _checked, _checked_, value);
+        set => SetValue(_checked_, ref _checked, value);
     }
     #endregion
 
@@ -5958,7 +5958,7 @@ public sealed partial class input : HtmlElement
     public bool? defaultChecked
     {
         get => _defaultChecked?.value;
-        set => SetValue(ref _defaultChecked, _defaultChecked_, value);
+        set => SetValue(_defaultChecked_, ref _defaultChecked, value);
     }
     #endregion
 
@@ -5972,7 +5972,7 @@ public sealed partial class input : HtmlElement
     public string defaultValue
     {
         get => _defaultValue?.value;
-        set => SetValue(ref _defaultValue, _defaultValue_, value);
+        set => SetValue(_defaultValue_, ref _defaultValue, value);
     }
     #endregion
 
@@ -5986,7 +5986,7 @@ public sealed partial class input : HtmlElement
     public bool? disabled
     {
         get => _disabled?.value;
-        set => SetValue(ref _disabled, _disabled_, value);
+        set => SetValue(_disabled_, ref _disabled, value);
     }
     #endregion
 
@@ -6003,7 +6003,7 @@ public sealed partial class input : HtmlElement
     public bool? autoFocus
     {
         get => _autoFocus?.value;
-        set => SetValue(ref _autoFocus, _autoFocus_, value);
+        set => SetValue(_autoFocus_, ref _autoFocus, value);
     }
     #endregion
 
@@ -6017,7 +6017,7 @@ public sealed partial class input : HtmlElement
     public string name
     {
         get => _name?.value;
-        set => SetValue(ref _name, _name_, value);
+        set => SetValue(_name_, ref _name, value);
     }
     #endregion
 
@@ -6031,7 +6031,7 @@ public sealed partial class input : HtmlElement
     public string placeholder
     {
         get => _placeholder?.value;
-        set => SetValue(ref _placeholder, _placeholder_, value);
+        set => SetValue(_placeholder_, ref _placeholder, value);
     }
     #endregion
 
@@ -6045,7 +6045,7 @@ public sealed partial class input : HtmlElement
     public bool? readOnly
     {
         get => _readOnly?.value;
-        set => SetValue(ref _readOnly, _readOnly_, value);
+        set => SetValue(_readOnly_, ref _readOnly, value);
     }
     #endregion
 
@@ -6059,7 +6059,7 @@ public sealed partial class input : HtmlElement
     public string type
     {
         get => _type?.value;
-        set => SetValue(ref _type, _type_, value);
+        set => SetValue(_type_, ref _type, value);
     }
     #endregion
 
@@ -6073,7 +6073,7 @@ public sealed partial class input : HtmlElement
     public int? max
     {
         get => _max?.value;
-        set => SetValue(ref _max, _max_, value);
+        set => SetValue(_max_, ref _max, value);
     }
     #endregion
 
@@ -6087,7 +6087,7 @@ public sealed partial class input : HtmlElement
     public int? min
     {
         get => _min?.value;
-        set => SetValue(ref _min, _min_, value);
+        set => SetValue(_min_, ref _min, value);
     }
     #endregion
 
@@ -6101,7 +6101,7 @@ public sealed partial class input : HtmlElement
     public int? step
     {
         get => _step?.value;
-        set => SetValue(ref _step, _step_, value);
+        set => SetValue(_step_, ref _step, value);
     }
     #endregion
 
@@ -6161,7 +6161,7 @@ public  partial class HtmlElement
     public string accesskey
     {
         get => _accesskey?.value;
-        set => SetValue(ref _accesskey, _accesskey_, value);
+        set => SetValue(_accesskey_, ref _accesskey, value);
     }
     #endregion
 
@@ -6175,7 +6175,7 @@ public  partial class HtmlElement
     public string draggable
     {
         get => _draggable?.value;
-        set => SetValue(ref _draggable, _draggable_, value);
+        set => SetValue(_draggable_, ref _draggable, value);
     }
     #endregion
 
@@ -6189,7 +6189,7 @@ public  partial class HtmlElement
     public string contenteditable
     {
         get => _contenteditable?.value;
-        set => SetValue(ref _contenteditable, _contenteditable_, value);
+        set => SetValue(_contenteditable_, ref _contenteditable, value);
     }
     #endregion
 
@@ -6203,7 +6203,7 @@ public  partial class HtmlElement
     public string className
     {
         get => _className?.value;
-        set => SetValue(ref _className, _className_, value);
+        set => SetValue(_className_, ref _className, value);
     }
     #endregion
 
@@ -6217,7 +6217,7 @@ public  partial class HtmlElement
     public dangerouslySetInnerHTML dangerouslySetInnerHTML
     {
         get => _dangerouslySetInnerHTML?.value;
-        set => SetValue(ref _dangerouslySetInnerHTML, _dangerouslySetInnerHTML_, value);
+        set => SetValue(_dangerouslySetInnerHTML_, ref _dangerouslySetInnerHTML, value);
     }
     #endregion
 
@@ -6231,7 +6231,7 @@ public  partial class HtmlElement
     public string dir
     {
         get => _dir?.value;
-        set => SetValue(ref _dir, _dir_, value);
+        set => SetValue(_dir_, ref _dir, value);
     }
     #endregion
 
@@ -6245,7 +6245,7 @@ public  partial class HtmlElement
     public string id
     {
         get => _id?.value;
-        set => SetValue(ref _id, _id_, value);
+        set => SetValue(_id_, ref _id, value);
     }
     #endregion
 
@@ -6259,7 +6259,7 @@ public  partial class HtmlElement
     public string lang
     {
         get => _lang?.value;
-        set => SetValue(ref _lang, _lang_, value);
+        set => SetValue(_lang_, ref _lang, value);
     }
     #endregion
 
@@ -6273,7 +6273,7 @@ public  partial class HtmlElement
     public string part
     {
         get => _part?.value;
-        set => SetValue(ref _part, _part_, value);
+        set => SetValue(_part_, ref _part, value);
     }
     #endregion
 
@@ -6287,7 +6287,7 @@ public  partial class HtmlElement
     public string role
     {
         get => _role?.value;
-        set => SetValue(ref _role, _role_, value);
+        set => SetValue(_role_, ref _role, value);
     }
     #endregion
 
@@ -6301,7 +6301,7 @@ public  partial class HtmlElement
     public string spellcheck
     {
         get => _spellcheck?.value;
-        set => SetValue(ref _spellcheck, _spellcheck_, value);
+        set => SetValue(_spellcheck_, ref _spellcheck, value);
     }
     #endregion
 
@@ -6315,7 +6315,7 @@ public  partial class HtmlElement
     public string tabIndex
     {
         get => _tabIndex?.value;
-        set => SetValue(ref _tabIndex, _tabIndex_, value);
+        set => SetValue(_tabIndex_, ref _tabIndex, value);
     }
     #endregion
 
@@ -6329,7 +6329,7 @@ public  partial class HtmlElement
     public string title
     {
         get => _title?.value;
-        set => SetValue(ref _title, _title_, value);
+        set => SetValue(_title_, ref _title, value);
     }
     #endregion
 
@@ -6343,7 +6343,7 @@ public  partial class HtmlElement
     public string translate
     {
         get => _translate?.value;
-        set => SetValue(ref _translate, _translate_, value);
+        set => SetValue(_translate_, ref _translate, value);
     }
     #endregion
 
@@ -6358,7 +6358,7 @@ public  partial class HtmlElement
     public MouseEventHandler onClick
     {
         get => _onClick?.value;
-        set => SetValue(ref _onClick, _onClick_, value);
+        set => SetValue(_onClick_, ref _onClick, value);
     }
     #endregion
 
@@ -6373,7 +6373,7 @@ public  partial class HtmlElement
     public MouseEventHandler onMouseEnter
     {
         get => _onMouseEnter?.value;
-        set => SetValue(ref _onMouseEnter, _onMouseEnter_, value);
+        set => SetValue(_onMouseEnter_, ref _onMouseEnter, value);
     }
     #endregion
 
@@ -6388,7 +6388,7 @@ public  partial class HtmlElement
     public MouseEventHandler onMouseLeave
     {
         get => _onMouseLeave?.value;
-        set => SetValue(ref _onMouseLeave, _onMouseLeave_, value);
+        set => SetValue(_onMouseLeave_, ref _onMouseLeave, value);
     }
     #endregion
 
@@ -6402,7 +6402,7 @@ public  partial class HtmlElement
     public ScrollEventHandler onScroll
     {
         get => _onScroll?.value;
-        set => SetValue(ref _onScroll, _onScroll_, value);
+        set => SetValue(_onScroll_, ref _onScroll, value);
     }
     #endregion
 
@@ -6416,7 +6416,7 @@ public  partial class HtmlElement
     public KeyboardEventHandler onKeyDown
     {
         get => _onKeyDown?.value;
-        set => SetValue(ref _onKeyDown, _onKeyDown_, value);
+        set => SetValue(_onKeyDown_, ref _onKeyDown, value);
     }
     #endregion
 

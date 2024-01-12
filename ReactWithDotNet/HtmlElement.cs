@@ -102,7 +102,7 @@ abstract partial class HtmlElement : Element
     public Action onClickPreview
     {
         get => _onClickPreview?.value;
-        set => SetValue(ref _onClickPreview, _onClickPreview_, value);
+        set => SetValue(_onClickPreview_, ref _onClickPreview, value);
     }
     #endregion
 
@@ -246,7 +246,7 @@ abstract partial class HtmlElement : Element
         public new T value;
     }
 
-    internal void SetValue<T>(ref PropertyValueNode<T> valueNode, PropertyValueDefinition propertyDefinition, T value)
+    internal void SetValue<T>(PropertyValueDefinition propertyDefinition, ref PropertyValueNode<T> valueNode, T value)
     {
         var shouldRemove = value is null;
 
