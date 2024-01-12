@@ -775,12 +775,7 @@ static partial class ElementSerializer
 
             return bindInfo;
         }
-
-        if (propertyValue is HtmlTextNode htmlTextNode)
-        {
-            return htmlTextNode.innerText;
-        }
-
+        
         if (property.TransformValueInClientFunction is not null)
         {
             var jsonMap = new JsonMap();
