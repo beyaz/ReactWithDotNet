@@ -271,6 +271,23 @@ static partial class ElementSerializer
             transformFunction = transformValueInClientAttribute?.TransformFunction
         };
     }
+    static BindInfo GetExpressionAsBindingInfo(HtmlElement.PropertyValueDefinition propertyInfo, Func<(IReadOnlyList<string> path, bool isConnectedToState)> calculateSourcePathFunc)
+    {
+        var reactBindAttribute = propertyInfo.bind;
+
+
+        var (path, isConnectedToState) = calculateSourcePathFunc();
+        return new BindInfo
+        {
+            targetProp        = reactBindAttribute.targetProp,
+            eventName         = reactBindAttribute.eventName,
+            sourcePath        = path,
+            sourceIsState     = isConnectedToState,
+            IsBinding         = true,
+            jsValueAccess     = reactBindAttribute.jsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
+            transformFunction = propertyInfo.transformValueInClient
+        };
+    }
 
     static string GetPropertyName(PropertyAccessInfo propertyAccessInfo)
     {
@@ -596,12 +613,11 @@ static partial class ElementSerializer
         return propertyValue;
     }
 
-    static async Task<ValueExportInfo<object>> GetPropertyValue(ElementSerializerContext context, Node node, TypeInfo typeInfo, HtmlElement instance, HtmlElement.PropertyValueNode propertyValueNode, 
-        PropertyAccessInfo property)
+    static async Task<object> GetPropertyValue(ElementSerializerContext context, HtmlElement instance, HtmlElement.PropertyValueNode propertyValueNode)
     {
         var propertyDefinition = propertyValueNode.propertyDefinition;
         
-        var propertyValue = propertyValueNode.value;
+        var propertyValue = propertyValueNode._value;
 
         if (propertyDefinition.isOnClickPreview)
         {
@@ -640,10 +656,6 @@ static partial class ElementSerializer
             return (JsonMap)newMap;
         }
         
-        // every value need to serialize. Because default value handled in property set function
-        var propertyInfo = property.PropertyInfo;
-
-
         if (propertyDefinition.isIsVoidTaskDelegate)
         {
             var handlerDelegate = (Delegate)propertyValue;
@@ -655,7 +667,7 @@ static partial class ElementSerializer
                     IsRemoteMethod                   = true,
                     remoteMethodName                 = handlerDelegate.Method.GetNameWithToken(),
                     HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier,
-                    FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
+                    FunctionNameOfGrabEventArguments = propertyDefinition.GrabEventArgumentsByUsingFunction,
                     StopPropagation                  = handlerDelegate.Method.GetCustomAttribute<ReactStopPropagationAttribute>() is not null,
                     KeyboardEventCallOnly            = handlerDelegate.Method.GetCustomAttribute<ReactKeyboardEventCallOnlyAttribute>()?.Keys
                 };
@@ -670,14 +682,9 @@ static partial class ElementSerializer
             throw HandlerMethodShouldBelongToReactComponent(propertyDefinition.name, handlerDelegate.Target);
         }
         
-        // todo init from definition
-        if (propertyValue is Expression<Func<int>> ||
-            propertyValue is Expression<Func<double>> ||
-            propertyValue is Expression<Func<string>> ||
-            propertyValue is Expression<Func<bool>>||
-            propertyValue is Expression<Func<InputValueBinder>>)
+        if (propertyDefinition.isBindingExpression)
         {
-            static object getTargetValueFromExpression(PropertyInfo pi, LambdaExpression lambdaExpression)
+            static object getTargetValueFromExpression(string propertyName, LambdaExpression lambdaExpression)
             {
                 var expression = lambdaExpression.Body;
                 while (true)
@@ -706,7 +713,7 @@ static partial class ElementSerializer
                         continue;
                     }
 
-                    throw HandlerMethodShouldBelongToReactComponent(pi, lambdaExpression.ToString());
+                    throw HandlerMethodShouldBelongToReactComponent(propertyName, lambdaExpression.ToString());
                 }
             }
 
@@ -740,21 +747,21 @@ static partial class ElementSerializer
                 throw new NotImplementedException();
             }
 
-            var bindInfo = GetExpressionAsBindingInfo(propertyInfo, calculateSourcePathFunc);
+            var bindInfo = GetExpressionAsBindingInfo(propertyDefinition, calculateSourcePathFunc);
             if (bindInfo == null)
             {
                 return NotExportableObject;
             }
 
-            if (getTargetValueFromExpression(propertyInfo, propertyValue as LambdaExpression) is ReactComponentBase target)
+            if (getTargetValueFromExpression(propertyDefinition.name, propertyValue as LambdaExpression) is ReactComponentBase target)
             {
                 bindInfo.HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier;
             }
 
-            var debounceTimeout = instance.GetType().GetProperty(propertyInfo.Name + "DebounceTimeout")?.GetValue(instance) as int?;
+            var debounceTimeout = instance.GetType().GetProperty(propertyDefinition.name+ "DebounceTimeout")?.GetValue(instance) as int?;
             if (debounceTimeout > 0)
             {
-                if (instance.GetType().GetProperty(propertyInfo.Name + "DebounceHandler")?.GetValue(instance) is Func<Task> debounceHandler)
+                if (instance.GetType().GetProperty(propertyDefinition.name+ "DebounceHandler")?.GetValue(instance) is Func<Task> debounceHandler)
                 {
                     bindInfo.DebounceTimeout = debounceTimeout;
                     bindInfo.DebounceHandler = debounceHandler.Method.GetNameWithToken();
@@ -764,11 +771,11 @@ static partial class ElementSerializer
             return bindInfo;
         }
         
-        if (property.TransformValueInClientFunction is not null)
+        if (propertyDefinition.transformValueInClient is not null)
         {
             var jsonMap = new JsonMap();
 
-            jsonMap.Add("$transformValueFunction", property.TransformValueInClientFunction);
+            jsonMap.Add("$transformValueFunction", propertyDefinition.transformValueInClient);
             jsonMap.Add("RawValue", propertyValue);
 
             return jsonMap;

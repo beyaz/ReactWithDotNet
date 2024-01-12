@@ -706,18 +706,15 @@ partial class ElementSerializer
     
     static async Task AddReactAttributes(ElementSerializerContext context, Node node, JsonMap jsonMap, HtmlElement element)
     {
-        var typeInfo = GetTypeInfo(element.GetType());
-
-        var reactProperties = typeInfo.ReactAttributedPropertiesOfType;
-
-        foreach (var item in reactProperties)
+        var current = element._head;
+        while (current is not null)
         {
-            var valueExportInfo = await GetPropertyValue(context, node, typeInfo, element, item);
-            if (valueExportInfo.NeedToExport)
-            {
-                jsonMap.Add(GetPropertyName(item), valueExportInfo.Value);
-            }
+            var value = await GetPropertyValue(context,  element, current);
+            jsonMap.Add(current.propertyDefinition.name, value);
+
+            current = current.next;
         }
+        
     }
     
 

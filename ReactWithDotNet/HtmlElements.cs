@@ -44,10 +44,32 @@ partial class input
     [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
     public string value { get; set; }
 
-    [ReactProp]
-    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
-    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
-    public Expression<Func<InputValueBinder>> valueBind { get; set; }
+    //[ReactProp]
+    //[ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
+    //[ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
+    //public Expression<Func<InputValueBinder>> valueBind { get; set; }
+    
+    
+    #region valueBind
+    PropertyValueNode<Expression<Func<InputValueBinder>>> _valueBind;
+    static readonly PropertyValueDefinition _valueBind_ = new()
+    {
+        name                   = nameof(valueBind),
+        isBindingExpression    = true,
+        transformValueInClient = "ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull",
+        bind =new ()
+        {
+            targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange"
+        }
+    };
+    public Expression<Func<InputValueBinder>> valueBind
+    {
+        get => _valueBind?.value;
+        set => SetValue(_valueBind_, ref _valueBind, value);
+    }
+    #endregion
+    
+    
 
     /// <summary>
     ///     if you want to handle when user iteraction finished see example below<br />

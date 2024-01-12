@@ -232,6 +232,9 @@ abstract partial class HtmlElement : Element
         public bool isOnClickPreview;
         public bool isIsVoidTaskDelegate;
         public bool isScrollEvent;
+        public bool isBindingExpression;
+        public string transformValueInClient;
+        public ReactBindAttribute bind;
     }
 
     
@@ -239,13 +242,17 @@ abstract partial class HtmlElement : Element
     {
         public PropertyValueNode next, prev;
         public PropertyValueDefinition propertyDefinition;
-        public object value;
+        public object _value;
     }
     
     [DebuggerDisplay("{propertyDefinition}: {value}")]
     internal sealed class PropertyValueNode<T> : PropertyValueNode
     {
-        public new T value;
+        public T value
+        {
+            get => (T)_value;
+            set=> _value = value;
+        }
     }
 
     internal void SetValue<T>(PropertyValueDefinition propertyDefinition, ref PropertyValueNode<T> valueNode, T value)
