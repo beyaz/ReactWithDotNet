@@ -82,12 +82,7 @@ public sealed class CssClass
 
 public sealed partial class textarea
 {
-    /// <summary>
-    ///     Occurs when an element loses focus.
-    /// </summary>
-    [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments")]
-    public FocusEventHandler onBlur { get; set; }
+   
 
     [ReactProp]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]

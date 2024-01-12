@@ -5561,6 +5561,25 @@ public sealed partial class textarea : HtmlElement
     #endregion
 
 
+    #region string onBlur
+    PropertyValueNode<FocusEventHandler> _onBlur;
+    static readonly PropertyValueDefinition _onBlur_ = new()
+    {
+        name = nameof(onBlur),
+        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments",
+        isIsVoidTaskDelegate = true
+    };
+    /// <summary>
+    ///     Occurs when an element loses focus.
+    /// </summary>
+    public FocusEventHandler onBlur
+    {
+        get => _onBlur?.value;
+        set => SetValue(_onBlur_, ref _onBlur, value);
+    }
+    #endregion
+
+
     public textarea() { }
 
     public textarea(params IModifier[] modifiers) : base(modifiers) { }
@@ -5671,6 +5690,13 @@ public sealed partial class textarea : HtmlElement
     public static HtmlElementModifier Value(string value) => Modify(x => x.value = value);
 
     public static HtmlElementModifier Disabled(string value) => Modify(x => x.disabled = value);
+
+    /// <summary>
+    ///     onBlur = <paramref name="value"/>
+    /// <br/>
+    ///     Occurs when an element loses focus.
+    /// </summary>
+    public static HtmlElementModifier OnBlur(FocusEventHandler value) => Modify(x => x.onBlur = value);
 
 }
 

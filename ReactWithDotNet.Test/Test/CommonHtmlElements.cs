@@ -1374,7 +1374,16 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name = "disabled"
-                    }
+                    },
+                    
+                    new ()
+                    {
+                        Name                              = "onBlur",
+                        Type                              = "FocusEventHandler",
+                        IsIsVoidTaskDelegate              = true,
+                        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments",
+                        Comment                           = "Occurs when an element loses focus."
+                    },
                 },
                 EnableCastFromString = false
             },
