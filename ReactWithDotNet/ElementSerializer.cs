@@ -599,61 +599,54 @@ static partial class ElementSerializer
     static async Task<ValueExportInfo<object>> GetPropertyValue(ElementSerializerContext context, Node node, TypeInfo typeInfo, HtmlElement instance, HtmlElement.PropertyValueNode propertyValueNode, 
         PropertyAccessInfo property)
     {
+        var propertyDefinition = propertyValueNode.propertyDefinition;
+        
+        var propertyValue = propertyValueNode.value;
+
+        if (propertyDefinition.isOnClickPreview)
+        {
+            if (context.IsCapturingPreview)
+            {
+                return NotExportableObject;
+            }
+
+            var action = (Action)propertyValue;
+
+            if (!(action.Target is ReactComponentBase target))
+            {
+                throw HandlerMethodShouldBelongToReactComponent("onClickPreview", action.Target);
+            }
+                    
+            var newTarget = (ReactComponentBase)target.Clone();
+
+            var newTargetTypeInfo = GetTypeInfo(target.GetType());
+            if (newTargetTypeInfo.StateProperty is not null)
+            {
+                var targetState = newTargetTypeInfo.StateProperty.GetValueFunc(target);
+                if (targetState is EmptyState == false)
+                {
+                    newTargetTypeInfo.StateProperty.SetValueFunc(newTarget, ReflectionHelper.DeepCopy(targetState));
+                }
+            }
+                    
+            action.Method.Invoke(newTarget, null);
+                        
+            await newTarget.InvokeRender();
+
+            context.IsCapturingPreview = true;
+            var newMap = await ToJsonMap(newTarget, context);
+            context.IsCapturingPreview = false;
+
+            return (JsonMap)newMap;
+        }
+        
         // every value need to serialize. Because default value handled in property set function
         var propertyInfo = property.PropertyInfo;
 
-        var propertyValue = propertyValueNode.value;
+        
         
         if (propertyValue is Delegate @delegate)
         {
-            if (propertyValue is Action)
-            {
-                if (@delegate.Target is ReactComponentBase target)
-                {
-                    // special case
-                    if (propertyInfo.Name == "onClickPreview" && propertyInfo.DeclaringType== typeof(HtmlElement))
-                    {
-                        if (context.IsCapturingPreview)
-                        {
-                            return NotExportableObject;
-                        }
-                    
-                        var newTarget = (ReactComponentBase)target.Clone();
-
-                        var newTargetTypeInfo = GetTypeInfo(target.GetType());
-                        if (newTargetTypeInfo.StateProperty is not null)
-                        {
-                            var targetState = newTargetTypeInfo.StateProperty.GetValueFunc(target);
-                            if (targetState is EmptyState == false)
-                            {
-                                newTargetTypeInfo.StateProperty.SetValueFunc(newTarget, ReflectionHelper.DeepCopy(targetState));
-                            }
-                        }
-                    
-                        @delegate.Method.Invoke(newTarget, null);
-                        
-                        await newTarget.InvokeRender();
-
-                        context.IsCapturingPreview = true;
-                        var newMap = await ToJsonMap(newTarget, context);
-                        context.IsCapturingPreview = false;
-
-                        return (JsonMap)newMap;
-                    }
-                
-                    propertyValue = new RemoteMethodInfo
-                    {
-                        IsRemoteMethod                   = true,
-                        remoteMethodName                 = @delegate.Method.GetNameWithToken(),
-                        HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier
-                    };
-                }
-                else
-                {
-                    throw HandlerMethodShouldBelongToReactComponent(propertyInfo, @delegate.Target);
-                }
-            }
-            
             if (property.PropertyTypeIsIsVoidTaskDelegate)
             {
                 if (@delegate.Target is ReactComponentBase target)
@@ -844,6 +837,14 @@ static partial class ElementSerializer
         throw DeveloperException(string.Join(Environment.NewLine,
                                              "Delegate method should belong to ReactComponent. ",
                                              "Please give named method to " + propertyInfo.DeclaringType?.FullName + "::" + propertyInfo.Name,
+                                             $"How to fix: inherit {handlerTarget?.GetType().FullName} class from ReactComponent."));
+    }
+    
+    static Exception HandlerMethodShouldBelongToReactComponent(string fullNameOfProperty, object handlerTarget)
+    {
+        throw DeveloperException(string.Join(Environment.NewLine,
+                                             "Delegate method should belong to ReactComponent. ",
+                                             "Please give named method to " + fullNameOfProperty,
                                              $"How to fix: inherit {handlerTarget?.GetType().FullName} class from ReactComponent."));
     }
 

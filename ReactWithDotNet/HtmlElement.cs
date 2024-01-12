@@ -88,12 +88,23 @@ abstract partial class HtmlElement : Element
     /// </summary>
     public string innerText { get; set; }
 
+    
+    
+    #region string onClickPreview
+    PropertyValueNode<Action> _onClickPreview;
+    static readonly PropertyValueDefinition _onClickPreview_ = new()
+    {
+        isOnClickPreview = true
+    };
     /// <summary>
-    ///     Gets or sets the on click.
+    /// TODO: comment here
     /// </summary>
-    [ReactProp]
-    [JsonPropertyName("$onClickPreview")]
-    public Action onClickPreview { get; set; }
+    public Action onClickPreview
+    {
+        get => _onClickPreview?.value;
+        set => SetValue(ref _onClickPreview, _onClickPreview_, value);
+    }
+    #endregion
 
     /// <summary>
     ///     Default value: 400 <br />
@@ -218,6 +229,7 @@ abstract partial class HtmlElement : Element
     {
         public string name;
         public string GrabEventArgumentsByUsingFunction;
+        public bool isOnClickPreview;
     }
 
     
