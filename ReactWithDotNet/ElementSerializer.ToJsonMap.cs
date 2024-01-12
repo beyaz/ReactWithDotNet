@@ -710,6 +710,7 @@ partial class ElementSerializer
         while (current is not null)
         {
             var value = await GetPropertyValue(context,  element, current);
+            
             jsonMap.Add(current.propertyDefinition.name, value);
 
             current = current.next;
