@@ -643,36 +643,31 @@ static partial class ElementSerializer
         // every value need to serialize. Because default value handled in property set function
         var propertyInfo = property.PropertyInfo;
 
-        
-        
-        if (propertyValue is Delegate @delegate)
+
+        if (propertyDefinition.isIsVoidTaskDelegate)
         {
-            if (property.PropertyTypeIsIsVoidTaskDelegate)
+            var handlerDelegate = (Delegate)propertyValue;
+            
+            if (handlerDelegate.Target is ReactComponentBase target)
             {
-                if (@delegate.Target is ReactComponentBase target)
+                var remoteMethodInfo = new RemoteMethodInfo
                 {
-                    int? htmlElementScrollDebounceTimeout = null;
-                    if (propertyInfo.Name == nameof(HtmlElement.onScroll) && propertyInfo.DeclaringType == typeof(HtmlElement))
-                    {
-                        htmlElementScrollDebounceTimeout = ((HtmlElement)instance).onScrollDebounceTimeout;
-                    }
-                    
-                    propertyValue = new RemoteMethodInfo
-                    {
-                        IsRemoteMethod                      = true,
-                        remoteMethodName                    = @delegate.Method.GetNameWithToken(),
-                        HandlerComponentUniqueIdentifier    = target.ComponentUniqueIdentifier,
-                        FunctionNameOfGrabEventArguments    = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
-                        StopPropagation                     = @delegate.Method.GetCustomAttribute<ReactStopPropagationAttribute>() is not null,
-                        HtmlElementScrollDebounceTimeout    = htmlElementScrollDebounceTimeout,
-                        KeyboardEventCallOnly = @delegate.Method.GetCustomAttribute<ReactKeyboardEventCallOnlyAttribute>()?.Keys
-                    };
-                }
-                else
+                    IsRemoteMethod                   = true,
+                    remoteMethodName                 = handlerDelegate.Method.GetNameWithToken(),
+                    HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier,
+                    FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
+                    StopPropagation                  = handlerDelegate.Method.GetCustomAttribute<ReactStopPropagationAttribute>() is not null,
+                    KeyboardEventCallOnly            = handlerDelegate.Method.GetCustomAttribute<ReactKeyboardEventCallOnlyAttribute>()?.Keys
+                };
+                if (propertyDefinition.isScrollEvent)
                 {
-                    throw HandlerMethodShouldBelongToReactComponent(propertyInfo, @delegate.Target);
+                    remoteMethodInfo.HtmlElementScrollDebounceTimeout = instance.onScrollDebounceTimeout;
                 }
+                
+                return remoteMethodInfo;
             }
+
+            throw HandlerMethodShouldBelongToReactComponent(propertyDefinition.name, handlerDelegate.Target);
         }
         
         // todo init from definition

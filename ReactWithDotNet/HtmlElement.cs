@@ -230,6 +230,8 @@ abstract partial class HtmlElement : Element
         public string name;
         public string GrabEventArgumentsByUsingFunction;
         public bool isOnClickPreview;
+        public bool isIsVoidTaskDelegate;
+        public bool isScrollEvent;
     }
 
     

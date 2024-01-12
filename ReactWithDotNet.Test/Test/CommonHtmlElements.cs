@@ -1614,7 +1614,9 @@ public class ExportingCommonHtmlElements
                     new ()
                     {
                         Name = "onScroll",
-                        Type = "ScrollEventHandler"
+                        Type = "ScrollEventHandler",
+                        IsIsVoidTaskDelegate = true,
+                        isScrollEvent = true
                     },
                     new ()
                     {
@@ -1679,6 +1681,16 @@ public class ExportingCommonHtmlElements
                     {
                         list[^1] += ",";
                         list.Add($"{padding}{padding}GrabEventArgumentsByUsingFunction = \"{attribute.GrabEventArgumentsByUsingFunction}\"");
+                    }
+                    if (attribute.IsIsVoidTaskDelegate)
+                    {
+                        list[^1] += ",";
+                        list.Add($"{padding}{padding}isIsVoidTaskDelegate = true");
+                    }
+                    if (attribute.isScrollEvent)
+                    {
+                        list[^1] += ",";
+                        list.Add($"{padding}{padding}isScrollEvent = true");
                     }
                     
                     
@@ -1831,6 +1843,8 @@ public class ExportingCommonHtmlElements
         public string Name { get; init; }
         public string Type { get; init; } = "string";
         public string GrabEventArgumentsByUsingFunction { get; init; }
+        public bool IsIsVoidTaskDelegate { get; init; }
+        public bool isScrollEvent { get; init; }
     }
 
     class TagInfo

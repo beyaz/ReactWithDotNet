@@ -6397,7 +6397,9 @@ public  partial class HtmlElement
     PropertyValueNode<ScrollEventHandler> _onScroll;
     static readonly PropertyValueDefinition _onScroll_ = new()
     {
-        name = nameof(onScroll)
+        name = nameof(onScroll),
+        isIsVoidTaskDelegate = true,
+        isScrollEvent = true
     };
     public ScrollEventHandler onScroll
     {
