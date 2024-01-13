@@ -1,8 +1,4 @@
-﻿
-
-using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
-
-namespace ReactWithDotNet.WebSite.Showcases;
+﻿namespace ReactWithDotNet.WebSite.Showcases;
 
 public class EventBusDemo : Component
 {
