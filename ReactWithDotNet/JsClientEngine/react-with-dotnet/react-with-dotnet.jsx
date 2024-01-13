@@ -2666,6 +2666,25 @@ function CreateNewDeveloperError(message)
 const DynamicStyles = [];
 var ReactWithDotNetDynamicCssElement = null;
 
+/**
+ * 
+ * @param {String} cssSelector
+ * @returns {Number} ComponentUniqueIdentifier
+ */
+function GetComponentUniqueIdentifierFromCssSelector(cssSelector)
+{
+    let startIndex = cssSelector.indexOf('._rwd_');
+    let endIndex = cssSelector.indexOf('_', startIndex + 6);
+
+    const componentUniqueIdentifier = parseInt(cssSelector.substring(startIndex + 6, endIndex));
+    if (isNaN(componentUniqueIdentifier))
+    {
+        throw CreateNewDeveloperError('componentUniqueIdentifier cannot calculated from ' + cssSelector);
+    }
+
+    return componentUniqueIdentifier;
+}
+
 function ProcessDynamicCssClasses(dynamicStyles)
 {
     if (dynamicStyles == null || dynamicStyles.length === 0)
@@ -2703,17 +2722,12 @@ function ProcessDynamicCssClasses(dynamicStyles)
             if (shouldInsert)
             {
                 hasChange = true;
-
-                let startIndex = cssSelector.indexOf('._rwd_');
-                let endIndex = cssSelector.indexOf('_', startIndex + 6);
-
-                const componentUniqueIdentifier = parseInt(cssSelector.substring(startIndex + 6, endIndex));
-                if (isNaN(componentUniqueIdentifier))
-                {
-                    throw CreateNewDeveloperError('componentUniqueIdentifier cannot calculated from ' + cssSelector);
-                }
-
-                DynamicStyles.push({cssSelector: cssSelector, cssBody: cssBody, componentUniqueIdentifier: componentUniqueIdentifier});
+                
+                DynamicStyles.push({
+                    cssSelector: cssSelector,
+                    cssBody: cssBody,
+                    componentUniqueIdentifier: GetComponentUniqueIdentifierFromCssSelector(cssSelector)
+                });
             }
         }
     }
