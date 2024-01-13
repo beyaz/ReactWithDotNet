@@ -2711,45 +2711,48 @@ function ProcessDynamicCssClasses(dynamicStyles)
 
     if (hasChange)
     {
-        if (ReactWithDotNetDynamicCssElement === null)
+        ApplyDynamicStylesToDom();
+    }
+}
+
+function ApplyDynamicStylesToDom()
+{
+    if (ReactWithDotNetDynamicCssElement === null)
+    {
+        const idOfStyleElement = "ReactWithDotNetDynamicCss";
+
+        ReactWithDotNetDynamicCssElement = document.getElementById(idOfStyleElement);
+
+        if (ReactWithDotNetDynamicCssElement == null)
         {
-            const idOfStyleElement = "ReactWithDotNetDynamicCss";
-
-            ReactWithDotNetDynamicCssElement = document.getElementById(idOfStyleElement);
-
-            if (ReactWithDotNetDynamicCssElement == null)
-            {
-                ReactWithDotNetDynamicCssElement = document.createElement('style');
-                ReactWithDotNetDynamicCssElement.id = idOfStyleElement;
-                document.head.appendChild(ReactWithDotNetDynamicCssElement);
-            }
+            ReactWithDotNetDynamicCssElement = document.createElement('style');
+            ReactWithDotNetDynamicCssElement.id = idOfStyleElement;
+            document.head.appendChild(ReactWithDotNetDynamicCssElement);
         }
+    }
 
-        const arr = [];
-        for (var i = 0; i < DynamicStyles.length; i++)
+    const arr = [];
+    for (var i = 0; i < DynamicStyles.length; i++)
+    {
+        const cssSelector = DynamicStyles[i].cssSelector;
+        const cssBody = DynamicStyles[i].cssBody;
+
+        arr.push("");
+        arr.push(cssSelector);
+        arr.push("{");
+        arr.push(cssBody);
+        arr.push("}");
+        if (cssSelector.indexOf('@media ') === 0)
         {
-            const cssSelector = DynamicStyles[i].cssSelector;
-            const cssBody = DynamicStyles[i].cssBody;
-
-            arr.push("");
-            arr.push(cssSelector);
-            arr.push("{");
-            arr.push(cssBody);
-            arr.push("}");
-            if (cssSelector.indexOf('@media ') === 0)
-            {
-                arr.push("}"); // for closing media rule bracket
-            }
+            arr.push("}"); // for closing media rule bracket
         }
+    }
 
-        // try update if has change
-        {
-            const newStyle = arr.join("\n");
-            if (!IsTwoStringHasValueAndSame(ReactWithDotNetDynamicCssElement.innerHTML, newStyle))
-            {
-                ReactWithDotNetDynamicCssElement.innerHTML = newStyle;
-            } 
-        }              
+    // try update if has change
+    const newStyle = arr.join("\n");
+    if (!IsTwoStringHasValueAndSame(ReactWithDotNetDynamicCssElement.innerHTML, newStyle))
+    {
+        ReactWithDotNetDynamicCssElement.innerHTML = newStyle;
     }
 }
 

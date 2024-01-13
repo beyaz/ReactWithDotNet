@@ -1725,6 +1725,20 @@ class ComponentDestroyQueue
 // todo: check usage or rethink
 const ComponentDestroyQueueInstance = new ComponentDestroyQueue();
 
+/**
+ * @param {Int32Array} componentUniqueIdentifiers
+ */
+function RemoveComponentDynamicStyles(componentUniqueIdentifiers)
+{
+    for (let i = 0; i < DynamicStyles.length; i++)
+    {
+        if (componentUniqueIdentifiers.indexOf(DynamicStyles[i].componentUniqueIdentifier) >= 0)
+        {
+            DynamicStyles.splice(i, 1);
+            i--;
+        }
+    }
+}
 
 function DestroyDotNetComponentInstance(instance)
 {
@@ -1734,15 +1748,7 @@ function DestroyDotNetComponentInstance(instance)
         instance[ON_COMPONENT_DESTROY][i]();
     }
 
-    // remove related dynamic styles
-    for (let i = 0; i < DynamicStyles.length; i++)
-    {
-        if (instance[DotNetComponentUniqueIdentifiers].indexOf(DynamicStyles[i].componentUniqueIdentifier) >= 0)
-        {
-            DynamicStyles.splice(i, 1);
-            i--;
-        }
-    }
+    RemoveComponentDynamicStyles(instance[DotNetComponentUniqueIdentifiers]);
 
     COMPONENT_CACHE.Unregister(instance);
 }
@@ -2007,15 +2013,7 @@ function DefinePureComponent(componentDeclaration)
         {
             const uid = NotNull(this.props.$jsonNode[DotNetComponentUniqueIdentifier]);
             
-            // remove related dynamic styles
-            for (let i = 0; i < DynamicStyles.length; i++)
-            {
-                if (DynamicStyles[i].componentUniqueIdentifier === uid)
-                {
-                    DynamicStyles.splice(i, 1);
-                    i--;
-                }
-            }
+            RemoveComponentDynamicStyles([uid]);
         }
     }
 
@@ -2713,45 +2711,48 @@ function ProcessDynamicCssClasses(dynamicStyles)
 
     if (hasChange)
     {
-        if (ReactWithDotNetDynamicCssElement === null)
+        ApplyDynamicStylesToDom();
+    }
+}
+
+function ApplyDynamicStylesToDom()
+{
+    if (ReactWithDotNetDynamicCssElement === null)
+    {
+        const idOfStyleElement = "ReactWithDotNetDynamicCss";
+
+        ReactWithDotNetDynamicCssElement = document.getElementById(idOfStyleElement);
+
+        if (ReactWithDotNetDynamicCssElement == null)
         {
-            const idOfStyleElement = "ReactWithDotNetDynamicCss";
-
-            ReactWithDotNetDynamicCssElement = document.getElementById(idOfStyleElement);
-
-            if (ReactWithDotNetDynamicCssElement == null)
-            {
-                ReactWithDotNetDynamicCssElement = document.createElement('style');
-                ReactWithDotNetDynamicCssElement.id = idOfStyleElement;
-                document.head.appendChild(ReactWithDotNetDynamicCssElement);
-            }
+            ReactWithDotNetDynamicCssElement = document.createElement('style');
+            ReactWithDotNetDynamicCssElement.id = idOfStyleElement;
+            document.head.appendChild(ReactWithDotNetDynamicCssElement);
         }
+    }
 
-        const arr = [];
-        for (var i = 0; i < DynamicStyles.length; i++)
+    const arr = [];
+    for (var i = 0; i < DynamicStyles.length; i++)
+    {
+        const cssSelector = DynamicStyles[i].cssSelector;
+        const cssBody = DynamicStyles[i].cssBody;
+
+        arr.push("");
+        arr.push(cssSelector);
+        arr.push("{");
+        arr.push(cssBody);
+        arr.push("}");
+        if (cssSelector.indexOf('@media ') === 0)
         {
-            const cssSelector = DynamicStyles[i].cssSelector;
-            const cssBody = DynamicStyles[i].cssBody;
-
-            arr.push("");
-            arr.push(cssSelector);
-            arr.push("{");
-            arr.push(cssBody);
-            arr.push("}");
-            if (cssSelector.indexOf('@media ') === 0)
-            {
-                arr.push("}"); // for closing media rule bracket
-            }
+            arr.push("}"); // for closing media rule bracket
         }
+    }
 
-        // try update if has change
-        {
-            const newStyle = arr.join("\n");
-            if (!IsTwoStringHasValueAndSame(ReactWithDotNetDynamicCssElement.innerHTML, newStyle))
-            {
-                ReactWithDotNetDynamicCssElement.innerHTML = newStyle;
-            } 
-        }              
+    // try update if has change
+    const newStyle = arr.join("\n");
+    if (!IsTwoStringHasValueAndSame(ReactWithDotNetDynamicCssElement.innerHTML, newStyle))
+    {
+        ReactWithDotNetDynamicCssElement.innerHTML = newStyle;
     }
 }
 
