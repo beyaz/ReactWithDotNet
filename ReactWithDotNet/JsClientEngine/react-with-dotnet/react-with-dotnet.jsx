@@ -1593,10 +1593,12 @@ function HandleAction(actionArguments)
             LastUsedComponentUniqueIdentifier = response.LastUsedComponentUniqueIdentifier;
         }
 
-        ProcessDynamicCssClasses(response.DynamicStyles);
-
+        const incomingDynamicStyles = response.DynamicStyles;
+        
         function stateCallback()
         {
+            ProcessDynamicCssClasses(incomingDynamicStyles);
+
             OnReactStateReady();
         }
 
@@ -1720,8 +1722,23 @@ class ComponentDestroyQueue
     }
 }
 
+// todo: check usage or rethink
 const ComponentDestroyQueueInstance = new ComponentDestroyQueue();
 
+/**
+ * @param {Int32Array} componentUniqueIdentifiers
+ */
+function RemoveComponentDynamicStyles(componentUniqueIdentifiers)
+{
+    for (let i = 0; i < DynamicStyles.length; i++)
+    {
+        if (componentUniqueIdentifiers.indexOf(DynamicStyles[i].componentUniqueIdentifier) >= 0)
+        {
+            DynamicStyles.splice(i, 1);
+            i--;
+        }
+    }
+}
 
 function DestroyDotNetComponentInstance(instance)
 {
@@ -1731,15 +1748,7 @@ function DestroyDotNetComponentInstance(instance)
         instance[ON_COMPONENT_DESTROY][i]();
     }
 
-    // remove related dynamic styles
-    for (let i = 0; i < DynamicStyles.length; i++)
-    {
-        if (instance[DotNetComponentUniqueIdentifiers].indexOf(DynamicStyles[i].componentUniqueIdentifier) >= 0)
-        {
-            DynamicStyles.splice(i, 1);
-            i--;
-        }
-    }
+    RemoveComponentDynamicStyles(instance[DotNetComponentUniqueIdentifiers]);
 
     COMPONENT_CACHE.Unregister(instance);
 }
@@ -1999,6 +2008,12 @@ function DefinePureComponent(componentDeclaration)
         render()
         {
             return ConvertToReactElement(this.props.$jsonNode[RootNode], this);
+        }
+        componentWillUnmount()
+        {
+            const uid = NotNull(this.props.$jsonNode[DotNetComponentUniqueIdentifier]);
+            
+            RemoveComponentDynamicStyles([uid]);
         }
     }
 

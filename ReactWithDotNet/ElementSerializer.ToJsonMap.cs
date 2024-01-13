@@ -241,6 +241,7 @@ partial class ElementSerializer
 
                 var map = new JsonMap();
                 map.Add("$isPureComponent", 1);
+                map.Add("$DotNetComponentUniqueIdentifier", reactPureComponent.ComponentUniqueIdentifier);
                 map.Add(___RootNode___, node.DotNetComponentRootNode.ElementAsJsonMap);
                 map.Add(___Type___, GetReactComponentTypeInfo(reactPureComponent));
                 map.Add(nameof(Element.key), reactPureComponent.key);

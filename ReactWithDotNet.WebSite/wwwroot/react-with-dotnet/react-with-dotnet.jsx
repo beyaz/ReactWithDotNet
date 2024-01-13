@@ -1593,10 +1593,12 @@ function HandleAction(actionArguments)
             LastUsedComponentUniqueIdentifier = response.LastUsedComponentUniqueIdentifier;
         }
 
-        ProcessDynamicCssClasses(response.DynamicStyles);
-
+        const incomingDynamicStyles = response.DynamicStyles;
+        
         function stateCallback()
         {
+            ProcessDynamicCssClasses(incomingDynamicStyles);
+
             OnReactStateReady();
         }
 
@@ -1720,6 +1722,7 @@ class ComponentDestroyQueue
     }
 }
 
+// todo: check usage or rethink
 const ComponentDestroyQueueInstance = new ComponentDestroyQueue();
 
 
@@ -1999,6 +2002,20 @@ function DefinePureComponent(componentDeclaration)
         render()
         {
             return ConvertToReactElement(this.props.$jsonNode[RootNode], this);
+        }
+        componentWillUnmount()
+        {
+            const uid = NotNull(this.props.$jsonNode[DotNetComponentUniqueIdentifier]);
+            
+            // remove related dynamic styles
+            for (let i = 0; i < DynamicStyles.length; i++)
+            {
+                if (DynamicStyles[i].componentUniqueIdentifier === uid)
+                {
+                    DynamicStyles.splice(i, 1);
+                    i--;
+                }
+            }
         }
     }
 
