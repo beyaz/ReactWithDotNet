@@ -25,12 +25,14 @@ public class EventBusDemo : Component
     class ComponentA_0 : Component
     {
         public string Message { get; set; } = nameof(ComponentA_0);
+
+        public int ReceivedMessageCount { get; set; }
         
         protected override Element render()
         {
             return new div(Size(300,200), Border(Solid(1,"red")))
             {
-                new div{ Message },
+                new div{ Message + $", ReceivedMessageCount: {ReceivedMessageCount}" },
                 new ComponentA_0_0()
             };
         }
@@ -44,6 +46,7 @@ public class EventBusDemo : Component
         Task OnMessageForA_0(string message)
         {
             Message = message;
+            ReceivedMessageCount++;
             Client.DispatchEvent("MessageForB","5");
             return Task.CompletedTask;
         }
@@ -73,6 +76,8 @@ public class EventBusDemo : Component
     {
         public string Message { get; set; } = nameof(ComponentB);
         
+        public int ReceivedMessageCount { get; set; }
+        
         protected override Task constructor()
         {
             Client.ListenEvent("MessageForB",OnMessageForB);
@@ -82,6 +87,8 @@ public class EventBusDemo : Component
         Task OnMessageForB(string message)
         {
             Message = message;
+
+            ReceivedMessageCount++;
             
             Client.DispatchEvent("MessageForA_0","2");
                 
@@ -92,7 +99,7 @@ public class EventBusDemo : Component
         {
             return new div(Size(400,300), Border(Solid(1,"red")))
             {
-                new div{ Message }
+                new div{ Message + $", ReceivedMessageCount: {ReceivedMessageCount}"}
             };
         }
     }
