@@ -1730,13 +1730,22 @@ const ComponentDestroyQueueInstance = new ComponentDestroyQueue();
  */
 function RemoveComponentDynamicStyles(componentUniqueIdentifiers)
 {
+    var hasChange = false;
+
     for (let i = 0; i < DynamicStyles.length; i++)
     {
         if (componentUniqueIdentifiers.indexOf(DynamicStyles[i].componentUniqueIdentifier) >= 0)
         {
             DynamicStyles.splice(i, 1);
             i--;
+
+            hasChange = true;
         }
+    }
+
+    if (hasChange)
+    {
+        ApplyDynamicStylesToDom();
     }
 }
 
