@@ -94,6 +94,7 @@ class PageShowcase : Component
         typeof(RSuiteAutoCompleteDemo),
         typeof(SwiperThumbsGalleryDemo),
         typeof(EventBusDemo),
+        typeof(EventBusDemo2),
         typeof(ReactPlayerDemo),
         typeof(OnClickPreviewDemo),
         typeof(MonacoEditorDemo)
