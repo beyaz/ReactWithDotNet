@@ -2692,8 +2692,28 @@ function ProcessDynamicCssClasses(dynamicStyles)
         return;
     }
 
-    let hasChange = false;
+    // remove all related css of component
+    for (var key in dynamicStyles)
+    {
+        if (dynamicStyles.hasOwnProperty(key))
+        {
+            const cssSelector = key;
 
+            var componentUniqueIdentifier = GetComponentUniqueIdentifierFromCssSelector(cssSelector);
+
+            // remove all related css of component
+            for (let i = 0; i < DynamicStyles.length; i++)
+            {
+                if (DynamicStyles[i].componentUniqueIdentifier === componentUniqueIdentifier)
+                {
+                    DynamicStyles.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+    }
+
+    // Add new records
     for (var key in dynamicStyles)
     {
         if (dynamicStyles.hasOwnProperty(key))
@@ -2701,41 +2721,15 @@ function ProcessDynamicCssClasses(dynamicStyles)
             const cssSelector = key;
             const cssBody = dynamicStyles[key];
 
-            let shouldInsert = true;
-
-            for (var i = 0; i < DynamicStyles.length; i++)
-            {
-                if (DynamicStyles[i].cssSelector === cssSelector)
-                {
-                    if (DynamicStyles[i].cssBody === cssBody)
-                    {
-                        shouldInsert = false;
-                        break;
-                    }
-
-                    hasChange = true;
-                    DynamicStyles[i].cssBody = cssBody;
-                    break;
-                }
-            }
-
-            if (shouldInsert)
-            {
-                hasChange = true;
-                
-                DynamicStyles.push({
-                    cssSelector: cssSelector,
-                    cssBody: cssBody,
-                    componentUniqueIdentifier: GetComponentUniqueIdentifierFromCssSelector(cssSelector)
-                });
-            }
+            DynamicStyles.push({
+                cssSelector: cssSelector,
+                cssBody: cssBody,
+                componentUniqueIdentifier: GetComponentUniqueIdentifierFromCssSelector(cssSelector)
+            });
         }
     }
 
-    if (hasChange)
-    {
-        ApplyDynamicStylesToDom();
-    }
+    ApplyDynamicStylesToDom();
 }
 
 function ApplyDynamicStylesToDom()
