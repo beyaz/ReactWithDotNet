@@ -1610,14 +1610,10 @@ function HandleAction(actionArguments)
 
         if (actionArguments.onlyUpdateState)
         {
-            const newState = {};
-
-            // note: SyncId should be equal for disable update children otherwise childrens rerenders.
-            newState[SyncId] = component[DotNetState][SyncId];
-            newState[DotNetState] = response.NewState;
-            newState[DotNetProperties] = response.NewDotNetProperties;
-
-            SetState(component, newState, stateCallback);
+            // note: setState not used here because this is special case. we don't want to trigger render.
+            component.state[DotNetState] = response.NewState;
+            component.state[DotNetProperties] = response.NewDotNetProperties;
+            stateCallback();
             return;
         }
 
