@@ -74,6 +74,8 @@ partial class Mixin
 
 
     public const string inherit = "inherit";
+    public const string none = "none";
+    public const string auto = "auto";
 }
 
 public sealed class CssUnit

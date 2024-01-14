@@ -865,6 +865,9 @@ public static partial class Mixin
     public static StyleModifier MarginLeftTop(double leftTopPixel) => new(style => style.marginLeftTop = leftTopPixel.AsPixel());
     public static StyleModifier MarginLeftBottom(double leftBottomPixel) => new(style => style.marginLeftBottom = leftBottomPixel.AsPixel());
     public static StyleModifier MarginTopRight(double topRightPixel) => new(style => style.marginTopRight = topRightPixel.AsPixel());
+    
+    public static StyleModifier MarginX(double leftRightPixel)=>MarginLeftRight(leftRightPixel);
+    public static StyleModifier MarginY(double topBottomPixel)=>MarginTopBottom(topBottomPixel);
     #endregion
 
     #region Padding
@@ -897,6 +900,9 @@ public static partial class Mixin
     public static StyleModifier PaddingLeftTop(double leftTopPixel) => new(style => style.paddingLeftTop = leftTopPixel.AsPixel());
     public static StyleModifier PaddingLeftBottom(double leftBottomPixel) => new(style => style.paddingLeftBottom = leftBottomPixel.AsPixel());
     public static StyleModifier PaddingTopRight(double topRightPixel) => new(style => style.paddingTopRight = topRightPixel.AsPixel());
+    
+    public static StyleModifier PaddingX(double leftRightPixel)=>PaddingLeftRight(leftRightPixel);
+    public static StyleModifier PaddingY(double topBottomPixel)=>PaddingTopBottom(topBottomPixel);
     #endregion
 
     #region short
