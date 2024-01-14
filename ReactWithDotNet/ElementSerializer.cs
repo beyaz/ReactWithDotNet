@@ -613,7 +613,7 @@ static partial class ElementSerializer
         return propertyValue;
     }
 
-    static async Task<object> GetPropertyValue(ElementSerializerContext context, HtmlElement instance, HtmlElement.PropertyValueNode propertyValueNode)
+    static async Task<object> GetPropertyValueOfHtmlElement(ElementSerializerContext context, HtmlElement instance, HtmlElement.PropertyValueNode propertyValueNode)
     {
         var propertyDefinition = propertyValueNode.propertyDefinition;
         
