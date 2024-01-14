@@ -159,6 +159,11 @@ partial class Mixin
     /// </summary>
     public static string Solid(double widthAsPx, string color)
         => BorderStyle("solid", widthAsPx, color);
+    
+    /// <summary>
+    ///     style.borderWidth = <paramref name="widthAsPx" /> + 'px'
+    /// </summary>
+    public static StyleModifier BorderWidth(double widthAsPx) => BorderWidth(widthAsPx.AsPixel());
 
     /// <summary>
     /// "url(urlValue)
