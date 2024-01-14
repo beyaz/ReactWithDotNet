@@ -1563,6 +1563,12 @@ function HandleAction(actionArguments)
         CallFunctionId: actionArguments.executionQueueEntry.id
     };
 
+    if (actionArguments.onlyUpdateState)
+    {
+        request.OnlyUpdateState = true;
+        request.CapturedStateTree = { "0": request.CapturedStateTree["0"] };
+    }
+
     ArrangeRemoteMethodArguments(actionArguments.remoteMethodArguments);
 
     request.EventArgumentsAsJsonArray = actionArguments.remoteMethodArguments.map(JSON.stringify);
@@ -1600,6 +1606,19 @@ function HandleAction(actionArguments)
             ProcessDynamicCssClasses(incomingDynamicStyles);
 
             OnReactStateReady();
+        }
+
+        if (actionArguments.onlyUpdateState)
+        {
+            const newState = {};
+
+            // note: SyncId should be equal for disable update children otherwise childrens rerenders.
+            newState[SyncId] = component[DotNetState][SyncId];
+            newState[DotNetState] = response.NewState;
+            newState[DotNetProperties] = response.NewDotNetProperties;
+
+            SetState(component, newState, stateCallback);
+            return;
         }
 
         const partialState = CalculateNewStateFromJsonElement(component.state, response.ElementAsJson);
@@ -2506,6 +2525,44 @@ RegisterCoreFunction("ListenEvent", function (eventName, remoteMethodName)
 
     EventBus.On(eventName, onEventFired);
 });
+
+RegisterCoreFunction("ListenEventThenOnlyUpdateState", function (eventName, remoteMethodName)
+{
+    const component = this;
+
+    const onEventFired = (eventArgumentsAsArray) =>
+    {
+        if (component.ComponentWillUnmountIsCalled)
+        {
+            return;
+        }
+
+        const actionArguments = {
+            component: component,
+            remoteMethodName: remoteMethodName,
+            remoteMethodArguments: eventArgumentsAsArray,
+            onlyUpdateState: true
+        };
+
+        const entry = StartAction(actionArguments);
+
+        // guard for removed node before send to server
+        component[ON_COMPONENT_DESTROY].push(() =>
+        {
+            entry.isValid = false;
+        });
+    };
+
+    NotNull(component[ON_COMPONENT_DESTROY]);
+
+    component[ON_COMPONENT_DESTROY].push(() =>
+    {
+        EventBus.Remove(eventName, onEventFired);
+    });
+
+    EventBus.On(eventName, onEventFired);
+});
+
 
 RegisterCoreFunction("ListenEventOnlyOnce", function (eventName, remoteMethodName)
 {

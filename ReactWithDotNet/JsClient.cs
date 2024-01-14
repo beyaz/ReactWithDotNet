@@ -8,6 +8,16 @@ partial class Mixin
         ListenEvent(client, handler.GetType().Name, handler.Method.Name);
     }
     
+    /// <summary>
+    ///     When event fired then updates only component state
+    ///     <br/>
+    ///     Do not calls c# render method. Updates state of react component in client.
+    /// </summary>
+    public static void ListenEventThenOnlyUpdateState<TDelegate>(this Client client, TDelegate handler) where TDelegate: Delegate
+    {
+        client.CallJsFunction(Core + nameof(ListenEventThenOnlyUpdateState), handler.GetType().Name, handler.Method.Name);
+    }
+    
     public static void DispatchEvent<TDelegate>(this Client client, params object[] eventArguments) where TDelegate: Delegate
     {
         client.CallJsFunction(Core + nameof(DispatchEvent), typeof(TDelegate).Name, eventArguments);

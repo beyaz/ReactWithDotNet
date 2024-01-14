@@ -896,7 +896,7 @@ partial class ElementSerializer
         return new Exception(message);
     }
 
-    static TypeInfo GetTypeInfo(Type type)
+    internal static TypeInfo GetTypeInfo(Type type)
     {
         
         
@@ -1288,7 +1288,7 @@ partial class ElementSerializer
         public Stopwatch Stopwatch { get; set; }
     }
 
-    sealed class TypeInfo
+    internal sealed class TypeInfo
     {
         public IReadOnlyList<MethodInfo> CacheableMethodInfoList { get; init; }
         public IReadOnlyList<PropertyAccessInfo> CustomEventPropertiesOfType { get; init; }

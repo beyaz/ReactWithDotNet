@@ -37,6 +37,8 @@ sealed class ComponentRequest
     public string MethodName { get; set; }
 
     public string QueryString { get; set; }
+    
+    public bool OnlyUpdateState { get; set; }
 }
 
 class ComponentResponse
@@ -46,12 +48,16 @@ class ComponentResponse
     public object DynamicStyles { get; set; }
 
     public object ElementAsJson { get; set; }
-
+    
+    public object NewState { get; set; }
+    public JsonMap NewDotNetProperties { get; set; }
+    
     public string ErrorMessage { get; set; }
 
     public int LastUsedComponentUniqueIdentifier { get; set; }
 
     public IReadOnlyCollection<string> Trace { get; set; }
+    
 
     internal ReactContext ReactContext;
 }
@@ -276,9 +282,38 @@ static class ComponentRequestHandler
             }
             catch (Exception exception)
             {
-                return new ComponentResponse { ErrorMessage = $"Error occured when invoking method.Method: {methodInfo.Name}. Exception: {exception}" };
+                return new() { ErrorMessage = $"Error occured when invoking method.Method: {methodInfo.Name}. Exception: {exception}" };
             }
 
+            if (request.OnlyUpdateState)
+            {
+                var typeInfo = ElementSerializer.GetTypeInfo(type);
+                
+                var newState = typeInfo.StateProperty.GetValueFunc(instance);
+
+                var dotNetProperties = new JsonMap();
+                {
+                    foreach (var item in typeInfo.DotNetPropertiesOfType)
+                    {
+                        var propertyValue = item.GetValueFunc(instance);
+
+                        if (item.DefaultValue == propertyValue)
+                        {
+                            continue;
+                        }
+
+                        dotNetProperties.Add(item.PropertyInfo.Name, propertyValue);
+                    }
+                }
+                
+                return new ()
+                {
+                    NewState         = newState,
+                    NewDotNetProperties = dotNetProperties,
+                    Trace    = tracer.Messages
+                };
+            }
+            
             var stateTree = new StateTree
             {
                 ChildStates    = request.CapturedStateTree,
