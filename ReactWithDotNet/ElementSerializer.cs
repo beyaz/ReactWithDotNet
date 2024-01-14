@@ -355,54 +355,6 @@ static partial class ElementSerializer
 
         if (propertyValue is Delegate @delegate)
         {
-            if (propertyValue is Action)
-            {
-                if (@delegate.Target is ReactComponentBase target)
-                {
-                    // special case
-                    if (propertyInfo.Name == "onClickPreview" && propertyInfo.DeclaringType== typeof(HtmlElement))
-                    {
-                        if (context.IsCapturingPreview)
-                        {
-                            return NotExportableObject;
-                        }
-                    
-                        var newTarget = (ReactComponentBase)target.Clone();
-
-                        var newTargetTypeInfo = GetTypeInfo(target.GetType());
-                        if (newTargetTypeInfo.StateProperty is not null)
-                        {
-                            var targetState = newTargetTypeInfo.StateProperty.GetValueFunc(target);
-                            if (targetState is EmptyState == false)
-                            {
-                                newTargetTypeInfo.StateProperty.SetValueFunc(newTarget, ReflectionHelper.DeepCopy(targetState));
-                            }
-                        }
-                    
-                        @delegate.Method.Invoke(newTarget, null);
-                        
-                        await newTarget.InvokeRender();
-
-                        context.IsCapturingPreview = true;
-                        var newMap = await ToJsonMap(newTarget, context);
-                        context.IsCapturingPreview = false;
-
-                        return (JsonMap)newMap;
-                    }
-                
-                    propertyValue = new RemoteMethodInfo
-                    {
-                        IsRemoteMethod                   = true,
-                        remoteMethodName                 = @delegate.Method.GetNameWithToken(),
-                        HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier
-                    };
-                }
-                else
-                {
-                    throw HandlerMethodShouldBelongToReactComponent(propertyInfo, @delegate.Target);
-                }
-            }
-            
             if (property.PropertyTypeIsIsVoidTaskDelegate)
             {
                 if (@delegate.Target is ReactComponentBase target)
@@ -430,10 +382,6 @@ static partial class ElementSerializer
                 }
             }
         }
-        
-        
-
-        
 
         if (propertyValue is Enum enumValue)
         {
