@@ -128,7 +128,29 @@ partial class Mixin
         style.width  = width.AsPixel();
         style.height = height.AsPixel();
     });
-
+    
+    /// <summary>
+    ///     style.minWidth = <paramref name="minWidth" /> + 'px'
+    ///     <br/>
+    ///     style.minHeight = <paramref name="minHeight" /> + 'px'
+    /// </summary>
+    public static StyleModifier MinSize(double minWidth, double minHeight) => new(style =>
+    {
+        style.minWidth  = minWidth.AsPixel();
+        style.minHeight = minHeight.AsPixel();
+    });
+    /// <summary>
+    ///     style.minWidth = <paramref name="width_and_height" /> + 'px'
+    ///     <br/>
+    ///     style.minHeight = <paramref name="width_and_height" /> + 'px'
+    /// </summary>
+    public static StyleModifier MinSize(double width_and_height) => new(style =>
+    {
+        style.minWidth  = width_and_height.AsPixel();
+        style.minHeight = width_and_height.AsPixel();
+    });
+    
+    
     /// <summary>
     ///     style.width = <paramref name="width_and_height" /> + 'px'
     ///     <br/>
