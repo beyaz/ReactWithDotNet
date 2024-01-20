@@ -152,9 +152,9 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 BorderRadius(4),
                 MarginLeftRight(3),
 
-                new legend(MarginLeft(8))
+                new legend(MarginLeft(8), DisplayFlexColumnCentered)
                 {
-                    new FlexRow(JustifyContentCenter, MarginTop(-9), Gap(5))
+                    new FlexRow(AlignItemsCenter, Gap(5), PaddingLeftRight(1))
                     {
                         createLabel($"Media Size: {state.ScreenWidth}px"),
                         new FlexRowCentered(BorderRadius(100),Padding(3),Background(Blue200), Hover(Background(Blue300)))
@@ -175,7 +175,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                         }
                     }
                 },
-                new FlexRowCentered(ClassName("reactwithdotnet_designer_slider"), PaddingLeftRight(5), PaddingTop(4), PaddingBottom(10))
+                new FlexRowCentered(ClassName("reactwithdotnet_designer_slider"), PaddingLeftRight(5), PaddingTop(8), PaddingBottom(10))
                 {
                     new style
                     {
