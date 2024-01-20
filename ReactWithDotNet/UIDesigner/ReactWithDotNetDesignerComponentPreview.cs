@@ -78,6 +78,8 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                             {
                                 tryUpdateStatePropertyFromJson(state.JsonTextForDotNetInstanceProperties, instance);
 
+                                ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
+
                                 if (component.IsStateNull)
                                 {
                                     tryUpdateStateFromStateTree(component, Context);
@@ -87,8 +89,6 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                                 {
                                     component.InvokeConstructor().GetAwaiter().GetResult();
                                 }
-
-                                ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
 
                                 component.DesignerCustomizedRender = () => (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
 
@@ -168,6 +168,8 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                     {
                         tryUpdateStatePropertyFromJson(state.JsonTextForDotNetInstanceProperties, instance);
 
+                        ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
+
                         if (component.IsStateNull)
                         {
                             tryUpdateStateFromStateTree(component, Context);
@@ -177,8 +179,6 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                         {
                             component.InvokeConstructor().GetAwaiter().GetResult();
                         }
-
-                        ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
 
                         return component;
                     }
