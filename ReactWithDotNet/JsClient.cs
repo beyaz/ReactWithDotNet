@@ -5,7 +5,7 @@ partial class Mixin
     
     public static void ListenEvent<TDelegate>(this Client client, TDelegate handler) where TDelegate: Delegate
     {
-        ListenEvent(client, handler.GetType().Name, handler.Method.Name);
+        ListenEvent(client, handler.GetType().Name, handler.Method.GetNameWithToken());
     }
     
     /// <summary>
@@ -15,7 +15,7 @@ partial class Mixin
     /// </summary>
     public static void ListenEventThenOnlyUpdateState<TDelegate>(this Client client, TDelegate handler) where TDelegate: Delegate
     {
-        client.CallJsFunction(Core + nameof(ListenEventThenOnlyUpdateState), handler.GetType().Name, handler.Method.Name);
+        client.CallJsFunction(Core + nameof(ListenEventThenOnlyUpdateState), handler.GetType().Name, handler.Method.GetNameWithToken());
     }
     
     public static void DispatchEvent<TDelegate>(this Client client, params object[] eventArguments) where TDelegate: Delegate
@@ -69,32 +69,32 @@ partial class Mixin
 
     public static void ListenEvent(this Client client, string eventName, Func<Task> handler)
     {
-        ListenEvent(client, eventName, handler.Method.Name);
+        ListenEvent(client, eventName, handler.Method.GetNameWithToken());
     }
     
     public static void ListenEvent(this Client client, string eventName, Func<string,Task> handler)
     {
-        ListenEvent(client, eventName, handler.Method.Name);
+        ListenEvent(client, eventName, handler.Method.GetNameWithToken());
     }
     public static void ListenEvent(this Client client, string eventName, Func<int,Task> handler)
     {
-        ListenEvent(client, eventName, handler.Method.Name);
+        ListenEvent(client, eventName, handler.Method.GetNameWithToken());
     }
     
     public static void ListenEvent<TEventArgument1>(this Client client, string eventName, Func<TEventArgument1,Task> handler)
     {
-        ListenEvent(client, eventName, handler.Method.Name);
+        ListenEvent(client, eventName, handler.Method.GetNameWithToken());
     }
     
     public static void ListenEvent<TEventArgument1>(this Client client, Enum eventName, Func<TEventArgument1,Task> handler)
     {
-        ListenEvent(client, eventName.ToString(), handler.Method.Name);
+        ListenEvent(client, eventName.ToString(), handler.Method.GetNameWithToken());
     }
     
     
     public static void ListenEvent(this Client client, Enum eventName, Func<Task> handler)
     {
-        ListenEvent(client, eventName.ToString(), handler.Method.Name);
+        ListenEvent(client, eventName.ToString(), handler.Method.GetNameWithToken());
     }
 
     public static void ListenWindowResizeEvent(this Client client, int resizeTimeout)
@@ -133,7 +133,7 @@ partial class Mixin
 
     public static void OnWindowResize(this Client client, Func<Task> handler)
     {
-        client.ListenEvent(Core + nameof(OnWindowResize), handler.Method.Name);
+        client.ListenEvent(Core + nameof(OnWindowResize), handler.Method.GetNameWithToken());
     }
 
     public static void SetCookie(this Client client, string cookieName, string cookieValue, int expiredays)
@@ -173,7 +173,7 @@ partial class Mixin
     }
     public static void ListenEventOnlyOnce(this Client client, Func<Client,Task> triggerMethod, Func<Task> handler)
     {
-        ListenEventOnlyOnce(client, triggerMethod.Method.Name, handler.Method.Name);
+        ListenEventOnlyOnce(client, triggerMethod.Method.Name, handler.Method.GetNameWithToken());
     }
 
 
