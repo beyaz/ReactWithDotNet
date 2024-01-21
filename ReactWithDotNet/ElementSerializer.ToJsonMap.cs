@@ -453,7 +453,7 @@ partial class ElementSerializer
                     map.Add("$ReactAttributeNames", reactAttributeNames);
                 }
 
-                if (HasComponentDidMountMethod(reactStatefulComponent))
+                if (typeInfo.HasComponentDidMountMethod)
                 {
                     map.Add(___HasComponentDidMountMethod___, true);
                 }
@@ -705,7 +705,7 @@ partial class ElementSerializer
         }
     }
     
-    static async Task AddReactAttributes(ElementSerializerContext context, Node node, JsonMap jsonMap, HtmlElement element)
+    static async Task AddReactAttributes(ElementSerializerContext context, JsonMap jsonMap, HtmlElement element)
     {
         var current = element._head;
         while (current is not null)
@@ -961,7 +961,7 @@ partial class ElementSerializer
                 type.GetMethod("GetPropertyValueForSerializeToClient", BindingFlags.NonPublic | BindingFlags.Static)
                     ?.CreateDelegate(typeof(Func<object, string, (bool needToExport, object value)>));
 
-            typeInfo = new TypeInfo
+            typeInfo = new()
             {
                 CustomEventPropertiesOfType          = reactCustomEventProperties,
                 DotNetPropertiesOfType               = propertyAccessors,
@@ -970,13 +970,29 @@ partial class ElementSerializer
                 ParameterizedCacheableMethodInfoList = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null).ToArray(),
                 StateProperty                        = type.GetProperty("state", BindingFlags.NonPublic | BindingFlags.Instance)?.ToFastAccess(),
 
-                GetPropertyValueForSerializeToClient = getPropertyValueForSerializeToClientFunc
+                GetPropertyValueForSerializeToClient = getPropertyValueForSerializeToClientFunc,
+                
+                HasComponentDidMountMethod = HasComponentDidMountMethod(type)
             };
 
             TypeInfoMap.TryAdd(type, typeInfo);
         }
 
         return typeInfo;
+        
+        static bool HasComponentDidMountMethod(Type componentType)
+        {
+            var didMountMethodInfo = componentType.FindMethod("componentDidMount", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (didMountMethodInfo != null)
+            {
+                if (didMountMethodInfo.DeclaringType != typeof(ReactComponentBase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 
     static async Task<JsonMap> LeafToMap_HtmlElement(Node node, ElementSerializerContext context)
@@ -1008,7 +1024,7 @@ partial class ElementSerializer
             }
         }
 
-        await AddReactAttributes(context,node,map, htmlElement);
+        await AddReactAttributes(context,map, htmlElement);
 
         if (htmlElement.innerText is not null)
         {
@@ -1297,6 +1313,7 @@ partial class ElementSerializer
         public IReadOnlyList<MethodInfo> ParameterizedCacheableMethodInfoList { get; init; }
         public IReadOnlyList<PropertyAccessInfo> ReactAttributedPropertiesOfType { get; init; }
         public PropertyAccessInfo StateProperty { get; init; }
+        public bool HasComponentDidMountMethod { get; init; }
     }
 }
 

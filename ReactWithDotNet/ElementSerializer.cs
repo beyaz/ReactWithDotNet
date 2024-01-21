@@ -802,23 +802,7 @@ static partial class ElementSerializer
     {
         throw new InvalidOperationException("Delegate method should belong to ReactComponent. Please give named method to " + propertyInfo.DeclaringType?.FullName + "::" + propertyInfo.Name + $" Given bindingPath:{bindingPath} is invalid.");
     }
-
-    static bool HasComponentDidMountMethod(object reactStatefulComponent)
-    {
-        var componentType = reactStatefulComponent.GetType();
-
-        var didMountMethodInfo = componentType.FindMethod("componentDidMount", BindingFlags.NonPublic | BindingFlags.Instance);
-        if (didMountMethodInfo != null)
-        {
-            if (didMountMethodInfo.DeclaringType != typeof(ReactComponentBase))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
+    
     static void TryCallBeforeSerializeElementToClient(this ElementSerializerContext context, Element element, Element parent)
     {
         if (element is null || context.BeforeSerializeElementToClient is null)
