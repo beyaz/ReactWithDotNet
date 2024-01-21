@@ -16,7 +16,7 @@ class CSharpPropertyMapperView : Component<CSharpPropertyMapperModel>
 {
     protected override Task constructor()
     {
-        state = new CSharpPropertyMapperModel
+        state = new()
         {
             FigmaCss = @"
 
@@ -132,7 +132,7 @@ class AnyClass
         return Task.CompletedTask;
     }
 
-    void OnCssValueChanged(string figmaCssText)
+    Task OnCssValueChanged(string figmaCssText)
     {
         state.EditCount++;
 
@@ -143,7 +143,7 @@ class AnyClass
         if (string.IsNullOrWhiteSpace(figmaCssText))
         {
             state.ReactInlineStyle = null;
-            return;
+            return Task.CompletedTask;
         }
 
         try
@@ -161,6 +161,8 @@ class AnyClass
         {
             state.StatusMessage = "Error occured: " + exception;
         }
+        
+        return Task.CompletedTask;
     }
 }
 

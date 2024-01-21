@@ -19,13 +19,6 @@ class PageHelperApps : Component
                     onClick  = _ => { SelectedAppName = nameof(HtmlToCSharpView); return Task.CompletedTask; },
                     disabled = SelectedAppName == nameof(HtmlToCSharpView),
                     children = { "Html to CSharp" }
-                },
-                new Button
-                {
-                    variant  = "outlined",
-                    onClick  = _ => { SelectedAppName = nameof(FigmaCss2ReactInlineStyleConverterView); return Task.CompletedTask; },
-                    disabled = SelectedAppName == nameof(FigmaCss2ReactInlineStyleConverterView),
-                    children = { "Figma css to React Inline style" }
                 }
             },
 
@@ -39,10 +32,7 @@ class PageHelperApps : Component
                 return new HtmlToCSharpView();
             }
 
-            if (SelectedAppName == nameof(FigmaCss2ReactInlineStyleConverterView))
-            {
-                return new FigmaCss2ReactInlineStyleConverterView();
-            }
+            
             
 
             return "No app selected";

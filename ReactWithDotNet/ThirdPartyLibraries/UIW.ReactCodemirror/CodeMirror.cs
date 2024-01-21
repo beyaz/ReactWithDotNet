@@ -13,7 +13,7 @@ public class CodeMirror : ThirdPartyReactComponent
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction(Prefix + nameof(CodeMirror) + "::OnChange")]
-    public Action<string> onChange { get; set; }
+    public Func<string,Task> onChange { get; set; }
 
     [ReactProp]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e", eventName = nameof(onChange))]
