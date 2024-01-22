@@ -635,6 +635,11 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                         continue;
                     }
 
+                    if (propertyType.Namespace?.StartsWith("System.Linq.Expressions",StringComparison.OrdinalIgnoreCase) is true)
+                    {
+                        continue;
+                    }
+
                     if (name is "state")
                     {
                         if (propertyType == typeof(EmptyState))
