@@ -91,9 +91,16 @@ class EventBusImp
             return;
         }
 
-        for (var i = 0; i < listenerFunctions.length; i++)
+        // NOTE: maybe user removed some listeners so we need to protect array modification
+
+        const functionArray = listenerFunctions.slice(0);
+
+        for (var i = 0; i < functionArray.length; i++)
         {
-            listenerFunctions[i].apply(null, [eventArgumentsAsArray]);
+            if (listenerFunctions.indexOf(functionArray[i]) >= 0)
+            {
+                functionArray[i].apply(null, [eventArgumentsAsArray]);
+            }
         }
     }
 }
