@@ -252,6 +252,8 @@ function IsEmptyObject(obj)
     return true;
 }
 
+const EventDispatchingFinishCallbackFunctionsQueue = [];
+
 const FunctionExecutionQueue = [];
 
 var ReactIsBusy = false;
@@ -274,6 +276,11 @@ function EmitNextFunctionInFunctionExecutionQueue()
     if (ReactIsBusy === true)
     {
         throw CreateNewDeveloperError("ReactWithDotNet event queue problem occured.");
+    }
+
+    if (FunctionExecutionQueue.length === 0 && EventDispatchingFinishCallbackFunctionsQueue.length > 0)
+    {
+        PushToFunctionExecutionQueue(EventDispatchingFinishCallbackFunctionsQueue.shift())
     }
 
     if (FunctionExecutionQueue.length > 0)
@@ -2461,7 +2468,14 @@ RegisterCoreFunction("GotoMethod", function (timeout, remoteMethodName, remoteMe
 
 RegisterCoreFunction("DispatchEvent", function(eventName, eventArguments)
 {
-    EventBus.Dispatch(eventName, eventArguments);
+    EventBus.Dispatch(eventName, eventArguments);    
+
+    EventDispatchingFinishCallbackFunctionsQueue.push(function ()
+    {
+        EventBus.Dispatch("$<<finished>>$" + eventName + "$<<finished>>$", eventArguments);
+
+        OnReactStateReady();
+    });    
 });
 
 /**

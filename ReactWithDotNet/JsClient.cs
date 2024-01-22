@@ -5,7 +5,15 @@ partial class Mixin
     
     public static void ListenEvent<TDelegate>(this Client client, TDelegate handler) where TDelegate: Delegate
     {
-        ListenEvent(client, handler.GetType().Name, handler.Method.GetNameWithToken());
+        ListenEvent(client, typeof(TDelegate).Name, handler.Method.GetNameWithToken());
+    }
+    
+    /// <summary>
+    ///     Occurs when event dispatching finished.
+    /// </summary>
+    public static void OnDispatchEventFinished<TDelegate>(this Client client, TDelegate handler) where TDelegate: Delegate
+    {
+        ListenEvent(client, "$<<finished>>$" + typeof(TDelegate).Name + "$<<finished>>$", handler.Method.GetNameWithToken());
     }
     
     /// <summary>
