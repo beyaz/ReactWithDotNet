@@ -179,9 +179,15 @@ partial class Mixin
     {
         client.CallJsFunction(Core + nameof(ListenEventOnlyOnce), eventName, handlerMethodName);
     }
+    
     public static void ListenEventOnlyOnce(this Client client, Func<Client,Task> triggerMethod, Func<Task> handler)
     {
         ListenEventOnlyOnce(client, triggerMethod.Method.Name, handler.Method.GetNameWithToken());
+    }
+    
+    public static void ListenEventOnlyOnce<TDelegate>(this Client client, TDelegate handler) where TDelegate: Delegate
+    {
+        ListenEventOnlyOnce(client, typeof(TDelegate).Name, handler.Method.GetNameWithToken());
     }
 
 
