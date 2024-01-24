@@ -61,7 +61,7 @@ static class MetadataHelper
 
                 if (classNodes.Count > 0)
                 {
-                    items.Add(new MetadataNode
+                    items.Add(new()
                     {
                         NamespaceReference = namespaceName,
                         IsNamespace        = true,
@@ -219,6 +219,11 @@ static class MetadataHelper
 
         static bool IsElement(Type type)
         {
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Task<>))
+            {
+                type = type.GetGenericArguments()[0];
+            }
+            
             return type == typeof(Element) || type.IsSubclassOf(typeof(Element));
         }
         
