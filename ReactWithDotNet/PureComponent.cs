@@ -9,7 +9,7 @@ namespace ReactWithDotNet;
 /// </summary>
 public abstract class PureComponent : Element
 {
-    internal Func<Element> DesignerCustomizedRender;
+    internal Func<Task<Element>> DesignerCustomizedRender;
 
     internal List<IModifier> Modifiers;
     
@@ -37,7 +37,7 @@ public abstract class PureComponent : Element
         {
             if (DesignerCustomizedRender != null)
             {
-                return Task.FromResult(DesignerCustomizedRender());
+                return DesignerCustomizedRender();
             }
             
             // ReSharper disable once MethodHasAsyncOverload

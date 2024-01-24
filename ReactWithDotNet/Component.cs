@@ -5,7 +5,7 @@ namespace ReactWithDotNet;
 
 public abstract class ReactComponentBase : Element
 {
-    internal Func<Element> DesignerCustomizedRender;
+    internal Func<Task<Element>> DesignerCustomizedRender;
     
     internal Style StyleForRootElement;
 
@@ -58,7 +58,7 @@ public abstract class ReactComponentBase : Element
         {
             if (DesignerCustomizedRender != null)
             {
-                return Task.FromResult(DesignerCustomizedRender());
+                return DesignerCustomizedRender();
             }
             
             // ReSharper disable once MethodHasAsyncOverload

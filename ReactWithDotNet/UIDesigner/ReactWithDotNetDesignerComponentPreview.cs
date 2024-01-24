@@ -90,7 +90,26 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                                     component.InvokeConstructor().GetAwaiter().GetResult();
                                 }
 
-                                component.DesignerCustomizedRender = () => (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
+                                component.DesignerCustomizedRender = async () =>
+                                {
+                                     var invocationResponse = methodInfo.Invoke(instance, invocationParameters.ToArray());
+
+                                     if (invocationResponse is null)
+                                     {
+                                         return null;
+                                     }
+                                    
+                                     if (invocationResponse is Task task)
+                                     {
+                                         await task;
+                                        
+                                         invocationResponse = task.GetType()
+                                             .GetProperty("Result", BindingFlags.Instance | BindingFlags.Public)!
+                                             .GetValue(task);
+                                     }
+
+                                     return (Element)invocationResponse;
+                                };
 
                                 return component;
                             }
@@ -99,7 +118,26 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                             {
                                 ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
 
-                                reactPureComponent.DesignerCustomizedRender = () => (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
+                                reactPureComponent.DesignerCustomizedRender = async () =>
+                                {
+                                    var invocationResponse = methodInfo.Invoke(instance, invocationParameters.ToArray());
+
+                                    if (invocationResponse is null)
+                                    {
+                                        return null;
+                                    }
+                                    
+                                    if (invocationResponse is Task task)
+                                    {
+                                        await task;
+                                        
+                                        invocationResponse = task.GetType()
+                                            .GetProperty("Result", BindingFlags.Instance | BindingFlags.Public)!
+                                            .GetValue(task);
+                                    }
+
+                                    return (Element)invocationResponse;
+                                };
 
                                 return reactPureComponent;
                             }
