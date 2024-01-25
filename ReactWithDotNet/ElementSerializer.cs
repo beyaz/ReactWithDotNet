@@ -249,23 +249,7 @@ static partial class ElementSerializer
         }
     }
 
-    static BindInfo GetExpressionAsBindingInfo(HtmlElement.PropertyValueDefinition propertyInfo, Func<(IReadOnlyList<string> path, bool isConnectedToState)> calculateSourcePathFunc)
-    {
-        var reactBindAttribute = propertyInfo.bind;
-
-
-        var (path, isConnectedToState) = calculateSourcePathFunc();
-        return new BindInfo
-        {
-            targetProp        = reactBindAttribute.targetProp,
-            eventName         = reactBindAttribute.eventName,
-            sourcePath        = path,
-            sourceIsState     = isConnectedToState,
-            IsBinding         = true,
-            jsValueAccess     = reactBindAttribute.jsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
-            transformFunction = propertyInfo.transformValueInClient
-        };
-    }
+    
 
     static string GetPropertyName(PropertyAccessInfo propertyAccessInfo)
     {
@@ -596,6 +580,8 @@ static partial class ElementSerializer
         
         if (propertyDefinition.isBindingExpression)
         {
+            var propertyValueAsLambdaExpression = (LambdaExpression)propertyValue;
+            
             static object getTargetValueFromExpression(string propertyName, LambdaExpression lambdaExpression)
             {
                 var expression = lambdaExpression.Body;
@@ -629,43 +615,21 @@ static partial class ElementSerializer
                 }
             }
 
-            (IReadOnlyList<string> path, bool isConnectedToState) calculateSourcePathFunc()
+            var reactBindAttribute = propertyDefinition.bind;
+
+            var (path, isConnectedToState) = propertyValueAsLambdaExpression.AsBindingPath();
+            var bindInfo = new BindInfo
             {
-                if (propertyValue is Expression<Func<string>> bindingExpressionAsString)
-                {
-                    return bindingExpressionAsString.AsBindingPath();
-                }
+                targetProp        = reactBindAttribute.targetProp,
+                eventName         = reactBindAttribute.eventName,
+                sourcePath        = path,
+                sourceIsState     = isConnectedToState,
+                IsBinding         = true,
+                jsValueAccess     = reactBindAttribute.jsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
+                transformFunction = propertyDefinition.transformValueInClient
+            };
 
-                if (propertyValue is Expression<Func<int>> bindingExpressionAsInt32)
-                {
-                    return bindingExpressionAsInt32.AsBindingPath();
-                }
-
-                if (propertyValue is Expression<Func<bool>> bindingExpressionAsBoolean)
-                {
-                    return bindingExpressionAsBoolean.AsBindingPath();
-                }
-
-                if (propertyValue is Expression<Func<double>> bindingExpressionAsDouble)
-                {
-                    return bindingExpressionAsDouble.AsBindingPath();
-                }
-                
-                if (propertyValue is Expression<Func<InputValueBinder>> bindingExpressionAsInputValueBinder)
-                {
-                    return bindingExpressionAsInputValueBinder.AsBindingPath();
-                }
-
-                throw new NotImplementedException();
-            }
-
-            var bindInfo = GetExpressionAsBindingInfo(propertyDefinition, calculateSourcePathFunc);
-            if (bindInfo == null)
-            {
-                return NotExportableObject;
-            }
-
-            if (getTargetValueFromExpression(propertyDefinition.name, propertyValue as LambdaExpression) is ReactComponentBase target)
+            if (getTargetValueFromExpression(propertyDefinition.name, propertyValueAsLambdaExpression) is ReactComponentBase target)
             {
                 bindInfo.HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier;
             }
