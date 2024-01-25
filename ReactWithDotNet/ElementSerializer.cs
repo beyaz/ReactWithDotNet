@@ -378,20 +378,13 @@ static partial class ElementSerializer
                 transformFunction = transformValueInClientAttribute?.TransformFunction
             };
 
-            var (success, targetValue) = GetTargetValueFromExpression(propertyValueAsLambdaExpression);
+            var (success, handlerComponentUniqueIdentifier) = GetHandlerComponentUniqueIdentifierFromBindingExpression(propertyValueAsLambdaExpression);
             if (!success)
             {
                 throw HandlerMethodShouldBelongToReactComponent(propertyInfo, propertyValueAsLambdaExpression.ToString());
             }
 
-            if (targetValue is ReactComponentBase targetValueAsReactComponentBase)
-            {
-                bindInfo.HandlerComponentUniqueIdentifier = targetValueAsReactComponentBase.ComponentUniqueIdentifier;
-            }
-            else
-            {
-                throw HandlerMethodShouldBelongToReactComponent(propertyInfo, propertyValueAsLambdaExpression.ToString());
-            }
+            bindInfo.HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier;
 
             var debounceTimeout = instance.GetType().GetProperty(propertyInfo.Name + "DebounceTimeout")?.GetValue(instance) as int?;
             if (debounceTimeout > 0)
@@ -573,20 +566,13 @@ static partial class ElementSerializer
                 transformFunction = propertyDefinition.transformValueInClient
             };
 
-            var (success, targetValue) = GetTargetValueFromExpression(propertyValueAsLambdaExpression);
+            var (success, handlerComponentUniqueIdentifier) = GetHandlerComponentUniqueIdentifierFromBindingExpression(propertyValueAsLambdaExpression);
             if (!success)
             {
                 throw HandlerMethodShouldBelongToReactComponent(propertyDefinition.name, propertyValueAsLambdaExpression.ToString());
             }
 
-            if (targetValue is ReactComponentBase targetValueAsReactComponentBase)
-            {
-                bindInfo.HandlerComponentUniqueIdentifier = targetValueAsReactComponentBase.ComponentUniqueIdentifier;
-            }
-            else
-            {
-                throw HandlerMethodShouldBelongToReactComponent(propertyDefinition.name, propertyValueAsLambdaExpression.ToString());
-            }
+            bindInfo.HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier;
 
             var debounceTimeout = instance.GetType().GetProperty(propertyDefinition.name+ "DebounceTimeout")?.GetValue(instance) as int?;
             if (debounceTimeout > 0)
@@ -614,6 +600,19 @@ static partial class ElementSerializer
         return propertyValue;
     }
 
+    static (bool success, int value) GetHandlerComponentUniqueIdentifierFromBindingExpression(LambdaExpression lambdaExpression)
+    {
+        var (success, targetValue) = GetTargetValueFromExpression(lambdaExpression);
+        if (success)
+        {
+            if (targetValue is ReactComponentBase targetValueAsReactComponentBase)
+            {
+                return  (true, targetValueAsReactComponentBase.ComponentUniqueIdentifier);
+            }
+        }
+
+        return default;
+    }
     
     static (bool success, object value) GetTargetValueFromExpression(LambdaExpression lambdaExpression)
     {
