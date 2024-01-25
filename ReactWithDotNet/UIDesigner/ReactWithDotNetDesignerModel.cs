@@ -19,7 +19,7 @@ public class ReactWithDotNetDesignerModel
 
     public MethodReference SelectedMethod { get; set; }
 
-    public string SelectedMethodTreeNodeKey { get; set; }
+    public string SelectedTreeNodeKey { get; set; }
 
     public TypeReference SelectedType { get; set; }
     

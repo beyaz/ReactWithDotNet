@@ -196,7 +196,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             {
                 ClassFilter               = state.ClassFilter,
                 MethodFilter              = state.MethodFilter,
-                SelectedMethodTreeNodeKey = state.SelectedMethodTreeNodeKey,
+                SelectedMethodTreeNodeKey = state.SelectedTreeNodeKey,
                 SelectionChanged          = OnElementSelected,
                 AssemblyFilePath          = state.SelectedAssemblyFilePath
             },
@@ -614,11 +614,11 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         state.JsonTextForDotNetInstanceProperties = null;
         state.JsonTextForDotNetMethodParameters   = null;
 
-        state.SelectedMethodTreeNodeKey = keyOfSelectedTreeNode;
+        state.SelectedTreeNodeKey = keyOfSelectedTreeNode;
 
         var fullAssemblyPath = state.SelectedAssemblyFilePath;
 
-        var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedMethodTreeNodeKey, state.ClassFilter, state.MethodFilter);
+        var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedTreeNodeKey, state.ClassFilter, state.MethodFilter);
         if (node is not null)
         {
             if (node.IsClass)
