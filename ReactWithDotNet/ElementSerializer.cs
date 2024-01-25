@@ -358,39 +358,6 @@ static partial class ElementSerializer
         {
             var propertyValueAsLambdaExpression = (LambdaExpression)propertyValue;
             
-            static object getTargetValueFromExpression(PropertyInfo pi, LambdaExpression lambdaExpression)
-            {
-                var expression = lambdaExpression.Body;
-                while (true)
-                {
-                    if (expression is UnaryExpression unaryExpression)
-                    {
-                        expression = unaryExpression.Operand;
-
-                        continue;
-                    }
-                    
-                    if (expression is MemberExpression memberExpression)
-                    {
-                        expression = memberExpression.Expression;
-                        continue;
-                    }
-
-                    if (expression is ConstantExpression constantExpression)
-                    {
-                        return constantExpression.Value;
-                    }
-
-                    if (expression is MethodCallExpression methodCallExpression)
-                    {
-                        expression = methodCallExpression.Object;
-                        continue;
-                    }
-
-                    throw HandlerMethodShouldBelongToReactComponent(pi, lambdaExpression.ToString());
-                }
-            }
-            
             var reactBindAttribute = propertyInfo.GetCustomAttribute<ReactBindAttribute>();
             if (reactBindAttribute == null)
             {
@@ -411,9 +378,19 @@ static partial class ElementSerializer
                 transformFunction = transformValueInClientAttribute?.TransformFunction
             };
 
-            if (getTargetValueFromExpression(propertyInfo, propertyValueAsLambdaExpression) is ReactComponentBase target)
+            var (success, targetValue) = GetTargetValueFromExpression(propertyValueAsLambdaExpression);
+            if (!success)
             {
-                bindInfo.HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier;
+                throw HandlerMethodShouldBelongToReactComponent(propertyInfo, propertyValueAsLambdaExpression.ToString());
+            }
+
+            if (targetValue is ReactComponentBase targetValueAsReactComponentBase)
+            {
+                bindInfo.HandlerComponentUniqueIdentifier = targetValueAsReactComponentBase.ComponentUniqueIdentifier;
+            }
+            else
+            {
+                throw HandlerMethodShouldBelongToReactComponent(propertyInfo, propertyValueAsLambdaExpression.ToString());
             }
 
             var debounceTimeout = instance.GetType().GetProperty(propertyInfo.Name + "DebounceTimeout")?.GetValue(instance) as int?;
@@ -582,39 +559,6 @@ static partial class ElementSerializer
         {
             var propertyValueAsLambdaExpression = (LambdaExpression)propertyValue;
             
-            static object getTargetValueFromExpression(string propertyName, LambdaExpression lambdaExpression)
-            {
-                var expression = lambdaExpression.Body;
-                while (true)
-                {
-                    if (expression is UnaryExpression unaryExpression)
-                    {
-                        expression = unaryExpression.Operand;
-
-                        continue;
-                    }
-                    
-                    if (expression is MemberExpression memberExpression)
-                    {
-                        expression = memberExpression.Expression;
-                        continue;
-                    }
-
-                    if (expression is ConstantExpression constantExpression)
-                    {
-                        return constantExpression.Value;
-                    }
-
-                    if (expression is MethodCallExpression methodCallExpression)
-                    {
-                        expression = methodCallExpression.Object;
-                        continue;
-                    }
-
-                    throw HandlerMethodShouldBelongToReactComponent(propertyName, lambdaExpression.ToString());
-                }
-            }
-
             var reactBindAttribute = propertyDefinition.bind;
 
             var (path, isConnectedToState) = propertyValueAsLambdaExpression.AsBindingPath();
@@ -629,9 +573,19 @@ static partial class ElementSerializer
                 transformFunction = propertyDefinition.transformValueInClient
             };
 
-            if (getTargetValueFromExpression(propertyDefinition.name, propertyValueAsLambdaExpression) is ReactComponentBase target)
+            var (success, targetValue) = GetTargetValueFromExpression(propertyValueAsLambdaExpression);
+            if (!success)
             {
-                bindInfo.HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier;
+                throw HandlerMethodShouldBelongToReactComponent(propertyDefinition.name, propertyValueAsLambdaExpression.ToString());
+            }
+
+            if (targetValue is ReactComponentBase targetValueAsReactComponentBase)
+            {
+                bindInfo.HandlerComponentUniqueIdentifier = targetValueAsReactComponentBase.ComponentUniqueIdentifier;
+            }
+            else
+            {
+                throw HandlerMethodShouldBelongToReactComponent(propertyDefinition.name, propertyValueAsLambdaExpression.ToString());
             }
 
             var debounceTimeout = instance.GetType().GetProperty(propertyDefinition.name+ "DebounceTimeout")?.GetValue(instance) as int?;
@@ -661,7 +615,38 @@ static partial class ElementSerializer
     }
 
     
-    
+    static (bool success, object value) GetTargetValueFromExpression(LambdaExpression lambdaExpression)
+    {
+        var expression = lambdaExpression.Body;
+        while (true)
+        {
+            if (expression is UnaryExpression unaryExpression)
+            {
+                expression = unaryExpression.Operand;
+
+                continue;
+            }
+                    
+            if (expression is MemberExpression memberExpression)
+            {
+                expression = memberExpression.Expression;
+                continue;
+            }
+
+            if (expression is ConstantExpression constantExpression)
+            {
+                return (true, constantExpression.Value);
+            }
+
+            if (expression is MethodCallExpression methodCallExpression)
+            {
+                expression = methodCallExpression.Object;
+                continue;
+            }
+
+            return default;
+        }
+    }
     
     
     static string GetReactComponentTypeInfo(object reactStatefulComponent)
