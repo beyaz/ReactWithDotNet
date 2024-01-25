@@ -25,7 +25,15 @@ public abstract class ReactComponentBase : Element
     internal abstract bool IsStateNull { get; }
 
     [System.Text.Json.Serialization.JsonIgnore]
-    public Client Client { get; internal set; } = new();
+    public Client Client 
+    {
+        get
+        {
+            return _client ??= new ();
+        }
+    }
+
+    internal Client _client;
 
     internal int ComponentUniqueIdentifier;
 

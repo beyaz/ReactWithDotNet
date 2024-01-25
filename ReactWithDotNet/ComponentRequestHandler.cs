@@ -3,6 +3,7 @@
 namespace ReactWithDotNet;
 
 using static Array;
+using static ReactWithDotNet.Client;
 
 sealed class ClientStateInfo
 {
@@ -51,6 +52,7 @@ class ComponentResponse
     
     public object NewState { get; set; }
     public JsonMap NewDotNetProperties { get; set; }
+    public IReadOnlyList<ClientTask> ClientTaskList{ get; set; }
     
     public string ErrorMessage { get; set; }
 
@@ -306,11 +308,12 @@ static class ComponentRequestHandler
                     }
                 }
                 
-                return new ()
+                return new()
                 {
-                    NewState         = newState,
+                    NewState            = newState,
                     NewDotNetProperties = dotNetProperties,
-                    Trace    = tracer.Messages
+                    ClientTaskList =instance._client is not null && instance._client.TaskList.Count > 0 ? instance._client.TaskList: null,
+                    Trace               = tracer.Messages
                 };
             }
             

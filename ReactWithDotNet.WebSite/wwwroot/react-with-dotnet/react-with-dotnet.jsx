@@ -1627,7 +1627,15 @@ function HandleAction(actionArguments)
             // note: setState not used here because this is special case. we don't want to trigger render.
             component.state[DotNetState] = response.NewState;
             component.state[DotNetProperties] = response.NewDotNetProperties;
+            if (response.ClientTaskList)
+            {
+                component.state[ClientTasks] = response.ClientTaskList;
+
+                HandleComponentClientTasks(component);
+            }
+            
             stateCallback();
+
             return;
         }
 

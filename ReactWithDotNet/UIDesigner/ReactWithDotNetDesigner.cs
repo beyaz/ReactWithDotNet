@@ -61,40 +61,95 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         state.SelectedAssemblyFilePath = Assembly.GetEntryAssembly()?.Location;
 
         Client.ListenEvent("ComponentPreviewRefreshed", OnComponentPreviewRefreshed);
+        
+        Client.ListenEventThenOnlyUpdateState<JsonTextChanged>(OnJsonTextChanged);
 
         return Task.CompletedTask;
     }
 
+    Task OnJsonTextChanged(string componentname, string jsontext)
+    {
+        if (componentname == nameof(state.JsonTextForDotNetInstanceProperties))
+        {
+            state.JsonTextForDotNetInstanceProperties = jsontext;
+        }
+        else
+        {
+            state.JsonTextForDotNetMethodParameters = jsontext;
+        }
+        
+        SaveState();
+        
+        Client.RefreshComponentPreview();
+        
+        return Task.CompletedTask;
+    }
+    
+    delegate Task JsonTextChanged(string componentName, string jsonText);
+    
+    class JsonTextEditor : Component<JsonTextEditor.JsonTextEditorState>
+    {
+        public required string Name { get; init; }
+        public required string JsonText { get; init; }
+        
+        internal class JsonTextEditorState
+        {
+            public string JsonText { get; set; }
+        }
+
+        protected override Task constructor()
+        {
+            state = new()
+            {
+                JsonText = JsonText
+            };
+            
+            return Task.CompletedTask;
+        }
+
+        Task OnKeypressFinished()
+        {
+            Client.DispatchEvent<JsonTextChanged>(Name,state.JsonText);
+
+            return Task.CompletedTask;
+        }
+        
+        protected override Element render()
+        {
+            return new Editor
+            {
+                defaultLanguage          = "json",
+                valueBind                = () => state.JsonText,
+                valueBindDebounceTimeout = 300,
+                valueBindDebounceHandler = OnKeypressFinished,
+                options =
+                {
+                    renderLineHighlight = "none",
+                    fontFamily          = "'IBM Plex Mono Medium', 'Courier New', monospace",
+                    fontSize            = 11,
+                    minimap             = new { enabled = false },
+                    lineNumbers         = "off"
+                }
+            };
+        }
+    }
     protected override Element render()
     {
         Element createJsonEditor()
         {
-            Expression<Func<string>> valueBind = () => state.JsonTextForDotNetMethodParameters;
-
             if (state.IsInstanceEditorActive)
             {
-                valueBind = () => state.JsonTextForDotNetInstanceProperties;
-            }
-
-            return new Fragment
-            {
-                new link { href = "https://fonts.cdnfonts.com/css/ibm-plex-mono-3", rel = "stylesheet" },
-
-                new Editor
+                return new JsonTextEditor
                 {
-                    defaultLanguage          = "json",
-                    valueBind                = valueBind,
-                    valueBindDebounceTimeout = 700,
-                    valueBindDebounceHandler = OnKeypressFinished,
-                    options =
-                    {
-                        renderLineHighlight = "none",
-                        fontFamily          = "'IBM Plex Mono Medium', 'Courier New', monospace",
-                        fontSize            = 11,
-                        minimap             = new { enabled = false },
-                        lineNumbers         = "off"
-                    }
-                }
+                    JsonText = state.JsonTextForDotNetInstanceProperties,
+                    Name     = nameof(state.JsonTextForDotNetInstanceProperties)
+                };
+            }
+            
+            return new JsonTextEditor
+            {
+                JsonText = state.JsonTextForDotNetMethodParameters,
+                Name     = nameof(state.JsonTextForDotNetMethodParameters)
             };
         }
 
@@ -105,7 +160,9 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
         var propertyPanel = new FlexColumn(Height("100%"), Width("100%"), FontSize15)
         {
-            new link { href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap", rel = "stylesheet" },
+            //new link { href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap", rel = "stylesheet" },
+            
+            new link { href = "https://fonts.cdnfonts.com/css/ibm-plex-mono-3", rel = "stylesheet" },
 
             new FlexColumn(MarginLeftRight(3))
             {
@@ -744,14 +801,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         return Task.CompletedTask;
     }
 
-    Task OnKeypressFinished()
-    {
-        SaveState();
-
-        Client.RefreshComponentPreview();
-
-        return Task.CompletedTask;
-    }
+    
 
     Task OnMediaSizeChanged()
     {

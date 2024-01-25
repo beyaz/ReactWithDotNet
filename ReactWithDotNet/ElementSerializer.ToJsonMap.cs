@@ -451,9 +451,9 @@ partial class ElementSerializer
                     map.Add(___HasComponentDidMountMethod___, true);
                 }
 
-                if (reactStatefulComponent.Client.TaskList.Count > 0)
+                if (reactStatefulComponent._client is not null && reactStatefulComponent._client.TaskList.Count > 0)
                 {
-                    map.Add("$ClientTasks", reactStatefulComponent.Client.TaskList);
+                    map.Add("$ClientTasks", reactStatefulComponent._client.TaskList);
                 }
 
                 if (node.IsHighOrderComponent)
@@ -536,14 +536,18 @@ partial class ElementSerializer
 
                         stateProperty.SetValueFunc(component, ReflectionHelper.DeepCopy(state));
 
-                        if (component.Client.TaskList.Count == 0)
+                        if (component._client is not null)
                         {
-                            component.Client = new Client();
+                            if (component._client.TaskList.Count == 0)
+                            {
+                                component._client = new ();
+                            }
+                            else
+                            {
+                                component._client = ReflectionHelper.DeepCopy(component._client);
+                            }
                         }
-                        else
-                        {
-                            component.Client = ReflectionHelper.DeepCopy(component.Client);
-                        }
+                        
 
                         return component;
 
