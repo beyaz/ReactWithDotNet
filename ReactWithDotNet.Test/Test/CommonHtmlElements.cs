@@ -1638,7 +1638,7 @@ public class ExportingCommonHtmlElements
                     },
                     new ()
                     {
-                        Name = "contenteditable"
+                        Name = "contentEditable"
                     },
                     new ()
                     {

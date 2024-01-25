@@ -6377,16 +6377,16 @@ public  partial class HtmlElement
     #endregion
 
 
-    #region string contenteditable
-    PropertyValueNode<string> _contenteditable;
-    static readonly PropertyValueDefinition _contenteditable_ = new()
+    #region string contentEditable
+    PropertyValueNode<string> _contentEditable;
+    static readonly PropertyValueDefinition _contentEditable_ = new()
     {
-        name = nameof(contenteditable)
+        name = nameof(contentEditable)
     };
-    public string contenteditable
+    public string contentEditable
     {
-        get => _contenteditable?.value;
-        set => SetValue(_contenteditable_, ref _contenteditable, value);
+        get => _contentEditable?.value;
+        set => SetValue(_contentEditable_, ref _contentEditable, value);
     }
     #endregion
 
@@ -6630,7 +6630,7 @@ public  partial class HtmlElement
 
     public static HtmlElementModifier Draggable(string value) => Modify(x => x.draggable = value);
 
-    public static HtmlElementModifier Contenteditable(string value) => Modify(x => x.contenteditable = value);
+    public static HtmlElementModifier ContentEditable(string value) => Modify(x => x.contentEditable = value);
 
     public static HtmlElementModifier ClassName(string value) => Modify(x => x.className = value);
 
