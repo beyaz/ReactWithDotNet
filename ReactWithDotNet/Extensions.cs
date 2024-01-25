@@ -5,7 +5,7 @@ namespace ReactWithDotNet;
 
 static class Extensions
 {
-    public static (IReadOnlyList<string> path, bool isConnectedToState) AsBindingPath<T>(this Expression<Func<T>> propertyAccessor)
+    public static (IReadOnlyList<string> path, bool isConnectedToState) AsBindingPath(this LambdaExpression propertyAccessor)
     {
         var path = AsPath(propertyAccessor.Body);
 
