@@ -18,6 +18,16 @@ static class ReflectionHelper
             return Convert.ChangeType(index, type);
         }
 
+        if (type == typeof(DateTime))
+        {
+            return DateTime.Now;
+        }
+        
+        if (type == typeof(DateTime?))
+        {
+            return (DateTime?)DateTime.Now;
+        }
+
         if (type.IsValueType)
         {
             return Activator.CreateInstance(type);
