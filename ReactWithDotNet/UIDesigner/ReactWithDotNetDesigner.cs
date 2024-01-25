@@ -110,6 +110,17 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             return Task.CompletedTask;
         }
 
+        protected internal override Task OverrideStateFromPropsBeforeRender()
+        {
+            if (state.SelectedTreeNodeKey != SelectedTreeNodeKey)
+            {
+                state.SelectedTreeNodeKey = SelectedTreeNodeKey;
+                state.JsonText = JsonText;
+            }
+            
+            return Task.CompletedTask;
+        }
+
         Task OnKeypressFinished()
         {
             Client.DispatchEvent<JsonTextChanged>(Name,state.JsonText);

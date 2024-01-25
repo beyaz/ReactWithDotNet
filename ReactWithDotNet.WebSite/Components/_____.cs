@@ -15,7 +15,7 @@ class SampleComponent: Component
           {
               text = "A simple CMS for your Next.js app",
               // disabled = "",
-              contenteditable = "false",
+              //contentEditable = "false",
               style =
               {
                   border = "0px solid rgb(229, 231, 235)",
@@ -63,7 +63,7 @@ class SampleComponent: Component
                   {
                       text = "Free plan",
                       // disabled = "",
-                      contenteditable = "false",
+                      //contentEditable = "false",
                       style =
                       {
                           border = "0px solid rgb(229, 231, 235)",
@@ -97,7 +97,7 @@ class SampleComponent: Component
                   {
                       text = "No credit card required",
                       // disabled = "",
-                      contenteditable = "false",
+                      //contentEditable = "false",
                       style =
                       {
                           border = "0px solid rgb(229, 231, 235)",
@@ -131,7 +131,7 @@ class SampleComponent: Component
                   {
                       text = "Setup in minutes",
                       // disabled = "",
-                      contenteditable = "false",
+                      //contentEditable = "false",
                       style =
                       {
                           border = "0px solid rgb(229, 231, 235)",
@@ -160,7 +160,7 @@ class SampleComponent: Component
                               {
                                   text = "Get started",
                                   // disabled = "",
-                                  contenteditable = "false",
+                                  //contentEditable = "false",
                                   style = { border = "0px solid rgb(229, 231, 235)", boxSizing = "border-box" }
                               }
                           }
@@ -175,7 +175,7 @@ class SampleComponent: Component
                           {
                               text = "product video",
                               // disabled = "",
-                              contenteditable = "false",
+                              //contentEditable = "false",
                               style = { border = "0px solid rgb(229, 231, 235)", boxSizing = "border-box", marginLeft = "4px" }
                           }
                       }
@@ -184,7 +184,7 @@ class SampleComponent: Component
                   {
                       text = "Publish content faster, improve page speed and SEO ranking.",
                       // disabled = "",
-                      contenteditable = "false",
+                      //contentEditable = "false",
                       style =
                       {
                           border = "0px solid rgb(229, 231, 235)",
