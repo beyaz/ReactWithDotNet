@@ -91,17 +91,20 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
     {
         public required string Name { get; init; }
         public required string JsonText { get; init; }
-        
+        public required string SelectedTreeNodeKey { get; init; }
+
         internal class JsonTextEditorState
         {
             public string JsonText { get; set; }
+            public string SelectedTreeNodeKey { get; set; }
         }
 
         protected override Task constructor()
         {
             state = new()
             {
-                JsonText = JsonText
+                JsonText            = JsonText,
+                SelectedTreeNodeKey = SelectedTreeNodeKey
             };
             
             return Task.CompletedTask;
@@ -141,15 +144,17 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             {
                 return new JsonTextEditor
                 {
-                    JsonText = state.JsonTextForDotNetInstanceProperties,
-                    Name     = nameof(state.JsonTextForDotNetInstanceProperties)
+                    JsonText            = state.JsonTextForDotNetInstanceProperties,
+                    Name                = nameof(state.JsonTextForDotNetInstanceProperties),
+                    SelectedTreeNodeKey = state.SelectedTreeNodeKey
                 };
             }
             
             return new JsonTextEditor
             {
-                JsonText = state.JsonTextForDotNetMethodParameters,
-                Name     = nameof(state.JsonTextForDotNetMethodParameters)
+                JsonText            = state.JsonTextForDotNetMethodParameters,
+                Name                = nameof(state.JsonTextForDotNetMethodParameters),
+                SelectedTreeNodeKey = state.SelectedTreeNodeKey
             };
         }
 
