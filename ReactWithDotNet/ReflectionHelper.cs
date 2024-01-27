@@ -213,6 +213,11 @@ static class ReflectionHelper
         return null;
     }
 
+    public static bool IsCompilerGenerated(this Type type)
+    {
+        return Attribute.GetCustomAttribute(type, typeof(CompilerGeneratedAttribute)) != null;
+    }
+
     public static bool IsVoidTaskDelegate(this PropertyInfo propertyInfo)
     {
         return propertyInfo.PropertyType.GetMethod("Invoke")?.ReturnType.FullName == "System.Threading.Tasks.Task";
@@ -234,10 +239,5 @@ static class ReflectionHelper
         public static readonly Type Type_uint = typeof(uint);
         public static readonly Type Type_ulong = typeof(ulong);
         public static readonly Type Type_ushort = typeof(ushort);
-    }
-    
-    public static bool IsCompilerGenerated(this Type type)
-    {
-        return Attribute.GetCustomAttribute(type, typeof(CompilerGeneratedAttribute)) != null;
     }
 }
