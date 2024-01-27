@@ -76,7 +76,9 @@ static class TextTransformer
             return null;
         }
 
-        line = line.RemoveFromStart("public ", StringComparison.OrdinalIgnoreCase);
+        line = line.RemoveFromStart("public ", StringComparison.OrdinalIgnoreCase).Trim();
+        
+        line = line.RemoveFromStart("required ", StringComparison.OrdinalIgnoreCase).Trim();
 
         const string pattern = @"[A-Za-z\?\<\>,]* ([A-Za-z0-9_]*) .*";
 
