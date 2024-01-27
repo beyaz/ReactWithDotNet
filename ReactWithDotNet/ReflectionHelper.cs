@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 using static ReactWithDotNet.ReflectionHelper.PrimitiveTypeCache;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -216,7 +217,7 @@ static class ReflectionHelper
     {
         return propertyInfo.PropertyType.GetMethod("Invoke")?.ReturnType.FullName == "System.Threading.Tasks.Task";
     }
-    
+
     internal static class PrimitiveTypeCache
     {
         public static readonly Type Type_bool = typeof(bool);
@@ -233,5 +234,10 @@ static class ReflectionHelper
         public static readonly Type Type_uint = typeof(uint);
         public static readonly Type Type_ulong = typeof(ulong);
         public static readonly Type Type_ushort = typeof(ushort);
+    }
+    
+    public static bool IsCompilerGenerated(this Type type)
+    {
+        return Attribute.GetCustomAttribute(type, typeof(CompilerGeneratedAttribute)) != null;
     }
 }
