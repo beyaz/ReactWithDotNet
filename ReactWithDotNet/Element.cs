@@ -171,33 +171,64 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         ModifyHelper.ProcessModifier(this, modifier);
     }
 
-    internal static Element ToElement(Func<Element> elementCreatorFunc)
+    internal static Element ToElement(Func<Element> func)
     {
-        if (elementCreatorFunc == null)
+        if (func == null)
         {
             return null;
         }
 
-        if (elementCreatorFunc.Target is not null)
+        if (func.Target is not null)
         {
-            var targeType = elementCreatorFunc.Target.GetType();
+            var targeType = func.Target.GetType();
 
             if (targeType.IsCompilerGenerated())
             {
                 return new CompilerGeneratedClassComponent
                 {
-                    renderFunc = elementCreatorFunc,
+                    renderFunc = func,
                     
-                    RenderMethodNameWithToken = elementCreatorFunc.Method.GetNameWithToken(),
+                    RenderMethodNameWithToken = func.Method.GetNameWithToken(),
                     
-                    Scope = ReflectionHelper.FieldsToDictionaryOfCompilerGeneratedTypeInstance(elementCreatorFunc.Target),
+                    Scope = ReflectionHelper.FieldsToDictionaryOfCompilerGeneratedTypeInstance(func.Target),
                     
                     CompilerGeneratedType = targeType
                 };
             }
         }
 
-        return elementCreatorFunc.Invoke();
+        return func.Invoke();
+    }
+    
+    internal static Element ToElement(Func<Task<Element>> func)
+    {
+        if (func == null)
+        {
+            return null;
+        }
+
+        if (func.Target is not null)
+        {
+            var targeType = func.Target.GetType();
+
+            if (targeType.IsCompilerGenerated())
+            {
+                return new CompilerGeneratedClassComponent
+                {
+                    IsRenderAsync = true,
+                            
+                    renderFuncAsync = func,
+                    
+                    RenderMethodNameWithToken = func.Method.GetNameWithToken(),
+                    
+                    Scope = ReflectionHelper.FieldsToDictionaryOfCompilerGeneratedTypeInstance(func.Target),
+                    
+                    CompilerGeneratedType = targeType
+                };
+            }
+        }
+
+        return new ElementAsTask(func());
     }
     
     /// <summary>
