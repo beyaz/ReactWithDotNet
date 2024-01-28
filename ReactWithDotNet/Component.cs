@@ -3,7 +3,14 @@ using System.Reflection;
 
 namespace ReactWithDotNet;
 
-public abstract class ReactComponentBase : Element
+public interface Scope
+{
+    public Client Client { get; }
+    
+    public ReactContext Context { get;  }
+}
+
+public abstract class ReactComponentBase : Element, Scope
 {
     internal Func<Task<Element>> DesignerCustomizedRender;
     
@@ -245,6 +252,10 @@ sealed class CompilerGeneratedClassComponent : Component
     internal Func<Element> renderFunc;
     
     internal Func<Task<Element>> renderFuncAsync;
+
+    internal Func<Scope, Element> renderFuncWithScope;
+    
+    internal Func<Scope,Task<Element>> renderFuncAsyncWithScope;
     
     internal object _target;
     
@@ -258,6 +269,7 @@ sealed class CompilerGeneratedClassComponent : Component
     public string RenderMethodNameWithToken { get; set; }
     
     public bool IsRenderAsync { get; set; }
+   
 
     public void InitializeTarget()
     {
@@ -300,11 +312,22 @@ sealed class CompilerGeneratedClassComponent : Component
         {
             return renderFunc();
         }
+
+        if (renderFuncWithScope is not null)
+        {
+            return renderFuncWithScope(this);
+        }
         
         MethodInfo methodInfo = null;
         if (TryResolveMethodInfo(RenderMethodNameWithToken, ref methodInfo))
         {
-            var response = methodInfo.Invoke(_target, null);
+            object[] invocationParameters = null;
+            if (methodInfo.GetParameters().Length == 1)
+            {
+                invocationParameters = [this];
+            }
+            
+            var response = methodInfo.Invoke(_target, invocationParameters);
 
             // recalculate scope because maybe fields have changed
             Scope = ReflectionHelper.FieldsToDictionaryOfCompilerGeneratedTypeInstance(_target);
@@ -322,10 +345,21 @@ sealed class CompilerGeneratedClassComponent : Component
             return renderFuncAsync();
         }
         
+        if (renderFuncAsyncWithScope is not null)
+        {
+            return renderFuncAsyncWithScope(this);
+        }
+        
         MethodInfo methodInfo = null;
         if (TryResolveMethodInfo(RenderMethodNameWithToken, ref methodInfo))
         {
-            var response = methodInfo.Invoke(_target, null);
+            object[] invocationParameters = null;
+            if (methodInfo.GetParameters().Length == 1)
+            {
+                invocationParameters = [this];
+            }
+            
+            var response = methodInfo.Invoke(_target, invocationParameters);
 
             // recalculate scope because maybe fields have changed
             Scope = ReflectionHelper.FieldsToDictionaryOfCompilerGeneratedTypeInstance(_target);

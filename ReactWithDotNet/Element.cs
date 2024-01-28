@@ -101,7 +101,19 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     {
         return ToElement(func);
     }
+    
+    public static implicit operator Element(Func<Scope,Element> func)
+    {
+        return ToElement(func);
+    }
+    
+    
     public static implicit operator Element(Func<Task<Element>> func)
+    {
+        return ToElement(func);
+    }
+    
+    public static implicit operator Element(Func<Scope,Task<Element>> func)
     {
         return ToElement(func);
     }
@@ -200,6 +212,38 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         return func.Invoke();
     }
     
+    internal static Element ToElement(Func<Scope,Element> func)
+    {
+        if (func == null)
+        {
+            return null;
+        }
+
+        if (func.Target is not null)
+        {
+            var targeType = func.Target.GetType();
+
+            if (targeType.IsCompilerGenerated())
+            {
+                return new CompilerGeneratedClassComponent
+                {
+                    renderFuncWithScope = func,
+                    
+                    RenderMethodNameWithToken = func.Method.GetNameWithToken(),
+                    
+                    Scope = ReflectionHelper.FieldsToDictionaryOfCompilerGeneratedTypeInstance(func.Target),
+                    
+                    CompilerGeneratedType = targeType
+                };
+            }
+        }
+        
+        return new CompilerGeneratedClassComponent
+        {
+            renderFuncWithScope = func
+        };
+    }
+    
     internal static Element ToElement(Func<Task<Element>> func)
     {
         if (func == null)
@@ -229,6 +273,42 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         }
 
         return new ElementAsTask(func());
+    }
+    
+    internal static Element ToElement(Func<Scope,Task<Element>> func)
+    {
+        if (func == null)
+        {
+            return null;
+        }
+
+        if (func.Target is not null)
+        {
+            var targeType = func.Target.GetType();
+
+            if (targeType.IsCompilerGenerated())
+            {
+                return new CompilerGeneratedClassComponent
+                {
+                    IsRenderAsync = true,
+                            
+                    renderFuncAsyncWithScope = func,
+                    
+                    RenderMethodNameWithToken = func.Method.GetNameWithToken(),
+                    
+                    Scope = ReflectionHelper.FieldsToDictionaryOfCompilerGeneratedTypeInstance(func.Target),
+                    
+                    CompilerGeneratedType = targeType
+                };
+            }
+        }
+
+        return new CompilerGeneratedClassComponent
+        {
+            IsRenderAsync = true,
+
+            renderFuncAsyncWithScope = func
+        };
     }
     
     /// <summary>
