@@ -841,6 +841,8 @@ partial class ElementSerializer
             convertToTask(fastPropertyInfo);
         }
 
+        return;
+
         void convertToTask(PropertyAccessInfo fastPropertyInfo)
         {
             var @delegate = (Delegate)fastPropertyInfo.GetValueFunc(reactComponent);
@@ -851,7 +853,9 @@ partial class ElementSerializer
 
             if (@delegate.Target is ReactComponentBase target)
             {
-                if (target.ComponentUniqueIdentifier == 0)
+                var handlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier;
+                
+                if (handlerComponentUniqueIdentifier == 0)
                 {
                     throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + target.GetType().FullName);
                 }
@@ -860,17 +864,21 @@ partial class ElementSerializer
 
                 propertyInfo.SetValue(reactComponent, null);
 
-                reactComponent.Client.InitializeDotnetComponentEventListener(GetEventSenderInfo(reactComponent, propertyInfo.Name), @delegate.Method.GetNameWithToken(), target.ComponentUniqueIdentifier);
+                var eventSenderInfo = GetEventSenderInfo(reactComponent, propertyInfo.Name);
+
+                var handlerMethod = @delegate.Method.GetNameWithToken();
+                
+                reactComponent.Client.InitializeDotnetComponentEventListener(eventSenderInfo, handlerMethod, handlerComponentUniqueIdentifier);
+
+                return;
             }
-            else
-            {
-                throw DeveloperException(string.Join(Environment.NewLine,
-                [
-                    "Action handler method should belong to React component.",
-                    $"@delegate.Target: {@delegate.Target?.GetType().FullName}",
-                    $"@delegate.Method: {@delegate.Method}"
-                ]));
-            }
+            
+            throw DeveloperException(string.Join(Environment.NewLine,
+            [
+                "Action handler method should belong to React component.",
+                $"@delegate.Target: {@delegate.Target?.GetType().FullName}",
+                $"@delegate.Method: {@delegate.Method}"
+            ]));
         }
     }
 
