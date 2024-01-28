@@ -58,43 +58,8 @@ partial class ElementSerializer
             
             if (node.ElementIsTaskFunc)
             {
-                Element realElement;
+                var realElement = Element.ToElement(await node.ElementAsTaskFunc.Value);
                     
-                var funcElement = await node.ElementAsTaskFunc.Value;
-                
-                if (funcElement.Target is not null)
-                {
-                    var targeType = funcElement.Target.GetType();
-
-                    if (targeType.IsCompilerGenerated())
-                    {
-                        realElement = new CompilerGeneratedClassComponent
-                        {
-                            renderFunc = funcElement,
-                    
-                            RenderMethodNameWithToken = funcElement.Method.GetNameWithToken(),
-                    
-                            Scope = ReflectionHelper.FieldsToDictionaryOfCompilerGeneratedTypeInstance(funcElement.Target),
-                    
-                            CompilerGeneratedType = targeType
-                        };
-                
-                        if (node.ElementAsTaskFunc.Modifiers is not null)
-                        {
-                            foreach (var modifier in node.ElementAsTaskFunc.Modifiers)
-                            {
-                                ModifyHelper.ProcessModifier(realElement, modifier );    
-                            }                    
-                        }
-                        
-                        node = ReplaceNode(node, ConvertToNode(realElement));
-                        
-                        continue;
-                    }
-                }
-
-                realElement = funcElement();
-                
                 if (node.ElementAsTaskFunc.Modifiers is not null)
                 {
                     foreach (var modifier in node.ElementAsTaskFunc.Modifiers)

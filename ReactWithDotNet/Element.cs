@@ -171,7 +171,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         ModifyHelper.ProcessModifier(this, modifier);
     }
 
-    static Element ToElement(Func<Element> elementCreatorFunc)
+    internal static Element ToElement(Func<Element> elementCreatorFunc)
     {
         if (elementCreatorFunc == null)
         {
