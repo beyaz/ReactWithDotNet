@@ -87,6 +87,11 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         return new ElementAsTask(task);
     }
     
+    public static implicit operator Element(Task<Func<Element>> task)
+    {
+        return new ElementAsTaskFunc(task);
+    }
+    
     public static implicit operator Element(Func<Element> fn)
     {
         return fn();
@@ -167,6 +172,19 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         }
         
         Add(elementCreatorFunc.Invoke());
+    }
+    
+    /// <summary>
+    ///     Invokes <paramref name="elementCreatorFunc" /> then adds return value to children.
+    /// </summary>
+    public void Add(Task<Func<Element>> elementCreatorFunc)
+    {
+        if (elementCreatorFunc == null)
+        {
+            return;
+        }
+        
+        Add(new ElementAsTaskFunc(elementCreatorFunc));
     }
     
     /// <summary>
@@ -253,3 +271,16 @@ sealed class ElementAsTask : Element
     
     internal List<IModifier> Modifiers;
 }
+
+sealed class ElementAsTaskFunc : Element
+{
+    public readonly Task<Func<Element>> Value;
+
+    public ElementAsTaskFunc(Task<Func<Element>> value)
+    {
+        Value = value;
+    }
+    
+    internal List<IModifier> Modifiers;
+}
+
