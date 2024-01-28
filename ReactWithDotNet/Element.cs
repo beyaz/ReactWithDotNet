@@ -132,6 +132,32 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         }
     }
     
+    public void Add(IEnumerable<Func<Element>> elements)
+    {
+        if (elements is null)
+        {
+            return;
+        }
+        
+        foreach (var item in elements)
+        {
+            Add(item);
+        }
+    }
+    
+    public void Add(IEnumerable<Task<Func<Element>>> elements)
+    {
+        if (elements is null)
+        {
+            return;
+        }
+        
+        foreach (var item in elements)
+        {
+            Add(item);
+        }
+    }
+    
     public void Add(Func<IEnumerable<Element>> elements)
     {
         if (elements is not null)
