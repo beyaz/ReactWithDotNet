@@ -171,14 +171,11 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         ModifyHelper.ProcessModifier(this, modifier);
     }
 
-    /// <summary>
-    ///     Invokes <paramref name="elementCreatorFunc" /> then adds return value to children.
-    /// </summary>
-    public void Add(Func<Element> elementCreatorFunc)
+    static Element ToElement(Func<Element> elementCreatorFunc)
     {
         if (elementCreatorFunc == null)
         {
-            return;
+            return null;
         }
 
         if (elementCreatorFunc.Target is not null)
@@ -187,7 +184,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
 
             if (targeType.IsCompilerGenerated())
             {
-                Add(new CompilerGeneratedClassComponent
+                return new CompilerGeneratedClassComponent
                 {
                     renderFunc = elementCreatorFunc,
                     
@@ -196,13 +193,19 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
                     Scope = ReflectionHelper.FieldsToDictionaryOfCompilerGeneratedTypeInstance(elementCreatorFunc.Target),
                     
                     CompilerGeneratedType = targeType
-                });
-                
-                return;
+                };
             }
         }
-        
-        Add(elementCreatorFunc.Invoke());
+
+        return elementCreatorFunc.Invoke();
+    }
+    
+    /// <summary>
+    ///     Invokes <paramref name="elementCreatorFunc" /> then adds return value to children.
+    /// </summary>
+    public void Add(Func<Element> elementCreatorFunc)
+    {
+        Add(ToElement(elementCreatorFunc));
     }
     
     /// <summary>
