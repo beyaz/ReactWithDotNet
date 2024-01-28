@@ -14,6 +14,8 @@ public abstract class PureComponent : Element
     internal List<IModifier> Modifiers;
     
     internal Style StyleForRootElement;
+    
+    internal List<Style> classNameList;
 
     [JsonIgnore]
     public Style style

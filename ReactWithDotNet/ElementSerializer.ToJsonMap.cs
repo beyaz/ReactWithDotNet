@@ -321,7 +321,7 @@ partial class ElementSerializer
                         {
                             ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, new StyleModifier(style => style.Import(reactPureComponent.StyleForRootElement)));
                         }
-
+                        
                         if (reactPureComponent.Modifiers is not null)
                         {
                             foreach (var modifier in reactPureComponent.Modifiers)
@@ -332,6 +332,18 @@ partial class ElementSerializer
                                 }
 
                                 ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, modifier);
+                            }
+                        }
+                        
+                        if (reactPureComponent.classNameList is not null)
+                        {
+                            foreach (var style in reactPureComponent.classNameList)
+                            {
+                                var response = ConvertStyleToCssClass(context, node, style, true, context.DynamicStyles.GetClassName);
+                                if (response.needToExport)
+                                {
+                                    ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, ClassName(response.cssClassName));
+                                }
                             }
                         }
                     }
@@ -474,7 +486,7 @@ partial class ElementSerializer
                             }
                         }
                     }
-
+                    
                     var getDerivedStateFromPropsMethodShouldInvoke = true;
                     if (getDerivedStateFromPropsMethodShouldInvoke)
                     {
@@ -512,6 +524,18 @@ partial class ElementSerializer
                                 }
 
                                 ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, modifier);
+                            }
+                        }
+                        
+                        if (reactStatefulComponent.classNameList is not null)
+                        {
+                            foreach (var style in reactStatefulComponent.classNameList)
+                            {
+                                var response = ConvertStyleToCssClass(context, node, style, true, context.DynamicStyles.GetClassName);
+                                if (response.needToExport)
+                                {
+                                    ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, ClassName(response.cssClassName));
+                                }
                             }
                         }
                     }

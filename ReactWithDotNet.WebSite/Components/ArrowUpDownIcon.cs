@@ -13,12 +13,12 @@ class ArrowUpDownIcon : PureComponent
 
         if (IsArrowUp)
         {
-            return arrowDown.WithStyle([
+            return arrowDown+WithStyle([
                 Transform("rotate(-180deg)")
             ]);
         }
         
-        return arrowDown.WithStyle([
+        return arrowDown+WithStyle([
             Transform("rotate(0deg)")
         ]);
     }

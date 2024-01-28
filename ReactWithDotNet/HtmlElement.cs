@@ -394,36 +394,42 @@ partial class Mixin
     ///     <br />
     ///     Example:
     ///     <code>
-    ///     arrowDown.WithStyle(new Style
+    ///     new ComponentX
     ///     {
-    ///        Transform("rotate(-180deg)")
-    ///     })
+    ///        WithStyle([
+    ///            Transition(nameof(Style.rotate), 400)
+    ///        ])
+    ///     }
     ///     </code>
     /// </summary>
-    public static TElement WithStyle<TElement>(this TElement element, Style cssBody) where TElement : HtmlElement
+    public static ElementModifier WithStyle(Style cssBody)
     {
-        (element.classNameList ??= []).Add(cssBody);
+        return new(modify);
+        
+        void modify(Element element)
+        {
+            if (element is HtmlElement htmlElement)
+            {
+                (htmlElement.classNameList ??= []).Add(cssBody);
+                
+                return;
+            }
+            
+            if (element is PureComponent pureComponent)
+            {
+                (pureComponent.classNameList ??= []).Add(cssBody);
+                
+                return;
+            }
+            
+            if (element is ReactComponentBase component)
+            {
+                (component.classNameList ??= []).Add(cssBody);
+                
+                return;
+            }
 
-        return element;
-    }
-
-    /// <summary>
-    ///     Automatically generates a css class then adds class name to element.
-    ///     <br />
-    ///     You can use transition css
-    ///     <br />
-    ///     Generated css class will be automatically remove when component destroyed.
-    ///     <br />
-    ///     Example:
-    ///     <code>
-    ///     arrowDown.WithStyle(new []
-    ///     {
-    ///        Transform("rotate(-180deg)")
-    ///     })
-    ///     </code>
-    /// </summary>
-    public static TElement WithStyle<TElement>(this TElement element, IEnumerable<StyleModifier> styleModifiers) where TElement : HtmlElement
-    {
-        return element.WithStyle(new(styleModifiers));
+            throw DeveloperException("WithStyle cannot be use with this type: " + element.GetType().FullName);
+        }
     }
 }

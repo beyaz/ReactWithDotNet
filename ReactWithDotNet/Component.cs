@@ -8,6 +8,8 @@ public abstract class ReactComponentBase : Element
     internal Func<Task<Element>> DesignerCustomizedRender;
     
     internal Style StyleForRootElement;
+    
+    internal List<Style> classNameList;
 
     internal List<IModifier> Modifiers;
 
