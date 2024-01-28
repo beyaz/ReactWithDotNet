@@ -97,13 +97,13 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         return new ElementAsTaskFuncDouble(task);
     }
     
-    public static implicit operator Element(Func<Element> fn)
+    public static implicit operator Element(Func<Element> func)
     {
-        return fn();
+        return ToElement(func);
     }
-    public static implicit operator Element(Func<Task<Element>> fn)
+    public static implicit operator Element(Func<Task<Element>> func)
     {
-        return fn();
+        return ToElement(func);
     }
 
     /// <summary>
