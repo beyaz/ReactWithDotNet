@@ -104,7 +104,7 @@ static class ReflectionHelper
 
         var propertyName = propertyInfo.DeclaringType?.FullName + "::" + propertyInfo.Name;
 
-        var dmGet = new DynamicMethod("Get_" + propertyName, typeof(object), new[] { typeof(object) });
+        var dmGet = new DynamicMethod("Get_" + propertyName, typeof(object), [typeof(object)]);
 
         var ilGenerator = dmGet.GetILGenerator();
 
@@ -138,7 +138,7 @@ static class ReflectionHelper
 
         var propertyName = propertyInfo.DeclaringType?.FullName + "::" + propertyInfo.Name;
 
-        var dmGet = new DynamicMethod("Set_" + propertyName, typeof(void), new[] { typeof(object), typeof(object) });
+        var dmGet = new DynamicMethod("Set_" + propertyName, typeof(void), [typeof(object), typeof(object)]);
 
         var ilGenerator = dmGet.GetILGenerator();
 
@@ -157,6 +157,13 @@ static class ReflectionHelper
         var json = JsonSerializer.Serialize(value, JsonSerializerOptionsInstance);
 
         return (T)JsonSerializer.Deserialize(json, value.GetType(), JsonSerializerOptionsInstance);
+    }
+
+    public static IReadOnlyDictionary<string, object> FieldsToDictionaryOfCompilerGeneratedTypeInstance(object compilerGeneratedTypeInstance)
+    {
+        var compilerGeneratedType = compilerGeneratedTypeInstance.GetType();
+
+        return compilerGeneratedType.GetFields().Select(f => (name: f.Name, value: f.GetValue(compilerGeneratedTypeInstance))).ToDictionary(x => x.name, v => v.value);
     }
 
     public static MethodInfo FindMethod(this Type type, string methodName, BindingFlags bindingFlags)

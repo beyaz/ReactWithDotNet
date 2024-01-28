@@ -90,7 +90,7 @@ static class Extensions
                         expression = methodCallExpression.Object;
                         continue;
                     }
-                    
+
                     if (methodCallExpression.Arguments[0] is MemberExpression { Expression: MemberExpression e1 })
                     {
                         path.Add("]");
@@ -142,7 +142,17 @@ static class Extensions
 
     public static string GetNameWithToken(this MethodInfo methodInfo)
     {
-        return $"{methodInfo.MetadataToken}|{methodInfo.Name}";
+        return $"{methodInfo.Module.Assembly.GetName().Name}#{methodInfo.MetadataToken}#{methodInfo.Name}";
+    }
+
+    public static IReadOnlyList<T> NewListWith<T>(this IReadOnlyList<T> readOnlyList, T newValue)
+    {
+        if (readOnlyList == null)
+        {
+            throw new ArgumentNullException(nameof(readOnlyList));
+        }
+
+        return new List<T>(readOnlyList) { newValue };
     }
 
     /// <summary>
@@ -208,26 +218,41 @@ static class Extensions
 
         return list;
     }
-
-    public static int? TryGetMethodInfoMetadataTokenFromName(string nameWithToken)
-    {
-        var index = nameWithToken.IndexOf('|');
-        if (index > 0)
-        {
-            return int.Parse(nameWithToken[..index]);
-        }
-
-        return null;
-    }
     
-    public static IReadOnlyList<T> NewListWith<T>(this IReadOnlyList<T> readOnlyList, T newValue)
+    public static bool TryResolveMethodInfo(string nameWithToken, ref MethodInfo methodInfo)
     {
-        if (readOnlyList == null)
+        var index = nameWithToken.IndexOf('#');
+        if (index <= 0)
         {
-            throw new ArgumentNullException(nameof(readOnlyList));
+            return false;
         }
 
-        return new List<T>(readOnlyList) { newValue };
+        var assemblyName = nameWithToken[..index];
+
+        var index2 = nameWithToken.IndexOf('#', index + 1);
+        if (index2 <= 0)
+        {
+            return false;
+        }
+
+        var metadataToken = int.Parse(nameWithToken.Substring(index + 1, index2 - index - 1));
+
+        var assembly = Assembly.Load(assemblyName);
+
+        foreach (var module in assembly.Modules)
+        {
+            var methodBase = module.ResolveMethod(metadataToken);
+            if (methodBase == null)
+            {
+                continue;
+            }
+
+            methodInfo = (MethodInfo)methodBase;
+
+            return true;
+        }
+
+        return false;
     }
 }
 
