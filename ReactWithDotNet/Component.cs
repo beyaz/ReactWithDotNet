@@ -267,6 +267,20 @@ sealed class CompilerGeneratedClassComponent : Component
 
             foreach (var fieldInfo in CompilerGeneratedType.GetFields())
             {
+                if (fieldInfo.Name.Contains("__this"))
+                {
+                    string[] errorMessage =
+                    [
+                        Environment.NewLine,
+                        "Invalid using of state.",
+                        $"{CompilerGeneratedType.FullName} should not be refer {fieldInfo.FieldType.FullName}",
+                        "You should be focus to:",
+                        string.Join(", ", CompilerGeneratedType.GetFields().Select(f => f.Name)),
+                        Environment.NewLine
+                    ];
+                    throw DeveloperException(string.Join(Environment.NewLine, errorMessage));
+                }
+                
                 if (Scope.TryGetValue(fieldInfo.Name, out var fieldValue))
                 {
                     fieldInfo.SetValue(instance, ArrangeValueForTargetType(fieldValue, fieldInfo.FieldType));

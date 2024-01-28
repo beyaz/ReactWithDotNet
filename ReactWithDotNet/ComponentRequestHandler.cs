@@ -289,7 +289,10 @@ static class ComponentRequestHandler
             }
             catch (Exception exception)
             {
-                return new() { ErrorMessage = $"Error occured when invoking method.Method: {methodInfo.Name}. Exception: {exception}" };
+                return new()
+                {
+                    ErrorMessage = $"Error occured when invoking method.Method: {methodInfo.Name}.{Environment.NewLine}Exception: {exception}"
+                };
             }
 
             if (request.OnlyUpdateState)

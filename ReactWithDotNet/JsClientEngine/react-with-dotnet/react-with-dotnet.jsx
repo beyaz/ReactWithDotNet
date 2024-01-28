@@ -2742,7 +2742,7 @@ RegisterCoreFunction("OnOutsideClicked", function (idOfElement, remoteMethodName
 
 function CreateNewDeveloperError(message)
 {
-    return new Error('ReactWithDotNet developer error occured.' + message);
+    return new Error('\nReactWithDotNet developer error occured.\n' + message);
 }
 
 const DynamicStyles = [];
