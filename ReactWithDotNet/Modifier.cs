@@ -324,6 +324,15 @@ static class ModifyHelper
             
             return;
         }
+        
+        if (element is ElementAsTaskFuncDouble elementAsTaskFuncDouble)
+        {
+            (elementAsTaskFuncDouble.Modifiers ??= []).Add(modifier);
+            
+            return;
+        }
+        
+        
 
         throw new DeveloperException("Modifier is not suitable for element. Element is " + element.GetType().FullName);
     }

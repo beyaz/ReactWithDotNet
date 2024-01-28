@@ -92,6 +92,11 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         return new ElementAsTaskFunc(task);
     }
     
+    public static implicit operator Element(Task<Func<Task<Element>>> task)
+    {
+        return new ElementAsTaskFuncDouble(task);
+    }
+    
     public static implicit operator Element(Func<Element> fn)
     {
         return fn();
@@ -185,6 +190,16 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         }
         
         Add(new ElementAsTaskFunc(elementCreatorFunc));
+    }
+    
+    public void Add(Task<Func<Task<Element>>> elementCreatorFunc)
+    {
+        if (elementCreatorFunc == null)
+        {
+            return;
+        }
+        
+        Add(new ElementAsTaskFuncDouble(elementCreatorFunc));
     }
     
     /// <summary>
@@ -283,4 +298,18 @@ sealed class ElementAsTaskFunc : Element
     
     internal List<IModifier> Modifiers;
 }
+
+sealed class ElementAsTaskFuncDouble : Element
+{
+    public readonly Task<Func<Task<Element>>> Value;
+
+    public ElementAsTaskFuncDouble(Task<Func<Task<Element>>> value)
+    {
+        Value = value;
+    }
+    
+    internal List<IModifier> Modifiers;
+}
+
+
 
