@@ -559,7 +559,7 @@ static partial class ElementSerializer
                 throw HandlerMethodShouldBelongToReactComponent(propertyDefinition.name, null);
             }
 
-            int? handlerComponentUniqueIdentifier;
+            int? handlerComponentUniqueIdentifier = null;
             
             if (handlerDelegateTarget is ReactComponentBase target)
             {
@@ -569,12 +569,23 @@ static partial class ElementSerializer
             {
                 if (context.CompilerGeneratedClassComponentStack?.Count > 0)
                 {
-                    var handlerComponent = context.CompilerGeneratedClassComponentStack.Peek();
-                    if (handlerComponent.CompilerGeneratedType == handlerDelegateTarget.GetType())
+                    foreach (var item in context.CompilerGeneratedClassComponentStack)
                     {
-                        handlerComponentUniqueIdentifier = handlerComponent.ComponentUniqueIdentifier; 
+                        if (item.CompilerGeneratedType == handlerDelegateTarget.GetType())
+                        {
+                            handlerComponentUniqueIdentifier = item.ComponentUniqueIdentifier;
+                            break;
+                        }
+
+                        var scope = handlerDelegateTarget.GetType().GetFields().FirstOrDefault(f => f.FieldType == typeof(Scope))?.GetValue(handlerDelegateTarget);
+                        if (scope is not null && scope == item)
+                        {
+                            handlerComponentUniqueIdentifier = item.ComponentUniqueIdentifier;
+                            break;
+                        }
                     }
-                    else
+
+                    if (handlerComponentUniqueIdentifier is null)
                     {
                         throw HandlerMethodShouldBelongToReactComponent(propertyDefinition.name, handlerDelegateTarget);
                     }
