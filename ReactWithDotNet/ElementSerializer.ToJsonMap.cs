@@ -468,7 +468,7 @@ partial class ElementSerializer
                         }
                     }
 
-                    reactStatefulComponent.ConvertReactEventsToTaskForEventBus();
+                    reactStatefulComponent.ConvertReactEventsToTaskForEventBus(context);
 
                     node.DotNetComponentRootNode = ConvertToNode(node.DotNetComponentRootElement);
 
@@ -830,7 +830,7 @@ partial class ElementSerializer
         node.IsCompleted = true;
     }
 
-    static void ConvertReactEventsToTaskForEventBus(this ReactComponentBase reactComponent)
+    static void ConvertReactEventsToTaskForEventBus(this ReactComponentBase reactComponent, ElementSerializerContext context)
     {
         var type = reactComponent.GetType();
 
@@ -851,7 +851,18 @@ partial class ElementSerializer
                 return;
             }
 
-            if (@delegate.Target is ReactComponentBase target)
+            var handlerDelegateTarget = @delegate.Target;
+            if (handlerDelegateTarget is null)
+            {
+                throw DeveloperException(string.Join(Environment.NewLine,
+                [
+                    "Action handler method should belong to React component.",
+                    "@delegate.Target: null",
+                    $"@delegate.Method: {@delegate.Method}"
+                ]));
+            }
+            
+            if (handlerDelegateTarget is ReactComponentBase target)
             {
                 var handlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier;
                 
@@ -873,10 +884,30 @@ partial class ElementSerializer
                 return;
             }
             
+            if (context.CompilerGeneratedClassComponentStack?.Count > 0 && handlerDelegateTarget.GetType().IsCompilerGenerated())
+            {
+                var handlerComponent = context.CompilerGeneratedClassComponentStack.Peek();
+                
+                var handlerComponentUniqueIdentifier = handlerComponent.ComponentUniqueIdentifier; 
+                    
+                var propertyInfo = fastPropertyInfo.PropertyInfo;
+
+                propertyInfo.SetValue(reactComponent, null);
+
+                var eventSenderInfo = GetEventSenderInfo(reactComponent, propertyInfo.Name);
+
+                var handlerMethod = @delegate.Method.GetNameWithToken();
+                
+                reactComponent.Client.InitializeDotnetComponentEventListener(eventSenderInfo, handlerMethod, handlerComponentUniqueIdentifier);
+
+                return;
+                
+            }
+            
             throw DeveloperException(string.Join(Environment.NewLine,
             [
                 "Action handler method should belong to React component.",
-                $"@delegate.Target: {@delegate.Target?.GetType().FullName}",
+                $"@delegate.Target: {handlerDelegateTarget.GetType().FullName}",
                 $"@delegate.Method: {@delegate.Method}"
             ]));
         }

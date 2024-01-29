@@ -267,8 +267,34 @@ static class ComponentRequestHandler
                     if (instance is CompilerGeneratedClassComponent compilerGeneratedClassComponent)
                     {
                         compilerGeneratedClassComponent.InitializeTarget();
+
+                        var targetInstance = compilerGeneratedClassComponent._target;                        
                         
-                        response = methodInfo.Invoke(compilerGeneratedClassComponent._target, parameters.value);
+                        // todo: think more and more comment here
+                        if (methodInfo.DeclaringType != null && methodInfo.DeclaringType != targetInstance.GetType())
+                        {
+                            var newTarget = Activator.CreateInstance(methodInfo.DeclaringType);
+                            foreach (var fieldInfo in methodInfo.DeclaringType.GetFields())
+                            {
+                                if (fieldInfo.FieldType == typeof(Scope))
+                                {
+                                    fieldInfo.SetValue(newTarget, compilerGeneratedClassComponent);
+                                    continue;
+                                }
+                                
+                                if (fieldInfo.FieldType == targetInstance.GetType())
+                                {
+                                    fieldInfo.SetValue(newTarget, targetInstance);
+                                    continue;
+                                }
+
+                                throw DeveloperException($"Scope cannot be resolved. Too complex. {fieldInfo.Name}");
+                            }
+
+                            targetInstance = newTarget;
+                        }
+                        
+                        response = methodInfo.Invoke(targetInstance, parameters.value);
                     }
                     else
                     {
