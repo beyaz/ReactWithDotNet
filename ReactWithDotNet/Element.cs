@@ -202,7 +202,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
                     
                     RenderMethodNameWithToken = func.Method.GetNameWithToken(),
                     
-                    Scope = ReflectionHelper.FieldsToDictionaryOfCompilerGeneratedTypeInstance(func.Target),
+                    Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(func.Target),
                     
                     CompilerGeneratedType = targeType
                 };
@@ -231,7 +231,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
                     
                     RenderMethodNameWithToken = func.Method.GetNameWithToken(),
                     
-                    Scope = ReflectionHelper.FieldsToDictionaryOfCompilerGeneratedTypeInstance(func.Target),
+                    Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(func.Target),
                     
                     CompilerGeneratedType = targeType
                 };
@@ -265,7 +265,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
                     
                     RenderMethodNameWithToken = func.Method.GetNameWithToken(),
                     
-                    Scope = ReflectionHelper.FieldsToDictionaryOfCompilerGeneratedTypeInstance(func.Target),
+                    Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(func.Target),
                     
                     CompilerGeneratedType = targeType
                 };
@@ -296,7 +296,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
                     
                     RenderMethodNameWithToken = func.Method.GetNameWithToken(),
                     
-                    Scope = ReflectionHelper.FieldsToDictionaryOfCompilerGeneratedTypeInstance(func.Target),
+                    Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(func.Target),
                     
                     CompilerGeneratedType = targeType
                 };

@@ -158,14 +158,7 @@ static class ReflectionHelper
 
         return (T)JsonSerializer.Deserialize(json, value.GetType(), JsonSerializerOptionsInstance);
     }
-
-    public static IReadOnlyDictionary<string, object> FieldsToDictionaryOfCompilerGeneratedTypeInstance(object compilerGeneratedTypeInstance)
-    {
-        var compilerGeneratedType = compilerGeneratedTypeInstance.GetType();
-
-        return compilerGeneratedType.GetFields().Select(f => (name: f.Name, value: f.GetValue(compilerGeneratedTypeInstance))).ToDictionary(x => x.name, v => v.value);
-    }
-
+    
     public static MethodInfo FindMethod(this Type type, string methodName, BindingFlags bindingFlags)
     {
         while (type != null)
@@ -247,4 +240,71 @@ static class ReflectionHelper
         public static readonly Type Type_ulong = typeof(ulong);
         public static readonly Type Type_ushort = typeof(ushort);
     }
+    
+    
+    
 }
+
+  internal static class SerializationHelperForCompilerGeneratedClasss
+    {
+        public static object  Deserialize(Type compilerGeneratedType, IReadOnlyDictionary<string, object> scope)
+        {
+            var instance  = Activator.CreateInstance(compilerGeneratedType);
+
+            foreach (var fieldInfo in compilerGeneratedType.GetFields())
+            {
+                if (fieldInfo.Name.Contains("__this"))
+                {
+                    string[] errorMessage =
+                    [
+                        Environment.NewLine,
+                        "Invalid using of state.",
+                        $"{compilerGeneratedType.FullName} should not be refer {fieldInfo.FieldType.FullName}",
+                        "You should be focus to:",
+                        string.Join(", ", compilerGeneratedType.GetFields().Select(f => f.Name)),
+                        Environment.NewLine
+                    ];
+                    throw DeveloperException(string.Join(Environment.NewLine, errorMessage));
+                }
+                
+                if (scope.TryGetValue(fieldInfo.Name, out var fieldValue))
+                {
+                    fieldValue = ArrangeValueForTargetType(fieldValue, fieldInfo.FieldType);
+                    
+                    if (fieldValue is MulticastDelegate multicastDelegate)
+                    {
+                        fieldValue = Delegate.CreateDelegate(multicastDelegate.GetType(), instance, multicastDelegate.Method);
+                    }
+                    
+                    fieldInfo.SetValue(instance, fieldValue);
+                }
+            }
+
+            return instance;
+        }
+        
+        public static IReadOnlyDictionary<string, object> Serialize(object compilerGeneratedTypeInstance)
+        {
+            var compilerGeneratedType = compilerGeneratedTypeInstance.GetType();
+
+            return compilerGeneratedType.GetFields().Select(toNameValuePair).ToDictionary(x => x.name, v => v.value);
+
+            (string name, object value) toNameValuePair(FieldInfo f)
+            {
+                var name = f.Name;
+            
+                var value = f.GetValue(compilerGeneratedTypeInstance);
+
+                if (value is MulticastDelegate multicastDelegate)
+                {
+                    if (multicastDelegate.Target == compilerGeneratedTypeInstance)
+                    {
+                        // for avoid circular reference
+                        value = Delegate.CreateDelegate(multicastDelegate.GetType(), null, multicastDelegate.Method);
+                    }
+                }
+            
+                return (name, value);
+            }
+        }
+    }

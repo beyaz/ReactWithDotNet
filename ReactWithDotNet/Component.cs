@@ -273,32 +273,7 @@ sealed class CompilerGeneratedClassComponent : Component
 
     public void InitializeTarget()
     {
-        if (_target is null)
-        {
-            var instance = _target = Activator.CreateInstance(CompilerGeneratedType);
-
-            foreach (var fieldInfo in CompilerGeneratedType.GetFields())
-            {
-                if (fieldInfo.Name.Contains("__this"))
-                {
-                    string[] errorMessage =
-                    [
-                        Environment.NewLine,
-                        "Invalid using of state.",
-                        $"{CompilerGeneratedType.FullName} should not be refer {fieldInfo.FieldType.FullName}",
-                        "You should be focus to:",
-                        string.Join(", ", CompilerGeneratedType.GetFields().Select(f => f.Name)),
-                        Environment.NewLine
-                    ];
-                    throw DeveloperException(string.Join(Environment.NewLine, errorMessage));
-                }
-                
-                if (Scope.TryGetValue(fieldInfo.Name, out var fieldValue))
-                {
-                    fieldInfo.SetValue(instance, ArrangeValueForTargetType(fieldValue, fieldInfo.FieldType));
-                }
-            }
-        }
+        _target ??= SerializationHelperForCompilerGeneratedClasss.Deserialize(CompilerGeneratedType, Scope);
     }
     
     protected override Element render()
@@ -330,7 +305,7 @@ sealed class CompilerGeneratedClassComponent : Component
             var response = methodInfo.Invoke(_target, invocationParameters);
 
             // recalculate scope because maybe fields have changed
-            Scope = ReflectionHelper.FieldsToDictionaryOfCompilerGeneratedTypeInstance(_target);
+            Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(_target);
 
             return (Element)response;
         }
@@ -362,7 +337,7 @@ sealed class CompilerGeneratedClassComponent : Component
             var response = methodInfo.Invoke(_target, invocationParameters);
 
             // recalculate scope because maybe fields have changed
-            Scope = ReflectionHelper.FieldsToDictionaryOfCompilerGeneratedTypeInstance(_target);
+            Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(_target);
 
             return (Task<Element>)response;
         }
