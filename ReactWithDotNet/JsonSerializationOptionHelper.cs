@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using static ReactWithDotNet.JsonSerializationOptionHelper;
@@ -284,6 +285,8 @@ static partial class JsonSerializationOptionHelper
 
         options.Converters.Add(new JsonConverterFactoryForCompilerGeneratedClass());
 
+        options.Converters.Add(JsonConverterFactoryForDelegate.Instance);
+
         return options;
     }
 
@@ -423,6 +426,174 @@ static partial class JsonSerializationOptionHelper
                 {
                     writer.WritePropertyName(fieldInfo.Name);
                     JsonSerializer.Serialize(writer, fieldInfo.GetValue(obj), options);
+                }
+
+                writer.WriteEndObject();
+            }
+        }
+    }
+
+    sealed class JsonConverterFactoryForDelegate : JsonConverterFactory
+    {
+        internal static readonly JsonConverterFactoryForDelegate Instance = new();
+
+        public override bool CanConvert(Type typeToConvert)
+        {
+            return typeToConvert.BaseType == typeof(MulticastDelegate);
+        }
+
+        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+        {
+            return ConverterForDelegate.ConverterInstance;
+        }
+
+        class ConverterForDelegate : JsonConverter<object>
+        {
+            internal static readonly ConverterForDelegate ConverterInstance = new();
+
+            public override object Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                if (reader.TokenType != JsonTokenType.StartObject)
+                {
+                    throw new JsonException();
+                }
+
+                object obj = null;
+
+                MethodInfo methodInfo = null;
+
+                Type targeType = null;
+
+                Type delegateType = null;
+
+                while (reader.Read())
+                {
+                    if (reader.TokenType == JsonTokenType.EndObject)
+                    {
+                        return obj;
+                    }
+
+                    if (reader.TokenType != JsonTokenType.PropertyName)
+                    {
+                        throw new JsonException();
+                    }
+
+                    var name = reader.GetString();
+                    if (name == null)
+                    {
+                        throw new JsonException();
+                    }
+
+                    if (name == "Type")
+                    {
+                        reader.Read();
+
+                        var typeName = reader.GetString();
+                        if (typeName == null)
+                        {
+                            throw new JsonException($"DelegateTypeName should have value for deserializing {typeToConvert.FullName}");
+                        }
+
+                        delegateType = Type.GetType(typeName);
+                        if (delegateType == null)
+                        {
+                            throw new JsonException($"{typeName} not found when  deserializing {typeToConvert.FullName}");
+                        }
+
+                        continue;
+                    }
+
+                    if (name == "Method")
+                    {
+                        reader.Read();
+
+                        var methodName = reader.GetString();
+
+                        TryResolveMethodInfo(methodName, ref methodInfo);
+
+                        if (methodInfo == null)
+                        {
+                            throw new JsonException($"{methodName} not resolved when  deserializing {typeToConvert.FullName}");
+                        }
+
+                        continue;
+                    }
+
+                    if (name == "TargetType")
+                    {
+                        reader.Read();
+
+                        var typeName = reader.GetString();
+
+                        if (typeName == null)
+                        {
+                            throw new JsonException($"DelegateTypeName should have value for deserializing {typeToConvert.FullName}");
+                        }
+
+                        targeType = Type.GetType(typeName);
+
+                        if (targeType == null)
+                        {
+                            throw new JsonException($"{typeName} not found when  deserializing {typeToConvert.FullName}");
+                        }
+
+                        continue;
+                    }
+
+                    if (name == "Target")
+                    {
+                        reader.Read();
+
+                        if (targeType == null)
+                        {
+                            throw new JsonException($"targeType should have value. when  deserializing {typeToConvert.FullName}");
+                        }
+
+                        if (delegateType == null)
+                        {
+                            throw new JsonException($"delegateType should have value. when  deserializing {typeToConvert.FullName}");
+                        }
+
+                        if (methodInfo == null)
+                        {
+                            throw new JsonException($"methodInfo should have value. when  deserializing {typeToConvert.FullName}");
+                        }
+
+                        var target = JsonSerializer.Deserialize(ref reader, targeType, options);
+
+                        obj = Delegate.CreateDelegate(delegateType, target, methodInfo);
+                    }
+                }
+
+                throw new JsonException();
+            }
+
+            public override void Write(Utf8JsonWriter writer, object obj, JsonSerializerOptions options)
+            {
+                if (obj is null)
+                {
+                    writer.WriteNullValue();
+                    return;
+                }
+
+                writer.WriteStartObject();
+
+                var @delegate = (Delegate)obj;
+
+                writer.WritePropertyName("Type");
+                JsonSerializer.Serialize(writer, obj.GetType().FullName, options);
+
+                writer.WritePropertyName("Method");
+                JsonSerializer.Serialize(writer, @delegate.Method.GetNameWithToken(), options);
+
+                var target = @delegate.Target;
+                if (target is not null)
+                {
+                    writer.WritePropertyName("TargetType");
+                    JsonSerializer.Serialize(writer, target.GetType().GetFullName(), options);
+
+                    writer.WritePropertyName("Target");
+                    JsonSerializer.Serialize(writer, target, options);
                 }
 
                 writer.WriteEndObject();
