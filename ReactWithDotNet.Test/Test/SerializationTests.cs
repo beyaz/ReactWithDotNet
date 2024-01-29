@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -179,6 +180,51 @@ public class SerializationTests
         
         instance.Prop1.Should().Be("a");
         instance.JJJ.Should().Be(MyEnum.C4TYU3);
+
+
+    }
+
+    class DelegateSerializationTestTarget
+    {
+        public string Prop1 { get; set; }
+        
+        public string Prop2 { get; set; }
+        
+        public int Prop3 { get; set; }
+
+        public string Process(string parameter1)
+        {
+            return Prop1 + parameter1 + Prop2 + Prop3;
+        }
+    }
+    
+    
+    
+    [TestMethod]
+    public void DelegateSerializationTest()
+    {
+        var instance = new DelegateSerializationTestTarget
+        {
+            Prop1 = "A",
+            Prop2 = "B",
+            Prop3 = 7
+        };
+
+        Func<string, string> func = instance.Process;
+        
+        
+
+        
+        var json = JsonSerializer.Serialize(func, JsonSerializerOptionsInstance);
+
+      
+
+        
+
+
+        var func2  = JsonSerializer.Deserialize<Func<string, string>>(json,JsonSerializerOptionsInstance);
+        
+        func2("X").Should().Be("AXB7");
 
 
     }
