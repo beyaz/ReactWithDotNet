@@ -370,46 +370,14 @@ static partial class JsonSerializationOptionHelper
         {
             public override object Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                if (reader.TokenType != JsonTokenType.StartObject)
+                var dictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(ref reader, options);
+
+                if (dictionary is null)
                 {
-                    throw new JsonException();
+                    return null;
                 }
 
-                var obj = Activator.CreateInstance(typeToConvert);
-
-                while (reader.Read())
-                {
-                    if (reader.TokenType == JsonTokenType.EndObject)
-                    {
-                        return obj;
-                    }
-
-                    if (reader.TokenType != JsonTokenType.PropertyName)
-                    {
-                        throw new JsonException();
-                    }
-
-                    var fieldName = reader.GetString();
-                    if (fieldName == null)
-                    {
-                        throw new JsonException();
-                    }
-
-                    var fieldInfo = typeToConvert.GetField(fieldName);
-
-                    if (fieldInfo == null)
-                    {
-                        throw new JsonException($"{fieldName} not deserialized.");
-                    }
-
-                    reader.Read();
-
-                    var fieldValue = JsonSerializer.Deserialize(ref reader, fieldInfo.FieldType, options);
-
-                    fieldInfo.SetValue(obj, fieldValue);
-                }
-
-                throw new JsonException();
+                return SerializationHelperForCompilerGeneratedClasss.Deserialize(typeToConvert, dictionary);
             }
 
             public override void Write(Utf8JsonWriter writer, object obj, JsonSerializerOptions options)
@@ -420,15 +388,9 @@ static partial class JsonSerializationOptionHelper
                     return;
                 }
 
-                writer.WriteStartObject();
+                var dictionary = SerializationHelperForCompilerGeneratedClasss.Serialize(obj);
 
-                foreach (var fieldInfo in obj.GetType().GetFields())
-                {
-                    writer.WritePropertyName(fieldInfo.Name);
-                    JsonSerializer.Serialize(writer, fieldInfo.GetValue(obj), options);
-                }
-
-                writer.WriteEndObject();
+                JsonSerializer.Serialize(writer, dictionary, options);
             }
         }
     }

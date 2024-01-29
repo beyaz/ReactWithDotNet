@@ -284,13 +284,18 @@ static class SerializationHelperForCompilerGeneratedClasss
     {
         var compilerGeneratedType = compilerGeneratedTypeInstance.GetType();
 
-        return compilerGeneratedType.GetFields().Select(toNameValuePair).ToDictionary(x => x.name, v => v.value);
+        var dictionary = new Dictionary<string, object>();
 
-        (string name, object value) toNameValuePair(FieldInfo f)
+        foreach (var fieldInfo in compilerGeneratedType.GetFields())
         {
-            var name = f.Name;
+            var name = fieldInfo.Name;
 
-            var value = f.GetValue(compilerGeneratedTypeInstance);
+            var value = fieldInfo.GetValue(compilerGeneratedTypeInstance);
+
+            if (value == compilerGeneratedTypeInstance)
+            {
+                continue;
+            }
 
             if (value is MulticastDelegate multicastDelegate)
             {
@@ -301,7 +306,9 @@ static class SerializationHelperForCompilerGeneratedClasss
                 }
             }
 
-            return (name, value);
+            dictionary.Add(name, value);
         }
+
+        return dictionary;
     }
 }
