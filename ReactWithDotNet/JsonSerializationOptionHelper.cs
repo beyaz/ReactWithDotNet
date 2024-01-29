@@ -6,7 +6,6 @@ namespace ReactWithDotNet;
 
 partial class Mixin
 {
-    
     internal static object ArrangeValueForTargetType(object value, Type targetType)
     {
         if (value is null)
@@ -240,7 +239,7 @@ partial class Mixin
                 return jsonElement.Deserialize(targetType, JsonSerializerOptionsInstance);
             }
 
-            throw new Exception();
+            throw new();
         }
 
         if (value is string valueAsString && targetType == typeof(Type))
@@ -276,12 +275,14 @@ static partial class JsonSerializationOptionHelper
         options.Converters.Add(new ReadOnlyJsonMapConverter());
 
         options.Converters.Add(new JsonStringEnumConverter());
-        
+
         options.Converters.Add(new ValueTupleFactory());
 
         options.Converters.Add(new JsonConverterFactoryForType());
 
         options.Converters.Add(new UnionPropFactory());
+
+        options.Converters.Add(new JsonConverterFactoryForCompilerGeneratedClass());
 
         return options;
     }
@@ -348,6 +349,87 @@ static partial class JsonSerializationOptionHelper
         }
     }
 
+    sealed class JsonConverterFactoryForCompilerGeneratedClass : JsonConverterFactory
+    {
+        static readonly ConverterForCompilerGeneratedClass ConverterForCompilerGeneratedClassInstance = new();
+
+        public override bool CanConvert(Type typeToConvert)
+        {
+            return typeToConvert.IsCompilerGenerated();
+        }
+
+        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+        {
+            return ConverterForCompilerGeneratedClassInstance;
+        }
+
+        class ConverterForCompilerGeneratedClass : JsonConverter<object>
+        {
+            public override object Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                if (reader.TokenType != JsonTokenType.StartObject)
+                {
+                    throw new JsonException();
+                }
+
+                var obj = Activator.CreateInstance(typeToConvert);
+
+                while (reader.Read())
+                {
+                    if (reader.TokenType == JsonTokenType.EndObject)
+                    {
+                        return obj;
+                    }
+
+                    if (reader.TokenType != JsonTokenType.PropertyName)
+                    {
+                        throw new JsonException();
+                    }
+
+                    var fieldName = reader.GetString();
+                    if (fieldName == null)
+                    {
+                        throw new JsonException();
+                    }
+
+                    var fieldInfo = typeToConvert.GetField(fieldName);
+
+                    if (fieldInfo == null)
+                    {
+                        throw new JsonException($"{fieldName} not deserialized.");
+                    }
+
+                    reader.Read();
+
+                    var fieldValue = JsonSerializer.Deserialize(ref reader, fieldInfo.FieldType, options);
+
+                    fieldInfo.SetValue(obj, fieldValue);
+                }
+
+                throw new JsonException();
+            }
+
+            public override void Write(Utf8JsonWriter writer, object obj, JsonSerializerOptions options)
+            {
+                if (obj is null)
+                {
+                    writer.WriteNullValue();
+                    return;
+                }
+
+                writer.WriteStartObject();
+
+                foreach (var fieldInfo in obj.GetType().GetFields())
+                {
+                    writer.WritePropertyName(fieldInfo.Name);
+                    JsonSerializer.Serialize(writer, fieldInfo.GetValue(obj), options);
+                }
+
+                writer.WriteEndObject();
+            }
+        }
+    }
+
     class ReadOnlyJsonMapConverter : JsonConverter<IReadOnlyJsonMap>
     {
         public override IReadOnlyJsonMap Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -381,15 +463,16 @@ sealed class RemoteMethodInfo
     public string FunctionNameOfGrabEventArguments { get; set; }
 
     public int? HandlerComponentUniqueIdentifier { get; set; }
+    public int? HtmlElementScrollDebounceTimeout { get; set; }
 
     [JsonPropertyName("$isRemoteMethod")]
     public bool IsRemoteMethod { get; set; }
 
+    public IReadOnlyList<string> KeyboardEventCallOnly { get; set; }
+
     public string remoteMethodName { get; set; }
 
     public bool? StopPropagation { get; set; }
-    public int? HtmlElementScrollDebounceTimeout { get; set; }
-    public IReadOnlyList<string> KeyboardEventCallOnly { get; set; }
 }
 
 [Serializable]
