@@ -27,6 +27,10 @@ public static class motion
         public dynamic whileHover { get; } = new ExpandoObject();
         
         public static IModifier Modify(Action<div> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
+        
+        [ReactProp]
+        [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
+        public MouseEventHandler onClick { get; set; }
     }
     
     public sealed class button : ElementBase
@@ -51,5 +55,9 @@ public static class motion
         [ReactProp]
         [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
         public dynamic whileHover { get; } = new ExpandoObject();
+        
+        [ReactProp]
+        [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
+        public MouseEventHandler onClick { get; set; }
     }
 }
