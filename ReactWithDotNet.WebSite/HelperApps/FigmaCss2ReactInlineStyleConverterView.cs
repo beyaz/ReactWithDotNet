@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
-using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
+using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
-using ReactWithDotNet.ThirdPartyLibraries.UIW.ReactCodemirror;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
 
@@ -40,50 +39,40 @@ color: #4A4A49;
 
     protected override Element render()
     {
-        var cssEditor = new CodeMirror
+        var cssEditor =  new Editor
         {
-            extensions = { "css", "githubLight" },
-            onChange   = OnCssValueChanged,
-            value      = state.FigmaCss,
-            basicSetup =
+            defaultLanguage          = "text",
+            valueBind                = () => state.FigmaCss,
+            valueBindDebounceTimeout = 300,
+            valueBindDebounceHandler = OnKeypressFinished,
+            options =
             {
-                highlightActiveLine       = false,
-                highlightActiveLineGutter = false,
-            },
-            style =
-            {
-                HeightMaximized,
-                MinHeight(200),
-                BorderRadius(3),
-                Border("1px solid #d9d9d9"),
-                FontSize11,
-                FontFamily("Consolas")
+                renderLineHighlight = "none",
+                fontFamily          = "consolas, 'IBM Plex Mono Medium', 'Courier New', monospace",
+                fontSize            = 11,
+                minimap             = new { enabled = false },
+                lineNumbers         = "off"
             }
         };
 
-        var csharpEditor = new CodeMirror
+        var csharpEditor = new Editor
         {
-            extensions = { "java", "githubLight" },
-            value      = state.ReactInlineStyle,
-            basicSetup =
+            defaultLanguage          = "text",
+            valueBind                = () => state.ReactInlineStyle,
+            valueBindDebounceTimeout = 300,
+            valueBindDebounceHandler = OnKeypressFinished,
+            options =
             {
-                highlightActiveLine       = false,
-                highlightActiveLineGutter = false,
-            },
-            style =
-            {
-                HeightMaximized,
-                MinHeight(200),
-                BorderRadius(3),
-                Border("1px solid #d9d9d9"),
-                FontSize11,
-                FontFamily("Consolas")
+                renderLineHighlight = "none",
+                fontFamily          = "consolas, 'IBM Plex Mono Medium', 'Courier New', monospace",
+                fontSize            = 11,
+                minimap             = new { enabled = false },
+                lineNumbers         = "off"
             }
         };
 
-        var statusMessageEditor = new Message
+        var statusMessageEditor = new FlexRowCentered
         {
-            severity = "success",
             text     = state.StatusMessage,
             style    = { position = "fixed", zIndex = "5", bottom = "25px", right = "25px", display = state.StatusMessage is null ? "none" : "" }
         };
@@ -93,19 +82,17 @@ color: #4A4A49;
             WidthHeightMaximized,
             Padding(10),
 
-            PrimeReactCssLibs,
             new div(FontSize23, Padding(10), TextAlignCenter)
             {
                 "Figma css to React inline style",
                 (small)" ( paste any figma css text to left panel )"
             },
-            new FlexRow(WidthHeightMaximized, Height(400), BorderForPaper, BorderRadiusForPaper)
+            new FlexRow(WidthHeightMaximized, FlexGrow(1), BorderForPaper, BorderRadiusForPaper)
             {
                 new FreeScrollBar
                 {
                     style =
                     {
-                        Height(400),
                         WidthMaximized
                     },
                     children = { cssEditor }
@@ -114,7 +101,6 @@ color: #4A4A49;
                 {
                     style =
                     {
-                        Height(400),
                         WidthMaximized
                     },
                     children = { csharpEditor }
@@ -123,6 +109,11 @@ color: #4A4A49;
 
             statusMessageEditor
         };
+    }
+
+    Task OnKeypressFinished()
+    {
+        return OnCssValueChanged(state.FigmaCss);
     }
 
     static string FigmaCssToReactInlineCss(string figmaCssText)
@@ -166,9 +157,7 @@ color: #4A4A49;
 
     Task ClearStatusMessage()
     {
-        state.StatusMessage = null;
-        
-        return Task.CompletedTask;
+        stat
     }
 
     Task OnCssValueChanged(string figmaCssText)
