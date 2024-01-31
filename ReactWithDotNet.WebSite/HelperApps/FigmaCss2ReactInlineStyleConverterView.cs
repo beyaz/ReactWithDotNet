@@ -71,12 +71,7 @@ color: #4A4A49;
             }
         };
 
-        var statusMessageEditor = new FlexRowCentered
-        {
-            text     = state.StatusMessage,
-            style    = { position = "fixed", zIndex = "5", bottom = "25px", right = "25px", display = state.StatusMessage is null ? "none" : "" }
-        };
-
+        
         return new FlexColumn
         {
             WidthHeightMaximized,
@@ -107,8 +102,65 @@ color: #4A4A49;
                 }
             },
 
-            statusMessageEditor
+            CopyButton()
         };
+    }
+
+    static Element CopyButton()
+    {
+        var showCopyButton = true;
+        
+        var ui = (Scope scope) =>
+        {
+            var content = new CopySvg() + OnClick(onCopyClicked);
+
+            if (showCopyButton is false)
+            {
+                content = new CheckIcon();
+            }
+            return new FlexRowCentered
+            {
+                content,
+                new[]
+                {
+                    PositionFixed,
+                    Zindex2,
+                    BottomRight(25)
+                }
+            };
+            
+            Task onCopyClicked(MouseEvent e)
+            {
+                showCopyButton = false;
+                
+                scope.Client.DispatchEvent<CopyClick>();
+               
+                scope.Client.GotoMethod(500,clearState);
+        
+                return Task.CompletedTask;
+            }
+            
+            Task clearState()
+            {
+                showCopyButton = true;
+        
+                return Task.CompletedTask;
+            }
+        };
+
+        return ui;
+        
+        
+
+    }
+    
+    Task OnCopyClicked(MouseEvent e)
+    {
+        Client.CopyToClipboard(state.ReactInlineStyle);
+        
+        state.StatusMessage = "Copied to clipboard.";
+        
+        return Task.CompletedTask;
     }
 
     Task OnKeypressFinished()
@@ -155,10 +207,7 @@ color: #4A4A49;
         }
     }
 
-    Task ClearStatusMessage()
-    {
-        stat
-    }
+    delegate Task CopyClick();
 
     Task OnCssValueChanged(string figmaCssText)
     {
@@ -178,12 +227,7 @@ color: #4A4A49;
         {
             state.ReactInlineStyle = FigmaCssToReactInlineCss(figmaCssText);
 
-            if (state.EditCount > 1)
-            {
-                Client.CopyToClipboard(state.ReactInlineStyle);
-                state.StatusMessage = "Copied to clipboard.";
-                Client.GotoMethod(700, ClearStatusMessage);
-            }
+            
         }
         catch (Exception exception)
         {
@@ -191,5 +235,39 @@ color: #4A4A49;
         }
         
         return Task.CompletedTask;
+    }
+
+    class CopySvg : PureComponent
+    {
+        protected override Element render()
+        {
+            return new svg(ViewBox(0, 0, 24, 24), svg.Size(64))
+            {
+                new path
+                {
+                    d = "M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z" ,
+                    
+                    fill = Gray700
+                },
+                new path
+                {
+                    d = "M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z",
+                    
+                    fill = Gray700
+                }
+            };
+        }
+    }
+    
+    class CheckIcon : PureComponent
+    {
+        protected override Element render()
+        {
+            return new svg(ViewBox(0, 0, 24, 24), svg.Size(64), Fill(none))
+            {
+                new path { d = "m6 13 4 4 8-10", stroke =Gray700, strokeWidth = "2", strokeLinecap = "round", strokeLinejoin = "round" },
+              
+            };
+        }
     }
 }
