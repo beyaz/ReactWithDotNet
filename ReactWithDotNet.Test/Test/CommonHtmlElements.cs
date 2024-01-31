@@ -330,7 +330,8 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name    = "stroke-width",
-                        Comment = "The width of the stroke."
+                        Comment = "The width of the stroke.",
+                        Type    = "UnionProp<string,double>"
                     }
                 },
                 EnableCastFromString = false
@@ -369,7 +370,8 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name    = "stroke-width",
-                        Comment = "The width of the line's outline."
+                        Comment = "The width of the line's outline.",
+                        Type    = "UnionProp<string,double>"
                     },
                     new AttributeInfo
                     {
@@ -418,7 +420,8 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name    = "stroke-width",
-                        Comment = "The width of the polyline's outline."
+                        Comment = "The width of the polyline's outline.",
+                        Type    = "UnionProp<string,double>"
                     }
                 },
                 EnableCastFromString = false
@@ -460,7 +463,8 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name    = "stroke-width",
-                        Comment = "The width of the stroke of the circle."
+                        Comment = "The width of the stroke of the circle.",
+                        Type = "UnionProp<string,double>"
                     }
                 },
                 EnableCastFromString = false
@@ -492,7 +496,8 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name    = "stroke-width",
-                        Comment = "Specifies the width of the polygon's stroke, in pixels."
+                        Comment = "Specifies the width of the polygon's stroke, in pixels.",
+                        Type    = "UnionProp<string,double>"
                     },
 
                     new AttributeInfo
@@ -678,7 +683,8 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name    = "stroke-width",
-                        Comment = "Stroke width"
+                        Comment = "Stroke width",
+                        Type    = "UnionProp<string,double>"
                     },
 
                     new AttributeInfo

@@ -1648,7 +1648,7 @@ public sealed class ellipse : HtmlElement
 
 
     #region string strokeWidth
-    PropertyValueNode<string> _strokeWidth;
+    PropertyValueNode<UnionProp<string,double>> _strokeWidth;
     static readonly PropertyValueDefinition _strokeWidth_ = new()
     {
         name = nameof(strokeWidth)
@@ -1656,7 +1656,7 @@ public sealed class ellipse : HtmlElement
     /// <summary>
     ///     The width of the stroke.
     /// </summary>
-    public string strokeWidth
+    public UnionProp<string,double> strokeWidth
     {
         get => _strokeWidth?.value;
         set => SetValue(_strokeWidth_, ref _strokeWidth, value);
@@ -1720,7 +1720,7 @@ public sealed class ellipse : HtmlElement
     /// <br/>
     ///     The width of the stroke.
     /// </summary>
-    public static HtmlElementModifier StrokeWidth(string value) => Modify(x => x.strokeWidth = value);
+    public static HtmlElementModifier StrokeWidth(UnionProp<string,double> value) => Modify(x => x.strokeWidth = value);
 
 }
 
@@ -1812,7 +1812,7 @@ public sealed class line : HtmlElement
 
 
     #region string strokeWidth
-    PropertyValueNode<string> _strokeWidth;
+    PropertyValueNode<UnionProp<string,double>> _strokeWidth;
     static readonly PropertyValueDefinition _strokeWidth_ = new()
     {
         name = nameof(strokeWidth)
@@ -1820,7 +1820,7 @@ public sealed class line : HtmlElement
     /// <summary>
     ///     The width of the line's outline.
     /// </summary>
-    public string strokeWidth
+    public UnionProp<string,double> strokeWidth
     {
         get => _strokeWidth?.value;
         set => SetValue(_strokeWidth_, ref _strokeWidth, value);
@@ -1945,7 +1945,7 @@ public sealed class line : HtmlElement
     /// <br/>
     ///     The width of the line's outline.
     /// </summary>
-    public static HtmlElementModifier StrokeWidth(string value) => Modify(x => x.strokeWidth = value);
+    public static HtmlElementModifier StrokeWidth(UnionProp<string,double> value) => Modify(x => x.strokeWidth = value);
 
     /// <summary>
     ///     strokeDasharray = <paramref name="value"/>
@@ -2031,7 +2031,7 @@ public sealed class polyline : HtmlElement
 
 
     #region string strokeWidth
-    PropertyValueNode<string> _strokeWidth;
+    PropertyValueNode<UnionProp<string,double>> _strokeWidth;
     static readonly PropertyValueDefinition _strokeWidth_ = new()
     {
         name = nameof(strokeWidth)
@@ -2039,7 +2039,7 @@ public sealed class polyline : HtmlElement
     /// <summary>
     ///     The width of the polyline's outline.
     /// </summary>
-    public string strokeWidth
+    public UnionProp<string,double> strokeWidth
     {
         get => _strokeWidth?.value;
         set => SetValue(_strokeWidth_, ref _strokeWidth, value);
@@ -2082,7 +2082,7 @@ public sealed class polyline : HtmlElement
     /// <br/>
     ///     The width of the polyline's outline.
     /// </summary>
-    public static HtmlElementModifier StrokeWidth(string value) => Modify(x => x.strokeWidth = value);
+    public static HtmlElementModifier StrokeWidth(UnionProp<string,double> value) => Modify(x => x.strokeWidth = value);
 
 }
 
@@ -2174,7 +2174,7 @@ public sealed class circle : HtmlElement
 
 
     #region string strokeWidth
-    PropertyValueNode<string> _strokeWidth;
+    PropertyValueNode<UnionProp<string,double>> _strokeWidth;
     static readonly PropertyValueDefinition _strokeWidth_ = new()
     {
         name = nameof(strokeWidth)
@@ -2182,7 +2182,7 @@ public sealed class circle : HtmlElement
     /// <summary>
     ///     The width of the stroke of the circle.
     /// </summary>
-    public string strokeWidth
+    public UnionProp<string,double> strokeWidth
     {
         get => _strokeWidth?.value;
         set => SetValue(_strokeWidth_, ref _strokeWidth, value);
@@ -2239,7 +2239,7 @@ public sealed class circle : HtmlElement
     /// <br/>
     ///     The width of the stroke of the circle.
     /// </summary>
-    public static HtmlElementModifier StrokeWidth(string value) => Modify(x => x.strokeWidth = value);
+    public static HtmlElementModifier StrokeWidth(UnionProp<string,double> value) => Modify(x => x.strokeWidth = value);
 
 }
 
@@ -2297,7 +2297,7 @@ public sealed class polygon : HtmlElement
 
 
     #region string strokeWidth
-    PropertyValueNode<string> _strokeWidth;
+    PropertyValueNode<UnionProp<string,double>> _strokeWidth;
     static readonly PropertyValueDefinition _strokeWidth_ = new()
     {
         name = nameof(strokeWidth)
@@ -2305,7 +2305,7 @@ public sealed class polygon : HtmlElement
     /// <summary>
     ///     Specifies the width of the polygon's stroke, in pixels.
     /// </summary>
-    public string strokeWidth
+    public UnionProp<string,double> strokeWidth
     {
         get => _strokeWidth?.value;
         set => SetValue(_strokeWidth_, ref _strokeWidth, value);
@@ -2399,7 +2399,7 @@ public sealed class polygon : HtmlElement
     /// <br/>
     ///     Specifies the width of the polygon's stroke, in pixels.
     /// </summary>
-    public static HtmlElementModifier StrokeWidth(string value) => Modify(x => x.strokeWidth = value);
+    public static HtmlElementModifier StrokeWidth(UnionProp<string,double> value) => Modify(x => x.strokeWidth = value);
 
     /// <summary>
     ///     strokeLinecap = <paramref name="value"/>
@@ -3021,7 +3021,7 @@ public sealed class path : HtmlElement
 
 
     #region string strokeWidth
-    PropertyValueNode<string> _strokeWidth;
+    PropertyValueNode<UnionProp<string,double>> _strokeWidth;
     static readonly PropertyValueDefinition _strokeWidth_ = new()
     {
         name = nameof(strokeWidth)
@@ -3029,7 +3029,7 @@ public sealed class path : HtmlElement
     /// <summary>
     ///     Stroke width
     /// </summary>
-    public string strokeWidth
+    public UnionProp<string,double> strokeWidth
     {
         get => _strokeWidth?.value;
         set => SetValue(_strokeWidth_, ref _strokeWidth, value);
@@ -3128,7 +3128,7 @@ public sealed class path : HtmlElement
     /// <br/>
     ///     Stroke width
     /// </summary>
-    public static HtmlElementModifier StrokeWidth(string value) => Modify(x => x.strokeWidth = value);
+    public static HtmlElementModifier StrokeWidth(UnionProp<string,double> value) => Modify(x => x.strokeWidth = value);
 
     public static HtmlElementModifier FillRule(string value) => Modify(x => x.fillRule = value);
 

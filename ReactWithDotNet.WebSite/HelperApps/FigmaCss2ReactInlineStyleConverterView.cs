@@ -9,14 +9,13 @@ class FigmaCss2ReactInlineStyleConverterModel
     public int EditCount { get; set; }
     public string FigmaCss { get; set; }
     public string ReactInlineStyle { get; set; }
-    public string StatusMessage { get; set; }
 }
 
 class FigmaCss2ReactInlineStyleConverterView : Component<FigmaCss2ReactInlineStyleConverterModel>
 {
     protected override Task constructor()
     {
-        state = new FigmaCss2ReactInlineStyleConverterModel
+        state = new()
         {
             FigmaCss = @"
 font-family: 'Open Sans';
@@ -34,6 +33,9 @@ color: #4A4A49;
         };
         state.ReactInlineStyle = FigmaCssToReactInlineCss(state.FigmaCss);
 
+        Client.ListenEventThenOnlyUpdateState<CopyClick>(OnCopyClicked);
+        
+        
         return Task.CompletedTask;
     }
 
@@ -154,11 +156,9 @@ color: #4A4A49;
 
     }
     
-    Task OnCopyClicked(MouseEvent e)
+    Task OnCopyClicked()
     {
         Client.CopyToClipboard(state.ReactInlineStyle);
-        
-        state.StatusMessage = "Copied to clipboard.";
         
         return Task.CompletedTask;
     }
@@ -213,7 +213,7 @@ color: #4A4A49;
     {
         state.EditCount++;
 
-        state.StatusMessage = null;
+        
 
         state.FigmaCss = figmaCssText;
 
@@ -223,16 +223,7 @@ color: #4A4A49;
             return Task.CompletedTask;
         }
 
-        try
-        {
-            state.ReactInlineStyle = FigmaCssToReactInlineCss(figmaCssText);
-
-            
-        }
-        catch (Exception exception)
-        {
-            state.StatusMessage = "Error occured: " + exception;
-        }
+        state.ReactInlineStyle = FigmaCssToReactInlineCss(figmaCssText);
         
         return Task.CompletedTask;
     }
@@ -265,7 +256,7 @@ color: #4A4A49;
         {
             return new svg(ViewBox(0, 0, 24, 24), svg.Size(64), Fill(none))
             {
-                new path { d = "m6 13 4 4 8-10", stroke =Gray700, strokeWidth = "2", strokeLinecap = "round", strokeLinejoin = "round" },
+                new path { d = "m6 13 4 4 8-10", stroke =Gray700, strokeWidth = 2, strokeLinecap = "round", strokeLinejoin = "round" },
               
             };
         }
