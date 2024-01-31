@@ -17,7 +17,9 @@ static class ReactWithDotNetIntegration
 
         endpoints.MapGet("/LiveEditor", httpContext => WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(HtmlToCSharpView)));
         endpoints.MapGet("/CSharpPropertyMapper", httpContext => WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(CSharpPropertyMapperView)));
-
+        endpoints.MapGet("/importFigmaCss", httpContext => WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(FigmaCss2ReactInlineStyleConverterView)));
+        
+        
         RegisterReactWithDotNetDevelopmentTools(endpoints);
     }
 
