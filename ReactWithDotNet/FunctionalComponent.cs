@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet;
 
-delegate Func<Element> FunctionalComponent();
+delegate Func<Element> FunctionalComponent(Scope cmp);
 
 public interface Scope
 {
