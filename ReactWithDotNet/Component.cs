@@ -3,14 +3,7 @@ using System.Reflection;
 
 namespace ReactWithDotNet;
 
-public interface Scope
-{
-    public Client Client { get; }
-    
-    public ReactContext Context { get;  }
-}
-
-public abstract class ReactComponentBase : Element, Scope
+public abstract class ReactComponentBase : Element
 {
     internal Func<Task<Element>> DesignerCustomizedRender;
     
@@ -247,7 +240,14 @@ public abstract class Component : Component<EmptyState>
 public sealed class EmptyState;
 
 
-sealed class CompilerGeneratedClassComponent : Component
+public interface Scope
+{
+    public Client Client { get; }
+    
+    public ReactContext Context { get;  }
+}
+
+sealed class CompilerGeneratedClassComponent : Component, Scope
 {
     internal Func<Element> renderFunc;
     
