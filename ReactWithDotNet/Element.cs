@@ -102,7 +102,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         return ToElement(func);
     }
     
-    public static implicit operator Element(Func<Scope,Element> func)
+    public static implicit operator Element(FC func)
     {
         return ToElement(func);
     }
@@ -118,6 +118,19 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         return ToElement(func);
     }
 
+    public void Add(IEnumerable<FC> elements)
+    {
+        if (elements is null)
+        {
+            return;
+        }
+        
+        foreach (var item in elements)
+        {
+            Add(item);
+        }
+    }
+    
     /// <summary>
     ///     Adds the specified element.
     /// </summary>
@@ -212,7 +225,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         return func.Invoke();
     }
     
-    internal static Element ToElement(Func<Scope,Element> func)
+    internal static Element ToElement(FC func)
     {
         if (func == null)
         {

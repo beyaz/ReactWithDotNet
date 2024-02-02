@@ -2,7 +2,10 @@
 
 namespace ReactWithDotNet;
 
-delegate Func<Element> FunctionalComponent(Scope cmp);
+/// <summary>
+///     Functional component.
+/// </summary>
+public delegate Element FC(Scope cmp);
 
 public interface Scope
 {
@@ -20,7 +23,7 @@ sealed class CompilerGeneratedClassComponent : Component, Scope
 
     internal Func<Scope, Task<Element>> renderFuncAsyncWithScope;
 
-    internal Func<Scope, Element> renderFuncWithScope;
+    internal FC renderFuncWithScope;
 
     public Type CompilerGeneratedType { get; set; }
 
