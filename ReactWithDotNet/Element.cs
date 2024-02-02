@@ -87,36 +87,23 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         return new ElementAsTask(task);
     }
     
-    public static implicit operator Element(Task<Func<Element>> task)
-    {
-        return new ElementAsTaskFunc(task);
-    }
-    
-    public static implicit operator Element(Task<Func<Task<Element>>> task)
-    {
-        return new ElementAsTaskFuncDouble(task);
-    }
-    
-    public static implicit operator Element(Func<Element> func)
-    {
-        return ToElement(func);
-    }
-    
     public static implicit operator Element(FC func)
     {
         return ToElement(func);
     }
     
-    
-    public static implicit operator Element(Func<Task<Element>> func)
+    public static implicit operator Element(Task<FC> func)
+    {
+        return new ElementAsTaskFC(func);
+    }
+
+
+    // TODO: Check usage maybe should remove
+    public static implicit operator Element(Func<Task<FC>> func)
     {
         return ToElement(func);
     }
-    
-    public static implicit operator Element(Func<Scope,Task<Element>> func)
-    {
-        return ToElement(func);
-    }
+
 
     public void Add(IEnumerable<FC> elements)
     {
@@ -157,32 +144,6 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         }
     }
     
-    public void Add(IEnumerable<Func<Element>> elements)
-    {
-        if (elements is null)
-        {
-            return;
-        }
-        
-        foreach (var item in elements)
-        {
-            Add(item);
-        }
-    }
-    
-    public void Add(IEnumerable<Task<Func<Element>>> elements)
-    {
-        if (elements is null)
-        {
-            return;
-        }
-        
-        foreach (var item in elements)
-        {
-            Add(item);
-        }
-    }
-    
     public void Add(Func<IEnumerable<Element>> elements)
     {
         if (elements is not null)
@@ -202,26 +163,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         {
             return null;
         }
-
-        if (func.Target is not null)
-        {
-            var targeType = func.Target.GetType();
-
-            if (targeType.IsCompilerGenerated())
-            {
-                return new CompilerGeneratedClassComponent
-                {
-                    renderFunc = func,
-                    
-                    RenderMethodNameWithToken = func.Method.GetNameWithToken(),
-                    
-                    Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(func.Target),
-                    
-                    CompilerGeneratedType = targeType
-                };
-            }
-        }
-
+        
         return func.Invoke();
     }
     
@@ -257,38 +199,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         };
     }
     
-    internal static Element ToElement(Func<Task<Element>> func)
-    {
-        if (func == null)
-        {
-            return null;
-        }
-
-        if (func.Target is not null)
-        {
-            var targeType = func.Target.GetType();
-
-            if (targeType.IsCompilerGenerated())
-            {
-                return new CompilerGeneratedClassComponent
-                {
-                    IsRenderAsync = true,
-                            
-                    renderFuncAsync = func,
-                    
-                    RenderMethodNameWithToken = func.Method.GetNameWithToken(),
-                    
-                    Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(func.Target),
-                    
-                    CompilerGeneratedType = targeType
-                };
-            }
-        }
-
-        return new ElementAsTask(func());
-    }
-    
-    internal static Element ToElement(Func<Scope,Task<Element>> func)
+    internal static Element ToElement(Func<Task<FC>> func)
     {
         if (func == null)
         {
@@ -335,33 +246,11 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     /// <summary>
     ///     Invokes <paramref name="elementCreatorFunc" /> then adds return value to children.
     /// </summary>
-    public void Add(Task<Func<Element>> elementCreatorFunc)
-    {
-        if (elementCreatorFunc == null)
-        {
-            return;
-        }
-        
-        Add(new ElementAsTaskFunc(elementCreatorFunc));
-    }
-    
-    public void Add(Task<Func<Task<Element>>> elementCreatorFunc)
-    {
-        if (elementCreatorFunc == null)
-        {
-            return;
-        }
-        
-        Add(new ElementAsTaskFuncDouble(elementCreatorFunc));
-    }
-    
-    /// <summary>
-    ///     Invokes <paramref name="elementCreatorFunc" /> then adds return value to children.
-    /// </summary>
     public void Add(Func<Task<Element>> elementCreatorFunc)
     {
         if (elementCreatorFunc == null)
         {
+            Add((Element)null);
             return;
         }
         
@@ -372,6 +261,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     {
         if (action == null)
         {
+            Add((Element)null);
             return;
         }
         
@@ -440,29 +330,16 @@ sealed class ElementAsTask : Element
     internal List<IModifier> Modifiers;
 }
 
-sealed class ElementAsTaskFunc : Element
+sealed class ElementAsTaskFC : Element
 {
-    public readonly Task<Func<Element>> Value;
+    public readonly Task<FC> Value;
 
-    public ElementAsTaskFunc(Task<Func<Element>> value)
+    public ElementAsTaskFC(Task<FC> value)
     {
         Value = value;
     }
     
     internal List<IModifier> Modifiers;
 }
-
-sealed class ElementAsTaskFuncDouble : Element
-{
-    public readonly Task<Func<Task<Element>>> Value;
-
-    public ElementAsTaskFuncDouble(Task<Func<Task<Element>>> value)
-    {
-        Value = value;
-    }
-    
-    internal List<IModifier> Modifiers;
-}
-
 
 

@@ -318,22 +318,13 @@ static class ModifyHelper
             return;
         }
         
-        if (element is ElementAsTaskFunc elementAsTaskFunc)
+        if (element is ElementAsTaskFC elementAsTaskFC)
         {
-            (elementAsTaskFunc.Modifiers ??= []).Add(modifier);
+            (elementAsTaskFC.Modifiers ??= []).Add(modifier);
             
             return;
         }
         
-        if (element is ElementAsTaskFuncDouble elementAsTaskFuncDouble)
-        {
-            (elementAsTaskFuncDouble.Modifiers ??= []).Add(modifier);
-            
-            return;
-        }
-        
-        
-
         throw new DeveloperException("Modifier is not suitable for element. Element is " + element.GetType().FullName);
     }
 }

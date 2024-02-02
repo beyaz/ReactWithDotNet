@@ -56,13 +56,13 @@ partial class ElementSerializer
                 continue;
             }
             
-            if (node.ElementIsTaskFunc)
+            if (node.ElementIsTaskFC)
             {
-                var realElement = Element.ToElement(await node.ElementAsTaskFunc.Value);
-                    
-                if (node.ElementAsTaskFunc.Modifiers is not null)
+                var realElement = await node.ElementAsTaskFC.Value;
+                
+                if (node.ElementAsTaskFC.Modifiers is not null)
                 {
-                    foreach (var modifier in node.ElementAsTaskFunc.Modifiers)
+                    foreach (var modifier in node.ElementAsTaskFC.Modifiers)
                     {
                         ModifyHelper.ProcessModifier(realElement, modifier );    
                     }                    
@@ -73,23 +73,6 @@ partial class ElementSerializer
                 continue;
             }
             
-            if (node.ElementIsTaskFuncDouble)
-            {
-                var realElement = Element.ToElement(await node.ElementAsTaskFuncDouble.Value);
-                
-                if (node.ElementAsTaskFunc.Modifiers is not null)
-                {
-                    foreach (var modifier in node.ElementAsTaskFunc.Modifiers)
-                    {
-                        ModifyHelper.ProcessModifier(realElement, modifier );    
-                    }                    
-                }
-
-                node = ReplaceNode(node, ConvertToNode(realElement));
-
-                continue;
-            }
-
             if (node.IsAllChildrenCompleted && node.ElementIsDotNetReactComponent is false && node.ElementIsDotNetReactPureComponent is false)
             {
                 // Try Calculate ThirdParty Component Suspense Fallback
@@ -1003,25 +986,16 @@ partial class ElementSerializer
             };
         }
         
-        if (element is ElementAsTaskFunc elementAsTaskFunc)
+        if (element is ElementAsTaskFC elementAsTaskFC)
         {
-            return new Node
+            return new ()
             {
-                Element           = element,
-                ElementIsTaskFunc = true,
-                ElementAsTaskFunc = elementAsTaskFunc
+                Element         = element,
+                ElementIsTaskFC = true,
+                ElementAsTaskFC = elementAsTaskFC
             };
         }
         
-        if (element is ElementAsTaskFuncDouble elementAsTaskFuncDouble)
-        {
-            return new Node
-            {
-                Element                 = element,
-                ElementIsTaskFuncDouble = true,
-                ElementAsTaskFuncDouble = elementAsTaskFuncDouble
-            };
-        }
 
         throw FatalError("Node type not recognized");
     }
@@ -1382,6 +1356,8 @@ partial class ElementSerializer
         public Node PreviousSibling;
         public Element SuspenseFallbackElement;
         public Node SuspenseFallbackNode;
+        public bool ElementIsTaskFC;
+        public ElementAsTaskFC ElementAsTaskFC;
         public long? Begin { get; set; }
         public string BreadCrumbPath { get; set; }
         public int? CurrentOrder { get; set; }
@@ -1439,10 +1415,6 @@ partial class ElementSerializer
         public Stopwatch Stopwatch { get; set; }
         
         public bool? IsCompilerGeneratedClassComponent { get; set; }
-        public bool ElementIsTaskFunc { get; set; }
-        public ElementAsTaskFunc ElementAsTaskFunc { get; set; }
-        public bool ElementIsTaskFuncDouble { get; set; }
-        public ElementAsTaskFuncDouble ElementAsTaskFuncDouble { get; set; }
     }
 
     internal sealed class TypeInfo

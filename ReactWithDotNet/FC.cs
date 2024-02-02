@@ -17,11 +17,8 @@ public interface Scope
 sealed class CompilerGeneratedClassComponent : Component, Scope
 {
     internal object _target;
-    internal Func<Element> renderFunc;
-
-    internal Func<Task<Element>> renderFuncAsync;
-
-    internal Func<Scope, Task<Element>> renderFuncAsyncWithScope;
+    
+    internal Func<Task<FC>> renderFuncAsyncWithScope;
 
     internal FC renderFuncWithScope;
 
@@ -47,12 +44,7 @@ sealed class CompilerGeneratedClassComponent : Component, Scope
         {
             return NoneOfRender.Value;
         }
-
-        if (renderFunc is not null)
-        {
-            return renderFunc();
-        }
-
+        
         if (renderFuncWithScope is not null)
         {
             return renderFuncWithScope(this);
@@ -78,16 +70,13 @@ sealed class CompilerGeneratedClassComponent : Component, Scope
         throw DeveloperException("Invalid usage of useState.");
     }
 
-    protected override Task<Element> renderAsync()
+    protected override async Task<Element> renderAsync()
     {
-        if (renderFuncAsync is not null)
-        {
-            return renderFuncAsync();
-        }
-
         if (renderFuncAsyncWithScope is not null)
         {
-            return renderFuncAsyncWithScope(this);
+            var fc = await renderFuncAsyncWithScope();
+
+            return fc?.Invoke(this);
         }
 
         MethodInfo methodInfo = null;
