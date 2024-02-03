@@ -426,15 +426,9 @@ partial class ElementSerializer
                         if (node.FunctionalComponent.Constructor is not null)
                         {
                             await node.FunctionalComponent.Constructor.Invoke();
-                            
-                            // recalculate scope because maybe fields have changed
-                            node.FunctionalComponent.Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(node.FunctionalComponent.Constructor.Target);
                         }
-                        else
-                        {
-                            // recalculate scope because maybe fields have changed
-                            node.FunctionalComponent.Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(node.FunctionalComponent._target);
-                        }
+                        
+                        node.FunctionalComponent.CalculateScopeFromTarget();
                     }
                     
 

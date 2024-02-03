@@ -42,6 +42,31 @@ sealed class FunctionalComponent : Component, Scope
     /// </summary>
     public IReadOnlyDictionary<string, object> Scope { get; set; }
 
+    internal void CalculateScopeFromTarget()
+    {
+        object target;
+        
+        if (renderFuncWithScope is not null)
+        {
+            target = renderFuncWithScope.Target;
+        }
+        else if (renderFuncAsyncWithScope is not null)
+        {
+            target = renderFuncAsyncWithScope.Target;
+        }
+        else
+        {
+            target = _target;
+        }
+
+        if (target is  null)
+        {
+            throw DeveloperException("Invalid usage of useState. target not calculated.");
+        }
+        
+        Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(target);
+    }
+
     public void InitializeTarget()
     {
         _target ??= SerializationHelperForCompilerGeneratedClasss.Deserialize(CompilerGeneratedType, Scope);
