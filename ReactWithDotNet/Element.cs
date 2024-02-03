@@ -180,7 +180,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
 
             if (targeType.IsCompilerGenerated())
             {
-                return new CompilerGeneratedClassComponent
+                return new FunctionalComponent
                 {
                     renderFuncWithScope = func,
                     
@@ -193,7 +193,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
             }
         }
         
-        return new CompilerGeneratedClassComponent
+        return new FunctionalComponent
         {
             renderFuncWithScope = func
         };
@@ -212,7 +212,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
 
             if (targeType.IsCompilerGenerated())
             {
-                return new CompilerGeneratedClassComponent
+                return new FunctionalComponent
                 {
                     IsRenderAsync = true,
                             
@@ -227,7 +227,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
             }
         }
 
-        return new CompilerGeneratedClassComponent
+        return new FunctionalComponent
         {
             IsRenderAsync = true,
 

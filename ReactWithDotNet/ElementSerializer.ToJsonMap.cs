@@ -306,11 +306,11 @@ partial class ElementSerializer
                 
                 if (node.IsCompilerGeneratedClassComponent is null)
                 {
-                    if (reactStatefulComponent is CompilerGeneratedClassComponent compilerGeneratedClassComponent)
+                    if (reactStatefulComponent is FunctionalComponent functionalComponent)
                     {
-                        context.CompilerGeneratedClassComponentStack ??= new();
+                        context.FunctionalComponentStack ??= new();
                     
-                        context.CompilerGeneratedClassComponentStack.Push(compilerGeneratedClassComponent);
+                        context.FunctionalComponentStack.Push(functionalComponent);
 
                         node.IsCompilerGeneratedClassComponent = true;
                     }
@@ -698,7 +698,7 @@ partial class ElementSerializer
 
                 if (node.IsCompilerGeneratedClassComponent is true)
                 {
-                    context.CompilerGeneratedClassComponentStack.Pop();
+                    context.FunctionalComponentStack.Pop();
                 }
                 
                 if (node.Stopwatch is not null)
@@ -867,9 +867,9 @@ partial class ElementSerializer
                 return;
             }
             
-            if (context.CompilerGeneratedClassComponentStack?.Count > 0 && handlerDelegateTarget.GetType().IsCompilerGenerated())
+            if (context.FunctionalComponentStack?.Count > 0 && handlerDelegateTarget.GetType().IsCompilerGenerated())
             {
-                var handlerComponent = context.CompilerGeneratedClassComponentStack.Peek();
+                var handlerComponent = context.FunctionalComponentStack.Peek();
                 
                 var handlerComponentUniqueIdentifier = handlerComponent.ComponentUniqueIdentifier; 
                     

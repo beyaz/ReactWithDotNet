@@ -14,7 +14,7 @@ public interface Scope
     public ReactContext Context { get; }
 }
 
-sealed class CompilerGeneratedClassComponent : Component, Scope
+sealed class FunctionalComponent : Component, Scope
 {
     internal object _target;
     

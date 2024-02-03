@@ -41,7 +41,7 @@ sealed class ElementSerializerContext
     public StateTree StateTree { get; init; }
     public Tracer Tracer { get; init; }
     public bool IsCapturingPreview { get; set; }
-    public Stack<CompilerGeneratedClassComponent> CompilerGeneratedClassComponentStack { get; set; }
+    public Stack<FunctionalComponent> FunctionalComponentStack { get; set; }
 }
 
 static partial class ElementSerializer
@@ -335,9 +335,9 @@ static partial class ElementSerializer
             }
             else
             {
-                if (context.CompilerGeneratedClassComponentStack?.Count > 0)
+                if (context.FunctionalComponentStack?.Count > 0)
                 {
-                    var handlerComponent = context.CompilerGeneratedClassComponentStack.Peek();
+                    var handlerComponent = context.FunctionalComponentStack.Peek();
                     if (handlerComponent.CompilerGeneratedType == handlerDelegateTarget.GetType())
                     {
                         handlerComponentUniqueIdentifier = handlerComponent.ComponentUniqueIdentifier; 
@@ -567,9 +567,9 @@ static partial class ElementSerializer
             }
             else
             {
-                if (context.CompilerGeneratedClassComponentStack?.Count > 0)
+                if (context.FunctionalComponentStack?.Count > 0)
                 {
-                    foreach (var item in context.CompilerGeneratedClassComponentStack)
+                    foreach (var item in context.FunctionalComponentStack)
                     {
                         if (item.CompilerGeneratedType == handlerDelegateTarget.GetType())
                         {

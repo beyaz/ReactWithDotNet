@@ -264,11 +264,11 @@ static class ComponentRequestHandler
                     }
 
                     object response;
-                    if (instance is CompilerGeneratedClassComponent compilerGeneratedClassComponent)
+                    if (instance is FunctionalComponent functionalComponent)
                     {
-                        compilerGeneratedClassComponent.InitializeTarget();
+                        functionalComponent.InitializeTarget();
 
-                        var targetInstance = compilerGeneratedClassComponent._target;                        
+                        var targetInstance = functionalComponent._target;                        
                         
                         // todo: think more and more comment here
                         if (methodInfo.DeclaringType != null && methodInfo.DeclaringType != targetInstance.GetType())
@@ -278,7 +278,7 @@ static class ComponentRequestHandler
                             {
                                 if (fieldInfo.FieldType == typeof(Scope))
                                 {
-                                    fieldInfo.SetValue(newTarget, compilerGeneratedClassComponent);
+                                    fieldInfo.SetValue(newTarget, functionalComponent);
                                     continue;
                                 }
                                 
