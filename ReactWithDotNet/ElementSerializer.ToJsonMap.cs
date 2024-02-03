@@ -303,20 +303,23 @@ partial class ElementSerializer
                     node.Stopwatch = new();
                     node.Stopwatch.Start();
                 }
-                
-                if (node.IsCompilerGeneratedClassComponent is null)
+
+                FunctionalComponent functionalComponent = null;
+                    
+                if (node.IsFunctionalComponent is null)
                 {
-                    if (reactStatefulComponent is FunctionalComponent functionalComponent)
+                    functionalComponent = reactStatefulComponent as FunctionalComponent;
+                    if (functionalComponent is not null)
                     {
                         context.FunctionalComponentStack ??= new();
                     
                         context.FunctionalComponentStack.Push(functionalComponent);
 
-                        node.IsCompilerGeneratedClassComponent = true;
+                        node.IsFunctionalComponent = true;
                     }
                     else
                     {
-                        node.IsCompilerGeneratedClassComponent = false;
+                        node.IsFunctionalComponent = false;
                     }
                 }
 
@@ -376,6 +379,8 @@ partial class ElementSerializer
                         // maybe developer forget init state
                         stateProperty.SetValueFunc(reactStatefulComponent,Activator.CreateInstance(stateProperty.PropertyInfo.PropertyType));
                     }
+
+                    
                 }
 
                 if (node.DotNetComponentRenderMethodInvoked is false)
@@ -415,6 +420,23 @@ partial class ElementSerializer
                     }
 
                     node.DotNetComponentRootElement = await reactStatefulComponent.InvokeRender();
+
+                    if (functionalComponent is not null)
+                    {
+                        if (functionalComponent.Constructor is not null)
+                        {
+                            await functionalComponent.Constructor.Invoke();
+                            
+                            // recalculate scope because maybe fields have changed
+                            functionalComponent.Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(functionalComponent.Constructor.Target);
+                        }
+                        else
+                        {
+                            // recalculate scope because maybe fields have changed
+                            functionalComponent.Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(functionalComponent._target);
+                        }
+                    }
+                    
 
                     if (node.DotNetComponentRootElement is not null)
                     {
@@ -696,7 +718,7 @@ partial class ElementSerializer
                     }
                 }
 
-                if (node.IsCompilerGeneratedClassComponent is true)
+                if (node.IsFunctionalComponent is true)
                 {
                     context.FunctionalComponentStack.Pop();
                 }
@@ -1413,8 +1435,8 @@ partial class ElementSerializer
 
         public Node Parent { get; set; }
         public Stopwatch Stopwatch { get; set; }
-        
-        public bool? IsCompilerGeneratedClassComponent { get; set; }
+
+        public bool? IsFunctionalComponent;
     }
 
     internal sealed class TypeInfo

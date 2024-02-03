@@ -12,10 +12,14 @@ public interface Scope
     public Client Client { get; }
 
     public ReactContext Context { get; }
+    
+    public Func<Task> Constructor { set; }
 }
 
 sealed class FunctionalComponent : Component, Scope
 {
+    public Func<Task> Constructor { internal get; set; }
+    
     internal object _target;
     
     internal Func<Task<FC>> renderFuncAsyncWithScope;
@@ -27,7 +31,7 @@ sealed class FunctionalComponent : Component, Scope
     public bool IsRenderAsync { get; set; }
 
     public string RenderMethodNameWithToken { get; set; }
-
+    
     /// <summary>
     ///     Scope means value of auto generated fields of CompilerGeneratedType instance.
     /// </summary>
@@ -50,6 +54,8 @@ sealed class FunctionalComponent : Component, Scope
             return renderFuncWithScope(this);
         }
 
+        
+
         MethodInfo methodInfo = null;
         if (TryResolveMethodInfo(RenderMethodNameWithToken, ref methodInfo))
         {
@@ -59,12 +65,12 @@ sealed class FunctionalComponent : Component, Scope
                 invocationParameters = [this];
             }
 
-            var response = methodInfo.Invoke(_target, invocationParameters);
+            var renderResult =  (Element)methodInfo.Invoke(_target, invocationParameters);
+            
+            // protect for calling twice
+            Constructor = null;
 
-            // recalculate scope because maybe fields have changed
-            Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(_target);
-
-            return (Element)response;
+            return renderResult;
         }
 
         throw DeveloperException("Invalid usage of useState.");
@@ -79,6 +85,8 @@ sealed class FunctionalComponent : Component, Scope
             return fc?.Invoke(this);
         }
 
+        
+
         MethodInfo methodInfo = null;
         if (TryResolveMethodInfo(RenderMethodNameWithToken, ref methodInfo))
         {
@@ -88,14 +96,16 @@ sealed class FunctionalComponent : Component, Scope
                 invocationParameters = [this];
             }
 
-            var response = methodInfo.Invoke(_target, invocationParameters);
+            var renderResult = (Task<Element>)methodInfo.Invoke(_target, invocationParameters);
 
-            // recalculate scope because maybe fields have changed
-            Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(_target);
-
-            return (Task<Element>)response;
+            // protect for calling twice
+            Constructor = null;
+            
+            return renderResult;
         }
 
         throw DeveloperException("Invalid usage of useState.");
     }
+
+    
 }

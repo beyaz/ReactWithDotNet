@@ -186,8 +186,6 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
                     
                     RenderMethodNameWithToken = func.Method.GetNameWithToken(),
                     
-                    Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(func.Target),
-                    
                     CompilerGeneratedType = targeType
                 };
             }
@@ -219,8 +217,6 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
                     renderFuncAsyncWithScope = func,
                     
                     RenderMethodNameWithToken = func.Method.GetNameWithToken(),
-                    
-                    Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(func.Target),
                     
                     CompilerGeneratedType = targeType
                 };
