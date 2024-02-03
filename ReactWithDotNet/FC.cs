@@ -14,11 +14,16 @@ public interface Scope
     public ReactContext Context { get; }
     
     public Func<Task> Constructor { set; }
+    
+    public Func<Task> ComponentDidMount { set; }
+    
 }
 
 sealed class FunctionalComponent : Component, Scope
 {
     public Func<Task> Constructor { internal get; set; }
+    
+    public Func<Task> ComponentDidMount { internal get; set; }
     
     internal object _target;
     
