@@ -15,10 +15,9 @@ const RootNode = '$RootNode';
 const ClientTasks = '$ClientTasks';
 const SyncId = '$SyncId';
 const DotNetState = '$State';
-const HasComponentDidMountMethod = '$HasComponentDidMountMethod';
+const ComponentDidMountMethod = '$ComponentDidMountMethod';
 const DotNetComponentUniqueIdentifier = '$DotNetComponentUniqueIdentifier';
 const DotNetComponentUniqueIdentifiers = '$DotNetComponentUniqueIdentifiers';
-
 const ON_COMPONENT_DESTROY = '$ON_COMPONENT_DESTROY';
 const CUSTOM_EVENT_LISTENER_MAP = '$CUSTOM_EVENT_LISTENER_MAP';
 const DotNetProperties = 'DotNetProperties';
@@ -1874,8 +1873,8 @@ function DefineComponent(componentDeclaration)
 
             function HandleHasComponentDidMount(isDirectCall)
             {
-                const hasComponentDidMountMethod = component.state[HasComponentDidMountMethod];
-                if (hasComponentDidMountMethod !== true)
+                const componentDidMountMethod = component.state[ComponentDidMountMethod];
+                if (componentDidMountMethod === undefined || componentDidMountMethod === null)
                 {
                     if (isDirectCall !== true)
                     {
@@ -1894,7 +1893,7 @@ function DefineComponent(componentDeclaration)
 
                         const clientTasks = newState[ClientTasks];
 
-                        newState[HasComponentDidMountMethod] = null;
+                        newState[ComponentDidMountMethod] = null;
                         newState[ClientTasks] = null;
 
                         function stateCallback()
@@ -1912,13 +1911,13 @@ function DefineComponent(componentDeclaration)
 
                 const partialState = {};
 
-                partialState[HasComponentDidMountMethod] = null;
+                partialState[ComponentDidMountMethod] = null;
 
                 function stateCallBack()
                 {
                     const actionArguments = {
                         component: component,
-                        remoteMethodName: 'componentDidMount',
+                        remoteMethodName: componentDidMountMethod,
                         remoteMethodArguments: []
                     };
                     StartAction(actionArguments);

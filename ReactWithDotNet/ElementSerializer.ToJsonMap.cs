@@ -304,16 +304,14 @@ partial class ElementSerializer
                     node.Stopwatch.Start();
                 }
 
-                FunctionalComponent functionalComponent = null;
-                    
                 if (node.IsFunctionalComponent is null)
                 {
-                    functionalComponent = reactStatefulComponent as FunctionalComponent;
-                    if (functionalComponent is not null)
+                    node.FunctionalComponent =  reactStatefulComponent as FunctionalComponent;
+                    if (node.FunctionalComponent is not null)
                     {
                         context.FunctionalComponentStack ??= new();
                     
-                        context.FunctionalComponentStack.Push(functionalComponent);
+                        context.FunctionalComponentStack.Push(node.FunctionalComponent);
 
                         node.IsFunctionalComponent = true;
                     }
@@ -321,6 +319,8 @@ partial class ElementSerializer
                     {
                         node.IsFunctionalComponent = false;
                     }
+                    
+                    
                 }
 
                 var stateTree = context.StateTree;
@@ -421,19 +421,19 @@ partial class ElementSerializer
 
                     node.DotNetComponentRootElement = await reactStatefulComponent.InvokeRender();
 
-                    if (functionalComponent is not null)
+                    if (node.IsFunctionalComponent == true)
                     {
-                        if (functionalComponent.Constructor is not null)
+                        if (node.FunctionalComponent.Constructor is not null)
                         {
-                            await functionalComponent.Constructor.Invoke();
+                            await node.FunctionalComponent.Constructor.Invoke();
                             
                             // recalculate scope because maybe fields have changed
-                            functionalComponent.Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(functionalComponent.Constructor.Target);
+                            node.FunctionalComponent.Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(node.FunctionalComponent.Constructor.Target);
                         }
                         else
                         {
                             // recalculate scope because maybe fields have changed
-                            functionalComponent.Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(functionalComponent._target);
+                            node.FunctionalComponent.Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(node.FunctionalComponent._target);
                         }
                     }
                     
@@ -525,9 +525,17 @@ partial class ElementSerializer
                     map.Add("$ReactAttributeNames", reactAttributeNames);
                 }
 
-                if (typeInfo.HasComponentDidMountMethod)
+                if (typeInfo.ComponentDidMountMethod is not null)
                 {
-                    map.Add(___HasComponentDidMountMethod___, true);
+                    map.Add(___ComponentDidMountMethod___, typeInfo.ComponentDidMountMethod);
+                }
+
+                if (node.IsFunctionalComponent == true)
+                {
+                    if (node.FunctionalComponent.ComponentDidMount is not null)
+                    {
+                        map.Add(___ComponentDidMountMethod___, node.FunctionalComponent.ComponentDidMount.Method.GetNameWithToken());
+                    }
                 }
 
                 if (reactStatefulComponent._client is not null && reactStatefulComponent._client.TaskList.Count > 0)
@@ -1103,7 +1111,7 @@ partial class ElementSerializer
 
                 GetPropertyValueForSerializeToClient = getPropertyValueForSerializeToClientFunc,
                 
-                HasComponentDidMountMethod = HasComponentDidMountMethod(type)
+                ComponentDidMountMethod = GetComponentDidMountMethod(type)
             };
 
             TypeInfoMap.TryAdd(type, typeInfo);
@@ -1111,18 +1119,20 @@ partial class ElementSerializer
 
         return typeInfo;
         
-        static bool HasComponentDidMountMethod(Type componentType)
+        
+        
+        static string GetComponentDidMountMethod(Type componentType)
         {
             var didMountMethodInfo = componentType.FindMethod("componentDidMount", BindingFlags.NonPublic | BindingFlags.Instance);
             if (didMountMethodInfo != null)
             {
                 if (didMountMethodInfo.DeclaringType != typeof(ReactComponentBase))
                 {
-                    return true;
+                    return didMountMethodInfo.GetNameWithToken();
                 }
             }
 
-            return false;
+            return null;
         }
     }
 
@@ -1435,6 +1445,7 @@ partial class ElementSerializer
 
         public Node Parent { get; set; }
         public Stopwatch Stopwatch { get; set; }
+        public FunctionalComponent FunctionalComponent;
 
         public bool? IsFunctionalComponent;
     }
@@ -1448,7 +1459,7 @@ partial class ElementSerializer
         public IReadOnlyList<MethodInfo> ParameterizedCacheableMethodInfoList { get; init; }
         public IReadOnlyList<PropertyAccessInfo> ReactAttributedPropertiesOfType { get; init; }
         public PropertyAccessInfo StateProperty { get; init; }
-        public bool HasComponentDidMountMethod { get; init; }
+        public string ComponentDidMountMethod { get; init; }
     }
 }
 

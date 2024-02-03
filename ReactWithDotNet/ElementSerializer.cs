@@ -46,7 +46,7 @@ sealed class ElementSerializerContext
 
 static partial class ElementSerializer
 {
-    const string ___HasComponentDidMountMethod___ = "$HasComponentDidMountMethod";
+    const string ___ComponentDidMountMethod___ = "$ComponentDidMountMethod";
     const string ___RootNode___ = "$RootNode";
     const string ___Type___ = "$Type";
     
