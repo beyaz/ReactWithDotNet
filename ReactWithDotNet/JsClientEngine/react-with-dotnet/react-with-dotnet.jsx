@@ -1848,24 +1848,6 @@ function DefineComponent(componentDeclaration)
                 initialState[SyncId] = ShouldBeNumber(props[SyncId]);
             }
 
-            // old way todo: check and remove
-            //initialState[DotNetState]      = NotNull(props.$jsonNode[DotNetState]);
-            //initialState[SyncId]           = ShouldBeNumber(props[SyncId]);
-            //initialState[RootNode]         = props.$jsonNode[RootNode];
-            //initialState[DotNetProperties] = NotNull(props.$jsonNode[DotNetProperties]);
-            //initialState[DotNetComponentUniqueIdentifier] = NotNull(props.$jsonNode[DotNetComponentUniqueIdentifier]);
-
-            //if (props.$jsonNode[HasComponentDidMountMethod]) {
-            //    initialState[HasComponentDidMountMethod] = props.$jsonNode[HasComponentDidMountMethod];
-            //}
-
-            //if (props.$jsonNode[ClientTasks]) {
-            //    initialState[ClientTasks] = props.$jsonNode[ClientTasks];
-            //}
-
-            //initialState.$CachedMethods = props.$jsonNode.$CachedMethods;
-           
-
             instance.state = initialState;
 
             initialState[DotNetTypeOfReactComponent] = instance[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
