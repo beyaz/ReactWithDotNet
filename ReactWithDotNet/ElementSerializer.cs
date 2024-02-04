@@ -404,7 +404,7 @@ static partial class ElementSerializer
                 transformFunction = transformValueInClientAttribute?.TransformFunction
             };
 
-            var (success, handlerComponentUniqueIdentifier) = GetHandlerComponentUniqueIdentifierFromBindingExpression(propertyValueAsLambdaExpression);
+            var (success, handlerComponentUniqueIdentifier) = GetHandlerComponentUniqueIdentifierFromBindingExpression(context,propertyValueAsLambdaExpression);
             if (!success)
             {
                 throw HandlerMethodShouldBelongToReactComponent(propertyInfo, propertyValueAsLambdaExpression.ToString());
@@ -625,7 +625,7 @@ static partial class ElementSerializer
                 transformFunction = propertyDefinition.transformValueInClient
             };
 
-            var (success, handlerComponentUniqueIdentifier) = GetHandlerComponentUniqueIdentifierFromBindingExpression(propertyValueAsLambdaExpression);
+            var (success, handlerComponentUniqueIdentifier) = GetHandlerComponentUniqueIdentifierFromBindingExpression(context,propertyValueAsLambdaExpression);
             if (!success)
             {
                 throw HandlerMethodShouldBelongToReactComponent(propertyDefinition.name, propertyValueAsLambdaExpression.ToString());
@@ -659,14 +659,16 @@ static partial class ElementSerializer
         return propertyValue;
     }
 
-    static (bool success, int value) GetHandlerComponentUniqueIdentifierFromBindingExpression(LambdaExpression lambdaExpression)
+    static (bool success, int value) GetHandlerComponentUniqueIdentifierFromBindingExpression(ElementSerializerContext context, LambdaExpression lambdaExpression)
     {
         var (success, targetValue) = GetTargetValueFromExpression(lambdaExpression);
         if (success)
         {
-            if (targetValue is ReactComponentBase targetValueAsReactComponentBase)
+            var handlerComponentUniqueIdentifier = TryFindHandlerComponentUniqueIdentifier(context, targetValue);
+
+            if (handlerComponentUniqueIdentifier.HasValue)
             {
-                return  (true, targetValueAsReactComponentBase.ComponentUniqueIdentifier);
+                return  (true, handlerComponentUniqueIdentifier.Value);
             }
         }
 
