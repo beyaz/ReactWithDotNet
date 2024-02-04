@@ -134,7 +134,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             {
                 defaultLanguage          = "json",
                 valueBind                = () => state.JsonText,
-                valueBindDebounceTimeout = 300,
+                valueBindDebounceTimeout = 800,
                 valueBindDebounceHandler = OnKeypressFinished,
                 options =
                 {
