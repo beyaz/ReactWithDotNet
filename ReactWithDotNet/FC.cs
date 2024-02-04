@@ -183,6 +183,8 @@ namespace ReactWithDotNet.WebSite;
            {
                return new FlexColumn(WidthMaximized, HeightMaximized)
                {
+                   BindingSample(7),
+                   
                    AAAA(6),
                    AAAA(7),
                    AAAA(8),
@@ -198,6 +200,35 @@ namespace ReactWithDotNet.WebSite;
                return Task.CompletedTask;
            }
        }
+
+       static FC BindingSample(int start)
+       {
+           var count = start;
+           
+           var text = "label: "+ count;
+
+           return cmp =>
+           {
+               return new FlexColumn
+               {
+                   new input
+                   {
+                       valueBind = ()=>count,
+                   },
+                   new label{ text },
+                   new button(OnClick(OnClickHandler)){ "Update Count"}
+               };
+
+               Task OnClickHandler(MouseEvent e)
+               {
+                   text = "label: "+ count;
+                   
+                   return Task.CompletedTask;
+                       
+               }
+           };
+       }
+       
        static FC AAAA(int start)
        {
    

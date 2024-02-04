@@ -404,10 +404,16 @@ static partial class ElementSerializer
                 transformFunction = transformValueInClientAttribute?.TransformFunction
             };
 
-            var (success, handlerComponentUniqueIdentifier) = GetHandlerComponentUniqueIdentifierFromBindingExpression(context,propertyValueAsLambdaExpression);
+            var (success, handlerComponentUniqueIdentifier, handlerIsReactComponent) = GetHandlerComponentUniqueIdentifierFromBindingExpression(context,propertyValueAsLambdaExpression);
             if (!success)
             {
                 throw HandlerMethodShouldBelongToReactComponent(propertyInfo, propertyValueAsLambdaExpression.ToString());
+            }
+
+            if (handlerIsReactComponent is false)
+            {
+                bindInfo.sourceIsState = true;
+                bindInfo.sourcePath    = new[]{nameof(FunctionalComponent.State.Scope)}.Concat(bindInfo.sourcePath).ToList();
             }
 
             bindInfo.HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier;
@@ -625,10 +631,16 @@ static partial class ElementSerializer
                 transformFunction = propertyDefinition.transformValueInClient
             };
 
-            var (success, handlerComponentUniqueIdentifier) = GetHandlerComponentUniqueIdentifierFromBindingExpression(context,propertyValueAsLambdaExpression);
+            var (success, handlerComponentUniqueIdentifier, handlerIsReactComponent) = GetHandlerComponentUniqueIdentifierFromBindingExpression(context,propertyValueAsLambdaExpression);
             if (!success)
             {
                 throw HandlerMethodShouldBelongToReactComponent(propertyDefinition.name, propertyValueAsLambdaExpression.ToString());
+            }
+            
+            if (handlerIsReactComponent is false)
+            {
+                bindInfo.sourceIsState = true;
+                bindInfo.sourcePath    = new[]{nameof(FunctionalComponent.State.Scope)}.Concat(bindInfo.sourcePath).ToList();
             }
 
             bindInfo.HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier;
@@ -659,7 +671,7 @@ static partial class ElementSerializer
         return propertyValue;
     }
 
-    static (bool success, int value) GetHandlerComponentUniqueIdentifierFromBindingExpression(ElementSerializerContext context, LambdaExpression lambdaExpression)
+    static (bool success, int value, bool handlerIsReactComponent) GetHandlerComponentUniqueIdentifierFromBindingExpression(ElementSerializerContext context, LambdaExpression lambdaExpression)
     {
         var (success, targetValue) = GetTargetValueFromExpression(lambdaExpression);
         if (success)
@@ -668,7 +680,7 @@ static partial class ElementSerializer
 
             if (handlerComponentUniqueIdentifier.HasValue)
             {
-                return  (true, handlerComponentUniqueIdentifier.Value);
+                return  (true, handlerComponentUniqueIdentifier.Value, targetValue is ReactComponentBase);
             }
         }
 
