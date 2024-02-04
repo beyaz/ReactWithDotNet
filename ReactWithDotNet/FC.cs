@@ -11,41 +11,45 @@ public interface Scope
 {
     public Client Client { get; }
 
-    public ReactContext Context { get; }
-    
-    public Func<Task> Constructor { set; }
-    
     public Func<Task> ComponentDidMount { set; }
-    
+
+    public Func<Task> Constructor { set; }
+
+    public ReactContext Context { get; }
 }
 
 sealed class FunctionalComponent : Component, Scope
 {
-    public Func<Task> Constructor { internal get; set; }
-    
-    public Func<Task> ComponentDidMount { internal get; set; }
-    
     internal object _target;
-    
+
     internal Func<Task<FC>> renderFuncAsyncWithScope;
 
     internal FC renderFuncWithScope;
 
     public Type CompilerGeneratedType { get; set; }
 
+    public Func<Task> ComponentDidMount { internal get; set; }
+
+    public Func<Task> Constructor { internal get; set; }
+
     public bool IsRenderAsync { get; set; }
 
     public string RenderMethodNameWithToken { get; set; }
-    
+
     /// <summary>
     ///     Scope means value of auto generated fields of CompilerGeneratedType instance.
     /// </summary>
     public IReadOnlyDictionary<string, object> Scope { get; set; }
 
+    public void InitializeTarget()
+    {
+        _target ??= SerializationHelperForCompilerGeneratedClasss.Deserialize(CompilerGeneratedType, Scope);
+    }
+
     internal void CalculateScopeFromTarget()
     {
         object target;
-        
+
         if (renderFuncWithScope is not null)
         {
             target = renderFuncWithScope.Target;
@@ -59,17 +63,12 @@ sealed class FunctionalComponent : Component, Scope
             target = _target;
         }
 
-        if (target is  null)
+        if (target is null)
         {
             throw DeveloperException("Invalid usage of useState. target not calculated.");
         }
-        
-        Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(target);
-    }
 
-    public void InitializeTarget()
-    {
-        _target ??= SerializationHelperForCompilerGeneratedClasss.Deserialize(CompilerGeneratedType, Scope);
+        Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(target);
     }
 
     protected override Element render()
@@ -78,13 +77,11 @@ sealed class FunctionalComponent : Component, Scope
         {
             return NoneOfRender.Value;
         }
-        
+
         if (renderFuncWithScope is not null)
         {
             return renderFuncWithScope(this);
         }
-
-        
 
         MethodInfo methodInfo = null;
         if (TryResolveMethodInfo(RenderMethodNameWithToken, ref methodInfo))
@@ -95,8 +92,8 @@ sealed class FunctionalComponent : Component, Scope
                 invocationParameters = [this];
             }
 
-            var renderResult =  (Element)methodInfo.Invoke(_target, invocationParameters);
-            
+            var renderResult = (Element)methodInfo.Invoke(_target, invocationParameters);
+
             // protect for calling twice
             Constructor = null;
 
@@ -115,8 +112,6 @@ sealed class FunctionalComponent : Component, Scope
             return fc?.Invoke(this);
         }
 
-        
-
         MethodInfo methodInfo = null;
         if (TryResolveMethodInfo(RenderMethodNameWithToken, ref methodInfo))
         {
@@ -130,12 +125,10 @@ sealed class FunctionalComponent : Component, Scope
 
             // protect for calling twice
             Constructor = null;
-            
+
             return renderResult;
         }
 
         throw DeveloperException("Invalid usage of useState.");
     }
-
-    
 }
