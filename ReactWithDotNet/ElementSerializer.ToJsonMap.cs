@@ -423,9 +423,12 @@ partial class ElementSerializer
 
                     if (node.IsFunctionalComponent == true)
                     {
-                        if (node.FunctionalComponent.Constructor is not null)
+                        if (node.FunctionalComponent.Constructor is not null && 
+                            node.FunctionalComponent.state.IsConstructorCalled == false)
                         {
                             await node.FunctionalComponent.Constructor.Invoke();
+
+                            node.FunctionalComponent.state.IsConstructorCalled = true;
                         }
                         
                         node.FunctionalComponent.CalculateScopeFromTarget();
