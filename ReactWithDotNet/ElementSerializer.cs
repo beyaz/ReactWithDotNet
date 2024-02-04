@@ -504,7 +504,32 @@ static partial class ElementSerializer
 
         return propertyValue;
     }
+    static int? TryFindHandlerComponentUniqueIdentifier(ElementSerializerContext context, object handlerDelegateTarget)
+    {
+        if (handlerDelegateTarget is ReactComponentBase target)
+        {
+            return target.ComponentUniqueIdentifier;
+        }
 
+        if (context.FunctionalComponentStack?.Count > 0)
+        {
+            foreach (var item in context.FunctionalComponentStack)
+            {
+                if (item.CompilerGeneratedType == handlerDelegateTarget.GetType())
+                {
+                    return item.ComponentUniqueIdentifier;
+                }
+
+                var scope = handlerDelegateTarget.GetType().GetFields().FirstOrDefault(f => f.FieldType == typeof(Scope))?.GetValue(handlerDelegateTarget);
+                if (scope is not null && scope == item)
+                {
+                    return item.ComponentUniqueIdentifier;
+                }
+            }
+        }
+
+        return null;
+    }
     static async Task<object> GetPropertyValueOfHtmlElement(ElementSerializerContext context, HtmlElement instance, HtmlElement.PropertyValueNode propertyValueNode)
     {
         var propertyDefinition = propertyValueNode.propertyDefinition;
@@ -558,42 +583,11 @@ static partial class ElementSerializer
             {
                 throw HandlerMethodShouldBelongToReactComponent(propertyDefinition.name, null);
             }
-
-            int? handlerComponentUniqueIdentifier = null;
             
-            if (handlerDelegateTarget is ReactComponentBase target)
+            var handlerComponentUniqueIdentifier =  TryFindHandlerComponentUniqueIdentifier(context, handlerDelegateTarget);
+            if (handlerComponentUniqueIdentifier is null)
             {
-                handlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier;
-            }
-            else
-            {
-                if (context.FunctionalComponentStack?.Count > 0)
-                {
-                    foreach (var item in context.FunctionalComponentStack)
-                    {
-                        if (item.CompilerGeneratedType == handlerDelegateTarget.GetType())
-                        {
-                            handlerComponentUniqueIdentifier = item.ComponentUniqueIdentifier;
-                            break;
-                        }
-
-                        var scope = handlerDelegateTarget.GetType().GetFields().FirstOrDefault(f => f.FieldType == typeof(Scope))?.GetValue(handlerDelegateTarget);
-                        if (scope is not null && scope == item)
-                        {
-                            handlerComponentUniqueIdentifier = item.ComponentUniqueIdentifier;
-                            break;
-                        }
-                    }
-
-                    if (handlerComponentUniqueIdentifier is null)
-                    {
-                        throw HandlerMethodShouldBelongToReactComponent(propertyDefinition.name, handlerDelegateTarget);
-                    }
-                }
-                else
-                {
-                    throw HandlerMethodShouldBelongToReactComponent(propertyDefinition.name, handlerDelegateTarget);
-                }
+                throw HandlerMethodShouldBelongToReactComponent(propertyDefinition.name, handlerDelegateTarget);
             }
 
             var remoteMethodInfo = new RemoteMethodInfo
