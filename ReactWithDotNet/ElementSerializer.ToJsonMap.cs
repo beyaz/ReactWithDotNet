@@ -560,7 +560,7 @@ partial class ElementSerializer
                             ComponentUniqueIdentifierNextValue = context.ComponentUniqueIdentifierNextValue + 1,
                             ReactContext                       = context.ReactContext,
                             SkipHandleCacheableMethods         = true,
-                            StateTree = new StateTree
+                            StateTree = new()
                             {
                                 BreadCrumbPath = context.StateTree.BreadCrumbPath,
                                 CurrentOrder   = context.StateTree.CurrentOrder,
@@ -596,7 +596,7 @@ partial class ElementSerializer
                             context.DynamicStyles.ListOfClasses.AddRange(newElementSerializerContext.DynamicStyles.ListOfClasses);
                             context.ComponentUniqueIdentifierNextValue = newElementSerializerContext.ComponentUniqueIdentifierNextValue;
 
-                            cacheableMethodInfo = new CacheableMethodInfo
+                            cacheableMethodInfo = new()
                             {
                                 MethodName       = cacheableMethod.GetNameWithToken(),
                                 IgnoreParameters = true,
@@ -604,7 +604,7 @@ partial class ElementSerializer
                             };
                         }
 
-                        cachedMethods ??= new List<CacheableMethodInfo>();
+                        cachedMethods ??= [];
 
                         cachedMethods.Add(cacheableMethodInfo);
                     }
@@ -700,7 +700,7 @@ partial class ElementSerializer
                                 context.DynamicStyles.ListOfClasses.AddRange(newElementSerializerContext.DynamicStyles.ListOfClasses);
                                 context.ComponentUniqueIdentifierNextValue = newElementSerializerContext.ComponentUniqueIdentifierNextValue;
 
-                                cacheableMethodInfo = new CacheableMethodInfo
+                                cacheableMethodInfo = new()
                                 {
                                     MethodName    = cacheableMethod.GetNameWithToken(),
                                     Parameter     = parameter,
@@ -708,7 +708,7 @@ partial class ElementSerializer
                                 };
                             }
 
-                            cachedMethods ??= new List<CacheableMethodInfo>();
+                            cachedMethods ??= [];
 
                             cachedMethods.Add(cacheableMethodInfo);
                         }
