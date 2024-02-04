@@ -20,36 +20,6 @@ public interface Scope
 
 sealed class FunctionalComponent : Component<FunctionalComponent.State>, Scope
 {
-    internal class State
-    {
-        /// <summary>
-        ///     Scope means value of auto generated fields of CompilerGeneratedType instance.
-        /// </summary>
-        public IReadOnlyDictionary<string, object> Scope { get; set; }
-        
-        public Type CompilerGeneratedType { get; init; }
-        
-        public bool IsRenderAsync { get; init; }
-        
-        public string RenderMethodNameWithToken { get; init; }
-
-        public bool IsConstructorCalled { get; set; }
-    }
-
-    protected override Task constructor()
-    {
-        state = new()
-        {
-            IsRenderAsync = IsRenderAsync,
-            
-            CompilerGeneratedType = CompilerGeneratedType,
-            
-            RenderMethodNameWithToken = RenderMethodNameWithToken
-        };
-
-        return Task.CompletedTask;
-    }
-
     internal object _target;
 
     internal Func<Task<FC>> renderFuncAsyncWithScope;
@@ -65,8 +35,6 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, Scope
     public bool IsRenderAsync { get; init; }
 
     public string RenderMethodNameWithToken { get; init; }
-
-    
 
     public void InitializeTarget()
     {
@@ -94,6 +62,20 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, Scope
         state.Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(target);
     }
 
+    protected override Task constructor()
+    {
+        state = new()
+        {
+            IsRenderAsync = IsRenderAsync,
+
+            CompilerGeneratedType = CompilerGeneratedType,
+
+            RenderMethodNameWithToken = RenderMethodNameWithToken
+        };
+
+        return Task.CompletedTask;
+    }
+
     protected override Element render()
     {
         if (state.IsRenderAsync)
@@ -101,12 +83,12 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, Scope
             return NoneOfRender.Value;
         }
 
-        if (renderFuncWithScope is not null && state.IsConstructorCalled  == false)
+        if (renderFuncWithScope is not null && state.IsConstructorCalled == false)
         {
             return renderFuncWithScope(this);
         }
 
-        if (_target is null &&  state.IsConstructorCalled)
+        if (_target is null && state.IsConstructorCalled)
         {
             InitializeTarget();
         }
@@ -159,4 +141,108 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, Scope
 
         throw DeveloperException("Invalid usage of useState.");
     }
+
+    internal class State
+    {
+        public Type CompilerGeneratedType { get; init; }
+
+        public bool IsConstructorCalled { get; set; }
+
+        public bool IsRenderAsync { get; init; }
+
+        public string RenderMethodNameWithToken { get; init; }
+
+        /// <summary>
+        ///     Scope means value of auto generated fields of CompilerGeneratedType instance.
+        /// </summary>
+        public IReadOnlyDictionary<string, object> Scope { get; set; }
+    }
 }
+
+
+/* TEST SCENARIO
+ 
+
+namespace ReactWithDotNet.WebSite;
+   
+   public class MainWindow : PureComponent
+   {
+       protected override Element render()
+       {
+           return new div(WidthMaximized, HeightMaximized)
+           {
+               new MyClass()
+               
+           };
+       }
+   
+       class MyClass : Component
+       {
+           public int count { get; set; }
+           protected override Element render()
+           {
+               return new FlexColumn(WidthMaximized, HeightMaximized)
+               {
+                   AAAA(6),
+                   AAAA(7),
+                   AAAA(8),
+                   
+                   new div{Size(50), Background("green"), OnClick(OnClickHandler), "count:"+count}
+               
+               };
+           }
+   
+           Task OnClickHandler(MouseEvent e)
+           {
+               count++;
+               return Task.CompletedTask;
+           }
+       }
+       static FC AAAA(int start)
+       {
+   
+           var count = start;
+   
+           var constructorCallCount = 0;
+   
+           var didMountCount = 0;
+   
+           Task OnClickHandler(MouseEvent e)
+           {
+               count++;
+               return Task.CompletedTask;
+           }
+           
+           
+           
+           return cmp =>
+           {
+               
+   
+               cmp.Constructor = () =>
+               {
+                   constructorCallCount++;
+   
+                   return Task.CompletedTask;
+               };
+               
+               cmp.ComponentDidMount = () =>
+               {
+                   didMountCount++;
+   
+                   return Task.CompletedTask;
+               };
+               
+               
+               return new FlexRowCentered
+               {
+                   count + "- constructorCallCount:" + constructorCallCount + "   didMountCount:"+didMountCount,
+                   OnClick(OnClickHandler)
+               };
+           };
+       }
+   
+       
+   }
+
+*/
