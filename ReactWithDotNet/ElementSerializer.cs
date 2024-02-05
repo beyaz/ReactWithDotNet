@@ -138,10 +138,10 @@ static partial class ElementSerializer
 
         for (var index = 0; index < childrenCount; index++)
         {
-            var sibling = children[index];
-            if (sibling is not null)
+            var child = children[index];
+            if (child is not null)
             {
-                sibling.key = index.ToString();
+                child.key = index.ToString();
             }
         }
     }
