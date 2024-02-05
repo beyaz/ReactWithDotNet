@@ -338,7 +338,7 @@ static partial class ElementSerializer
                 if (context.FunctionalComponentStack?.Count > 0)
                 {
                     var handlerComponent = context.FunctionalComponentStack.Peek();
-                    if (handlerComponent.CompilerGeneratedType == handlerDelegateTarget.GetType())
+                    if (handlerComponent.state.CompilerGeneratedType == handlerDelegateTarget.GetType())
                     {
                         handlerComponentUniqueIdentifier = handlerComponent.ComponentUniqueIdentifier; 
                     }
@@ -521,7 +521,7 @@ static partial class ElementSerializer
         {
             foreach (var item in context.FunctionalComponentStack)
             {
-                if (item.CompilerGeneratedType == handlerDelegateTarget.GetType())
+                if (item.state.CompilerGeneratedType == handlerDelegateTarget.GetType())
                 {
                     return item.ComponentUniqueIdentifier;
                 }
