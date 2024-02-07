@@ -75,6 +75,22 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, Scope
 
         return Task.CompletedTask;
     }
+
+    static void TryUpdateProps(object targetInMethod, object target)
+    {
+        if (targetInMethod is not null)
+        {
+            foreach (var fieldInfo in targetInMethod.GetType().GetFields())
+            {
+                if (char.IsUpper(fieldInfo.Name[0]))
+                {
+                    var propValue = fieldInfo.GetValue(targetInMethod);
+                        
+                    fieldInfo.SetValue(target, propValue);
+                }
+            }
+        }
+    }
     
     protected override Element render()
     {
@@ -91,6 +107,8 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, Scope
         if (_target is null && state.Scope is not null)
         {
             InitializeTarget();
+
+            TryUpdateProps(renderFuncWithScope?.Target,_target);
         }
 
         MethodInfo methodInfo = null;
@@ -115,11 +133,18 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, Scope
 
     protected override async Task<Element> renderAsync()
     {
-        if (renderFuncAsyncWithScope is not null)
+        if (renderFuncAsyncWithScope is not null && state.Scope is null)
         {
             var fc = await renderFuncAsyncWithScope();
 
             return fc?.Invoke(this);
+        }
+
+        if (_target is null && state.Scope is not null)
+        {
+            InitializeTarget();
+
+            TryUpdateProps(renderFuncAsyncWithScope?.Target,_target);
         }
 
         MethodInfo methodInfo = null;
