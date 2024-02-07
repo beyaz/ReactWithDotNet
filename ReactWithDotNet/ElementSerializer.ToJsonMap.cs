@@ -334,28 +334,31 @@ partial class ElementSerializer
                     throw new MissingMemberException(dotNetTypeOfReactComponent.GetFullName(), "state");
                 }
 
-                static string CalculateNodeLocation(Node node)
+                static void InitializeNodeLocationToRoot(Node node)
                 {
-                    List<string> breadcrumb = [];
-
-                    var current = node;
-                    while (current is not null)
+                    if (node.Parent is null)
                     {
-                        breadcrumb.Add(current.Element.key);
+                        node.location = node.Element.key;
 
-                        current = current.Parent;
+                        return;
                     }
 
-                    breadcrumb.Reverse();
+                    if (node.Parent.location is null)
+                    {
+                        InitializeNodeLocationToRoot(node.Parent);
+                    }
 
-                    return string.Join(",", breadcrumb);
+                    Debug.Assert(node.Parent.location is not null);
+                    Debug.Assert(node.location is null);
+
+                    node.location = node.Parent.location + "," + node.Element.key;
                 }
 
                 if (node.location is null)
                 {
-                    node.location = CalculateNodeLocation(node);
+                    InitializeNodeLocationToRoot(node);
                 }
-                
+
                 if (stateProperty.GetValueFunc(reactStatefulComponent) is null)
                 {
                     if (true == stateTree.ChildStates?.TryGetValue(node.location, out var clientStateInfo))
