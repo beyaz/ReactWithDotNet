@@ -474,15 +474,15 @@ const VisitFiberNodeForCaptureState = (parentScope, fiberNode) =>
 {
     var scope = parentScope;
 
+    var breadcrumb = parentScope.breadcrumb + ',' + fiberNode.key;
+
+    scope = { map: parentScope.map, breadcrumb: breadcrumb };
+
     var isFiberNodeRelatedWithDotNetComponent = fiberNode.type && fiberNode.type[DotNetTypeOfReactComponent];
     if (isFiberNodeRelatedWithDotNetComponent)
     {
         var map = parentScope.map;
-
-        var breadcrumb = parentScope.breadcrumb + ',' + parentScope.index;
-
-        parentScope.index++;
-
+        
         if (map[breadcrumb] !== undefined)
         {
             throw CreateNewDeveloperError('Problem when traversing nodes');
@@ -496,8 +496,6 @@ const VisitFiberNodeForCaptureState = (parentScope, fiberNode) =>
         };
 
         map[breadcrumb] = stateInfo;
-
-        scope = { map: map, index: 0, breadcrumb: breadcrumb };
     }
 
     var child = fiberNode.child;
@@ -516,14 +514,16 @@ const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
         rootFiberNode = rootFiberNode.alternate;
     }
 
+    const rootNodeKey = rootFiberNode.key;
+
     var map = {};
 
-    map['0'] =
+    map[rootNodeKey] =
     {
         StateAsJson: JSON.stringify(rootFiberNode.stateNode.state[DotNetState])
     };
 
-    var rootScope = { map: map, index: 0, breadcrumb: '0' };
+    var rootScope = { map: map, breadcrumb: rootNodeKey };
 
     var child = rootFiberNode.child;
     while (child)
@@ -532,18 +532,18 @@ const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
         child = child.sibling;
     }
 
-    map['0'][DotNetProperties] = Object.assign({}, NotNull(rootFiberNode.stateNode.state[DotNetProperties]));
+    map[rootNodeKey][DotNetProperties] = Object.assign({}, NotNull(rootFiberNode.stateNode.state[DotNetProperties]));
 
     // calculate $LogicalChildrenCount
     {
         const logicalChildrenCountCalculation = TryGetValueInPath(rootFiberNode.stateNode, "props.$jsonNode.$LogicalChildrenCount");
         if (logicalChildrenCountCalculation.success)
         {
-            map['0'][DotNetProperties].$LogicalChildrenCount = logicalChildrenCountCalculation.value;
+            map[rootNodeKey][DotNetProperties].$LogicalChildrenCount = logicalChildrenCountCalculation.value;
         }
     }
 
-    return map;
+    return { stateTree: map, rootNodeKey: rootNodeKey };
 };
 
 const GetNextSequence = (() =>
@@ -1561,14 +1561,15 @@ function HandleAction(actionArguments)
 
         throw capturedStateTreeResponse.exception;
     }
-
+    
     const request =
     {
         MethodName: "HandleComponentEvent",
 
         EventHandlerMethodName: NotNull(remoteMethodName),
         FullName: NotNull(component.constructor)[DotNetTypeOfReactComponent],
-        CapturedStateTree: capturedStateTreeResponse.value,
+        CapturedStateTree: capturedStateTreeResponse.value.stateTree,
+        CapturedStateTreeRootNodeKey: capturedStateTreeResponse.value.rootNodeKey,
         ComponentKey: parseInt(NotNull(component.props.$jsonNode.key)),
         LastUsedComponentUniqueIdentifier: LastUsedComponentUniqueIdentifier,
         ComponentUniqueIdentifier: NotNull(component.state[DotNetComponentUniqueIdentifier]),

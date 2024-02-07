@@ -18,6 +18,8 @@ sealed class ComponentRequest
 
     public IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; set; }
 
+    public string CapturedStateTreeRootNodeKey { get; set; }
+
     public double? ClientHeight { get; set; }
 
     public double? ClientWidth { get; set; }
@@ -168,8 +170,7 @@ static class ComponentRequestHandler
 
             var stateTree = new StateTree
             {
-                ChildStates    = request.CapturedStateTree,
-                BreadCrumbPath = "0"
+                ChildStates    = request.CapturedStateTree
             };
 
             var serializerContext = new ElementSerializerContext
@@ -215,7 +216,7 @@ static class ComponentRequestHandler
 
             // Init state
             {
-                var errorMessage = setState(type, instance, request.CapturedStateTree["0"].StateAsJson);
+                var errorMessage = setState(type, instance, request.CapturedStateTree[request.CapturedStateTreeRootNodeKey].StateAsJson);
                 if (errorMessage != null)
                 {
                     return new ComponentResponse { ErrorMessage = errorMessage };
@@ -226,7 +227,7 @@ static class ComponentRequestHandler
             
             // transfer properties
             {
-                var errorMessage = ElementSerializer.TransferPropertiesToDotNetComponent(instance, type, request.CapturedStateTree["0"].DotNetProperties);
+                var errorMessage = ElementSerializer.TransferPropertiesToDotNetComponent(instance, type, request.CapturedStateTree[request.CapturedStateTreeRootNodeKey].DotNetProperties);
                 if (errorMessage is not null)
                 {
                     return new ComponentResponse { ErrorMessage = errorMessage };
@@ -353,8 +354,7 @@ static class ComponentRequestHandler
             
             var stateTree = new StateTree
             {
-                ChildStates    = request.CapturedStateTree,
-                BreadCrumbPath = "0"
+                ChildStates    = request.CapturedStateTree
             };
 
             var serializerContext = new ElementSerializerContext
@@ -451,9 +451,5 @@ static class ComponentRequestHandler
 
 sealed class StateTree
 {
-    public string BreadCrumbPath { get; set; }
-
     public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; init; }
-
-    public int CurrentOrder { get; set; }
 }

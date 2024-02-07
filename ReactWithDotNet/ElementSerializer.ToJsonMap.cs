@@ -336,17 +336,30 @@ partial class ElementSerializer
                     throw new MissingMemberException(dotNetTypeOfReactComponent.GetFullName(), "state");
                 }
 
-                if (node.CurrentOrder is null)
+                static string CalculateNodeLocation(Node node)
                 {
-                    node.BreadCrumbPath = stateTree.BreadCrumbPath;
-                    node.CurrentOrder   = stateTree.CurrentOrder;
+                    List<string> breadcrumb = [];
+                    
+                    var current = node;
+                    while (current is not null)
+                    {
+                        breadcrumb.Add(current.Element.key);
+                        
+                        current = current.Parent;
+                    }
 
+                    breadcrumb.Reverse();
+
+                    return string.Join(",", breadcrumb);
+                }
+                
+                if (node.location is null)
+                {
+                    node.location = CalculateNodeLocation(node);
+                    
                     if (stateProperty.GetValueFunc(reactStatefulComponent) is null)
                     {
-                        stateTree.BreadCrumbPath = node.BreadCrumbPath + "," + stateTree.CurrentOrder;
-                        stateTree.CurrentOrder   = 0;
-
-                        if (true == stateTree.ChildStates?.TryGetValue(stateTree.BreadCrumbPath, out var clientStateInfo))
+                        if (true == stateTree.ChildStates?.TryGetValue(node.location, out var clientStateInfo))
                         {
                             if (reactStatefulComponent.GetType().GetFullName() == clientStateInfo.FullTypeNameOfComponent)
                             {
@@ -354,14 +367,9 @@ partial class ElementSerializer
                                 stateProperty.SetValueFunc(reactStatefulComponent, stateValue);
                             }
                         }
-
-                        if (stateTree.BreadCrumbPath != "0")
-                        {
-                            node.CurrentOrder++;
-                        }
                     }
                 }
-
+                
                 reactStatefulComponent.Context = context.ReactContext;
 
                 if (reactStatefulComponent.ComponentUniqueIdentifier == 0)
@@ -542,10 +550,7 @@ partial class ElementSerializer
                 {
                     map.Add("$LogicalChildrenCount", reactStatefulComponent._children?.Count ?? 0);
                 }
-
-                stateTree.BreadCrumbPath = node.BreadCrumbPath;
-                stateTree.CurrentOrder   = node.CurrentOrder.Value;
-
+                
                 node.ElementAsJsonMap = map;
 
                 node.IsCompleted = true;
@@ -563,8 +568,6 @@ partial class ElementSerializer
                             SkipHandleCacheableMethods         = true,
                             StateTree = new()
                             {
-                                BreadCrumbPath = context.StateTree.BreadCrumbPath,
-                                CurrentOrder   = context.StateTree.CurrentOrder,
                                 ChildStates    = context.StateTree.ChildStates
                             }
                         };
@@ -1377,6 +1380,8 @@ partial class ElementSerializer
 
     sealed class Node
     {
+        public string location;
+        
         public PureComponent ElementAsDotNetReactPureComponent;
         public bool ElementIsDotNetReactPureComponent;
         public bool IsSuspenseFallbackElementCalculated;
@@ -1386,8 +1391,6 @@ partial class ElementSerializer
         public bool ElementIsTaskFC;
         public ElementAsTaskFC ElementAsTaskFC;
         public long? Begin { get; set; }
-        public string BreadCrumbPath { get; set; }
-        public int? CurrentOrder { get; set; }
         public bool DotNetComponentRenderMethodInvoked { get; set; }
         public Element DotNetComponentRootElement { get; set; }
         public Node DotNetComponentRootNode { get; set; }
