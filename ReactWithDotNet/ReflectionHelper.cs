@@ -342,7 +342,7 @@ static class SerializationHelperForCompilerGeneratedClasss
                         var multicastDelegateTargetType = multicastDelegateTarget.GetType();
                         if (multicastDelegateTargetType.IsCompilerGenerated())
                         {
-                            var fieldInfoForComponentLocation = multicastDelegateTargetType.GetFields().FirstOrDefault(f=>f.FieldType == typeof(Scope));
+                            var fieldInfoForComponentLocation = multicastDelegateTargetType.GetFields().FirstOrDefault(f=>f.FieldType == typeof(IFunctionalComponent));
                             if (fieldInfoForComponentLocation is not null)
                             {
                                 var nestedFunctionalComponent = (FunctionalComponent)fieldInfoForComponentLocation.GetValue(multicastDelegateTarget);

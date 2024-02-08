@@ -526,7 +526,7 @@ static partial class ElementSerializer
                     return item.ComponentUniqueIdentifier;
                 }
 
-                var scope = handlerDelegateTarget.GetType().GetFields().FirstOrDefault(f => f.FieldType == typeof(Scope))?.GetValue(handlerDelegateTarget);
+                var scope = handlerDelegateTarget.GetType().GetFields().FirstOrDefault(f => f.FieldType == typeof(IFunctionalComponent))?.GetValue(handlerDelegateTarget);
                 if (scope is not null && scope == item)
                 {
                     return item.ComponentUniqueIdentifier;

@@ -6,9 +6,9 @@ namespace ReactWithDotNet;
 /// <summary>
 ///     Functional component.
 /// </summary>
-public delegate Element FC(Scope cmp);
+public delegate Element FC(IFunctionalComponent cmp);
 
-public interface Scope
+public interface IFunctionalComponent
 {
     public Client Client { get; }
 
@@ -30,7 +30,7 @@ partial class Mixin
     ///     Sample event dispatching <br />
     ///     DispatchEvent(OnUserChanged, new UserInfo { Name = '..'});
     /// </summary>
-    public static void DispatchEvent<A>(this Scope scope, Func<A, Task> handlerFunc, A a, [CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
+    public static void DispatchEvent<A>(this IFunctionalComponent functionalComponent, Func<A, Task> handlerFunc, A a, [CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
     {
         if (handlerFuncName is null)
         {
@@ -39,14 +39,14 @@ partial class Mixin
 
         var propertyName = handlerFuncName.Split('.').Last();
 
-        var senderInfo = GetEventSenderInfo((FunctionalComponent)scope, propertyName);
+        var senderInfo = GetEventSenderInfo((FunctionalComponent)functionalComponent, propertyName);
 
-        scope.Client.DispatchDotNetCustomEvent(senderInfo, a);
+        functionalComponent.Client.DispatchDotNetCustomEvent(senderInfo, a);
     }
 }
 
 
-sealed class FunctionalComponent : Component<FunctionalComponent.State>, Scope
+sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFunctionalComponent
 {
     internal object _target;
     
