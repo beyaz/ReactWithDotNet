@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace ReactWithDotNet;
 
@@ -120,6 +121,98 @@ public abstract class ReactComponentBase : Element
     ///     <br />
     ///     <br />
     ///     Sample event dispatching <br />
+    ///     DispatchEvent(OnUserChanged, new UserInfo { Name = '..'});
+    /// </summary>
+    protected void DispatchEvent(Func<Task> handlerFunc, [CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
+    {
+        if (handlerFuncName is null)
+        {
+            throw new ArgumentNullException(nameof(handlerFuncName));
+        }
+
+        var propertyName = handlerFuncName.Split('.').Last();
+
+        var senderInfo = GetEventSenderInfo(this, propertyName);
+
+        Client.DispatchDotNetCustomEvent(senderInfo);
+    }
+    
+    /// <summary>
+    ///     Sample event declaration
+    ///     <br />
+    ///     [ReactCustomEvent] public Func&lt;UserInfo,Task&gt; OnUserChanged { get; set; }
+    ///     <br />
+    ///     <br />
+    ///     Sample event dispatching <br />
+    ///     DispatchEvent(OnUserChanged, new UserInfo { Name = '..'});
+    /// </summary>
+    protected void DispatchEvent<A>(Func<A, Task> handlerFunc, A a, [CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
+    {
+        if (handlerFuncName is null)
+        {
+            throw new ArgumentNullException(nameof(handlerFuncName));
+        }
+
+        var propertyName = handlerFuncName.Split('.').Last();
+
+        var senderInfo = GetEventSenderInfo(this, propertyName);
+
+        Client.DispatchDotNetCustomEvent(senderInfo, a);
+    }
+    
+    /// <summary>
+    ///     Sample event declaration
+    ///     <br />
+    ///     [ReactCustomEvent] public Func&lt;UserInfo,Task&gt; OnUserChanged { get; set; }
+    ///     <br />
+    ///     <br />
+    ///     Sample event dispatching <br />
+    ///     DispatchEvent(OnUserChanged, new UserInfo { Name = '..'});
+    /// </summary>
+    protected void DispatchEvent<A,B>(Func<A, Task> handlerFunc, A a, B b, [CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
+    {
+        if (handlerFuncName is null)
+        {
+            throw new ArgumentNullException(nameof(handlerFuncName));
+        }
+
+        var propertyName = handlerFuncName.Split('.').Last();
+
+        var senderInfo = GetEventSenderInfo(this, propertyName);
+
+        Client.DispatchDotNetCustomEvent(senderInfo, a, b);
+    }
+
+    /// <summary>
+    ///     Sample event declaration
+    ///     <br />
+    ///     [ReactCustomEvent] public Func&lt;UserInfo,Task&gt; OnUserChanged { get; set; }
+    ///     <br />
+    ///     <br />
+    ///     Sample event dispatching <br />
+    ///     DispatchEvent(OnUserChanged, new UserInfo { Name = '..'});
+    /// </summary>
+    protected void DispatchEvent<A,B,C>(Func<A, Task> handlerFunc, A a, B b, C c, [CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
+    {
+        if (handlerFuncName is null)
+        {
+            throw new ArgumentNullException(nameof(handlerFuncName));
+        }
+
+        var propertyName = handlerFuncName.Split('.').Last();
+
+        var senderInfo = GetEventSenderInfo(this, propertyName);
+
+        Client.DispatchDotNetCustomEvent(senderInfo, a, b, c);
+    }
+
+    /// <summary>
+    ///     Sample event declaration
+    ///     <br />
+    ///     [ReactCustomEvent] public Func&lt;UserInfo,Task&gt; OnUserChanged { get; set; }
+    ///     <br />
+    ///     <br />
+    ///     Sample event dispatching <br />
     ///     DispatchEvent(()=> OnUserChanged, new UserInfo { Name = '..'});
     /// </summary>
     protected void DispatchEvent(Expression<Func<Delegate>> expressionForAccessingCustomReactEventProperty)
@@ -140,8 +233,14 @@ public abstract class ReactComponentBase : Element
     /// </summary>
     protected void DispatchEvent<A>(Expression<Func<Delegate>> expressionForAccessingCustomReactEventProperty, A a)
     {
-        Client.DispatchDotNetCustomEvent(GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a);
+        var propertyName = GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body);
+
+        var senderInfo = GetEventSenderInfo(this, propertyName);
+        
+        Client.DispatchDotNetCustomEvent(senderInfo, a);
     }
+    
+    
     
     /// <summary>
     ///     Sample event declaration
