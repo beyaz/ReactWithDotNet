@@ -280,7 +280,7 @@ static class SerializationHelperForCompilerGeneratedClasss
         return instance;
     }
 
-    public static IReadOnlyDictionary<string, object> Serialize(object compilerGeneratedTypeInstance)
+    public static IReadOnlyDictionary<string, object> Serialize(object compilerGeneratedTypeInstance, FunctionalComponent functionalComponent = null)
     {
         var compilerGeneratedType = compilerGeneratedTypeInstance.GetType();
 
@@ -299,11 +299,81 @@ static class SerializationHelperForCompilerGeneratedClasss
 
             if (value is MulticastDelegate multicastDelegate)
             {
-                if (multicastDelegate.Target == compilerGeneratedTypeInstance)
+                
+
+                var multicastDelegateTarget = multicastDelegate.Target;
+                if (multicastDelegateTarget != null)
                 {
-                    // for avoid circular reference
-                    value = Delegate.CreateDelegate(multicastDelegate.GetType(), null, multicastDelegate.Method);
+                    var isHandled = false;
+                    
+                    if (multicastDelegateTarget == compilerGeneratedTypeInstance)
+                    {
+                        // for avoid circular reference
+                        value = Delegate.CreateDelegate(multicastDelegate.GetType(), null, multicastDelegate.Method);
+                    
+                        isHandled = true;
+                    }
+
+                    if (!isHandled)
+                    {
+                        if (multicastDelegateTarget is ReactComponentBase componentBase && functionalComponent is not null)
+                        {
+                            // initialize event handler
+                    
+                            var handlerComponentUniqueIdentifier = componentBase.ComponentUniqueIdentifier;
+
+                            if (handlerComponentUniqueIdentifier == 0)
+                            {
+                                throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + componentBase.GetType().FullName);
+                            }
+
+                            var eventSenderInfo = GetEventSenderInfo(functionalComponent, name);
+
+                            var handlerMethod = multicastDelegate.Method.GetNameWithToken();
+
+                            functionalComponent.Client.InitializeDotnetComponentEventListener(eventSenderInfo, handlerMethod, handlerComponentUniqueIdentifier);
+                    
+                            continue;
+                        }
+                    }
+
+                    if (!isHandled)
+                    {
+                        var multicastDelegateTargetType = multicastDelegateTarget.GetType();
+                        if (multicastDelegateTargetType.IsCompilerGenerated())
+                        {
+                            var fieldInfoForComponentLocation = multicastDelegateTargetType.GetFields().FirstOrDefault(f=>f.FieldType == typeof(Scope));
+                            if (fieldInfoForComponentLocation is not null)
+                            {
+                                var nestedFunctionalComponent = (FunctionalComponent)fieldInfoForComponentLocation.GetValue(multicastDelegateTarget);
+
+                                if (nestedFunctionalComponent is not null && functionalComponent is not null)
+                                {
+                                    // initialize event handler
+                    
+                                    var handlerComponentUniqueIdentifier = nestedFunctionalComponent.ComponentUniqueIdentifier;
+
+                                    if (handlerComponentUniqueIdentifier == 0)
+                                    {
+                                        throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + nestedFunctionalComponent.GetType().FullName);
+                                    }
+
+                                    var eventSenderInfo = GetEventSenderInfo(functionalComponent, name);
+
+                                    var handlerMethod = multicastDelegate.Method.GetNameWithToken();
+
+                                    functionalComponent.Client.InitializeDotnetComponentEventListener(eventSenderInfo, handlerMethod, handlerComponentUniqueIdentifier);
+                    
+                                    continue;
+                                }  
+                            }
+                        }
+                    
+                    }
                 }
+                
+                
+                
             }
 
             dictionary.Add(name, value);
