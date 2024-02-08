@@ -15,7 +15,7 @@ static partial class Mixin
             throw DeveloperException("ComponentUniqueIdentifier cannot be null");
         }
 
-        return new EventSenderInfo
+        return new()
         {
             SenderPropertyFullName          = $"{reactComponent.GetType().FullName}::{propertyName}",
             SenderComponentUniqueIdentifier = reactComponent.ComponentUniqueIdentifier
