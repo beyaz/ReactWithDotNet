@@ -1561,6 +1561,9 @@ function HandleAction(actionArguments)
 
         throw capturedStateTreeResponse.exception;
     }
+
+    const capturedStateTree = capturedStateTreeResponse.value.stateTree;
+    const capturedStateTreeRootNodeKey = capturedStateTreeResponse.value.rootNodeKey;
     
     const request =
     {
@@ -1568,8 +1571,8 @@ function HandleAction(actionArguments)
 
         EventHandlerMethodName: NotNull(remoteMethodName),
         FullName: NotNull(component.constructor)[DotNetTypeOfReactComponent],
-        CapturedStateTree: capturedStateTreeResponse.value.stateTree,
-        CapturedStateTreeRootNodeKey: capturedStateTreeResponse.value.rootNodeKey,
+        CapturedStateTree: capturedStateTree,
+        CapturedStateTreeRootNodeKey: capturedStateTreeRootNodeKey,
         ComponentKey: parseInt(NotNull(component.props.$jsonNode.key)),
         LastUsedComponentUniqueIdentifier: LastUsedComponentUniqueIdentifier,
         ComponentUniqueIdentifier: NotNull(component.state[DotNetComponentUniqueIdentifier]),
@@ -1577,11 +1580,15 @@ function HandleAction(actionArguments)
         CallFunctionId: actionArguments.executionQueueEntry.id
     };
 
+
     if (actionArguments.onlyUpdateState)
     {
         request.OnlyUpdateState = true;
-        request.CapturedStateTree = { "0": request.CapturedStateTree["0"] };
+        request.CapturedStateTree = { };
+        request.CapturedStateTree[capturedStateTreeRootNodeKey] = capturedStateTree[capturedStateTreeRootNodeKey];
+
     }
+    
 
     ArrangeRemoteMethodArguments(actionArguments.remoteMethodArguments);
 
