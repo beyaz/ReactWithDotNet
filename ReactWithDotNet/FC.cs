@@ -22,13 +22,82 @@ public interface IFunctionalComponent
 partial class Mixin
 {
     /// <summary>
-    ///     Sample event declaration
-    ///     <br />
-    ///     [ReactCustomEvent] public Func&lt;UserInfo,Task&gt; OnUserChanged { get; set; }
-    ///     <br />
-    ///     <br />
-    ///     Sample event dispatching <br />
-    ///     DispatchEvent(OnUserChanged, new UserInfo { Name = '..'});
+    ///    Dispatch given <paramref name="handlerFunc"/>
+    ///    <br/>
+    ///    Sample usage:
+    /// <code> 
+    ///    static FC Counter(int Count, Func&lt;int, Task&gt; OnValueChange)
+    ///    {
+    ///        var count = Count;
+    ///       
+    ///        return cmp =>
+    ///        {
+    ///            return new FlexColumn
+    ///            {
+    ///                new button(Padding(10))
+    ///                {
+    ///                    $"{count}",
+    ///                    OnClick(OnClickHandler)
+    ///                }
+    ///            };
+    ///       
+    ///            Task OnClickHandler(MouseEvent e)
+    ///            {
+    ///                count++;
+    ///        
+    ///                cmp.DispatchEvent(OnValueChange, count);
+    ///       
+    ///                return Task.CompletedTask;
+    ///            }
+    ///        };
+    ///    }
+    /// </code>
+    /// </summary>
+    public static void DispatchEvent(this IFunctionalComponent functionalComponent, Func<Task> handlerFunc, [CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
+    {
+        if (handlerFuncName is null)
+        {
+            throw new ArgumentNullException(nameof(handlerFuncName));
+        }
+
+        var propertyName = handlerFuncName.Split('.').Last();
+
+        var senderInfo = GetEventSenderInfo((FunctionalComponent)functionalComponent, propertyName);
+
+        functionalComponent.Client.DispatchDotNetCustomEvent(senderInfo);
+    }
+    
+    /// <summary>
+    ///    Dispatch given <paramref name="handlerFunc"/>
+    ///    <br/>
+    ///    Sample usage:
+    /// <code> 
+    ///    static FC Counter(int Count, Func&lt;int, Task&gt; OnValueChange)
+    ///    {
+    ///        var count = Count;
+    ///       
+    ///        return cmp =>
+    ///        {
+    ///            return new FlexColumn
+    ///            {
+    ///                new button(Padding(10))
+    ///                {
+    ///                    $"{count}",
+    ///                    OnClick(OnClickHandler)
+    ///                }
+    ///            };
+    ///       
+    ///            Task OnClickHandler(MouseEvent e)
+    ///            {
+    ///                count++;
+    ///        
+    ///                cmp.DispatchEvent(OnValueChange, count);
+    ///       
+    ///                return Task.CompletedTask;
+    ///            }
+    ///        };
+    ///    }
+    /// </code>
     /// </summary>
     public static void DispatchEvent<A>(this IFunctionalComponent functionalComponent, Func<A, Task> handlerFunc, A a, [CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
     {
@@ -42,6 +111,98 @@ partial class Mixin
         var senderInfo = GetEventSenderInfo((FunctionalComponent)functionalComponent, propertyName);
 
         functionalComponent.Client.DispatchDotNetCustomEvent(senderInfo, a);
+    }
+    
+    /// <summary>
+    ///    Dispatch given <paramref name="handlerFunc"/>
+    ///    <br/>
+    ///    Sample usage:
+    /// <code> 
+    ///    static FC Counter(int Count, Func&lt;int, Task&gt; OnValueChange)
+    ///    {
+    ///        var count = Count;
+    ///       
+    ///        return cmp =>
+    ///        {
+    ///            return new FlexColumn
+    ///            {
+    ///                new button(Padding(10))
+    ///                {
+    ///                    $"{count}",
+    ///                    OnClick(OnClickHandler)
+    ///                }
+    ///            };
+    ///       
+    ///            Task OnClickHandler(MouseEvent e)
+    ///            {
+    ///                count++;
+    ///        
+    ///                cmp.DispatchEvent(OnValueChange, count);
+    ///       
+    ///                return Task.CompletedTask;
+    ///            }
+    ///        };
+    ///    }
+    /// </code>
+    /// </summary>
+    public static void DispatchEvent<A,B>(this IFunctionalComponent functionalComponent, Func<A, B, Task> handlerFunc, A a, B b,[CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
+    {
+        if (handlerFuncName is null)
+        {
+            throw new ArgumentNullException(nameof(handlerFuncName));
+        }
+
+        var propertyName = handlerFuncName.Split('.').Last();
+
+        var senderInfo = GetEventSenderInfo((FunctionalComponent)functionalComponent, propertyName);
+
+        functionalComponent.Client.DispatchDotNetCustomEvent(senderInfo, a, b);
+    }
+    
+    /// <summary>
+    ///    Dispatch given <paramref name="handlerFunc"/>
+    ///    <br/>
+    ///    Sample usage:
+    /// <code> 
+    ///    static FC Counter(int Count, Func&lt;int, Task&gt; OnValueChange)
+    ///    {
+    ///        var count = Count;
+    ///       
+    ///        return cmp =>
+    ///        {
+    ///            return new FlexColumn
+    ///            {
+    ///                new button(Padding(10))
+    ///                {
+    ///                    $"{count}",
+    ///                    OnClick(OnClickHandler)
+    ///                }
+    ///            };
+    ///       
+    ///            Task OnClickHandler(MouseEvent e)
+    ///            {
+    ///                count++;
+    ///        
+    ///                cmp.DispatchEvent(OnValueChange, count);
+    ///       
+    ///                return Task.CompletedTask;
+    ///            }
+    ///        };
+    ///    }
+    /// </code>
+    /// </summary>
+    public static void DispatchEvent<A,B,C>(this IFunctionalComponent functionalComponent, Func<A, B, C,Task> handlerFunc, A a, B b, C c, [CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
+    {
+        if (handlerFuncName is null)
+        {
+            throw new ArgumentNullException(nameof(handlerFuncName));
+        }
+
+        var propertyName = handlerFuncName.Split('.').Last();
+
+        var senderInfo = GetEventSenderInfo((FunctionalComponent)functionalComponent, propertyName);
+
+        functionalComponent.Client.DispatchDotNetCustomEvent(senderInfo, a, b, c);
     }
 }
 
