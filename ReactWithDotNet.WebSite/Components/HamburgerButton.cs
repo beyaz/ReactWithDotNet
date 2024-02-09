@@ -2,9 +2,9 @@
 
 class HamburgerButton : Component
 {
-    public bool IsOpen { get; set; }
+    public required bool IsOpen { get; init; }
 
-    public MouseEventHandler Click { get; set; }
+    public required MouseEventHandler Click { get; init; }
 
     protected override Element render()
     {
