@@ -602,8 +602,8 @@ static partial class ElementSerializer
                 remoteMethodName                 = handlerDelegate.Method.GetNameWithToken(),
                 HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier,
                 FunctionNameOfGrabEventArguments = propertyDefinition.GrabEventArgumentsByUsingFunction,
-                StopPropagation                  = handlerDelegate.Method.GetCustomAttribute<ReactStopPropagationAttribute>() is not null,
-                KeyboardEventCallOnly            = handlerDelegate.Method.GetCustomAttribute<ReactKeyboardEventCallOnlyAttribute>()?.Keys
+                StopPropagation                  = handlerDelegate.Method.GetCustomAttributes<ReactStopPropagationAttribute>().Any(),
+                KeyboardEventCallOnly            = handlerDelegate.Method.GetCustomAttributes<ReactKeyboardEventCallOnlyAttribute>().FirstOrDefault()?.Keys
             };
             if (propertyDefinition.isScrollEvent)
             {
