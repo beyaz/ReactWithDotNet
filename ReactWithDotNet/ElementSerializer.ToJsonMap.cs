@@ -436,7 +436,7 @@ partial class ElementSerializer
                             await node.FunctionalComponent.Constructor.Invoke();
                         }
 
-                        node.FunctionalComponent.CalculateScopeFromTarget();
+                        node.FunctionalComponent.CalculateScopeFromTarget(context);
                     }
 
                     if (node.DotNetComponentRootElement is not null)

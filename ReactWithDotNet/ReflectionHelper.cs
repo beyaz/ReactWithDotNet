@@ -280,7 +280,7 @@ static class SerializationHelperForCompilerGeneratedClasss
         return instance;
     }
 
-    public static IReadOnlyDictionary<string, object> Serialize(object compilerGeneratedTypeInstance, FunctionalComponent functionalComponent = null)
+    public static IReadOnlyDictionary<string, object> Serialize(object compilerGeneratedTypeInstance, FunctionalComponent functionalComponent = null,ElementSerializerContext context = null)
     {
         var compilerGeneratedType = compilerGeneratedTypeInstance.GetType();
 
@@ -370,10 +370,23 @@ static class SerializationHelperForCompilerGeneratedClasss
                         }
                     
                     }
+
+                    // maybe nested functional component
+                    if (!isHandled && context is not null)
+                    {
+                        var handlerComponentUniqueIdentifier = ElementSerializer.TryFindHandlerComponentUniqueIdentifier(context, multicastDelegateTarget);
+                        if (handlerComponentUniqueIdentifier.HasValue)
+                        {
+                            var eventSenderInfo = GetEventSenderInfo(functionalComponent, name);
+
+                            var handlerMethod = multicastDelegate.Method.GetNameWithToken();
+
+                            functionalComponent.Client.InitializeDotnetComponentEventListener(eventSenderInfo, handlerMethod, handlerComponentUniqueIdentifier.Value);
+
+                            continue;
+                        }
+                    }
                 }
-                
-                
-                
             }
 
             dictionary.Add(name, value);

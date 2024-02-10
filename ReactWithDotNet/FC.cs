@@ -231,7 +231,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
         _target ??= SerializationHelperForCompilerGeneratedClasss.Deserialize(state.CompilerGeneratedType, state.Scope);
     }
 
-    internal void CalculateScopeFromTarget()
+    internal void CalculateScopeFromTarget(ElementSerializerContext context)
     {
         var target = _target;
 
@@ -249,7 +249,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
             throw DeveloperException("Invalid usage of useState. target not calculated.");
         }
 
-        state.Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(target, this);
+        state.Scope = SerializationHelperForCompilerGeneratedClasss.Serialize(target, this, context);
     }
 
     protected override Task constructor()
@@ -383,8 +383,6 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
 
 
 
-
-
    
    namespace ReactWithDotNet.WebSite;
    
@@ -396,13 +394,13 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
           {
               new FunctionalComponentWithDelegateParameter(),
               
-              new FunctionalComponentMethodParamUpdateTest(),
+              //new FunctionalComponentMethodParamUpdateTest(),
               
-              new TraceAndBindingContainerComponent(),
+              //new TraceAndBindingContainerComponent(),
    
-              new ChildRemoveTest(),
+              //new ChildRemoveTest(),
    
-              new TriggerParentTest()
+              //new TriggerParentTest()
           };
       }
    
@@ -859,9 +857,44 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
    
               return cmp =>
               {
-                  return new button(Size(100), Background("yellow"))
+                  return new FlexColumn(Gap(20), Border(Solid(1,Gray200)), BorderRadius(5), JustifyContentSpaceAround)
                   {
-                      "count:" +count + " / Count:" + Count,
+                      new button(Size(100), Background("yellow"))
+                      {
+                          "Counter_nested: " +count + "/" + Count,
+                          OnClick(OnClickHandler)
+                      },
+                      
+                      Counter_nested_nested(count,OnNestedClicked)
+                  };
+   
+                  Task OnClickHandler(MouseEvent e)
+                  {
+                      count++;
+                      
+                      cmp.DispatchEvent(OnValueChange, count);
+   
+                      return Task.CompletedTask;
+                  }
+
+                  Task OnNestedClicked(int newValue)
+                  {
+                      count++;
+                      
+                      return Task.CompletedTask;
+                  }
+              };
+          }
+          
+          static FC Counter_nested_nested(int Count, Func<int, Task> OnValueChange)
+          {
+              var count = Count;
+   
+              return cmp =>
+              {
+                  return new button(Size(200), BorderColor(Gray300), BorderRadius(5))
+                  {
+                      "Counter_nested_nested: " +count + "/" + Count,
                       OnClick(OnClickHandler)
                   };
    
@@ -877,6 +910,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
           }
       }
    }
+   
    
    
 

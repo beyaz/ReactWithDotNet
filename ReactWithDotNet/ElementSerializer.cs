@@ -510,7 +510,7 @@ static partial class ElementSerializer
 
         return propertyValue;
     }
-    static int? TryFindHandlerComponentUniqueIdentifier(ElementSerializerContext context, object handlerDelegateTarget)
+    internal static int? TryFindHandlerComponentUniqueIdentifier(ElementSerializerContext context, object handlerDelegateTarget)
     {
         if (handlerDelegateTarget is ReactComponentBase target)
         {
