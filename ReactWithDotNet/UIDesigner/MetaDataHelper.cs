@@ -224,37 +224,32 @@ static class MetadataHelper
                 type = type.GetGenericArguments()[0];
             }
             
-            return type == typeof(Element) || type.IsSubclassOf(typeof(Element));
+            return type == typeof(Element) || type.IsSubclassOf(typeof(Element)) || type == typeof(FC);
         }
         
-        static bool isNotValidForJson(Type t)
+        static bool isNotValidForJson(Type parameterType)
         {
-            if (t == typeof(object))
+            if (parameterType == typeof(object))
             {
                 return true;
             }
             
-            if (t == typeof(Element) || t.BaseType == typeof(HtmlElement) ||
-                t == typeof(Element[]) || t == typeof(IEnumerable<Element>))
+            if (parameterType == typeof(Element) || parameterType.BaseType == typeof(HtmlElement) ||
+                parameterType == typeof(Element[]) || parameterType == typeof(IEnumerable<Element>))
             {
                 return true;
             }
 
-            if (typeof(Element).IsAssignableFrom(t.BaseType))
+            if (typeof(Element).IsAssignableFrom(parameterType.BaseType))
             {
                 return true;
             }
 
-            if (typeof(ReactComponentBase).IsAssignableFrom(t.BaseType))
+            if (typeof(ReactComponentBase).IsAssignableFrom(parameterType.BaseType))
             {
                 return true;
             }
-            if (typeof(PureComponent).IsAssignableFrom(t.BaseType))
-            {
-                return true;
-            }
-
-            if (typeof(MulticastDelegate).IsAssignableFrom(t.BaseType))
+            if (typeof(PureComponent).IsAssignableFrom(parameterType.BaseType))
             {
                 return true;
             }
