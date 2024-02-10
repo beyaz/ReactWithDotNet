@@ -12,9 +12,10 @@ static class ReflectionCache
 
         if (!assemblyNode.Methods.TryGetValue(new(methodInfo), out var node))
         {
-            node = new(methodInfo);
-
-            node.Initialize();
+            node = new(methodInfo)
+            {
+                Calculated = MethodInfoCalculated.From(methodInfo)
+            };
 
             assemblyNode.Methods.Add(node);
         }
@@ -44,16 +45,9 @@ static class ReflectionCache
             _methodInfo = methodInfo;
         }
 
-        public bool HasStopPropagationAttribute { get; private set; }
-        public IReadOnlyList<string> KeyboardEventCallOnlyAttribute { get; private set; }
-        public string NameWithToken { get; private set; }
+        public MethodInfoCalculated Calculated { get;  set; }
 
-        public void Initialize()
-        {
-            HasStopPropagationAttribute    = _methodInfo.GetCustomAttributes<ReactStopPropagationAttribute>().Any();
-            KeyboardEventCallOnlyAttribute = _methodInfo.GetCustomAttributes<ReactKeyboardEventCallOnlyAttribute>().FirstOrDefault()?.Keys;
-            NameWithToken                  = _methodInfo.GetNameWithToken();
-        }
+        
 
         class Comparer : IComparer<MethodInfoNode>
         {
@@ -72,5 +66,34 @@ static class ReflectionCache
     class AssemblyNode
     {
         public readonly SortedSet<MethodInfoNode> Methods = new(MethodInfoNode.ComparerInstance);
+    }
+}
+
+sealed class MethodInfoCalculated
+{
+    // todo: cache more accessed values
+    
+    public required MethodInfo MethodInfo { get; init; }
+    public required bool HasStopPropagationAttribute { get; init; }
+    public required IReadOnlyList<string> KeyboardEventCallOnlyAttribute { get; init; }
+    public required string NameWithToken { get; init; }
+    
+    public static MethodInfoCalculated From(MethodInfo methodInfo)
+    {
+        return new()
+        {
+            MethodInfo                     = methodInfo,
+            HasStopPropagationAttribute    = methodInfo.GetCustomAttributes<ReactStopPropagationAttribute>().Any(),
+            KeyboardEventCallOnlyAttribute = methodInfo.GetCustomAttributes<ReactKeyboardEventCallOnlyAttribute>().FirstOrDefault()?.Keys,
+            NameWithToken                  = methodInfo.GetNameWithToken(),
+        };
+    }
+}
+
+partial class Mixin
+{
+    internal static MethodInfoCalculated GetCalculated(this MethodInfo methodInfo)
+    {
+        return methodInfo.Cached().Calculated;
     }
 }

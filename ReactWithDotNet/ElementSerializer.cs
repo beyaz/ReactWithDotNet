@@ -596,14 +596,16 @@ static partial class ElementSerializer
                 throw HandlerMethodShouldBelongToReactComponent(propertyDefinition.name, handlerDelegateTarget);
             }
 
+            var handlerMethod = handlerDelegate.Method.GetCalculated();
+            
             var remoteMethodInfo = new RemoteMethodInfo
             {
                 IsRemoteMethod                   = true,
-                remoteMethodName                 = handlerDelegate.Method.GetNameWithToken(),
+                remoteMethodName                 = handlerMethod.NameWithToken,
                 HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier,
                 FunctionNameOfGrabEventArguments = propertyDefinition.GrabEventArgumentsByUsingFunction,
-                StopPropagation                  = handlerDelegate.Method.GetCustomAttributes<ReactStopPropagationAttribute>().Any(),
-                KeyboardEventCallOnly            = handlerDelegate.Method.GetCustomAttributes<ReactKeyboardEventCallOnlyAttribute>().FirstOrDefault()?.Keys
+                StopPropagation                  = handlerMethod.HasStopPropagationAttribute,
+                KeyboardEventCallOnly            = handlerMethod.KeyboardEventCallOnlyAttribute
             };
             if (propertyDefinition.isScrollEvent)
             {
