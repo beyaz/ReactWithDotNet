@@ -61,7 +61,30 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                         if (methodInfo.IsStatic)
                         {
-                            return (Element)methodInfo.Invoke(null, invocationParameters.ToArray());
+                            var invocationResult = methodInfo.Invoke(null, invocationParameters.ToArray());
+
+                            if (invocationResult is null)
+                            {
+                                return null;
+                            }
+
+                            if (invocationResult is FC invocationResultAsFC)
+                            {
+                                return invocationResultAsFC;
+                            }
+                            
+                            if (invocationResult is Task<FC> invocationResultAsTaskFC)
+                            {
+                                return invocationResultAsTaskFC.GetAwaiter().GetResult();
+                            }
+                            
+                            if (invocationResult is Element invocationResultAselement)
+                            {
+                                return invocationResultAselement;
+                            }
+                            
+                            
+                            return new div { text = $"Method should return Element or FC but returned {invocationResult.GetType().FullName}" };
                         }
 
                         // invoke as instance
