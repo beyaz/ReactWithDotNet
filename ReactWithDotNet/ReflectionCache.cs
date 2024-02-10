@@ -6,7 +6,7 @@ static class ReflectionCache
 {
     static readonly Dictionary<Assembly, AssemblyNode> AssemblyCache = [];
 
-    public static MethodInfoNode Get(MethodInfo methodInfo)
+    public static MethodInfoNode Cached(this MethodInfo methodInfo)
     {
         var assemblyNode = Get(methodInfo.Module.Assembly);
 
@@ -46,11 +46,13 @@ static class ReflectionCache
 
         public bool HasStopPropagationAttribute { get; private set; }
         public IReadOnlyList<string> KeyboardEventCallOnlyAttribute { get; private set; }
+        public string NameWithToken { get; private set; }
 
         public void Initialize()
         {
             HasStopPropagationAttribute    = _methodInfo.GetCustomAttributes<ReactStopPropagationAttribute>().Any();
             KeyboardEventCallOnlyAttribute = _methodInfo.GetCustomAttributes<ReactKeyboardEventCallOnlyAttribute>().FirstOrDefault()?.Keys;
+            NameWithToken                  = _methodInfo.GetNameWithToken();
         }
 
         class Comparer : IComparer<MethodInfoNode>
