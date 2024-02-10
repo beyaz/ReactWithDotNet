@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Immutable;
 using System.Reflection;
 
@@ -40,6 +41,11 @@ static class ReflectionHelper
             {
                 return Array.CreateInstance(elementType, 0);
             }
+        }
+
+        if (type.IsSubclassOf(typeof(Delegate)))
+        {
+            return null;
         }
 
         if (type.IsGenericType)
