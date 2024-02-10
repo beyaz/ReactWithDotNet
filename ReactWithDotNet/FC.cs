@@ -53,7 +53,7 @@ partial class Mixin
     ///    }
     /// </code>
     /// </summary>
-    public static void DispatchEvent(this IFunctionalComponent functionalComponent, Func<Task> handlerFunc, [CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
+    public static void DispatchEvent(this IFunctionalComponent functionalComponent, Delegate handlerFunc, [CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
     {
         if (handlerFuncName is null)
         {
@@ -99,7 +99,7 @@ partial class Mixin
     ///    }
     /// </code>
     /// </summary>
-    public static void DispatchEvent<A>(this IFunctionalComponent functionalComponent, Func<A, Task> handlerFunc, A a, [CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
+    public static void DispatchEvent<A>(this IFunctionalComponent functionalComponent, Delegate handlerFunc, A a, [CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
     {
         if (handlerFuncName is null)
         {
@@ -145,7 +145,7 @@ partial class Mixin
     ///    }
     /// </code>
     /// </summary>
-    public static void DispatchEvent<A,B>(this IFunctionalComponent functionalComponent, Func<A, B, Task> handlerFunc, A a, B b,[CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
+    public static void DispatchEvent<A,B>(this IFunctionalComponent functionalComponent, Delegate handlerFunc, A a, B b,[CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
     {
         if (handlerFuncName is null)
         {
@@ -191,7 +191,7 @@ partial class Mixin
     ///    }
     /// </code>
     /// </summary>
-    public static void DispatchEvent<A,B,C>(this IFunctionalComponent functionalComponent, Func<A, B, C,Task> handlerFunc, A a, B b, C c, [CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
+    public static void DispatchEvent<A,B,C>(this IFunctionalComponent functionalComponent, Delegate handlerFunc, A a, B b, C c, [CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
     {
         if (handlerFuncName is null)
         {
