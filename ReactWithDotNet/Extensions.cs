@@ -81,7 +81,7 @@ static class Extensions
 
                     if (methodCallExpression.Arguments[0] is MemberExpression { Expression: ConstantExpression constantExpression })
                     {
-                        var index = constantExpression.Value!.GetType().GetFields()[0].GetValue(constantExpression.Value);
+                        var index = constantExpression.Value!.GetType().GetFields()[^1].GetValue(constantExpression.Value);
 
                         path.Add("]");
                         path.Add(index?.ToString());
