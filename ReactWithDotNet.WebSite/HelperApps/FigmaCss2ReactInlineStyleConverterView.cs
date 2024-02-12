@@ -108,11 +108,11 @@ color: #4A4A49;
         };
     }
 
-    static FC CopyButton()
+    static Element CopyButton()
     {
         var showCopyButton = true;
         
-        return scope =>
+        return FC(scope =>
         {
             var content = new CopySvg() + OnClick(onCopyClicked);
 
@@ -148,7 +148,7 @@ color: #4A4A49;
         
                 return Task.CompletedTask;
             }
-        };
+        });
 
     }
     

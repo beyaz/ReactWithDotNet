@@ -55,24 +55,7 @@ partial class ElementSerializer
 
                 continue;
             }
-
-            if (node.ElementIsTaskFC)
-            {
-                var realElement = await node.ElementAsTaskFC.Value;
-
-                if (node.ElementAsTaskFC.Modifiers is not null)
-                {
-                    foreach (var modifier in node.ElementAsTaskFC.Modifiers)
-                    {
-                        ModifyHelper.ProcessModifier(realElement, modifier);
-                    }
-                }
-
-                node = ReplaceNode(node, ConvertToNode(realElement));
-
-                continue;
-            }
-
+            
             if (node.IsAllChildrenCompleted && node.ElementIsDotNetReactComponent is false && node.ElementIsDotNetReactPureComponent is false)
             {
                 // Try Calculate ThirdParty Component Suspense Fallback
@@ -1104,17 +1087,7 @@ partial class ElementSerializer
                 ElementAsTask = elementAsTask
             };
         }
-
-        if (element is ElementAsTaskFC elementAsTaskFC)
-        {
-            return new()
-            {
-                Element         = element,
-                ElementIsTaskFC = true,
-                ElementAsTaskFC = elementAsTaskFC
-            };
-        }
-
+        
         throw FatalError("Node type not recognized");
     }
 
@@ -1382,9 +1355,7 @@ partial class ElementSerializer
     sealed class Node
     {
         public PureComponent ElementAsDotNetReactPureComponent;
-        public ElementAsTaskFC ElementAsTaskFC;
         public bool ElementIsDotNetReactPureComponent;
-        public bool ElementIsTaskFC;
         public FunctionalComponent FunctionalComponent;
 
         public bool? IsFunctionalComponent;

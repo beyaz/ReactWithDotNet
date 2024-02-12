@@ -224,7 +224,7 @@ static class MetadataHelper
                 type = type.GetGenericArguments()[0];
             }
             
-            return type == typeof(Element) || type.IsSubclassOf(typeof(Element)) || type == typeof(FC);
+            return type == typeof(Element) || type.IsSubclassOf(typeof(Element));
         }
         
         static bool isNotValidForJson(Type parameterType)

@@ -318,13 +318,6 @@ static class ModifyHelper
             return;
         }
         
-        if (element is ElementAsTaskFC elementAsTaskFC)
-        {
-            (elementAsTaskFC.Modifiers ??= []).Add(modifier);
-            
-            return;
-        }
-        
         throw new DeveloperException("Modifier is not suitable for element. Element is " + element.GetType().FullName);
     }
 }

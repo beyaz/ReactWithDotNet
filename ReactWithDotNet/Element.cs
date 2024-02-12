@@ -18,7 +18,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     {
         get
         {
-            _children ??= new ElementCollection();
+            _children ??= new ();
 
             return _children;
         }
@@ -87,37 +87,6 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         return new ElementAsTask(task);
     }
     
-    public static implicit operator Element(FC func)
-    {
-        return ToElement(func);
-    }
-    
-    public static implicit operator Element(Task<FC> func)
-    {
-        return new ElementAsTaskFC(func);
-    }
-
-
-    // TODO: Check usage maybe should remove
-    public static implicit operator Element(Func<Task<FC>> func)
-    {
-        return ToElement(func);
-    }
-
-
-    public void Add(IEnumerable<FC> elements)
-    {
-        if (elements is null)
-        {
-            return;
-        }
-        
-        foreach (var item in elements)
-        {
-            Add(item);
-        }
-    }
-    
     /// <summary>
     ///     Adds the specified element.
     /// </summary>
@@ -156,87 +125,19 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     {
         ModifyHelper.ProcessModifier(this, modifier);
     }
-
-    internal static Element ToElement(Func<Element> func)
-    {
-        if (func == null)
-        {
-            return null;
-        }
-        
-        return func.Invoke();
-    }
-    
-    internal static Element ToElement(FC func)
-    {
-        if (func == null)
-        {
-            return null;
-        }
-
-        if (func.Target is not null)
-        {
-            var targeType = func.Target.GetType();
-
-            if (targeType.IsCompilerGenerated())
-            {
-                return new FunctionalComponent
-                {
-                    renderFuncWithScope = func,
-                    
-                    RenderMethodNameWithToken = func.Method.GetNameWithToken(),
-                    
-                    CompilerGeneratedType = targeType
-                };
-            }
-        }
-        
-        return new FunctionalComponent
-        {
-            renderFuncWithScope = func
-        };
-    }
-    
-    internal static Element ToElement(Func<Task<FC>> func)
-    {
-        if (func == null)
-        {
-            return null;
-        }
-
-        if (func.Target is not null)
-        {
-            var targeType = func.Target.GetType();
-
-            if (targeType.IsCompilerGenerated())
-            {
-                return new FunctionalComponent
-                {
-                    IsRenderAsync = true,
-                            
-                    renderFuncAsyncWithScope = func,
-                    
-                    RenderMethodNameWithToken = func.Method.GetNameWithToken(),
-                    
-                    CompilerGeneratedType = targeType
-                };
-            }
-        }
-
-        return new FunctionalComponent
-        {
-            IsRenderAsync = true,
-
-            renderFuncAsyncWithScope = func
-        };
-    }
     
     /// <summary>
     ///     Invokes <paramref name="elementCreatorFunc" /> then adds return value to children.
     /// </summary>
     public void Add(Func<Element> elementCreatorFunc)
     {
-        Add(ToElement(elementCreatorFunc));
+        if (elementCreatorFunc == null)
+        {
+            Add((Element)null);
+            return;
+                
+        }
+        Add(elementCreatorFunc.Invoke());
     }
     
     /// <summary>
@@ -325,17 +226,3 @@ sealed class ElementAsTask : Element
     
     internal List<IModifier> Modifiers;
 }
-
-sealed class ElementAsTaskFC : Element
-{
-    public readonly Task<FC> Value;
-
-    public ElementAsTaskFC(Task<FC> value)
-    {
-        Value = value;
-    }
-    
-    internal List<IModifier> Modifiers;
-}
-
-

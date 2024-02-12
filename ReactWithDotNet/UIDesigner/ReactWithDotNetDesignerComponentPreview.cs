@@ -68,15 +68,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                                 return null;
                             }
 
-                            if (invocationResult is FC invocationResultAsFC)
-                            {
-                                return invocationResultAsFC;
-                            }
-                            
-                            if (invocationResult is Task<FC> invocationResultAsTaskFC)
-                            {
-                                return invocationResultAsTaskFC.GetAwaiter().GetResult();
-                            }
+                           
                             
                             if (invocationResult is Element invocationResultAselement)
                             {
