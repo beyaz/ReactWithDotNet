@@ -81,10 +81,24 @@ static class Extensions
 
                     if (methodCallExpression.Arguments[0] is MemberExpression { Expression: ConstantExpression constantExpression })
                     {
-                        var index = constantExpression.Value!.GetType().GetFields()[^1].GetValue(constantExpression.Value);
+                        object index = null;
+                        
+                        foreach (var fieldInfo in constantExpression.Value!.GetType().GetFields())
+                        {
+                            if (isNumberType(fieldInfo.FieldType))
+                            {
+                                 index = fieldInfo.GetValue(constantExpression.Value);
+                                 break;
+                            }
+                        }
 
+                        if (index is null)
+                        {
+                            throw new DeveloperException(constantExpression.ToString());
+                        }
+                        
                         path.Add("]");
-                        path.Add(index?.ToString());
+                        path.Add(index.ToString());
                         path.Add("[");
 
                         expression = methodCallExpression.Object;
@@ -106,6 +120,16 @@ static class Extensions
             }
 
             return path;
+            
+            static bool isNumberType(Type type) =>
+                type == typeof(int) ||
+                type == typeof(long) ||
+                type == typeof(decimal) ||
+                type == typeof(byte) ||
+                type == typeof(short) ||
+                type == typeof(decimal) ||
+                type == typeof(double) ||
+                type == typeof(float);
         }
     }
 
