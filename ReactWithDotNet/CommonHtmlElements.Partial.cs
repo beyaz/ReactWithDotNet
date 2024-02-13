@@ -1,11 +1,20 @@
 namespace ReactWithDotNet;
 
-
-
 sealed class Nbsp : HtmlElement
 {
-    [ReactProp]
-    public int? length { get; set; }
+    #region int? length
+    PropertyValueNode<int?> _length;
+    static readonly PropertyValueDefinition _length_ = new()
+    {
+        name = nameof(length)
+    };
+    
+    public int? length
+    {
+        get => _length?.value;
+        set => SetValue(_length_, ref _length, value);
+    }
+    #endregion
 }
 
 partial class Mixin
