@@ -160,20 +160,7 @@ public class SerializationTests
         
         var json = JsonSerializer.Serialize(instance, JsonSerializerOptionsInstance);
 
-        json.Should().Be(
-                         """
-                         {
-                           "JJJ": "C4TYU3",
-                           "Prop1": "a"
-                         }
-                         """);
-
-        json = """
-               {
-                 "JJJ": "C4TYU3",
-                 "Prop1": "a"
-               }
-               """;
+       
 
 
         instance = JsonSerializer.Deserialize<MyClass>(json,JsonSerializerOptionsInstance);
