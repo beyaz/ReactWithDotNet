@@ -337,7 +337,7 @@ public class ToHtmlTests
     {
         const string expectedHtml = """
 
-                                    <rect x="6" y="9" width="45" height="56" rx="3"></rect>
+                                    <rect width="45" height="56" rx="3" x="6" y="9"></rect>
 
                                     """;
 
