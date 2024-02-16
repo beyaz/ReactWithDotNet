@@ -1305,6 +1305,8 @@ partial class ElementSerializer
             ReactBindAttribute = propertyInfo.GetCustomAttribute<ReactBindAttribute>(),
             
             FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
+            
+            NameOfTransformValueInClient = propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>()?.TransformFunction
         };
 
         static Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> getTransformValueInServerSideTransformFunction(PropertyInfo propertyInfo)
@@ -1344,6 +1346,7 @@ partial class ElementSerializer
         public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
         public string FunctionNameOfGrabEventArguments { get; init; }
         public ReactBindAttribute ReactBindAttribute { get; init; }
+        public string NameOfTransformValueInClient { get; init; }
     }
 
     internal sealed class TypeInfo

@@ -390,8 +390,6 @@ static partial class ElementSerializer
                 return NotExportableObject;
             }
 
-            var transformValueInClientAttribute = propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>();
-
             var (path, isConnectedToState) = propertyValueAsLambdaExpression.AsBindingPath();
             var bindInfo = new BindInfo
             {
@@ -401,7 +399,7 @@ static partial class ElementSerializer
                 sourceIsState     = isConnectedToState,
                 IsBinding         = true,
                 jsValueAccess     = reactBindAttribute.jsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
-                transformFunction = transformValueInClientAttribute?.TransformFunction
+                transformFunction = property.NameOfTransformValueInClient
             };
 
             var (success, handlerComponentUniqueIdentifier, handlerIsReactComponent) = GetHandlerComponentUniqueIdentifierFromBindingExpression(context,propertyValueAsLambdaExpression);
