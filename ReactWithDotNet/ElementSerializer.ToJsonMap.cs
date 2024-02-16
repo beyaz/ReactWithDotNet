@@ -1300,7 +1300,9 @@ partial class ElementSerializer
             JsonPropertyName               = propertyInfo.GetCustomAttribute<JsonPropertyNameAttribute>(),
             TransformValueInClientFunction = TryGetTransformValueInClientFunctionName(propertyInfo),
 
-            PropertyTypeIsIsVoidTaskDelegate = propertyInfo.IsVoidTaskDelegate()
+            PropertyTypeIsIsVoidTaskDelegate = propertyInfo.IsVoidTaskDelegate(),
+            
+            FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
         };
 
         static Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> getTransformValueInServerSideTransformFunction(PropertyInfo propertyInfo)
@@ -1338,6 +1340,7 @@ partial class ElementSerializer
         public ReactTemplateAttribute TemplateAttribute { get; init; }
         public string TransformValueInClientFunction { get; init; }
         public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
+        public string FunctionNameOfGrabEventArguments { get; init; }
     }
 
     internal sealed class TypeInfo

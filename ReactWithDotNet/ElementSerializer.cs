@@ -364,7 +364,7 @@ static partial class ElementSerializer
                 IsRemoteMethod                   = true,
                 remoteMethodName                 = handlerDelegate.Method.GetNameWithToken(),
                 HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier,
-                FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
+                FunctionNameOfGrabEventArguments = property.FunctionNameOfGrabEventArguments,
                 StopPropagation                  = handlerDelegate.Method.GetCalculated().HasStopPropagation,
                 HtmlElementScrollDebounceTimeout = htmlElementScrollDebounceTimeout,
                 KeyboardEventCallOnly            = handlerDelegate.Method.GetCalculated().KeyboardEventCallOnly
