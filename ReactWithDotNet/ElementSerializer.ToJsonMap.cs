@@ -1302,6 +1302,8 @@ partial class ElementSerializer
 
             PropertyTypeIsIsVoidTaskDelegate = propertyInfo.IsVoidTaskDelegate(),
             
+            ReactBindAttribute = propertyInfo.GetCustomAttribute<ReactBindAttribute>(),
+            
             FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
         };
 
@@ -1341,6 +1343,7 @@ partial class ElementSerializer
         public string TransformValueInClientFunction { get; init; }
         public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
         public string FunctionNameOfGrabEventArguments { get; init; }
+        public ReactBindAttribute ReactBindAttribute { get; init; }
     }
 
     internal sealed class TypeInfo

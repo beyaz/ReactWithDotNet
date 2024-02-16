@@ -383,8 +383,8 @@ static partial class ElementSerializer
             propertyValue is Expression<Func<InputValueBinder>>)
         {
             var propertyValueAsLambdaExpression = (LambdaExpression)propertyValue;
-            
-            var reactBindAttribute = propertyInfo.GetCustomAttribute<ReactBindAttribute>();
+
+            var reactBindAttribute = property.ReactBindAttribute;
             if (reactBindAttribute == null)
             {
                 return NotExportableObject;
