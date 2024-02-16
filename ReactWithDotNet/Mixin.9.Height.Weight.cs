@@ -171,18 +171,19 @@ partial class Mixin
     /// <summary>
     ///     width: <paramref name="percentOfTotal"/> / <paramref name="total"/> * 100 + '%'
     ///     <br/>Example:<br/>
-    ///     Width(3, 4) means Width("75%")
+    ///     Width(4, 3) means Width("75%")
     /// </summary>
-    public static StyleModifier Width(double percentOfTotal, double total) => Width( percentOfTotal / total * 100 + "%");
-    
+    public static StyleModifier Width( double total,double percentOfTotal) => Width(percentOfTotal / total * 100 + "%");
+
     /// <summary>
     ///     height:  <paramref name="percentOfTotal"/> / <paramref name="total"/> * 100 + '%'
     ///     <br/>Example:<br/>
-    ///     Height(3, 4) means Height("75%")
+    ///     Height(4, 3) means Height("75%")
     /// </summary>
-    public static StyleModifier Height(double percentOfTotal, double total) => Height(percentOfTotal / total * 100 + "%");
+    public static StyleModifier Height( double total,double percentOfTotal) => Height(percentOfTotal / total * 100 + "%");
+
     
-    
+
     /// <summary>
     ///     height: 100%
     /// </summary>

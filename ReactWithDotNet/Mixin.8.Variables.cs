@@ -43,6 +43,13 @@ partial class Mixin
     /// <summary>
     ///     'linear-gradient(<b>to </b> <paramref name="targetDirection" />,
     ///     <paramref name="fromColor" />, <paramref name="toColor" />)'
+    ///     <code>
+    ///      Example:
+    ///         new div
+    ///         {
+    ///             BackgroundImage(linear_gradientTo("right","#8490ff","#a3eeff"))
+    ///         }
+    ///     </code>
     /// </summary>
     public static string linear_gradientTo(string targetDirection, string fromColor, string toColor)
         => $"linear-gradient(to {targetDirection}, {fromColor}, {toColor})";
