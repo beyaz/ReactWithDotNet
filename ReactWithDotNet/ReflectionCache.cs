@@ -5,8 +5,6 @@ namespace ReactWithDotNet;
 
 sealed class MethodInfoCalculated
 {
-    // todo: cache more accessed values
-
     public required bool HasStopPropagation { get; init; }
 
     public required IReadOnlyList<string> KeyboardEventCallOnly { get; init; }
@@ -19,10 +17,10 @@ sealed class MethodInfoCalculated
     {
         return new()
         {
-            MethodInfo                     = methodInfo,
+            MethodInfo            = methodInfo,
             HasStopPropagation    = methodInfo.GetCustomAttributes<ReactStopPropagationAttribute>().Any(),
             KeyboardEventCallOnly = methodInfo.GetCustomAttributes<ReactKeyboardEventCallOnlyAttribute>().FirstOrDefault()?.Keys,
-            NameWithToken                  = methodInfo.GetNameWithToken()
+            NameWithToken         = methodInfo.GetNameWithToken()
         };
     }
 }
