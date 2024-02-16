@@ -769,26 +769,7 @@ static partial class ElementSerializer
         return style;
     }
 
-    static Exception HandlerMethodShouldBelongToReactComponent(PropertyInfo propertyInfo, object handlerTarget)
-    {
-        throw DeveloperException(string.Join(Environment.NewLine,
-                                             "Delegate method should belong to ReactComponent. ",
-                                             "Please give named method to " + propertyInfo.DeclaringType?.FullName + "::" + propertyInfo.Name,
-                                             $"How to fix: inherit {handlerTarget?.GetType().FullName} class from ReactComponent."));
-    }
     
-    static Exception HandlerMethodShouldBelongToReactComponent(string fullNameOfProperty, object handlerTarget)
-    {
-        throw DeveloperException(string.Join(Environment.NewLine,
-                                             "Delegate method should belong to ReactComponent. ",
-                                             "Please give named method to " + fullNameOfProperty,
-                                             $"How to fix: inherit {handlerTarget?.GetType().FullName} class from ReactComponent."));
-    }
-
-    static Exception HandlerMethodShouldBelongToReactComponent(PropertyInfo propertyInfo, string bindingPath)
-    {
-        throw new InvalidOperationException("Delegate method should belong to ReactComponent. Please give named method to " + propertyInfo.DeclaringType?.FullName + "::" + propertyInfo.Name + $" Given bindingPath:{bindingPath} is invalid.");
-    }
     
     static void TryCallBeforeSerializeElementToClient(this ElementSerializerContext context, Element element, Element parent)
     {
