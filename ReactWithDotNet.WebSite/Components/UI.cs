@@ -9,7 +9,7 @@ static class UI
             new div
             {
                 HeightFull,
-                Width(total,current),
+                Width(current,total),
                 BorderRadius(16),
                 
                 BackgroundImage(linear_gradientTo("right","#8490ff","#a3eeff"))
