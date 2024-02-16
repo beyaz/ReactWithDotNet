@@ -80,9 +80,10 @@ partial class Mixin
     public static StyleModifier Height(CssUnit value) => Height(value.ToString());
 
 
-    public const string inherit = "inherit";
-    public const string none = "none";
-    public const string auto = "auto";
+    public static readonly string inherit = "inherit";
+    public static readonly string none = "none";
+    public static readonly string auto = "auto";
+    public static readonly string solid = "solid";
 }
 
 public sealed class CssUnit

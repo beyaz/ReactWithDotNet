@@ -12,7 +12,8 @@ partial class Mixin
     public static StyleModifier Border(double top, double right, double bottom, double left)
         => Border(top.AsPixel(), right.AsPixel(), bottom.AsPixel(), left.AsPixel());
 
-  
+    public static StyleModifier Border(double widthAsPixel, string borderStyle, string color)
+        => new(style => style.border = $"{widthAsPixel}px {borderStyle} {color}");
 
    
    
