@@ -646,7 +646,7 @@ partial class ElementSerializer
                                 throw new InvalidOperationException($"Method not found method name is {nameofMethodForGettingParameters}");
                             }
 
-                            parameters = (IEnumerable)methodInfoForGettingParameters.Invoke(reactStatefulComponent, Array.Empty<object>());
+                            parameters = (IEnumerable)methodInfoForGettingParameters.Invoke(reactStatefulComponent, []);
                             if (parameters == null)
                             {
                                 throw new InvalidOperationException($"Method should return IEnumerable<{cacheableMethod.GetParameters().FirstOrDefault()}>");
