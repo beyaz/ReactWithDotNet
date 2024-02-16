@@ -365,9 +365,9 @@ static partial class ElementSerializer
                 remoteMethodName                 = handlerDelegate.Method.GetNameWithToken(),
                 HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier,
                 FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
-                StopPropagation                  = handlerDelegate.Method.GetCustomAttribute<ReactStopPropagationAttribute>() is not null,
+                StopPropagation                  = handlerDelegate.Method.GetCalculated().HasStopPropagation,
                 HtmlElementScrollDebounceTimeout = htmlElementScrollDebounceTimeout,
-                KeyboardEventCallOnly            = handlerDelegate.Method.GetCustomAttribute<ReactKeyboardEventCallOnlyAttribute>()?.Keys
+                KeyboardEventCallOnly            = handlerDelegate.Method.GetCalculated().KeyboardEventCallOnly
             };
         }
 
@@ -604,8 +604,8 @@ static partial class ElementSerializer
                 remoteMethodName                 = handlerMethod.NameWithToken,
                 HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier,
                 FunctionNameOfGrabEventArguments = propertyDefinition.GrabEventArgumentsByUsingFunction,
-                StopPropagation                  = handlerMethod.HasStopPropagationAttribute,
-                KeyboardEventCallOnly            = handlerMethod.KeyboardEventCallOnlyAttribute
+                StopPropagation                  = handlerMethod.HasStopPropagation,
+                KeyboardEventCallOnly            = handlerMethod.KeyboardEventCallOnly
             };
             if (propertyDefinition.isScrollEvent)
             {
