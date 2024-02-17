@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet;
+﻿using InvalidCastException = System.InvalidCastException;
+
+namespace ReactWithDotNet;
 
 public interface IModifier;
 
@@ -74,7 +76,21 @@ class HtmlElementModifier<THtmlElement> : HtmlElementModifier where THtmlElement
             return;
         }
 
-        ModifyHtmlElement((THtmlElement)htmlElement);
+        THtmlElement element;
+
+        try
+        {
+            element = (THtmlElement)htmlElement;
+        }
+        catch (InvalidCastException)
+        {
+            throw DeveloperException(string.Join(Environment.NewLine, [
+                $"InvalidCast: {htmlElement.GetType().Name} -> {typeof(THtmlElement).Name}",
+                $"Location:{ModifyHtmlElement.Method}"
+            ]));
+        }
+        
+        ModifyHtmlElement(element);
     }
 }
 

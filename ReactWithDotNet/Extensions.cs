@@ -163,7 +163,7 @@ static class Extensions
     {
         return new DeveloperException(message);
     }
-
+    
     public static string GetNameWithToken(this MethodInfo methodInfo)
     {
         return $"{methodInfo.Module.Assembly.GetName().Name}#{methodInfo.MetadataToken}#{methodInfo.Name}";
