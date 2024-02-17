@@ -3,26 +3,27 @@
 namespace ReactWithDotNet;
 
 /// <summary>
-/// PureComponent is similar to Component but it skips re-renders for same props and state.
-/// <br/>
-/// https://react.dev/reference/react/PureComponent
+///     PureComponent is similar to Component but it skips re-renders for same props and state.
+///     <br />
+///     https://react.dev/reference/react/PureComponent
 /// </summary>
 public abstract class PureComponent : Element
 {
+    internal List<Style> classNameList;
+
+    internal int ComponentUniqueIdentifier;
     internal Func<Task<Element>> DesignerCustomizedRender;
 
     internal List<IModifier> Modifiers;
-    
+
     internal Style StyleForRootElement;
-    
-    internal List<Style> classNameList;
 
     [JsonIgnore]
     public Style style
     {
         get
         {
-            StyleForRootElement ??= new ();
+            StyleForRootElement ??= new();
 
             return StyleForRootElement;
         }
@@ -30,8 +31,6 @@ public abstract class PureComponent : Element
 
     [JsonIgnore]
     protected internal ReactContext Context { get; internal set; }
-
-    internal int ComponentUniqueIdentifier;
 
     internal async Task<Element> InvokeRender()
     {
@@ -41,7 +40,7 @@ public abstract class PureComponent : Element
             {
                 return DesignerCustomizedRender();
             }
-            
+
             // ReSharper disable once MethodHasAsyncOverload
             var renderResult = render();
 
@@ -49,9 +48,9 @@ public abstract class PureComponent : Element
             {
                 return renderResult;
             }
-        
+
             var renderAsyncResult = await renderAsync();
-            
+
             if (!NoneOfRender.IsNoneOfRender(renderAsyncResult))
             {
                 return renderAsyncResult;
@@ -78,16 +77,6 @@ public abstract class PureComponent : Element
         return CreatePureComponentModifier(modifyAction);
     }
 
-    protected virtual Element render()
-    {
-        return NoneOfRender.Value;
-    }
-    
-    protected virtual Task<Element> renderAsync()
-    {
-        return Task.FromResult(NoneOfRender.Value);
-    }
-
     /// <summary>
     ///     When any exception occurred in render method then this method will be call.
     ///     <code>
@@ -104,6 +93,16 @@ public abstract class PureComponent : Element
     {
         return NoneOfRender.Value;
     }
+
+    protected virtual Element render()
+    {
+        return NoneOfRender.Value;
+    }
+
+    protected virtual Task<Element> renderAsync()
+    {
+        return Task.FromResult(NoneOfRender.Value);
+    }
 }
 
 static class NoneOfRender
@@ -114,5 +113,4 @@ static class NoneOfRender
     {
         return ReferenceEquals(Value, element);
     }
-        
 }
