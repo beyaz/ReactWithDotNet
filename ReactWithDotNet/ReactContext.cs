@@ -39,13 +39,7 @@ public sealed class ReactContext
 
     public void Set<TValue>(string key, TValue value)
     {
-        if (map.ContainsKey(key))
-        {
-            map[key] = value;
-            return;
-        }
-
-        map.Add(key, value);
+        map[key] = value;
     }
 
     public TValue TryGetValue<TValue>(ReactContextKey<TValue> key)
