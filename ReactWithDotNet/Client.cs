@@ -58,4 +58,45 @@ public sealed class Client
         public object[] JsFunctionArguments { get; set; }
         public string JsFunctionPath { get; set; }
     }
+    
+    /// <summary>
+    ///  Sample usage:
+    ///     <code>
+    ///     
+    ///      if (Client.WidthHasMatch(SM))
+    ///      {
+    ///          // 
+    ///      }
+    ///     
+    ///     </code>
+    /// </summary>
+    public bool WidthHasMatch(Func<StyleModifier[],StyleModifier> mediaSizeFunction)
+    {
+        if (mediaSizeFunction == SM)
+        {
+            return Width >= 640;
+        }
+        
+        if (mediaSizeFunction == MD)
+        {
+            return Width >= 768;
+        }
+        
+        if (mediaSizeFunction == LG)
+        {
+            return Width >= 1024;
+        }
+        
+        if (mediaSizeFunction == XL)
+        {
+            return Width >= 1280;
+        }
+        
+        if (mediaSizeFunction == XXL)
+        {
+            return Width >= 1536;
+        }
+
+        throw DeveloperException("Use common media size functions: SM, MD, LG, XL, XXL");
+    }
 }
