@@ -156,13 +156,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     
     public void Add<TElement>(Action<TElement> action) where TElement : Element
     {
-        if (action == null)
-        {
-            Add((Element)null);
-            return;
-        }
-        
-        action.Invoke((TElement)this);
+        action?.Invoke((TElement)this);
     }
 
     /// <summary>
