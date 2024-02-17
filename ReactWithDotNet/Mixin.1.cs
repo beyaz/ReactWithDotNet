@@ -291,6 +291,16 @@ public static partial class Mixin
     ///     width: 100%
     /// </summary>
     public static StyleModifier WidthMaximized => Width("100%");
+    
+    /// <summary>
+    ///     width: fit-content
+    /// </summary>
+    public static StyleModifier WidthFitContent => Width("fit-content");
+    
+    /// <summary>
+    ///     height: fit-content
+    /// </summary>
+    public static StyleModifier HeightFitContent => Height("fit-content");
 
     public static TParent appendChild<TParent, TChild>(this TParent element, TChild child) where TParent : Element where TChild : Element
     {
