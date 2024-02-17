@@ -32,7 +32,7 @@ public abstract class ReactComponentBase : Element
     {
         get
         {
-            return _client ??= new ();
+            return _client ??= new (Context);
         }
     }
 

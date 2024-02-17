@@ -19,6 +19,9 @@ public sealed class ReactContextKey<TValue>
 
 public sealed class ReactContext
 {
+    internal double? ClientWidth { get; init; }
+    internal double? ClientHeight { get; init; }
+    
     readonly Dictionary<string, object> map = new();
 
     internal ReactContext()
@@ -26,6 +29,7 @@ public sealed class ReactContext
     }
 
     internal IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; init; }
+    
 
     public bool Contains<TValue>(ReactContextKey<TValue> key)
     {

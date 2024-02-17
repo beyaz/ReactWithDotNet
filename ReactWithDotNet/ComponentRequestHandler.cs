@@ -442,7 +442,10 @@ static class ComponentRequestHandler
     {
         var context = new ReactContext
         {
-            CapturedStateTree = request.CapturedStateTree
+            CapturedStateTree = request.CapturedStateTree,
+            ClientWidth       = request.ClientWidth,
+            ClientHeight      = request.ClientHeight
+            
         };
 
         return context;

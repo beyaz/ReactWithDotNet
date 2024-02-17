@@ -606,7 +606,7 @@ partial class ElementSerializer
                         {
                             if (component._client.TaskList.Count == 0)
                             {
-                                component._client = new();
+                                component._client = new(component.Context);
                             }
                             else
                             {
