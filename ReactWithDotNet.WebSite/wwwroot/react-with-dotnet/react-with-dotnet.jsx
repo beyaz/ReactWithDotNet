@@ -1830,13 +1830,19 @@ function HandleComponentClientTasks(component)
 
 function DefineComponent(componentDeclaration)
 {
-    const dotNetTypeOfReactComponent = componentDeclaration[DotNetTypeOfReactComponent];
+    var cacheKeyForComponentDefinitions = componentDeclaration[DotNetTypeOfReactComponent];
 
-    const component = ComponentDefinitions[dotNetTypeOfReactComponent];
+    if (cacheKeyForComponentDefinitions === 'ReactWithDotNet.FunctionalComponent,ReactWithDotNet')
+    {
+        cacheKeyForComponentDefinitions = componentDeclaration[DotNetProperties].RenderMethodNameWithToken;
+    }
+    const component = ComponentDefinitions[cacheKeyForComponentDefinitions];
     if (component)
     {
         return component;
     }
+
+    const dotNetTypeOfReactComponent = componentDeclaration[DotNetTypeOfReactComponent];
 
     class NewComponent extends React.Component
     {
@@ -2021,7 +2027,7 @@ function DefineComponent(componentDeclaration)
 
     NewComponent[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
 
-    ComponentDefinitions[dotNetTypeOfReactComponent] = NewComponent;
+    ComponentDefinitions[cacheKeyForComponentDefinitions] = NewComponent;
 
     NewComponent.displayName = dotNetTypeOfReactComponent.split(',')[0].split('.').pop();
     if (NewComponent.displayName === 'FunctionalComponent')
