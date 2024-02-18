@@ -2024,6 +2024,10 @@ function DefineComponent(componentDeclaration)
     ComponentDefinitions[dotNetTypeOfReactComponent] = NewComponent;
 
     NewComponent.displayName = dotNetTypeOfReactComponent.split(',')[0].split('.').pop();
+    if (NewComponent.displayName === 'FunctionalComponent')
+    {
+        NewComponent.displayName = componentDeclaration[DotNetProperties].Name;
+    }
 
     return NewComponent;
 }

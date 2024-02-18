@@ -16,7 +16,7 @@ public interface IFunctionalComponent
 
 partial class Mixin
 {
-    public static Element FC(Func<IFunctionalComponent, Element> func)
+    public static Element FC(Func<IFunctionalComponent, Element> func, [CallerMemberName] string callerMemberName = null)
     {
         if (func == null)
         {
@@ -35,7 +35,10 @@ partial class Mixin
                     
                     RenderMethodNameWithToken = func.Method.GetNameWithToken(),
                     
-                    CompilerGeneratedType = targeType
+                    CompilerGeneratedType = targeType,
+                    
+                    Name = $"{targeType.DeclaringType?.Name}.{callerMemberName}"
+                    
                 };
             }
         }
@@ -43,7 +46,7 @@ partial class Mixin
         throw DeveloperException("Invalid usage of Functional component");
     }
     
-    public static Element FC(Func<IFunctionalComponent, Task<Element>> func)
+    public static Element FC(Func<IFunctionalComponent, Task<Element>> func, [CallerMemberName] string callerMemberName = null)
     {
         if (func == null)
         {
@@ -66,7 +69,9 @@ partial class Mixin
                     
                     RenderMethodNameWithToken = func.Method.GetNameWithToken(),
                     
-                    CompilerGeneratedType = targeType
+                    CompilerGeneratedType = targeType,
+                    
+                    Name = $"{targeType.DeclaringType?.Name}.{callerMemberName}"
                 };
             }
         }
@@ -283,6 +288,8 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
     public string RenderMethodNameWithToken { get; init; }
     
     public bool IsAsyncFC { get; init; }
+    
+    public required string Name { get; init; }
 
     public void InitializeTarget()
     {
