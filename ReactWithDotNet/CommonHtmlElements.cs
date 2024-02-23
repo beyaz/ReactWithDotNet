@@ -346,6 +346,120 @@ public sealed class p : HtmlElement
 }
 
 /// <summary>
+///     Defines a description list.
+/// </summary>
+public sealed class dl : HtmlElement
+{
+
+    /// <summary>
+    ///     Defines a description list.
+    /// </summary>
+    public dl(string innerText) : base(innerText) {  }
+
+    /// <summary>
+    ///     Defines a description list.
+    /// </summary>
+    public static implicit operator dl(string text) => new() { text = text };
+    /// <summary>
+    ///     Defines a description list.
+    /// </summary>
+    public dl() { }
+
+    /// <summary>
+    ///     Defines a description list.
+    /// </summary>
+    public dl(params IModifier[] modifiers) : base(modifiers) { }
+
+    /// <summary>
+    ///     Defines a description list.
+    /// </summary>
+    public dl(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Defines a description list.
+    /// </summary>
+    public dl(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<dl> modifyAction) => CreateHtmlElementModifier(modifyAction);
+}
+
+/// <summary>
+///     Defines a term/name in a description list.
+/// </summary>
+public sealed class dt : HtmlElement
+{
+
+    /// <summary>
+    ///     Defines a term/name in a description list.
+    /// </summary>
+    public dt(string innerText) : base(innerText) {  }
+
+    /// <summary>
+    ///     Defines a term/name in a description list.
+    /// </summary>
+    public static implicit operator dt(string text) => new() { text = text };
+    /// <summary>
+    ///     Defines a term/name in a description list.
+    /// </summary>
+    public dt() { }
+
+    /// <summary>
+    ///     Defines a term/name in a description list.
+    /// </summary>
+    public dt(params IModifier[] modifiers) : base(modifiers) { }
+
+    /// <summary>
+    ///     Defines a term/name in a description list.
+    /// </summary>
+    public dt(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Defines a term/name in a description list.
+    /// </summary>
+    public dt(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<dt> modifyAction) => CreateHtmlElementModifier(modifyAction);
+}
+
+/// <summary>
+///     Describe a term/name in a description list.
+/// </summary>
+public sealed class dd : HtmlElement
+{
+
+    /// <summary>
+    ///     Describe a term/name in a description list.
+    /// </summary>
+    public dd(string innerText) : base(innerText) {  }
+
+    /// <summary>
+    ///     Describe a term/name in a description list.
+    /// </summary>
+    public static implicit operator dd(string text) => new() { text = text };
+    /// <summary>
+    ///     Describe a term/name in a description list.
+    /// </summary>
+    public dd() { }
+
+    /// <summary>
+    ///     Describe a term/name in a description list.
+    /// </summary>
+    public dd(params IModifier[] modifiers) : base(modifiers) { }
+
+    /// <summary>
+    ///     Describe a term/name in a description list.
+    /// </summary>
+    public dd(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Describe a term/name in a description list.
+    /// </summary>
+    public dd(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<dd> modifyAction) => CreateHtmlElementModifier(modifyAction);
+}
+
+/// <summary>
 ///     Preformatted text
 /// </summary>
 public sealed class pre : HtmlElement
