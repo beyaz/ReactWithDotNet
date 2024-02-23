@@ -460,6 +460,44 @@ public sealed class dd : HtmlElement
 }
 
 /// <summary>
+///     tag is used to define keyboard input. The content inside is displayed in the browser's default monospace font.
+/// </summary>
+public sealed class kbd : HtmlElement
+{
+
+    /// <summary>
+    ///     tag is used to define keyboard input. The content inside is displayed in the browser's default monospace font.
+    /// </summary>
+    public kbd(string innerText) : base(innerText) {  }
+
+    /// <summary>
+    ///     tag is used to define keyboard input. The content inside is displayed in the browser's default monospace font.
+    /// </summary>
+    public static implicit operator kbd(string text) => new() { text = text };
+    /// <summary>
+    ///     tag is used to define keyboard input. The content inside is displayed in the browser's default monospace font.
+    /// </summary>
+    public kbd() { }
+
+    /// <summary>
+    ///     tag is used to define keyboard input. The content inside is displayed in the browser's default monospace font.
+    /// </summary>
+    public kbd(params IModifier[] modifiers) : base(modifiers) { }
+
+    /// <summary>
+    ///     tag is used to define keyboard input. The content inside is displayed in the browser's default monospace font.
+    /// </summary>
+    public kbd(Style style) : base(style) { }
+
+    /// <summary>
+    ///     tag is used to define keyboard input. The content inside is displayed in the browser's default monospace font.
+    /// </summary>
+    public kbd(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<kbd> modifyAction) => CreateHtmlElementModifier(modifyAction);
+}
+
+/// <summary>
 ///     Preformatted text
 /// </summary>
 public sealed class pre : HtmlElement
