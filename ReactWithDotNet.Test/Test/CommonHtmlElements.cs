@@ -97,7 +97,19 @@ public class ExportingCommonHtmlElements
                 Comment              = "Defines a paragraph",
                 EnableCastFromString = true
             },
-
+            new()
+            {
+                Tag = "time",
+                Attributes = new AttributeInfo[]
+                {
+                    new ()
+                    {
+                        Name    = "datetime",
+                        Comment = "Represent a machine-readable format of the 'time' element"
+                    }
+                },
+                EnableCastFromString = false
+            },
             new()
             {
                 Tag                  = "dl",

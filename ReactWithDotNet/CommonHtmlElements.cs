@@ -345,6 +345,43 @@ public sealed class p : HtmlElement
     public static HtmlElementModifier Modify(Action<p> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
+public sealed class time : HtmlElement
+{
+    #region string datetime
+    PropertyValueNode<string> _datetime;
+    static readonly PropertyValueDefinition _datetime_ = new()
+    {
+        name = nameof(datetime)
+    };
+    /// <summary>
+    ///     Represent a machine-readable format of the 'time' element
+    /// </summary>
+    public string datetime
+    {
+        get => _datetime?.value;
+        set => SetValue(_datetime_, ref _datetime, value);
+    }
+    #endregion
+
+
+    public time() { }
+
+    public time(params IModifier[] modifiers) : base(modifiers) { }
+
+    public time(Style style) : base(style) { }
+
+    public time(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<time> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     datetime = <paramref name="value"/>
+    /// <br/>
+    ///     Represent a machine-readable format of the 'time' element
+    /// </summary>
+    public static HtmlElementModifier Datetime(string value) => Modify(x => x.datetime = value);
+
+}
+
 /// <summary>
 ///     Defines a description list.
 /// </summary>
