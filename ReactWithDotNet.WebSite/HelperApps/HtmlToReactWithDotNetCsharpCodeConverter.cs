@@ -1032,7 +1032,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         if (name == "padding")
         {
             var paddingValues = value.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
-            if (paddingValues.Count == 4 && paddingValues.TrueForAll(x => x.EndsWith("px", StringComparison.OrdinalIgnoreCase)))
+            if (paddingValues.Count == 4 &&
+                paddingValues.TrueForAll(x => x.EndsWith("px", StringComparison.OrdinalIgnoreCase)))
             {
                 if (paddingValues[0] == paddingValues[1] &&   
                     paddingValues[0] == paddingValues[2] && 
