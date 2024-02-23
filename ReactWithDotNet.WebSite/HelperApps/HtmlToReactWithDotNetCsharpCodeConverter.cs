@@ -1031,24 +1031,36 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         if (name == "padding")
         {
-            var paddingValues = value.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
-            if (paddingValues.Count == 4 &&
-                paddingValues.TrueForAll(x => x.EndsWith("px", StringComparison.OrdinalIgnoreCase)))
+            var parameters = value.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
+            
+            if (parameters.TrueForAll(IsEndsWithPixel))
             {
-                if (paddingValues[0] == paddingValues[1] &&   
-                    paddingValues[0] == paddingValues[2] && 
-                    paddingValues[0] == paddingValues[3])
+                if (parameters.Count == 4)
                 {
-                    return success($"Padding({paddingValues[0].RemoveFromEnd("px")})");
+                    // 5px 5px 5px 5px
+                    if (parameters[0] == parameters[1] &&   
+                        parameters[0] == parameters[2] && 
+                        parameters[0] == parameters[3])
+                    {
+                        return success($"Padding({parameters[0].RemovePixelFromEnd()})");
+                    }
+                
+                    // 5px 6px 5px 6px
+                    if (parameters[0] == parameters[2] &&   
+                        parameters[1] == parameters[3] )
+                    {
+                        return success($"Padding({parameters[0].RemovePixelFromEnd()}, {parameters[1].RemovePixelFromEnd()})");
+                    }
+                
+                    // 5px 6px 7px 8px
+                    return success($"Padding({string.Join(", ",parameters.Select(x=>x.RemovePixelFromEnd()))})");
                 }
                 
-                if (paddingValues[0] == paddingValues[2] &&   
-                    paddingValues[1] == paddingValues[3] )
+                // 5px 6px 8px
+                if (parameters.Count == 3)
                 {
-                    return success($"Padding({paddingValues[0].RemoveFromEnd("px")}, {paddingValues[1].RemoveFromEnd("px")})");
+                    return success($"Padding({string.Join(", ",parameters.Select(x=>x.RemovePixelFromEnd()))})");
                 }
-                
-                return success($"Padding({paddingValues[0].RemoveFromEnd("px")}, {paddingValues[1].RemoveFromEnd("px")}, {paddingValues[2].RemoveFromEnd("px")}, {paddingValues[3].RemoveFromEnd("px")})");
             }
         }
 
@@ -1116,6 +1128,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         
             return default;
         }
+    }
+
+    static bool IsEndsWithPixel(string x)
+    {
+        return x.EndsWith("px", StringComparison.OrdinalIgnoreCase);
     }
 
     static PropertyInfo TryFindProperty(string htmlTagName, string attributeName)
