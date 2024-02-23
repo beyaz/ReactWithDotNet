@@ -1029,39 +1029,34 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return success(UnMarkAsAlreadyCalculatedModifier(value));
         }
 
-        if (name == "padding")
+        if (name == "padding" || name == "margin")
         {
             var parameters = value.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
             
             if (parameters.TrueForAll(IsEndsWithPixel))
             {
                 var methodName = CamelCase(name);
-                
-                // 5px 6px 8px
-                if (parameters.Count == 3)
+
+                switch (parameters.Count)
                 {
-                    return success($"{methodName}({string.Join(", ",parameters.Select(x=>x.RemovePixelFromEnd()))})");
-                }
-                
-                if (parameters.Count == 4)
-                {
+                    // 5px 6px 8px
+                    case 3:
+                        return success($"{methodName}({string.Join(", ",parameters.Select(x=>x.RemovePixelFromEnd()))})");
+                    
                     // 5px 5px 5px 5px
-                    if (parameters[0] == parameters[1] &&   
-                        parameters[0] == parameters[2] && 
-                        parameters[0] == parameters[3])
-                    {
+                    case 4 when parameters[0] == parameters[1] &&   
+                                parameters[0] == parameters[2] && 
+                                parameters[0] == parameters[3]:
                         return success($"{methodName}({parameters[0].RemovePixelFromEnd()})");
-                    }
-                
+                    
                     // 5px 6px 5px 6px
-                    if (parameters[0] == parameters[2] &&   
-                        parameters[1] == parameters[3] )
-                    {
+                    case 4 when parameters[0] == parameters[2] &&   
+                                parameters[1] == parameters[3]:
                         return success($"{methodName}({parameters[0].RemovePixelFromEnd()}, {parameters[1].RemovePixelFromEnd()})");
-                    }
-                
+                    
                     // 5px 6px 7px 8px
-                    return success($"{methodName}({string.Join(", ",parameters.Select(x=>x.RemovePixelFromEnd()))})");
+                    case 4:
+                        return success($"{methodName}({string.Join(", ",parameters.Select(x=>x.RemovePixelFromEnd()))})");
                 }
             }
         }
