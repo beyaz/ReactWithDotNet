@@ -1021,6 +1021,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 return success($"BoxShadow({string.Join(", ", parseResponse.parameters)})");   
             }
+            
+            return success($"{CamelCase(name)}(\"{value}\")");
         }
         
 
