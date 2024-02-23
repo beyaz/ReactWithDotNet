@@ -858,6 +858,7 @@ public static partial class Mixin
     public static StyleModifier Margin(double margin) => new(style => style.margin = margin.AsPixel());
     public static StyleModifier Margin(double topBottomPixel, double lefRighttPixel) => Margin($"{topBottomPixel}px {lefRighttPixel}px");
     public static StyleModifier Margin(double topPixel, double lefRightPixel, double bottomPixel) => Margin($"{topPixel}px {lefRightPixel}px {bottomPixel}px");
+    public static StyleModifier Margin(double topPixel, double rightPixel, double bottomPixel, double leftPixel) => Margin($"{topPixel}px {rightPixel}px {bottomPixel}px {leftPixel}px");
     
 
     public static StyleModifier MarginLeft(double leftPixel) => new(style => style.marginLeft = leftPixel.AsPixel());
@@ -886,14 +887,7 @@ public static partial class Mixin
     
     public static StyleModifier Padding(double topBottomPixel, double lefRightPixel) => Padding($"{topBottomPixel}px {lefRightPixel}px");
     
-    public static StyleModifier Padding(double topPixel, double rightPixel, double bottomPixel, double leftPixel) 
-        => new(style =>
-        {
-            style.paddingTop    = topPixel.AsPixel();
-            style.paddingRight  = rightPixel.AsPixel();
-            style.paddingBottom = bottomPixel.AsPixel();
-            style.paddingLeft = leftPixel.AsPixel();
-        });
+    public static StyleModifier Padding(double topPixel, double rightPixel, double bottomPixel, double leftPixel) => Padding($"{topPixel}px {rightPixel}px {bottomPixel}px {leftPixel}px");
     
     public static StyleModifier Padding(double topPixel, double lefRightPixel, double bottomPixel) => Padding($"{topPixel}px {lefRightPixel}px {bottomPixel}px");
 
