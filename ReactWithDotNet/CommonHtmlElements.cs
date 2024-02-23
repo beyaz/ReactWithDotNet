@@ -2576,6 +2576,19 @@ public sealed class polygon : HtmlElement
 
 }
 
+public sealed class use : HtmlElement
+{
+    public use() { }
+
+    public use(params IModifier[] modifiers) : base(modifiers) { }
+
+    public use(Style style) : base(style) { }
+
+    public use(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<use> modifyAction) => CreateHtmlElementModifier(modifyAction);
+}
+
 public sealed class rect : HtmlElement
 {
     #region string x

@@ -543,7 +543,12 @@ public class ExportingCommonHtmlElements
                 },
                 EnableCastFromString = false
             },
-
+            new()
+            {
+                Tag = "use",
+                Attributes = [],
+                EnableCastFromString = false
+            },
             new()
             {
                 Tag = "rect",
