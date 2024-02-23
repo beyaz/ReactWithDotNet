@@ -1036,12 +1036,17 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             if (parameters.TrueForAll(IsEndsWithPixel))
             {
                 var methodName = CamelCase(name);
+                
+                var joinAllParameters = () =>
+                {
+                    return $"{methodName}({string.Join(", ", parameters.Select(x => x.RemovePixelFromEnd()))})";
+                };
 
                 switch (parameters.Count)
                 {
-                    // 5px 6px 8px
-                    case 3:
-                        return success($"{methodName}({string.Join(", ",parameters.Select(x=>x.RemovePixelFromEnd()))})");
+                    // 5px 5px
+                    case 2 when parameters[0] == parameters[1]:
+                        return success($"{methodName}({parameters[0].RemovePixelFromEnd()})");
                     
                     // 5px 5px 5px 5px
                     case 4 when parameters[0] == parameters[1] &&   
@@ -1054,9 +1059,15 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                                 parameters[1] == parameters[3]:
                         return success($"{methodName}({parameters[0].RemovePixelFromEnd()}, {parameters[1].RemovePixelFromEnd()})");
                     
+                    // 5px 6px
+                    // 5px 6px 8px
                     // 5px 6px 7px 8px
+                    
+                    case 1:
+                    case 2:
+                    case 3:
                     case 4:
-                        return success($"{methodName}({string.Join(", ",parameters.Select(x=>x.RemovePixelFromEnd()))})");
+                        return success(joinAllParameters());
                 }
             }
         }
