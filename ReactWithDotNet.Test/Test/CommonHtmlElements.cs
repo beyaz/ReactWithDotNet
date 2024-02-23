@@ -100,6 +100,23 @@ public class ExportingCommonHtmlElements
 
             new()
             {
+                Tag                  = "dl",
+                Comment              = "Defines a description list."
+            },
+            new()
+            {
+                Tag                  = "dt",
+                Comment              = "Defines a term/name in a description list.",
+                EnableCastFromString = true
+            },
+            new()
+            {
+                Tag                  = "dd",
+                Comment              = "Describe a term/name in a description list.",
+                EnableCastFromString = true
+            },
+            new()
+            {
                 Tag                  = "pre",
                 Comment              = "Preformatted text",
                 EnableCastFromString = true
