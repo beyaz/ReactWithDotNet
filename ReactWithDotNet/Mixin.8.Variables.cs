@@ -122,6 +122,11 @@ public sealed class CssUnit
         return new CssUnit("px", valueInPx + "px");
     }
 
+    public static implicit operator string(CssUnit cssUnit)
+    {
+        return cssUnit.ToString();
+    }
+    
     public override string ToString()
     {
         return _finalValue;

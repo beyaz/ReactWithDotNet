@@ -18,16 +18,16 @@ partial class Mixin
     public static StyleModifier Border(CssUnit width, string borderStyle, string color)
         => new(style => style.border = $"{width} {borderStyle} {color}");
 
-    public static StyleModifier BorderLeft(CssUnit width, string borderStyle, string color)
+    public static StyleModifier BorderLeft(string width, string borderStyle, string color)
         => BorderLeft($"{width} {borderStyle} {color}");
     
-    public static StyleModifier BorderRight(CssUnit width, string borderStyle, string color)
+    public static StyleModifier BorderRight(string width, string borderStyle, string color)
         => BorderRight($"{width} {borderStyle} {color}");
    
-    public static StyleModifier BorderTop(CssUnit width, string borderStyle, string color)
+    public static StyleModifier BorderTop(string width, string borderStyle, string color)
         => BorderTop($"{width} {borderStyle} {color}");
     
-    public static StyleModifier BorderBottom(CssUnit width, string borderStyle, string color)
+    public static StyleModifier BorderBottom(string width, string borderStyle, string color)
         => BorderBottom($"{width} {borderStyle} {color}");
    
 

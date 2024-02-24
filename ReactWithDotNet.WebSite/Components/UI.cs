@@ -25,9 +25,9 @@ static class UI
                 Title ="Introduction",
                 Links =new[]
                 {
-                    new {Label ="Getting started", Url  ="/getuser"},
-                    new {Label ="Server Driven UI", Url ="/getuser"},
-                    new {Label ="React and .Net", Url ="/getuser"}
+                    new {Label ="Getting started", Url  ="/getuser1"},
+                    new {Label ="Server Driven UI", Url ="/getuser2"},
+                    new {Label ="React and .Net", Url ="/getuser3"}
                 }
             },
             new
@@ -51,12 +51,16 @@ static class UI
                 }
             }
         };
-        
+
+        bool isSelected(string url)
+        {
+            return url == "/getuser2";
+        }
         return new FlexRow(JustifyContentCenter, Background("#f8fafc"), Width(286))
         {
             new nav(FontSize14, LineHeight24)
             {
-                new ul(DisplayFlexColumn, Gap(48), Role("list"))
+                new ul(DisplayFlexColumn, Gap(2*rem), Role("list"))
                 {
                     data.Select(item => new li(ListStyleNone)
                     {
@@ -67,9 +71,9 @@ static class UI
                         new ul(Role("list"), BorderLeft(2 * px, solid, rgb(226, 232, 240)))
                         {
                             item.Links.Select(link => new li(MarginTop(16), DisplayFlexRow, AlignItemsCenter)
-                            {
-                                new span(Size(8),MarginLeft(-5),  BorderRadius(4),Background(rgb(30, 167, 253))),
-                            
+                            { 
+                                isSelected(link.Url) ? BorderLeft(2*px, solid, rgb(30, 167, 253))+ MarginLeft(-2) : null,
+                                
                                 new a(PaddingLeft(14), TextDecorationNone, Color(rgb(71, 85, 105)))
                                 {
                                     link.Label, Href(link.Url)
