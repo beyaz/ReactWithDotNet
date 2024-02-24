@@ -9,16 +9,24 @@ using ReactWithDotNet.WebSite.Pages;
 
 namespace ReactWithDotNet.WebSite;
 
+public class PageList
+{
+    public static readonly (string pattern, Type type) Home = ("/", typeof(MainWindow));
+    public static readonly (string pattern, Type type) Doc = ("/doc", typeof(PageDocumentation));
+    public static readonly (string pattern, Type type) DocDetail = ("/doc/{0}", typeof(PageDocumentation));
+    public static readonly (string pattern, Type type) LiveEditor = ("/LiveEditor", typeof(HtmlToCSharpView));
+}
+
 static class ReactWithDotNetIntegration
 {
     public static void ConfigureReactWithDotNet(this IEndpointRouteBuilder endpoints)
     {
         var routing = new[]
         {
-            ("/", typeof(MainWindow)),
-            ("/doc", typeof(PageDocumentation)),
-            ("/doc/{0}", typeof(PageDocumentation)),
-            ("/LiveEditor", typeof(HtmlToCSharpView)),
+            PageList.Home,
+            PageList.Doc,
+            PageList.DocDetail,
+            PageList.LiveEditor,
             ("/CSharpPropertyMapper", typeof(CSharpPropertyMapperView)),
             ("/importFigmaCss", typeof(FigmaCss2ReactInlineStyleConverterView))
         };

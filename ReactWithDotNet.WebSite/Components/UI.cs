@@ -16,7 +16,7 @@ static class UI
         };
     }
 
-    public static Element LeftMenu()
+    public static Element LeftMenu(string url)
     {
         var data = new[]
         {
@@ -25,9 +25,9 @@ static class UI
                 Title ="Introduction",
                 Links =new[]
                 {
-                    new {Label ="Getting started", Url  ="/getuser1"},
-                    new {Label ="Server Driven UI", Url ="/getuser2"},
-                    new {Label ="React and .Net", Url ="/getuser3"}
+                    new {Label ="Getting started", Url  = string.Format(PageList.DocDetail.pattern, "start")},
+                    new {Label ="Server Driven UI", Url =string.Format(PageList.DocDetail.pattern, "1")},
+                    new {Label ="React and .Net", Url   =string.Format(PageList.DocDetail.pattern, "2")},
                 }
             },
             new
@@ -52,9 +52,10 @@ static class UI
             }
         };
 
-        bool isSelected(string url)
+        bool isSelected(string uuu)
         {
-            return url == "/getuser2";
+
+            return url?.EndsWith(uuu) == true;
         }
         return new FlexRow(JustifyContentCenter, AlignItemsFlexStart, Background("#f8fafc"), Width(286))
         {
