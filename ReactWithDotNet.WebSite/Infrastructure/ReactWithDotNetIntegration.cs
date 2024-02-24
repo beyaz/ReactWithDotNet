@@ -13,16 +13,30 @@ static class ReactWithDotNetIntegration
 {
     public static void ConfigureReactWithDotNet(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet("/", HomePage);
-        endpoints.MapPost("/" + nameof(HandleReactWithDotNetRequest), HandleReactWithDotNetRequest);
 
-        endpoints.MapGet("/LiveEditor", httpContext => WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(HtmlToCSharpView)));
-        endpoints.MapGet("/CSharpPropertyMapper", httpContext => WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(CSharpPropertyMapperView)));
-        endpoints.MapGet("/importFigmaCss", httpContext => WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(FigmaCss2ReactInlineStyleConverterView)));
+        var routing = new []
+        {
+            ("/", typeof(MainWindow)),
+            ("/doc", typeof(PageDocumentation)),
+            ("/doc/{0}", typeof(PageDocumentation)),
+            ("/LiveEditor", typeof(HtmlToCSharpView)),
+            ("/CSharpPropertyMapper", typeof(CSharpPropertyMapperView)),
+            ("/importFigmaCss", typeof(FigmaCss2ReactInlineStyleConverterView))
+        };
         
-        endpoints.MapGet("/doc/{0}", httpContext => WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(PageDocumentation)));
+        foreach (var (pattern, cmp) in routing)
+        {
+            endpoints.MapGet(pattern, httpContext => WriteHtmlResponse(httpContext, typeof(MainLayout), cmp));
+        }
+        
+        
+
         
         RegisterReactWithDotNetDevelopmentTools(endpoints);
+        
+        endpoints.MapPost("/" + nameof(HandleReactWithDotNetRequest), HandleReactWithDotNetRequest);
+
+       
     }
 
     static Task HandleReactWithDotNetRequest(HttpContext httpContext)
@@ -36,10 +50,7 @@ static class ReactWithDotNetIntegration
         });
     }
 
-    static Task HomePage(HttpContext httpContext)
-    {
-        return WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(MainWindow));
-    }
+    
 
     static Task InitializeTheme(HttpContext httpContext, ReactContext context)
     {
