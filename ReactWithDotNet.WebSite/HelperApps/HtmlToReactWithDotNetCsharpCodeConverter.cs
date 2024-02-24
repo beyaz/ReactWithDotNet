@@ -36,9 +36,9 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
     static string CamelCase(string str)
     {
-        if (str == null)
+        if (string.IsNullOrEmpty(str))
         {
-            return null;
+            return str;
         }
 
         if (str.IndexOf('-') > 0)
@@ -263,7 +263,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         var modifiers = new List<string>();
 
         var htmlNodeName = htmlNode.OriginalName;
-        if (htmlNodeName == "clippath")
+        if (htmlNodeName ==  "clippath")
         {
             htmlNodeName = "clipPath";
         }

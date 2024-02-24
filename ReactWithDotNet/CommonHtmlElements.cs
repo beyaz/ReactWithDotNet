@@ -6361,6 +6361,20 @@ public sealed partial class input : HtmlElement
     #endregion
 
 
+    #region string maxLength
+    PropertyValueNode<int?> _maxLength;
+    static readonly PropertyValueDefinition _maxLength_ = new()
+    {
+        name = nameof(maxLength)
+    };
+    public int? maxLength
+    {
+        get => _maxLength?.value;
+        set => SetValue(_maxLength_, ref _maxLength, value);
+    }
+    #endregion
+
+
     #region string min
     PropertyValueNode<int?> _min;
     static readonly PropertyValueDefinition _min_ = new()
@@ -6525,6 +6539,8 @@ public sealed partial class input : HtmlElement
     public static HtmlElementModifier Type(string value) => Modify(x => x.type = value);
 
     public static HtmlElementModifier Max(int? value) => Modify(x => x.max = value);
+
+    public static HtmlElementModifier MaxLength(int? value) => Modify(x => x.maxLength = value);
 
     public static HtmlElementModifier Min(int? value) => Modify(x => x.min = value);
 

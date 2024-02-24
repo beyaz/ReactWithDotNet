@@ -1602,6 +1602,11 @@ public class ExportingCommonHtmlElements
                     },
                     new ()
                     {
+                        Name = "maxLength",
+                        Type = "int?"
+                    },
+                    new ()
+                    {
                         Name = "min",
                         Type = "int?"
                     },
