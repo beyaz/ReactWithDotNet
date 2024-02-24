@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Net.Http.Headers;
 using ReactWithDotNet.UIDesigner;
 using ReactWithDotNet.WebSite.HelperApps;
+using ReactWithDotNet.WebSite.Pages;
 
 namespace ReactWithDotNet.WebSite;
 
@@ -19,6 +20,7 @@ static class ReactWithDotNetIntegration
         endpoints.MapGet("/CSharpPropertyMapper", httpContext => WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(CSharpPropertyMapperView)));
         endpoints.MapGet("/importFigmaCss", httpContext => WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(FigmaCss2ReactInlineStyleConverterView)));
         
+        endpoints.MapGet("/doc/{0}", httpContext => WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(PageDocumentation)));
         
         RegisterReactWithDotNetDevelopmentTools(endpoints);
     }

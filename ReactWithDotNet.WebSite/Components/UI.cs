@@ -56,9 +56,9 @@ static class UI
         {
             return url == "/getuser2";
         }
-        return new FlexRow(JustifyContentCenter, Background("#f8fafc"), Width(286))
+        return new FlexRow(JustifyContentCenter, AlignItemsFlexStart, Background("#f8fafc"), Width(286))
         {
-            new nav(FontSize14, LineHeight24)
+            new nav(FontSize14, LineHeight24,PositionSticky,Top(100))
             {
                 new ul(DisplayFlexColumn, Gap(2*rem), Role("list"))
                 {
@@ -82,6 +82,106 @@ static class UI
                         }
 
                     })
+                }
+            }
+        };
+    }
+    
+    public static Element SampleDocumentContent()
+    {
+        
+        return new FlexRow(JustifyContentCenter, Background("white"), WidthFull)
+        {
+            new article(PaddingTopBottom(4*rem))
+            {
+                new h1(FontSize32, FontWeight400, LineHeight32, MarginBottom(1.2*rem))
+                {
+                    "Ana Başlık"
+                },
+                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1*rem))
+                {
+                    "Quis vel iste dicta"
+                },
+                new p(LineHeight28, MarginBottom(1.5*rem))
+                {
+                    "Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
+                },
+                
+                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1*rem))
+                {
+                    "Quis vel iste dicta 2"
+                },
+                new p(LineHeight28, MarginBottom(1.5*rem))
+                {
+                    "2 Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
+                },
+                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1*rem))
+                {
+                    "Quis vel iste dicta"
+                },
+                new p(LineHeight28, MarginBottom(1.5*rem))
+                {
+                    "Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
+                },
+                
+                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1*rem))
+                {
+                    "Quis vel iste dicta 2"
+                },
+                new p(LineHeight28, MarginBottom(1.5*rem))
+                {
+                    "2 Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
+                },
+                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1*rem))
+                {
+                    "Quis vel iste dicta"
+                },
+                new p(LineHeight28, MarginBottom(1.5*rem))
+                {
+                    "Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
+                },
+                
+                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1*rem))
+                {
+                    "Quis vel iste dicta 2"
+                },
+                new p(LineHeight28, MarginBottom(1.5*rem))
+                {
+                    "2 Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
+                },
+                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1*rem))
+                {
+                    "Quis vel iste dicta"
+                },
+                new p(LineHeight28, MarginBottom(1.5*rem))
+                {
+                    "Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
+                },
+                
+                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1*rem))
+                {
+                    "Quis vel iste dicta 2"
+                },
+                new p(LineHeight28, MarginBottom(1.5*rem))
+                {
+                    "2 Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
+                },
+                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1*rem))
+                {
+                    "Quis vel iste dicta"
+                },
+                new p(LineHeight28, MarginBottom(1.5*rem))
+                {
+                    "Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
+                },
+                
+                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1*rem))
+                {
+                    "Quis vel iste dicta 2"
+                },
+                new p(LineHeight28, MarginBottom(1.5*rem))
+                {
+                    "2 Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
                 }
             }
         };
