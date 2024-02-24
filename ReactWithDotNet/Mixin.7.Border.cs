@@ -15,7 +15,20 @@ partial class Mixin
     public static StyleModifier Border(double widthAsPixel, string borderStyle, string color)
         => new(style => style.border = $"{widthAsPixel}px {borderStyle} {color}");
 
+    public static StyleModifier Border(CssUnit width, string borderStyle, string color)
+        => new(style => style.border = $"{width} {borderStyle} {color}");
+
+    public static StyleModifier BorderLeft(CssUnit width, string borderStyle, string color)
+        => BorderLeft($"{width} {borderStyle} {color}");
+    
+    public static StyleModifier BorderRight(CssUnit width, string borderStyle, string color)
+        => BorderRight($"{width} {borderStyle} {color}");
    
+    public static StyleModifier BorderTop(CssUnit width, string borderStyle, string color)
+        => BorderTop($"{width} {borderStyle} {color}");
+    
+    public static StyleModifier BorderBottom(CssUnit width, string borderStyle, string color)
+        => BorderBottom($"{width} {borderStyle} {color}");
    
 
 

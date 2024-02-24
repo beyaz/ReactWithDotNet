@@ -25,6 +25,11 @@ partial class Mixin
     ///     7*vw returns like '7vw'
     /// </summary>
     public static readonly CssUnit vw = new("vw", "");
+    
+    /// <summary>
+    ///     2*px returns like '2px'
+    /// </summary>
+    public static readonly CssUnit px = new("px", "");
 
     /// <summary>
     ///     'linear-gradient(<paramref name="degree" /><b>+deg</b>, <paramref name="fromColor" />, <paramref name="toColor" />

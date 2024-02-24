@@ -585,17 +585,17 @@ public static partial class Mixin
     /// <summary>
     ///     style.listStyle = 'inside'
     /// </summary>
-    public static StyleModifier ListStyleInside() => ListStyle("inside");
+    public static StyleModifier ListStyleInside => ListStyle("inside");
 
     /// <summary>
     ///     style.listStyle = 'none'
     /// </summary>
-    public static StyleModifier ListStyleNone() => ListStyle("none");
+    public static StyleModifier ListStyleNone => ListStyle("none");
 
     /// <summary>
     ///     style.listStyle = 'square'
     /// </summary>
-    public static StyleModifier ListStyleSquare() => ListStyle("square");
+    public static StyleModifier ListStyleSquare => ListStyle("square");
 
 
     /// <summary>
@@ -1044,19 +1044,7 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier pb(string paddingBottom) => PaddingBottom(paddingBottom);
 
-    /// <summary>
-    ///     style.paddingLeft = <paramref name="value" /> + 'px'
-    ///     <br />
-    ///     style.paddingRight = <paramref name="value" /> + 'px'
-    /// </summary>
-    public static StyleModifier px(double value) => PaddingLeftRight(value);
-
-    /// <summary>
-    ///     style.paddingLeft = <paramref name="value" />
-    ///     <br />
-    ///     style.paddingRight = <paramref name="value" />
-    /// </summary>
-    public static StyleModifier px(string value) => PaddingLeftRight(value);
+    
 
     /// <summary>
     ///     style.paddingTop = <paramref name="value" /> + 'px'
