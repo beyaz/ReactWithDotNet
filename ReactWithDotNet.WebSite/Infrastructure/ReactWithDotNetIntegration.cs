@@ -13,8 +13,7 @@ static class ReactWithDotNetIntegration
 {
     public static void ConfigureReactWithDotNet(this IEndpointRouteBuilder endpoints)
     {
-
-        var routing = new []
+        var routing = new[]
         {
             ("/", typeof(MainWindow)),
             ("/doc", typeof(PageDocumentation)),
@@ -23,38 +22,31 @@ static class ReactWithDotNetIntegration
             ("/CSharpPropertyMapper", typeof(CSharpPropertyMapperView)),
             ("/importFigmaCss", typeof(FigmaCss2ReactInlineStyleConverterView))
         };
-        
+
         foreach (var (pattern, cmp) in routing)
         {
             endpoints.MapGet(pattern, httpContext => WriteHtmlResponse(httpContext, typeof(MainLayout), cmp));
         }
-        
-        
 
-        
         RegisterReactWithDotNetDevelopmentTools(endpoints);
-        
-        endpoints.MapPost("/" + nameof(HandleReactWithDotNetRequest), HandleReactWithDotNetRequest);
 
-       
+        endpoints.MapPost("/" + nameof(HandleReactWithDotNetRequest), HandleReactWithDotNetRequest);
     }
 
     static Task HandleReactWithDotNetRequest(HttpContext httpContext)
     {
         httpContext.Response.ContentType = "application/json; charset=utf-8";
 
-        return ProcessReactWithDotNetComponentRequest(new ()
+        return ProcessReactWithDotNetComponentRequest(new()
         {
             HttpContext           = httpContext,
             OnReactContextCreated = InitializeTheme
         });
     }
 
-    
-
     static Task InitializeTheme(HttpContext httpContext, ReactContext context)
     {
-        context.Set(ThemeKey, new LightTheme());
+        context.Set(ThemeKey, new());
 
         KeyForHttpContext[context] = httpContext;
 
@@ -86,7 +78,7 @@ static class ReactWithDotNetIntegration
         httpContext.Response.Headers[HeaderNames.Expires]      = "0";
         httpContext.Response.Headers[HeaderNames.Pragma]       = "no-cache";
 
-        return ProcessReactWithDotNetPageRequest(new ()
+        return ProcessReactWithDotNetPageRequest(new()
         {
             LayoutType            = layoutType,
             MainContentType       = mainContentType,
