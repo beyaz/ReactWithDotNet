@@ -329,6 +329,23 @@ function PushToFunctionExecutionQueue(fn, forceWait)
     return entry;
 }
 
+function InvalidateQueuedFunctionsByName(name)
+{
+    if (FunctionExecutionQueueCurrentEntry &&
+        FunctionExecutionQueueCurrentEntry.name === name)
+    {
+        FunctionExecutionQueueCurrentEntry.isValid = false;
+    }
+
+    for (var i = 0; i < FunctionExecutionQueue.length; i++)
+    {
+        if (FunctionExecutionQueue[i].name === name)
+        {
+            FunctionExecutionQueue[i].isValid = false;
+        }
+    }
+}
+
 function SetState(component, partialState, stateCallback)
 {
     ReactIsBusy = true;
@@ -963,11 +980,7 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
 
             const executionQueueItemName = eventName + '-debounce-' + GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
 
-            if (FunctionExecutionQueueCurrentEntry &&
-                FunctionExecutionQueueCurrentEntry.name === executionQueueItemName)
-            {
-                FunctionExecutionQueueCurrentEntry.isValid = false;
-            }
+            InvalidateQueuedFunctionsByName(executionQueueItemName);
 
             const timeoutKey = eventName + '-debounceTimeoutId';
 
@@ -1199,11 +1212,7 @@ function ConvertToReactElement(jsonNode, component)
                     {
                         const executionQueueItemName = eventName + '-debounce-' + GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
 
-                        if (FunctionExecutionQueueCurrentEntry &&
-                            FunctionExecutionQueueCurrentEntry.name === executionQueueItemName)
-                        {
-                            FunctionExecutionQueueCurrentEntry.isValid = false;
-                        }
+                        InvalidateQueuedFunctionsByName(executionQueueItemName);
 
                         const timeoutKey = eventName + '-debounceTimeoutId';
 
