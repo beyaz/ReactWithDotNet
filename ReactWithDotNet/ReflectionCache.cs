@@ -32,7 +32,7 @@ partial class Mixin
             }
         }
 
-        var propertyAccessors = new List<PropertyInfoCalculated>();
+        var dotNetPropertiesOfType = new List<PropertyInfoCalculated>();
         {
             foreach (var propertyInfo in serializableProperties)
             {
@@ -59,7 +59,7 @@ partial class Mixin
                     continue;
                 }
 
-                propertyAccessors.Add(propertyInfo.Calculate());
+                dotNetPropertiesOfType.Add(propertyInfo.Calculate());
             }
         }
 
@@ -79,7 +79,7 @@ partial class Mixin
         typeInfo = new()
         {
             CustomEventPropertiesOfType          = reactCustomEventProperties,
-            DotNetPropertiesOfType               = propertyAccessors,
+            DotNetPropertiesOfType               = dotNetPropertiesOfType,
             ReactAttributedPropertiesOfType      = reactProperties,
             CacheableMethodInfoList              = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray(),
             ParameterizedCacheableMethodInfoList = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null).ToArray(),
