@@ -252,18 +252,18 @@ static partial class ElementSerializer
 
     
 
-    static string GetPropertyName(PropertyAccessInfo propertyAccessInfo)
+    static string GetPropertyName(PropertyInfoCalculated propertyInfoCalculated)
     {
-        var jsonPropertyName = propertyAccessInfo.JsonPropertyName;
+        var jsonPropertyName = propertyInfoCalculated.JsonPropertyName;
         if (jsonPropertyName != null)
         {
             return jsonPropertyName.Name;
         }
 
-        return propertyAccessInfo.PropertyInfo.Name;
+        return propertyInfoCalculated.PropertyInfo.Name;
     }
 
-    static async Task<ValueExportInfo<object>> GetPropertyValue(ElementSerializerContext context, Node node, TypeInfo typeInfo, object instance, PropertyAccessInfo property)
+    static async Task<ValueExportInfo<object>> GetPropertyValue(ElementSerializerContext context, Node node, TypeInfoCalculated typeInfoCalculated, object instance, PropertyInfoCalculated property)
     {
         var propertyInfo = property.PropertyInfo;
 
@@ -275,9 +275,9 @@ static partial class ElementSerializer
             return NotExportableObject;
         }
 
-        if (typeInfo.GetPropertyValueForSerializeToClient is not null)
+        if (typeInfoCalculated.GetPropertyValueForSerializeToClient is not null)
         {
-            var output = typeInfo.GetPropertyValueForSerializeToClient(instance, propertyInfo.Name);
+            var output = typeInfoCalculated.GetPropertyValueForSerializeToClient(instance, propertyInfo.Name);
             if (output.needToExport)
             {
                 return output.value;

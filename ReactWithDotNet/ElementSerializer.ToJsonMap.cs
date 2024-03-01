@@ -8,7 +8,7 @@ namespace ReactWithDotNet;
 
 partial class ElementSerializer
 {
-    static readonly ConcurrentDictionary<Type, TypeInfo> TypeInfoMap = new();
+    static readonly ConcurrentDictionary<Type, TypeInfoCalculated> TypeInfoMap = new();
 
     public static async Task<IReadOnlyJsonMap> ToJsonMap(this Element element, ElementSerializerContext context)
     {
@@ -724,13 +724,13 @@ partial class ElementSerializer
         return node.ElementAsJsonMap;
     }
 
-    internal static TypeInfo GetTypeInfo(Type type)
+    internal static TypeInfoCalculated GetTypeInfo(Type type)
     {
         if (!TypeInfoMap.TryGetValue(type, out var typeInfo))
         {
             var serializableProperties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty | BindingFlags.GetProperty);
 
-            var reactCustomEventProperties = new List<PropertyAccessInfo>();
+            var reactCustomEventProperties = new List<PropertyInfoCalculated>();
             {
                 foreach (var propertyInfo in serializableProperties.Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
                 {
@@ -743,7 +743,7 @@ partial class ElementSerializer
                 }
             }
 
-            var propertyAccessors = new List<PropertyAccessInfo>();
+            var propertyAccessors = new List<PropertyInfoCalculated>();
             {
                 foreach (var propertyInfo in serializableProperties)
                 {
@@ -774,7 +774,7 @@ partial class ElementSerializer
                 }
             }
 
-            var reactProperties = new List<PropertyAccessInfo>();
+            var reactProperties = new List<PropertyInfoCalculated>();
             {
                 foreach (var propertyInfo in serializableProperties.Where(x => x.GetCustomAttribute<ReactPropAttribute>() != null))
                 {
@@ -929,7 +929,7 @@ partial class ElementSerializer
 
         return;
 
-        void convertToTask(PropertyAccessInfo fastPropertyInfo)
+        void convertToTask(PropertyInfoCalculated fastPropertyInfo)
         {
             var @delegate = (Delegate)fastPropertyInfo.GetValueFunc(reactComponent);
             if (@delegate is null)
@@ -1286,7 +1286,7 @@ partial class ElementSerializer
         return newNode;
     }
 
-    static PropertyAccessInfo ToFastAccess(this PropertyInfo propertyInfo)
+    static PropertyInfoCalculated ToFastAccess(this PropertyInfo propertyInfo)
     {
         return new()
         {
@@ -1332,34 +1332,9 @@ partial class ElementSerializer
         }
     }
 
-    internal class PropertyAccessInfo
-    {
-        public object DefaultValue { get; init; }
-        public Func<object, object> GetValueFunc { get; init; }
-        public bool HasReactAttribute { get; init; }
-        public JsonPropertyNameAttribute JsonPropertyName { get; init; }
-        public PropertyInfo PropertyInfo { get; init; }
-        public bool PropertyTypeIsIsVoidTaskDelegate { get; init; }
-        public Action<object, object> SetValueFunc { get; init; }
-        public ReactTemplateAttribute TemplateAttribute { get; init; }
-        public string TransformValueInClientFunction { get; init; }
-        public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
-        public string FunctionNameOfGrabEventArguments { get; init; }
-        public ReactBindAttribute ReactBindAttribute { get; init; }
-        public string NameOfTransformValueInClient { get; init; }
-    }
+    
 
-    internal sealed class TypeInfo
-    {
-        public IReadOnlyList<MethodInfo> CacheableMethodInfoList { get; init; }
-        public string ComponentDidMountMethod { get; init; }
-        public IReadOnlyList<PropertyAccessInfo> CustomEventPropertiesOfType { get; init; }
-        public IReadOnlyList<PropertyAccessInfo> DotNetPropertiesOfType { get; init; }
-        public Func<object, string, (bool needToExport, object value)> GetPropertyValueForSerializeToClient { get; init; }
-        public IReadOnlyList<MethodInfo> ParameterizedCacheableMethodInfoList { get; init; }
-        public IReadOnlyList<PropertyAccessInfo> ReactAttributedPropertiesOfType { get; init; }
-        public PropertyAccessInfo StateProperty { get; init; }
-    }
+    
 
     sealed class Node
     {
