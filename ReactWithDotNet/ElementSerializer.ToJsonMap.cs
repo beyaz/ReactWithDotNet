@@ -8,7 +8,6 @@ namespace ReactWithDotNet;
 
 partial class ElementSerializer
 {
-    static readonly ConcurrentDictionary<Type, TypeInfoCalculated> TypeInfoMap = new();
 
     public static async Task<IReadOnlyJsonMap> ToJsonMap(this Element element, ElementSerializerContext context)
     {
@@ -308,7 +307,7 @@ partial class ElementSerializer
 
                 var dotNetTypeOfReactComponent = reactStatefulComponent.GetType();
 
-                var typeInfo = GetTypeInfo(dotNetTypeOfReactComponent);
+                var typeInfo = dotNetTypeOfReactComponent.Calculated();
 
                 var stateProperty = typeInfo.StateProperty;
 
@@ -723,104 +722,7 @@ partial class ElementSerializer
 
         return node.ElementAsJsonMap;
     }
-
-    internal static TypeInfoCalculated GetTypeInfo(Type type)
-    {
-        if (!TypeInfoMap.TryGetValue(type, out var typeInfo))
-        {
-            var serializableProperties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty | BindingFlags.GetProperty);
-
-            var reactCustomEventProperties = new List<PropertyInfoCalculated>();
-            {
-                foreach (var propertyInfo in serializableProperties.Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
-                {
-                    if (!propertyInfo.IsVoidTaskDelegate())
-                    {
-                        throw DeveloperException($"Delegate should return 'Task'. @PropertyName is '{propertyInfo.Name}'");
-                    }
-
-                    reactCustomEventProperties.Add(propertyInfo.ToFastAccess());
-                }
-            }
-
-            var propertyAccessors = new List<PropertyInfoCalculated>();
-            {
-                foreach (var propertyInfo in serializableProperties)
-                {
-                    if (propertyInfo.Name == nameof(ReactComponentBase.Context)
-                        || propertyInfo.Name == nameof(Element.children)
-                        || propertyInfo.Name == nameof(ReactComponentBase.key)
-                        || propertyInfo.Name == nameof(ReactComponentBase.Client)
-                        || propertyInfo.Name == "state"
-                        || propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
-                        || propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>() is not null
-                        || (propertyInfo.Name == "Item" && propertyInfo.GetIndexParameters().Length > 0)
-                       )
-                    {
-                        continue;
-                    }
-
-                    if (propertyInfo.PropertyType == typeof(Element) || propertyInfo.PropertyType.IsSubclassOf(typeof(Element)))
-                    {
-                        continue;
-                    }
-
-                    if (propertyInfo.CanWrite == false && !propertyInfo.DeclaringType?.IsSubclassOf(typeof(ThirdPartyReactComponent)) == true)
-                    {
-                        continue;
-                    }
-
-                    propertyAccessors.Add(propertyInfo.ToFastAccess());
-                }
-            }
-
-            var reactProperties = new List<PropertyInfoCalculated>();
-            {
-                foreach (var propertyInfo in serializableProperties.Where(x => x.GetCustomAttribute<ReactPropAttribute>() != null))
-                {
-                    reactProperties.Add(propertyInfo.ToFastAccess());
-                }
-            }
-
-            var getPropertyValueForSerializeToClientFunc =
-                (Func<object, string, (bool needToExport, object value)>)
-                type.GetMethod("GetPropertyValueForSerializeToClient", BindingFlags.NonPublic | BindingFlags.Static)
-                    ?.CreateDelegate(typeof(Func<object, string, (bool needToExport, object value)>));
-
-            typeInfo = new()
-            {
-                CustomEventPropertiesOfType          = reactCustomEventProperties,
-                DotNetPropertiesOfType               = propertyAccessors,
-                ReactAttributedPropertiesOfType      = reactProperties,
-                CacheableMethodInfoList              = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray(),
-                ParameterizedCacheableMethodInfoList = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null).ToArray(),
-                StateProperty                        = type.GetProperty("state", BindingFlags.NonPublic | BindingFlags.Instance)?.ToFastAccess(),
-
-                GetPropertyValueForSerializeToClient = getPropertyValueForSerializeToClientFunc,
-
-                ComponentDidMountMethod = GetComponentDidMountMethod(type)
-            };
-
-            TypeInfoMap.TryAdd(type, typeInfo);
-        }
-
-        return typeInfo;
-
-        static string GetComponentDidMountMethod(Type componentType)
-        {
-            var didMountMethodInfo = componentType.FindMethod("componentDidMount", BindingFlags.NonPublic | BindingFlags.Instance);
-            if (didMountMethodInfo != null)
-            {
-                if (didMountMethodInfo.DeclaringType != typeof(ReactComponentBase))
-                {
-                    return didMountMethodInfo.GetNameWithToken();
-                }
-            }
-
-            return null;
-        }
-    }
-
+    
     internal static string TransferPropertiesToDotNetComponent(ReactComponentBase instance, Type type, IReadOnlyDictionary<string, object> props)
     {
         if (props == null)
@@ -855,7 +757,7 @@ partial class ElementSerializer
 
     static async Task AddReactAttributes(ElementSerializerContext context, Node node, JsonMap jsonMap, Element element)
     {
-        var typeInfo = GetTypeInfo(element.GetType());
+        var typeInfo = element.GetType().Calculated();
 
         var reactProperties = typeInfo.ReactAttributedPropertiesOfType;
 
@@ -920,7 +822,7 @@ partial class ElementSerializer
     {
         var type = reactComponent.GetType();
 
-        var reactCustomEventProperties = GetTypeInfo(type).CustomEventPropertiesOfType;
+        var reactCustomEventProperties = type.Calculated().CustomEventPropertiesOfType;
 
         foreach (var fastPropertyInfo in reactCustomEventProperties)
         {
@@ -1286,51 +1188,7 @@ partial class ElementSerializer
         return newNode;
     }
 
-    static PropertyInfoCalculated ToFastAccess(this PropertyInfo propertyInfo)
-    {
-        return new()
-        {
-            SetValueFunc                   = ReflectionHelper.CreateSetFunction(propertyInfo),
-            GetValueFunc                   = ReflectionHelper.CreateGetFunction(propertyInfo),
-            PropertyInfo                   = propertyInfo,
-            DefaultValue                   = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null,
-            HasReactAttribute              = propertyInfo.GetCustomAttribute<ReactPropAttribute>() is not null,
-            TransformValueInServerSide     = getTransformValueInServerSideTransformFunction(propertyInfo),
-            TemplateAttribute              = propertyInfo.GetCustomAttribute<ReactTemplateAttribute>(),
-            JsonPropertyName               = propertyInfo.GetCustomAttribute<JsonPropertyNameAttribute>(),
-            TransformValueInClientFunction = TryGetTransformValueInClientFunctionName(propertyInfo),
-
-            PropertyTypeIsIsVoidTaskDelegate = propertyInfo.IsVoidTaskDelegate(),
-            
-            ReactBindAttribute = propertyInfo.GetCustomAttribute<ReactBindAttribute>(),
-            
-            FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
-            
-            NameOfTransformValueInClient = propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>()?.TransformFunction
-        };
-
-        static Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> getTransformValueInServerSideTransformFunction(PropertyInfo propertyInfo)
-        {
-            var attribute = propertyInfo.GetCustomAttribute<ReactTransformValueInServerSideAttribute>();
-            if (attribute == null)
-            {
-                return null;
-            }
-
-            var methodInfo = attribute.TransformMethodDeclaringType.GetMethod("Transform", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
-            if (methodInfo == null)
-            {
-                throw DeveloperException($"Type should have a static method named 'Transform'. @type:{attribute.TransformMethodDeclaringType}");
-            }
-
-            return (Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse>)methodInfo.CreateDelegate(typeof(Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse>));
-        }
-
-        static string TryGetTransformValueInClientFunctionName(PropertyInfo propertyInfo)
-        {
-            return propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>()?.TransformFunction;
-        }
-    }
+    
 
     
 

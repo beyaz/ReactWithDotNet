@@ -556,7 +556,7 @@ static partial class ElementSerializer
                     
             var newTarget = (ReactComponentBase)target.Clone();
 
-            var newTargetTypeInfo = GetTypeInfo(target.GetType());
+            var newTargetTypeInfo = target.GetType().Calculated();
             if (newTargetTypeInfo.StateProperty is not null)
             {
                 var targetState = newTargetTypeInfo.StateProperty.GetValueFunc(target);

@@ -324,7 +324,7 @@ static class ComponentRequestHandler
 
             if (request.OnlyUpdateState)
             {
-                var typeInfo = ElementSerializer.GetTypeInfo(type);
+                var typeInfo = type.Calculated();
                 
                 var newState = typeInfo.StateProperty.GetValueFunc(instance);
 
