@@ -15,8 +15,10 @@ partial class Mixin
         {
             return typeInfo;
         }
+
+        var isAnonymousType = type.IsAnonymousType();
         
-        
+
         var serializableProperties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty | BindingFlags.GetProperty);
 
         var reactCustomEventProperties = new List<PropertyInfoCalculated>();
@@ -87,7 +89,9 @@ partial class Mixin
 
             GetPropertyValueForSerializeToClient = getPropertyValueForSerializeToClientFunc,
 
-            ComponentDidMountMethod = GetComponentDidMountMethod(type)
+            ComponentDidMountMethod = GetComponentDidMountMethod(type),
+            
+            IsAnonymousType = isAnonymousType
         };
 
         CacheForTypeInfoCalculated.TryAdd(type, typeInfo);
@@ -222,4 +226,5 @@ sealed class TypeInfoCalculated
     public IReadOnlyList<MethodInfo> ParameterizedCacheableMethodInfoList { get; init; }
     public IReadOnlyList<PropertyInfoCalculated> ReactAttributedPropertiesOfType { get; init; }
     public PropertyInfoCalculated StateProperty { get; init; }
+    public bool IsAnonymousType { get; init; }
 }
