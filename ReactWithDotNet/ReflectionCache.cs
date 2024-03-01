@@ -11,83 +11,86 @@ partial class Mixin
 
     internal static TypeInfoCalculated Calculated(this Type type)
     {
-        if (!CacheForTypeInfoCalculated.TryGetValue(type, out var typeInfo))
+        if (CacheForTypeInfoCalculated.TryGetValue(type, out var typeInfo))
         {
-            var serializableProperties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty | BindingFlags.GetProperty);
-
-            var reactCustomEventProperties = new List<PropertyInfoCalculated>();
-            {
-                foreach (var propertyInfo in serializableProperties.Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
-                {
-                    if (!propertyInfo.IsVoidTaskDelegate())
-                    {
-                        throw DeveloperException($"Delegate should return 'Task'. @PropertyName is '{propertyInfo.Name}'");
-                    }
-
-                    reactCustomEventProperties.Add(propertyInfo.Calculate());
-                }
-            }
-
-            var propertyAccessors = new List<PropertyInfoCalculated>();
-            {
-                foreach (var propertyInfo in serializableProperties)
-                {
-                    if (propertyInfo.Name == nameof(ReactComponentBase.Context)
-                        || propertyInfo.Name == nameof(Element.children)
-                        || propertyInfo.Name == nameof(ReactComponentBase.key)
-                        || propertyInfo.Name == nameof(ReactComponentBase.Client)
-                        || propertyInfo.Name == "state"
-                        || propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
-                        || propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>() is not null
-                        || (propertyInfo.Name == "Item" && propertyInfo.GetIndexParameters().Length > 0)
-                       )
-                    {
-                        continue;
-                    }
-
-                    if (propertyInfo.PropertyType == typeof(Element) || propertyInfo.PropertyType.IsSubclassOf(typeof(Element)))
-                    {
-                        continue;
-                    }
-
-                    if (propertyInfo.CanWrite == false && !propertyInfo.DeclaringType?.IsSubclassOf(typeof(ThirdPartyReactComponent)) == true)
-                    {
-                        continue;
-                    }
-
-                    propertyAccessors.Add(propertyInfo.Calculate());
-                }
-            }
-
-            var reactProperties = new List<PropertyInfoCalculated>();
-            {
-                foreach (var propertyInfo in serializableProperties.Where(x => x.GetCustomAttribute<ReactPropAttribute>() != null))
-                {
-                    reactProperties.Add(propertyInfo.Calculate());
-                }
-            }
-
-            var getPropertyValueForSerializeToClientFunc =
-                (Func<object, string, (bool needToExport, object value)>)
-                type.GetMethod("GetPropertyValueForSerializeToClient", BindingFlags.NonPublic | BindingFlags.Static)
-                    ?.CreateDelegate(typeof(Func<object, string, (bool needToExport, object value)>));
-
-            typeInfo = new()
-            {
-                CustomEventPropertiesOfType          = reactCustomEventProperties,
-                DotNetPropertiesOfType               = propertyAccessors,
-                ReactAttributedPropertiesOfType      = reactProperties,
-                CacheableMethodInfoList              = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray(),
-                ParameterizedCacheableMethodInfoList = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null).ToArray(),
-                StateProperty                        = type.GetProperty("state", BindingFlags.NonPublic | BindingFlags.Instance)?.Calculate(),
-
-                GetPropertyValueForSerializeToClient = getPropertyValueForSerializeToClientFunc,
-
-                ComponentDidMountMethod = GetComponentDidMountMethod(type)
-            };
-
-            CacheForTypeInfoCalculated.TryAdd(type, typeInfo);
+            return typeInfo;
         }
+        
+        
+        var serializableProperties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty | BindingFlags.GetProperty);
+
+        var reactCustomEventProperties = new List<PropertyInfoCalculated>();
+        {
+            foreach (var propertyInfo in serializableProperties.Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
+            {
+                if (!propertyInfo.IsVoidTaskDelegate())
+                {
+                    throw DeveloperException($"Delegate should return 'Task'. @PropertyName is '{propertyInfo.Name}'");
+                }
+
+                reactCustomEventProperties.Add(propertyInfo.Calculate());
+            }
+        }
+
+        var propertyAccessors = new List<PropertyInfoCalculated>();
+        {
+            foreach (var propertyInfo in serializableProperties)
+            {
+                if (propertyInfo.Name == nameof(ReactComponentBase.Context)
+                    || propertyInfo.Name == nameof(Element.children)
+                    || propertyInfo.Name == nameof(ReactComponentBase.key)
+                    || propertyInfo.Name == nameof(ReactComponentBase.Client)
+                    || propertyInfo.Name == "state"
+                    || propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
+                    || propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>() is not null
+                    || (propertyInfo.Name == "Item" && propertyInfo.GetIndexParameters().Length > 0)
+                   )
+                {
+                    continue;
+                }
+
+                if (propertyInfo.PropertyType == typeof(Element) || propertyInfo.PropertyType.IsSubclassOf(typeof(Element)))
+                {
+                    continue;
+                }
+
+                if (propertyInfo.CanWrite == false && !propertyInfo.DeclaringType?.IsSubclassOf(typeof(ThirdPartyReactComponent)) == true)
+                {
+                    continue;
+                }
+
+                propertyAccessors.Add(propertyInfo.Calculate());
+            }
+        }
+
+        var reactProperties = new List<PropertyInfoCalculated>();
+        {
+            foreach (var propertyInfo in serializableProperties.Where(x => x.GetCustomAttribute<ReactPropAttribute>() != null))
+            {
+                reactProperties.Add(propertyInfo.Calculate());
+            }
+        }
+
+        var getPropertyValueForSerializeToClientFunc =
+            (Func<object, string, (bool needToExport, object value)>)
+            type.GetMethod("GetPropertyValueForSerializeToClient", BindingFlags.NonPublic | BindingFlags.Static)
+                ?.CreateDelegate(typeof(Func<object, string, (bool needToExport, object value)>));
+
+        typeInfo = new()
+        {
+            CustomEventPropertiesOfType          = reactCustomEventProperties,
+            DotNetPropertiesOfType               = propertyAccessors,
+            ReactAttributedPropertiesOfType      = reactProperties,
+            CacheableMethodInfoList              = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray(),
+            ParameterizedCacheableMethodInfoList = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null).ToArray(),
+            StateProperty                        = type.GetProperty("state", BindingFlags.NonPublic | BindingFlags.Instance)?.Calculate(),
+
+            GetPropertyValueForSerializeToClient = getPropertyValueForSerializeToClientFunc,
+
+            ComponentDidMountMethod = GetComponentDidMountMethod(type)
+        };
+
+        CacheForTypeInfoCalculated.TryAdd(type, typeInfo);
 
         return typeInfo;
 
