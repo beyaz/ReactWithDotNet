@@ -377,10 +377,11 @@ static partial class JsonSerializationOptionHelper
         
             writer.WriteStartObject();
 
-            foreach (var property in type.GetProperties())
+            foreach (var property in type.Calculated().DotNetPropertiesOfType)
             {
-                writer.WritePropertyName(property.Name);
-                JsonSerializer.Serialize(writer, property.GetValue(value), options);
+                writer.WritePropertyName(property.PropertyInfo.Name);
+                
+                JsonSerializer.Serialize(writer, property.GetValueFunc(value), options);
             }
         
             writer.WriteEndObject();

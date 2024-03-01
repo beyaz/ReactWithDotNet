@@ -38,6 +38,12 @@ partial class Mixin
         {
             foreach (var propertyInfo in serializableProperties)
             {
+                if (isAnonymousType)
+                {
+                    dotNetPropertiesOfType.Add(propertyInfo.Calculate());
+                    continue;
+                }
+                
                 if (propertyInfo.Name == nameof(ReactComponentBase.Context)
                     || propertyInfo.Name == nameof(Element.children)
                     || propertyInfo.Name == nameof(ReactComponentBase.key)
