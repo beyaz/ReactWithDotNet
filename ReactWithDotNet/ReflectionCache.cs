@@ -4,31 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
-
-
 partial class Mixin
 {
+    static readonly ConcurrentDictionary<Type, TypeInfoCalculated> CacheForTypeInfoCalculated = new();
     static readonly ConcurrentDictionary<Assembly, ConcurrentDictionary<MethodInfo, MethodInfoCalculated>> methodInfoCalculatedCache = new();
 
-    internal static MethodInfoCalculated GetCalculated(this MethodInfo methodInfo)
-    {
-        var assembly = methodInfo.Module.Assembly;
-
-        if (!methodInfoCalculatedCache.TryGetValue(assembly, out var methodCache))
-        {
-            methodInfoCalculatedCache[assembly] = methodCache = new();
-        }
-
-        if (!methodCache.TryGetValue(methodInfo, out var methodInfoCalculated))
-        {
-            methodCache[methodInfo] = methodInfoCalculated = MethodInfoCalculated.From(methodInfo);
-        }
-
-        return methodInfoCalculated;
-    }
-    
-    static readonly ConcurrentDictionary<Type, TypeInfoCalculated> CacheForTypeInfoCalculated = new();
-    
     internal static TypeInfoCalculated Calculated(this Type type)
     {
         if (!CacheForTypeInfoCalculated.TryGetValue(type, out var typeInfo))
@@ -125,8 +105,25 @@ partial class Mixin
             return null;
         }
     }
-    
-     static PropertyInfoCalculated Calculate(this PropertyInfo propertyInfo)
+
+    internal static MethodInfoCalculated GetCalculated(this MethodInfo methodInfo)
+    {
+        var assembly = methodInfo.Module.Assembly;
+
+        if (!methodInfoCalculatedCache.TryGetValue(assembly, out var methodCache))
+        {
+            methodInfoCalculatedCache[assembly] = methodCache = new();
+        }
+
+        if (!methodCache.TryGetValue(methodInfo, out var methodInfoCalculated))
+        {
+            methodCache[methodInfo] = methodInfoCalculated = MethodInfoCalculated.From(methodInfo);
+        }
+
+        return methodInfoCalculated;
+    }
+
+    static PropertyInfoCalculated Calculate(this PropertyInfo propertyInfo)
     {
         return new()
         {
@@ -141,11 +138,11 @@ partial class Mixin
             TransformValueInClientFunction = TryGetTransformValueInClientFunctionName(propertyInfo),
 
             PropertyTypeIsIsVoidTaskDelegate = propertyInfo.IsVoidTaskDelegate(),
-            
+
             ReactBindAttribute = propertyInfo.GetCustomAttribute<ReactBindAttribute>(),
-            
+
             FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
-            
+
             NameOfTransformValueInClient = propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>()?.TransformFunction
         };
 
@@ -171,7 +168,7 @@ partial class Mixin
             return propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>()?.TransformFunction;
         }
     }
-    
+
     internal sealed class MethodInfoCalculated
     {
         public required bool HasStopPropagation { get; init; }
@@ -193,30 +190,26 @@ partial class Mixin
             };
         }
     }
-    
-    
-    
 }
 
-
-internal sealed class PropertyInfoCalculated
+sealed class PropertyInfoCalculated
 {
     public object DefaultValue { get; init; }
+    public string FunctionNameOfGrabEventArguments { get; init; }
     public Func<object, object> GetValueFunc { get; init; }
     public bool HasReactAttribute { get; init; }
     public JsonPropertyNameAttribute JsonPropertyName { get; init; }
+    public string NameOfTransformValueInClient { get; init; }
     public PropertyInfo PropertyInfo { get; init; }
     public bool PropertyTypeIsIsVoidTaskDelegate { get; init; }
+    public ReactBindAttribute ReactBindAttribute { get; init; }
     public Action<object, object> SetValueFunc { get; init; }
     public ReactTemplateAttribute TemplateAttribute { get; init; }
     public string TransformValueInClientFunction { get; init; }
     public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
-    public string FunctionNameOfGrabEventArguments { get; init; }
-    public ReactBindAttribute ReactBindAttribute { get; init; }
-    public string NameOfTransformValueInClient { get; init; }
 }
 
-internal sealed class TypeInfoCalculated
+sealed class TypeInfoCalculated
 {
     public IReadOnlyList<MethodInfo> CacheableMethodInfoList { get; init; }
     public string ComponentDidMountMethod { get; init; }
