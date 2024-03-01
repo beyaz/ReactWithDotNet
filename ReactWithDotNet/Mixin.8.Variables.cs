@@ -109,12 +109,12 @@ public sealed class CssUnit
 
     public static CssUnit operator *(double value, CssUnit cssUnit)
     {
-        return new CssUnit(cssUnit._type, value + cssUnit._type);
+        return new CssUnit(cssUnit._type, value.ToString(CultureInfo_en_US) + cssUnit._type);
     }
 
     public static implicit operator CssUnit(double valueInPx)
     {
-        return new CssUnit("px", valueInPx + "px");
+        return new CssUnit("px", valueInPx.AsPixel());
     }
 
     public static implicit operator CssUnit(int valueInPx)

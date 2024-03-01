@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Globalization;
 using System.Text.Json;
 
 namespace ReactWithDotNet;
@@ -350,8 +351,8 @@ public static partial class Mixin
     /// <summary>
     ///     style.backdropFilter = blur(px)
     /// </summary>
-    public static StyleModifier BackdropFilterBlur(double px) =>
-        new(style => style.backdropFilter = $"blur({px}px)");
+    public static StyleModifier BackdropFilterBlur(double valueAsPixel) =>
+        new(style => style.backdropFilter = $"blur({valueAsPixel.AsPixel()})");
 
  
 
@@ -782,12 +783,10 @@ public static partial class Mixin
     {
         return condition == true ? elementFunc() : null;
     }
-   
+    
+    internal static readonly CultureInfo CultureInfo_en_US = new ("en-US");
 
-
- 
-
-    internal static string AsPixel(this double value) => value + "px";
+    internal static string AsPixel(this double value) => value.ToString(CultureInfo_en_US) + "px";
 
     // todo: think better solution write to output stream or maybe span
     internal static ReadOnlySpan<char> ToJson(this ComponentResponse value)
@@ -856,9 +855,9 @@ public static partial class Mixin
 
     #region Margin
     public static StyleModifier Margin(double margin) => new(style => style.margin = margin.AsPixel());
-    public static StyleModifier Margin(double topBottomPixel, double lefRighttPixel) => Margin($"{topBottomPixel}px {lefRighttPixel}px");
-    public static StyleModifier Margin(double topPixel, double lefRightPixel, double bottomPixel) => Margin($"{topPixel}px {lefRightPixel}px {bottomPixel}px");
-    public static StyleModifier Margin(double topPixel, double rightPixel, double bottomPixel, double leftPixel) => Margin($"{topPixel}px {rightPixel}px {bottomPixel}px {leftPixel}px");
+    public static StyleModifier Margin(double topBottomPixel, double lefRighttPixel) => Margin($"{topBottomPixel.AsPixel()} {lefRighttPixel.AsPixel()}");
+    public static StyleModifier Margin(double topPixel, double lefRightPixel, double bottomPixel) => Margin($"{topPixel}px {lefRightPixel.AsPixel()} {bottomPixel.AsPixel()}");
+    public static StyleModifier Margin(double topPixel, double rightPixel, double bottomPixel, double leftPixel) => Margin($"{topPixel.AsPixel()} {rightPixel.AsPixel()} {bottomPixel.AsPixel()} {leftPixel.AsPixel()}");
     
 
     public static StyleModifier MarginLeft(double leftPixel) => new(style => style.marginLeft = leftPixel.AsPixel());
@@ -885,11 +884,11 @@ public static partial class Mixin
     #region Padding
     public static StyleModifier Padding(double paddingPixel) => new(style => style.padding = paddingPixel.AsPixel());
     
-    public static StyleModifier Padding(double topBottomPixel, double lefRightPixel) => Padding($"{topBottomPixel}px {lefRightPixel}px");
+    public static StyleModifier Padding(double topBottomPixel, double lefRightPixel) => Padding($"{topBottomPixel.AsPixel()} {lefRightPixel.AsPixel()}");
     
-    public static StyleModifier Padding(double topPixel, double rightPixel, double bottomPixel, double leftPixel) => Padding($"{topPixel}px {rightPixel}px {bottomPixel}px {leftPixel}px");
+    public static StyleModifier Padding(double topPixel, double rightPixel, double bottomPixel, double leftPixel) => Padding($"{topPixel.AsPixel()} {rightPixel.AsPixel()} {bottomPixel.AsPixel()} {leftPixel.AsPixel()}");
     
-    public static StyleModifier Padding(double topPixel, double lefRightPixel, double bottomPixel) => Padding($"{topPixel}px {lefRightPixel}px {bottomPixel}px");
+    public static StyleModifier Padding(double topPixel, double lefRightPixel, double bottomPixel) => Padding($"{topPixel}px {lefRightPixel.AsPixel()} {bottomPixel.AsPixel()}");
 
     public static StyleModifier PaddingLeft(double leftPixel) => new(style => style.paddingLeft = leftPixel.AsPixel());
     public static StyleModifier PaddingRight(double rightPixel) => new(style => style.paddingRight = rightPixel.AsPixel());
