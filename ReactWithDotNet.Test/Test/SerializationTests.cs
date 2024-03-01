@@ -215,4 +215,26 @@ public class SerializationTests
 
 
     }
+    
+    
+    [TestMethod]
+    public void AnonymousType()
+    {
+        var value = new { A123 = "a", B123 = "b" };
+        
+        var jsonMap = new JsonMap();
+
+        var isA = value.GetType().IsAnonymousType();
+        
+        var fn = value.GetType().FullName;
+        
+        jsonMap.Add("AA", value);
+    
+        var json = JsonSerializer.Serialize(jsonMap, JsonSerializerOptionsInstance);
+
+        json.Should().Be("{\"AA\":{\"A123\":\"a\",\"B123\":\"b\"}}");
+
+
+
+    }
 }

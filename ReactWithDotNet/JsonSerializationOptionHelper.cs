@@ -283,9 +283,14 @@ static partial class JsonSerializationOptionHelper
 
         options.Converters.Add(new UnionPropFactory());
 
+        options.Converters.Add(AnonymousTypeJsonConverter.Instance);
+        
         options.Converters.Add(new JsonConverterFactoryForCompilerGeneratedClass());
 
         options.Converters.Add(JsonConverterFactoryForDelegate.Instance);
+        
+        
+        
 
         return options;
     }
@@ -352,6 +357,36 @@ static partial class JsonSerializationOptionHelper
         }
     }
 
+    sealed class AnonymousTypeJsonConverter : JsonConverter<dynamic>
+    {
+        public static readonly AnonymousTypeJsonConverter Instance = new ();
+    
+        public override bool CanConvert(Type typeToConvert)
+        {
+            return typeToConvert.IsAnonymousType();
+        }
+
+        public override dynamic Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            return JsonSerializer.Deserialize(ref reader, typeToConvert, options);
+        }
+
+        public override void Write(Utf8JsonWriter writer, dynamic value, JsonSerializerOptions options)
+        {
+            Type type = value.GetType();
+        
+            writer.WriteStartObject();
+
+            foreach (var property in type.GetProperties())
+            {
+                writer.WritePropertyName(property.Name);
+                JsonSerializer.Serialize(writer, property.GetValue(value), options);
+            }
+        
+            writer.WriteEndObject();
+        }
+    }
+    
     sealed class JsonConverterFactoryForCompilerGeneratedClass : JsonConverterFactory
     {
         static readonly ConverterForCompilerGeneratedClass ConverterForCompilerGeneratedClassInstance = new();
