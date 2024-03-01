@@ -3,27 +3,7 @@ using System.Reflection;
 
 namespace ReactWithDotNet;
 
-sealed class MethodInfoCalculated
-{
-    public required bool HasStopPropagation { get; init; }
 
-    public required IReadOnlyList<string> KeyboardEventCallOnly { get; init; }
-
-    public required MethodInfo MethodInfo { get; init; }
-
-    public required string NameWithToken { get; init; }
-
-    public static MethodInfoCalculated From(MethodInfo methodInfo)
-    {
-        return new()
-        {
-            MethodInfo            = methodInfo,
-            HasStopPropagation    = methodInfo.GetCustomAttributes<ReactStopPropagationAttribute>().Any(),
-            KeyboardEventCallOnly = methodInfo.GetCustomAttributes<ReactKeyboardEventCallOnlyAttribute>().FirstOrDefault()?.Keys,
-            NameWithToken         = methodInfo.GetNameWithToken()
-        };
-    }
-}
 
 partial class Mixin
 {
@@ -44,5 +24,27 @@ partial class Mixin
         }
 
         return methodInfoCalculated;
+    }
+    
+    internal sealed class MethodInfoCalculated
+    {
+        public required bool HasStopPropagation { get; init; }
+
+        public required IReadOnlyList<string> KeyboardEventCallOnly { get; init; }
+
+        public required MethodInfo MethodInfo { get; init; }
+
+        public required string NameWithToken { get; init; }
+
+        public static MethodInfoCalculated From(MethodInfo methodInfo)
+        {
+            return new()
+            {
+                MethodInfo            = methodInfo,
+                HasStopPropagation    = methodInfo.GetCustomAttributes<ReactStopPropagationAttribute>().Any(),
+                KeyboardEventCallOnly = methodInfo.GetCustomAttributes<ReactKeyboardEventCallOnlyAttribute>().FirstOrDefault()?.Keys,
+                NameWithToken         = methodInfo.GetNameWithToken()
+            };
+        }
     }
 }
