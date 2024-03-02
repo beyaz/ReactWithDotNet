@@ -13,7 +13,7 @@ partial class Mixin
         => Border(top.AsPixel(), right.AsPixel(), bottom.AsPixel(), left.AsPixel());
 
     public static StyleModifier Border(double widthAsPixel, string borderStyle, string color)
-        => new(style => style.border = $"{widthAsPixel}px {borderStyle} {color}");
+        => new(style => style.border = $"{widthAsPixel.AsPixel()}  {borderStyle} {color}");
 
     public static StyleModifier Border(CssUnit width, string borderStyle, string color)
         => new(style => style.border = $"{width} {borderStyle} {color}");
@@ -145,10 +145,10 @@ partial class Mixin
   
 
     public static StyleModifier BoxShadow(double offsetX, double offsetY, double blurRadius, double spreadRadius, string color)
-        => BoxShadow($"{offsetX}px {offsetY}px {blurRadius}px {spreadRadius}px {color}");
+        => BoxShadow($"{offsetX.AsPixel()} {offsetY.AsPixel()} {blurRadius.AsPixel()} {spreadRadius.AsPixel()} {color}");
     
     public static StyleModifier BoxShadow(double offsetX, double offsetY, double blurRadius, string color)
-        => BoxShadow($"{offsetX}px {offsetY}px {blurRadius}px {color}");
+        => BoxShadow($"{offsetX.AsPixel()} {offsetY.AsPixel()} {blurRadius.AsPixel()} {color}");
     
     /// <summary>
     ///     style.boxShadow = <strong>none</strong>
@@ -196,7 +196,7 @@ partial class Mixin
             throw new ArgumentNullException(nameof(color));
         }
 
-        return $"{widthAsPx}px {styleName} {color}";
+        return $"{widthAsPx.AsPixel()} {styleName} {color}";
     }
     
     
