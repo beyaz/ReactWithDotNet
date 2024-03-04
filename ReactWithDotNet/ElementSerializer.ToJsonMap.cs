@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Reflection;
-using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
@@ -603,14 +601,7 @@ partial class ElementSerializer
 
                         if (component._client is not null)
                         {
-                            if (component._client.TaskList.Count == 0)
-                            {
-                                component._client = new(component.Context);
-                            }
-                            else
-                            {
-                                component._client = ReflectionHelper.DeepCopy(component._client);
-                            }
+                            component._client = component._client.Clone();
                         }
 
                         return component;

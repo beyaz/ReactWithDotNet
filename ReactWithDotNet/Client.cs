@@ -30,6 +30,21 @@ static partial class Mixin
 
 public sealed class Client
 {
+    internal Client Clone()
+    {
+        if (TaskList.Count == 0)
+        {
+            return new(_reactContext);
+        }
+
+        var cloned = new Client(_reactContext);
+        
+        cloned.TaskList.AddRange(TaskList);
+
+        return cloned;
+    }
+    
+    
     internal readonly List<ClientTask> TaskList = new();
     readonly ReactContext _reactContext;
 
