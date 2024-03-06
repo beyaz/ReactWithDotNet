@@ -702,6 +702,7 @@ class ComponentCacheItem
         this.component = null;
         this.freeSpace = {};
         this.freeSpace[CUSTOM_EVENT_LISTENER_MAP] = {};
+        this.freeSpace[ON_COMPONENT_DESTROY] = [];
     }
 }
 
@@ -1808,13 +1809,25 @@ function RemoveComponentDynamicStyles(componentUniqueIdentifiers)
     }
 }
 
+// DESTROY UTILITY
+function InvokeComponentDestroyListeners(componentInstance)
+{
+    const functionArray = GetFreeSpaceOfComponent(componentInstance)[ON_COMPONENT_DESTROY];
+
+    for (var i = 0; i < functionArray.length; i++)
+    {
+        functionArray[i]();
+    }
+}
+
+function OnComponentDestroy(component, fn)
+{
+    GetFreeSpaceOfComponent(component)[ON_COMPONENT_DESTROY].push(fn);
+}
+
 function DestroyDotNetComponentInstance(instance)
 {
-    const length = instance[ON_COMPONENT_DESTROY].length;
-    for (var i = 0; i < length; i++)
-    {
-        instance[ON_COMPONENT_DESTROY][i]();
-    }
+    InvokeComponentDestroyListeners(instance);
 
     RemoveComponentDynamicStyles(instance[DotNetComponentUniqueIdentifiers]);
 
@@ -1879,9 +1892,7 @@ function DefineComponent(componentDeclaration)
             instance.state = initialState;
 
             initialState[DotNetTypeOfReactComponent] = instance[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
-
-            instance[ON_COMPONENT_DESTROY] = [];
-            
+                        
             instance[DotNetComponentUniqueIdentifiers] = [NotNull(props.$jsonNode[DotNetComponentUniqueIdentifier])];
 
             InitializeDotNetComponentInstanceId(instance);
@@ -2547,15 +2558,13 @@ RegisterCoreFunction("ListenEvent", function (eventName, remoteMethodName)
         const entry = StartAction(actionArguments);
 
         // guard for removed node before send to server
-        component[ON_COMPONENT_DESTROY].push(() =>
+        OnComponentDestroy(component, () =>
         {
             entry.isValid = false;
         });
     };
 
-    NotNull(component[ON_COMPONENT_DESTROY]);
-
-    component[ON_COMPONENT_DESTROY].push(() =>
+    OnComponentDestroy(component, () =>
     {
         EventBus.Remove(eventName, onEventFired);
     });
@@ -2584,15 +2593,13 @@ RegisterCoreFunction("ListenEventThenOnlyUpdateState", function (eventName, remo
         const entry = StartAction(actionArguments);
 
         // guard for removed node before send to server
-        component[ON_COMPONENT_DESTROY].push(() =>
+        OnComponentDestroy(component, () =>
         {
             entry.isValid = false;
         });
     };
-
-    NotNull(component[ON_COMPONENT_DESTROY]);
-
-    component[ON_COMPONENT_DESTROY].push(() =>
+    
+    OnComponentDestroy(component, () =>
     {
         EventBus.Remove(eventName, onEventFired);
     });
@@ -2618,15 +2625,13 @@ RegisterCoreFunction("ListenEventOnlyOnce", function (eventName, remoteMethodNam
         const entry = StartAction(actionArguments);
 
         // guard for removed node before send to server
-        component[ON_COMPONENT_DESTROY].push(() =>
+        OnComponentDestroy(component, () =>
         {
             entry.isValid = false;
         });
     };
-
-    NotNull(component[ON_COMPONENT_DESTROY]);
-
-    component[ON_COMPONENT_DESTROY].push(() =>
+    
+    OnComponentDestroy(component, () =>
     {
         EventBus.Remove(eventName, onEventFired);
     });
@@ -2681,13 +2686,13 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSe
         const entry = StartAction(actionArguments);
 
         // guard for removed node before send to server
-        handlerComponent[ON_COMPONENT_DESTROY].push(() =>
+        OnComponentDestroy(handlerComponent, () =>
         {
             entry.isValid = false;
         });
     };
 
-    component[ON_COMPONENT_DESTROY].push(() =>
+    OnComponentDestroy(component, () =>
     {
         EventBus.Remove(eventName, onEventFired);
     });
@@ -2747,7 +2752,7 @@ RegisterCoreFunction("OnOutsideClicked", function (idOfElement, remoteMethodName
 
     document.addEventListener('click', onDocumentClick);
 
-    component[ON_COMPONENT_DESTROY].push(() =>
+    OnComponentDestroy(component, () =>
     {
         document.removeEventListener('click', onDocumentClick);
     });
