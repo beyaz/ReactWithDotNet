@@ -701,6 +701,7 @@ class ComponentCacheItem
     {
         this.component = null;
         this.freeSpace = {};
+        this.freeSpace[CUSTOM_EVENT_LISTENER_MAP] = {};
     }
 }
 
@@ -1829,7 +1830,7 @@ function HandleComponentClientTasks(component)
         return false;
     }
 
-    const freeSpace = COMPONENT_CACHE.GetFreeSpaceOfComponent(component[DotNetComponentUniqueIdentifiers][0]);
+    const freeSpace = GetFreeSpaceOfComponent(component);
     if (freeSpace.lastProcessedClientTasks === clientTasks)
     {
         return false;
@@ -1880,9 +1881,7 @@ function DefineComponent(componentDeclaration)
             initialState[DotNetTypeOfReactComponent] = instance[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
 
             instance[ON_COMPONENT_DESTROY] = [];
-
-            instance[CUSTOM_EVENT_LISTENER_MAP] = {};
-
+            
             instance[DotNetComponentUniqueIdentifiers] = [NotNull(props.$jsonNode[DotNetComponentUniqueIdentifier])];
 
             InitializeDotNetComponentInstanceId(instance);
@@ -2657,12 +2656,14 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSe
             'handlerComponentUniqueIdentifier:' + handlerComponentUniqueIdentifier
         ].join(',');
 
-        if (component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey])
+        const freeSpace = GetFreeSpaceOfComponent(component);
+        
+        if (freeSpace[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey])
         {
             return;
         }
 
-        component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] = 1;
+        freeSpace[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] = 1;
     }
 
     const eventName = GetRealNameOfDotNetEvent(senderPropertyFullName, senderComponentUniqueIdentifier);
@@ -2713,12 +2714,14 @@ RegisterCoreFunction("OnOutsideClicked", function (idOfElement, remoteMethodName
     {
         const customEventListenerMapKey = 'OnOutsideClicked(IdOfElement:' + idOfElement + ', remoteMethodName:' + remoteMethodName + ', @handlerComponentUniqueIdentifier:' + handlerComponentUniqueIdentifier + ')';
 
-        if (component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey])
+        const freeSpace = GetFreeSpaceOfComponent(component);
+
+        if (freeSpace[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey])
         {
             return;
         }
 
-        component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] = 1;
+        freeSpace[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] = 1;
     }
 
     function onDocumentClick(e)
