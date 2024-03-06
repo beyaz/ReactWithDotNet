@@ -1819,7 +1819,7 @@ function HandleComponentClientTasks(component)
 {
     const clientTasks = component.state[ClientTasks];
 
-    if (clientTasks == null || clientTasks.length === 0)
+    if (clientTasks == null || clientTasks.length === 0 || component.ComponentWillUnmountIsCalled === true)
     {
         return false;
     }
