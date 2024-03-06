@@ -797,6 +797,11 @@ class ComponentCache
 
 const COMPONENT_CACHE = new ComponentCache();
 
+function GetFreeSpaceOfComponent(component)
+{
+    return COMPONENT_CACHE.GetFreeSpaceOfComponent(component[DotNetComponentUniqueIdentifiers][0]);
+}
+
 function GetComponentByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier)
 {
     const component = COMPONENT_CACHE.FindComponentByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier);
