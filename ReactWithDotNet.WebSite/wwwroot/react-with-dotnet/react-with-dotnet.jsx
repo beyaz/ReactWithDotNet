@@ -1809,6 +1809,21 @@ function RemoveComponentDynamicStyles(componentUniqueIdentifiers)
     }
 }
 
+// Custom Event
+function HasCustomEventListener(component, customEventListenerMapKey)
+{
+    const freeSpace = GetFreeSpaceOfComponent(component);
+
+    return freeSpace[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] === 1;
+}
+
+function MarkCustomEventListener(component, customEventListenerMapKey)
+{
+    const freeSpace = GetFreeSpaceOfComponent(component);
+
+    return freeSpace[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] = 1;
+}
+
 // DESTROY UTILITY
 function InvokeComponentDestroyListeners(componentInstance)
 {
@@ -2661,14 +2676,13 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSe
             'handlerComponentUniqueIdentifier:' + handlerComponentUniqueIdentifier
         ].join(',');
 
-        const freeSpace = GetFreeSpaceOfComponent(component);
-        
-        if (freeSpace[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey])
+
+        if (HasCustomEventListener(component, customEventListenerMapKey))
         {
             return;
         }
 
-        freeSpace[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] = 1;
+        MarkCustomEventListener(component, customEventListenerMapKey);
     }
 
     const eventName = GetRealNameOfDotNetEvent(senderPropertyFullName, senderComponentUniqueIdentifier);
@@ -2719,14 +2733,12 @@ RegisterCoreFunction("OnOutsideClicked", function (idOfElement, remoteMethodName
     {
         const customEventListenerMapKey = 'OnOutsideClicked(IdOfElement:' + idOfElement + ', remoteMethodName:' + remoteMethodName + ', @handlerComponentUniqueIdentifier:' + handlerComponentUniqueIdentifier + ')';
 
-        const freeSpace = GetFreeSpaceOfComponent(component);
-
-        if (freeSpace[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey])
+        if (HasCustomEventListener(component, customEventListenerMapKey))
         {
             return;
         }
 
-        freeSpace[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] = 1;
+        MarkCustomEventListener(component, customEventListenerMapKey);
     }
 
     function onDocumentClick(e)
