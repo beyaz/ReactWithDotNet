@@ -20,12 +20,14 @@ public class DelegatePropertyTest
     public void CreationTest()
     {
 
-        MyComponent myComponent = new MyComponent
-        {
-            ComponentUniqueIdentifier = 5
-        };
+        
 
         {
+            MyComponent myComponent = new MyComponent
+            {
+                ComponentUniqueIdentifier = 5
+            };
+            
             var propertyValue = DelegatePropertyHelper.ReCalculatePropertyValue(myComponent, typeof(MyComponent).GetProperty(nameof(myComponent.SampleDelegateProperty1)));
 
             var delegateFunc = (Func<string, Task>)propertyValue;
@@ -34,13 +36,19 @@ public class DelegatePropertyTest
 
             myComponent.Client.TaskList.Count.Should().Be(1);
         }
+
         
         {
+            MyComponent myComponent = new MyComponent
+            {
+                ComponentUniqueIdentifier = 5
+            };
+            
             var propertyValue = DelegatePropertyHelper.ReCalculatePropertyValue(myComponent, typeof(MyComponent).GetProperty(nameof(myComponent.SampleDelegateProperty2)));
 
-            var delegateFunc = (Func<string,string, Task>)propertyValue;
+            var delegateFunc = (Func<string, string, Task>)propertyValue;
 
-            delegateFunc("abC","ab");
+            delegateFunc("abC", "ab");
 
             myComponent.Client.TaskList.Count.Should().Be(1);
         }
