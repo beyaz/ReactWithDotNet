@@ -17,8 +17,11 @@ public class DelegatePropertyTest
     [TestMethod]
     public void CreationTest()
     {
-        
-        MyComponent myComponent = new MyComponent();
+
+        MyComponent myComponent = new MyComponent
+        {
+            ComponentUniqueIdentifier = 5
+        };
 
         var propertyValue = DelegatePropertyHelper.ReCalculatePropertyValue(myComponent, typeof(MyComponent).GetProperty(nameof(myComponent.SampleDelegateProperty1)));
 

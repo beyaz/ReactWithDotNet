@@ -69,7 +69,6 @@ static class DelegatePropertyHelper
 
         ilGenerator.Emit(OpCodes.Ldarg_0);
         ilGenerator.Emit(OpCodes.Ldstr, propertyInfo.Name);
-        ilGenerator.Emit(OpCodes.Ldarg_1);
         ilGenerator.Emit(OpCodes.Ldc_I4_1);
         ilGenerator.Emit(OpCodes.Newarr, typeof(object));
         ilGenerator.Emit(OpCodes.Dup);
@@ -82,6 +81,11 @@ static class DelegatePropertyHelper
         return  (Func<object,T, Task>)dynamicMethod.CreateDelegate(typeof(Func<object,T, Task>));
     }
 
+    static void AAAA(ReactComponentBase reactComponent, string h)
+    {
+        DispatchDotNetCustomEvent(reactComponent, "abc",[h]);
+        
+    }
     static Task DispatchDotNetCustomEvent(ReactComponentBase reactComponent, string propertyName, object[] eventArguments)
     {
         var senderInfo = GetEventSenderInfo(reactComponent, propertyName);
