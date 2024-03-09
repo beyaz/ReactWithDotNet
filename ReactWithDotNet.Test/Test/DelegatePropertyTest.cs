@@ -12,6 +12,8 @@ public class DelegatePropertyTest
 
         public Func<string,Task> SampleDelegateProperty1 { get; set; }
         
+        public Func<string,string , Task> SampleDelegateProperty2 { get; set; }
+        
     }
     
     [TestMethod]
@@ -23,12 +25,24 @@ public class DelegatePropertyTest
             ComponentUniqueIdentifier = 5
         };
 
-        var propertyValue = DelegatePropertyHelper.ReCalculatePropertyValue(myComponent, typeof(MyComponent).GetProperty(nameof(myComponent.SampleDelegateProperty1)));
+        {
+            var propertyValue = DelegatePropertyHelper.ReCalculatePropertyValue(myComponent, typeof(MyComponent).GetProperty(nameof(myComponent.SampleDelegateProperty1)));
 
-        var delegateFunc = (Func<string, Task>)propertyValue;
+            var delegateFunc = (Func<string, Task>)propertyValue;
 
-        delegateFunc("abC");
+            delegateFunc("abC");
 
-        myComponent.Client.TaskList.Count.Should().Be(1);
+            myComponent.Client.TaskList.Count.Should().Be(1);
+        }
+        
+        {
+            var propertyValue = DelegatePropertyHelper.ReCalculatePropertyValue(myComponent, typeof(MyComponent).GetProperty(nameof(myComponent.SampleDelegateProperty2)));
+
+            var delegateFunc = (Func<string,string, Task>)propertyValue;
+
+            delegateFunc("abC","ab");
+
+            myComponent.Client.TaskList.Count.Should().Be(1);
+        }
     }
 }

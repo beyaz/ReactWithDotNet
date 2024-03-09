@@ -19,16 +19,16 @@ static class DelegatePropertyHelper
         {
             throw new ArgumentNullException(nameof(methodInfoCurry));
         }
-        
-        var argumentTypes = typeof(string);
-        
-        var genericArguments = propertyInfo.PropertyType.GetGenericArguments();
-        if (genericArguments.Length == 2)
-        {
-            argumentTypes = genericArguments[0];
-        }
 
+        var genericArguments = propertyInfo.PropertyType.GetGenericArguments();
+        if (genericArguments.Length == 0 || 
+            genericArguments.Length > 4 || 
+            genericArguments[^1] != typeof(Task))
+        {
+            throw DeveloperException($"Custom Delegate should return Task {propertyInfo.Name}");
+        }
         
+        var argumentTypes = genericArguments.SkipLast(1).ToArray();
         
         var createDelegateMethodInfo = methodInfoCreateDelagate.MakeGenericMethod(argumentTypes);
 
