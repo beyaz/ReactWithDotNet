@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.Contracts;
+﻿using System.Collections.Concurrent;
+using System.Diagnostics.Contracts;
 using System.Reflection;
 using System.Reflection.Emit;
 
@@ -6,40 +7,55 @@ namespace ReactWithDotNet;
 
 static class DelegatePropertyHelper
 {
+    static readonly ConcurrentDictionary<PropertyInfo, (Delegate @delegate, MethodInfo curry)> Cache = new();
+
     public static Delegate ReCalculatePropertyValue(ReactComponentBase reactComponent, PropertyInfo propertyInfo)
     {
-        var genericArguments = propertyInfo.PropertyType.GetGenericArguments();
-        if (genericArguments.Length == 0 ||
-            genericArguments.Length > 4 ||
-            genericArguments[^1] != typeof(Task))
+        if (!Cache.TryGetValue(propertyInfo, out var tuple))
         {
-            throw DeveloperException($"Custom Delegate should return Func<,,,Task> {propertyInfo.Name}");
+            var genericArguments = propertyInfo.PropertyType.GetGenericArguments();
+            if (genericArguments.Length == 0 ||
+                genericArguments.Length > 4 ||
+                genericArguments[^1] != typeof(Task))
+            {
+                throw DeveloperException($"Custom Delegate should return Func<,,,Task> {propertyInfo.Name}");
+            }
+
+            var argumentTypes = genericArguments.SkipLast(1).ToArray();
+
+            var methodInfoCreateDelagate = typeof(DelegatePropertyHelper).GetMethod(nameof(CreateDelegate), BindingFlags.Static | BindingFlags.NonPublic);
+            if (methodInfoCreateDelagate is null)
+            {
+                throw new ArgumentNullException(nameof(methodInfoCreateDelagate));
+            }
+
+            var @delegate = (Delegate)methodInfoCreateDelagate.Invoke(null, [reactComponent, propertyInfo]);
+
+            MethodInfo methodInfoCurry;
+            {
+                var nameofCurryMethod = $"Curry{argumentTypes.Length}";
+
+                methodInfoCurry = typeof(DelegatePropertyHelper).GetMethod(nameofCurryMethod, BindingFlags.Static | BindingFlags.NonPublic);
+                if (methodInfoCurry is null)
+                {
+                    throw new ArgumentNullException(nameof(methodInfoCurry));
+                }
+
+                if (argumentTypes.Length > 0)
+                {
+                    methodInfoCurry = methodInfoCurry.MakeGenericMethod(argumentTypes);
+                }
+            }
+
+            tuple = (@delegate, methodInfoCurry);
+
+            Cache.TryAdd(propertyInfo, tuple);
         }
 
-        var argumentTypes = genericArguments.SkipLast(1).ToArray();
+        var delegateFunc = tuple.@delegate;
+        var curry = tuple.curry;
 
-        var methodInfoCreateDelagate = typeof(DelegatePropertyHelper).GetMethod(nameof(CreateDelegate), BindingFlags.Static | BindingFlags.NonPublic);
-        if (methodInfoCreateDelagate is null)
-        {
-            throw new ArgumentNullException(nameof(methodInfoCreateDelagate));
-        }
-
-        var nameofCurryMethod = $"Curry{argumentTypes.Length}";
-
-        var methodInfoCurry = typeof(DelegatePropertyHelper).GetMethod(nameofCurryMethod, BindingFlags.Static | BindingFlags.NonPublic);
-        if (methodInfoCurry is null)
-        {
-            throw new ArgumentNullException(nameof(methodInfoCurry));
-        }
-
-        var delegateFunc = methodInfoCreateDelagate.Invoke(null, [reactComponent, propertyInfo]);
-
-        if (argumentTypes.Length > 0)
-        {
-            methodInfoCurry = methodInfoCurry.MakeGenericMethod(argumentTypes);
-        }
-
-        return (Delegate)methodInfoCurry.Invoke(null, [reactComponent, delegateFunc]);
+        return (Delegate)curry.Invoke(null, [reactComponent, delegateFunc]);
     }
 
     [Pure]
