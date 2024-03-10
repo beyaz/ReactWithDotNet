@@ -23,52 +23,52 @@ public class DelegatePropertyTest
     public void CreationTest()
     {
 
-        //{
-        //    MyComponent myComponent = new MyComponent
-        //    {
-        //        ComponentUniqueIdentifier = 5
-        //    };
-            
-        //    var propertyValue = DelegatePropertyHelper.ReCalculatePropertyValue(myComponent, typeof(MyComponent).GetProperty(nameof(myComponent.SampleDelegateProperty0)));
+        {
+            MyComponent myComponent = new MyComponent
+            {
+                ComponentUniqueIdentifier = 5
+            };
 
-        //    var delegateFunc = (Func<Task>)propertyValue;
+            var propertyValue = DelegatePropertyHelper.ReCalculatePropertyValue(myComponent, typeof(MyComponent).GetProperty(nameof(myComponent.SampleDelegateProperty0)));
 
-        //    delegateFunc();
+            var delegateFunc = (Func<Task>)propertyValue;
 
-        //    myComponent.Client.TaskList.Count.Should().Be(1);
-        //}
+            delegateFunc();
 
-        //{
-        //    MyComponent myComponent = new MyComponent
-        //    {
-        //        ComponentUniqueIdentifier = 5
-        //    };
-            
-        //    var propertyValue = DelegatePropertyHelper.ReCalculatePropertyValue(myComponent, typeof(MyComponent).GetProperty(nameof(myComponent.SampleDelegateProperty1)));
+            myComponent.Client.TaskList.Count.Should().Be(1);
+        }
 
-        //    var delegateFunc = (Func<string, Task>)propertyValue;
+        {
+            MyComponent myComponent = new MyComponent
+            {
+                ComponentUniqueIdentifier = 5
+            };
 
-        //    delegateFunc("abC");
+            var propertyValue = DelegatePropertyHelper.ReCalculatePropertyValue(myComponent, typeof(MyComponent).GetProperty(nameof(myComponent.SampleDelegateProperty1)));
 
-        //    myComponent.Client.TaskList.Count.Should().Be(1);
-        //}
+            var delegateFunc = (Func<string, Task>)propertyValue;
 
-        
-        //{
-        //    MyComponent myComponent = new MyComponent
-        //    {
-        //        ComponentUniqueIdentifier = 5
-        //    };
-            
-        //    var propertyValue = DelegatePropertyHelper.ReCalculatePropertyValue(myComponent, typeof(MyComponent).GetProperty(nameof(myComponent.SampleDelegateProperty2)));
+            delegateFunc("abC");
 
-        //    var delegateFunc = (Func<string, string, Task>)propertyValue;
+            myComponent.Client.TaskList.Count.Should().Be(1);
+        }
 
-        //    delegateFunc("abC", "ab");
 
-        //    myComponent.Client.TaskList.Count.Should().Be(1);
-        //}
-        
+        {
+            MyComponent myComponent = new MyComponent
+            {
+                ComponentUniqueIdentifier = 5
+            };
+
+            var propertyValue = DelegatePropertyHelper.ReCalculatePropertyValue(myComponent, typeof(MyComponent).GetProperty(nameof(myComponent.SampleDelegateProperty2)));
+
+            var delegateFunc = (Func<string, string, Task>)propertyValue;
+
+            delegateFunc("abC", "ab");
+
+            myComponent.Client.TaskList.Count.Should().Be(1);
+        }
+
         {
             MyComponent myComponent = new MyComponent
             {

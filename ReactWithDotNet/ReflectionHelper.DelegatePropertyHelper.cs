@@ -13,7 +13,7 @@ static class DelegatePropertyHelper
             genericArguments.Length > 4 ||
             genericArguments[^1] != typeof(Task))
         {
-            throw DeveloperException($"Custom Delegate should return Task {propertyInfo.Name}");
+            throw DeveloperException($"Custom Delegate should return Func<,,,Task> {propertyInfo.Name}");
         }
 
         var argumentTypes = genericArguments.SkipLast(1).ToArray();
