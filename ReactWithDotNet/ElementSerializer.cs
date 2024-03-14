@@ -326,33 +326,9 @@ static partial class ElementSerializer
             {
                 throw HandlerMethodShouldBelongToReactComponent(propertyInfo, null);
             }
+
+            var handlerComponentUniqueIdentifier = TryFindHandlerComponentUniqueIdentifier(context, handlerDelegateTarget);
             
-            int? handlerComponentUniqueIdentifier;
-            
-            if (handlerDelegateTarget is ReactComponentBase target)
-            {
-                handlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier;
-            }
-            else
-            {
-                if (context.FunctionalComponentStack?.Count > 0)
-                {
-                    var handlerComponent = context.FunctionalComponentStack.Peek();
-                    if (handlerComponent.state.CompilerGeneratedType == handlerDelegateTarget.GetType())
-                    {
-                        handlerComponentUniqueIdentifier = handlerComponent.ComponentUniqueIdentifier; 
-                    }
-                    else
-                    {
-                        throw HandlerMethodShouldBelongToReactComponent(propertyInfo, handlerDelegateTarget);
-                    }
-                }
-                else
-                {
-                    throw HandlerMethodShouldBelongToReactComponent(propertyInfo, handlerDelegateTarget);
-                }
-            }
-                
             int? htmlElementScrollDebounceTimeout = null;
             if (propertyInfo.Name == nameof(HtmlElement.onScroll) && propertyInfo.DeclaringType == typeof(HtmlElement))
             {
