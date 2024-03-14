@@ -125,6 +125,52 @@ partial class Mixin
 
         functionalComponent.Client.DispatchDotNetCustomEvent(senderInfo);
     }
+  
+    /// <summary>
+    ///    Dispatch given <paramref name="handlerFunc"/>
+    ///    <br/>
+    ///    Sample usage:
+    /// <code> 
+    ///    static FC Counter(int Count, Func&lt;int, Task&gt; OnValueChange)
+    ///    {
+    ///        var count = Count;
+    ///       
+    ///        return cmp =>
+    ///        {
+    ///            return new FlexColumn
+    ///            {
+    ///                new button(Padding(10))
+    ///                {
+    ///                    $"{count}",
+    ///                    OnClick(OnClickHandler)
+    ///                }
+    ///            };
+    ///       
+    ///            Task OnClickHandler(MouseEvent e)
+    ///            {
+    ///                count++;
+    ///        
+    ///                cmp.DispatchEvent(OnValueChange, [count]);
+    ///       
+    ///                return Task.CompletedTask;
+    ///            }
+    ///        };
+    ///    }
+    /// </code>
+    /// </summary>
+    public static void DispatchEvent(this IFunctionalComponent functionalComponent, Delegate handlerFunc, object[] parameters, [CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
+    {
+        if (handlerFuncName is null)
+        {
+            throw new ArgumentNullException(nameof(handlerFuncName));
+        }
+
+        var propertyName = handlerFuncName.Split('.').Last();
+
+        var senderInfo = GetEventSenderInfo((FunctionalComponent)functionalComponent, propertyName);
+
+        functionalComponent.Client.DispatchDotNetCustomEvent(senderInfo, parameters);
+    }
     
     /// <summary>
     ///    Dispatch given <paramref name="handlerFunc"/>
