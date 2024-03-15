@@ -270,6 +270,50 @@ public abstract class ReactComponentBase : Element
         Client.DispatchDotNetCustomEvent(GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a, b, c);
     }
 
+    /// <summary>
+    ///    Dispatch given <paramref name="handlerFunc"/> as event.
+    ///    <br/>
+    ///    Sample usage:
+    /// <code> 
+    ///    DispatchEvent(OnUserChanged, [new UserInfo { Name = '..'}] );
+    /// </code>
+    /// </summary>
+    protected void DispatchEvent(Delegate handlerFunc, [CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
+    {
+        if (handlerFuncName is null)
+        {
+            throw new ArgumentNullException(nameof(handlerFuncName));
+        }
+
+        var propertyName = handlerFuncName.Split('.').Last();
+
+        var senderInfo = GetEventSenderInfo(this, propertyName);
+        
+        Client.DispatchDotNetCustomEvent(senderInfo);
+    }
+    
+    /// <summary>
+    ///    Dispatch given <paramref name="handlerFunc"/> as event.
+    ///    <br/>
+    ///    Sample usage:
+    /// <code> 
+    ///    DispatchEvent(OnUserChanged, [new UserInfo { Name = '..'}] );
+    /// </code>
+    /// </summary>
+    protected void DispatchEvent(Delegate handlerFunc, object[] parameters, [CallerArgumentExpression(nameof(handlerFunc))] string handlerFuncName = null)
+    {
+        if (handlerFuncName is null)
+        {
+            throw new ArgumentNullException(nameof(handlerFuncName));
+        }
+
+        var propertyName = handlerFuncName.Split('.').Last();
+
+        var senderInfo = GetEventSenderInfo(this, propertyName);
+        
+        Client.DispatchDotNetCustomEvent(senderInfo, parameters);
+    }
+    
     protected virtual Element render()
     {
         return NoneOfRender.Value;
