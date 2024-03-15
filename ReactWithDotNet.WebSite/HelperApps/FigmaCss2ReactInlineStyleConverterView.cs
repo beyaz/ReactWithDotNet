@@ -112,7 +112,7 @@ color: #4A4A49;
     {
         var showCopyButton = true;
         
-        return FC(scope =>
+        return FC(cmp =>
         {
             var content = new CopySvg() + OnClick(onCopyClicked);
 
@@ -135,9 +135,9 @@ color: #4A4A49;
             {
                 showCopyButton = false;
                 
-                scope.Client.DispatchEvent<CopyClick>();
+                cmp.Client.DispatchEvent<CopyClick>();
                
-                scope.Client.GotoMethod(500,clearState);
+                cmp.Client.GotoMethod(500,clearState);
         
                 return Task.CompletedTask;
             }
