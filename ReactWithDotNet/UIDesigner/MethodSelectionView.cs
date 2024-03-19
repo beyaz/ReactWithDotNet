@@ -213,7 +213,7 @@ class MethodSelectionView : Component
 
     Task OnTreeItemClicked(MouseEvent e)
     {
-        DispatchEvent(SelectionChanged, e.currentTarget.id);
+        DispatchEvent(SelectionChanged, [e.currentTarget.id]);
         
         return Task.CompletedTask;
     }
