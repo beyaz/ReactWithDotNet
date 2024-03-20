@@ -5,7 +5,7 @@ namespace ReactWithDotNet.UIDesigner;
 [Serializable]
 public sealed class AssemblyReference
 {
-    public string Name { get; set; }
+    public string Name { get; init; }
 
     public bool Equals(AssemblyReference other)
     {
@@ -21,14 +21,15 @@ public sealed class AssemblyReference
 [Serializable]
 public sealed class TypeReference
 {
-    public AssemblyReference Assembly { get; set; }
+    public AssemblyReference Assembly { get; init; }
 
-    public string FullName { get; set; }
+    public string FullName { get; init; }
 
-    public string Name { get; set; }
+    public string Name { get; init; }
 
-    public string NamespaceName { get; set; }
-    public bool IsStaticClass { get; set; }
+    public string NamespaceName { get; init; }
+    
+    public bool IsStaticClass { get; init; }
 
     public bool Equals(TypeReference other)
     {
@@ -44,17 +45,17 @@ public sealed class TypeReference
 [Serializable]
 public sealed class MethodReference
 {
-    public TypeReference DeclaringType { get; set; }
+    public TypeReference DeclaringType { get; init; }
 
-    public string FullNameWithoutReturnType { get; set; }
+    public string FullNameWithoutReturnType { get; init; }
 
-    public bool IsStatic { get; set; }
+    public bool IsStatic { get; init; }
 
-    public int MetadataToken { get; set; }
+    public int MetadataToken { get; init; }
 
-    public string Name { get; set; }
+    public string Name { get; init; }
 
-    public IReadOnlyList<ParameterReference> Parameters { get; set; }
+    public IReadOnlyList<ParameterReference> Parameters { get; init; }
 
     public bool Equals(MethodReference other)
     {
@@ -83,9 +84,9 @@ public sealed class MethodReference
 [Serializable]
 public sealed class ParameterReference
 {
-    public string Name { get; set; }
+    public string Name { get; init; }
 
-    public TypeReference ParameterType { get; set; }
+    public TypeReference ParameterType { get; init; }
 
     public override string ToString()
     {
