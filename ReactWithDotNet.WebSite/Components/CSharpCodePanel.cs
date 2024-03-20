@@ -40,6 +40,7 @@ class CSharpCodePanel : PureComponent
                     fontSize            = 11,
                     minimap             = new { enabled = false },
                     lineNumbers         = "off",
+                    unicodeHighlight    = new { showExcludeOptions = false },
                     readOnly = true
                 }
             }

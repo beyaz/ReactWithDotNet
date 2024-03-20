@@ -53,7 +53,8 @@ color: #4A4A49;
                 fontFamily          = "consolas, 'IBM Plex Mono Medium', 'Courier New', monospace",
                 fontSize            = 11,
                 minimap             = new { enabled = false },
-                lineNumbers         = "off"
+                lineNumbers         = "off",
+                unicodeHighlight    = new { showExcludeOptions = false }
             }
         };
 
@@ -69,7 +70,8 @@ color: #4A4A49;
                 fontFamily          = "consolas, 'IBM Plex Mono Medium', 'Courier New', monospace",
                 fontSize            = 11,
                 minimap             = new { enabled = false },
-                lineNumbers         = "off"
+                lineNumbers         = "off",
+                unicodeHighlight    = new { showExcludeOptions = false }
             }
         };
 

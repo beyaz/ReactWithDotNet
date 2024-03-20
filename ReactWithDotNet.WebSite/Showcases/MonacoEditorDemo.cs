@@ -50,7 +50,8 @@ class MonacoEditorDemo : Component<MonacoEditorDemoState>
                 {
                     renderLineHighlight ="none",
                     fontFamily          ="'IBM Plex Mono Medium', 'Courier New', monospace",
-                    minimap = new { enabled = false }
+                    minimap             = new { enabled            = false },
+                    unicodeHighlight    = new { showExcludeOptions = false }
                 }
             },
             new FlexRow
