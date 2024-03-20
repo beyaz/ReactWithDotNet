@@ -58,6 +58,8 @@ public sealed class MethodReference
     public string Name { get; init; }
 
     public IReadOnlyList<ParameterReference> Parameters { get; init; }
+    
+    public string UUID { get; init; }
 
     public bool Equals(MethodReference other)
     {
@@ -150,21 +152,27 @@ static class AssemblyModelHelper
 
     public static MethodReference AsReference(this MethodInfo methodInfo)
     {
-        return new MethodReference
+        var declaringType = methodInfo.DeclaringType.AsReference();
+
+        var fullNameWithoutReturnType = string.Join(string.Empty, new List<string>
+        {
+            methodInfo.Name,
+            "(",
+            string.Join(", ", methodInfo.GetParameters().Select(parameterInfo => parameterInfo.ParameterType.Name + " " + parameterInfo.Name)),
+            ")"
+        });
+        
+        var uuid = GetHashString(declaringType + "::" + fullNameWithoutReturnType);
+        
+        return new()
         {
             Name     = methodInfo.Name,
             IsStatic = methodInfo.IsStatic,
-            FullNameWithoutReturnType = string.Join(string.Empty, new List<string>
-            {
-                methodInfo.Name,
-                "(",
-                string.Join(", ", methodInfo.GetParameters().Select(parameterInfo => parameterInfo.ParameterType.Name + " " + parameterInfo.Name)),
-                ")"
-            }),
+            FullNameWithoutReturnType = fullNameWithoutReturnType,
             MetadataToken = methodInfo.MetadataToken,
-
-            DeclaringType = methodInfo.DeclaringType.AsReference(),
-            Parameters    = methodInfo.GetParameters().Select(AsReference).ToList()
+            DeclaringType = declaringType,
+            Parameters    = methodInfo.GetParameters().Select(AsReference).ToList(),
+            UUID = uuid
         };
     }
 
