@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace ReactWithDotNet.UIDesigner;
 
@@ -96,6 +98,29 @@ public sealed class ParameterReference
 
 static class AssemblyModelHelper
 {
+    public static string GetHashString(this string text)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            return string.Empty;
+        }
+
+        // Uses SHA256 to create the hash
+        using (var sha = SHA256.Create())
+        {
+            // Convert the string to a byte array first, to be processed
+            var textBytes = Encoding.UTF8.GetBytes(text);
+            var hashBytes = sha.ComputeHash(textBytes);
+
+            // Convert back to a string, removing the '-' that BitConverter adds
+            var hash = BitConverter
+                .ToString(hashBytes)
+                .Replace("-", string.Empty);
+
+            return hash;
+        }
+    }
+    
     public static AssemblyReference AsReference(this Assembly assembly)
     {
         return new AssemblyReference { Name = assembly.GetName().Name };
