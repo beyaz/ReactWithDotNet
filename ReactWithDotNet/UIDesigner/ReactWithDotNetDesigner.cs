@@ -142,7 +142,8 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                     fontFamily          = "'IBM Plex Mono Medium', 'Courier New', monospace",
                     fontSize            = 11,
                     minimap             = new { enabled = false },
-                    lineNumbers         = "off"
+                    lineNumbers         = "off",
+                    unicodeHighlight    = new { showExcludeOptions = false }
                 }
             };
         }
