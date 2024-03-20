@@ -66,13 +66,13 @@ static class ReactWithDotNetIntegration
     {
         endpoints.MapGet("/$", httpContext =>
         {
-            ReactWithDotNetDesigner.IsAttached = true;
+            DesignMode = true;
 
             return WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(ReactWithDotNetDesigner));
         });
         endpoints.MapGet("/" + nameof(ReactWithDotNetDesignerComponentPreview), httpContext =>
         {
-            ReactWithDotNetDesigner.IsAttached = true;
+            DesignMode = true;
 
             return WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(ReactWithDotNetDesignerComponentPreview));
         });

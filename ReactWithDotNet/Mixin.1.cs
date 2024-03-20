@@ -7,6 +7,11 @@ namespace ReactWithDotNet;
 public static partial class Mixin
 {
     /// <summary>
+    ///   Indicates component is in design mode.
+    /// </summary>
+    public static bool DesignMode { get; set; }
+    
+    /// <summary>
     ///     style.backgroundColor = 'transparent'
     /// </summary>
     public static StyleModifier BackgroundColorTransparent =>

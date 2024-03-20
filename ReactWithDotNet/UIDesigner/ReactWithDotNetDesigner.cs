@@ -50,8 +50,6 @@ class HotReloadListener : Component
 
 public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 {
-    public static bool IsAttached { get; set; }
-
     public int UpdatingProgress { get; set; }
 
     protected override Task constructor()
