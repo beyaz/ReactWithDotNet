@@ -116,7 +116,7 @@ class MethodSelectionView : Component
 
         if (node.IsMethod)
         {
-            return node.MethodReference.MetadataToken.ToString() == treeNodeKey;
+            return node.MethodReference.UUID == treeNodeKey;
         }
 
         return false;
@@ -132,7 +132,7 @@ class MethodSelectionView : Component
 
                 new div { Text(node.label), MarginLeft(5), FontSize13 },
 
-                Id(node.MethodReference.MetadataToken),
+                Id(node.MethodReference.UUID),
 
                 arrangeBackground
             };

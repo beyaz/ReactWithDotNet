@@ -53,8 +53,6 @@ public sealed class MethodReference
 
     public bool IsStatic { get; init; }
 
-    public int MetadataToken { get; init; }
-
     public string Name { get; init; }
 
     public IReadOnlyList<ParameterReference> Parameters { get; init; }
@@ -161,15 +159,14 @@ static class AssemblyModelHelper
             string.Join(", ", methodInfo.GetParameters().Select(parameterInfo => parameterInfo.ParameterType.Name + " " + parameterInfo.Name)),
             ")"
         });
-        
-        var uuid = GetHashString(declaringType + "::" + fullNameWithoutReturnType);
+
+        var uuid = declaringType + "::" + fullNameWithoutReturnType;
         
         return new()
         {
             Name     = methodInfo.Name,
             IsStatic = methodInfo.IsStatic,
             FullNameWithoutReturnType = fullNameWithoutReturnType,
-            MetadataToken = methodInfo.MetadataToken,
             DeclaringType = declaringType,
             Parameters    = methodInfo.GetParameters().Select(AsReference).ToList(),
             UUID = uuid

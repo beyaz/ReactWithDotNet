@@ -22,7 +22,7 @@ static class MetadataHelper
         {
             if (returnMethodInfo == null)
             {
-                if (ConvertToMetadataNode(methodInfo).MethodReference.MetadataToken == node.MethodReference.MetadataToken)
+                if (ConvertToMetadataNode(methodInfo).MethodReference.UUID == node.MethodReference.UUID)
                 {
                     returnMethodInfo = methodInfo;
                 }
