@@ -50,6 +50,8 @@ class HotReloadListener : Component
 
 public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 {
+    delegate Task JsonTextChanged(string componentName, string jsonText);
+
     public int UpdatingProgress { get; set; }
 
     protected override Task constructor()
@@ -59,104 +61,12 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         state.SelectedAssemblyFilePath = Assembly.GetEntryAssembly()?.Location;
 
         Client.ListenEvent("ComponentPreviewRefreshed", OnComponentPreviewRefreshed);
-        
+
         Client.ListenEventThenOnlyUpdateState<JsonTextChanged>(OnJsonTextChanged);
 
         return Task.CompletedTask;
     }
 
-    Task OnJsonTextChanged(string componentname, string jsontext)
-    {
-        if (componentname == nameof(state.JsonTextForDotNetInstanceProperties))
-        {
-            state.JsonTextForDotNetInstanceProperties = jsontext;
-        }
-        else
-        {
-            state.JsonTextForDotNetMethodParameters = jsontext;
-        }
-        
-        SaveState();
-        
-        Client.RefreshComponentPreview();
-        
-        return Task.CompletedTask;
-    }
-    
-    delegate Task JsonTextChanged(string componentName, string jsonText);
-    
-    class JsonTextEditor : Component<JsonTextEditor.JsonTextEditorState>
-    {
-        public required string Name { get; init; }
-        public required string JsonText { get; init; }
-        public required string SelectedTreeNodeKey { get; init; }
-
-        internal class JsonTextEditorState
-        {
-            public string JsonText { get; set; }
-            public string SelectedTreeNodeKey { get; set; }
-        }
-
-        protected override Task constructor()
-        {
-            state = new()
-            {
-                JsonText            = JsonText,
-                SelectedTreeNodeKey = SelectedTreeNodeKey
-            };
-            
-            return Task.CompletedTask;
-        }
-
-        protected internal override Task OverrideStateFromPropsBeforeRender()
-        {
-            if (state.SelectedTreeNodeKey != SelectedTreeNodeKey)
-            {
-                state.SelectedTreeNodeKey = SelectedTreeNodeKey;
-                state.JsonText = JsonText;
-            }
-            
-            return Task.CompletedTask;
-        }
-
-        Task OnKeypressFinished()
-        {
-            Client.DispatchEvent<JsonTextChanged>(Name,state.JsonText);
-
-            return Task.CompletedTask;
-        }
-        
-        protected override Element render()
-        {
-            return new Editor
-            {
-                defaultLanguage          = "json",
-                valueBind                = () => state.JsonText,
-                valueBindDebounceTimeout = 800,
-                valueBindDebounceHandler = OnKeypressFinished,
-                options =
-                {
-                    renderLineHighlight = "none",
-                    fontFamily          = "'IBM Plex Mono Medium', 'Courier New', monospace",
-                    fontSize            = 11,
-                    minimap             = new { enabled = false },
-                    lineNumbers         = "off",
-                    unicodeHighlight    = new { showExcludeOptions = false }
-                }
-            };
-        }
-    }
-
-    string ScreenHeight()
-    {
-        var h = state.ScreenHeight;
-        if (h <= 0 || h>= 100)
-        {
-            return "100%";
-        }
-
-        return h + "%";
-    }
     protected override Element render()
     {
         Element createJsonEditor()
@@ -170,7 +80,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                     SelectedTreeNodeKey = state.SelectedTreeNodeKey
                 };
             }
-            
+
             return new JsonTextEditor
             {
                 JsonText            = state.JsonTextForDotNetMethodParameters,
@@ -187,7 +97,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         var propertyPanel = new FlexColumn(Height("100%"), Width("100%"), FontSize15)
         {
             //new link { href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap", rel = "stylesheet" },
-            
+
             new link { href = "https://fonts.cdnfonts.com/css/ibm-plex-mono-3", rel = "stylesheet" },
 
             new FlexColumn(MarginLeftRight(3))
@@ -231,132 +141,128 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
             new FlexRow(WidthMaximized, PaddingLeftRight(3))
             {
-                  new fieldset(WidthMaximized)
-            {
-                Border("1px solid #d9d9d9"),
-                BorderRadius(4),
-                
-
-                new legend(MarginLeft(8), DisplayFlexRowCentered)
+                new fieldset(WidthMaximized)
                 {
-                    new FlexRow(AlignItemsCenter, Gap(5), PaddingLeftRight(1))
+                    Border("1px solid #d9d9d9"),
+                    BorderRadius(4),
+
+                    new legend(MarginLeft(8), DisplayFlexRowCentered)
                     {
-                        createLabel($"Media Size: W: {state.ScreenWidth}px"),
-                        new FlexRowCentered(BorderRadius(100),Padding(3),Background(Blue200), Hover(Background(Blue300)))
+                        new FlexRow(AlignItemsCenter, Gap(5), PaddingLeftRight(1))
                         {
-                            OnClick(OnMediaSizeMinusClicked),
-                            new svg(ViewBox(0, 0, 16, 16), svg.Size(16), Color(Blue800) )
+                            createLabel($"Media Size: W: {state.ScreenWidth}px"),
+                            new FlexRowCentered(BorderRadius(100), Padding(3), Background(Blue200), Hover(Background(Blue300)))
                             {
-                                new path { fill = "currentColor", d = "M12 8.667H4A.669.669 0 0 1 3.333 8c0-.367.3-.667.667-.667h8c.367 0 .667.3.667.667 0 .367-.3.667-.667.667Z" }
+                                OnClick(OnMediaSizeMinusClicked),
+                                new svg(ViewBox(0, 0, 16, 16), svg.Size(16), Color(Blue800))
+                                {
+                                    new path { fill = "currentColor", d = "M12 8.667H4A.669.669 0 0 1 3.333 8c0-.367.3-.667.667-.667h8c.367 0 .667.3.667.667 0 .367-.3.667-.667.667Z" }
+                                }
+                            },
+                            new FlexRowCentered(BorderRadius(100), Padding(3), Background(Blue200), Hover(Background(Blue300)))
+                            {
+                                OnClick(OnMediaSizePlusClicked),
+                                new svg(ViewBox(0, 0, 16, 16), svg.Size(16), Color(Blue800))
+                                {
+                                    new path { fill = "currentColor", d = "M12 8.667H8.667V12c0 .367-.3.667-.667.667A.669.669 0 0 1 7.333 12V8.667H4A.669.669 0 0 1 3.333 8c0-.367.3-.667.667-.667h3.333V4c0-.366.3-.667.667-.667.367 0 .667.3.667.667v3.333H12c.367 0 .667.3.667.667 0 .367-.3.667-.667.667Z" }
+                                }
                             }
                         },
-                        new FlexRowCentered(BorderRadius(100),Padding(3),Background(Blue200), Hover(Background(Blue300)))
+
+                        SpaceX(10),
+
+                        new FlexRow(AlignItemsCenter, PaddingLeftRight(1))
                         {
-                            OnClick(OnMediaSizePlusClicked),
-                            new svg(ViewBox(0, 0, 16, 16), svg.Size(16), Color(Blue800) )
-                            {
-                                new path { fill = "currentColor", d = "M12 8.667H8.667V12c0 .367-.3.667-.667.667A.669.669 0 0 1 7.333 12V8.667H4A.669.669 0 0 1 3.333 8c0-.367.3-.667.667-.667h3.333V4c0-.366.3-.667.667-.667.367 0 .667.3.667.667v3.333H12c.367 0 .667.3.667.667 0 .367-.3.667-.667.667Z" }
+                            createLabel($"H: {state.ScreenHeight}%")
+                        }
+                    },
+
+                    new FlexRow(WidthMaximized, ClassName("reactwithdotnet_designer_slider"))
+                    {
+                        new style
+                        {
+                            """
+                            .reactwithdotnet_designer_slider input[type="range"] {
+                              -webkit-appearance:none !important;
+                              width:200px;
+                              height:1px;
+                              background:#7cc8e5;
+                              border:none;
+                              outline:none;
                             }
-                        }
-                    },
-                    
-                    SpaceX(10),
-                    
-                    new FlexRow(AlignItemsCenter, PaddingLeftRight(1))
-                    {
-                        createLabel($"H: {state.ScreenHeight}%")
-                    },
-                },
-                
-                new FlexRow(WidthMaximized, ClassName("reactwithdotnet_designer_slider"))
-                {
-                    new style
-                    {
-                        """
-                        .reactwithdotnet_designer_slider input[type="range"] {
-                          -webkit-appearance:none !important;
-                          width:200px;
-                          height:1px;
-                          background:#7cc8e5;
-                          border:none;
-                          outline:none;
-                        }
-                        .reactwithdotnet_designer_slider input[type="range"]::-webkit-slider-thumb {
-                          -webkit-appearance:none !important;
-                          width:20px;
-                          height:20px;
-                          background:#f5f5f5;
-                          border:2px solid #7cc8e5;
-                          border-radius:50%;
-                          cursor:pointer;
-                        }
-                        """
-                    },
-                    
-                    new FlexColumn(WidthMaximized)
-                    {
-                        new FlexRowCentered(PaddingLeftRight(5), PaddingTop(8), PaddingBottom(10))
+                            .reactwithdotnet_designer_slider input[type="range"]::-webkit-slider-thumb {
+                              -webkit-appearance:none !important;
+                              width:20px;
+                              height:20px;
+                              background:#f5f5f5;
+                              border:2px solid #7cc8e5;
+                              border-radius:50%;
+                              cursor:pointer;
+                            }
+                            """
+                        },
+
+                        new FlexColumn(WidthMaximized)
+                        {
+                            new FlexRowCentered(PaddingLeftRight(5), PaddingTop(8), PaddingBottom(10))
+                            {
+                                new input
+                                {
+                                    step                     = 10,
+                                    type                     = "range",
+                                    min                      = 300,
+                                    max                      = 1600,
+                                    valueBind                = () => state.ScreenWidth,
+                                    valueBindDebounceTimeout = 500,
+                                    valueBindDebounceHandler = OnMediaSizeChanged,
+                                    style                    = { Height(10), WidthMaximized, BorderRadius(38) }
+                                }
+                            },
+
+                            new FlexRow(JustifyContentSpaceAround, AlignItemsCenter)
+                            {
+                                new[] { "M", "SM", "MD", "LG", "XL", "XXL" }.Select(x => new FlexRowCentered
+                                {
+                                    x,
+                                    FontSize16,
+                                    FontWeight300,
+                                    CursorDefault,
+                                    PaddingTopBottom(3),
+                                    FlexGrow(1),
+
+                                    Data("value", x),
+                                    OnClick(OnCommonSizeClicked),
+                                    Hover(Color("#2196f3")),
+
+                                    (x == "M" && state.ScreenWidth == 320) ||
+                                    (x == "SM" && state.ScreenWidth == 640) ||
+                                    (x == "MD" && state.ScreenWidth == 768) ||
+                                    (x == "LG" && state.ScreenWidth == 1024) ||
+                                    (x == "XL" && state.ScreenWidth == 1280) ||
+                                    (x == "XXL" && state.ScreenWidth == 1536)
+                                        ? FontWeight500 + Color("#2196f3")
+                                        : null
+                                })
+                            }
+                        },
+
+                        new FlexRow(Width(30))
                         {
                             new input
                             {
                                 step                     = 10,
                                 type                     = "range",
-                                min                      = 300,
-                                max                      = 1600,
-                                valueBind                = () => state.ScreenWidth,
+                                min                      = 10,
+                                max                      = 100,
+                                valueBind                = () => state.ScreenHeight,
                                 valueBindDebounceTimeout = 500,
                                 valueBindDebounceHandler = OnMediaSizeChanged,
-                                style                    = { Height(10), WidthMaximized, BorderRadius(38) }
+                                style                    = { Height(7), MarginTop(20), Width(70), BorderRadius(38), Transform("translateY(20px)"), Rotate("90deg") }
                             }
-                        },
-
-                        new FlexRow(JustifyContentSpaceAround, AlignItemsCenter)
-                        {
-                            new[] { "M", "SM", "MD", "LG", "XL", "XXL" }.Select(x => new FlexRowCentered
-                            {
-                                x,
-                                FontSize16,
-                                FontWeight300,
-                                CursorDefault,
-                                PaddingTopBottom(3),
-                                FlexGrow(1),
-
-                                Data("value", x),
-                                OnClick(OnCommonSizeClicked),
-                                Hover(Color("#2196f3")),
-
-                                (x == "M" && state.ScreenWidth == 320) ||
-                                (x == "SM" && state.ScreenWidth == 640) ||
-                                (x == "MD" && state.ScreenWidth == 768) ||
-                                (x == "LG" && state.ScreenWidth == 1024) ||
-                                (x == "XL" && state.ScreenWidth == 1280) ||
-                                (x == "XXL" && state.ScreenWidth == 1536)
-                                    ? FontWeight500 + Color("#2196f3")
-                                    : null
-                            })
-                        }
-                    },
-                    
-                    new FlexRow(Width(30))
-                    {
-                        new input
-                        {
-                            step                     = 10,
-                            type                     = "range",
-                            min                      = 10,
-                            max                      = 100,
-                            valueBind                = () => state.ScreenHeight,
-                            valueBindDebounceTimeout = 500,
-                            valueBindDebounceHandler = OnMediaSizeChanged,
-                            style                    = { Height(7), MarginTop(20), Width(70), BorderRadius(38), Transform("translateY(20px)"), Rotate("90deg") }
                         }
                     }
-                   
                 }
-                
-            }
             },
-          
 
             new FlexColumn(FlexGrow(1))
             {
@@ -557,7 +463,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             },
 
             Width(state.ScreenWidth <= 100 ? state.ScreenWidth + "%" : state.ScreenWidth + "px"),
-            Height(ScreenHeight()),
+            Height(state.ScreenHeight*percent),
             BoxShadow(0, 4, 12, 0, rgba(0, 0, 0, 0.1))
         };
 
@@ -753,7 +659,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                         continue;
                     }
 
-                    if (propertyType.Namespace?.StartsWith("System.Linq.Expressions",StringComparison.OrdinalIgnoreCase) is true)
+                    if (propertyType.Namespace?.StartsWith("System.Linq.Expressions", StringComparison.OrdinalIgnoreCase) is true)
                     {
                         continue;
                     }
@@ -862,7 +768,23 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         return Task.CompletedTask;
     }
 
-    
+    Task OnJsonTextChanged(string componentname, string jsontext)
+    {
+        if (componentname == nameof(state.JsonTextForDotNetInstanceProperties))
+        {
+            state.JsonTextForDotNetInstanceProperties = jsontext;
+        }
+        else
+        {
+            state.JsonTextForDotNetMethodParameters = jsontext;
+        }
+
+        SaveState();
+
+        Client.RefreshComponentPreview();
+
+        return Task.CompletedTask;
+    }
 
     Task OnMediaSizeChanged()
     {
@@ -870,12 +792,14 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
         return Task.CompletedTask;
     }
+
     Task OnMediaSizeMinusClicked(MouseEvent e)
     {
         state.ScreenWidth -= 10;
 
         return OnMediaSizeChanged();
     }
+
     Task OnMediaSizePlusClicked(MouseEvent e)
     {
         state.ScreenWidth += 10;
@@ -916,6 +840,68 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         }
 
         return Task.CompletedTask;
+    }
+
+    class JsonTextEditor : Component<JsonTextEditor.JsonTextEditorState>
+    {
+        public required string JsonText { get; init; }
+        public required string Name { get; init; }
+        public required string SelectedTreeNodeKey { get; init; }
+
+        protected internal override Task OverrideStateFromPropsBeforeRender()
+        {
+            if (state.SelectedTreeNodeKey != SelectedTreeNodeKey)
+            {
+                state.SelectedTreeNodeKey = SelectedTreeNodeKey;
+                state.JsonText            = JsonText;
+            }
+
+            return Task.CompletedTask;
+        }
+
+        protected override Task constructor()
+        {
+            state = new()
+            {
+                JsonText            = JsonText,
+                SelectedTreeNodeKey = SelectedTreeNodeKey
+            };
+
+            return Task.CompletedTask;
+        }
+
+        protected override Element render()
+        {
+            return new Editor
+            {
+                defaultLanguage          = "json",
+                valueBind                = () => state.JsonText,
+                valueBindDebounceTimeout = 800,
+                valueBindDebounceHandler = OnKeypressFinished,
+                options =
+                {
+                    renderLineHighlight = "none",
+                    fontFamily          = "'IBM Plex Mono Medium', 'Courier New', monospace",
+                    fontSize            = 11,
+                    minimap             = new { enabled = false },
+                    lineNumbers         = "off",
+                    unicodeHighlight    = new { showExcludeOptions = false }
+                }
+            };
+        }
+
+        Task OnKeypressFinished()
+        {
+            Client.DispatchEvent<JsonTextChanged>(Name, state.JsonText);
+
+            return Task.CompletedTask;
+        }
+
+        internal class JsonTextEditorState
+        {
+            public string JsonText { get; set; }
+            public string SelectedTreeNodeKey { get; set; }
+        }
     }
 
     // Taken from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader
