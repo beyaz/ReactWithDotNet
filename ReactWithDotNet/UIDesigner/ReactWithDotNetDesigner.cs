@@ -146,6 +146,17 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             };
         }
     }
+
+    string ScreenHeight()
+    {
+        var h = state.ScreenHeight;
+        if (h <= 0 || h>= 100)
+        {
+            return "100%";
+        }
+
+        return h + "%";
+    }
     protected override Element render()
     {
         Element createJsonEditor()
@@ -218,17 +229,19 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
             SpaceY(10),
 
-            new fieldset
+            new FlexRow(WidthMaximized, PaddingLeftRight(3))
+            {
+                  new fieldset(WidthMaximized)
             {
                 Border("1px solid #d9d9d9"),
                 BorderRadius(4),
-                MarginLeftRight(3),
+                
 
-                new legend(MarginLeft(8), DisplayFlexColumnCentered)
+                new legend(MarginLeft(8), DisplayFlexRowCentered)
                 {
                     new FlexRow(AlignItemsCenter, Gap(5), PaddingLeftRight(1))
                     {
-                        createLabel($"Media Size: {state.ScreenWidth}px"),
+                        createLabel($"Media Size: W: {state.ScreenWidth}px"),
                         new FlexRowCentered(BorderRadius(100),Padding(3),Background(Blue200), Hover(Background(Blue300)))
                         {
                             OnClick(OnMediaSizeMinusClicked),
@@ -245,10 +258,17 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                                 new path { fill = "currentColor", d = "M12 8.667H8.667V12c0 .367-.3.667-.667.667A.669.669 0 0 1 7.333 12V8.667H4A.669.669 0 0 1 3.333 8c0-.367.3-.667.667-.667h3.333V4c0-.366.3-.667.667-.667.367 0 .667.3.667.667v3.333H12c.367 0 .667.3.667.667 0 .367-.3.667-.667.667Z" }
                             }
                         }
-                    }
+                    },
+                    
+                    SpaceX(10),
+                    
+                    new FlexRow(AlignItemsCenter, PaddingLeftRight(1))
+                    {
+                        createLabel($"H: {state.ScreenHeight}%")
+                    },
                 },
                 
-                new FlexColumn(ClassName("reactwithdotnet_designer_slider"))
+                new FlexRow(WidthMaximized, ClassName("reactwithdotnet_designer_slider"))
                 {
                     new style
                     {
@@ -273,7 +293,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                         """
                     },
                     
-                    new FlexColumn
+                    new FlexColumn(WidthMaximized)
                     {
                         new FlexRowCentered(PaddingLeftRight(5), PaddingTop(8), PaddingBottom(10))
                         {
@@ -315,11 +335,28 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                                     : null
                             })
                         }
+                    },
+                    
+                    new FlexRow(Width(30))
+                    {
+                        new input
+                        {
+                            step                     = 10,
+                            type                     = "range",
+                            min                      = 10,
+                            max                      = 100,
+                            valueBind                = () => state.ScreenHeight,
+                            valueBindDebounceTimeout = 500,
+                            valueBindDebounceHandler = OnMediaSizeChanged,
+                            style                    = { Height(7), MarginTop(20), Width(70), BorderRadius(38), Transform("translateY(20px)"), Rotate("90deg") }
+                        }
                     }
                    
                 }
                 
+            }
             },
+          
 
             new FlexColumn(FlexGrow(1))
             {
@@ -520,8 +557,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             },
 
             Width(state.ScreenWidth <= 100 ? state.ScreenWidth + "%" : state.ScreenWidth + "px"),
-
-            HeightMaximized,
+            Height(ScreenHeight()),
             BoxShadow(0, 4, 12, 0, rgba(0, 0, 0, 0.1))
         };
 

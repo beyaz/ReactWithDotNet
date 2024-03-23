@@ -24,5 +24,7 @@ public class ReactWithDotNetDesignerModel
     public TypeReference SelectedType { get; set; }
     
     public bool PropertyPanelIsClosed { get; set; }
+    
+    public int ScreenHeight { get; set; }
 }
 
