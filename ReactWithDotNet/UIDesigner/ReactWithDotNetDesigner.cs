@@ -507,7 +507,8 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                     When(UpdatingProgress is > 0 and <= 100, DisplayNone)
                 },
 
-                When(state.PropertyPanelIsClosed == false,()=> propertyPanel),
+                state.PropertyPanelIsClosed ? null : propertyPanel,
+                
                 When(state.PropertyPanelIsClosed, Width(15))
             },
             new div(DisplayFlex, JustifyContentCenter, FlexGrow(1), Padding(7), MarginLeft(40))
