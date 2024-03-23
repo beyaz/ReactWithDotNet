@@ -22,7 +22,7 @@ class TutorialItemView : PureComponent
 
         return new article
         {
-            When(Model.Title is not null, new h2{Model.Title}),
+            When(Model.Title is not null, ()=>new h2{Model.Title}),
             
             new div{Model.Description},
             

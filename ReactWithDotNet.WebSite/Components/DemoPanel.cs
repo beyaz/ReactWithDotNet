@@ -74,7 +74,7 @@ class DemoPanel : Component
             {
                 creatElement,
 
-                When(!HideSourceCodeVisibilityButton, new FlexRow(PositionAbsolute, Right(1), Bottom(1) )
+                When(!HideSourceCodeVisibilityButton, ()=>new FlexRow(PositionAbsolute, Right(1), Bottom(1) )
                 {
                     ShowHideButton
                 })

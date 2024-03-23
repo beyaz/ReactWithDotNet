@@ -269,7 +269,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 // h e a d e r
                 new FlexRow(Color("#6c757d"), CursorPointer, TextAlignCenter)
                 {
-                    When(canShowInstanceEditor(), new div(Text("Instance json"))
+                    When(canShowInstanceEditor(), ()=>new div(Text("Instance json"))
                     {
                         OnClick(_ => Task.FromResult(state.IsInstanceEditorActive = true)),
                         When(state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"), FontWeight600),
@@ -278,7 +278,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                         FontSize13
                     }),
 
-                    When(canShowParametersEditor(), new div(Text("Parameters json"))
+                    When(canShowParametersEditor(), ()=>new div(Text("Parameters json"))
                     {
                         OnClick(_ => Task.FromResult(state.IsInstanceEditorActive = false)),
                         When(!state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"), FontWeight600),
@@ -507,7 +507,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                     When(UpdatingProgress is > 0 and <= 100, DisplayNone)
                 },
 
-                When(state.PropertyPanelIsClosed == false, propertyPanel),
+                When(state.PropertyPanelIsClosed == false,()=> propertyPanel),
                 When(state.PropertyPanelIsClosed, Width(15))
             },
             new div(DisplayFlex, JustifyContentCenter, FlexGrow(1), Padding(7), MarginLeft(40))
