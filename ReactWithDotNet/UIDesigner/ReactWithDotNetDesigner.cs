@@ -272,46 +272,51 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                         }
                         """
                     },
-                    new FlexRowCentered(PaddingLeftRight(5), PaddingTop(8), PaddingBottom(10))
+                    
+                    new FlexColumn
                     {
-                        new input
+                        new FlexRowCentered(PaddingLeftRight(5), PaddingTop(8), PaddingBottom(10))
                         {
-                            step                     = 10,
-                            type                     = "range",
-                            min                      = 300,
-                            max                      = 1600,
-                            valueBind                = () => state.ScreenWidth,
-                            valueBindDebounceTimeout = 500,
-                            valueBindDebounceHandler = OnMediaSizeChanged,
-                            style                    = { Height(10), WidthMaximized, BorderRadius(38) }
+                            new input
+                            {
+                                step                     = 10,
+                                type                     = "range",
+                                min                      = 300,
+                                max                      = 1600,
+                                valueBind                = () => state.ScreenWidth,
+                                valueBindDebounceTimeout = 500,
+                                valueBindDebounceHandler = OnMediaSizeChanged,
+                                style                    = { Height(10), WidthMaximized, BorderRadius(38) }
+                            }
+                        },
+
+                        new FlexRow(JustifyContentSpaceAround, AlignItemsCenter)
+                        {
+                            new[] { "M", "SM", "MD", "LG", "XL", "XXL" }.Select(x => new FlexRowCentered
+                            {
+                                x,
+                                FontSize16,
+                                FontWeight300,
+                                CursorDefault,
+                                PaddingTopBottom(3),
+                                FlexGrow(1),
+
+                                Data("value", x),
+                                OnClick(OnCommonSizeClicked),
+                                Hover(Color("#2196f3")),
+
+                                (x == "M" && state.ScreenWidth == 320) ||
+                                (x == "SM" && state.ScreenWidth == 640) ||
+                                (x == "MD" && state.ScreenWidth == 768) ||
+                                (x == "LG" && state.ScreenWidth == 1024) ||
+                                (x == "XL" && state.ScreenWidth == 1280) ||
+                                (x == "XXL" && state.ScreenWidth == 1536)
+                                    ? FontWeight500 + Color("#2196f3")
+                                    : null
+                            })
                         }
-                    },
-
-                    new FlexRow(JustifyContentSpaceAround, AlignItemsCenter)
-                    {
-                        new[] { "M", "SM", "MD", "LG", "XL", "XXL" }.Select(x => new FlexRowCentered
-                        {
-                            x,
-                            FontSize16,
-                            FontWeight300,
-                            CursorDefault,
-                            PaddingTopBottom(3),
-                            FlexGrow(1),
-
-                            Data("value", x),
-                            OnClick(OnCommonSizeClicked),
-                            Hover(Color("#2196f3")),
-
-                            (x == "M" && state.ScreenWidth == 320) ||
-                            (x == "SM" && state.ScreenWidth == 640) ||
-                            (x == "MD" && state.ScreenWidth == 768) ||
-                            (x == "LG" && state.ScreenWidth == 1024) ||
-                            (x == "XL" && state.ScreenWidth == 1280) ||
-                            (x == "XXL" && state.ScreenWidth == 1536)
-                                ? FontWeight500 + Color("#2196f3")
-                                : null
-                        })
                     }
+                   
                 }
                 
             },
