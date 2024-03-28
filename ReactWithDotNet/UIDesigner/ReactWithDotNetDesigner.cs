@@ -363,8 +363,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
             BackgroundSize("10px 10px"),
 
-            createHorizontalRuler() + PositionAbsolute,
-            new div(PositionAbsolute, Top(18), WidthMaximized, Height("calc(100% - 20px)"))
+            new div(PositionAbsolute, WidthMaximized, HeightMaximized)
             {
                 new div(PositionRelative)
                 {
@@ -378,7 +377,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 }
             },
 
-            Width(state.ScreenWidth + "px"),
+            Width(state.ScreenWidth),
             Height(state.ScreenHeight*percent),
             BoxShadow(0, 4, 12, 0, rgba(0, 0, 0, 0.1))
         };
@@ -427,8 +426,10 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 
                 When(state.PropertyPanelIsClosed, Width(15))
             },
-            new div(DisplayFlex, JustifyContentCenter, FlexGrow(1), Padding(7), MarginLeft(40))
+            new FlexColumn(AlignItemsCenter, FlexGrow(1), Padding(7), MarginLeft(40))
             {
+                
+                createHorizontalRuler() + Width(state.ScreenWidth) + MarginTop(5),
                 outputPanel
             }
         };
