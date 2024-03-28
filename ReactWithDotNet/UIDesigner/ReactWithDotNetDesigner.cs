@@ -378,7 +378,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 }
             },
 
-            Width(state.ScreenWidth <= 100 ? state.ScreenWidth + "%" : state.ScreenWidth + "px"),
+            Width(state.ScreenWidth + "px"),
             Height(state.ScreenHeight*percent),
             BoxShadow(0, 4, 12, 0, rgba(0, 0, 0, 0.1))
         };
