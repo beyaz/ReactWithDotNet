@@ -360,30 +360,31 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
         Element createHorizontalRuler()
         {
-            var step = 50;
+            const int step = 50;
             var max = state.ScreenWidth / step + 1;
 
-            double calculateMarginForCenterizeLabel(int stepNumber)
+            return new FlexRow(PositionRelative, WidthMaximized, Height(20))
             {
-                var label = stepNumber * step;
-
-                if (label < 10)
+                Enumerable.Range(0, max).Select(number => new div(PositionAbsolute)
                 {
-                    return -2;
-                }
+                    Bottom(3), Left(number * step),
+                    new FlexColumn(FontSize8, LineHeight6, FontWeight500, Gap(4))
+                    {
+                        new div(MarginLeft(calculateMarginForCenterizeLabel(number)))
+                        {
+                            (number * step).ToString()
+                        },
+                        new div(BorderRadius(3))
+                        {
+                            Width(0.5),
+                            Height(7),
 
-                if (label < 100)
-                {
-                    return -4.5;
-                }
-
-                if (label < 1000)
-                {
-                    return -7;
-                }
-
-                return -9;
-            }
+                            Background("green")
+                        }
+                    }
+                }),
+                createTenPoints()
+            };
 
             IReadOnlyList<Element> createTenPoints()
             {
@@ -418,28 +419,27 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 return returnList;
             }
 
-            return new FlexRow(PositionRelative, WidthMaximized, Height(20))
+            double calculateMarginForCenterizeLabel(int stepNumber)
             {
-                Enumerable.Range(0, max).Select(number => new div(PositionAbsolute)
-                {
-                    Bottom(3), Left(number * step),
-                    new FlexColumn(FontSize8, LineHeight6, FontWeight500, Gap(4))
-                    {
-                        new div(MarginLeft(calculateMarginForCenterizeLabel(number)))
-                        {
-                            (number * step).ToString()
-                        },
-                        new div(BorderRadius(3))
-                        {
-                            Width(0.5),
-                            Height(7),
+                var label = stepNumber * step;
 
-                            Background("green")
-                        }
-                    }
-                }),
-                createTenPoints()
-            };
+                if (label < 10)
+                {
+                    return -2;
+                }
+
+                if (label < 100)
+                {
+                    return -4.5;
+                }
+
+                if (label < 1000)
+                {
+                    return -7;
+                }
+
+                return -9;
+            }
         }
 
         var outputPanel = new div(PositionRelative)
