@@ -428,7 +428,6 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             },
             new FlexColumn(AlignItemsCenter, FlexGrow(1), Padding(7), MarginLeft(40))
             {
-                
                 createHorizontalRuler() + Width(state.ScreenWidth) + MarginTop(5),
                 outputPanel
             }
