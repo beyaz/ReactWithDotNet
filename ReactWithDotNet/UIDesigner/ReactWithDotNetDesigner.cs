@@ -295,9 +295,9 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
         Element createVerticleRuler()
         {
-            var maxHeight = 600;
+            const int maxHeight = 5000;
 
-            var step = 50;
+            const int step = 50;
             var max = maxHeight / step + 1;
 
             IReadOnlyList<Element> createTenPoints()
@@ -333,14 +333,14 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 return returnList;
             }
 
-            return new div(WidthHeightMaximized, PositionRelative)
+            return new div(WidthHeightMaximized, Width(30), MarginLeft(-30), OverflowHidden, PositionRelative)
             {
                 Enumerable.Range(0, max).Select(number => new div(PositionAbsolute)
                 {
                     Right(3), Top(number * step),
                     new FlexRow(FontSize8, LineHeight6, FontWeight500, Gap(4))
                     {
-                        new div(MarginTop(-3))
+                        new div(MarginTop(number == 0 ? 0 : -3))
                         {
                             (number * step).ToString()
                         },
@@ -358,24 +358,14 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             };
         }
 
-        var outputPanel = new div(PositionRelative)
+        var outputPanel = new FlexRow(JustifyContentFlexStart ,PositionRelative)
         {
             BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
             BackgroundSize("10px 10px"),
-
-            new div(PositionAbsolute, WidthMaximized, HeightMaximized)
-            {
-                new div(PositionRelative)
-                {
-                    WidthHeightMaximized,
-                    createElement(),
-
-                    new div(PositionAbsolute, Top(0), Left(0))
-                    {
-                        createVerticleRuler
-                    }
-                }
-            },
+            
+            createVerticleRuler,
+            createElement(),
+            
 
             Width(state.ScreenWidth),
             Height(state.ScreenHeight*percent),
