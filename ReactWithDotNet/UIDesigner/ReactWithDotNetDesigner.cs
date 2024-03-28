@@ -358,6 +358,81 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             };
         }
 
+        var outputPanel = new div(PositionRelative)
+        {
+            BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
+            BackgroundSize("10px 10px"),
+
+            createHorizontalRuler() + PositionAbsolute,
+            new div(PositionAbsolute, Top(18), WidthMaximized, Height("calc(100% - 20px)"))
+            {
+                new div(PositionRelative)
+                {
+                    WidthHeightMaximized,
+                    createElement(),
+
+                    new div(PositionAbsolute, Top(0), Left(0))
+                    {
+                        createVerticleRuler
+                    }
+                }
+            },
+
+            Width(state.ScreenWidth <= 100 ? state.ScreenWidth + "%" : state.ScreenWidth + "px"),
+            Height(state.ScreenHeight*percent),
+            BoxShadow(0, 4, 12, 0, rgba(0, 0, 0, 0.1))
+        };
+
+        Element createElement()
+        {
+            return new iframe
+            {
+                id    = "ComponentPreview",
+                src   = "/ReactWithDotNetDesignerComponentPreview",
+                style = { BorderNone, WidthMaximized, HeightMaximized },
+                title = "Component Preview"
+            };
+        }
+
+        return new FlexRow(WidthMaximized, Height100vh, PrimaryBackground, FontFamily("system-ui"))
+        {
+            new HotReloadListener(),
+            new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative)
+            {
+                When(UpdatingProgress is > 0 and <= 100, () => new div(PositionAbsolute, TopRight(5))
+                {
+                    When(state.PropertyPanelIsClosed, PositionStatic),
+
+                    new LoadingIcon() + Size(12, 12)
+                }),
+
+                new div
+                {
+                    state.PropertyPanelIsClosed ? "→" : "←",
+                    OnClick(state.PropertyPanelIsClosed ? OpenPropertyPanel : ClosePropertyPanel),
+                    PositionAbsolute,
+                    TopRight(0),
+                    FontSize14,
+                    FontWeight500,
+                    Color("#c5d7e8"),
+                    CursorPointer,
+                    Hover(FontSize17, Color("#9090f2")),
+                    When(state.PropertyPanelIsClosed, PositionSticky),
+
+                    Size(12, 12),
+                    When(UpdatingProgress is > 0 and <= 100, DisplayNone)
+                },
+
+                state.PropertyPanelIsClosed ? null : propertyPanel,
+                
+                When(state.PropertyPanelIsClosed, Width(15))
+            },
+            new div(DisplayFlex, JustifyContentCenter, FlexGrow(1), Padding(7), MarginLeft(40))
+            {
+                outputPanel
+            }
+        };
+
         Element createHorizontalRuler()
         {
             const int step = 50;
@@ -441,81 +516,6 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 return -9;
             }
         }
-
-        var outputPanel = new div(PositionRelative)
-        {
-            BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
-            BackgroundSize("10px 10px"),
-
-            createHorizontalRuler() + PositionAbsolute,
-            new div(PositionAbsolute, Top(18), WidthMaximized, Height("calc(100% - 20px)"))
-            {
-                new div(PositionRelative)
-                {
-                    WidthHeightMaximized,
-                    createElement(),
-
-                    new div(PositionAbsolute, Top(0), Left(0))
-                    {
-                        createVerticleRuler
-                    }
-                }
-            },
-
-            Width(state.ScreenWidth <= 100 ? state.ScreenWidth + "%" : state.ScreenWidth + "px"),
-            Height(state.ScreenHeight*percent),
-            BoxShadow(0, 4, 12, 0, rgba(0, 0, 0, 0.1))
-        };
-
-        Element createElement()
-        {
-            return new iframe
-            {
-                id    = "ComponentPreview",
-                src   = "/ReactWithDotNetDesignerComponentPreview",
-                style = { BorderNone, WidthMaximized, HeightMaximized },
-                title = "Component Preview"
-            };
-        }
-
-        return new FlexRow(WidthMaximized, Height100vh, PrimaryBackground, FontFamily("system-ui"))
-        {
-            new HotReloadListener(),
-            new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative)
-            {
-                When(UpdatingProgress is > 0 and <= 100, () => new div(PositionAbsolute, TopRight(5))
-                {
-                    When(state.PropertyPanelIsClosed, PositionStatic),
-
-                    new LoadingIcon() + Size(12, 12)
-                }),
-
-                new div
-                {
-                    state.PropertyPanelIsClosed ? "→" : "←",
-                    OnClick(state.PropertyPanelIsClosed ? OpenPropertyPanel : ClosePropertyPanel),
-                    PositionAbsolute,
-                    TopRight(0),
-                    FontSize14,
-                    FontWeight500,
-                    Color("#c5d7e8"),
-                    CursorPointer,
-                    Hover(FontSize17, Color("#9090f2")),
-                    When(state.PropertyPanelIsClosed, PositionSticky),
-
-                    Size(12, 12),
-                    When(UpdatingProgress is > 0 and <= 100, DisplayNone)
-                },
-
-                state.PropertyPanelIsClosed ? null : propertyPanel,
-                
-                When(state.PropertyPanelIsClosed, Width(15))
-            },
-            new div(DisplayFlex, JustifyContentCenter, FlexGrow(1), Padding(7), MarginLeft(40))
-            {
-                outputPanel
-            }
-        };
     }
 
     bool canShowInstanceEditor()
