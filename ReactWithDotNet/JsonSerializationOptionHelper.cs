@@ -53,6 +53,14 @@ partial class Mixin
                 return ReflectionHelper.ConvertNonEmptyOrNullStringValueToPrimitiveType(stringValue, targetType);
             }
 
+            if (jsonElement.ValueKind == JsonValueKind.Number )
+            {
+                if (targetType.IsEnum)
+                {
+                    return Enum.ToObject(targetType, long.Parse(jsonElement.GetRawText()));
+                }
+            }
+
             // BOOL
             if (targetType == typeof(bool) || targetType == typeof(bool?))
             {
