@@ -56,6 +56,19 @@ static class Extensions
 
     public static void RefreshComponentPreview(this Client client)
     {
-        client.RunJavascript("window.frames[0].ReactWithDotNet.DispatchEvent('RefreshComponentPreview', []);");
+        const string jsCode =
+            """
+            var frame = window.frames[0].ReactWithDotNet.DispatchEvent('RefreshComponentPreview', []);
+            if(frame)
+            {
+              var reactWithDotNet = frame.ReactWithDotNet;
+              if(reactWithDotNet)
+              {
+                reactWithDotNet.DispatchEvent('RefreshComponentPreview', []);
+              }
+            }
+            """;
+        
+        client.RunJavascript(jsCode);
     }
 }
