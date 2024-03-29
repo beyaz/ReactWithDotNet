@@ -58,7 +58,7 @@ static class Extensions
     {
         const string jsCode =
             """
-            var frame = window.frames[0].ReactWithDotNet.DispatchEvent('RefreshComponentPreview', []);
+            var frame = window.frames[0];
             if(frame)
             {
               var reactWithDotNet = frame.ReactWithDotNet;
