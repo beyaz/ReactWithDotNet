@@ -70,9 +70,9 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                            
                             
-                            if (invocationResult is Element invocationResultAselement)
+                            if (invocationResult is Element invocationResultAsElement)
                             {
-                                return invocationResultAselement;
+                                return invocationResultAsElement;
                             }
                             
                             
