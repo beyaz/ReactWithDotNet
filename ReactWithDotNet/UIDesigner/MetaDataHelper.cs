@@ -194,7 +194,7 @@ static class MetadataHelper
     
     static bool IsValidForExport(MethodInfo methodInfo)
     {
-        if (methodInfo.Name == "render" || methodInfo.Name == "InvokeRender")
+        if (methodInfo.Name == "render" || methodInfo.Name == "renderAsync" || methodInfo.Name == "InvokeRender")
         {
             return false;
         }
