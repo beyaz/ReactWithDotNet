@@ -578,10 +578,10 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 }
                 
                 
-                // padding: WidthHeightMaximized
+                // padding: SizeFull
                 if (style.width == "100%" && style.height == "100%")
                 {
-                    style.width = MarkAsAlreadyCalculatedModifier("WidthHeightMaximized");
+                    style.width = MarkAsAlreadyCalculatedModifier("SizeFull");
 
                     style.height = null;
                 }

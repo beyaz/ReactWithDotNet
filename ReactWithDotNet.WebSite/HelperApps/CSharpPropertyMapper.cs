@@ -85,7 +85,7 @@ class AnyClass
 
         return new FlexColumn
         {
-            WidthHeightMaximized,
+            SizeFull,
             Padding(10),
 
             PrimeReactCssLibs,
@@ -94,7 +94,7 @@ class AnyClass
                 "C# code property mapper generator",
                 (small)" ( paste any part of c# class text to left panel )"
             },
-            new FlexRow(WidthHeightMaximized, Height(400), BorderForPaper, BorderRadiusForPaper)
+            new FlexRow(SizeFull, Height(400), BorderForPaper, BorderRadiusForPaper)
             {
                 new FreeScrollBar
                 {

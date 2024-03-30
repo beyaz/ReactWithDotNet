@@ -11,7 +11,7 @@ public class PrimeReactTabViewDemo : PureComponent
     
     protected override Element render()
     {
-        return new div(WidthHeightMaximized)
+        return new div(SizeFull)
         {
             PrimeReactCssLibs,
             new TabView

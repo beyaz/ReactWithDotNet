@@ -12,7 +12,7 @@ class CSharpCodePanel : PureComponent
     {
         return new div
         {
-            WidthHeightMaximized,
+            SizeFull,
             
             //FontSize12,
             

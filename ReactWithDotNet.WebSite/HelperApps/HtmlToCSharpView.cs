@@ -135,7 +135,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 .npm__react-simple-code-editor__textarea:focus{  outline: none; }
 
 "},
-            WidthHeightMaximized,
+            SizeFull,
             Padding(10),
             
 
@@ -152,18 +152,18 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             {
                 "MaxAttributeCountPerLine", maxAttributeCountPerLineEditor
             },
-            new FlexRow(WidthHeightMaximized, BorderForPaper, BorderRadiusForPaper)
+            new FlexRow(SizeFull, BorderForPaper, BorderRadiusForPaper)
             {
-                new FlexRow(WidthHeightMaximized)
+                new FlexRow(SizeFull)
                 {
                     
-                    new FlexColumn(WidthHeightMaximized, Gap(20))
+                    new FlexColumn(SizeFull, Gap(20))
                     {
-                        new FreeScrollBar(WidthHeightMaximized, Border(Solid(1,"#d1d9d1")), BorderRadius(5))
+                        new FreeScrollBar(SizeFull, Border(Solid(1,"#d1d9d1")), BorderRadius(5))
                         {
                             htmlEditor
                         },
-                        new FreeScrollBar(WidthHeightMaximized, Border(Solid(1,"#d1d9d1")), BorderRadius(5))
+                        new FreeScrollBar(SizeFull, Border(Solid(1,"#d1d9d1")), BorderRadius(5))
                         {
                             csharpEditor
                         }
@@ -171,13 +171,13 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                     
                     ,
                     
-                    new FreeScrollBar(WidthHeightMaximized)
+                    new FreeScrollBar(SizeFull)
                     {
                         // paper
                         BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
                         BackgroundSize("10px 10px"),
                             
-                        new FlexRowCentered(WidthHeightMaximized, Padding(15))
+                        new FlexRowCentered(SizeFull, Padding(15))
                         {
                             CreatePreview
                         }

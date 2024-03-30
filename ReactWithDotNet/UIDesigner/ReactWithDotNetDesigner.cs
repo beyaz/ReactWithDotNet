@@ -333,7 +333,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 return returnList;
             }
 
-            return new div(WidthHeightMaximized, Width(30), MarginLeft(-30), OverflowHidden, PositionRelative)
+            return new div(SizeFull, Width(30), MarginLeft(-30), OverflowHidden, PositionRelative)
             {
                 Enumerable.Range(0, max).Select(number => new div(PositionAbsolute)
                 {
@@ -927,7 +927,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                     """
                 },
 
-                new div { className = "loader-designer-react-with-dot-net", style = { WidthHeightMaximized } }
+                new div { className = "loader-designer-react-with-dot-net", style = { SizeFull } }
             };
         }
     }

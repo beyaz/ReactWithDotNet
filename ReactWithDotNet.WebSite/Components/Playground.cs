@@ -40,11 +40,11 @@ class Playground : Component<PlaygroundState>
 
     protected override Element render()
     {
-        return new FlexColumn(WidthHeightMaximized, BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), BorderRadius(3), CursorDefault)
+        return new FlexColumn(WidthHeight("100%"), BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), BorderRadius(3), CursorDefault)
         {
             Part_AppBar,
 
-            new FlexRow(WidthHeightMaximized, JustifyContentSpaceBetween)
+            new FlexRow(SizeFull, JustifyContentSpaceBetween)
             {
                 new FlexRowCentered(Width("50%"), BorderRight(Solid(1, rgb(235, 236, 240))))
                 {
@@ -133,7 +133,7 @@ class Playground : Component<PlaygroundState>
     {
         if (state.ResetMode)
         {
-            return new FlexRowCentered(WidthHeightMaximized)
+            return new FlexRowCentered(SizeFull)
             {
                 new LoadingIcon { Color = Theme.Blue700 } + Size(20, 20)
             };

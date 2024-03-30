@@ -10,7 +10,7 @@ public class RSuiteAutoCompleteDemo : Component
     
     protected override Element render()
     {
-        return new div(WidthHeightMaximized)
+        return new div(SizeFull)
         {
             new AutoComplete
             {

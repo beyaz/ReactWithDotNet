@@ -4,7 +4,7 @@ public class EventBusDemo : Component
 {
     protected override Element render()
     {
-        return new FlexRow(WidthHeightMaximized, CursorDefault, Gap(10))
+        return new FlexRow(SizeFull, CursorDefault, Gap(10))
         {
             new ComponentA(), new ComponentB()
         };
@@ -109,7 +109,7 @@ public class EventBusDemo2 : PureComponent
 {
     protected override Element render()
     {
-        return new div(WidthHeightMaximized, CursorDefault)
+        return new div(SizeFull, CursorDefault)
         {
             new Container()
         };

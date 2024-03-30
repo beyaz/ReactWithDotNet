@@ -286,12 +286,7 @@ public static partial class Mixin
 
     public static StyleModifier WidthAuto => new(style => style.width = "auto");
 
-    /// <summary>
-    ///     width: 100%
-    ///     <br />
-    ///     height: 100%
-    /// </summary>
-    public static StyleModifier WidthHeightMaximized => WidthHeight("100%");
+    
 
     /// <summary>
     ///     width: 100%

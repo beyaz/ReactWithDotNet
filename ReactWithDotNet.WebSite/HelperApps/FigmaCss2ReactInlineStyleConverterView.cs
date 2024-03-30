@@ -78,7 +78,7 @@ color: #4A4A49;
         
         return new FlexColumn
         {
-            WidthHeightMaximized,
+            SizeFull,
             Padding(10),
 
             new div(FontSize23, Padding(10), TextAlignCenter)
@@ -86,7 +86,7 @@ color: #4A4A49;
                 "Figma css to React inline style",
                 (small)" ( paste any figma css text to left panel )"
             },
-            new FlexRow(WidthHeightMaximized, FlexGrow(1), BorderForPaper, BorderRadiusForPaper)
+            new FlexRow(SizeFull, FlexGrow(1), BorderForPaper, BorderRadiusForPaper)
             {
                 new FreeScrollBar
                 {
