@@ -288,10 +288,7 @@ public static partial class Mixin
 
     
 
-    /// <summary>
-    ///     width: 100%
-    /// </summary>
-    public static StyleModifier WidthMaximized => Width("100%"); // todo: remove and update with WidthMax
+    
     
     /// <summary>
     ///     width: 100%
