@@ -47,7 +47,7 @@ class AnyClass
             },
             style =
             {
-                HeightMaximized,
+                HeightFull,
                 MinHeight(200),
                 BorderRadius(3),
                 Border("1px solid #d9d9d9"),
@@ -67,7 +67,7 @@ class AnyClass
             },
             style =
             {
-                HeightMaximized,
+                HeightFull,
                 MinHeight(200),
                 BorderRadius(3),
                 Border("1px solid #d9d9d9"),

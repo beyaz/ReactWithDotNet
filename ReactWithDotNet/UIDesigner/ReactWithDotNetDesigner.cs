@@ -378,7 +378,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             {
                 id    = "ComponentPreview",
                 src   = "/ReactWithDotNetDesignerComponentPreview",
-                style = { BorderNone, WidthFull, HeightMaximized },
+                style = { BorderNone, WidthFull, HeightFull },
                 title = "Component Preview"
             };
         }

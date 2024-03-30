@@ -187,7 +187,7 @@ partial class Mixin
     /// <summary>
     ///     height: 100%
     /// </summary>
-    public static StyleModifier h_full = HeightMaximized;
+    public static StyleModifier h_full = HeightFull;
     
     /// <summary>
     ///     width: 100%
@@ -211,10 +211,6 @@ partial class Mixin
     /// </summary>
     public static StyleModifier HeightFull => Height("100%");
     
-    /// <summary>
-    ///     height: 100%
-    /// </summary>
-    public static StyleModifier HeightMaximized => Height("100%"); // todo: remove and update heightMax
     
     /// <summary>
     ///     width: 100%

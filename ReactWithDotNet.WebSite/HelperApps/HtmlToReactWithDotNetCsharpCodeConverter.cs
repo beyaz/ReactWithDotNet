@@ -1012,7 +1012,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         if (name.Equals("Height", StringComparison.OrdinalIgnoreCase) && value == "100%")
         {
-            return success("HeightMaximized");
+            return success("HeightFull");
         }
         if (name.Equals("boxShadow", StringComparison.OrdinalIgnoreCase))
         {

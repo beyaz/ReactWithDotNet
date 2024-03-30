@@ -54,7 +54,7 @@ class DemoPanel : Component
             return new fieldset(Border("1px solid #dee2e6"), WidthFull)
             {
                 new legend{new img{Src(Asset("csharp.svg")), Width(25), Height(20)}},
-                new FlexColumn(AlignItemsFlexStart,WidthFull, HeightMaximized)
+                new FlexColumn(AlignItemsFlexStart,WidthFull, HeightFull)
                 {
                     new CSharpCodePanel{ Code = CSharpCode}
                 }

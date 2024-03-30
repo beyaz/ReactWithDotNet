@@ -22,7 +22,7 @@ class PageHelperApps : Component
                 }
             },
 
-            creatElement() + HeightMaximized + WidthFull
+            creatElement() + HeightFull + WidthFull
         };
 
         Element creatElement()
