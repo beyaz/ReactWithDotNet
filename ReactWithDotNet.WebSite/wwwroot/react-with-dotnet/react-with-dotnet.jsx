@@ -2389,7 +2389,7 @@ RegisterCoreFunction('ListenWindowResizeEvent', function (resizeTimeout)
 
         timeout = setTimeout(function ()
         {
-            ReactWithDotNet.DispatchEvent('ReactWithDotNet::Core::OnWindowResize', []);
+            DispatchEvent('ReactWithDotNet::Core::OnWindowResize', [], 0);
         }, resizeTimeout);
     });
 });
@@ -2519,17 +2519,23 @@ RegisterCoreFunction("GotoMethod", function (timeout, remoteMethodName, remoteMe
     }, timeout);
 });
 
-RegisterCoreFunction("DispatchEvent", function(eventName, eventArguments)
+function DispatchEvent(eventName, eventArguments, timeout)
 {
-    EventBus.Dispatch(eventName, eventArguments);    
-
-    EventDispatchingFinishCallbackFunctionsQueue.push(function ()
+    setTimeout(() =>
     {
-        EventBus.Dispatch("$<<finished>>$" + eventName + "$<<finished>>$", eventArguments);
+        EventBus.Dispatch(eventName, eventArguments || []);
 
-        OnReactStateReady();
-    });    
-});
+        EventDispatchingFinishCallbackFunctionsQueue.push(function ()
+        {
+            EventBus.Dispatch("$<<finished>>$" + eventName + "$<<finished>>$", eventArguments || []);
+
+            OnReactStateReady();
+        });
+
+    }, timeout)
+   
+}
+RegisterCoreFunction("DispatchEvent", DispatchEvent);
 
 /**
  * @param {string} senderPropertyFullName
@@ -2928,7 +2934,7 @@ var ReactWithDotNet =
     RequestHandlerUrl: '/HandleReactWithDotNetRequest',
     OnDocumentReady: OnDocumentReady,
     StartAction: StartAction,
-    DispatchEvent: EventBus.Dispatch,
+    DispatchEvent: DispatchEvent,
     RenderComponentIn: RenderComponentIn,
     BeforeSendRequest: x=>x,
     RegisterExternalJsObject: RegisterExternalJsObject,

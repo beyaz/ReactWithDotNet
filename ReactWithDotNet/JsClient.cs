@@ -14,9 +14,34 @@ partial class Mixin
         client.DispatchEvent(typeof(TDelegate).Name, eventArguments);
     }
 
-    public static void DispatchEvent(this Client client, string eventName, object[] eventArguments = null)
+    public static void DispatchEvent(this Client client, string eventName)
     {
-        client.CallJsFunction(Core + nameof(DispatchEvent), eventName, eventArguments);
+        client.DispatchEvent(eventName, eventArguments:null);
+    }
+    
+    public static void DispatchEvent(this Client client, string eventName, object[] eventArguments)
+    {
+        client.DispatchEvent(eventName, eventArguments, delayTimeoutInMilliseconds:0);
+    }
+    
+    public static void DispatchEvent(this Client client, string eventName, double delayTimeoutInMilliseconds)
+    {
+        client.DispatchEvent(eventName, eventArguments:null, delayTimeoutInMilliseconds);
+    }
+    
+    
+    public static void DispatchEvent(this Client client, string eventName, TimeSpan delayTimeout)
+    {
+        client.DispatchEvent(eventName, eventArguments:null, delayTimeout.TotalMilliseconds);
+    }
+    
+    public static void DispatchEvent(this Client client, string eventName, object[] eventArguments, double delayTimeoutInMilliseconds)
+    {
+        client.CallJsFunction(Core + nameof(DispatchEvent), eventName, eventArguments, delayTimeoutInMilliseconds);
+    }
+    public static void DispatchEvent(this Client client, string eventName, object[] eventArguments, TimeSpan delayTimeout)
+    {
+        client.DispatchEvent(eventName, eventArguments, delayTimeout.TotalMilliseconds);
     }
 
     public static void DispatchEvent(this Client client, Enum eventName, object[] eventArguments = null)
