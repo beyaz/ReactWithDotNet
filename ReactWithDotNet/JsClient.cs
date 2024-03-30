@@ -49,7 +49,7 @@ partial class Mixin
         client.CallJsFunction(Core + nameof(DispatchEvent), eventName, eventArguments);
     }
     
-    public static void DispatchEvent(this Client client, Enum eventName, params object[] eventArguments)
+    public static void DispatchEvent2(this Client client, Enum eventName, object[] eventArguments)
     {
         DispatchEvent(client, eventName.ToString(), eventArguments);
     }
@@ -149,7 +149,7 @@ partial class Mixin
         client.CallJsFunction(Core + nameof(SetCookie), cookieName, cookieValue, expiredays);
     }
 
-    internal static void DispatchDotNetCustomEvent(this Client client, EventSenderInfo eventName, params object[] eventArguments)
+    internal static void DispatchDotNetCustomEvent(this Client client, EventSenderInfo eventName, object[] eventArguments = null)
     {
         if (eventArguments is not null)
         {
