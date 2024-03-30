@@ -161,12 +161,7 @@ partial class Mixin
         style.width  = width_and_height.AsPixel();
         style.height = width_and_height.AsPixel();
     });
-
-    /// <summary>
-    ///     width: 100%
-    /// </summary>
-    public static StyleModifier w_full = WidthFull;
-
+    
 
     /// <summary>
     ///     width: <paramref name="percentOfTotal"/> / <paramref name="total"/> * 100 + '%'
@@ -184,17 +179,6 @@ partial class Mixin
 
     
 
-    /// <summary>
-    ///     height: 100%
-    /// </summary>
-    public static StyleModifier h_full = HeightFull;
-    
-    /// <summary>
-    ///     width: 100%
-    ///     <br />
-    ///     height: 100%
-    /// </summary>
-    public static StyleModifier size_full = WidthHeight("100%");
     
     /// <summary>
     ///     width: 100%
