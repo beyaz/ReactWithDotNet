@@ -92,7 +92,7 @@ color: #4A4A49;
                 {
                     style =
                     {
-                        WidthMaximized
+                        WidthFull
                     },
                     children = { cssEditor }
                 },
@@ -100,7 +100,7 @@ color: #4A4A49;
                 {
                     style =
                     {
-                        WidthMaximized
+                        WidthFull
                     },
                     children = { csharpEditor }
                 }

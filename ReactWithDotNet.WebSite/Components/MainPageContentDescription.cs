@@ -24,7 +24,7 @@ class MainPageContentDescription : PureComponent
             },
             SpaceY(40),
 
-            new FlexRow(JustifyContentFlexStart, WidthMaximized, MediaQueryOnMobileOrTablet(JustifyContentCenter))
+            new FlexRow(JustifyContentFlexStart, WidthFull, MediaQueryOnMobileOrTablet(JustifyContentCenter))
             {
                 new GetStartedButton()
             }

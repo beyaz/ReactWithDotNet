@@ -7,7 +7,7 @@ public class MainWindow : PureComponent
 {
     protected override Element render()
     {
-        return new div(WidthMaximized, HeightMaximized)
+        return new div(WidthFull, HeightMaximized)
         {
             new MainPageHeader(),
 

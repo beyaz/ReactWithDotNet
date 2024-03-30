@@ -20,7 +20,7 @@ class SwiperThumbsGalleryDemo : Component
                 src = $"https://swiperjs.com/demos/images/nature-{i}.jpg",
                 style =
                 {
-                    WidthMaximized,
+                    WidthFull,
                     Height(mainImageHeight)
                 }
             }
@@ -48,7 +48,7 @@ class SwiperThumbsGalleryDemo : Component
            
         });
 
-        return new div(WidthMaximized, HeightAuto)
+        return new div(WidthFull, HeightAuto)
         {
             new Swiper(mainSlides)
             {

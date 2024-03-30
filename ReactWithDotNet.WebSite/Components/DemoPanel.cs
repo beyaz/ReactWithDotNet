@@ -51,10 +51,10 @@ class DemoPanel : Component
 
         Element createSourceCode()
         {
-            return new fieldset(Border("1px solid #dee2e6"), WidthMaximized)
+            return new fieldset(Border("1px solid #dee2e6"), WidthFull)
             {
                 new legend{new img{Src(Asset("csharp.svg")), Width(25), Height(20)}},
-                new FlexColumn(AlignItemsFlexStart,WidthMaximized, HeightMaximized)
+                new FlexColumn(AlignItemsFlexStart,WidthFull, HeightMaximized)
                 {
                     new CSharpCodePanel{ Code = CSharpCode}
                 }
@@ -67,10 +67,10 @@ class DemoPanel : Component
                            MarginTopBottom(1), 
                            FlexWrap,
                            //MediaQueryOnDesktop(MinWidth(500)), 
-                           WidthMaximized,
+                           WidthFull,
                            FontSize10)
         {
-            new FlexRowCentered(BackgroundColor(Theme.grey_100), Padding(40), WidthMaximized, BorderRadius(10), PositionRelative)
+            new FlexRowCentered(BackgroundColor(Theme.grey_100), Padding(40), WidthFull, BorderRadius(10), PositionRelative)
             {
                 creatElement,
 

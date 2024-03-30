@@ -9,7 +9,7 @@ class PageVideos : PureComponent
         {
             new FlexRow(DisplayFlex, JustifyContentCenter)
             {
-                new MainContentContainer(JustifyContentCenter, WidthMaximized, FlexDirectionColumn)
+                new MainContentContainer(JustifyContentCenter, WidthFull, FlexDirectionColumn)
                 {
                     new section(DisplayFlexRow, Padding(100), FlexWrap, JustifyContentCenter, Margin(-20), Gap(20),
                         CursorDefault)

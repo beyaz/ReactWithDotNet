@@ -101,7 +101,7 @@ class AnyClass
                     style =
                     {
                         Height(400),
-                        WidthMaximized
+                        WidthFull
                     },
                     children = { cssEditor }
                 },
@@ -110,7 +110,7 @@ class AnyClass
                     style =
                     {
                         Height(400),
-                        WidthMaximized
+                        WidthFull
                     },
                     children = { csharpEditor }
                 }

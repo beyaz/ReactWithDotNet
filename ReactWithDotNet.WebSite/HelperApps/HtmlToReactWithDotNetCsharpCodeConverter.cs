@@ -1007,7 +1007,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         if (name.Equals("Width", StringComparison.OrdinalIgnoreCase) && value == "100%")
         {
-            return success("WidthMaximized");
+            return success("WidthFull");
         }
 
         if (name.Equals("Height", StringComparison.OrdinalIgnoreCase) && value == "100%")

@@ -385,7 +385,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
    {
        protected override Element render()
        {
-           return new div(WidthMaximized, HeightMaximized)
+           return new div(WidthFull, HeightMaximized)
            {
                new ParentChildEventTest(),
                
@@ -518,7 +518,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
 
            protected override Element render()
            {
-               return new FlexColumn(WidthMaximized, HeightMaximized)
+               return new FlexColumn(WidthFull, HeightMaximized)
                {
                    BindingSample(7),
 

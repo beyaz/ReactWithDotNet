@@ -5,7 +5,7 @@ class PageModifiers : PureComponent
 {
     protected override Element render()
     {
-        return new article(WidthMaximized)
+        return new article(WidthFull)
         { 
             new h2{"Modifiers"},
             
@@ -85,7 +85,7 @@ class PageTechnicalDetail : PureComponent
 {
     protected override Element render()
     {
-        return new article(WidthMaximized)
+        return new article(WidthFull)
         {
             new h2{"Technical Details"},
             new p
@@ -140,7 +140,7 @@ class PageDocuments : PureComponent
 {
     protected override Element render()
     {
-        return new FlexRow(Gap(150), WidthMaximized, JustifyContentSpaceAround)
+        return new FlexRow(Gap(150), WidthFull, JustifyContentSpaceAround)
         {
             "PageDocuments"
         };

@@ -86,7 +86,7 @@ static partial class Extensions
 
     public static Style ContainerStyle => new()
     {
-        WidthMaximized,
+        WidthFull,
         MaxWidth(1200),
         DisplayFlexRow,
         JustifyContentCenter,

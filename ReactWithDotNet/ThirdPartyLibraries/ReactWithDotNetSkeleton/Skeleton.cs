@@ -10,7 +10,7 @@ public class Skeleton : PureComponent
             style =
             {
                 BorderRadius(5),
-                WidthMaximized,
+                WidthFull,
                 HeightMaximized
             },
             children =

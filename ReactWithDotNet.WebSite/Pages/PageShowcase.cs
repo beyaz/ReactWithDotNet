@@ -13,14 +13,14 @@ class PageShowcase : Component
     {
         var boxShadowOfWindow = BoxShadow("0 2px 10px 2px rgb(0 0 0 / 10%)");
         
-        return new FlexColumn(WidthMaximized, boxShadowOfWindow, BorderRadius(5))
+        return new FlexColumn(WidthFull, boxShadowOfWindow, BorderRadius(5))
         {
             new FlexRow{(h4)"Showcases"+ MarginLeft(30)+FontWeight500 + FontSize19, BorderBottom("1px solid rgba(5, 5, 5, 0.1)"), AlignItemsCenter },
-            new FlexRow(WidthMaximized, Padding(10))
+            new FlexRow(WidthFull, Padding(10))
             {
                 LeftMenu,
 
-                new div(Padding(10),WidthMaximized)
+                new div(Padding(10),WidthFull)
                 {
                     new DemoPanel
                     {

@@ -9,7 +9,7 @@ class HeaderMenuBar : PureComponent
 
     protected override Element render()
     {
-        return new FlexRow(WidthMaximized, JustifyContentSpaceBetween, AlignItemsCenter, Height(60))
+        return new FlexRow(WidthFull, JustifyContentSpaceBetween, AlignItemsCenter, Height(60))
         {
             new FlexRow(AlignItemsCenter)
             {

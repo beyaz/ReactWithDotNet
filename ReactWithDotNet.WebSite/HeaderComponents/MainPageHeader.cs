@@ -20,7 +20,7 @@ class Footer : PureComponent
 {
     protected override Element render()
     {
-        return new footer(BorderTop(Solid(1, Theme.grey_100)), Height(50),WidthMaximized)
+        return new footer(BorderTop(Solid(1, Theme.grey_100)), Height(50),WidthFull)
         {
             DisplayFlexRowCentered,
             new HighlightedText

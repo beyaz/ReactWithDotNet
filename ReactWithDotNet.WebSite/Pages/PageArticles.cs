@@ -11,7 +11,7 @@ class PageArticles : PureComponent
         {
             return new FlexRow(DisplayFlex, JustifyContentCenter)
             {
-                new MainContentContainer(JustifyContentCenter, WidthMaximized, FlexDirectionColumn, PaddingTopBottom(20))
+                new MainContentContainer(JustifyContentCenter, WidthFull, FlexDirectionColumn, PaddingTopBottom(20))
                 {
                     new Article { FilePathInContentFolder = "tr\\6.html" }
                 }
@@ -24,7 +24,7 @@ class PageArticles : PureComponent
         {
             new FlexRow(DisplayFlex, JustifyContentCenter)
             {
-                new MainContentContainer(JustifyContentCenter, WidthMaximized, FlexDirectionColumn)
+                new MainContentContainer(JustifyContentCenter, WidthFull, FlexDirectionColumn)
                 {
                     new section(DisplayFlexRow, Padding(100), FlexWrap, JustifyContentCenter, Margin(-20), Gap(20),
                         CursorDefault)

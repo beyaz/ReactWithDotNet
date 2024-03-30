@@ -165,7 +165,7 @@ partial class Mixin
     /// <summary>
     ///     width: 100%
     /// </summary>
-    public static StyleModifier w_full = WidthMaximized;
+    public static StyleModifier w_full = WidthFull;
 
 
     /// <summary>
@@ -216,11 +216,6 @@ partial class Mixin
     /// </summary>
     public static StyleModifier WidthFull => Width("100%");
     
-    /// <summary>
-    ///     width: 100%
-    /// </summary>
-    public static StyleModifier WidthMaximized => Width("100%"); // todo: remove and update with WidthMax
-
 
     /// <summary>
     ///     inset: "0"

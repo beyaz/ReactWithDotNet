@@ -5,7 +5,7 @@ class PageMain: PureComponent
 {
     protected override Element render()
     {
-        return new FlexRowCentered(WidthMaximized)
+        return new FlexRowCentered(WidthFull)
         {
             new FlexColumn(Gap(20), ContainerStyle, FlexDirectionColumn)
             {

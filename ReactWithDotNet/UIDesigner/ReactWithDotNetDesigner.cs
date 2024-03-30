@@ -139,9 +139,9 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
             SpaceY(10),
 
-            new FlexRow(WidthMaximized, PaddingLeftRight(3))
+            new FlexRow(WidthFull, PaddingLeftRight(3))
             {
-                new fieldset(WidthMaximized)
+                new fieldset(WidthFull)
                 {
                     Border("1px solid #d9d9d9"),
                     BorderRadius(4),
@@ -177,7 +177,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                         }
                     },
 
-                    new FlexRow(WidthMaximized, ClassName("reactwithdotnet_designer_slider"))
+                    new FlexRow(WidthFull, ClassName("reactwithdotnet_designer_slider"))
                     {
                         new style
                         {
@@ -202,7 +202,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                             """
                         },
 
-                        new FlexColumn(WidthMaximized)
+                        new FlexColumn(WidthFull)
                         {
                             new FlexRowCentered(PaddingLeftRight(5), PaddingTop(8), PaddingBottom(10))
                             {
@@ -215,7 +215,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                                     valueBind                = () => state.ScreenWidth,
                                     valueBindDebounceTimeout = 500,
                                     valueBindDebounceHandler = OnMediaSizeChanged,
-                                    style                    = { Height(10), WidthMaximized, BorderRadius(38) }
+                                    style                    = { Height(10), WidthFull, BorderRadius(38) }
                                 }
                             },
 
@@ -378,12 +378,12 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             {
                 id    = "ComponentPreview",
                 src   = "/ReactWithDotNetDesignerComponentPreview",
-                style = { BorderNone, WidthMaximized, HeightMaximized },
+                style = { BorderNone, WidthFull, HeightMaximized },
                 title = "Component Preview"
             };
         }
 
-        return new FlexRow(WidthMaximized, Height100vh, PrimaryBackground, FontFamily("system-ui"))
+        return new FlexRow(WidthFull, Height100vh, PrimaryBackground, FontFamily("system-ui"))
         {
             new HotReloadListener(),
             new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative)
@@ -428,7 +428,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             const int step = 50;
             var max = state.ScreenWidth / step + 1;
 
-            return new FlexRow(PositionRelative, WidthMaximized, Height(20))
+            return new FlexRow(PositionRelative, WidthFull, Height(20))
             {
                 Enumerable.Range(0, max).Select(number => new div(PositionAbsolute)
                 {
