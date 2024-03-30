@@ -26,7 +26,7 @@ partial class Mixin
         client.CallJsFunction(Core + nameof(ListenEventThenOnlyUpdateState), handler.GetType().Name, handler.Method.GetNameWithToken());
     }
     
-    public static void DispatchEvent<TDelegate>(this Client client, params object[] eventArguments) where TDelegate: Delegate
+    public static void DispatchEvent2<TDelegate>(this Client client, object[] eventArguments=null) where TDelegate: Delegate
     {
         client.CallJsFunction(Core + nameof(DispatchEvent), typeof(TDelegate).Name, eventArguments);
     }
@@ -49,7 +49,7 @@ partial class Mixin
         client.CallJsFunction(Core + nameof(DispatchEvent), eventName, eventArguments);
     }
     
-    public static void DispatchEvent2(this Client client, Enum eventName, object[] eventArguments)
+    public static void DispatchEvent2(this Client client, Enum eventName, object[] eventArguments=null)
     {
         DispatchEvent(client, eventName.ToString(), eventArguments);
     }

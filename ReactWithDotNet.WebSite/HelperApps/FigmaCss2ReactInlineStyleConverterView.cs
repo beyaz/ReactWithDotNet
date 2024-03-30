@@ -137,7 +137,7 @@ color: #4A4A49;
             {
                 showCopyButton = false;
                 
-                cmp.Client.DispatchEvent<CopyClick>();
+                cmp.Client.DispatchEvent2<CopyClick>();
                
                 cmp.Client.GotoMethod(500,clearState);
         
