@@ -44,14 +44,14 @@ partial class Mixin
         client.CallJsFunction(Core + nameof(RunJavascript), javascriptCodeWillBeExecuteInClient);
     }
 
-    public static void DispatchEvent(this Client client, string eventName, params object[] eventArguments)
+    public static void DispatchEvent2(this Client client, string eventName, object[] eventArguments=null)
     {
         client.CallJsFunction(Core + nameof(DispatchEvent), eventName, eventArguments);
     }
     
     public static void DispatchEvent2(this Client client, Enum eventName, object[] eventArguments=null)
     {
-        DispatchEvent(client, eventName.ToString(), eventArguments);
+        DispatchEvent2(client, eventName.ToString(), eventArguments);
     }
     
 

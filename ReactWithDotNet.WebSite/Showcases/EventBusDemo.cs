@@ -47,7 +47,7 @@ public class EventBusDemo : Component
         {
             Message = message;
             ReceivedMessageCount++;
-            Client.DispatchEvent("MessageForB","5");
+            Client.DispatchEvent2("MessageForB",["5"]);
             return Task.CompletedTask;
         }
     }
@@ -66,7 +66,7 @@ public class EventBusDemo : Component
         [ReactStopPropagation]
         Task OnClickHandler(MouseEvent e)
         {
-            Client.DispatchEvent("MessageForA_0","1");
+            Client.DispatchEvent2("MessageForA_0",["1"]);
             
             return Task.CompletedTask;
         }
@@ -90,7 +90,7 @@ public class EventBusDemo : Component
 
             ReceivedMessageCount++;
             
-            Client.DispatchEvent("MessageForA_0","2");
+            Client.DispatchEvent2("MessageForA_0",["2"]);
                 
             return Task.CompletedTask;
         }
@@ -191,7 +191,7 @@ public class EventBusDemo2 : PureComponent
 
             Task OnClickHandler(MouseEvent obj)
             {
-                Client.DispatchEvent("XYZ", Id);
+                Client.DispatchEvent2("XYZ", [Id]);
         
                 return Task.CompletedTask;
             }
