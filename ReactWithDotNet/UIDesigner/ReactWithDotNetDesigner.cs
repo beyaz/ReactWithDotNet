@@ -883,7 +883,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
         Task OnKeypressFinished()
         {
-            Client.DispatchEvent2<JsonTextChanged>([Name, state.JsonText]);
+            Client.DispatchEvent<JsonTextChanged>([Name, state.JsonText]);
 
             return Task.CompletedTask;
         }
