@@ -160,7 +160,7 @@ public static partial class Mixin
     /// <summary>
     ///     height: 100%
     /// </summary>
-    public static StyleModifier HeightMaximized => Height("100%");
+    public static StyleModifier HeightMaximized => Height("100%"); // todo: remove and update heightMax
 
     /// <summary>
     ///     <para>justifyContent = "center"</para>
@@ -296,7 +296,17 @@ public static partial class Mixin
     /// <summary>
     ///     width: 100%
     /// </summary>
-    public static StyleModifier WidthMaximized => Width("100%");
+    public static StyleModifier WidthMaximized => Width("100%"); // todo: remove and update with WidthMax
+    
+    /// <summary>
+    ///     width: 100%
+    /// </summary>
+    public static StyleModifier WidthMax => Width("100%");
+    
+    /// <summary>
+    ///     height: 100%
+    /// </summary>
+    public static StyleModifier HeightMax => Height("100%");
     
     /// <summary>
     ///     width: fit-content
