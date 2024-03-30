@@ -105,7 +105,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         this.Apply(modifiers);
     }
 
-    public void Add(IEnumerable<Element> elements)
+    public void Add<TElement>(IEnumerable<TElement> elements) where TElement:Element
     {
         if (elements is not null)
         {
