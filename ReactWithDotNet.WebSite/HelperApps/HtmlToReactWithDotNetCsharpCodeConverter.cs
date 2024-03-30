@@ -591,7 +591,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     style.height.EndsWithPixel() &&
                     style.width == style.height)
                 {
-                    style.width = MarkAsAlreadyCalculatedModifier($"WidthHeight({style.width.RemovePixelFromEnd()})");
+                    style.width = MarkAsAlreadyCalculatedModifier($"Size({style.width.RemovePixelFromEnd()})");
 
                     style.height = null;
                 }
