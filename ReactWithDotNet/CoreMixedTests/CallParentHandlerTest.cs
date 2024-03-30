@@ -46,7 +46,7 @@
 
 //        if (state.ClickCount % 3 == 0)
 //        {
-//            DispatchEvent(()=> OnCountMod3, state.ClickCount);
+//            DispatchEvent(OnCountMod3, state.ClickCount);
 //        }
 
 //        if (state.ClickCount % 2 == 0)
@@ -120,7 +120,7 @@
 //        state.ClickCount++;
 //        if (state.ClickCount % 4 == 0)
 //        {
-//            DispatchEvent(() => OnCountMod4, state.ClickCount);
+//            DispatchEvent(OnCountMod4, state.ClickCount);
 //        }
 //    }
 //}

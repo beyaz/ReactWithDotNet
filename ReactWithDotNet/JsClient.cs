@@ -16,29 +16,29 @@ partial class Mixin
 
     public static void DispatchEvent(this Client client, string eventName)
     {
-        client.DispatchEvent(eventName, eventArguments:null);
+        client.DispatchEvent(eventName, null);
     }
-    
+
     public static void DispatchEvent(this Client client, string eventName, object[] eventArguments)
     {
-        client.DispatchEvent(eventName, eventArguments, delayTimeoutInMilliseconds:0);
+        client.DispatchEvent(eventName, eventArguments, 0);
     }
-    
+
     public static void DispatchEvent(this Client client, string eventName, double delayTimeoutInMilliseconds)
     {
-        client.DispatchEvent(eventName, eventArguments:null, delayTimeoutInMilliseconds);
+        client.DispatchEvent(eventName, null, delayTimeoutInMilliseconds);
     }
-    
-    
+
     public static void DispatchEvent(this Client client, string eventName, TimeSpan delayTimeout)
     {
-        client.DispatchEvent(eventName, eventArguments:null, delayTimeout.TotalMilliseconds);
+        client.DispatchEvent(eventName, null, delayTimeout.TotalMilliseconds);
     }
-    
+
     public static void DispatchEvent(this Client client, string eventName, object[] eventArguments, double delayTimeoutInMilliseconds)
     {
-        client.CallJsFunction(Core + nameof(DispatchEvent), eventName, eventArguments, delayTimeoutInMilliseconds);
+        client.CallJsFunction(Core + nameof(DispatchEvent), eventName, eventArguments ?? [], delayTimeoutInMilliseconds);
     }
+
     public static void DispatchEvent(this Client client, string eventName, object[] eventArguments, TimeSpan delayTimeout)
     {
         client.DispatchEvent(eventName, eventArguments, delayTimeout.TotalMilliseconds);
@@ -183,14 +183,13 @@ partial class Mixin
 
     internal static void DispatchDotNetCustomEvent(this Client client, EventSenderInfo eventName, object[] eventArguments = null)
     {
-        if (eventArguments is not null)
+        eventArguments ??= [];
+
+        foreach (var argument in eventArguments)
         {
-            foreach (var argument in eventArguments)
+            if (argument is Element)
             {
-                if (argument is Element)
-                {
-                    throw DeveloperException($"Invalid arguments for DispatchEvent . Element type('{argument.GetType().FullName}') cannot serialize to client.");
-                }
+                throw DeveloperException($"Invalid arguments for DispatchEvent . Element type('{argument.GetType().FullName}') cannot serialize to client.");
             }
         }
 
