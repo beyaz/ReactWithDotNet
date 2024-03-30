@@ -157,10 +157,7 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier HeightAuto => new(style => style.height = "auto");
 
-    /// <summary>
-    ///     height: 100%
-    /// </summary>
-    public static StyleModifier HeightMaximized => Height("100%"); // todo: remove and update heightMax
+  
 
     /// <summary>
     ///     <para>justifyContent = "center"</para>

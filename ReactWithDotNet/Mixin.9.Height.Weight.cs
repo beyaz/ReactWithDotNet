@@ -209,7 +209,12 @@ partial class Mixin
     /// <summary>
     ///     height: 100%
     /// </summary>
-    public static StyleModifier HeightFull => HeightMaximized;
+    public static StyleModifier HeightFull => Height("100%");
+    
+    /// <summary>
+    ///     height: 100%
+    /// </summary>
+    public static StyleModifier HeightMaximized => Height("100%"); // todo: remove and update heightMax
     
     /// <summary>
     ///     width: 100%
