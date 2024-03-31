@@ -377,6 +377,8 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
 
 
 
+
+
      
      
    namespace ReactWithDotNet.WebSite;
@@ -835,7 +837,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
                    {
                        count++;
 
-                       cmp.DispatchEvent(OnValueChange, count);
+                       cmp.DispatchEvent(OnValueChange, [count]);
 
                        return Task.CompletedTask;
                    }
@@ -844,7 +846,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
                    {
                        count++;
 
-                       cmp.DispatchEvent(OnValueChange, count);
+                       cmp.DispatchEvent(OnValueChange, [count]);
 
                        return Task.CompletedTask;
                    }
@@ -872,7 +874,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
                    {
                        count++;
 
-                       cmp.DispatchEvent(OnValueChange, count);
+                       cmp.DispatchEvent(OnValueChange, [count]);
 
                        return Task.CompletedTask;
                    }
@@ -902,7 +904,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
                    {
                        count++;
 
-                       cmp.DispatchEvent(OnValueChange, count);
+                       cmp.DispatchEvent(OnValueChange, [count]);
 
                        return Task.CompletedTask;
                    }
@@ -1001,7 +1003,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
                    {
                        count++;
 
-                       cmp.DispatchEvent(OnValueChangeA, count);
+                       cmp.DispatchEvent(OnValueChangeA, [count]);
 
                        return Task.CompletedTask;
                    }
@@ -1027,7 +1029,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
                    {
                        count++;
 
-                       cmp.DispatchEvent(OnValueChangeB, count-2);
+                       cmp.DispatchEvent(OnValueChangeB, [count-2]);
 
                        return Task.CompletedTask;
                    }
@@ -1051,7 +1053,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
                    {
                        count++;
 
-                       cmp.DispatchEvent(OnValueChangeC, count);
+                       cmp.DispatchEvent(OnValueChangeC, [count]);
 
                        return Task.CompletedTask;
                    }
