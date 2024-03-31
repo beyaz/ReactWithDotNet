@@ -381,15 +381,22 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
 
      
      
+   
+     
+     
    namespace ReactWithDotNet.WebSite;
 
+   
+   
    public class MainWindow : PureComponent
    {
        protected override Element render()
        {
            return new div(WidthFull, HeightFull)
            {
-               new ParentChildEventTest(),
+               new ErrorViewTest(),
+               
+               // new ParentChildEventTest(),
                
                //CountComponentAsync(7),
                //CountComponentAsyncTask(8),
@@ -404,6 +411,47 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
 
                //new TriggerParentTest()
            };
+       }
+       
+       class ErrorViewTest : Component<ErrorViewTest.State>
+       {
+           internal class State
+           {
+               public int Count { get; set; }
+           }
+       
+           protected override Element render()
+           {
+               return new FlexColumn(Size(300), Border(1, solid, "red"))
+               {
+                   new button { $"container: {state.Count}", OnClick(OnClickHandler) },
+                   SpaceY(50),
+                   IsOdd(state.Count)
+               };
+           }
+
+           static Element IsOdd(int Number)
+           {
+               return FC(_ =>
+               {
+                   var isOdd = Number % 2 == 1;
+               
+                   return new FlexColumn
+                   {
+                       new div
+                       {
+                           Number + (isOdd ? "odd" : "even")
+                       }
+                   };
+               });
+           }
+
+           Task OnClickHandler(MouseEvent e)
+           {
+               state.Count++;
+           
+               return Task.CompletedTask;
+           }
        }
 
        static Element BindingSample(int start)
@@ -1064,6 +1112,8 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
    }
    
    
+     
+     
      
      
    
