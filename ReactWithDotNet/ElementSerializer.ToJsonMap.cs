@@ -255,6 +255,8 @@ partial class ElementSerializer
                 map.Add(___Type___, GetReactComponentTypeInfo(reactPureComponent));
                 map.Add(nameof(Element.key), reactPureComponent.key);
 
+                await TransferProps(context,node,map,reactPureComponent.GetType().Calculated(),reactPureComponent);
+                
                 node.ElementAsJsonMap = map;
 
                 node.IsCompleted = true;
@@ -528,6 +530,8 @@ partial class ElementSerializer
                 {
                     map.Add("$LogicalChildrenCount", reactStatefulComponent._children?.Count ?? 0);
                 }
+                
+                await TransferProps(context,node,map,typeInfo,reactStatefulComponent);
 
                 node.ElementAsJsonMap = map;
 
@@ -712,6 +716,26 @@ partial class ElementSerializer
         }
 
         return node.ElementAsJsonMap;
+    }
+    
+    static async Task TransferProps(ElementSerializerContext context, Node node, JsonMap map, TypeInfoCalculated calculatedType, object component)
+    {
+        var reactAttributes = calculatedType.ReactAttributedPropertiesOfType;
+        if (reactAttributes.Count > 0)
+        {
+            var reactAttributesMap = new Dictionary<string, object>();
+                    
+            foreach (var calculatedPropertyInfo in reactAttributes)
+            {
+                var propertyValue = await GetPropertyValue(context, node, calculatedType, component, calculatedPropertyInfo);
+                if (propertyValue.NeedToExport)
+                {
+                    reactAttributesMap.Add(calculatedPropertyInfo.PropertyInfo.Name, propertyValue.Value);
+                }
+            }
+                    
+            map.Add("$props",reactAttributesMap);
+        }
     }
     
     internal static string TransferPropertiesToDotNetComponent(ReactComponentBase instance, Type type, IReadOnlyDictionary<string, object> props)

@@ -1081,6 +1081,11 @@ function ConvertToReactElement(jsonNode, component)
             $jsonNode: jsonNode
         };
 
+        if (jsonNode.$props)
+        {
+            Object.assign(cmpProps, jsonNode.$props);
+        }
+
         return createElement(cmp, cmpProps);
     }
 
@@ -1118,7 +1123,12 @@ function ConvertToReactElement(jsonNode, component)
         else
         {
             cmpProps[SyncId] = GetNextSequence();
-        }        
+        }
+
+        if (jsonNode.$props)
+        {
+            Object.assign(cmpProps, jsonNode.$props);
+        }
 
         return createElement(cmp, cmpProps);
     }
