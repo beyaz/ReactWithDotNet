@@ -28,6 +28,8 @@ public class Program
 
         services.AddControllers().AddJsonOptions(jsonOptions => { jsonOptions.JsonSerializerOptions.ModifyForReactWithDotNet(); });
 
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        
         // C O N F I G U R E     A P P L I C A T I O N
         var app = builder.Build();
 

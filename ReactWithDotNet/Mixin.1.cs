@@ -1,4 +1,7 @@
-﻿using System.Drawing;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Net.Http.Headers;
+using ReactWithDotNet.UIDesigner;
+using System.Drawing;
 using System.Globalization;
 using System.Text.Json;
 
@@ -9,7 +12,15 @@ public static partial class Mixin
     /// <summary>
     ///   Indicates component is in design mode.
     /// </summary>
-    public static bool DesignMode { get; set; }
+    public static bool DesignMode
+    {
+        get
+        {
+            var referer = new HttpContextAccessor().HttpContext?.Request.Headers[HeaderNames.Referer].FirstOrDefault();
+
+            return referer?.EndsWith("/$") == true || referer?.EndsWith($"/{nameof(ReactWithDotNetDesignerComponentPreview)}") == true;
+        }
+    }
     
     /// <summary>
     ///     style.backgroundColor = 'transparent'

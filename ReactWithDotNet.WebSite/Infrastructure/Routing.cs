@@ -64,18 +64,8 @@ static class ReactWithDotNetIntegration
     [Conditional("DEBUG")]
     static void RegisterReactWithDotNetDevelopmentTools(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet("/$", httpContext =>
-        {
-            DesignMode = true;
-
-            return WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(ReactWithDotNetDesigner));
-        });
-        endpoints.MapGet("/" + nameof(ReactWithDotNetDesignerComponentPreview), httpContext =>
-        {
-            DesignMode = true;
-
-            return WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(ReactWithDotNetDesignerComponentPreview));
-        });
+        endpoints.MapGet("/$", httpContext => WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(ReactWithDotNetDesigner)));
+        endpoints.MapGet("/" + nameof(ReactWithDotNetDesignerComponentPreview), httpContext => WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(ReactWithDotNetDesignerComponentPreview)));
     }
 
     static Task WriteHtmlResponse(HttpContext httpContext, Type layoutType, Type mainContentType)
