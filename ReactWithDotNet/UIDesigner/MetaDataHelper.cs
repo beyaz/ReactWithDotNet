@@ -159,12 +159,14 @@ static class MetadataHelper
         {
             if (!string.IsNullOrWhiteSpace(classFilter))
             {
-                if (type.Name.IndexOf(classFilter, StringComparison.OrdinalIgnoreCase) >= 0)
+                var classFilters = classFilter.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim()).ToArray();
+                foreach (var filter in classFilters)
                 {
-                    types.Add(type);
+                    if (type.FullName?.IndexOf(filter, StringComparison.OrdinalIgnoreCase) < 0)
+                    {
+                        return;
+                    }
                 }
-
-                return;
             }
 
             types.Add(type);
