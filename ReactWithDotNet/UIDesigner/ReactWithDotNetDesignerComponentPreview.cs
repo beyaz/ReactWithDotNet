@@ -41,22 +41,32 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                         var methodParameters = methodInfo.GetParameters();
 
+                        var dictionary = new Dictionary<string, object>();
+                        
                         if (state.JsonTextForDotNetMethodParameters.HasValue())
                         {
-                            var dictionary = DeserializeJsonBySystemTextJson<Dictionary<string, object>>(state.JsonTextForDotNetMethodParameters);
-                            foreach (var parameterInfo in methodParameters)
+                            dictionary = DeserializeJsonBySystemTextJson<Dictionary<string, object>>(state.JsonTextForDotNetMethodParameters);
+                        }
+                        
+                        dictionary ??= new();
+                        
+                        foreach (var parameterInfo in methodParameters)
+                        {
+                            var parameterName = parameterInfo.Name;
+                            var parameterType = parameterInfo.ParameterType;
+
+                            object parameterValue;
+                                
+                            if (parameterName is not null && dictionary.TryGetValue(parameterName, out var parameterValueAsJsonObject))
                             {
-                                var parameterName = parameterInfo.Name;
-                                var parameterType = parameterInfo.ParameterType;
-
-                                if (parameterName is not null && dictionary.TryGetValue(parameterName, out var parameterValueAsJsonObject))
-                                {
-                                    invocationParameters.Add(ArrangeValueForTargetType(parameterValueAsJsonObject, parameterType));
-                                    continue;
-                                }
-
-                                return new div { text = $"Missing parameter {parameterName}" };
+                                parameterValue = ArrangeValueForTargetType(parameterValueAsJsonObject, parameterType);
                             }
+                            else
+                            {
+                                parameterValue = parameterType.IsClass ? null : Activator.CreateInstance(parameterType);    
+                            }
+
+                            invocationParameters.Add(parameterValue);
                         }
 
                         if (methodInfo.IsStatic)
