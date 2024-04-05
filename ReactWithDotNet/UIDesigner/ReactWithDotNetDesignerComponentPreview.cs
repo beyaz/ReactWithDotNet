@@ -77,14 +77,11 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                             {
                                 return null;
                             }
-
-                           
                             
                             if (invocationResult is Element invocationResultAsElement)
                             {
                                 return invocationResultAsElement;
                             }
-                            
                             
                             return new div { text = $"Method should return Element or FC but returned {invocationResult.GetType().FullName}" };
                         }
