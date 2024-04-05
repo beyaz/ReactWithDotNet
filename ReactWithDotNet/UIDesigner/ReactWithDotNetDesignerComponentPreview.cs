@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections;
+using System.Reflection;
 using System.Text.Json;
 
 namespace ReactWithDotNet.UIDesigner;
@@ -81,6 +82,14 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                             if (invocationResult is Element invocationResultAsElement)
                             {
                                 return invocationResultAsElement;
+                            }
+
+                            if (invocationResult is IEnumerable enumerable)
+                            {
+                                return new Fragment
+                                {
+                                    enumerable.ToReadOnlyListOf<object, Element>(x => x as Element)
+                                };
                             }
                             
                             return new div { text = $"Method should return Element or FC but returned {invocationResult.GetType().FullName}" };

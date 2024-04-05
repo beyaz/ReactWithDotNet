@@ -226,6 +226,27 @@ static class MetadataHelper
                 type = type.GetGenericArguments()[0];
             }
             
+            if (type.IsGenericType)
+            {
+                var genericTypeDefinition = type.GetGenericTypeDefinition();
+                
+                
+                var genericArguments = type.GetGenericArguments();
+
+                if (genericArguments.Length == 1)
+                {
+                    var genericEnumerableInterface = typeof(IEnumerable<>).MakeGenericType(genericArguments);
+                    
+                    if (genericTypeDefinition == typeof(Task<>) ||
+                        genericTypeDefinition == typeof(IEnumerable<>) ||
+                        type.GetInterfaces().Contains(genericEnumerableInterface))
+                    {
+                        type = genericArguments[0];
+                    }
+                }
+                
+            }
+            
             return type == typeof(Element) || type.IsSubclassOf(typeof(Element));
         }
         
