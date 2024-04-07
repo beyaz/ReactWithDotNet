@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Immutable;
 using System.Reflection;
 
@@ -102,7 +101,8 @@ static class ReflectionHelper
                     }
                 }
 
-                if (propertyInfo.PropertyType.IsValueType)
+                
+                if (propertyInfo.PropertyType.IsValueType && propertyInfo.IsRequired() is false)
                 {
                     return default;
                 }
@@ -148,5 +148,31 @@ static class ReflectionHelper
     public static bool IsStaticClass(this Type type)
     {
         return type.IsClass && type.IsAbstract && type.IsSealed;
+    }
+    
+    public static bool IsInitOnly(this PropertyInfo property)
+    {
+        if (!property.CanWrite)
+        {
+            return false;
+        }
+ 
+        var setMethod = property.SetMethod;
+
+        if (setMethod is null)
+        {
+            return false;
+        }
+ 
+        // Get the modifiers applied to the return parameter.
+        var setMethodReturnParameterModifiers = setMethod.ReturnParameter?.GetRequiredCustomModifiers();
+ 
+        // Init-only properties are marked with the IsExternalInit type.
+        return setMethodReturnParameterModifiers?.Contains(typeof(System.Runtime.CompilerServices.IsExternalInit)) is true;
+    }
+    
+    public static bool IsRequired(this PropertyInfo property)
+    {
+        return property.GetCustomAttribute<System.Runtime.CompilerServices.RequiredMemberAttribute>() is not null;
     }
 }
