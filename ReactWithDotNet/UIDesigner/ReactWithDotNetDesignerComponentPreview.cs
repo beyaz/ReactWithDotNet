@@ -72,19 +72,21 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                         if (methodInfo.IsStatic)
                         {
-                            var invocationResult = methodInfo.Invoke(null, invocationParameters.ToArray());
+                            var invocationResponse = methodInfo.Invoke(null, invocationParameters.ToArray());
 
-                            if (invocationResult is null)
+                            if (invocationResponse is null)
                             {
                                 return null;
                             }
                             
-                            if (invocationResult is Element invocationResultAsElement)
+                            
+                            
+                            if (invocationResponse is Element invocationResultAsElement)
                             {
                                 return invocationResultAsElement;
                             }
 
-                            if (invocationResult is IEnumerable enumerable)
+                            if (invocationResponse is IEnumerable enumerable)
                             {
                                 return new Fragment
                                 {
@@ -92,7 +94,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                                 };
                             }
                             
-                            return new div { text = $"Method should return Element or FC but returned {invocationResult.GetType().FullName}" };
+                            return new div { text = $"Method should return Element or FC but returned {invocationResponse.GetType().FullName}" };
                         }
 
                         // invoke as instance
