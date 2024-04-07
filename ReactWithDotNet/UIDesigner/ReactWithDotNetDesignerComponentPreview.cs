@@ -23,7 +23,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
         return Task.CompletedTask;
     }
 
-    internal static Element CreateElement(ReactWithDotNetDesignerModel state, ReactContext Context)
+    internal static async Task<Element> CreateElement(ReactWithDotNetDesignerModel state, ReactContext Context)
     {
         try
         {
@@ -79,6 +79,14 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                                 return null;
                             }
                             
+                            if (invocationResponse is Task task)
+                            {
+                                await task;
+                                        
+                                invocationResponse = task.GetType()
+                                    .GetProperty("Result", BindingFlags.Instance | BindingFlags.Public)!
+                                    .GetValue(task);
+                            }
                             
                             
                             if (invocationResponse is Element invocationResultAsElement)
@@ -94,7 +102,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                                 };
                             }
                             
-                            return new div { text = $"Method should return Element or FC but returned {invocationResponse.GetType().FullName}" };
+                            return new div { text = $"Method should return Element or FC but returned {invocationResponse?.GetType().FullName}" };
                         }
 
                         // invoke as instance
@@ -326,8 +334,8 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
         return Task.CompletedTask;
     }
 
-    protected override Element render()
+    protected override async Task<Element> renderAsync()
     {
-        return CreateElement(state, Context) + ComponentIndicatorStyle;
+        return (await CreateElement(state, Context)) + ComponentIndicatorStyle;
     }
 }
