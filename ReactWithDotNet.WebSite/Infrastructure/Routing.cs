@@ -15,6 +15,11 @@ public class PageList
     public static readonly (string pattern, Type type) Doc = ("/doc", typeof(PageDocumentation));
     public static readonly (string pattern, Type type) DocDetail = ("/doc/{0}", typeof(PageDocumentation));
     public static readonly (string pattern, Type type) LiveEditor = ("/LiveEditor", typeof(HtmlToCSharpView));
+    
+    public static string DocDetailUrl(string part)
+    {
+        return string.Format(DocDetail.pattern,part);
+    }
 }
 
 static class ReactWithDotNetIntegration

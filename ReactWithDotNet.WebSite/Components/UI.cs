@@ -132,9 +132,9 @@ static class UI
                 Title = "Introduction",
                 Links = new[]
                 {
-                    new { Label = "Getting started", Url  = string.Format(PageList.DocDetail.pattern, "start") },
-                    new { Label = "Server Driven UI", Url = string.Format(PageList.DocDetail.pattern, "1") },
-                    new { Label = "React and .Net", Url   = string.Format(PageList.DocDetail.pattern, "2") }
+                    new { Label = "Getting started", Url  = PageList.DocDetailUrl("start") },
+                    new { Label = "Server Driven UI", Url = PageList.DocDetailUrl("1") },
+                    new { Label = "React and .Net", Url   = PageList.DocDetailUrl("2") }
                 }
             },
             new

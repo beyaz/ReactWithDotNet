@@ -6,6 +6,8 @@ namespace ReactWithDotNet.WebSite.Pages;
 
 class PageDocumentation : PureComponent
 {
+    
+    
     protected override Element render()
     {
         return new div(WidthFull,HeightFull)
