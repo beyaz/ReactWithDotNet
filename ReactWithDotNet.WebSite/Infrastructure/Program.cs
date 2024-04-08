@@ -51,11 +51,7 @@ public class Program
 
         app.UseResponseCompression();
 
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.ConfigureReactWithDotNet();
-            endpoints.MapControllers();
-        });
+        app.ConfigureReactWithDotNet();
 
         app.Run();
     }

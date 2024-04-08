@@ -24,7 +24,7 @@ public class PageList
 
 static class ReactWithDotNetIntegration
 {
-    public static void ConfigureReactWithDotNet(this IEndpointRouteBuilder endpoints)
+    public static void ConfigureReactWithDotNet(this WebApplication app)
     {
         var routing = new[]
         {
@@ -38,12 +38,12 @@ static class ReactWithDotNetIntegration
 
         foreach (var (pattern, cmp) in routing)
         {
-            endpoints.MapGet(pattern, httpContext => WriteHtmlResponse(httpContext, typeof(MainLayout), cmp));
+            app.MapGet(pattern, httpContext => WriteHtmlResponse(httpContext, typeof(MainLayout), cmp));
         }
 
-        RegisterReactWithDotNetDevelopmentTools(endpoints);
+        RegisterReactWithDotNetDevelopmentTools(app);
 
-        endpoints.MapPost("/" + nameof(HandleReactWithDotNetRequest), HandleReactWithDotNetRequest);
+        app.MapPost("/" + nameof(HandleReactWithDotNetRequest), HandleReactWithDotNetRequest);
     }
 
     static Task HandleReactWithDotNetRequest(HttpContext httpContext)
