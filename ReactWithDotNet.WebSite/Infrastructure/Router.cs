@@ -9,7 +9,7 @@ namespace ReactWithDotNet.WebSite;
 
 public sealed record PageRouteInfo(string pattern, Type page);
 
-public static class Router
+static class Page
 {
     public static readonly PageRouteInfo CSharpPropertyMapper = new("/CSharpPropertyMapper", typeof(CSharpPropertyMapperView));
     public static readonly PageRouteInfo Doc = new("/doc", typeof(PageDocumentation));
@@ -17,15 +17,20 @@ public static class Router
     public static readonly PageRouteInfo Home = new("/", typeof(MainWindow));
     public static readonly PageRouteInfo ImportFigmaCss = new("/importFigmaCss", typeof(FigmaCss2ReactInlineStyleConverterView));
     public static readonly PageRouteInfo LiveEditor = new("/LiveEditor", typeof(HtmlToCSharpView));
+}
+
+public static class Router
+{
+    
 
     static readonly Dictionary<string, PageRouteInfo> Map = new[]
     {
-        Home,
-        Doc,
-        DocDetail,
-        LiveEditor,
-        CSharpPropertyMapper,
-        ImportFigmaCss
+        Page.Home,
+        Page.Doc,
+        Page.DocDetail,
+        Page.LiveEditor,
+        Page.CSharpPropertyMapper,
+        Page.ImportFigmaCss
     }.ToDictionary(x => x.pattern, x => x, StringComparer.OrdinalIgnoreCase);
 
     public static void ConfigureReactWithDotNet(this WebApplication app)
@@ -46,9 +51,9 @@ public static class Router
                 return;
             }
 
-            if (path.StartsWith(DocDetail.pattern))
+            if (path.StartsWith(Page.DocDetail.pattern))
             {
-                await WriteHtmlResponse(httpContext, typeof(MainLayout), DocDetail.page);
+                await WriteHtmlResponse(httpContext, typeof(MainLayout), Page.DocDetail.page);
                 return;
             }
 
@@ -72,7 +77,7 @@ public static class Router
 
     public static string DocDetailUrl(string part)
     {
-        return DocDetail.pattern + part;
+        return Page.DocDetail.pattern + part;
     }
 
     static Task HandleReactWithDotNetRequest(HttpContext httpContext)
