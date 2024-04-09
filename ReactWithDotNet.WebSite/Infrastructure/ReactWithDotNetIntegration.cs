@@ -2,37 +2,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
 using ReactWithDotNet.UIDesigner;
-using ReactWithDotNet.WebSite.HelperApps;
-using ReactWithDotNet.WebSite.Pages;
 
 namespace ReactWithDotNet.WebSite;
-
-sealed record PageRouteInfo(string pattern, Type page);
-
-static class Page
-{
-    public static readonly PageRouteInfo CSharpPropertyMapper = new("/CSharpPropertyMapper", typeof(CSharpPropertyMapperView));
-    public static readonly PageRouteInfo Doc = new("/doc", typeof(PageDocumentation));
-    public static readonly PageRouteInfo DocDetail = new("/doc/", typeof(PageDocumentation));
-    public static readonly PageRouteInfo Home = new("/", typeof(MainWindow));
-    public static readonly PageRouteInfo ImportFigmaCss = new("/importFigmaCss", typeof(FigmaCss2ReactInlineStyleConverterView));
-    public static readonly PageRouteInfo LiveEditor = new("/LiveEditor", typeof(HtmlToCSharpView));
-
-    internal static readonly Dictionary<string, PageRouteInfo> Map = new[]
-    {
-        Home,
-        Doc,
-        DocDetail,
-        LiveEditor,
-        CSharpPropertyMapper,
-        ImportFigmaCss
-    }.ToDictionary(x => x.pattern, x => x, StringComparer.OrdinalIgnoreCase);
-
-    public static string DocDetailUrl(string part)
-    {
-        return DocDetail.pattern + part;
-    }
-}
 
 public static class ReactWithDotNetIntegration
 {
@@ -54,7 +25,7 @@ public static class ReactWithDotNetIntegration
                 return;
             }
 
-            if (path.StartsWith(Page.DocDetail.pattern))
+            if (path.StartsWith(Page.DocDetail.Url))
             {
                 await WriteHtmlResponse(httpContext, typeof(MainLayout), Page.DocDetail.page);
                 return;
