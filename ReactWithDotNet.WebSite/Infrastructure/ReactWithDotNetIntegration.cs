@@ -11,9 +11,9 @@ public static class ReactWithDotNetIntegration
     public static void ConfigureReactWithDotNet(this WebApplication app)
     {
         var map = typeof(Page)
-            .GetProperties(BindingFlags.Static | BindingFlags.Public)
-            .Where(p => p.PropertyType == typeof(PageRouteInfo))
-            .Select(p => (PageRouteInfo)p.GetValue(null))
+            .GetFields(BindingFlags.Static | BindingFlags.Public)
+            .Where(f => f.FieldType == typeof(PageRouteInfo))
+            .Select(f => (PageRouteInfo)f.GetValue(null))
             .Where(x => x is not null)
             .ToDictionary(x => x.Url, x => x, StringComparer.OrdinalIgnoreCase);
 
