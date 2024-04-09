@@ -34,6 +34,12 @@ public static class Routing
         {
             var path = httpContext.Request.Path.Value ?? string.Empty;
 
+            if (path == $"/{nameof(HandleReactWithDotNetRequest)}")
+            {
+                await HandleReactWithDotNetRequest(httpContext);
+                return;
+            }
+
             if (Map.TryGetValue(path, out var routeInfo))
             {
                 await WriteHtmlResponse(httpContext, typeof(MainLayout), routeInfo.page);
@@ -43,12 +49,6 @@ public static class Routing
             if (path.StartsWith(DocDetail.pattern))
             {
                 await WriteHtmlResponse(httpContext, typeof(MainLayout), DocDetail.page);
-                return;
-            }
-
-            if (path == $"/{nameof(HandleReactWithDotNetRequest)}")
-            {
-                await HandleReactWithDotNetRequest(httpContext);
                 return;
             }
 
