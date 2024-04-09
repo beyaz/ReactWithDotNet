@@ -7,18 +7,18 @@ using ReactWithDotNet.WebSite.Pages;
 
 namespace ReactWithDotNet.WebSite;
 
-public sealed record RouteInfo(string pattern, Type page);
+public sealed record PageRouteInfo(string pattern, Type page);
 
 public static class Router
 {
-    public static readonly RouteInfo CSharpPropertyMapper = new("/CSharpPropertyMapper", typeof(CSharpPropertyMapperView));
-    public static readonly RouteInfo Doc = new("/doc", typeof(PageDocumentation));
-    public static readonly RouteInfo DocDetail = new("/doc/", typeof(PageDocumentation));
-    public static readonly RouteInfo Home = new("/", typeof(MainWindow));
-    public static readonly RouteInfo ImportFigmaCss = new("/importFigmaCss", typeof(FigmaCss2ReactInlineStyleConverterView));
-    public static readonly RouteInfo LiveEditor = new("/LiveEditor", typeof(HtmlToCSharpView));
+    public static readonly PageRouteInfo CSharpPropertyMapper = new("/CSharpPropertyMapper", typeof(CSharpPropertyMapperView));
+    public static readonly PageRouteInfo Doc = new("/doc", typeof(PageDocumentation));
+    public static readonly PageRouteInfo DocDetail = new("/doc/", typeof(PageDocumentation));
+    public static readonly PageRouteInfo Home = new("/", typeof(MainWindow));
+    public static readonly PageRouteInfo ImportFigmaCss = new("/importFigmaCss", typeof(FigmaCss2ReactInlineStyleConverterView));
+    public static readonly PageRouteInfo LiveEditor = new("/LiveEditor", typeof(HtmlToCSharpView));
 
-    static readonly Dictionary<string, RouteInfo> Map = new[]
+    static readonly Dictionary<string, PageRouteInfo> Map = new[]
     {
         Home,
         Doc,
