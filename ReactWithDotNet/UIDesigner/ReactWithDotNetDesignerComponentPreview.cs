@@ -240,7 +240,12 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                     {
                         return "type not found.@" + state.SelectedType.FullName;
                     }
-
+                    
+                    if (type.IsStaticClass())
+                    {
+                        return new div { "Selected type is static. Please select component inherited class." };
+                    }
+                    
                     var instance = createInstance(type);
 
                     if (instance is ReactComponentBase component)
@@ -268,8 +273,13 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                         return reactPureComponent;
                     }
+                    
+                    if (instance is Element instanceAsElement)
+                    {
+                        return instanceAsElement;
+                    }
 
-                    return instance.ToString();
+                    return new div { "Please select component inherited class." };
                 }
             }
         }
@@ -285,9 +295,9 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
         return "Element not created. Select type or method from left panel";
 
-        Element createInstance(Type type)
+        object createInstance(Type type)
         {
-            var instance = (Element)Activator.CreateInstance(type);
+            var instance = Activator.CreateInstance(type);
             if (instance is ReactComponentBase component)
             {
                 component.key     = "0";
@@ -299,7 +309,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                 reactPureComponent.key     = "0";
                 reactPureComponent.Context = Context;
             }
-
+            
             return instance;
         }
 
