@@ -1,3 +1,4 @@
+using System.Reflection;
 using ReactWithDotNet.WebSite.HelperApps;
 using ReactWithDotNet.WebSite.Pages;
 
@@ -14,15 +15,10 @@ static class Page
     public static readonly PageRouteInfo ImportFigmaCss = new("/importFigmaCss", typeof(FigmaCss2ReactInlineStyleConverterView));
     public static readonly PageRouteInfo LiveEditor = new("/LiveEditor", typeof(HtmlToCSharpView));
 
-    internal static readonly IReadOnlyDictionary<string, PageRouteInfo> Map = new[]
-    {
-        Home,
-        Doc,
-        DocDetail,
-        LiveEditor,
-        CSharpPropertyMapper,
-        ImportFigmaCss
-    }.ToDictionary(x => x.Url, x => x, StringComparer.OrdinalIgnoreCase);
+
+        
+        
+        
 
     public static string DocDetailUrl(string part)
     {
