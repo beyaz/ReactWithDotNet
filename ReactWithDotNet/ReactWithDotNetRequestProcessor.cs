@@ -322,7 +322,7 @@ sealed class CalculateComponentRenderInfoInput
     public string QueryString { get; init; }
 }
 
-public delegate void BeforeSerializeElementToClient(ReactContext reactContext, Element element, Element parent);
+public delegate Task BeforeSerializeElementToClient(ReactContext reactContext, Element element, Element parent);
 
 public delegate Task OnReactContextCreated(HttpContext httpContext, ReactContext reactContext);
 public delegate Task OnReactContextDisposed(HttpContext httpContext, ReactContext reactContext);

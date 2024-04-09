@@ -742,17 +742,15 @@ static partial class ElementSerializer
 
         return style;
     }
-
     
-    
-    static void TryCallBeforeSerializeElementToClient(this ElementSerializerContext context, Element element, Element parent)
+    static Task TryCallBeforeSerializeElementToClient(this ElementSerializerContext context, Element element, Element parent)
     {
         if (element is null || context.BeforeSerializeElementToClient is null)
         {
-            return;
+            return Task.CompletedTask;
         }
 
-        context.BeforeSerializeElementToClient(context.ReactContext, element, parent);
+        return context.BeforeSerializeElementToClient(context.ReactContext, element, parent);
     }
 
     class CacheableMethodInfo
