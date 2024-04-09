@@ -7,7 +7,7 @@ using ReactWithDotNet.WebSite.Pages;
 
 namespace ReactWithDotNet.WebSite;
 
-public sealed record PageRouteInfo(string pattern, Type page);
+sealed record PageRouteInfo(string pattern, Type page);
 
 static class Page
 {
@@ -17,22 +17,25 @@ static class Page
     public static readonly PageRouteInfo Home = new("/", typeof(MainWindow));
     public static readonly PageRouteInfo ImportFigmaCss = new("/importFigmaCss", typeof(FigmaCss2ReactInlineStyleConverterView));
     public static readonly PageRouteInfo LiveEditor = new("/LiveEditor", typeof(HtmlToCSharpView));
-}
 
-public static class Router
-{
-    
-
-    static readonly Dictionary<string, PageRouteInfo> Map = new[]
+    internal static readonly Dictionary<string, PageRouteInfo> Map = new[]
     {
-        Page.Home,
-        Page.Doc,
-        Page.DocDetail,
-        Page.LiveEditor,
-        Page.CSharpPropertyMapper,
-        Page.ImportFigmaCss
+        Home,
+        Doc,
+        DocDetail,
+        LiveEditor,
+        CSharpPropertyMapper,
+        ImportFigmaCss
     }.ToDictionary(x => x.pattern, x => x, StringComparer.OrdinalIgnoreCase);
 
+    public static string DocDetailUrl(string part)
+    {
+        return DocDetail.pattern + part;
+    }
+}
+
+public static class ReactWithDotNetIntegration
+{
     public static void ConfigureReactWithDotNet(this WebApplication app)
     {
         app.Use(async (httpContext, next) =>
@@ -45,7 +48,7 @@ public static class Router
                 return;
             }
 
-            if (Map.TryGetValue(path, out var routeInfo))
+            if (Page.Map.TryGetValue(path, out var routeInfo))
             {
                 await WriteHtmlResponse(httpContext, typeof(MainLayout), routeInfo.page);
                 return;
@@ -73,11 +76,6 @@ public static class Router
 
             await next();
         });
-    }
-
-    public static string DocDetailUrl(string part)
-    {
-        return Page.DocDetail.pattern + part;
     }
 
     static Task HandleReactWithDotNetRequest(HttpContext httpContext)
