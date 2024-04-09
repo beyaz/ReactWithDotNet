@@ -9,7 +9,7 @@ namespace ReactWithDotNet.WebSite;
 
 public sealed record RouteInfo(string pattern, Type page);
 
-public static class Routing
+public static class Router
 {
     public static readonly RouteInfo CSharpPropertyMapper = new("/CSharpPropertyMapper", typeof(CSharpPropertyMapperView));
     public static readonly RouteInfo Doc = new("/doc", typeof(PageDocumentation));
