@@ -709,7 +709,7 @@ partial class ElementSerializer
 
                     if (node.Stopwatch.ElapsedMilliseconds >= 3)
                     {
-                        tracer.Trace($"{dotNetTypeOfReactComponent.FullName} rendered in {node.Stopwatch.ElapsedMilliseconds} milliseconds");
+                        tracer.Trace($"{(node.IsFunctionalComponent is true ? node.FunctionalComponent.Name: dotNetTypeOfReactComponent.FullName)} rendered in {node.Stopwatch.ElapsedMilliseconds} milliseconds");
                     }
                 }
             }
