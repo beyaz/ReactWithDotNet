@@ -222,6 +222,11 @@ partial class Mixin
     {
         GotoMethod(client, 0, func.Method.GetNameWithToken());
     }
+    
+    public static void GotoMethod(this Client client, Func<Task> func, TimeSpan delayTimeout)
+    {
+        GotoMethod(client, delayTimeout.TotalMilliseconds, func.Method.GetNameWithToken());
+    }
 
     public static void GotoMethod<TArgument>(this Client client, int timeoutInMilliseconds, Func<TArgument, Task> func, TArgument argument)
     {
@@ -243,7 +248,7 @@ partial class Mixin
         GotoMethod(client, 3, func.Method.GetNameWithToken(), argument1, argument2);
     }
 
-    static void GotoMethod(Client client, int timeoutInMilliseconds, string methodName, params object[] methodArguments)
+    static void GotoMethod(Client client, double timeoutInMilliseconds, string methodName, params object[] methodArguments)
     {
         client.CallJsFunction(Core + nameof(GotoMethod), timeoutInMilliseconds, methodName, methodArguments);
     }
