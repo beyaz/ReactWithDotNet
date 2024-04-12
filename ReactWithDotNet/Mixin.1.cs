@@ -18,7 +18,7 @@ public static partial class Mixin
         {
             var referer = new HttpContextAccessor().HttpContext?.Request.Headers[HeaderNames.Referer].FirstOrDefault();
 
-            return referer?.EndsWith("/$") == true || referer?.EndsWith($"/{nameof(ReactWithDotNetDesignerComponentPreview)}") == true;
+            return referer?.EndsWith($"/{nameof(ReactWithDotNetDesigner)}") == true || referer?.EndsWith($"/{nameof(ReactWithDotNetDesignerComponentPreview)}") == true;
         }
     }
     
