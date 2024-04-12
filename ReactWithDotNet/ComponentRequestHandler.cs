@@ -325,6 +325,11 @@ static class ComponentRequestHandler
             if (request.OnlyUpdateState)
             {
                 var typeInfo = type.Calculated();
+
+                if (instance is FunctionalComponent functionalComponent)
+                {
+                    functionalComponent.CalculateScopeFromTarget(null);
+                }
                 
                 var newState = typeInfo.StateProperty.GetValueFunc(instance);
 
