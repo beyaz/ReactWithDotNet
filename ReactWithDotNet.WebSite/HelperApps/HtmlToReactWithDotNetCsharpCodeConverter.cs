@@ -82,7 +82,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         if (value.Contains("&nbsp;"))
         {
-            return string.Join(", nbsp, ", value.Split(new[] { "&nbsp;" }, StringSplitOptions.RemoveEmptyEntries).Select(ConvertToCSharpString));
+            return string.Join(", nbsp, ", value.Split(["&nbsp;"], StringSplitOptions.None).Select(ConvertToCSharpString));
         }
 
         value = '"' + value + '"';
@@ -397,7 +397,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 {
                     if (smartMode)
                     {
-                        modifiers.Insert(0, '"' + text + '"');
+                        modifiers.Insert(0, ConvertToCSharpString(text));
                     }
                     else //if (htmlNode.Attributes.Any())
                     {
