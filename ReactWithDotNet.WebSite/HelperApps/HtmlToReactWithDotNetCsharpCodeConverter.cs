@@ -1098,7 +1098,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 return success($"{CamelCase(name)}({value.RemovePixelFromEnd()})");
             }
 
-            if (value.StartsWith("rgb(", StringComparison.OrdinalIgnoreCase))
+            if (value.StartsWith("rgb(", StringComparison.OrdinalIgnoreCase) &&
+                value.EndsWith(")", StringComparison.OrdinalIgnoreCase))
             {
                 return success($"{CamelCase(name)}({value})");
             }
