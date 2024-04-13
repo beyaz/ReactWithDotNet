@@ -148,6 +148,16 @@ partial class Mixin
     {
         ListenEvent(client, "$<<finished>>$" + typeof(TDelegate).Name + "$<<finished>>$", handler.Method.GetNameWithToken());
     }
+    
+    /// <summary>
+    ///     Occurs when event dispatching finished.
+    ///     <br/>
+    ///     After first call then do not listen finished event again
+    /// </summary>
+    public static void OnDispatchEventFinishedOnlyOnce<TDelegate>(this Client client, TDelegate handler) where TDelegate : Delegate
+    {
+        ListenEventOnlyOnce(client, "$<<finished>>$" + typeof(TDelegate).Name + "$<<finished>>$", handler.Method.GetNameWithToken());
+    }
 
     public static void OnOutsideClicked(this Client client, string idOfElement, Func<Task> func)
     {
