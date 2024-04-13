@@ -346,6 +346,11 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
     protected override async Task<Element> renderAsync()
     {
-        return (await CreateElement(state, Context)) + ComponentIndicatorStyle;
+        var element = await CreateElement(state, Context);
+
+        element += ComponentIndicatorStyle;
+        
+        
+        return element;
     }
 }
