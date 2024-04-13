@@ -22,7 +22,7 @@ abstract partial class HtmlElement : Element
         this.Apply(styleModifiers);
     }
 
-    protected HtmlElement(params IModifier[] modifiers)
+    protected HtmlElement(params Modifier[] modifiers)
     {
         this.Apply(modifiers);
     }
@@ -181,7 +181,7 @@ abstract partial class HtmlElement : Element
         return htmlElement;
     }
 
-    public static HtmlElement operator +(HtmlElement htmlElement, IModifier modifier)
+    public static HtmlElement operator +(HtmlElement htmlElement, Modifier modifier)
     {
         ModifyHelper.ProcessModifier(htmlElement, modifier);
 

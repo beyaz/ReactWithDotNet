@@ -20,7 +20,7 @@ public class Swiper : ThirdPartyReactComponent
         }
     }
 
-    public Swiper(IEnumerable<Element> children, params IModifier[] modifiers)
+    public Swiper(IEnumerable<Element> children, params Modifier[] modifiers)
     {
         if (children is not null)
         {

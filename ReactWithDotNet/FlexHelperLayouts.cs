@@ -12,7 +12,7 @@ public sealed class FlexRow : HtmlElement
     ///     <br />
     ///     flexDirection  = "row"
     /// </summary>
-    public FlexRow(params IModifier[] modifiers) : this()
+    public FlexRow(params Modifier[] modifiers) : this()
     {
         this.Apply(modifiers);
     }
@@ -43,7 +43,7 @@ public sealed class InlineFlexRow : HtmlElement
     ///     <br />
     ///     flexDirection  = "row"
     /// </summary>
-    public InlineFlexRow(params IModifier[] modifiers) : this()
+    public InlineFlexRow(params Modifier[] modifiers) : this()
     {
         this.Apply(modifiers);
     }
@@ -74,7 +74,7 @@ public sealed class FlexColumn : HtmlElement
     ///     <br />
     ///     flexDirection  = "column"
     /// </summary>
-    public FlexColumn(params IModifier[] modifiers) : this()
+    public FlexColumn(params Modifier[] modifiers) : this()
     {
         this.Apply(modifiers);
     }
@@ -105,7 +105,7 @@ public sealed class InlineFlexColumn : HtmlElement
     ///     <br />
     ///     flexDirection  = "column"
     /// </summary>
-    public InlineFlexColumn(params IModifier[] modifiers) : this()
+    public InlineFlexColumn(params Modifier[] modifiers) : this()
     {
         this.Apply(modifiers);
     }
@@ -161,7 +161,7 @@ public sealed class FlexRowCentered : HtmlElement
     ///     <br />
     ///     alignItems     = "center"
     /// </summary>
-    public FlexRowCentered(params IModifier[] modifiers) : this()
+    public FlexRowCentered(params Modifier[] modifiers) : this()
     {
         this.Apply(modifiers);
     }
@@ -206,7 +206,7 @@ public sealed class InlineFlexRowCentered : HtmlElement
     ///     <br />
     ///     alignItems     = "center"
     /// </summary>
-    public InlineFlexRowCentered(params IModifier[] modifiers) : this()
+    public InlineFlexRowCentered(params Modifier[] modifiers) : this()
     {
         this.Apply(modifiers);
     }
@@ -251,7 +251,7 @@ public sealed class FlexColumnCentered : HtmlElement
     ///     <br />
     ///     alignItems     = "center"
     /// </summary>
-    public FlexColumnCentered(params IModifier[] modifiers) : this()
+    public FlexColumnCentered(params Modifier[] modifiers) : this()
     {
         this.Apply(modifiers);
     }
@@ -296,7 +296,7 @@ public sealed class InlineFlexColumnCentered : HtmlElement
     ///     <br />
     ///     alignItems     = "center"
     /// </summary>
-    public InlineFlexColumnCentered(params IModifier[] modifiers) : this()
+    public InlineFlexColumnCentered(params Modifier[] modifiers) : this()
     {
         this.Apply(modifiers);
     }

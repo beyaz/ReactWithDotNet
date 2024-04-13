@@ -2,13 +2,13 @@
 
 public sealed class Fragment : Element
 {
-    internal List<IModifier> Modifiers;
+    internal List<Modifier> Modifiers;
 
     public Fragment()
     {
     }
 
-    public Fragment(params IModifier[] modifiers)
+    public Fragment(params Modifier[] modifiers)
     {
         if (modifiers is null || modifiers.Length == 0)
         {

@@ -325,7 +325,7 @@ public static partial class Mixin
         return element;
     }
 
-    public static void Apply(this Element element, params IModifier[] modifiers)
+    public static void Apply(this Element element, params Modifier[] modifiers)
     {
         if (modifiers is null)
         {
@@ -753,7 +753,7 @@ public static partial class Mixin
         }
     }
 
-    public static ElementModifier When(bool condition, params IModifier[] modifiers)
+    public static ElementModifier When(bool condition, params Modifier[] modifiers)
     {
         if (!condition)
         {

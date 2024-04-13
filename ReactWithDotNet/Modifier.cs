@@ -2,9 +2,9 @@
 
 namespace ReactWithDotNet;
 
-public interface IModifier;
+public abstract class Modifier;
 
-public sealed class StyleModifier : IModifier
+public sealed class StyleModifier : Modifier
 {
     internal readonly Action<Style> ModifyStyle;
 
@@ -32,7 +32,7 @@ public sealed class StyleModifier : IModifier
     }
 }
 
-public sealed class ElementModifier : IModifier
+public sealed class ElementModifier : Modifier
 {
     internal readonly bool IsModifyReactKey;
 
@@ -60,7 +60,7 @@ public sealed class ElementModifier : IModifier
     }
 }
 
-public abstract class HtmlElementModifier : IModifier
+public abstract class HtmlElementModifier : Modifier
 {
     internal abstract void Process(HtmlElement htmlElement);
 }
@@ -94,7 +94,7 @@ class HtmlElementModifier<THtmlElement> : HtmlElementModifier where THtmlElement
     }
 }
 
-abstract class ReactComponentModifier : IModifier
+abstract class ReactComponentModifier : Modifier
 {
     internal abstract void Modify(ReactComponentBase reactComponent);
 }
@@ -119,7 +119,7 @@ sealed class ReactComponentModifier<TComponent> : ReactComponentModifier where T
     }
 }
 
-abstract class ReactPureComponentModifier : IModifier
+abstract class ReactPureComponentModifier : Modifier
 {
     internal abstract void Modify(PureComponent pureComponent);
 }
@@ -144,7 +144,7 @@ sealed class ReactPureComponentModifier<TPureComponent> : ReactPureComponentModi
     }
 }
 
-abstract class ThirdPartyReactComponentModifier : IModifier
+abstract class ThirdPartyReactComponentModifier : Modifier
 {
     internal abstract void Modify(ThirdPartyReactComponent thirdPartyReactComponent);
 }
@@ -202,7 +202,7 @@ partial class Mixin
         return element;
     }
 
-    public static IModifier CreateComponentModifier<TComponent>(Action<TComponent> modifyAction) where TComponent : Component
+    public static Modifier CreateComponentModifier<TComponent>(Action<TComponent> modifyAction) where TComponent : Component
     {
         return new ReactComponentModifier<TComponent>(modifyAction);
     }
@@ -212,7 +212,7 @@ partial class Mixin
         return new HtmlElementModifier<THtmlElement> { ModifyHtmlElement = modifyAction };
     }
 
-    public static IModifier CreatePureComponentModifier<TPureComponent>(Action<TPureComponent> modifyAction)
+    public static Modifier CreatePureComponentModifier<TPureComponent>(Action<TPureComponent> modifyAction)
         where TPureComponent : PureComponent
     {
         return new ReactPureComponentModifier<TPureComponent>(modifyAction);
@@ -223,7 +223,7 @@ partial class Mixin
         return new(modifyAction);
     }
 
-    public static IModifier CreateThirdPartyReactComponentModifier<TComponent>(Action<TComponent> modifyAction)
+    public static Modifier CreateThirdPartyReactComponentModifier<TComponent>(Action<TComponent> modifyAction)
         where TComponent : ThirdPartyReactComponent
     {
         return new ThirdPartyReactComponentModifier<TComponent>(modifyAction);
@@ -232,7 +232,7 @@ partial class Mixin
 
 static class ModifyHelper
 {
-    public static void ProcessModifier(Element element, IModifier modifier)
+    public static void ProcessModifier(Element element, Modifier modifier)
     {
         if (modifier == null || element is null)
         {

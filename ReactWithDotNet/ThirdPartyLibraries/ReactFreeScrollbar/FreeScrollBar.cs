@@ -88,5 +88,5 @@ public sealed class FreeScrollBar : ThirdPartyReactComponent
         return new Skeleton() + style;
     }
 
-    public static IModifier Modify(Action<FreeScrollBar> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
+    public static Modifier Modify(Action<FreeScrollBar> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
 }

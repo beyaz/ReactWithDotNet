@@ -645,7 +645,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                     var name = propertyInfo.Name;
                     var propertyType = propertyInfo.PropertyType;
 
-                    if (propertyType.GetInterfaces().Any(x => x == typeof(IModifier)))
+                    if (propertyType.GetInterfaces().Any(x => x == typeof(Modifier)))
                     {
                         continue;
                     }

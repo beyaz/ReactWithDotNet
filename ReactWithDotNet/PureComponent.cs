@@ -14,7 +14,7 @@ public abstract class PureComponent : Element
     internal int ComponentUniqueIdentifier;
     internal Func<Task<Element>> DesignerCustomizedRender;
 
-    internal List<IModifier> Modifiers;
+    internal List<Modifier> Modifiers;
 
     internal Style StyleForRootElement;
     
@@ -79,7 +79,7 @@ public abstract class PureComponent : Element
         }
     }
 
-    protected static IModifier Modify<TPureComponent>(Action<TPureComponent> modifyAction)
+    protected static Modifier Modify<TPureComponent>(Action<TPureComponent> modifyAction)
         where TPureComponent : PureComponent
     {
         return CreatePureComponentModifier(modifyAction);

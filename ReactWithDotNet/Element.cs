@@ -6,7 +6,7 @@ namespace ReactWithDotNet;
 /// <summary>
 ///     The element
 /// </summary>
-public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
+public abstract class Element : IEnumerable<Element>, IEnumerable<Modifier>
 {
     internal ElementCollection _children;
 
@@ -52,7 +52,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         return element;
     }
 
-    public static Element operator +(Element element, IModifier modifier)
+    public static Element operator +(Element element, Modifier modifier)
     {
         ModifyHelper.ProcessModifier(element, modifier);
 
@@ -95,7 +95,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         children.Add(element);
     }
     
-    public void Add(params IModifier[] modifiers)
+    public void Add(params Modifier[] modifiers)
     {
         this.Apply(modifiers);
     }
@@ -121,7 +121,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         }
     }
 
-    public void Add(IModifier modifier)
+    public void Add(Modifier modifier)
     {
         ModifyHelper.ProcessModifier(this, modifier);
     }
@@ -183,9 +183,9 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         return children.GetEnumerator();
     }
 
-    IEnumerator<IModifier> IEnumerable<IModifier>.GetEnumerator()
+    IEnumerator<Modifier> IEnumerable<Modifier>.GetEnumerator()
     {
-        return Enumerable.Empty<IModifier>().GetEnumerator();
+        return Enumerable.Empty<Modifier>().GetEnumerator();
     }
 
     class ToStringHandlerComponent : PureComponent
@@ -218,5 +218,5 @@ sealed class ElementAsTask : Element
         Value = value;
     }
     
-    internal List<IModifier> Modifiers;
+    internal List<Modifier> Modifiers;
 }

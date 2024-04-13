@@ -232,7 +232,7 @@ static class Exporter
         {
             lines.AddRange(AsCSharpComment(memberInfo.Comment));
         }
-        lines.Add($"public static IModifier {UpperCaseFirstChar(memberName)}({dotNetType} value) => CreateThirdPartyReactComponentModifier<{input.ClassName}>(x => x.{memberName} = value);");
+        lines.Add($"public static Modifier {UpperCaseFirstChar(memberName)}({dotNetType} value) => CreateThirdPartyReactComponentModifier<{input.ClassName}>(x => x.{memberName} = value);");
 
         return lines;
 

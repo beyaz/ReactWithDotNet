@@ -24,7 +24,7 @@ public sealed class Accordion : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    public static IModifier DefaultExpanded(bool? value) => CreateThirdPartyReactComponentModifier<Accordion>(x => x.defaultExpanded = value);
+    public static Modifier DefaultExpanded(bool? value) => CreateThirdPartyReactComponentModifier<Accordion>(x => x.defaultExpanded = value);
     
     /// <summary>
     ///     If `true`, the component is disabled.
@@ -39,7 +39,7 @@ public sealed class Accordion : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    public static IModifier Disabled(bool? value) => CreateThirdPartyReactComponentModifier<Accordion>(x => x.disabled = value);
+    public static Modifier Disabled(bool? value) => CreateThirdPartyReactComponentModifier<Accordion>(x => x.disabled = value);
     
     /// <summary>
     ///     If `true`, it removes the margin between two expanded accordion items and the increase of height.
@@ -54,7 +54,7 @@ public sealed class Accordion : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    public static IModifier DisableGutters(bool? value) => CreateThirdPartyReactComponentModifier<Accordion>(x => x.disableGutters = value);
+    public static Modifier DisableGutters(bool? value) => CreateThirdPartyReactComponentModifier<Accordion>(x => x.disableGutters = value);
     
     /// <summary>
     ///     If `true`, expands the accordion, otherwise collapse it.
@@ -69,7 +69,7 @@ public sealed class Accordion : ElementBase
     ///     <br/>
     ///     Setting this prop enables control over the accordion.
     /// </summary>
-    public static IModifier Expanded(bool? value) => CreateThirdPartyReactComponentModifier<Accordion>(x => x.expanded = value);
+    public static Modifier Expanded(bool? value) => CreateThirdPartyReactComponentModifier<Accordion>(x => x.expanded = value);
     
     /// <summary>
     ///     Callback fired when the expand/collapse state is changed.

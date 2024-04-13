@@ -17,7 +17,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    public static IModifier Arrow(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.arrow = value);
+    public static Modifier Arrow(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.arrow = value);
     
     /// <summary>
     ///     Override or extend the styles applied to the component.
@@ -79,7 +79,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    public static IModifier DescribeChild(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.describeChild = value);
+    public static Modifier DescribeChild(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.describeChild = value);
     
     /// <summary>
     ///     Do not respond to focus-visible events.
@@ -94,7 +94,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    public static IModifier DisableFocusListener(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.disableFocusListener = value);
+    public static Modifier DisableFocusListener(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.disableFocusListener = value);
     
     /// <summary>
     ///     Do not respond to hover events.
@@ -109,7 +109,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    public static IModifier DisableHoverListener(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.disableHoverListener = value);
+    public static Modifier DisableHoverListener(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.disableHoverListener = value);
     
     /// <summary>
     ///     Makes a tooltip not interactive, i.e. it will close when the user
@@ -128,7 +128,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    public static IModifier DisableInteractive(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.disableInteractive = value);
+    public static Modifier DisableInteractive(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.disableInteractive = value);
     
     /// <summary>
     ///     Do not respond to long press touch events.
@@ -143,7 +143,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    public static IModifier DisableTouchListener(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.disableTouchListener = value);
+    public static Modifier DisableTouchListener(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.disableTouchListener = value);
     
     /// <summary>
     ///     The number of milliseconds to wait before showing the tooltip.
@@ -162,7 +162,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default 100
     /// </summary>
-    public static IModifier EnterDelay(double? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.enterDelay = value);
+    public static Modifier EnterDelay(double? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.enterDelay = value);
     
     /// <summary>
     ///     The number of milliseconds to wait before showing the tooltip when one was already recently opened.
@@ -177,7 +177,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default 0
     /// </summary>
-    public static IModifier EnterNextDelay(double? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.enterNextDelay = value);
+    public static Modifier EnterNextDelay(double? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.enterNextDelay = value);
     
     /// <summary>
     ///     The number of milliseconds a user must touch the element before showing the tooltip.
@@ -192,7 +192,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default 700
     /// </summary>
-    public static IModifier EnterTouchDelay(double? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.enterTouchDelay = value);
+    public static Modifier EnterTouchDelay(double? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.enterTouchDelay = value);
     
     /// <summary>
     ///     If `true`, the tooltip follow the cursor over the wrapped element.
@@ -207,7 +207,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    public static IModifier FollowCursor(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.followCursor = value);
+    public static Modifier FollowCursor(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.followCursor = value);
     
     /// <summary>
     ///     This prop is used to help implement the accessibility logic.
@@ -222,7 +222,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     If you don't provide this prop. It falls back to a randomly generated id.
     /// </summary>
-    public static IModifier Id(string value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.id = value);
+    public static Modifier Id(string value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.id = value);
     
     /// <summary>
     ///     The number of milliseconds to wait before hiding the tooltip.
@@ -241,7 +241,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default 0
     /// </summary>
-    public static IModifier LeaveDelay(double? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.leaveDelay = value);
+    public static Modifier LeaveDelay(double? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.leaveDelay = value);
     
     /// <summary>
     ///     The number of milliseconds after the user stops touching an element before hiding the tooltip.
@@ -256,7 +256,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default 1500
     /// </summary>
-    public static IModifier LeaveTouchDelay(double? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.leaveTouchDelay = value);
+    public static Modifier LeaveTouchDelay(double? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.leaveTouchDelay = value);
     
     /// <summary>
     ///     Callback fired when the component requests to be closed.
@@ -287,7 +287,7 @@ public sealed class Tooltip : ElementBase
     /// <summary>
     ///     If `true`, the component is shown.
     /// </summary>
-    public static IModifier Open(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.open = value);
+    public static Modifier Open(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.open = value);
     
     /// <summary>
     ///     Tooltip placement.
@@ -302,7 +302,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default 'bottom'
     /// </summary>
-    public static IModifier Placement(string value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.placement = value);
+    public static Modifier Placement(string value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.placement = value);
     
     /// <summary>
     ///     Props applied to the [`Popper`](/material-ui/api/popper/) element.
@@ -361,7 +361,7 @@ public sealed class Tooltip : ElementBase
     /// <summary>
     ///     Tooltip title. Zero-length titles string, undefined, null and false are never displayed.
     /// </summary>
-    public static IModifier Title(Element value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.title = value);
+    public static Modifier Title(Element value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.title = value);
     
     protected override Element GetSuspenseFallbackElement()
     {

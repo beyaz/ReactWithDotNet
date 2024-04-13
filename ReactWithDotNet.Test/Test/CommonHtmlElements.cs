@@ -1925,7 +1925,7 @@ public class ExportingCommonHtmlElements
 
                 list.Add(Empty);
                 addComment();
-                list.Add($"    public {item.Tag}(params IModifier[] modifiers) : base(modifiers) {{ }}");
+                list.Add($"    public {item.Tag}(params Modifier[] modifiers) : base(modifiers) {{ }}");
                 
                 list.Add(Empty);
                 addComment();

@@ -26,7 +26,7 @@ public static class motion
         [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
         public dynamic whileHover { get; } = new ExpandoObject();
         
-        public static IModifier Modify(Action<div> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
+        public static Modifier Modify(Action<div> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
         
         [ReactProp]
         [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]

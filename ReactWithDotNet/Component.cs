@@ -11,7 +11,7 @@ public abstract class ReactComponentBase : Element
     
     internal List<Style> classNameList;
 
-    internal List<IModifier> Modifiers;
+    internal List<Modifier> Modifiers;
 
     [System.Text.Json.Serialization.JsonIgnore]
     public Style style
@@ -206,7 +206,7 @@ public abstract class Component<TState> : ReactComponentBase where TState : clas
 
 public abstract class Component : Component<EmptyState>
 {
-    protected static IModifier Modify<TComponent>(Action<TComponent> modifyAction)
+    protected static Modifier Modify<TComponent>(Action<TComponent> modifyAction)
         where TComponent : Component => CreateComponentModifier(modifyAction);
 }
 

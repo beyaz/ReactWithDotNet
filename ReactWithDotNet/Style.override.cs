@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
-partial class Style : IEnumerable<StyleModifier>, IModifier
+partial class Style : Modifier, IEnumerable<StyleModifier>
 {
     protected static StyleModifier Modify(Action<Style> modifyAction) => CreateStyleModifier(modifyAction);
 

@@ -2,11 +2,11 @@
 
 class MainContentContainer : PureComponent
 {
-    readonly IModifier[] modifiers;
+    readonly Modifier[] modifiers;
     public MainContentContainer()
     { }
 
-    public MainContentContainer(params IModifier[] modifiers)
+    public MainContentContainer(params Modifier[] modifiers)
     {
         this.modifiers = modifiers;
     }

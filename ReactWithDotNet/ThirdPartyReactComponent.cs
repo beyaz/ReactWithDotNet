@@ -67,7 +67,7 @@ public abstract class ThirdPartyReactComponent : Element
 
     protected internal ReactContext Context { get; set; }
 
-    public static Element operator +(ThirdPartyReactComponent element, IModifier modifier)
+    public static Element operator +(ThirdPartyReactComponent element, Modifier modifier)
     {
         ModifyHelper.ProcessModifier(element, modifier);
 

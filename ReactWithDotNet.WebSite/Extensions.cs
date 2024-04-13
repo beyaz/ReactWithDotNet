@@ -10,7 +10,7 @@ static partial class Extensions
     public static readonly ReactContextKey<HttpContext> KeyForHttpContext = new(nameof(KeyForHttpContext));
         
 
-    public static IModifier GetPageLink(string pageName) => Href($"/?p={pageName}");
+    public static Modifier GetPageLink(string pageName) => Href($"/?p={pageName}");
 
 
 
