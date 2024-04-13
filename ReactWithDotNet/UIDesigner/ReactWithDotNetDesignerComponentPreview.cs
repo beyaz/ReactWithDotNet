@@ -350,7 +350,6 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
         element += ComponentIndicatorStyle;
         
-        
         return element;
     }
 }
