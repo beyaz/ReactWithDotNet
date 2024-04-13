@@ -2,6 +2,22 @@
 
 namespace ReactWithDotNet;
 
+/// <summary>
+///     Designed for modify an element by functional way <br/>
+///     Example: <br/>
+///     <code>
+///     -- normal aproach 
+///     var element = new div();
+///     element.style.width = "50px";
+/// 
+///     -- better approach
+///     new div { Width(50) } 
+///     </code>
+///     <br/>
+///     Inherited types : <br/>
+///     <see cref="StyleModifier"/> <br/>
+///     <see cref="ElementModifier"/>
+/// </summary>
 public abstract class Modifier;
 
 public sealed class StyleModifier : Modifier
