@@ -43,7 +43,18 @@ partial class Mixin
             }
         }
 
-        throw DeveloperException("Invalid usage of Functional component");
+        throw InvalidUsageOfFunctionalComponent(func);
+    }
+
+    static Exception InvalidUsageOfFunctionalComponent(Delegate @delegate)
+    {
+        var target = @delegate.Target;
+        if (target is null)
+        {
+            return DeveloperException($"Invalid usage of Functional component.{@delegate.Method} target cannot be null.");
+        }
+        
+        return DeveloperException($"Invalid usage of Functional component. {target.GetType().FullName}  should be compiler generated type.");
     }
     
     public static Element FC(Func<IFunctionalComponent, Task<Element>> func, [CallerMemberName] string callerMemberName = null)
@@ -76,7 +87,7 @@ partial class Mixin
             }
         }
         
-        throw DeveloperException("Invalid usage of Functional component");
+        throw InvalidUsageOfFunctionalComponent(func);
     }
     
     
