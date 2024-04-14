@@ -83,23 +83,6 @@ partial class Mixin
     public static StyleModifier WhenMediaSizeIsMobile(params StyleModifier[] styleModifiers)
         => WhenMediaSizeIsMobile(new Style(styleModifiers));
     
-    
-    
-    
-    /// <summary>
-    ///     min-width: 768px
-    /// </summary>
-    public static StyleModifier WhenMediaSizeIsGreaterThanMobile(Style styleForOverride)
-        => MediaQuery("(min-width: 768px)", styleForOverride);
-    
-    /// <summary>
-    ///     min-width: 768px
-    /// </summary>
-    public static StyleModifier WhenMediaSizeIsGreaterThanMobile(params StyleModifier[] styleModifiers)
-        => WhenMediaSizeIsGreaterThanMobile(new Style(styleModifiers));
-    
-    
-    
     /// <summary>
     ///     min-width: <paramref name="widthAsPixel"/> + 'px'
     /// </summary>
