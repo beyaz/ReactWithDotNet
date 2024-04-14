@@ -3,22 +3,10 @@
 partial class Mixin
 {
     public static StyleModifier MediaQuery(string query, Style styleForOverride)
-        => new(style => style.MediaQueries.Add(new MediaQuery(query, styleForOverride)));
+        => new(style => style.MediaQueries.Add(new (query, styleForOverride)));
 
     public static StyleModifier MediaQuery(string query, params StyleModifier[] styleModifiers)
         => MediaQuery(query, new Style(styleModifiers));
-
-    /// <summary>
-    ///     min-width: 768px and max-width: 1023px
-    /// </summary>
-    public static StyleModifier MediaQueryOnTablet(Style styleForOverride)
-        => MediaQuery("(min-width: 768px) and (max-width: 1023px)", styleForOverride);
-
-    /// <summary>
-    ///     min-width: 768px and max-width: 1023px
-    /// </summary>
-    public static StyleModifier MediaQueryOnTablet(params StyleModifier[] styleModifiers)
-        => MediaQueryOnTablet(new Style(styleModifiers));
 
     /// <summary>
     ///     min-width: <paramref name="widthAsPixel"/> + 'px'
