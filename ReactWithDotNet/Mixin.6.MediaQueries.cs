@@ -21,18 +21,6 @@ partial class Mixin
         => MediaQueryOnTablet(new Style(styleModifiers));
 
     /// <summary>
-    ///     max-width: 767px
-    /// </summary>
-    public static StyleModifier WhenMediaSizeIsMobile(Style styleForOverride)
-        => MediaQuery("(max-width: 767px)", styleForOverride);
-
-    /// <summary>
-    ///     max-width: 767px
-    /// </summary>
-    public static StyleModifier WhenMediaSizeIsMobile(params StyleModifier[] styleModifiers)
-        => WhenMediaSizeIsMobile(new Style(styleModifiers));
-    
-    /// <summary>
     ///     min-width: <paramref name="widthAsPixel"/> + 'px'
     /// </summary>
     public static StyleModifier WhenMediaSizeIsGreaterThan(int widthAsPixel,params StyleModifier[] styleModifiers)
