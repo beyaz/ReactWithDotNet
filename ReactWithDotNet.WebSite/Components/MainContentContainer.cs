@@ -21,7 +21,7 @@ class MainContentContainer : PureComponent
 
             MediaQueryOnMobile(PaddingLeftRight("5%")),
             MediaQueryOnTablet(PaddingLeftRight("10%")),
-            MediaQueryOnDesktop(PaddingLeftRight("5%")),
+            LG(PaddingLeftRight("5%")),
             Data(".net_component_name", nameof(MainContentContainer))
 
         };

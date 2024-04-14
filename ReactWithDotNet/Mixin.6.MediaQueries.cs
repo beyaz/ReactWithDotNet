@@ -9,18 +9,6 @@ partial class Mixin
         => MediaQuery(query, new Style(styleModifiers));
 
     /// <summary>
-    ///     min-width: 1024px
-    /// </summary>
-    public static StyleModifier MediaQueryOnDesktop(Style styleForOverride)
-        => MediaQuery("(min-width: 1024px)", styleForOverride);
-
-    /// <summary>
-    ///     min-width: 1024px
-    /// </summary>
-    public static StyleModifier MediaQueryOnDesktop(params StyleModifier[] styleModifiers)
-        => MediaQueryOnDesktop(new Style(styleModifiers));
-
-    /// <summary>
     ///     max-width: 767px
     /// </summary>
     public static StyleModifier MediaQueryOnMobile(Style styleForOverride)
@@ -88,7 +76,7 @@ partial class Mixin
     /// <summary>
     ///     max-width: <paramref name="widthAsPixel"/> + 'px'
     /// </summary>
-    public static StyleModifier WhenMediaSizeIsLessThan(int widthAsPixel,params StyleModifier[] styleModifiers)
+    public static StyleModifier WhenMediaSizeIsLessThan(int widthAsPixel, params StyleModifier[] styleModifiers)
         => MediaQuery($"(max-width: {widthAsPixel}px)", styleModifiers);
 
     /// <summary>

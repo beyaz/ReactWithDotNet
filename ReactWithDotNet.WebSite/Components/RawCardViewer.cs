@@ -32,7 +32,7 @@ class RawCardViewer : PureComponent
     {
         return new div(FlexGrow(1))
         {
-            MediaQueryOnDesktop(Width(33.333 * percent)),
+            LG(Width(33.333 * percent)),
             MediaQueryOnTablet(Width(50 * percent)),
             MediaQueryOnMobile(Width(100 * percent)),
 
@@ -54,7 +54,7 @@ class RawCardViewer : PureComponent
 
                     Hover(BorderColor(Theme.grey_300), BoxShadow(0,2,8,2,Theme.grey_100)),
 
-                    MediaQueryOnDesktop(Height(150)),
+                    LG(Height(150)),
                     MediaQueryOnTablet(Height(160)),
                     MediaQueryOnMobile(Height(200)),
 
