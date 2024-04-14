@@ -16,7 +16,7 @@ class MobileMenu : Component
     {
         return new div
         {
-            new HamburgerButton { IsOpen = IsOpen, Click = Clicked } + MediaQueryOnTabletOrDesktop(DisplayNone),
+            new HamburgerButton { IsOpen = IsOpen, Click = Clicked } + MD(DisplayNone),
 
             new FlexColumn(PositionFixed, Top(70), LeftRight(0), DisplayNoneWhenNotMobile,
                            BoxShadow("rgb(170 180 190 / 30%) 0px 4px 20px"))

@@ -57,21 +57,6 @@ partial class Mixin
         => MediaQueryOnTablet(new Style(styleModifiers));
 
     /// <summary>
-    ///     min-width: 768px
-    /// </summary>
-    public static StyleModifier MediaQueryOnTabletOrDesktop(Style styleForOverride)
-        => MediaQuery("(min-width: 768px)", styleForOverride);
-
-    /// <summary>
-    ///     min-width: 768px
-    /// </summary>
-    public static StyleModifier MediaQueryOnTabletOrDesktop(params StyleModifier[] styleModifiers)
-        => MediaQueryOnTabletOrDesktop(new Style(styleModifiers));
-    
-    
-    
-    
-    /// <summary>
     ///     max-width: 767px
     /// </summary>
     public static StyleModifier WhenMediaSizeIsMobile(Style styleForOverride)

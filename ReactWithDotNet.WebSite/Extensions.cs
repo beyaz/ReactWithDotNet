@@ -17,7 +17,7 @@ static partial class Extensions
     public static StyleModifier BorderRadiusForPaper => BorderRadius(4);
 
     public static StyleModifier DisplayNoneWhenMobile => MediaQueryOnMobile(DisplayNone);
-    public static StyleModifier DisplayNoneWhenNotMobile => MediaQueryOnTabletOrDesktop(DisplayNone);
+    public static StyleModifier DisplayNoneWhenNotMobile => MD(DisplayNone);
 
     public static IEnumerable<Element> PrimeReactCssLibs => new[] // TODO: can be remove
     {
