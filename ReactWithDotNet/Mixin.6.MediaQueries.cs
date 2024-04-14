@@ -23,18 +23,18 @@ partial class Mixin
     /// <summary>
     ///     min-width: <paramref name="widthAsPixel"/> + 'px'
     /// </summary>
-    public static StyleModifier WhenMediaSizeIsGreaterThan(int widthAsPixel,params StyleModifier[] styleModifiers)
+    public static StyleModifier WhenMediaSizeGreaterThan(int widthAsPixel,params StyleModifier[] styleModifiers)
         => MediaQuery($"(min-width: {widthAsPixel}px)", styleModifiers);
     
     /// <summary>
     ///     Sample Usage:
     ///     <code>
-    ///      WhenMediaSizeIsGreaterThan(SM, BorderRadius(8))
+    ///      WhenMediaSizeGreaterThan(SM, BorderRadius(8))
     ///     </code>
     /// </summary>
-    public static StyleModifier WhenMediaSizeIsGreaterThan(Func<StyleModifier[], StyleModifier> breakpoint, params StyleModifier[] styleModifiers)
+    public static StyleModifier WhenMediaSizeGreaterThan(Func<StyleModifier[], StyleModifier> breakpoint, params StyleModifier[] styleModifiers)
     {
-        return WhenMediaSizeIsGreaterThan(ConvertToNumber(breakpoint), styleModifiers);
+        return WhenMediaSizeGreaterThan(ConvertToNumber(breakpoint), styleModifiers);
     }
     
     /// <summary>
