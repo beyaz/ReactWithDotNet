@@ -34,4 +34,13 @@ public sealed class ElementCollection : List<Element>
     {
         base.Add(elementCreatorFunc?.Invoke());
     }
+    
+    public static ElementCollection From(Element[] elements)
+    {
+        var  elementCollection = new ElementCollection();
+        
+        elementCollection.AddRange(elements);
+        
+        return elementCollection;
+    }
 }
