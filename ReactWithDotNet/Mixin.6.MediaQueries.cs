@@ -107,10 +107,62 @@ partial class Mixin
         => MediaQuery($"(min-width: {widthAsPixel}px)", styleModifiers);
     
     /// <summary>
+    ///     Sample Usage:
+    ///     <code>
+    ///      WhenMediaSizeIsGreaterThan(SM, BorderRadius(8))
+    ///     </code>
+    /// </summary>
+    public static StyleModifier WhenMediaSizeIsGreaterThan(Func<StyleModifier[], StyleModifier> breakpoint, params StyleModifier[] styleModifiers)
+    {
+        return WhenMediaSizeIsGreaterThan(ConvertToNumber(breakpoint), styleModifiers);
+    }
+    
+    /// <summary>
     ///     max-width: <paramref name="widthAsPixel"/> + 'px'
     /// </summary>
     public static StyleModifier WhenMediaSizeIsLessThan(int widthAsPixel,params StyleModifier[] styleModifiers)
         => MediaQuery($"(max-width: {widthAsPixel}px)", styleModifiers);
+
+    /// <summary>
+    ///     Sample Usage:
+    ///     <code>
+    ///      WhenMediaSizeIsLessThan(SM, BorderRadius(8))
+    ///     </code>
+    /// </summary>
+    public static StyleModifier WhenMediaSizeIsLessThan(Func<StyleModifier[], StyleModifier> breakpoint, params StyleModifier[] styleModifiers)
+    {
+        return WhenMediaSizeIsLessThan(ConvertToNumber(breakpoint), styleModifiers);
+    }
+
+    static int ConvertToNumber(Func<StyleModifier[], StyleModifier> breakpoint)
+    {
+        if (breakpoint == SM)
+        {
+            return 640;
+        }
+
+        if (breakpoint == MD)
+        {
+            return 768;
+        }
+
+        if (breakpoint == LG)
+        {
+            return 1024;
+        }
+
+        if (breakpoint == XL)
+        {
+            return 1280;
+        }
+
+        if (breakpoint == XXL)
+        {
+            return 1536;
+        }
+
+        throw DeveloperException($"{breakpoint} parameter can be SM or MD or LG or XML or XXL");
+    }
     
     /// <summary>
     ///     (min-width: <paramref name="minWidthAsPixel"/> + 'px') and (max-width: <paramref name="maxWidthAsPixel"/> + 'px')
