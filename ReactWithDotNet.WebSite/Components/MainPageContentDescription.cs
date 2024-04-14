@@ -7,7 +7,7 @@ class MainPageContentDescription : PureComponent
         return new FlexColumn(AlignItemsCenter)
         {
             SpaceY(60),
-            new div(FontFamily_PlusJakartaSans_ExtraBold, FontSize(56), FontWeight800, WhenMediaSizeIsLessThan(MD,TextAlignCenter))
+            new div(FontFamily_PlusJakartaSans_ExtraBold, FontSize(56), FontWeight800, WhenMediaSizeLessThan(MD,TextAlignCenter))
             {
                 LineHeight(62),
                 
@@ -24,7 +24,7 @@ class MainPageContentDescription : PureComponent
             },
             SpaceY(40),
 
-            new FlexRow(JustifyContentFlexStart, WidthFull, WhenMediaSizeIsLessThan(MD,JustifyContentCenter))
+            new FlexRow(JustifyContentFlexStart, WidthFull, WhenMediaSizeLessThan(MD,JustifyContentCenter))
             {
                 new GetStartedButton()
             }

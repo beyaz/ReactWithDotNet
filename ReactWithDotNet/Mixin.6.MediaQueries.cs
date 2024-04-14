@@ -43,16 +43,16 @@ partial class Mixin
     public static StyleModifier WhenMediaSizeIsLessThan(int widthAsPixel, params StyleModifier[] styleModifiers)
         => MediaQuery($"(max-width: {widthAsPixel}px)", styleModifiers);
 
-    /// <summary>
-    ///     Sample Usage:
-    ///     <code>
-    ///      WhenMediaSizeIsLessThan(SM, BorderRadius(8))
-    ///     </code>
-    /// </summary>
-    public static StyleModifier WhenMediaSizeIsLessThan(Func<StyleModifier[], StyleModifier> breakpoint, params StyleModifier[] styleModifiers)
-    {
-        return WhenMediaSizeIsLessThan(ConvertToNumber(breakpoint), styleModifiers);
-    }
+    ///// <summary>
+    /////     Sample Usage:
+    /////     <code>
+    /////      WhenMediaSizeIsLessThan(SM, BorderRadius(8))
+    /////     </code>
+    ///// </summary>
+    //public static StyleModifier WhenMediaSizeIsLessThan(Func<StyleModifier[], StyleModifier> breakpoint, params StyleModifier[] styleModifiers)
+    //{
+    //    return WhenMediaSizeIsLessThan(ConvertToNumber(breakpoint), styleModifiers);
+    //}
     
     /// <summary>
     ///     Sample Usage:
