@@ -69,31 +69,6 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
     protected override Element render()
     {
-        Element createJsonEditor()
-        {
-            if (state.IsInstanceEditorActive)
-            {
-                return new JsonTextEditor
-                {
-                    JsonText            = state.JsonTextForDotNetInstanceProperties,
-                    Name                = nameof(state.JsonTextForDotNetInstanceProperties),
-                    SelectedTreeNodeKey = state.SelectedTreeNodeKey
-                };
-            }
-
-            return new JsonTextEditor
-            {
-                JsonText            = state.JsonTextForDotNetMethodParameters,
-                Name                = nameof(state.JsonTextForDotNetMethodParameters),
-                SelectedTreeNodeKey = state.SelectedTreeNodeKey
-            };
-        }
-
-        Element createLabel(string text)
-        {
-            return new small(Text(text), Color("rgb(73 86 193)"), FontWeight600);
-        }
-
         var propertyPanel = new FlexColumn(Height("100%"), Width("100%"), FontSize15)
         {
             //new link { href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap", rel = "stylesheet" },
@@ -293,7 +268,61 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             }
         };
 
-        Element createVerticleRuler()
+        var outputPanel = new FlexRow(JustifyContentFlexStart ,PositionRelative)
+        {
+            BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
+            BackgroundSize("10px 10px"),
+            
+            createVerticleRuler,
+            createElement(),
+            
+
+            Width(state.ScreenWidth),
+            Height(state.ScreenHeight*percent),
+            BoxShadow(0, 4, 12, 0, rgba(0, 0, 0, 0.1))
+        };
+
+        return new FlexRow(WidthFull, Height100vh, PrimaryBackground, FontFamily("system-ui"))
+        {
+            new HotReloadListener(),
+            new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative)
+            {
+                When(UpdatingProgress is > 0 and <= 100, () => new div(PositionAbsolute, TopRight(5))
+                {
+                    When(state.PropertyPanelIsClosed, PositionStatic),
+
+                    new LoadingIcon() + Size(12, 12)
+                }),
+
+                new div
+                {
+                    state.PropertyPanelIsClosed ? "→" : "←",
+                    OnClick(state.PropertyPanelIsClosed ? OpenPropertyPanel : ClosePropertyPanel),
+                    PositionAbsolute,
+                    TopRight(0),
+                    FontSize14,
+                    FontWeight500,
+                    Color("#c5d7e8"),
+                    CursorPointer,
+                    Hover(FontSize17, Color("#9090f2")),
+                    When(state.PropertyPanelIsClosed, PositionSticky),
+
+                    Size(12, 12),
+                    When(UpdatingProgress is > 0 and <= 100, DisplayNone)
+                },
+
+                state.PropertyPanelIsClosed ? null : propertyPanel,
+                
+                When(state.PropertyPanelIsClosed, Width(15))
+            },
+            new FlexColumn(AlignItemsCenter, FlexGrow(1), Padding(7), MarginLeft(40))
+            {
+                createHorizontalRuler() + Width(state.ScreenWidth) + MarginTop(5),
+                outputPanel
+            }
+        };
+
+        static  Element createVerticleRuler()
         {
             const int maxHeight = 5000;
 
@@ -358,21 +387,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             };
         }
 
-        var outputPanel = new FlexRow(JustifyContentFlexStart ,PositionRelative)
-        {
-            BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
-            BackgroundSize("10px 10px"),
-            
-            createVerticleRuler,
-            createElement(),
-            
-
-            Width(state.ScreenWidth),
-            Height(state.ScreenHeight*percent),
-            BoxShadow(0, 4, 12, 0, rgba(0, 0, 0, 0.1))
-        };
-
-        Element createElement()
+        static Element createElement()
         {
             return new iframe
             {
@@ -383,45 +398,30 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             };
         }
 
-        return new FlexRow(WidthFull, Height100vh, PrimaryBackground, FontFamily("system-ui"))
+        Element createJsonEditor()
         {
-            new HotReloadListener(),
-            new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative)
+            if (state.IsInstanceEditorActive)
             {
-                When(UpdatingProgress is > 0 and <= 100, () => new div(PositionAbsolute, TopRight(5))
+                return new JsonTextEditor
                 {
-                    When(state.PropertyPanelIsClosed, PositionStatic),
-
-                    new LoadingIcon() + Size(12, 12)
-                }),
-
-                new div
-                {
-                    state.PropertyPanelIsClosed ? "→" : "←",
-                    OnClick(state.PropertyPanelIsClosed ? OpenPropertyPanel : ClosePropertyPanel),
-                    PositionAbsolute,
-                    TopRight(0),
-                    FontSize14,
-                    FontWeight500,
-                    Color("#c5d7e8"),
-                    CursorPointer,
-                    Hover(FontSize17, Color("#9090f2")),
-                    When(state.PropertyPanelIsClosed, PositionSticky),
-
-                    Size(12, 12),
-                    When(UpdatingProgress is > 0 and <= 100, DisplayNone)
-                },
-
-                state.PropertyPanelIsClosed ? null : propertyPanel,
-                
-                When(state.PropertyPanelIsClosed, Width(15))
-            },
-            new FlexColumn(AlignItemsCenter, FlexGrow(1), Padding(7), MarginLeft(40))
-            {
-                createHorizontalRuler() + Width(state.ScreenWidth) + MarginTop(5),
-                outputPanel
+                    JsonText            = state.JsonTextForDotNetInstanceProperties,
+                    Name                = nameof(state.JsonTextForDotNetInstanceProperties),
+                    SelectedTreeNodeKey = state.SelectedTreeNodeKey
+                };
             }
-        };
+
+            return new JsonTextEditor
+            {
+                JsonText            = state.JsonTextForDotNetMethodParameters,
+                Name                = nameof(state.JsonTextForDotNetMethodParameters),
+                SelectedTreeNodeKey = state.SelectedTreeNodeKey
+            };
+        }
+
+        static Element createLabel(string text)
+        {
+            return new small(Text(text), Color("rgb(73 86 193)"), FontWeight600, UserSelect(none));
+        }
 
         Element createHorizontalRuler()
         {
