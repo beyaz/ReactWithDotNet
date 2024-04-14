@@ -15,7 +15,7 @@ class HeaderMenuBar : PureComponent
             {
                 new Logo(),
                 SpaceX(10),
-                new nav(DisplayFlex, AlignItemsCenter, MediaQueryOnMobile(DisplayNone))
+                new nav(DisplayFlex, AlignItemsCenter, WhenMediaSizeLessThan(MD,DisplayNone))
                 {
                     RawData.MenuList.Select(AsTooltip)
                 }
@@ -23,7 +23,7 @@ class HeaderMenuBar : PureComponent
 
             new MobileMenu(),
             
-            new FlexRow(Gap(15), AlignItemsCenter, MarginRight(50), MediaQueryOnMobile(DisplayNone))
+            new FlexRow(Gap(15), AlignItemsCenter, MarginRight(50), WhenMediaSizeLessThan(MD,DisplayNone))
             {
                 RawData.SocialMediaLinks.Select(x => new a(Href(x.Link))
                 {

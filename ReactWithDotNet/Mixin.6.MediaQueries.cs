@@ -9,18 +9,6 @@ partial class Mixin
         => MediaQuery(query, new Style(styleModifiers));
 
     /// <summary>
-    ///     max-width: 767px
-    /// </summary>
-    public static StyleModifier MediaQueryOnMobile(Style styleForOverride)
-        => MediaQuery("(max-width: 767px)", styleForOverride);
-
-    /// <summary>
-    ///     max-width: 767px
-    /// </summary>
-    public static StyleModifier MediaQueryOnMobile(params StyleModifier[] styleModifiers)
-        => MediaQueryOnMobile(new Style(styleModifiers));
-
-    /// <summary>
     ///     min-width: 768px and max-width: 1023px
     /// </summary>
     public static StyleModifier MediaQueryOnTablet(Style styleForOverride)
@@ -74,6 +62,17 @@ partial class Mixin
     ///     </code>
     /// </summary>
     public static StyleModifier WhenMediaSizeIsLessThan(Func<StyleModifier[], StyleModifier> breakpoint, params StyleModifier[] styleModifiers)
+    {
+        return WhenMediaSizeIsLessThan(ConvertToNumber(breakpoint), styleModifiers);
+    }
+    
+    /// <summary>
+    ///     Sample Usage:
+    ///     <code>
+    ///      WhenMediaSizeLessThan(SM, BorderRadius(8))
+    ///     </code>
+    /// </summary>
+    public static StyleModifier WhenMediaSizeLessThan(Func<StyleModifier[], StyleModifier> breakpoint, params StyleModifier[] styleModifiers)
     {
         return WhenMediaSizeIsLessThan(ConvertToNumber(breakpoint), styleModifiers);
     }

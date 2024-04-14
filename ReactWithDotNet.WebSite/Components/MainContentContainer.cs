@@ -19,7 +19,7 @@ class MainContentContainer : PureComponent
 
             children,
 
-            MediaQueryOnMobile(PaddingLeftRight("5%")),
+            WhenMediaSizeLessThan(MD,PaddingLeftRight("5%")),
             MediaQueryOnTablet(PaddingLeftRight("10%")),
             LG(PaddingLeftRight("5%")),
             Data(".net_component_name", nameof(MainContentContainer))

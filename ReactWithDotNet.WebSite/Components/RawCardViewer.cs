@@ -34,7 +34,7 @@ class RawCardViewer : PureComponent
         {
             LG(Width(33.333 * percent)),
             MediaQueryOnTablet(Width(50 * percent)),
-            MediaQueryOnMobile(Width(100 * percent)),
+            WhenMediaSizeLessThan(MD,Width(100 * percent)),
 
             new a
             {
@@ -56,7 +56,7 @@ class RawCardViewer : PureComponent
 
                     LG(Height(150)),
                     MediaQueryOnTablet(Height(160)),
-                    MediaQueryOnMobile(Height(200)),
+                    WhenMediaSizeLessThan(MD,Height(200)),
 
                     new FlexRow(MarginBottom(12), AlignItemsCenter, Gap(5))
                     {
