@@ -87,15 +87,15 @@ partial class Style
     {
         var sb = new StringBuilder();
 
-        var separator = isImportant ? " !important;" : ";";
+        ReadOnlySpan<char> separator = isImportant ? " !important;" : ";";
         
         var currentNode = headNode;
         
         while (currentNode != null)
         {
-            sb.Append(currentNode.NameInfo.NameInKebabCase);
+            sb.Append(currentNode.NameInfo.NameInKebabCase.AsSpan());
             sb.Append(":");
-            sb.Append(currentNode.Value);
+            sb.Append(currentNode.Value.AsSpan());
             sb.Append(separator);
 
             if (currentNode.Next == null)
