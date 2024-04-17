@@ -87,6 +87,8 @@ partial class Style
     {
         var sb = new StringBuilder();
 
+        ReadOnlySpan<char> semiColumn = ":";
+        
         ReadOnlySpan<char> separator = isImportant ? " !important;" : ";";
         
         var currentNode = headNode;
@@ -94,7 +96,7 @@ partial class Style
         while (currentNode != null)
         {
             sb.Append(currentNode.NameInfo.NameInKebabCase.AsSpan());
-            sb.Append(":");
+            sb.Append(semiColumn);
             sb.Append(currentNode.Value.AsSpan());
             sb.Append(separator);
 
