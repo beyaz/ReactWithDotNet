@@ -20,7 +20,7 @@ sealed class JsonMap : IReadOnlyJsonMap
     {
         Count++;
 
-        var node = new Node { Key = key, Value = value };
+        var node = new Node(key, value);
 
         if (Head == null)
         {
@@ -82,8 +82,15 @@ sealed class JsonMap : IReadOnlyJsonMap
 
     internal sealed class Node
     {
-        public string Key;
+        public readonly string Key;
+        public readonly object Value;
+        
         public Node Next;
-        public object Value;
+
+        public Node(string key, object value)
+        {
+            Key   = key;
+            Value = value;
+        }
     }
 }
