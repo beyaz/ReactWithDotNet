@@ -94,9 +94,9 @@ public sealed partial class Style
 
         while (node != null)
         {
-            writer.WritePropertyName(node.NameInfo.NameInCamelCase);
+            writer.WritePropertyName(node.NameInfo.NameInCamelCase.AsSpan());
 
-            writer.WriteStringValue(node.Value);
+            writer.WriteStringValue(node.Value.AsSpan());
 
             node = node.Next;
         }
