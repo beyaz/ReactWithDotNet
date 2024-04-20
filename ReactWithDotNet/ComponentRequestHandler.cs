@@ -277,7 +277,7 @@ static class ComponentRequestHandler
                             var newTarget = Activator.CreateInstance(methodInfo.DeclaringType);
                             foreach (var fieldInfo in methodInfo.DeclaringType.GetFields())
                             {
-                                if (fieldInfo.FieldType == typeof(IFunctionalComponent))
+                                if (fieldInfo.FieldType.IsFunctionalComponent())
                                 {
                                     fieldInfo.SetValue(newTarget, functionalComponent);
                                     continue;

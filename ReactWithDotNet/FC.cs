@@ -12,6 +12,11 @@ public interface IFunctionalComponent: IReactComponent
 
 partial class Mixin
 {
+    internal static bool IsFunctionalComponent(this Type type)
+    {
+        return type == typeof(IFunctionalComponent);
+    }
+    
     public static Element FC(Func<IFunctionalComponent, Element> func, [CallerMemberName] string callerMemberName = null)
     {
         if (func == null)
