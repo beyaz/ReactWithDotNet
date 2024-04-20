@@ -693,9 +693,14 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                     }
 
                     var existingValue = propertyInfo.GetValue(instance);
-                    
-                    if (isNumberType(propertyInfo.PropertyType))
+                    if (existingValue is not null)
                     {
+                        if (propertyInfo.PropertyType.IsClass)
+                        {
+                            map.Add(name, existingValue);
+                            continue;
+                        }
+                        
                         var defaultValue = Activator.CreateInstance(propertyInfo.PropertyType);
 
                         var hasDefaultValue = defaultValue!.Equals(existingValue);
@@ -705,7 +710,6 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                             continue;
                         }
                     }
-                    
 
                     if (!map.ContainsKey(name))
                     {
@@ -720,17 +724,6 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             });
 
-            static bool isNumberType(Type type)
-            {
-                return type == typeof(int) ||
-                       type == typeof(long) ||
-                       type == typeof(decimal) ||
-                       type == typeof(byte) ||
-                       type == typeof(short) ||
-                       type == typeof(decimal) ||
-                       type == typeof(double) ||
-                       type == typeof(float);
-            }
         }
 
         void initializeParametersJson()
