@@ -924,6 +924,19 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         if (name == "focusable" && tagName == "svg")
         {
+            if ("true".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return success($"svg.{nameof(svg.FocusableTrue)}");
+            }
+            if ("false".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return success($"svg.{nameof(svg.FocusableFalse)}");
+            }
+            if ("auto".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return success($"svg.{nameof(svg.FocusableAuto)}");
+            }
+            
             return success($"svg.Focusable(\"{value}\")");
         }
 

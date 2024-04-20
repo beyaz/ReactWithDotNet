@@ -38,6 +38,22 @@ partial class svg
     ///     svg.viewBox = '<paramref name="minX" /> <paramref name="minY" /> <paramref name="width" /> <paramref name="height" />'
     /// </summary>
     public static HtmlElementModifier ViewBox(double  minX, double minY, double width, double height) => ViewBox($"{minX} {minY} {width} {height}");
+    
+    /// <summary>
+    ///     svg.focusable = false
+    /// </summary>
+    public static HtmlElementModifier FocusableFalse => Focusable("false");
+    
+    /// <summary>
+    ///     svg.focusable = true
+    /// </summary>
+    public static HtmlElementModifier FocusableTrue => Focusable("true");
+    
+    /// <summary>
+    ///     svg.focusable = auto
+    /// </summary>
+    public static HtmlElementModifier FocusableAuto => Focusable("auto");
+
 }
 
 partial class Mixin
