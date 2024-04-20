@@ -5,6 +5,8 @@ partial class Mixin
     public static StyleModifier BorderNone => Border("none");
 
    
+    public static StyleModifier BorderInline(double widthAsPixel, string borderStyle, string color)
+        => new(style => style.borderInline = $"{widthAsPixel.AsPixel()}  {borderStyle} {color}");
 
     public static StyleModifier Border(string top, string right, string bottom, string left)
         => new(style => style.border = $"{top} {right} {bottom} {left}");

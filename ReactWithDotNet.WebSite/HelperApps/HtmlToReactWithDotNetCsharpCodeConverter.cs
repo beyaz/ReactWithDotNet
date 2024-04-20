@@ -1104,6 +1104,13 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 return success($"{CamelCase(name)}({value})");
             }
 
+            if (value == none||
+                value == auto||
+                value == inherit||
+                value == solid)
+            {
+                return success($"{CamelCase(name)}({value})");    
+            }
             return success($"{CamelCase(name)}(\"{value}\")");
         }
 
