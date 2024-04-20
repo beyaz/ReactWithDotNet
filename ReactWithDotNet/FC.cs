@@ -3,15 +3,11 @@ using System.Runtime.CompilerServices;
 
 namespace ReactWithDotNet;
 
-public interface IFunctionalComponent
+public interface IFunctionalComponent: IReactComponent
 {
-    public Client Client { get; }
-
     public Func<Task> ComponentDidMount { set; }
 
     public Func<Task> Constructor { set; }
-
-    public ReactContext Context { get; }
 }
 
 partial class Mixin

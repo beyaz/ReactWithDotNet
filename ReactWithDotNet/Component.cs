@@ -3,7 +3,12 @@ using System.Runtime.CompilerServices;
 
 namespace ReactWithDotNet;
 
-public abstract class ReactComponentBase : Element
+public interface IReactComponent
+{
+    Client Client { get; }
+    ReactContext Context { get; }
+}
+public abstract class ReactComponentBase : Element, IReactComponent
 {
     internal Func<Task<Element>> DesignerCustomizedRender;
     
