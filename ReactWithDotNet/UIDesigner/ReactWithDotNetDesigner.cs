@@ -692,9 +692,10 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                         continue;
                     }
 
+                    var existingValue = propertyInfo.GetValue(instance);
+                    
                     if (isNumberType(propertyInfo.PropertyType))
                     {
-                        var existingValue = propertyInfo.GetValue(instance);
                         var defaultValue = Activator.CreateInstance(propertyInfo.PropertyType);
 
                         var hasDefaultValue = defaultValue!.Equals(existingValue);
@@ -704,6 +705,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                             continue;
                         }
                     }
+                    
 
                     if (!map.ContainsKey(name))
                     {
