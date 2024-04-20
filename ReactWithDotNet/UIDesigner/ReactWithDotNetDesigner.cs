@@ -642,6 +642,11 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
                 foreach (var propertyInfo in instanceType.GetProperties(BindingFlags.Instance | BindingFlags.Public))
                 {
+                    if (propertyInfo.CanWrite is false || propertyInfo.CanRead is false)
+                    {
+                        continue;
+                    }
+                    
                     var name = propertyInfo.Name;
                     var propertyType = propertyInfo.PropertyType;
 
