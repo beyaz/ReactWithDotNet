@@ -43,7 +43,7 @@
 
 	<!-- npm -->
 	<ItemGroup>
-		<JsFilesIdDist Include="wwwroot\dist\*.*"/>
+		<JsFilesIdDist Include="wwwroot\dist\*.*" />
 	</ItemGroup>
 	<PropertyGroup>
 		<AppRoot>wwwroot\</AppRoot>		
