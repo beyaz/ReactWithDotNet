@@ -690,6 +690,24 @@ public static partial class Mixin
     ///     Creates new div element wihth given height
     /// </summary>
     public static Element SpaceY(double heightInPx) => new div { style = { height = heightInPx.AsPixel() } };
+    
+    /// <summary>
+    ///     Creates new div element wihth given height
+    /// </summary>
+    public static Element SpaceY(double heightInPx, Func<StyleModifier[], StyleModifier> breakpoint, double heightInPxOnBreakpointMatched) => new div
+    {
+        Height(heightInPx),
+        breakpoint([Height(heightInPxOnBreakpointMatched)])
+    };
+    
+    /// <summary>
+    ///     Creates new div element wihth given width
+    /// </summary>
+    public static Element SpaceX(double widthInPx,Func<StyleModifier[], StyleModifier> breakpoint, double widthtInPxOnBreakpointMatched) => new div
+    {
+        Width(widthInPx),
+        breakpoint([Width(widthtInPxOnBreakpointMatched)])
+    };
 
     public static HtmlElementModifier Text(string innerText) 
         => CreateHtmlElementModifier<HtmlElement>(element => element.text = innerText);
