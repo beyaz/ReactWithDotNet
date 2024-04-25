@@ -217,4 +217,15 @@ public sealed class SwiperThumbs
     public Swiper swiper { get; set; }
 }
 
-public class SwiperSlide : ThirdPartyReactComponent;
+public class SwiperSlide : ThirdPartyReactComponent
+{
+    public SwiperSlide(params StyleModifier[] modifiers)
+    {
+        style.Add(modifiers);
+    }
+    
+    public SwiperSlide()
+    {
+        
+    }
+}
