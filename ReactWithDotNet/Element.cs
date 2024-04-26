@@ -44,6 +44,13 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<Modifier>
 
         return element;
     }
+    
+    public static Element operator +(Element parent, Element child)
+    {
+        parent.Add(child);
+
+        return parent;
+    }
 
     public static Element operator +(Element element, Style style)
     {
