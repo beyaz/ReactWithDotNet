@@ -131,13 +131,14 @@ static class HtmlTextGenerator
         return length > 2 && sb[length - 2] == '\r' && sb[length - 1] == '\n';
     }
 
-    static string PascalToKebabCase(string dotnetPropertyName)
+    static string PascalToKebabCase(ReadOnlySpan<char> dotnetPropertyName)
     {
+        // todo: think more efficient way
         
         if (dotnetPropertyName.StartsWith("aria-", StringComparison.OrdinalIgnoreCase) ||
             dotnetPropertyName.StartsWith("data-", StringComparison.OrdinalIgnoreCase))
         {
-            return dotnetPropertyName;
+            return dotnetPropertyName.ToString();
         }
 
         if (dotnetPropertyName == "className")
@@ -163,10 +164,10 @@ static class HtmlTextGenerator
         var upperCharIndex = indexOfUpperChar(dotnetPropertyName, 1);
         if (upperCharIndex < 0)
         {
-            return dotnetPropertyName;
+            return dotnetPropertyName.ToString();
         }
 
-        return pascalToKebabCaseInternal(dotnetPropertyName);
+        return pascalToKebabCaseInternal(dotnetPropertyName.ToString());
 
         static string pascalToKebabCaseInternal(string str)
         {
