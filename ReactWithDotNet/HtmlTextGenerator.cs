@@ -159,13 +159,13 @@ static class HtmlTextGenerator
             return "viewBox";
         }
 
+        return string.Concat(dotnetPropertyName.SelectMany(convertChar));
+
         static IEnumerable<char> convertChar(char c, int index)
         {
             if (char.IsUpper(c) && index != 0) yield return '-';
             yield return char.ToLower(c, CultureInfo_en_US);
         }
-
-        return string.Concat(dotnetPropertyName.SelectMany(convertChar));
     }
 
     static void ProcessJsonMapNode(HtmlNode htmlNode, string name, object value)
