@@ -42,6 +42,36 @@ partial class Style : Modifier, IEnumerable<StyleModifier>
             right = value;
         }
     }
+    
+    /// <summary>
+    ///     left = <paramref name="value"/>
+    ///     <br/>
+    ///     bottom = <paramref name="value"/>
+    /// </summary>
+    [JsonIgnore]
+    public string leftBottom
+    {
+        set
+        {
+            left  = value;
+            bottom = value;
+        }
+    }
+    
+    /// <summary>
+    ///     right = <paramref name="value"/>
+    ///     <br/>
+    ///     bottom = <paramref name="value"/>
+    /// </summary>
+    [JsonIgnore]
+    public string rightBottom
+    {
+        set
+        {
+            right   = value;
+            bottom = value;
+        }
+    }
 
     [JsonIgnore]
     public string leftRightBottom

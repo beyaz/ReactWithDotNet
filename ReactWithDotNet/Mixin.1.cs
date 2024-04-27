@@ -565,7 +565,39 @@ public static partial class Mixin
     public static HtmlElementModifier Lang(string lang) => CreateHtmlElementModifier<HtmlElement>(element => element.lang = lang);
 
     public static StyleModifier Left(double left) => Left(left.AsPixel());
-    public static StyleModifier LeftRight(string valueForLeftAndRight) => new(style => style.leftRight = valueForLeftAndRight);
+    
+    public static StyleModifier LeftRight(string valueForLeftAndRight) 
+        => new(style => style.leftRight = valueForLeftAndRight);
+    
+    /// <summary>
+    ///     left = <paramref name="value"/>
+    ///     <br/>
+    ///     bottom = <paramref name="value"/>
+    /// </summary>
+    public static StyleModifier LeftBottom(string value) 
+        => new(style => style.leftBottom = value);
+
+    /// <summary>
+    ///     left = <paramref name="value"/> + 'px'
+    ///     <br/>
+    ///     bottom = <paramref name="value"/> + 'px'
+    /// </summary>
+    public static StyleModifier LeftBottom(double value) => LeftBottom(value.AsPixel());
+    
+    /// <summary>
+    ///     right = <paramref name="value"/>
+    ///     <br/>
+    ///     bottom = <paramref name="value"/>
+    /// </summary>
+    public static StyleModifier RightBottom(string value) 
+        => new(style => style.rightBottom = value);
+
+    /// <summary>
+    ///     right = <paramref name="value"/> + 'px'
+    ///     <br/>
+    ///     bottom = <paramref name="value"/> + 'px'
+    /// </summary>
+    public static StyleModifier RightBottom(double value) => RightBottom(value.AsPixel());
 
     /// <summary>
     ///     style.left = <paramref name="pixelValue" /> + 'px'
