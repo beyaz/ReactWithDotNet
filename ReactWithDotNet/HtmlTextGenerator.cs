@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Globalization;
 using System.Text;
 
 namespace ReactWithDotNet;
@@ -15,12 +14,12 @@ static class HtmlTextGenerator
 
     static void AddAttribute(HtmlNode htmlNode, HtmlAttribute htmlAttribute)
     {
-        (htmlNode.Attributes ??= new List<HtmlAttribute>()).Add(htmlAttribute);
+        (htmlNode.Attributes ??= []).Add(htmlAttribute);
     }
 
     static void AddChild(HtmlNode parent, HtmlNode child)
     {
-        var children = parent.Children ??= new List<HtmlNode>();
+        var children = parent.Children ??= [];
 
         children.Add(child);
     }
