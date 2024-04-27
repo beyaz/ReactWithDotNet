@@ -133,6 +133,7 @@ static class HtmlTextGenerator
 
     static string PascalToKebabCase(string dotnetPropertyName)
     {
+        
         if (dotnetPropertyName.StartsWith("aria-", StringComparison.OrdinalIgnoreCase) ||
             dotnetPropertyName.StartsWith("data-", StringComparison.OrdinalIgnoreCase))
         {
@@ -158,6 +159,12 @@ static class HtmlTextGenerator
         {
             return "viewBox";
         }
+        
+        var upperCharIndex = indexOfUpperChar(dotnetPropertyName, 1);
+        if (upperCharIndex < 0)
+        {
+            return dotnetPropertyName;
+        }
 
         return pascalToKebabCaseInternal(dotnetPropertyName);
 
@@ -174,6 +181,22 @@ static class HtmlTextGenerator
                 yield return char.ToLower(c, CultureInfo_en_US);
             }
         }
+        
+        static int indexOfUpperChar(ReadOnlySpan<char> str, int from)
+        {
+            var length = str.Length;
+            
+            for (var i = from; i < length; i++)
+            {
+                if (char.IsUpper(str[i]))
+                {
+                    return i;
+                }
+            }
+                
+            return -1;
+        }
+        
         
         
     }
