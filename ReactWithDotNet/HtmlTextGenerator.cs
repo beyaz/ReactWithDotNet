@@ -159,16 +159,23 @@ static class HtmlTextGenerator
             return "viewBox";
         }
 
-        return string.Concat(dotnetPropertyName.SelectMany(convertChar));
+        return pascalToKebabCaseInternal(dotnetPropertyName);
 
-        static IEnumerable<char> convertChar(char c, int index)
+        static string pascalToKebabCaseInternal(string str)
         {
-            if (char.IsUpper(c) && index != 0)
+            return string.Concat(str.SelectMany(convertChar));
+            
+            static IEnumerable<char> convertChar(char c, int index)
             {
-                yield return '-';
+                if (char.IsUpper(c) && index != 0)
+                {
+                    yield return '-';
+                }
+                yield return char.ToLower(c, CultureInfo_en_US);
             }
-            yield return char.ToLower(c, CultureInfo_en_US);
         }
+        
+        
     }
 
     static void ProcessJsonMapNode(HtmlNode htmlNode, string name, object value)
