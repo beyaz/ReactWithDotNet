@@ -371,6 +371,7 @@ static class HtmlTextGenerator
 
         pushIndent();
         finishTag();
+        return;
 
         bool hasNewLineFromTagToEnd()
         {
