@@ -131,77 +131,6 @@ static class HtmlTextGenerator
         return length > 2 && sb[length - 2] == '\r' && sb[length - 1] == '\n';
     }
 
-    static string PascalToKebabCase(ReadOnlySpan<char> dotnetPropertyName)
-    {
-        // todo: think more efficient way
-        
-        if (dotnetPropertyName.StartsWith("aria-", StringComparison.OrdinalIgnoreCase) ||
-            dotnetPropertyName.StartsWith("data-", StringComparison.OrdinalIgnoreCase))
-        {
-            return dotnetPropertyName.ToString();
-        }
-
-        if (dotnetPropertyName == "className")
-        {
-            return "class";
-        }
-
-        if (dotnetPropertyName == "htmlFor")
-        {
-            return "for";
-        }
-
-        if (dotnetPropertyName == "cssFloat")
-        {
-            return "float";
-        }
-
-        if (dotnetPropertyName == "viewBox")
-        {
-            return "viewBox";
-        }
-        
-        var upperCharIndex = indexOfUpperChar(dotnetPropertyName, 1);
-        if (upperCharIndex < 0)
-        {
-            return dotnetPropertyName.ToString();
-        }
-
-        return pascalToKebabCaseInternal(dotnetPropertyName.ToString());
-
-        static string pascalToKebabCaseInternal(string str)
-        {
-            return string.Concat(str.SelectMany(convertChar));
-            
-            static IEnumerable<char> convertChar(char c, int index)
-            {
-                if (char.IsUpper(c) && index != 0)
-                {
-                    yield return '-';
-                }
-                yield return char.ToLower(c, CultureInfo_en_US);
-            }
-        }
-        
-        static int indexOfUpperChar(ReadOnlySpan<char> str, int from)
-        {
-            var length = str.Length;
-            
-            for (var i = from; i < length; i++)
-            {
-                if (char.IsUpper(str[i]))
-                {
-                    return i;
-                }
-            }
-                
-            return -1;
-        }
-        
-        
-        
-    }
-
     static void ProcessJsonMapNode(HtmlNode htmlNode, ReadOnlySpan<char> name, object value)
     {
         if (name == "key" || name == "DotNetProperties" || name == "onClick" || name == "$DotNetComponentUniqueIdentifier" ||
@@ -278,7 +207,7 @@ static class HtmlTextGenerator
                 valueType == TypeOfBoolean||
                 (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == TypeOfUnionProp))
             {
-                AddAttribute(htmlNode, new () { Name = PascalToKebabCase(name), Value = value.ToString() });
+                AddAttribute(htmlNode, new () { Name = PascalToKebabCaseHelper.PascalToKebabCase(name), Value = value.ToString() });
                 return;
             }
         }
@@ -551,5 +480,79 @@ static class HtmlTextGenerator
         public string Text;
         
         public StringBuilder StringBuilder;
+    }
+    
+    static class PascalToKebabCaseHelper
+    {
+        public static string PascalToKebabCase(ReadOnlySpan<char> dotnetPropertyName)
+        {
+            // todo: think more efficient way
+        
+            if (dotnetPropertyName.StartsWith("aria-", StringComparison.OrdinalIgnoreCase) ||
+                dotnetPropertyName.StartsWith("data-", StringComparison.OrdinalIgnoreCase))
+            {
+                return dotnetPropertyName.ToString();
+            }
+
+            if (dotnetPropertyName == "className")
+            {
+                return "class";
+            }
+
+            if (dotnetPropertyName == "htmlFor")
+            {
+                return "for";
+            }
+
+            if (dotnetPropertyName == "cssFloat")
+            {
+                return "float";
+            }
+
+            if (dotnetPropertyName == "viewBox")
+            {
+                return "viewBox";
+            }
+        
+            var upperCharIndex = indexOfUpperChar(dotnetPropertyName, 1);
+            if (upperCharIndex < 0)
+            {
+                return dotnetPropertyName.ToString();
+            }
+
+            return pascalToKebabCaseInternal(dotnetPropertyName.ToString());
+
+            static string pascalToKebabCaseInternal(string str)
+            {
+                return string.Concat(str.SelectMany(convertChar));
+            
+                static IEnumerable<char> convertChar(char c, int index)
+                {
+                    if (char.IsUpper(c) && index != 0)
+                    {
+                        yield return '-';
+                    }
+                    yield return char.ToLower(c, CultureInfo_en_US);
+                }
+            }
+        
+            static int indexOfUpperChar(ReadOnlySpan<char> str, int from)
+            {
+                var length = str.Length;
+            
+                for (var i = from; i < length; i++)
+                {
+                    if (char.IsUpper(str[i]))
+                    {
+                        return i;
+                    }
+                }
+                
+                return -1;
+            }
+        
+        
+        
+        }
     }
 }
