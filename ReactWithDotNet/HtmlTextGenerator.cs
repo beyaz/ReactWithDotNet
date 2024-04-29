@@ -484,6 +484,13 @@ static class HtmlTextGenerator
     
     static class PascalToKebabCaseHelper
     {
+        static readonly Dictionary<string, string> Cache = new()
+        {
+            {"className","class"},
+            {"htmlFor","for"},
+            {"cssFloat","float"},
+            {"viewBox","viewBox"}
+        };
         public static string PascalToKebabCase(ReadOnlySpan<char> dotnetPropertyName)
         {
             // todo: think more efficient way
@@ -494,26 +501,11 @@ static class HtmlTextGenerator
                 return dotnetPropertyName.ToString();
             }
 
-            if (dotnetPropertyName == "className")
+            if (Cache.TryGetValue(dotnetPropertyName.ToString(), out var value))
             {
-                return "class";
+                return value;
             }
-
-            if (dotnetPropertyName == "htmlFor")
-            {
-                return "for";
-            }
-
-            if (dotnetPropertyName == "cssFloat")
-            {
-                return "float";
-            }
-
-            if (dotnetPropertyName == "viewBox")
-            {
-                return "viewBox";
-            }
-        
+            
             var upperCharIndex = indexOfUpperChar(dotnetPropertyName, 1);
             if (upperCharIndex < 0)
             {
