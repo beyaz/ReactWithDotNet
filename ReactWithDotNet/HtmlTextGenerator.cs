@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Text;
 
 namespace ReactWithDotNet;
@@ -131,7 +132,7 @@ static class HtmlTextGenerator
         return length > 2 && sb[length - 2] == '\r' && sb[length - 1] == '\n';
     }
 
-    static void ProcessJsonMapNode(HtmlNode htmlNode, ReadOnlySpan<char> name, object value)
+    static void ProcessJsonMapNode(HtmlNode htmlNode, string name, object value)
     {
         if (name == "key" || name == "DotNetProperties" || name == "onClick" || name == "$DotNetComponentUniqueIdentifier" ||
             name == "$State" || name == "$Type" ||
@@ -484,35 +485,42 @@ static class HtmlTextGenerator
     
     static class PascalToKebabCaseHelper
     {
-        static readonly Dictionary<string, string> Cache = new()
+        static PascalToKebabCaseHelper()
         {
-            {"className","class"},
-            {"htmlFor","for"},
-            {"cssFloat","float"},
-            {"viewBox","viewBox"}
-        };
-        public static string PascalToKebabCase(ReadOnlySpan<char> dotnetPropertyName)
-        {
-            // todo: think more efficient way
+            Cache.TryAdd("className", "class");
+            Cache.TryAdd("htmlFor","for");
+            Cache.TryAdd("cssFloat","float");
+            Cache.TryAdd("viewBox","viewBox");
+        }
+
+        static readonly ConcurrentDictionary<string, string> Cache = new();
         
+        public static string PascalToKebabCase(string dotnetPropertyName)
+        {
+            if (Cache.TryGetValue(dotnetPropertyName, out var value))
+            {
+                return value;
+            }
+
             if (dotnetPropertyName.StartsWith("aria-", StringComparison.OrdinalIgnoreCase) ||
                 dotnetPropertyName.StartsWith("data-", StringComparison.OrdinalIgnoreCase))
             {
-                return dotnetPropertyName.ToString();
-            }
-
-            if (Cache.TryGetValue(dotnetPropertyName.ToString(), out var value))
-            {
-                return value;
+                return dotnetPropertyName;
             }
             
             var upperCharIndex = indexOfUpperChar(dotnetPropertyName, 1);
             if (upperCharIndex < 0)
             {
-                return dotnetPropertyName.ToString();
+                Cache.TryAdd(dotnetPropertyName, dotnetPropertyName);
+                
+                return dotnetPropertyName;
             }
 
-            return pascalToKebabCaseInternal(dotnetPropertyName.ToString());
+            value = pascalToKebabCaseInternal(dotnetPropertyName);
+            
+            Cache.TryAdd(dotnetPropertyName, value);
+            
+            return value;
 
             static string pascalToKebabCaseInternal(string str)
             {
