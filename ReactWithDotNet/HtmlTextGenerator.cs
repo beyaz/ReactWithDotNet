@@ -313,7 +313,7 @@ static class HtmlTextGenerator
         {
             openTag();
 
-            appendAttributes();
+            appendAttributes(sb,htmlNode);
 
             if (htmlNode.Text != null)
             {
@@ -330,7 +330,7 @@ static class HtmlTextGenerator
 
         openTag();
 
-        appendAttributes();
+        appendAttributes(sb, htmlNode);
 
         sb.Append(">");
 
@@ -445,7 +445,7 @@ static class HtmlTextGenerator
             sb.Append(">");
         }
 
-        void appendAttributes()
+        static void appendAttributes(StringBuilder sb, HtmlNode htmlNode)
         {
             if (htmlNode.Attributes is null)
             {
