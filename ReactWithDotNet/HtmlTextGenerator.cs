@@ -364,16 +364,17 @@ static class HtmlTextGenerator
             ToString(sb, childDepth, child);
         }
 
-        if (hasNewLineFromTagToEnd())
+        if (hasNewLineFromTagToEnd(sb, tagIndex))
         {
             TryAddNewLine(sb);
         }
 
         pushIndent();
         finishTag();
+        
         return;
 
-        bool hasNewLineFromTagToEnd()
+        static bool hasNewLineFromTagToEnd(StringBuilder sb, int? tagIndex)
         {
             if (tagIndex.HasValue)
             {
