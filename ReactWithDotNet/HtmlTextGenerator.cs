@@ -132,15 +132,20 @@ static class HtmlTextGenerator
         return length > 2 && sb[length - 2] == '\r' && sb[length - 1] == '\n';
     }
 
+    static readonly IReadOnlyDictionary<string, bool> SkipThisProperties = new Dictionary<string, bool>
+    {
+        {"key",true},
+        {"DotNetProperties",true},
+        {"onClick",true},
+        {"$DotNetComponentUniqueIdentifier",true},
+        {"$State",true},
+        {"$Type",true},
+        {"$ClientTasks",true}
+    };
+    
     static void ProcessJsonMapNode(HtmlNode htmlNode, string name, object value)
     {
-        if (name == "key" || 
-            name == "DotNetProperties" ||
-            name == "onClick" || 
-            name == "$DotNetComponentUniqueIdentifier" ||
-            name == "$State" ||
-            name == "$Type" ||
-            name == "$ClientTasks")
+        if (SkipThisProperties.ContainsKey(name))
         {
             return;
         }
