@@ -86,6 +86,11 @@ class CssClassInfo
         {
             return false;
         }
+        
+        if (a.Body != b.Body)
+        {
+            return false;
+        }
 
         // compare Pseudos
         {
@@ -159,11 +164,6 @@ class CssClassInfo
                     }
                 }
             }
-        }
-
-        if (a.Body != b.Body)
-        {
-            return false;
         }
 
         return true;
