@@ -80,7 +80,7 @@ partial class Style
 
     static Exception CssParseException(string message)
     {
-        return new Exception("Css parse error." + message);
+        return new ("Css parse error." + message);
     }
     
     string ToCss(bool isImportant)
@@ -95,9 +95,9 @@ partial class Style
         
         while (currentNode != null)
         {
-            sb.Append(currentNode.NameInfo.NameInKebabCase.AsSpan());
+            sb.Append(currentNode.NameInfo.NameInKebabCase);
             sb.Append(semiColumn);
-            sb.Append(currentNode.Value.AsSpan());
+            sb.Append(currentNode.Value);
             sb.Append(separator);
 
             if (currentNode.Next == null)
