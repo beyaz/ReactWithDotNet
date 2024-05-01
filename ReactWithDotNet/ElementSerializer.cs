@@ -338,7 +338,7 @@ static partial class ElementSerializer
             return new RemoteMethodInfo
             {
                 IsRemoteMethod                   = true,
-                remoteMethodName                 = handlerDelegate.Method.GetNameWithToken(),
+                remoteMethodName                 = handlerDelegate.Method.GetAccessKey(),
                 HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier,
                 FunctionNameOfGrabEventArguments = property.FunctionNameOfGrabEventArguments,
                 StopPropagation                  = handlerDelegate.Method.GetCalculated().HasStopPropagation,
@@ -398,7 +398,7 @@ static partial class ElementSerializer
                 if (instance.GetType().GetProperty(propertyInfo.Name + "DebounceHandler")?.GetValue(instance) is Func<Task> debounceHandler)
                 {
                     bindInfo.DebounceTimeout = debounceTimeout;
-                    bindInfo.DebounceHandler = debounceHandler.Method.GetNameWithToken();
+                    bindInfo.DebounceHandler = debounceHandler.Method.GetAccessKey();
                 }
             }
 
@@ -627,7 +627,7 @@ static partial class ElementSerializer
                 if (instance.GetType().GetProperty(propertyDefinition.name+ "DebounceHandler")?.GetValue(instance) is Func<Task> debounceHandler)
                 {
                     bindInfo.DebounceTimeout = debounceTimeout;
-                    bindInfo.DebounceHandler = debounceHandler.Method.GetNameWithToken();
+                    bindInfo.DebounceHandler = debounceHandler.Method.GetAccessKey();
                 }
             }
 

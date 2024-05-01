@@ -590,7 +590,7 @@ static partial class JsonSerializationOptionHelper
                 JsonSerializer.Serialize(writer, obj.GetType().FullName, options);
 
                 writer.WritePropertyName("Method");
-                JsonSerializer.Serialize(writer, @delegate.Method.GetNameWithToken(), options);
+                JsonSerializer.Serialize(writer, @delegate.Method.GetAccessKey(), options);
 
                 var target = @delegate.Target;
                 if (target is not null)

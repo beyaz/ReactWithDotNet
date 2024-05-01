@@ -111,7 +111,7 @@ partial class Mixin
             {
                 if (didMountMethodInfo.DeclaringType != typeof(ReactComponentBase))
                 {
-                    return didMountMethodInfo.GetNameWithToken();
+                    return didMountMethodInfo.GetAccessKey();
                 }
             }
 
@@ -199,7 +199,7 @@ partial class Mixin
                 MethodInfo            = methodInfo,
                 HasStopPropagation    = methodInfo.GetCustomAttributes<ReactStopPropagationAttribute>().Any(),
                 KeyboardEventCallOnly = methodInfo.GetCustomAttributes<ReactKeyboardEventCallOnlyAttribute>().FirstOrDefault()?.Keys,
-                NameWithToken         = methodInfo.GetNameWithToken()
+                NameWithToken         = methodInfo.GetAccessKey()
             };
         }
     }

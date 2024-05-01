@@ -34,7 +34,7 @@ partial class Mixin
                 {
                     renderFuncWithScope = func,
                     
-                    RenderMethodNameWithToken = func.Method.GetNameWithToken(),
+                    RenderMethodNameWithToken = func.Method.GetAccessKey(),
                     
                     CompilerGeneratedType = targeType,
                     
@@ -79,7 +79,7 @@ partial class Mixin
                             
                     asyncRenderFunc = func,
                     
-                    RenderMethodNameWithToken = func.Method.GetNameWithToken(),
+                    RenderMethodNameWithToken = func.Method.GetAccessKey(),
                     
                     CompilerGeneratedType = targeType,
                     

@@ -517,7 +517,7 @@ partial class ElementSerializer
                 {
                     if (node.FunctionalComponent.ComponentDidMount is not null)
                     {
-                        map.Add(___ComponentDidMountMethod___, node.FunctionalComponent.ComponentDidMount.Method.GetNameWithToken());
+                        map.Add(___ComponentDidMountMethod___, node.FunctionalComponent.ComponentDidMount.Method.GetAccessKey());
                     }
                 }
 
@@ -584,7 +584,7 @@ partial class ElementSerializer
 
                             cacheableMethodInfo = new()
                             {
-                                MethodName       = cacheableMethod.GetNameWithToken(),
+                                MethodName       = cacheableMethod.GetAccessKey(),
                                 IgnoreParameters = true,
                                 ElementAsJson    = cachedVersion
                             };
@@ -680,7 +680,7 @@ partial class ElementSerializer
 
                                 cacheableMethodInfo = new()
                                 {
-                                    MethodName    = cacheableMethod.GetNameWithToken(),
+                                    MethodName    = cacheableMethod.GetAccessKey(),
                                     Parameter     = parameter,
                                     ElementAsJson = cachedVersion
                                 };
@@ -880,7 +880,7 @@ partial class ElementSerializer
 
                 var eventSenderInfo = GetEventSenderInfo(reactComponent, propertyInfo.Name);
 
-                var handlerMethod = @delegate.Method.GetNameWithToken();
+                var handlerMethod = @delegate.Method.GetAccessKey();
 
                 reactComponent.Client.InitializeDotnetComponentEventListener(eventSenderInfo, handlerMethod, handlerComponentUniqueIdentifier);
 
@@ -899,7 +899,7 @@ partial class ElementSerializer
 
                 var eventSenderInfo = GetEventSenderInfo(reactComponent, propertyInfo.Name);
 
-                var handlerMethod = @delegate.Method.GetNameWithToken();
+                var handlerMethod = @delegate.Method.GetAccessKey();
 
                 reactComponent.Client.InitializeDotnetComponentEventListener(eventSenderInfo, handlerMethod, handlerComponentUniqueIdentifier);
 

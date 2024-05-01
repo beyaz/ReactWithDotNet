@@ -343,7 +343,7 @@ static class SerializationHelperForCompilerGeneratedClasss
 
                             var eventSenderInfo = GetEventSenderInfo(functionalComponent, name);
 
-                            var handlerMethod = multicastDelegate.Method.GetNameWithToken();
+                            var handlerMethod = multicastDelegate.Method.GetAccessKey();
 
                             functionalComponent.Client.InitializeDotnetComponentEventListener(eventSenderInfo, handlerMethod, handlerComponentUniqueIdentifier);
                     
@@ -374,7 +374,7 @@ static class SerializationHelperForCompilerGeneratedClasss
 
                                     var eventSenderInfo = GetEventSenderInfo(functionalComponent, name);
 
-                                    var handlerMethod = multicastDelegate.Method.GetNameWithToken();
+                                    var handlerMethod = multicastDelegate.Method.GetAccessKey();
 
                                     functionalComponent.Client.InitializeDotnetComponentEventListener(eventSenderInfo, handlerMethod, handlerComponentUniqueIdentifier);
                     
@@ -393,7 +393,7 @@ static class SerializationHelperForCompilerGeneratedClasss
                         {
                             var eventSenderInfo = GetEventSenderInfo(functionalComponent, name);
 
-                            var handlerMethod = multicastDelegate.Method.GetNameWithToken();
+                            var handlerMethod = multicastDelegate.Method.GetAccessKey();
 
                             functionalComponent.Client.InitializeDotnetComponentEventListener(eventSenderInfo, handlerMethod, handlerComponentUniqueIdentifier.Value);
 

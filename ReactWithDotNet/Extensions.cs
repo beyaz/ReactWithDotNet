@@ -246,7 +246,7 @@ static class MethodAccess
 {
     static readonly ConcurrentDictionary<string, MethodInfo> Cache = new();
 
-    public static string GetNameWithToken(this MethodInfo methodInfo)
+    public static string GetAccessKey(this MethodInfo methodInfo)
     {
         var cacheKey = methodInfo.GetCacheKey();
 
