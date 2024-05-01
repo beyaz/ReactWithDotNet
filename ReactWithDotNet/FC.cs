@@ -293,7 +293,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
         }
 
         MethodInfo methodInfo = null;
-        if (TryResolveMethodInfo(state.RenderMethodNameWithToken, ref methodInfo))
+        if (MethodAccess.TryResolveMethodInfo(state.RenderMethodNameWithToken, ref methodInfo))
         {
             object[] invocationParameters = null;
             if (methodInfo.GetParameters().Length == 1)
@@ -345,7 +345,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
         }
 
         MethodInfo methodInfo = null;
-        if (TryResolveMethodInfo(state.RenderMethodNameWithToken, ref methodInfo))
+        if (MethodAccess.TryResolveMethodInfo(state.RenderMethodNameWithToken, ref methodInfo))
         {
             object[] invocationParameters = null;
             if (methodInfo.GetParameters().Length == 1)

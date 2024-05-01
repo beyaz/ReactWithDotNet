@@ -237,7 +237,7 @@ static class ComponentRequestHandler
             // Find method
             MethodInfo methodInfo = null;
             {
-                if (!TryResolveMethodInfo(request.EventHandlerMethodName, ref methodInfo))
+                if (!MethodAccess.TryResolveMethodInfo(request.EventHandlerMethodName, ref methodInfo))
                 {
                     methodInfo = type.FindMethod(request.EventHandlerMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
                     

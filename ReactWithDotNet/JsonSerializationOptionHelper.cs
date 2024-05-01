@@ -515,7 +515,7 @@ static partial class JsonSerializationOptionHelper
 
                         var methodName = reader.GetString();
 
-                        TryResolveMethodInfo(methodName, ref methodInfo);
+                        MethodAccess.TryResolveMethodInfo(methodName, ref methodInfo);
 
                         if (methodInfo == null)
                         {

@@ -166,10 +166,7 @@ static class Extensions
         return new DeveloperException(message);
     }
 
-    public static string GetNameWithToken(this MethodInfo methodInfo)
-    {
-        return $"{methodInfo.Module.Assembly.GetName().Name}#{methodInfo.MetadataToken}#{methodInfo.Name}";
-    }
+   
 
     public static IReadOnlyList<T> NewListWith<T>(this IReadOnlyList<T> readOnlyList, T newValue)
     {
@@ -245,6 +242,16 @@ static class Extensions
         return list;
     }
 
+    
+}
+
+static class MethodAccess
+{
+    public static string GetNameWithToken(this MethodInfo methodInfo)
+    {
+        return $"{methodInfo.Module.Assembly.GetName().Name}#{methodInfo.MetadataToken}#{methodInfo.Name}";
+    }
+    
     public static bool TryResolveMethodInfo(string nameWithToken, ref MethodInfo methodInfo)
     {
         var index = nameWithToken.IndexOf('#');
