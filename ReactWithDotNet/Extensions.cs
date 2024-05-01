@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Concurrent;
 using System.Reflection;
 
 namespace ReactWithDotNet;
@@ -247,13 +248,24 @@ static class Extensions
 
 static class MethodAccess
 {
+    static readonly ConcurrentDictionary<string, MethodInfo> Cache = new();
+    
     public static string GetNameWithToken(this MethodInfo methodInfo)
     {
-        return $"{methodInfo.Module.Assembly.GetName().Name}#{methodInfo.MetadataToken}#{methodInfo.Name}";
+        var key =  $"{methodInfo.Module.Assembly.GetName().Name}#{methodInfo.MetadataToken}#{methodInfo.Name}";
+
+        
+        return key;
     }
     
     public static bool TryResolveMethodInfo(string nameWithToken, ref MethodInfo methodInfo)
     {
+        var cacheKey = nameWithToken;
+        if (Cache.TryGetValue(cacheKey, out methodInfo))
+        {
+            return true;
+        }
+        
         var index = nameWithToken.IndexOf('#');
         if (index <= 0)
         {
@@ -281,6 +293,8 @@ static class MethodAccess
             }
 
             methodInfo = (MethodInfo)methodBase;
+
+            Cache.TryAdd(cacheKey, methodInfo);
 
             return true;
         }
