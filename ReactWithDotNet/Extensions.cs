@@ -82,13 +82,13 @@ static class Extensions
                     if (methodCallExpression.Arguments[0] is MemberExpression { Expression: ConstantExpression constantExpression })
                     {
                         object index = null;
-                        
+
                         foreach (var fieldInfo in constantExpression.Value!.GetType().GetFields())
                         {
                             if (isNumberType(fieldInfo.FieldType))
                             {
-                                 index = fieldInfo.GetValue(constantExpression.Value);
-                                 break;
+                                index = fieldInfo.GetValue(constantExpression.Value);
+                                break;
                             }
                         }
 
@@ -96,7 +96,7 @@ static class Extensions
                         {
                             throw new DeveloperException(constantExpression.ToString());
                         }
-                        
+
                         path.Add("]");
                         path.Add(index.ToString());
                         path.Add("[");
@@ -120,16 +120,18 @@ static class Extensions
             }
 
             return path;
-            
-            static bool isNumberType(Type type) =>
-                type == typeof(int) ||
-                type == typeof(long) ||
-                type == typeof(decimal) ||
-                type == typeof(byte) ||
-                type == typeof(short) ||
-                type == typeof(decimal) ||
-                type == typeof(double) ||
-                type == typeof(float);
+
+            static bool isNumberType(Type type)
+            {
+                return type == typeof(int) ||
+                       type == typeof(long) ||
+                       type == typeof(decimal) ||
+                       type == typeof(byte) ||
+                       type == typeof(short) ||
+                       type == typeof(decimal) ||
+                       type == typeof(double) ||
+                       type == typeof(float);
+            }
         }
     }
 
@@ -163,7 +165,7 @@ static class Extensions
     {
         return new DeveloperException(message);
     }
-    
+
     public static string GetNameWithToken(this MethodInfo methodInfo)
     {
         return $"{methodInfo.Module.Assembly.GetName().Name}#{methodInfo.MetadataToken}#{methodInfo.Name}";
@@ -242,7 +244,7 @@ static class Extensions
 
         return list;
     }
-    
+
     public static bool TryResolveMethodInfo(string nameWithToken, ref MethodInfo methodInfo)
     {
         var index = nameWithToken.IndexOf('#');
