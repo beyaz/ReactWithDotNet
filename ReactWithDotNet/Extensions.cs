@@ -167,8 +167,6 @@ static class Extensions
         return new DeveloperException(message);
     }
 
-   
-
     public static IReadOnlyList<T> NewListWith<T>(this IReadOnlyList<T> readOnlyList, T newValue)
     {
         if (readOnlyList == null)
@@ -242,64 +240,88 @@ static class Extensions
 
         return list;
     }
-
-    
 }
 
 static class MethodAccess
 {
     static readonly ConcurrentDictionary<string, MethodInfo> Cache = new();
-    
+
     public static string GetNameWithToken(this MethodInfo methodInfo)
     {
-        var key =  $"{methodInfo.Module.Assembly.GetName().Name}#{methodInfo.MetadataToken}#{methodInfo.Name}";
+        var cacheKey = methodInfo.GetCacheKey();
 
-        
-        return key;
+        Cache.TryAdd(cacheKey, methodInfo);
+
+        return cacheKey;
     }
-    
-    public static bool TryResolveMethodInfo(string nameWithToken, ref MethodInfo methodInfo)
+
+    public static bool TryResolveMethodInfo(string cacheKey, ref MethodInfo methodInfo)
     {
-        var cacheKey = nameWithToken;
         if (Cache.TryGetValue(cacheKey, out methodInfo))
         {
             return true;
         }
-        
-        var index = nameWithToken.IndexOf('#');
+
+        methodInfo = FindMethod(cacheKey);
+        if (methodInfo is null)
+        {
+            return false;
+        }
+
+        Cache.TryAdd(cacheKey, methodInfo);
+
+        return true;
+    }
+
+    static MethodInfo FindMethod(string cacheKey)
+    {
+        var index = cacheKey.IndexOf('#');
         if (index <= 0)
         {
-            return false;
+            return null;
         }
 
-        var assemblyName = nameWithToken[..index];
-
-        var index2 = nameWithToken.IndexOf('#', index + 1);
-        if (index2 <= 0)
+        var type = Type.GetType(cacheKey[(index + 1)..]);
+        if (type is null)
         {
-            return false;
+            return null;
         }
 
-        var metadataToken = int.Parse(nameWithToken.Substring(index + 1, index2 - index - 1));
-
-        var assembly = Assembly.Load(assemblyName);
-
-        foreach (var module in assembly.Modules)
+        foreach (var methodInfo in type.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
         {
-            var methodBase = module.ResolveMethod(metadataToken);
-            if (methodBase == null)
+            if (methodInfo.GetCacheKey() == cacheKey)
             {
-                continue;
+                return methodInfo;
             }
-
-            methodInfo = (MethodInfo)methodBase;
-
-            Cache.TryAdd(cacheKey, methodInfo);
-
-            return true;
         }
 
-        return false;
+        return null;
+    }
+
+    static string GetCacheKey(this MethodInfo methodInfo)
+    {
+        if (methodInfo == null)
+        {
+            throw new ArgumentNullException(nameof(methodInfo));
+        }
+
+        var str = methodInfo.ToString();
+        if (str is null)
+        {
+            throw new ArgumentException(nameof(str));
+        }
+
+        var methodNameWithoutReturnType = str.Substring(str.IndexOf(' ') + 1);
+
+        var type = methodInfo.ReflectedType;
+        if (type is null)
+        {
+            throw new ArgumentException(nameof(type));
+        }
+
+        var assemblyName = type.Assembly.GetName().Name;
+
+        return $"{methodNameWithoutReturnType}#{type},{assemblyName}";
     }
 }
 
