@@ -11,7 +11,7 @@ partial class Mixin
     
     
     /// <summary>
-    ///     a.href = <paramref name="href" />
+    ///     (a or link).href = <paramref name="href" />
     /// </summary>
     public static HtmlElementModifier Href(string href) => CreateHtmlElementModifier<HtmlElement>(element =>
     {
@@ -41,7 +41,7 @@ partial class Mixin
     public static HtmlElementModifier Target(string target) => CreateHtmlElementModifier<a>(element => element.target = target);
     
     /// <summary>
-    ///     a.href = <paramref name="value" />;
+    ///     (a or link).href = <paramref name="value" />;
     ///     <br/>
     ///     <br/>
     ///     Specifies the relationship between the current document and the linked document.
