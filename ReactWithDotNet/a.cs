@@ -13,7 +13,27 @@ partial class Mixin
     /// <summary>
     ///     a.href = <paramref name="href" />
     /// </summary>
-    public static HtmlElementModifier Href(string href) => CreateHtmlElementModifier<a>(element => element.href = href);
+    public static HtmlElementModifier Href(string href) => CreateHtmlElementModifier<HtmlElement>(element =>
+    {
+        if (element is null)
+        {
+            return;
+        }
+        
+        if (element is a aElement)
+        {
+            aElement.href = href;
+        }
+        else if (element is link linkElement)
+        {
+            linkElement.href = href;
+        }
+        else
+        {
+            throw DeveloperException($"Href not calculated.{element.GetType().FullName}");    
+        }
+        
+    });
 
     /// <summary>
     ///     a.target = <paramref name="target" />
@@ -30,5 +50,24 @@ partial class Mixin
     ///     <br />
     ///     Tip: Search engines can use this attribute to get more information about a link!
     /// </summary>
-    public static HtmlElementModifier Rel(string value) => CreateHtmlElementModifier<a>(element => element.rel = value);
+    public static HtmlElementModifier Rel(string value) => CreateHtmlElementModifier<HtmlElement>(element =>
+    {
+        if (element is null)
+        {
+            return;
+        }
+        
+        if (element is a aElement)
+        {
+            aElement.rel = value;
+        }
+        else if (element is link linkElement)
+        {
+            linkElement.rel = value;
+        }
+        else
+        {
+            throw DeveloperException($"rel not calculated.{element.GetType().FullName}");    
+        }       
+    });
 }
