@@ -63,7 +63,8 @@ partial class Mixin
    
 
   
-    
+    public static StyleModifier BorderRadius(double borderTopLeftRadius, double borderTopRightRadius,double borderBottomRightRadius,double borderBottomLeftRadius)
+        => BorderRadius($"{borderTopLeftRadius}px {borderTopRightRadius}px {borderBottomRightRadius}px {borderBottomLeftRadius}px");
    
     
     

@@ -1044,7 +1044,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return success(UnMarkAsAlreadyCalculatedModifier(value));
         }
 
-        if (name == "padding" || name == "margin")
+        if (name == nameof(Style.padding) || name == nameof(Style.margin) || name == nameof(Style.borderRadius))
         {
             var parameters = value.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
             
