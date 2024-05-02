@@ -558,7 +558,12 @@ public class ExportingCommonHtmlElements
             new()
             {
                 Tag = "use",
-                Attributes = [],
+                Attributes = [
+                    new AttributeInfo
+                    {
+                        Name    = "xlinkHref"
+                    },
+                ],
                 EnableCastFromString = false
             },
             new()

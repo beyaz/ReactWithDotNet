@@ -2615,6 +2615,20 @@ public sealed class polygon : HtmlElement
 
 public sealed class use : HtmlElement
 {
+    #region string xlinkHref
+    PropertyValueNode<string> _xlinkHref;
+    static readonly PropertyValueDefinition _xlinkHref_ = new()
+    {
+        name = nameof(xlinkHref)
+    };
+    public string xlinkHref
+    {
+        get => _xlinkHref?.value;
+        set => SetValue(_xlinkHref_, ref _xlinkHref, value);
+    }
+    #endregion
+
+
     public use() { }
 
     public use(params Modifier[] modifiers) : base(modifiers) { }
@@ -2624,6 +2638,8 @@ public sealed class use : HtmlElement
     public use(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<use> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    public static HtmlElementModifier XlinkHref(string value) => Modify(x => x.xlinkHref = value);
+
 }
 
 public sealed class rect : HtmlElement
