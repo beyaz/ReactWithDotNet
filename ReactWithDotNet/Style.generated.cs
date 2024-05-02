@@ -173,7 +173,7 @@ partial class Style
         public static readonly StyleAttributeNameInfo flexGrow = new ("flexGrow", "flex-grow");
         public static readonly StyleAttributeNameInfo flexShrink = new ("flexShrink", "flex-shrink");
         public static readonly StyleAttributeNameInfo flexWrap = new ("flexWrap", "flex-wrap");
-        public static readonly StyleAttributeNameInfo @float = new ("@float", "@float");
+        public static readonly StyleAttributeNameInfo @float = new ("float", "float");
         public static readonly StyleAttributeNameInfo floodColor = new ("floodColor", "flood-color");
         public static readonly StyleAttributeNameInfo floodOpacity = new ("floodOpacity", "flood-opacity");
         public static readonly StyleAttributeNameInfo font = new ("font", "font");
