@@ -4,6 +4,7 @@ using System.Web;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 using ReactWithDotNet.ThirdPartyLibraries.ReactSimpleCodeEditor;
+using ReactWithDotNet.ThirdPartyLibraries.split_js;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
 
@@ -179,16 +180,19 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             },
             style = { Width(50) }
         };
-        
+
         return new FlexColumn
         {
-            new style{ text = @"
+            new style
+            {
+                text = @"
 .npm__react-simple-code-editor__textarea:focus{  outline: none; }
 
-"},
+"
+            },
             SizeFull,
             Padding(10),
-            
+
 
             new div(FontSize23, Padding(10), TextAlignCenter)
             {
@@ -207,36 +211,37 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             {
                 new FlexRow(SizeFull)
                 {
-                    
-                    new FlexColumn(SizeFull, Gap(20))
+
+                    new Split
                     {
-                        new FreeScrollBar(SizeFull, Border(Solid(1,"#d1d9d1")), BorderRadius(5))
+                        new FlexColumn(SizeFull, Gap(20))
                         {
-                            htmlEditor
-                        },
-                        new FreeScrollBar(SizeFull, Border(Solid(1,"#d1d9d1")), BorderRadius(5))
-                        {
-                            csharpEditor
-                        }
-                    }
-                    
-                    ,
-                    
-                    new FreeScrollBar(SizeFull)
-                    {
-                        // paper
-                        BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
-                        BackgroundSize("10px 10px"),
-                            
-                        new FlexRowCentered(SizeFull, Padding(15))
-                        {
-                           
-                            new iframe
+                            new FreeScrollBar(SizeFull, Border(Solid(1, "#d1d9d1")), BorderRadius(5))
                             {
-                                id="g",
-                                src   = Page.LiveEditor.Url+$"?utid={state.Utid}&preview=true",
-                                style = { BorderNone, WidthFull, HeightFull },
-                                title = "Live Editor Preview"
+                                htmlEditor
+                            },
+                            new FreeScrollBar(SizeFull, Border(Solid(1, "#d1d9d1")), BorderRadius(5))
+                            {
+                                csharpEditor
+                            }
+                        },
+
+                        new FreeScrollBar(SizeFull)
+                        {
+                            // paper
+                            BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
+                            BackgroundSize("10px 10px"),
+
+                            new FlexRowCentered(SizeFull, Padding(15))
+                            {
+
+                                new iframe
+                                {
+                                    id    = "g",
+                                    src   = Page.LiveEditor.Url + $"?utid={state.Utid}&preview=true",
+                                    style = { BorderNone, WidthFull, HeightFull },
+                                    title = "Live Editor Preview"
+                                }
                             }
                         }
                     }
