@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Collections.Concurrent;
+using System.Text;
+using System.Web;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 using ReactWithDotNet.ThirdPartyLibraries.ReactSimpleCodeEditor;
@@ -13,12 +15,51 @@ class HtmlToCSharpViewModel
     public int MaxAttributeCountPerLine { get; set; }
     public string StatusMessage { get; set; }
     public bool SmartMode { get; set; }
+    public string Utid { get; set; }
 }
 
 class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 {
+    string GetQuery(string name)
+    {
+        var value = KeyForHttpContext[Context].Request.Query[name].FirstOrDefault();
+        if (value != null)
+        {
+            return value;
+        }
+
+        var referer = KeyForHttpContext[Context].Request.Headers["Referer"];
+        if (string.IsNullOrWhiteSpace(referer))
+        {
+            return null;
+        }
+
+        var nameValueCollection = HttpUtility.ParseQueryString(new Uri(referer).Query);
+
+        return nameValueCollection[name];
+    }
+    
+    string UtidParameter =>GetQuery("utid");
+    
+    bool Preview => GetQuery("preview") == "true";
+    
+    static readonly ConcurrentDictionary<string, string> Utid_To_GeneratedCode_Cache = [];
+
+    public Task Refresh()
+    {
+        return Task.CompletedTask;
+    }
+    
     protected override Task constructor()
     {
+        if (Preview)
+        {
+            Client.ListenEvent("RefreshComponentPreview", Refresh);  
+            return Task.CompletedTask;
+        }
+        
+        
+        
         state = new HtmlToCSharpViewModel
         {
             HtmlText = @"
@@ -43,10 +84,13 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 ",
             
             SmartMode = true,
-            MaxAttributeCountPerLine = 4
+            MaxAttributeCountPerLine = 4,
+            Utid = UtidParameter ?? Guid.NewGuid().ToString("N")
         };
 
         CalculateOutput();
+        
+        Client.HistoryReplaceState(null,null, Page.LiveEditor.Url+$"?utid={state.Utid}");
 
         return Task.CompletedTask;
     }
@@ -62,8 +106,15 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         return Task.CompletedTask;
     }
     
+   
+    
     protected override Element render()
     {
+        if (Preview)
+        {
+            return CreatePreview(UtidParameter);
+        }
+        
         var htmlEditor = new Editor
         {
             valueBind                = ()=>state.HtmlText,
@@ -179,7 +230,14 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                             
                         new FlexRowCentered(SizeFull, Padding(15))
                         {
-                            CreatePreview
+                           
+                            new iframe
+                            {
+                                id="g",
+                                src   = Page.LiveEditor.Url+$"?utid={state.Utid}&preview=true",
+                                style = { BorderNone, WidthFull, HeightFull },
+                                title = "Live Editor Preview"
+                            }
                         }
                     }
                 }
@@ -200,11 +258,17 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
         if (string.IsNullOrWhiteSpace(htmlText))
         {
+            
             state.CSharpCode = null;
+            
+            Utid_To_GeneratedCode_Cache[state.Utid] = null;
+            
             return;
         }
 
         CalculateOutput();
+
+       
     }
 
     void CalculateOutput()
@@ -244,7 +308,10 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
             state.CSharpCode = sb.ToString();
 
-            
+            Utid_To_GeneratedCode_Cache[state.Utid] = state.CSharpCode;
+
+            RefreshComponentPreview(Client);
+
         }
         catch (Exception exception)
         {
@@ -252,13 +319,39 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         }
     }
 
-    
-    
-    Element CreatePreview()
+    static void RefreshComponentPreview(Client client)
     {
-        if (state.CSharpCode?.Length  > 0)
+        const string jsCode =
+            """
+            var frame = window.frames[0];
+            if(frame)
+            {
+              var reactWithDotNet = frame.ReactWithDotNet;
+              if(reactWithDotNet)
+              {
+                reactWithDotNet.DispatchEvent('RefreshComponentPreview', []);
+              }
+            }
+            """;
+        
+        client.RunJavascript(jsCode);
+    }
+    
+    static Element CreatePreview(string utid)
+    {
+        if (utid is null)
         {
-            var (isTypeFound, type, assemblyLoadContext, sourceCodeHasError, sourceCodeError) = DynamicCode.LoadAndFindType(new []{state.CSharpCode}, "Preview.SampleComponent");
+            return "Utid is null";
+        }
+        
+        if (Utid_To_GeneratedCode_Cache.TryGetValue(utid, out var csharpCode))
+        {
+            if (string.IsNullOrWhiteSpace(csharpCode))
+            {
+                return "Empty CSharp Code";
+            }
+            
+            var (isTypeFound, type, assemblyLoadContext, sourceCodeHasError, sourceCodeError) = DynamicCode.LoadAndFindType(new []{csharpCode}, "Preview.SampleComponent");
             if (isTypeFound)
             {
                 var instance = type.Assembly.CreateInstance("Preview.SampleComponent");
@@ -274,6 +367,6 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             DynamicCode.TryClear(assemblyLoadContext);
         }
 
-        return null;
+        return "Utid not found";
     }
 }
