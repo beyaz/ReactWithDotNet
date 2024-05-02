@@ -1106,7 +1106,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         if (typeof(Mixin).GetMethod(CamelCase(name), [typeof(string)]) is not null)
         {
             if (typeof(Mixin).GetMethod(CamelCase(name), [typeof(double)]) is not null &&
-                value.EndsWithPixel())
+                value.EndsWithPixel() && value.IndexOf(' ') < 0)
             {
                 return success($"{CamelCase(name)}({value.RemovePixelFromEnd()})");
             }
