@@ -1,4 +1,4 @@
-import Split from 'react-split'
+import Split from 'split.js'
 
 export default Split;
 
