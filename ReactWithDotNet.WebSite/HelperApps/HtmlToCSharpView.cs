@@ -4,7 +4,7 @@ using System.Web;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 using ReactWithDotNet.ThirdPartyLibraries.ReactSimpleCodeEditor;
-using ReactWithDotNet.ThirdPartyLibraries.split_js;
+using ReactWithDotNet.ThirdPartyLibraries._react_split_;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
 
@@ -214,36 +214,43 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
                     new Split
                     {
-                        new FlexColumn(SizeFull, Gap(20))
-                        {
-                            new FreeScrollBar(SizeFull, Border(Solid(1, "#d1d9d1")), BorderRadius(5))
-                            {
-                                htmlEditor
-                            },
-                            new FreeScrollBar(SizeFull, Border(Solid(1, "#d1d9d1")), BorderRadius(5))
-                            {
-                                csharpEditor
-                            }
-                        },
+                        sizes=[25, 75],
+                        gutterSize = 10,
+                        style     = { WidthFull, DisplayFlexRow },
+                        
+                       children=
+                       {
+                           new FlexColumn(SizeFull, Gap(20))
+                           {
+                               new FreeScrollBar(SizeFull, Border(Solid(1, "#d1d9d1")), BorderRadius(5))
+                               {
+                                   htmlEditor
+                               },
+                               new FreeScrollBar(SizeFull, Border(Solid(1, "#d1d9d1")), BorderRadius(5))
+                               {
+                                   csharpEditor
+                               }
+                           },
 
-                        new FreeScrollBar(SizeFull)
-                        {
-                            // paper
-                            BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
-                            BackgroundSize("10px 10px"),
+                           new FreeScrollBar(SizeFull)
+                           {
+                               // paper
+                               BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
+                               BackgroundSize("10px 10px"),
 
-                            new FlexRowCentered(SizeFull, Padding(15))
-                            {
+                               new FlexRowCentered(SizeFull, Padding(15))
+                               {
 
-                                new iframe
-                                {
-                                    id    = "g",
-                                    src   = Page.LiveEditor.Url + $"?utid={state.Utid}&preview=true",
-                                    style = { BorderNone, WidthFull, HeightFull },
-                                    title = "Live Editor Preview"
-                                }
-                            }
-                        }
+                                   new iframe
+                                   {
+                                       id    = "g",
+                                       src   = Page.LiveEditor.Url + $"?utid={state.Utid}&preview=true",
+                                       style = { BorderNone, WidthFull, HeightFull },
+                                       title = "Live Editor Preview"
+                                   }
+                               }
+                           }
+                       }
                     }
                 }
             },

@@ -19,6 +19,6 @@ import "./react-with-dotnet/libraries/uiw-react-textarea-code-editor/all";
 import "./react-with-dotnet/libraries/react-simple-code-editor/all";
 import "./react-with-dotnet/libraries/react-player/all";
 import "./react-with-dotnet/libraries/react-quill/all";
-import "./react-with-dotnet/libraries/split.js/all";
+import "./react-with-dotnet/libraries/react-split/all";
 
 export { ReactWithDotNet };
