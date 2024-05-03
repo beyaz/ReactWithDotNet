@@ -14,7 +14,7 @@ public sealed class Split : ThirdPartyReactComponent
 
     [ReactProp]
     public string gutterAlign { get; set; }
-
+    
     [ReactProp]
     public int? snapOffset { get; set; }
     
