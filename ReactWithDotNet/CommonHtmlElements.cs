@@ -6037,16 +6037,16 @@ public sealed class link : HtmlElement
     #endregion
 
 
-    #region string crossorigin
-    PropertyValueNode<string> _crossorigin;
-    static readonly PropertyValueDefinition _crossorigin_ = new()
+    #region string crossOrigin
+    PropertyValueNode<string> _crossOrigin;
+    static readonly PropertyValueDefinition _crossOrigin_ = new()
     {
-        name = nameof(crossorigin)
+        name = nameof(crossOrigin)
     };
-    public string crossorigin
+    public string crossOrigin
     {
-        get => _crossorigin?.value;
-        set => SetValue(_crossorigin_, ref _crossorigin, value);
+        get => _crossOrigin?.value;
+        set => SetValue(_crossOrigin_, ref _crossOrigin, value);
     }
     #endregion
 
@@ -6088,7 +6088,7 @@ public sealed class link : HtmlElement
 
     public static HtmlElementModifier Integrity(string value) => Modify(x => x.integrity = value);
 
-    public static HtmlElementModifier Crossorigin(string value) => Modify(x => x.crossorigin = value);
+    public static HtmlElementModifier CrossOrigin(string value) => Modify(x => x.crossOrigin = value);
 
     public static HtmlElementModifier Referrerpolicy(string value) => Modify(x => x.referrerpolicy = value);
 

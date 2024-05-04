@@ -63,10 +63,10 @@ class MainLayout : PureComponent, IPageLayout
                
                 new link
                 {
-                    rel = "stylesheet",
-                    type = "text/css",
-                    href = $"{root}/dist/index.css",
-                    crossorigin = "anonymous"
+                    rel         = "stylesheet",
+                    type        = "text/css",
+                    href        = $"{root}/dist/index.css",
+                    crossOrigin = "anonymous"
                 },
                 
 
@@ -99,7 +99,7 @@ ReactWithDotNet.RenderComponentIn({{
             
             return new Element[]
             {
-                new link{href   = "https://fonts.gstatic.com", rel = "preconnect", crossorigin = "anonymous"},
+                new link{href   = "https://fonts.gstatic.com", rel = "preconnect", crossOrigin = "anonymous"},
                 
                 new link{href   = "https://fonts.googleapis.com", rel = "preconnect"},
                 
@@ -109,11 +109,11 @@ ReactWithDotNet.RenderComponentIn({{
                 // optimized for english characters (40kb -> 6kb)
                 new link
                 {
-                    rel = "preload", 
-                    href = $"{fonts}PlusJakartaSans-ExtraBold-subset.woff2",
-                    type="font/woff2",
-                    crossorigin = "anonymous",
-                    @as = "font"
+                    rel         = "preload", 
+                    href        = $"{fonts}PlusJakartaSans-ExtraBold-subset.woff2",
+                    type        ="font/woff2",
+                    crossOrigin = "anonymous",
+                    @as         = "font"
                 },
                 
 

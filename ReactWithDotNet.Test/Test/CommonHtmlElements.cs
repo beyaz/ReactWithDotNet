@@ -1486,7 +1486,7 @@ public class ExportingCommonHtmlElements
                     },
                     new ()
                     {
-                        Name = "crossorigin"
+                        Name = "crossOrigin"
                     },
                     new ()
                     {
