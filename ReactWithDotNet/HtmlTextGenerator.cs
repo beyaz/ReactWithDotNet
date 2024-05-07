@@ -51,8 +51,13 @@ static class HtmlTextGenerator
             return htmlNode;
         }
 
-        jsonMap.Foreach((k, v) => ProcessJsonMapNode(htmlNode, k, v));
-
+        var node = jsonMap.Head;
+        while (node is not null)
+        {
+            ProcessJsonMapNode(htmlNode, node.Key, node.Value);
+            node = node.Next;
+        }
+        
         return htmlNode;
     }
 
