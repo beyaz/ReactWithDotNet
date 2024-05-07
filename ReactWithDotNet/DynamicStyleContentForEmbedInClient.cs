@@ -34,7 +34,7 @@ class DynamicStyleContentForEmbedInClient
 
             while (true)
             {
-                cssClassInfo = new ()
+                cssClassInfo = new()
                 {
                     Name                      = firstName + suffix++,
                     Pseudos                   = cssClassInfo.Pseudos,
@@ -43,7 +43,6 @@ class DynamicStyleContentForEmbedInClient
                     Body                      = cssClassInfo.Body
                 };
 
-                
                 {
                     var cursor = CollectionsMarshal.AsSpan(ListOfClasses);
                     var length = cursor.Length;
@@ -62,7 +61,7 @@ class DynamicStyleContentForEmbedInClient
                     // check has already same name give another name
                     {
                         var hasAlreadyExistsSameName = false;
-                    
+
                         for (var i = 0; i < length; i++)
                         {
                             if (cursor[i].Name == cssClassInfo.Name)
@@ -78,7 +77,6 @@ class DynamicStyleContentForEmbedInClient
                         }
                     }
                 }
-                
 
                 break;
             }
@@ -115,7 +113,7 @@ class CssClassInfo
         {
             return false;
         }
-        
+
         if (a.Body != b.Body)
         {
             return false;
@@ -125,7 +123,7 @@ class CssClassInfo
         {
             var aPseudos = a.Pseudos;
             var bPseudos = b.Pseudos;
-            
+
             if (aPseudos is not null && bPseudos is null)
             {
                 return false;
@@ -162,7 +160,7 @@ class CssClassInfo
         {
             var aMediaQueries = a.MediaQueries;
             var bMediaQueries = b.MediaQueries;
-            
+
             if (aMediaQueries is not null && bMediaQueries is null)
             {
                 return false;
@@ -212,7 +210,7 @@ class CssClassInfo
             foreach (var pseudoCodeInfo in Pseudos)
             {
                 var cssSelector = $".{Name}:{pseudoCodeInfo.Name}";
-                var cssBody     = pseudoCodeInfo.BodyOfCss;
+                var cssBody = pseudoCodeInfo.BodyOfCss;
 
                 jsonMap.Add(cssSelector, cssBody);
             }
