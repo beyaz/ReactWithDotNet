@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace ReactWithDotNet;
 
@@ -1148,8 +1149,12 @@ partial class ElementSerializer
             }
         }
 
-        foreach (var item in children)
+        var childrenAsSpan = CollectionsMarshal.AsSpan(children);
+        for (var i = 0; i < length; i++)
         {
+            var item = childrenAsSpan[i];
+            
+            
             var childNode = ConvertToNode(item);
 
             childNode.Parent = node;
