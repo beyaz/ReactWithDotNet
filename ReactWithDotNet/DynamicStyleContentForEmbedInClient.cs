@@ -43,39 +43,33 @@ class DynamicStyleContentForEmbedInClient
                     Body                      = cssClassInfo.Body
                 };
 
+                var cursor = CollectionsMarshal.AsSpan(ListOfClasses);
+                var length = cursor.Length;
+
+                // if everything is equal then no need to reExport return existing record
+                for (var i = 0; i < length; i++)
                 {
-                    var cursor = CollectionsMarshal.AsSpan(ListOfClasses);
-                    var length = cursor.Length;
-
-                    // if everything is equal then no need to reExport return existing record
+                    if (CssClassInfo.IsEquals(cssClassInfo, cursor[i]))
                     {
-                        for (var i = 0; i < length; i++)
-                        {
-                            if (CssClassInfo.IsEquals(cssClassInfo, cursor[i]))
-                            {
-                                return cssClassInfo.Name;
-                            }
-                        }
+                        return cssClassInfo.Name;
                     }
+                }
 
-                    // check has already same name give another name
+                // check has already same name give another name
+                var hasAlreadyExistsSameName = false;
+
+                for (var i = 0; i < length; i++)
+                {
+                    if (cursor[i].Name == cssClassInfo.Name)
                     {
-                        var hasAlreadyExistsSameName = false;
-
-                        for (var i = 0; i < length; i++)
-                        {
-                            if (cursor[i].Name == cssClassInfo.Name)
-                            {
-                                hasAlreadyExistsSameName = true;
-                                break;
-                            }
-                        }
-
-                        if (hasAlreadyExistsSameName)
-                        {
-                            continue;
-                        }
+                        hasAlreadyExistsSameName = true;
+                        break;
                     }
+                }
+
+                if (hasAlreadyExistsSameName)
+                {
+                    continue;
                 }
 
                 break;
