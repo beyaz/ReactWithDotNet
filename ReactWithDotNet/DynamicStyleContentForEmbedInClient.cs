@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices;
+
 namespace ReactWithDotNet;
 
 class DynamicStyleContentForEmbedInClient
@@ -6,14 +8,15 @@ class DynamicStyleContentForEmbedInClient
 
     public JsonMap CalculateCssClassList()
     {
-        if (!ListOfClasses.Any())
+        var cssClassInfoList = CollectionsMarshal.AsSpan(ListOfClasses);
+        if (cssClassInfoList.Length == 0)
         {
             return null;
         }
 
         var jsonMap = new JsonMap();
 
-        foreach (var cssClassInfo in ListOfClasses)
+        foreach (var cssClassInfo in cssClassInfoList)
         {
             cssClassInfo.WriteTo(jsonMap);
         }
