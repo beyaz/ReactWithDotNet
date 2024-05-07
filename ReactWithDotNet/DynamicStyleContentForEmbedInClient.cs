@@ -44,11 +44,15 @@ class DynamicStyleContentForEmbedInClient
                 };
 
                 // if everything is equal then no need to reExport
-                if (ListOfClasses.Any(x => CssClassInfo.IsEquals(cssClassInfo, x)))
+                foreach (var x in CollectionsMarshal.AsSpan(ListOfClasses))
                 {
-                    return cssClassInfo.Name;
+                    if (CssClassInfo.IsEquals(cssClassInfo, x))
+                    {
+                        return cssClassInfo.Name;
+                    }
                 }
-
+                
+                // todo: check detail
                 if (ListOfClasses.Any(x => x.Name == cssClassInfo.Name))
                 {
                     continue;
