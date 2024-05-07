@@ -88,17 +88,17 @@ class DynamicStyleContentForEmbedInClient
     }
 }
 
-class CssPseudoCodeInfo
+sealed class CssPseudoCodeInfo
 {
     public string BodyOfCss { get; init; }
     public string Name { get; init; }
 }
 
-class CssClassInfo
+sealed class CssClassInfo
 {
     public string Body { get; init; }
     public int? ComponentUniqueIdentifier { get; init; }
-    public IReadOnlyList<(string mediaRule, string cssBody)> MediaQueries { get; set; }
+    public IReadOnlyList<(string mediaRule, string cssBody)> MediaQueries { get; init; }
     public string Name { get; init; }
     public IReadOnlyList<CssPseudoCodeInfo> Pseudos { get; init; }
 
