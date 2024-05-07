@@ -1128,8 +1128,13 @@ partial class ElementSerializer
         node.IsChildrenOpened = true;
 
         var children = node.Element._children;
+        if (children == null)
+        {
+            return;
+        }
 
-        if (children == null || children.Count == 0)
+        var length = children.Count;
+        if (length == 0)
         {
             return;
         }
