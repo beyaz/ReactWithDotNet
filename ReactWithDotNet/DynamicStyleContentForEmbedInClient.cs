@@ -34,7 +34,7 @@ class DynamicStyleContentForEmbedInClient
 
             while (true)
             {
-                cssClassInfo = new CssClassInfo
+                cssClassInfo = new ()
                 {
                     Name                      = firstName + suffix++,
                     Pseudos                   = cssClassInfo.Pseudos,
@@ -43,20 +43,42 @@ class DynamicStyleContentForEmbedInClient
                     Body                      = cssClassInfo.Body
                 };
 
-                // if everything is equal then no need to reExport
-                foreach (var x in CollectionsMarshal.AsSpan(ListOfClasses))
+                
                 {
-                    if (CssClassInfo.IsEquals(cssClassInfo, x))
+                    var cursor = CollectionsMarshal.AsSpan(ListOfClasses);
+                    var length = cursor.Length;
+
+                    // if everything is equal then no need to reExport return existing record
                     {
-                        return cssClassInfo.Name;
+                        for (var i = 0; i < length; i++)
+                        {
+                            if (CssClassInfo.IsEquals(cssClassInfo, cursor[i]))
+                            {
+                                return cssClassInfo.Name;
+                            }
+                        }
+                    }
+
+                    // check has already same name give another name
+                    {
+                        var hasAlreadyExistsSameName = false;
+                    
+                        for (var i = 0; i < length; i++)
+                        {
+                            if (cursor[i].Name == cssClassInfo.Name)
+                            {
+                                hasAlreadyExistsSameName = true;
+                                break;
+                            }
+                        }
+
+                        if (hasAlreadyExistsSameName)
+                        {
+                            continue;
+                        }
                     }
                 }
                 
-                // todo: check detail
-                if (ListOfClasses.Any(x => x.Name == cssClassInfo.Name))
-                {
-                    continue;
-                }
 
                 break;
             }
