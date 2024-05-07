@@ -55,7 +55,7 @@ static class HtmlTextGenerator
 
             if (jsonMap.Tail is { Key: nameof(Nbsp.length) })
             {
-                htmlNode.Text = string.Join(string.Empty, Enumerable.Range(0, (int)jsonMap.Tail.Value).Select(_ => "&nbsp;"));
+                htmlNode.Text = Repeat("&nbsp;", (int)jsonMap.Tail.Value);
                 return htmlNode;
             }
 
