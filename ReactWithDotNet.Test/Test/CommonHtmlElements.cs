@@ -1635,14 +1635,39 @@ public class ExportingCommonHtmlElements
                     
                     new ()
                     {
-                        Name                   = "checkedBind",
-                        Type                   = "Expression<Func<bool>>",
-                        IsBindingExpression    = true,
+                        Name                   = "valueBindDebounceTimeout",
+                        Type                   = "int?",
+                        Comment ="""
+                                 if you want to handle when user iteraction finished see example below
+                                 component.valueBind = ()=>state.UserInfo.Name
+                                 component.valueBindDebounceTimeout = 600 // milliseconds
+                                 component.valueBindDebounceHandler = OnUserIterationFinished
+                                 """ 
+                    },
+                    
+                    new ()
+                    {
+                        Name = "valueBindDebounceHandler",
+                        Type = "Func<Task>",
+                        Comment ="""
+                                 if you want to handle when user iteraction finished see example below
+                                 component.valueBind = ()=>state.UserInfo.Name
+                                 component.valueBindDebounceTimeout = 600 // milliseconds
+                                 component.valueBindDebounceHandler = OnUserIterationFinished
+                                 """ 
+                    },
+                    
+                    new ()
+                    {
+                        Name                = "checkedBind",
+                        Type                = "Expression<Func<bool>>",
+                        IsBindingExpression = true,
                         Bind =new ()
                         {
                             targetProp = "checked", jsValueAccess = "e.target.value", eventName = "onChange"
                         }
                     },
+
                     
                     new ()
                     {
@@ -1872,7 +1897,12 @@ public class ExportingCommonHtmlElements
                     if (IsNullOrWhiteSpace(attribute.Comment) == false)
                     {
                         list.Add($"{padding}/// <summary>");
-                        list.Add($"{padding}///     {attribute.Comment}");
+                        
+                        foreach (var line in attribute.Comment.Split(Environment.NewLine,StringSplitOptions.RemoveEmptyEntries))
+                        {
+                            list.Add($"{padding}///     {line}");
+                        }
+                        
                         list.Add($"{padding}/// </summary>");
                     }
 
@@ -1955,7 +1985,12 @@ public class ExportingCommonHtmlElements
                         list.Add($"{padding}/// <summary>");
                         list.Add($"{padding}///     {CamelCase(attribute.Name)} = <paramref name=\"value\"/>");
                         list.Add($"{padding}/// <br/>");
-                        list.Add($"{padding}///     {attribute.Comment}");
+                        
+                        foreach (var line in attribute.Comment.Split(Environment.NewLine,StringSplitOptions.RemoveEmptyEntries))
+                        {
+                            list.Add($"{padding}///     {line}");
+                        }
+                        
                         list.Add($"{padding}/// </summary>");
                     }
 
@@ -1973,7 +2008,12 @@ public class ExportingCommonHtmlElements
                 if (IsNullOrWhiteSpace(item.Comment) == false)
                 {
                     list.Add($"{space}/// <summary>");
-                    list.Add($"{space}///     {item.Comment}");
+                    
+                    foreach (var line in item.Comment.Split(Environment.NewLine,StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        list.Add($"{padding}///     {line}");
+                    }
+                    
                     list.Add($"{space}/// </summary>");
                 }
             }
