@@ -24,25 +24,25 @@ partial class Mixin
         => BorderLeft($"{width} {borderStyle} {color}");
     
     public static StyleModifier BorderLeft(double width, string borderStyle, string color)
-        => BorderLeft($"{width} {borderStyle} {color}");
+        => BorderLeft($"{width}px {borderStyle} {color}");
     
     public static StyleModifier BorderRight(string width, string borderStyle, string color)
         => BorderRight($"{width} {borderStyle} {color}");
     
     public static StyleModifier BorderRight(double width, string borderStyle, string color)
-        => BorderRight($"{width} {borderStyle} {color}");
+        => BorderRight($"{width}px {borderStyle} {color}");
    
     public static StyleModifier BorderTop(string width, string borderStyle, string color)
         => BorderTop($"{width} {borderStyle} {color}");
     
     public static StyleModifier BorderTop(double width, string borderStyle, string color)
-        => BorderTop($"{width} {borderStyle} {color}");
+        => BorderTop($"{width}px {borderStyle} {color}");
     
     public static StyleModifier BorderBottom(string width, string borderStyle, string color)
         => BorderBottom($"{width} {borderStyle} {color}");
     
     public static StyleModifier BorderBottom(double width, string borderStyle, string color)
-        => BorderBottom($"{width} {borderStyle} {color}");
+        => BorderBottom($"{width}px {borderStyle} {color}");
 
     public static StyleModifier BorderRadius(double borderRadius)
         => BorderRadius(borderRadius.AsPixel());
