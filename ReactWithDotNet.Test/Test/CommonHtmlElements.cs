@@ -1907,11 +1907,11 @@ public class ExportingCommonHtmlElements
                     }
 
                     // todo: default value only xmlns fix in constructor
-                    var partDefaultValueAssignment = "";
-                    if (attribute.DefaultValue is not null)
-                    {
-                        partDefaultValueAssignment = $" ?? \"{attribute.DefaultValue}\";";
-                    }
+                    //var partDefaultValueAssignment = "";
+                    //if (attribute.DefaultValue is not null)
+                    //{
+                    //    partDefaultValueAssignment = $" ?? \"{attribute.DefaultValue}\";";
+                    //}
 
                     list.Add($"{padding}public {attribute.Type} {CamelCase(attribute.Name)}");
                     list.Add($"{padding}{{");
@@ -2046,10 +2046,10 @@ public class ExportingCommonHtmlElements
         }
     }
 
-    class AttributeInfo
+    sealed class AttributeInfo
     {
         public string Comment { get; init; }
-        public string DefaultValue { get; set; }
+        public string DefaultValue { get; init; }
         public string Name { get; init; }
         public string Type { get; init; } = "string";
         public string GrabEventArgumentsByUsingFunction { get; init; }
@@ -2060,7 +2060,7 @@ public class ExportingCommonHtmlElements
         public ReactBindAttribute Bind{ get; init; }
     }
 
-    class TagInfo
+    sealed class TagInfo
     {
         public IReadOnlyList<AttributeInfo> Attributes { get; init; }
         public string Comment { get; init; }
