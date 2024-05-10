@@ -1342,7 +1342,6 @@ public class ExportingCommonHtmlElements
              new()
             {
                 Tag = "textarea",
-                CreateClassAsPartial = true,
                 Attributes = new[]
                 {
                     new AttributeInfo
@@ -1447,6 +1446,30 @@ public class ExportingCommonHtmlElements
                             targetProp = "value", jsValueAccess = "e.target.value", eventName = "onChange"
                         }
                     },
+                    
+                    new ()
+                    {
+                        Name = "valueBindDebounceTimeout",
+                        Type = "int?",
+                        Comment ="""
+                                 if you want to handle when user iteraction finished see example below
+                                 component.valueBind = ()=>state.UserInfo.Name
+                                 component.valueBindDebounceTimeout = 600 // milliseconds
+                                 component.valueBindDebounceHandler = OnUserIterationFinished
+                                 """ 
+                    },
+                    
+                    new ()
+                    {
+                        Name = "valueBindDebounceHandler",
+                        Type = "Func<Task>",
+                        Comment ="""
+                                 if you want to handle when user iteraction finished see example below
+                                 component.valueBind = ()=>state.UserInfo.Name
+                                 component.valueBindDebounceTimeout = 600 // milliseconds
+                                 component.valueBindDebounceHandler = OnUserIterationFinished
+                                 """ 
+                    },
                 },
                 EnableCastFromString = false
             },
@@ -1548,7 +1571,6 @@ public class ExportingCommonHtmlElements
             {
                 Tag = "input",
                 
-                CreateClassAsPartial = true,
                 Attributes = [
                     new ()
                     {
@@ -2011,7 +2033,7 @@ public class ExportingCommonHtmlElements
                     
                     foreach (var line in item.Comment.Split(Environment.NewLine,StringSplitOptions.RemoveEmptyEntries))
                     {
-                        list.Add($"{padding}///     {line}");
+                        list.Add($"{space}///     {line}");
                     }
                     
                     list.Add($"{space}/// </summary>");

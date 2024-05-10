@@ -6204,7 +6204,7 @@ public sealed class select : HtmlElement
 
 }
 
-public sealed partial class input : HtmlElement
+public sealed class input : HtmlElement
 {
     #region string required
     PropertyValueNode<string> _required;
@@ -6436,6 +6436,46 @@ public sealed partial class input : HtmlElement
     #endregion
 
 
+    #region string valueBindDebounceTimeout
+    PropertyValueNode<int?> _valueBindDebounceTimeout;
+    static readonly PropertyValueDefinition _valueBindDebounceTimeout_ = new()
+    {
+        name = nameof(valueBindDebounceTimeout)
+    };
+    /// <summary>
+    ///     if you want to handle when user iteraction finished see example below
+    ///     component.valueBind = ()=>state.UserInfo.Name
+    ///     component.valueBindDebounceTimeout = 600 // milliseconds
+    ///     component.valueBindDebounceHandler = OnUserIterationFinished
+    /// </summary>
+    public int? valueBindDebounceTimeout
+    {
+        get => _valueBindDebounceTimeout?.value;
+        set => SetValue(_valueBindDebounceTimeout_, ref _valueBindDebounceTimeout, value);
+    }
+    #endregion
+
+
+    #region string valueBindDebounceHandler
+    PropertyValueNode<Func<Task>> _valueBindDebounceHandler;
+    static readonly PropertyValueDefinition _valueBindDebounceHandler_ = new()
+    {
+        name = nameof(valueBindDebounceHandler)
+    };
+    /// <summary>
+    ///     if you want to handle when user iteraction finished see example below
+    ///     component.valueBind = ()=>state.UserInfo.Name
+    ///     component.valueBindDebounceTimeout = 600 // milliseconds
+    ///     component.valueBindDebounceHandler = OnUserIterationFinished
+    /// </summary>
+    public Func<Task> valueBindDebounceHandler
+    {
+        get => _valueBindDebounceHandler?.value;
+        set => SetValue(_valueBindDebounceHandler_, ref _valueBindDebounceHandler, value);
+    }
+    #endregion
+
+
     #region string checkedBind
     PropertyValueNode<Expression<Func<bool>>> _checkedBind;
     static readonly PropertyValueDefinition _checkedBind_ = new()
@@ -6563,6 +6603,26 @@ public sealed partial class input : HtmlElement
     public static HtmlElementModifier Step(int? value) => Modify(x => x.step = value);
 
     public static HtmlElementModifier ValueBind(Expression<Func<InputValueBinder>> value) => Modify(x => x.valueBind = value);
+
+    /// <summary>
+    ///     valueBindDebounceTimeout = <paramref name="value"/>
+    /// <br/>
+    ///     if you want to handle when user iteraction finished see example below
+    ///     component.valueBind = ()=>state.UserInfo.Name
+    ///     component.valueBindDebounceTimeout = 600 // milliseconds
+    ///     component.valueBindDebounceHandler = OnUserIterationFinished
+    /// </summary>
+    public static HtmlElementModifier ValueBindDebounceTimeout(int? value) => Modify(x => x.valueBindDebounceTimeout = value);
+
+    /// <summary>
+    ///     valueBindDebounceHandler = <paramref name="value"/>
+    /// <br/>
+    ///     if you want to handle when user iteraction finished see example below
+    ///     component.valueBind = ()=>state.UserInfo.Name
+    ///     component.valueBindDebounceTimeout = 600 // milliseconds
+    ///     component.valueBindDebounceHandler = OnUserIterationFinished
+    /// </summary>
+    public static HtmlElementModifier ValueBindDebounceHandler(Func<Task> value) => Modify(x => x.valueBindDebounceHandler = value);
 
     public static HtmlElementModifier CheckedBind(Expression<Func<bool>> value) => Modify(x => x.checkedBind = value);
 

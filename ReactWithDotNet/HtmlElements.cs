@@ -16,24 +16,7 @@ public sealed class InputValueBinder
     }
 }
 
-partial class input
-{
-    /// <summary>
-    ///     if you want to handle when user iteraction finished see example below<br />
-    ///     component.valueBind = ()=>state.UserInfo.Name<br />
-    ///     component.valueBindDebounceTimeout = 600 // milliseconds<br />
-    ///     component.valueBindDebounceHandler = OnUserIterationFinished<br />
-    /// </summary>
-    public Func<Task> valueBindDebounceHandler { get; set; }
 
-    /// <summary>
-    ///     if you want to handle when user iteraction finished see example below<br />
-    ///     component.valueBind = ()=>state.UserInfo.Name<br />
-    ///     component.valueBindDebounceTimeout = 600 // milliseconds<br />
-    ///     component.valueBindDebounceHandler = OnUserIterationFinished<br />
-    /// </summary>
-    public int? valueBindDebounceTimeout { get; set; }
-}
 
 public sealed class HtmlTextNode : HtmlElement
 {
