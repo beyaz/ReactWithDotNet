@@ -5511,7 +5511,7 @@ public sealed class form : HtmlElement
 
 }
 
-public sealed partial class textarea : HtmlElement
+public sealed class textarea : HtmlElement
 {
     #region string name
     PropertyValueNode<string> _name;
@@ -5815,6 +5815,46 @@ public sealed partial class textarea : HtmlElement
     #endregion
 
 
+    #region string valueBindDebounceTimeout
+    PropertyValueNode<int?> _valueBindDebounceTimeout;
+    static readonly PropertyValueDefinition _valueBindDebounceTimeout_ = new()
+    {
+        name = nameof(valueBindDebounceTimeout)
+    };
+    /// <summary>
+    ///     if you want to handle when user iteraction finished see example below
+    ///     component.valueBind = ()=>state.UserInfo.Name
+    ///     component.valueBindDebounceTimeout = 600 // milliseconds
+    ///     component.valueBindDebounceHandler = OnUserIterationFinished
+    /// </summary>
+    public int? valueBindDebounceTimeout
+    {
+        get => _valueBindDebounceTimeout?.value;
+        set => SetValue(_valueBindDebounceTimeout_, ref _valueBindDebounceTimeout, value);
+    }
+    #endregion
+
+
+    #region string valueBindDebounceHandler
+    PropertyValueNode<Func<Task>> _valueBindDebounceHandler;
+    static readonly PropertyValueDefinition _valueBindDebounceHandler_ = new()
+    {
+        name = nameof(valueBindDebounceHandler)
+    };
+    /// <summary>
+    ///     if you want to handle when user iteraction finished see example below
+    ///     component.valueBind = ()=>state.UserInfo.Name
+    ///     component.valueBindDebounceTimeout = 600 // milliseconds
+    ///     component.valueBindDebounceHandler = OnUserIterationFinished
+    /// </summary>
+    public Func<Task> valueBindDebounceHandler
+    {
+        get => _valueBindDebounceHandler?.value;
+        set => SetValue(_valueBindDebounceHandler_, ref _valueBindDebounceHandler, value);
+    }
+    #endregion
+
+
     public textarea() { }
 
     public textarea(params Modifier[] modifiers) : base(modifiers) { }
@@ -5934,6 +5974,26 @@ public sealed partial class textarea : HtmlElement
     public static HtmlElementModifier OnBlur(FocusEventHandler value) => Modify(x => x.onBlur = value);
 
     public static HtmlElementModifier ValueBind(Expression<Func<InputValueBinder>> value) => Modify(x => x.valueBind = value);
+
+    /// <summary>
+    ///     valueBindDebounceTimeout = <paramref name="value"/>
+    /// <br/>
+    ///     if you want to handle when user iteraction finished see example below
+    ///     component.valueBind = ()=>state.UserInfo.Name
+    ///     component.valueBindDebounceTimeout = 600 // milliseconds
+    ///     component.valueBindDebounceHandler = OnUserIterationFinished
+    /// </summary>
+    public static HtmlElementModifier ValueBindDebounceTimeout(int? value) => Modify(x => x.valueBindDebounceTimeout = value);
+
+    /// <summary>
+    ///     valueBindDebounceHandler = <paramref name="value"/>
+    /// <br/>
+    ///     if you want to handle when user iteraction finished see example below
+    ///     component.valueBind = ()=>state.UserInfo.Name
+    ///     component.valueBindDebounceTimeout = 600 // milliseconds
+    ///     component.valueBindDebounceHandler = OnUserIterationFinished
+    /// </summary>
+    public static HtmlElementModifier ValueBindDebounceHandler(Func<Task> value) => Modify(x => x.valueBindDebounceHandler = value);
 
 }
 
