@@ -129,8 +129,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         if (name.Contains(":"))
         {
             var parts = name.Split(":");
-
-            return parts[0] + char.ToUpper(parts[1][0]) + parts[1].Substring(1);
+            if (parts.Length == 2)
+            {
+                return parts[0] + char.ToUpper(parts[1][0]) + parts[1][1..];
+            }
+            
         }
 
         return name;
