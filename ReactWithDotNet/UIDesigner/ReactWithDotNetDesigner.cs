@@ -71,8 +71,6 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
     {
         var propertyPanel = new FlexColumn(Height("100%"), Width("100%"), FontSize15)
         {
-            //new link { href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap", rel = "stylesheet" },
-
             new link { href = "https://fonts.cdnfonts.com/css/ibm-plex-mono-3", rel = "stylesheet" },
 
             new FlexColumn(MarginLeftRight(3))
