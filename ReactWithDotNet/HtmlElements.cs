@@ -46,8 +46,29 @@ public sealed class style : HtmlElement
         {
             nameOfClass = "." + nameOfClass;
         }
+        
+        var sb = new StringBuilder();
+        sb.Append(Environment.NewLine);
+        sb.Append(nameOfClass);
+        sb.Append("{");
+        
+        var stylee = new Style(classInfo._styleModifiers);
 
-        innerText += Environment.NewLine + nameOfClass + "{" + new Style(classInfo._styleModifiers).ToCss() + "}";
+        sb.AppendLine(stylee.ToCss());
+        
+        sb.Append("}");
+        
+        if (stylee._hover is not null)
+        {
+            sb.Append(nameOfClass);
+            sb.Append(":hover {");
+            sb.AppendLine(stylee._hover.ToCssWithImportant());
+            sb.Append("}");
+        }
+
+        innerText += sb;
+        
+        
     }
 }
 
