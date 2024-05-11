@@ -54,6 +54,8 @@ public  sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesigner
 {
     public static string UrlPath => "/$";
     
+    internal static string UrlPathOfComponentPreview => $"{UrlPath}?preview=true";
+    
     string GetQuery(string name)
     {
         var httpContext = Context.TryGetValue<HttpContext>(typeof(HttpContext).FullName);
@@ -427,7 +429,7 @@ public  sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesigner
             return new iframe
             {
                 id    = "ComponentPreview",
-                src   = $"{UrlPath}?preview=true",
+                src   = UrlPathOfComponentPreview,
                 style = { BorderNone, WidthFull, HeightFull },
                 title = "Component Preview"
             };
