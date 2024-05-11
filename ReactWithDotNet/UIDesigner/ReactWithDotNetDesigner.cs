@@ -244,7 +244,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 // h e a d e r
                 new FlexRow(Color("#6c757d"), CursorPointer, TextAlignCenter)
                 {
-                    When(canShowInstanceEditor(), ()=>new div(Text("Instance json"))
+                    When(canShowInstanceEditor(), () => new div(Text("Instance json"))
                     {
                         OnClick(_ => Task.FromResult(state.IsInstanceEditorActive = true)),
                         When(state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"), FontWeight600),
@@ -253,7 +253,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                         FontSize13
                     }),
 
-                    When(canShowParametersEditor(), ()=>new div(Text("Parameters json"))
+                    When(canShowParametersEditor(), () => new div(Text("Parameters json"))
                     {
                         OnClick(_ => Task.FromResult(state.IsInstanceEditorActive = false)),
                         When(!state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"), FontWeight600),
@@ -268,17 +268,16 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             }
         };
 
-        var outputPanel = new FlexRow(JustifyContentFlexStart ,PositionRelative)
+        var outputPanel = new FlexRow(JustifyContentFlexStart, PositionRelative)
         {
             BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
             BackgroundSize("10px 10px"),
-            
+
             createVerticleRuler,
             createElement(),
-            
 
             Width(state.ScreenWidth),
-            Height(state.ScreenHeight*percent),
+            Height(state.ScreenHeight * percent),
             BoxShadow(0, 4, 12, 0, rgba(0, 0, 0, 0.1))
         };
 
@@ -312,7 +311,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 },
 
                 state.PropertyPanelIsClosed ? null : propertyPanel,
-                
+
                 When(state.PropertyPanelIsClosed, Width(15))
             },
             new FlexColumn(AlignItemsCenter, FlexGrow(1), Padding(7), MarginLeft(40))
@@ -322,7 +321,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             }
         };
 
-        static  Element createVerticleRuler()
+        static Element createVerticleRuler()
         {
             const int maxHeight = 5000;
 
@@ -646,7 +645,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                     {
                         continue;
                     }
-                    
+
                     var name = propertyInfo.Name;
                     var propertyType = propertyInfo.PropertyType;
 
@@ -705,7 +704,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                             map.Add(name, existingValue);
                             continue;
                         }
-                        
+
                         var defaultValue = Activator.CreateInstance(propertyInfo.PropertyType);
 
                         var hasDefaultValue = defaultValue!.Equals(existingValue);
@@ -728,7 +727,6 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 WriteIndented          = true,
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             });
-
         }
 
         void initializeParametersJson()

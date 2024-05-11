@@ -12,7 +12,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
         {
             return;
         }
-        
+
         s.border ??= $"0.5px dotted {Blue500}";
     });
 
@@ -43,28 +43,28 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                         var methodParameters = methodInfo.GetParameters();
 
                         var dictionary = new Dictionary<string, object>();
-                        
+
                         if (state.JsonTextForDotNetMethodParameters.HasValue())
                         {
                             dictionary = DeserializeJsonBySystemTextJson<Dictionary<string, object>>(state.JsonTextForDotNetMethodParameters);
                         }
-                        
+
                         dictionary ??= new();
-                        
+
                         foreach (var parameterInfo in methodParameters)
                         {
                             var parameterName = parameterInfo.Name;
                             var parameterType = parameterInfo.ParameterType;
 
                             object parameterValue;
-                                
+
                             if (parameterName is not null && dictionary.TryGetValue(parameterName, out var parameterValueAsJsonObject))
                             {
                                 parameterValue = ArrangeValueForTargetType(parameterValueAsJsonObject, parameterType);
                             }
                             else
                             {
-                                parameterValue = parameterType.IsClass ? null : Activator.CreateInstance(parameterType);    
+                                parameterValue = parameterType.IsClass ? null : Activator.CreateInstance(parameterType);
                             }
 
                             invocationParameters.Add(parameterValue);
@@ -78,17 +78,16 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                             {
                                 return null;
                             }
-                            
+
                             if (invocationResponse is Task task)
                             {
                                 await task;
-                                        
+
                                 invocationResponse = task.GetType()
                                     .GetProperty("Result", BindingFlags.Instance | BindingFlags.Public)!
                                     .GetValue(task);
                             }
-                            
-                            
+
                             if (invocationResponse is Element invocationResultAsElement)
                             {
                                 return invocationResultAsElement;
@@ -101,7 +100,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                                     enumerable.ToReadOnlyListOf<object, Element>(x => x as Element)
                                 };
                             }
-                            
+
                             return new div { text = $"Method should return Element or FC but returned {invocationResponse?.GetType().FullName}" };
                         }
 
@@ -133,23 +132,23 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                                 component.DesignerCustomizedRender = async () =>
                                 {
-                                     var invocationResponse = methodInfo.Invoke(instance, invocationParameters.ToArray());
+                                    var invocationResponse = methodInfo.Invoke(instance, invocationParameters.ToArray());
 
-                                     if (invocationResponse is null)
-                                     {
-                                         return null;
-                                     }
-                                    
-                                     if (invocationResponse is Task task)
-                                     {
-                                         await task;
-                                        
-                                         invocationResponse = task.GetType()
-                                             .GetProperty("Result", BindingFlags.Instance | BindingFlags.Public)!
-                                             .GetValue(task);
-                                     }
+                                    if (invocationResponse is null)
+                                    {
+                                        return null;
+                                    }
 
-                                     return (Element)invocationResponse;
+                                    if (invocationResponse is Task task)
+                                    {
+                                        await task;
+
+                                        invocationResponse = task.GetType()
+                                            .GetProperty("Result", BindingFlags.Instance | BindingFlags.Public)!
+                                            .GetValue(task);
+                                    }
+
+                                    return (Element)invocationResponse;
                                 };
 
                                 return component;
@@ -167,11 +166,11 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                                     {
                                         return null;
                                     }
-                                    
+
                                     if (invocationResponse is Task task)
                                     {
                                         await task;
-                                        
+
                                         invocationResponse = task.GetType()
                                             .GetProperty("Result", BindingFlags.Instance | BindingFlags.Public)!
                                             .GetValue(task);
@@ -240,12 +239,12 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                     {
                         return "type not found.@" + state.SelectedType.FullName;
                     }
-                    
+
                     if (type.IsStaticClass())
                     {
                         return new div { "Selected type is static. Please select component inherited class." };
                     }
-                    
+
                     var instance = createInstance(type);
 
                     if (instance is ReactComponentBase component)
@@ -273,7 +272,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                         return reactPureComponent;
                     }
-                    
+
                     if (instance is Element instanceAsElement)
                     {
                         return instanceAsElement;
@@ -309,7 +308,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                 reactPureComponent.key     = "0";
                 reactPureComponent.Context = Context;
             }
-            
+
             return instance;
         }
 
@@ -349,7 +348,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
         var element = await CreateElement(state, Context);
 
         element += ComponentIndicatorStyle;
-        
+
         return element;
     }
 }
