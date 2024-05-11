@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace ReactWithDotNet.UIDesigner;
 
-public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNetDesignerModel>
+sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNetDesignerModel>
 {
     static StyleModifier ComponentIndicatorStyle => new(s =>
     {

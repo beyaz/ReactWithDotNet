@@ -2,6 +2,8 @@
 using System.Reflection.Metadata;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Web;
+using Microsoft.AspNetCore.Http;
 using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
 using ReactWithDotNet.UIDesigner;
 using static ReactWithDotNet.UIDesigner.Extensions;
@@ -48,14 +50,45 @@ class HotReloadListener : Component
     }
 }
 
-public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
+public  sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 {
+    public static string UrlPath => $"/{nameof(ReactWithDotNetDesigner)}";
+    
+    string GetQuery(string name)
+    {
+        var httpContext = Context.TryGetValue<HttpContext>(typeof(HttpContext).FullName);
+        
+        var value = httpContext.Request.Query[name].FirstOrDefault();
+        if (value != null)
+        {
+            return value;
+        }
+
+        var referer = httpContext.Request.Headers["Referer"];
+        if (string.IsNullOrWhiteSpace(referer))
+        {
+            return null;
+        }
+
+        var nameValueCollection = HttpUtility.ParseQueryString(new Uri(referer).Query);
+
+        return nameValueCollection[name];
+    }
+    
+    bool Preview => GetQuery("preview") == "true";
+    
+    
     delegate Task JsonTextChanged(string componentName, string jsonText);
 
     public int UpdatingProgress { get; set; }
 
     protected override Task constructor()
     {
+        if (Preview)
+        {
+            return Task.CompletedTask;
+        }
+        
         state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
 
         state.SelectedAssemblyFilePath = Assembly.GetEntryAssembly()?.Location;
@@ -69,6 +102,11 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
     protected override Element render()
     {
+        if (Preview)
+        {
+            return new ReactWithDotNetDesignerComponentPreview();
+        }
+        
         var propertyPanel = new FlexColumn(Height("100%"), Width("100%"), FontSize15)
         {
             new link { href = "https://fonts.cdnfonts.com/css/ibm-plex-mono-3", rel = "stylesheet" },
@@ -389,7 +427,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             return new iframe
             {
                 id    = "ComponentPreview",
-                src   = $"/{nameof(ReactWithDotNetDesignerComponentPreview)}",
+                src   = $"{UrlPath}?preview=true",
                 style = { BorderNone, WidthFull, HeightFull },
                 title = "Component Preview"
             };

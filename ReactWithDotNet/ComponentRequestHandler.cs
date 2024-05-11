@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Microsoft.AspNetCore.Http;
 
 namespace ReactWithDotNet;
 
@@ -84,6 +85,8 @@ static class ComponentRequestHandler
             if (context == null)
             {
                 context = CreateContext(request);
+                
+                context.Set(typeof(HttpContext).FullName, input.HttpContext);
 
                 var task = input.OnReactContextCreated?.Invoke(input.HttpContext, context);
                 if (task is not null)
@@ -445,15 +448,12 @@ static class ComponentRequestHandler
 
     static ReactContext CreateContext(ComponentRequest request)
     {
-        var context = new ReactContext
+        return new()
         {
             CapturedStateTree = request.CapturedStateTree,
             ClientWidth       = request.ClientWidth,
             ClientHeight      = request.ClientHeight
-            
         };
-
-        return context;
     }
 }
 
