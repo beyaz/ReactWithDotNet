@@ -13,7 +13,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
             return;
         }
 
-        s.border ??= $"0.5px dotted {Blue500}";
+        s.border = $"0.5px dotted {Blue500}";
     });
 
     public Task Refresh()
