@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Web;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Net.Http.Headers;
 using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
 using ReactWithDotNet.UIDesigner;
 using static ReactWithDotNet.UIDesigner.Extensions;
@@ -61,6 +62,17 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
     internal static string UrlPathOfComponentPreview => $"{UrlPath}?preview=true";
 
     bool Preview => GetQuery("preview") == "true";
+
+    /// <summary>
+    ///     Indicates component is in design mode.
+    /// </summary>
+    public static bool IsInDesignMode(HttpContext httpContext)
+    {
+        var referer = httpContext?.Request.Headers[HeaderNames.Referer].FirstOrDefault();
+
+        return referer?.EndsWith(UrlPath) == true ||
+               referer?.EndsWith(UrlPathOfComponentPreview) == true;
+    }
 
     protected override Task constructor()
     {
@@ -553,7 +565,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
 
     string GetQuery(string name)
     {
-        var httpContext = Context.TryGetValue<HttpContext>(typeof(HttpContext).FullName);
+        var httpContext = Context.HttpContext;
 
         var value = httpContext.Request.Query[name].FirstOrDefault();
         if (value != null)

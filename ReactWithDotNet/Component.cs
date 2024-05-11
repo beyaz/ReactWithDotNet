@@ -1,5 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using ReactWithDotNet.UIDesigner;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
@@ -10,6 +12,13 @@ public interface IReactComponent
 }
 public abstract class ReactComponentBase : Element, IReactComponent
 {
+
+    /// <summary>
+    ///   Indicates component is in design mode.
+    /// </summary>
+    [JsonIgnore]
+    protected bool DesignMode => ReactWithDotNetDesigner.IsInDesignMode(Context.HttpContext);
+    
     internal Func<Task<Element>> DesignerCustomizedRender;
     
     internal Style StyleForRootElement;

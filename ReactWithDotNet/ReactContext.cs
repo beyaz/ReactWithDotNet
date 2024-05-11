@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace ReactWithDotNet;
 
 // ReSharper disable once UnusedTypeParameter
 public sealed class ReactContextKey<TValue>
@@ -19,6 +21,8 @@ public sealed class ReactContextKey<TValue>
 
 public sealed class ReactContext
 {
+    public required HttpContext HttpContext{ get; init; }
+    
     internal double? ClientWidth { get; init; }
     internal double? ClientHeight { get; init; }
     

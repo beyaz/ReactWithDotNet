@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Net.Http.Headers;
-using ReactWithDotNet.UIDesigner;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Globalization;
 using System.Text.Json;
 
@@ -9,20 +6,6 @@ namespace ReactWithDotNet;
 
 public static partial class Mixin
 {
-    /// <summary>
-    ///   Indicates component is in design mode.
-    /// </summary>
-    public static bool DesignMode
-    {
-        get
-        {
-            var referer = new HttpContextAccessor().HttpContext?.Request.Headers[HeaderNames.Referer].FirstOrDefault();
-
-            return referer?.EndsWith(ReactWithDotNetDesigner.UrlPath) == true ||
-                   referer?.EndsWith(ReactWithDotNetDesigner.UrlPathOfComponentPreview) == true;
-        }
-    }
-    
     /// <summary>
     ///     style.backgroundColor = 'transparent'
     /// </summary>

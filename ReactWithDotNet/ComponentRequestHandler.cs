@@ -84,7 +84,13 @@ static class ComponentRequestHandler
         {
             if (context == null)
             {
-                context = CreateContext(request);
+                context = new()
+                {
+                    CapturedStateTree = request.CapturedStateTree,
+                    ClientWidth       = request.ClientWidth,
+                    ClientHeight      = request.ClientHeight,
+                    HttpContext       = input.HttpContext
+                };
                 
                 context.Set(typeof(HttpContext).FullName, input.HttpContext);
 
@@ -446,15 +452,6 @@ static class ComponentRequestHandler
         }
     }
 
-    static ReactContext CreateContext(ComponentRequest request)
-    {
-        return new()
-        {
-            CapturedStateTree = request.CapturedStateTree,
-            ClientWidth       = request.ClientWidth,
-            ClientHeight      = request.ClientHeight
-        };
-    }
 }
 
 sealed class StateTree

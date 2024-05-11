@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using ReactWithDotNet.UIDesigner;
 
 namespace ReactWithDotNet;
 
@@ -9,6 +10,14 @@ namespace ReactWithDotNet;
 /// </summary>
 public abstract class PureComponent : Element
 {
+    
+    /// <summary>
+    ///   Indicates component is in design mode.
+    /// </summary>
+    [JsonIgnore]
+    protected bool DesignMode => ReactWithDotNetDesigner.IsInDesignMode(Context.HttpContext);
+    
+    
     internal List<Style> classNameList;
 
     internal int ComponentUniqueIdentifier;

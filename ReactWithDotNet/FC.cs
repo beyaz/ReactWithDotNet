@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
@@ -8,6 +9,8 @@ public interface IFunctionalComponent: IReactComponent
     public Func<Task> ComponentDidMount { set; }
 
     public Func<Task> Constructor { set; }
+    
+    public bool DesignMode { get; }
 }
 
 partial class Mixin
@@ -188,6 +191,9 @@ partial class Mixin
 
 sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFunctionalComponent
 {
+    [JsonIgnore]
+    public new bool DesignMode => base.DesignMode;
+    
     internal object _target;
     
 
