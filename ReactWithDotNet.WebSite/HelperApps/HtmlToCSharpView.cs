@@ -209,60 +209,35 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             },
             new FlexRow(SizeFull, BorderForPaper, BorderRadiusForPaper)
             {
-                new FlexRow(SizeFull)
+                new TwoRowSplittedForm
                 {
-                    new style
+                    new FlexColumn(SizeFull, Gap(20))
                     {
-                        new CssClass("gutter",
-                        [
-                            Background("#eee"),
-                            BackgroundRepeatNoRepeat,
-                            BackgroundPosition("50%")
-                        ]),
-                        new CssClass("gutter.gutter-horizontal",
-                        [
-                            BackgroundImage("url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==')"),
-                            Cursor("col-resize")
-                        ])
+                        new FreeScrollBar(SizeFull, Border(Solid(1, "#d1d9d1")), BorderRadius(5))
+                        {
+                            htmlEditor
+                        },
+                        new FreeScrollBar(SizeFull, Border(Solid(1, "#d1d9d1")), BorderRadius(5))
+                        {
+                            csharpEditor
+                        }
                     },
 
-                    new Split
+                    new FreeScrollBar(SizeFull)
                     {
-                        sizes      = [40, 60],
-                        gutterSize = 12,
-                        style      = { WidthFull, DisplayFlexRow },
+                        // paper
+                        BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
+                        BackgroundSize("10px 10px"),
 
-                        children =
+                        new FlexRowCentered(SizeFull, Padding(15))
                         {
-                            new FlexColumn(SizeFull, Gap(20))
+
+                            new iframe
                             {
-                                new FreeScrollBar(SizeFull, Border(Solid(1, "#d1d9d1")), BorderRadius(5))
-                                {
-                                    htmlEditor
-                                },
-                                new FreeScrollBar(SizeFull, Border(Solid(1, "#d1d9d1")), BorderRadius(5))
-                                {
-                                    csharpEditor
-                                }
-                            },
-
-                            new FreeScrollBar(SizeFull)
-                            {
-                                // paper
-                                BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
-                                BackgroundSize("10px 10px"),
-
-                                new FlexRowCentered(SizeFull, Padding(15))
-                                {
-
-                                    new iframe
-                                    {
-                                        id    = "g",
-                                        src   = Page.LiveEditor.Url + $"?utid={state.Utid}&preview=true",
-                                        style = { BorderNone, WidthFull, HeightFull },
-                                        title = "Live Editor Preview"
-                                    }
-                                }
+                                id    = "g",
+                                src   = Page.LiveEditor.Url + $"?utid={state.Utid}&preview=true",
+                                style = { BorderNone, WidthFull, HeightFull },
+                                title = "Live Editor Preview"
                             }
                         }
                     }
@@ -272,8 +247,42 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             statusMessageEditor
         };
     }
-   
 
+    class TwoRowSplittedForm: PureComponent
+    {
+        protected override Element render()
+        {
+            return new FlexRow(SizeFull)
+            {
+                new style
+                {
+                    new CssClass("gutter",
+                    [
+                        Background("#eee"),
+                        BackgroundRepeatNoRepeat,
+                        BackgroundPosition("50%")
+                    ]),
+                    new CssClass("gutter.gutter-horizontal",
+                    [
+                        BackgroundImage("url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==')"),
+                        Cursor("col-resize")
+                    ])
+                },
+
+                new Split
+                {
+                    sizes      = [40, 60],
+                    gutterSize = 12,
+                    style      = { WidthFull, DisplayFlexRow },
+
+                    children =
+                    {
+                        children
+                    }
+                }
+            };
+        }
+    }
     void OnHtmlValueChanged(string htmlText)
     {
         state.EditCount++;
