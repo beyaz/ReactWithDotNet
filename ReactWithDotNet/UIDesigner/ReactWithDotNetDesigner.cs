@@ -52,7 +52,7 @@ class HotReloadListener : Component
 
 public  sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 {
-    public static string UrlPath => $"/{nameof(ReactWithDotNetDesigner)}";
+    public static string UrlPath => "/$";
     
     string GetQuery(string name)
     {
