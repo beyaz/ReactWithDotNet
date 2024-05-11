@@ -16,16 +16,12 @@ public sealed class InputValueBinder
     }
 }
 
-
-
 public sealed class HtmlTextNode : HtmlElement
 {
     internal StringBuilder stringBuilder;
 }
 
 sealed class br : HtmlElement;
-
-
 
 public sealed class style : HtmlElement
 {
@@ -46,29 +42,39 @@ public sealed class style : HtmlElement
         {
             nameOfClass = "." + nameOfClass;
         }
-        
+
         var sb = new StringBuilder();
         sb.Append(Environment.NewLine);
         sb.Append(nameOfClass);
-        sb.Append("{");
-        
-        var stylee = new Style(classInfo._styleModifiers);
+        sb.AppendLine("{");
 
-        sb.AppendLine(stylee.ToCss());
-        
-        sb.Append("}");
-        
-        if (stylee._hover is not null)
+        var styleInstance = new Style(classInfo._styleModifiers);
+
+        sb.AppendLine(styleInstance.ToCss());
+
+        sb.AppendLine("}");
+
+        writePseudo(sb, nameOfClass, styleInstance._hover, "hover");
+        writePseudo(sb, nameOfClass, styleInstance._before, "before");
+        writePseudo(sb, nameOfClass, styleInstance._after, "after");
+        writePseudo(sb, nameOfClass, styleInstance._active, "active");
+        writePseudo(sb, nameOfClass, styleInstance._focus, "focus");
+
+        innerText += sb.ToString();
+        return;
+
+        static void writePseudo(StringBuilder sb, string cssClassName, Style pseudo, string pseudoName)
         {
-            sb.Append(nameOfClass);
-            sb.Append(":hover {");
-            sb.AppendLine(stylee._hover.ToCssWithImportant());
-            sb.Append("}");
-        }
+            if (pseudo is null)
+            {
+                return;
+            }
 
-        innerText += sb;
-        
-        
+            sb.Append(cssClassName);
+            sb.AppendLine($":{pseudoName} {{");
+            sb.AppendLine(pseudo.ToCssWithImportant());
+            sb.AppendLine("}");
+        }
     }
 }
 
