@@ -5,7 +5,6 @@ using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 using ReactWithDotNet.ThirdPartyLibraries.ReactSimpleCodeEditor;
 using ReactWithDotNet.ThirdPartyLibraries._react_split_;
-using YamlDotNet.Core;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
 
@@ -218,8 +217,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                         [
                             Background("#eee"),
                             BackgroundRepeatNoRepeat,
-                            BackgroundPosition("50%"),
-                            Hover(Background("#f4f41e"))
+                            BackgroundPosition("50%")
                         ]),
                         new CssClass("gutter.gutter-horizontal",
                         [
