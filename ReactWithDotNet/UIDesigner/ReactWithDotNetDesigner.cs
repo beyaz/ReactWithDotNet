@@ -50,39 +50,17 @@ class HotReloadListener : Component
     }
 }
 
-public  sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
+public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 {
-    public static string UrlPath => "/$";
-    
-    internal static string UrlPathOfComponentPreview => $"{UrlPath}?preview=true";
-    
-    string GetQuery(string name)
-    {
-        var httpContext = Context.TryGetValue<HttpContext>(typeof(HttpContext).FullName);
-        
-        var value = httpContext.Request.Query[name].FirstOrDefault();
-        if (value != null)
-        {
-            return value;
-        }
-
-        var referer = httpContext.Request.Headers["Referer"];
-        if (string.IsNullOrWhiteSpace(referer))
-        {
-            return null;
-        }
-
-        var nameValueCollection = HttpUtility.ParseQueryString(new Uri(referer).Query);
-
-        return nameValueCollection[name];
-    }
-    
-    bool Preview => GetQuery("preview") == "true";
-    
-    
     delegate Task JsonTextChanged(string componentName, string jsonText);
 
+    public static string UrlPath => "/$";
+
     public int UpdatingProgress { get; set; }
+
+    internal static string UrlPathOfComponentPreview => $"{UrlPath}?preview=true";
+
+    bool Preview => GetQuery("preview") == "true";
 
     protected override Task constructor()
     {
@@ -90,7 +68,7 @@ public  sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesigner
         {
             return Task.CompletedTask;
         }
-        
+
         state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
 
         state.SelectedAssemblyFilePath = Assembly.GetEntryAssembly()?.Location;
@@ -108,7 +86,7 @@ public  sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesigner
         {
             return new ReactWithDotNetDesignerComponentPreview();
         }
-        
+
         var propertyPanel = new FlexColumn(Height("100%"), Width("100%"), FontSize15)
         {
             new link { href = "https://fonts.cdnfonts.com/css/ibm-plex-mono-3", rel = "stylesheet" },
@@ -571,6 +549,27 @@ public  sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesigner
         SaveState();
 
         return Task.CompletedTask;
+    }
+
+    string GetQuery(string name)
+    {
+        var httpContext = Context.TryGetValue<HttpContext>(typeof(HttpContext).FullName);
+
+        var value = httpContext.Request.Query[name].FirstOrDefault();
+        if (value != null)
+        {
+            return value;
+        }
+
+        var referer = httpContext.Request.Headers["Referer"];
+        if (string.IsNullOrWhiteSpace(referer))
+        {
+            return null;
+        }
+
+        var nameValueCollection = HttpUtility.ParseQueryString(new Uri(referer).Query);
+
+        return nameValueCollection[name];
     }
 
     Task OnCommonSizeClicked(MouseEvent e)
