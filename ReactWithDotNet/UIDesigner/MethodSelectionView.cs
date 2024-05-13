@@ -67,7 +67,7 @@ class MethodSelectionView : Component
             content = AsTreeView(nodes);
         }
 
-        return new div(Height(250), MarginLeftRight(3), OverflowYScroll, CursorPointer, Padding(5), Border(Solid(1, "rgb(217, 217, 217)")), BorderRadius(3))
+        return new div(HeightFull, MarginLeftRight(3), OverflowYScroll, CursorPointer, Padding(5), Border(Solid(1, "rgb(217, 217, 217)")), BorderRadius(3))
         {
             content
         };

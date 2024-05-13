@@ -131,13 +131,16 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             },
 
             SpaceY(5),
-            new MethodSelectionView
+            new FlexColumn(Flex(1,1,0), WidthFull, MaxHeight(250))
             {
-                ClassFilter               = state.ClassFilter,
-                MethodFilter              = state.MethodFilter,
-                SelectedMethodTreeNodeKey = state.SelectedTreeNodeKey,
-                SelectionChanged          = OnElementSelected,
-                AssemblyFilePath          = state.SelectedAssemblyFilePath
+                new MethodSelectionView
+                {
+                    ClassFilter               = state.ClassFilter,
+                    MethodFilter              = state.MethodFilter,
+                    SelectedMethodTreeNodeKey = state.SelectedTreeNodeKey,
+                    SelectionChanged          = OnElementSelected,
+                    AssemblyFilePath          = state.SelectedAssemblyFilePath
+                }
             },
 
             SpaceY(10),
@@ -267,7 +270,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                 }
             },
 
-            new FlexColumn(FlexGrow(1))
+            new FlexColumn(Flex(1,1,0))
             {
                 // h e a d e r
                 new FlexRow(Color("#6c757d"), CursorPointer, TextAlignCenter)
