@@ -128,7 +128,7 @@ class MethodSelectionView : Component
         {
             return new FlexRow(AlignItemsCenter)
             {
-                new img { Src(GetSvgUrl("Method")), Size(11), mt(5), ml(20) },
+                new img { Src(GetSvgUrl("Method")), Size(11), MarginTop(5), MarginLeft(20) },
 
                 new div { Text(node.label), MarginLeft(5), FontSize13 },
 
@@ -142,7 +142,7 @@ class MethodSelectionView : Component
         {
             return new FlexRow(AlignItemsCenter)
             {
-                new img { Src(GetSvgUrl("Class")), Size(14), ml(10) },
+                new img { Src(GetSvgUrl("Class")), Size(14), MarginLeft(10) },
 
                 new div { Text(node.label), MarginLeft(5), FontSize13 },
 

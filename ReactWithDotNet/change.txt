@@ -3,3 +3,155 @@ WidthHeight=>size
 StretchWidthHeight=>SizeFull
 
 prop.width_height = removed
+
+
+removed:
+#region short
+    #region margin
+    /// <summary>
+    ///     style.margin = <paramref name="margin" /> + 'px'
+    /// </summary>
+    public static StyleModifier m(double margin) => Margin(margin);
+
+    /// <summary>
+    ///     style.margin = <paramref name="margin" />
+    /// </summary>
+    public static StyleModifier m(string margin) => Margin(margin);
+
+    /// <summary>
+    ///     style.marginRight = <paramref name="marginRight" /> + 'px'
+    /// </summary>
+    public static StyleModifier mr(double marginRight) => MarginRight(marginRight);
+
+    /// <summary>
+    ///     style.marginRight = <paramref name="marginRight" />
+    /// </summary>
+    public static StyleModifier mr(string marginRight) => MarginRight(marginRight);
+
+    /// <summary>
+    ///     style.marginLeft = <paramref name="marginLeft" /> + 'px'
+    /// </summary>
+    public static StyleModifier ml(double marginLeft) => MarginLeft(marginLeft);
+
+    /// <summary>
+    ///     style.marginLeft = <paramref name="marginLeft" />
+    /// </summary>
+    public static StyleModifier ml(string marginLeft) => MarginLeft(marginLeft);
+
+    /// <summary>
+    ///     style.marginTop = <paramref name="marginTop" /> + 'px'
+    /// </summary>
+    public static StyleModifier mt(double marginTop) => MarginTop(marginTop);
+
+    /// <summary>
+    ///     style.marginTop = <paramref name="marginTop" />
+    /// </summary>
+    public static StyleModifier mt(string marginTop) => MarginTop(marginTop);
+
+    /// <summary>
+    ///     style.marginBottom = <paramref name="marginBottom" /> + 'px'
+    /// </summary>
+    public static StyleModifier mb(double marginBottom) => MarginBottom(marginBottom);
+
+    /// <summary>
+    ///     style.marginBottom = <paramref name="marginBottom" />
+    /// </summary>
+    public static StyleModifier mb(string marginBottom) => MarginBottom(marginBottom);
+
+    /// <summary>
+    ///     style.marginLeft = <paramref name="value" /> + 'px'
+    ///     <br />
+    ///     style.marginRight = <paramref name="value" /> + 'px'
+    /// </summary>
+    public static StyleModifier mx(double value) => MarginLeftRight(value);
+
+    /// <summary>
+    ///     style.marginLeft = <paramref name="value" />
+    ///     <br />
+    ///     style.marginRight = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier mx(string value) => MarginLeftRight(value);
+
+    /// <summary>
+    ///     style.marginTop = <paramref name="value" /> + 'px'
+    ///     <br />
+    ///     style.marginBottom = <paramref name="value" /> + 'px'
+    /// </summary>
+    public static StyleModifier my(double value) => MarginTopBottom(value);
+
+    /// <summary>
+    ///     style.marginTop = <paramref name="value" />
+    ///     <br />
+    ///     style.marginBottom = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier my(string value) => MarginTopBottom(value);
+    #endregion
+
+    #region padding
+    /// <summary>
+    ///     style.padding = <paramref name="padding" /> + 'px'
+    /// </summary>
+    public static StyleModifier p(double padding) => Padding(padding);
+
+    /// <summary>
+    ///     style.padding = <paramref name="padding" />
+    /// </summary>
+    public static StyleModifier p(string padding) => Padding(padding);
+
+    /// <summary>
+    ///     style.paddingRight = <paramref name="paddingRight" /> + 'px'
+    /// </summary>
+    public static StyleModifier pr(double paddingRight) => PaddingRight(paddingRight);
+
+    /// <summary>
+    ///     style.paddingRight = <paramref name="paddingRight" />
+    /// </summary>
+    public static StyleModifier pr(string paddingRight) => PaddingRight(paddingRight);
+
+    /// <summary>
+    ///     style.paddingLeft = <paramref name="paddingLeft" /> + 'px'
+    /// </summary>
+    public static StyleModifier pl(double paddingLeft) => PaddingLeft(paddingLeft);
+
+    /// <summary>
+    ///     style.paddingLeft = <paramref name="paddingLeft" />
+    /// </summary>
+    public static StyleModifier pl(string paddingLeft) => PaddingLeft(paddingLeft);
+
+    /// <summary>
+    ///     style.paddingTop = <paramref name="paddingTop" /> + 'px'
+    /// </summary>
+    public static StyleModifier pt(double paddingTop) => PaddingTop(paddingTop);
+
+    /// <summary>
+    ///     style.paddingTop = <paramref name="paddingTop" />
+    /// </summary>
+    public static StyleModifier pt(string paddingTop) => PaddingTop(paddingTop);
+
+    /// <summary>
+    ///     style.paddingBottom = <paramref name="paddingBottom" /> + 'px'
+    /// </summary>
+    public static StyleModifier pb(double paddingBottom) => PaddingBottom(paddingBottom);
+
+    /// <summary>
+    ///     style.paddingBottom = <paramref name="paddingBottom" />
+    /// </summary>
+    public static StyleModifier pb(string paddingBottom) => PaddingBottom(paddingBottom);
+
+    
+
+    /// <summary>
+    ///     style.paddingTop = <paramref name="value" /> + 'px'
+    ///     <br />
+    ///     style.paddingBottom = <paramref name="value" /> + 'px'
+    /// </summary>
+    public static StyleModifier py(double value) => PaddingTopBottom(value);
+
+    /// <summary>
+    ///     style.paddingTop = <paramref name="value" />
+    ///     <br />
+    ///     style.paddingBottom = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier py(string value) => PaddingTopBottom(value);
+    #endregion
+    #endregion
