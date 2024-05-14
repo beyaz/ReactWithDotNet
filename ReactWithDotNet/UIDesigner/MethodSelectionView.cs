@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.UIDesigner;
 
-class MetadataNode
+sealed record MetadataNode
 {
     internal List<MetadataNode> children;
 
@@ -13,13 +13,14 @@ class MetadataNode
     public bool IsNamespace { get; init; }
 
     public string label { get; set; }
+    
     public MethodReference MethodReference { get; init; }
 
     public string NamespaceReference { get; init; }
     public TypeReference TypeReference { get; init; }
 }
 
-class MethodSelectionView : Component
+sealed class MethodSelectionView : Component
 {
     public required string AssemblyFilePath { get; init; }
 
