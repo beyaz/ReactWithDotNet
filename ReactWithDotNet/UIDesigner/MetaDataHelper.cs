@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections.Immutable;
+using System.Reflection;
 
 namespace ReactWithDotNet.UIDesigner;
 
@@ -32,15 +33,12 @@ static class MetadataHelper
         return returnMethodInfo;
     }
 
-    static void AddChild(this MetadataNode node, MetadataNode child)
+    static MetadataNode AddChild(this MetadataNode node, MetadataNode child)
     {
-        (node.children ??= new List<MetadataNode>()).Add(child);
+        return node with { Children = node.Children.Add(child) };
     }
     
-    static bool HasChild(this MetadataNode node)
-    {
-        return node.Children?.Count > 0;
-    }
+    
     
     public static IEnumerable<MetadataNode> GetMetadataNodes(string assemblyFilePath, string classFilter, string methodFilter)
     {
@@ -56,7 +54,7 @@ static class MetadataHelper
 
                 if (!string.IsNullOrWhiteSpace(methodFilter))
                 {
-                    classNodes = classNodes.Where(classNode => classNode.HasChild()).Take(3).OrderByDescending(classNode => classNode.Children.Count).ToList();
+                    classNodes = classNodes.Where(classNode => classNode.HasChild).Take(3).OrderByDescending(classNode => classNode.Children.Count).ToList();
                 }
 
                 if (classNodes.Count > 0)
@@ -66,7 +64,7 @@ static class MetadataHelper
                         NamespaceReference = namespaceName,
                         IsNamespace        = true,
                         label              = namespaceName,
-                        children = classNodes
+                        Children = classNodes.ToImmutableList()
                     });
                 }
             }
@@ -76,7 +74,7 @@ static class MetadataHelper
 
         static bool ignoreClass(MetadataNode classNode)
         {
-            if (classNode.Children?.Count == 0)
+            if (classNode.Children.Count == 0)
             {
                 if (classNode.TypeReference.IsStaticClass)
                 {
@@ -105,21 +103,21 @@ static class MetadataHelper
             {
                 if (!string.IsNullOrWhiteSpace(methodFilter))
                 {
-                    if (classNode.Children is null || classNode.Children?.Count < 5)
+                    if (classNode.Children.Count < 5)
                     {
                         if (m.Name.IndexOf(methodFilter, StringComparison.OrdinalIgnoreCase) >= 0)
                         {
-                            classNode.AddChild(ConvertToMetadataNode(m));
+                            classNode = classNode.AddChild(ConvertToMetadataNode(m));
                         }
                     }
 
                     return;
                 }
 
-                classNode.AddChild(ConvertToMetadataNode(m));
+                classNode = classNode.AddChild(ConvertToMetadataNode(m));
             });
 
-            if (classNode.HasChild() is false)
+            if (classNode.HasChild is false)
             {
                 if (!(type.IsSubclassOf(typeof(ReactComponentBase)) || type.IsSubclassOf(typeof(PureComponent))))
                 {

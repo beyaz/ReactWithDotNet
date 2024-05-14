@@ -1,12 +1,11 @@
-﻿using static ReactWithDotNet.UIDesigner.Extensions;
+﻿using System.Collections.Immutable;
+using static ReactWithDotNet.UIDesigner.Extensions;
 
 namespace ReactWithDotNet.UIDesigner;
 
 sealed record MetadataNode
 {
-    internal List<MetadataNode> children;
-
-    public IReadOnlyList<MetadataNode> Children => children;
+    public ImmutableList<MetadataNode> Children { get; init; } = ImmutableList.Create<MetadataNode>();
     
     public bool IsClass { get; init; }
     public bool IsMethod { get; init; }
@@ -18,6 +17,8 @@ sealed record MetadataNode
 
     public string NamespaceReference { get; init; }
     public TypeReference TypeReference { get; init; }
+
+    public bool HasChild => Children.Count > 0;
 }
 
 sealed class MethodSelectionView : Component
@@ -186,7 +187,7 @@ sealed class MethodSelectionView : Component
 
         Element toItem(MetadataNode node)
         {
-            if (node.Children?.Count > 0)
+            if (node.Children.Count > 0)
             {
                 var parent = AsTreeItem(node);
                 var childrenOfParent = AsTreeView(node.Children);
