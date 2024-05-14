@@ -40,7 +40,7 @@ class Playground : Component<PlaygroundState>
 
     protected override Element render()
     {
-        return new FlexColumn(WidthHeight("100%"), BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), BorderRadius(3), CursorDefault)
+        return new FlexColumn(Size("100%"), BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), BorderRadius(3), CursorDefault)
         {
             Part_AppBar,
 

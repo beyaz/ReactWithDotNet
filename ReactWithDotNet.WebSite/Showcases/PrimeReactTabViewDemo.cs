@@ -60,7 +60,7 @@ public class PrimeReactTabViewDemo : PureComponent
                             {
                                 image = "https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png",
                                 shape = "circle", className ="mx-2"
-                            } + WidthHeight(28),
+                            } + Size(28),
                            "Amy Elsner"
                         },
                         header = "Header III",

@@ -38,7 +38,7 @@ class YoutubeCard : PureComponent
 
             // Play icon
             PositionRelative,
-            new img { Src(Asset("play.svg")), WidthHeight(30), Right(10), Top(10), PositionAbsolute },
+            new img { Src(Asset("play.svg")), Size(30), Right(10), Top(10), PositionAbsolute },
         };
     }
 }

@@ -8,8 +8,8 @@ public class Logo_old : PureComponent
         {
             new FlexRow(Gap(25))
             {
-                new img { Src(Asset("react.svg")), WidthHeight(30) },
-                new img { Src(Asset("net_core_logo.svg")), WidthHeight(30) }
+                new img { Src(Asset("react.svg")), Size(30) },
+                new img { Src(Asset("net_core_logo.svg")), Size(30) }
             },
 
             new FlexRow(Gap(3)){ (span)"React"+FontWeight500, " with " , (span)"DotNet" + FontWeight500 }

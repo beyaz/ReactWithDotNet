@@ -41,7 +41,7 @@ class HeaderMenuBar : PureComponent
 
                         children =
                         {
-                            new svg(WidthHeight(20), svg.Fill(Theme.Blue700), svg.ViewBox(0, 0, 24, 24))
+                            new svg(Size(20), svg.Fill(Theme.Blue700), svg.ViewBox(0, 0, 24, 24))
                             {
                                 new path { d = x.Svg }
                             }
@@ -89,7 +89,7 @@ class HeaderMenuBar : PureComponent
 
             new FlexRow(AlignItemsCenter, Gap(20), BorderRadius)
             {
-                new img { Src(Asset(model.SvgFileName)), WidthHeight(36) },
+                new img { Src(Asset(model.SvgFileName)), Size(36) },
                 new FlexColumn
                 {
                     FontFamily_IBM_Plex_Sans,

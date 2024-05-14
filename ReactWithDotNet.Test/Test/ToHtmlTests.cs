@@ -281,8 +281,8 @@ public class ToHtmlTests
         {
             new FlexRow(Gap(25))
             {
-                new img { Src("A.svg"), WidthHeight(30) },
-                new img { Src("B.svg"), WidthHeight(30) }
+                new img { Src("A.svg"), Size(30) },
+                new img { Src("B.svg"), Size(30) }
             },
 
             new small { "React with DotNet" }

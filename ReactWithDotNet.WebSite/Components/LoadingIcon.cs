@@ -37,7 +37,7 @@ public class LoadingIcon : PureComponent
 "
             },
 
-            new div { className = "loader", style = { WidthHeight("100%") } }
+            new div { className = "loader", style = { Size("100%") } }
         };
     }
 }
