@@ -761,14 +761,7 @@ public static partial class Mixin
     ///     new div{ style = {height = <paramref name="valueInPx" />}}
     /// </summary>
     public static HtmlElement VSpace(double valueInPx) => new div(Height(valueInPx));
-
-    /// <summary>
-    ///     style.width = <paramref name="pixelValue" /> + 'px'
-    ///     <br />
-    ///     style.height = <paramref name="pixelValue" /> + 'px'
-    /// </summary>
-    public static StyleModifier wh(double pixelValue) => WidthHeight(pixelValue);
-
+    
     /// <summary>
     ///     Apply given modifiers when condition is true
     /// </summary>
