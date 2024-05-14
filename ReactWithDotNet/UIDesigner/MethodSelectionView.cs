@@ -21,30 +21,30 @@ class MetadataNode
 
 class MethodSelectionView : Component
 {
-    public string AssemblyFilePath { get; set; }
+    public required string AssemblyFilePath { get; init; }
 
-    public string ClassFilter { get; set; }
+    public required string ClassFilter { get; init; }
 
-    public string MethodFilter { get; set; }
+    public required string MethodFilter { get; init; }
 
-    public string SelectedMethodTreeNodeKey { get; set; }
+    public required string SelectedMethodTreeNodeKey { get; init; }
 
     [ReactCustomEvent]
-    public Func<string,Task> SelectionChanged { get; set; }
+    public required Func<string,Task> SelectionChanged { get; init; }
 
-    public static MetadataNode FindTreeNode(string AssemblyFilePath, string treeNodeKey, string classFilter, string methodFilter)
+    public static MetadataNode FindTreeNode(string assemblyFilePath, string treeNodeKey, string classFilter, string methodFilter)
     {
-        if (string.IsNullOrWhiteSpace(AssemblyFilePath) || string.IsNullOrWhiteSpace(treeNodeKey))
+        if (string.IsNullOrWhiteSpace(assemblyFilePath) || string.IsNullOrWhiteSpace(treeNodeKey))
         {
             return null;
         }
 
-        if (!File.Exists(AssemblyFilePath))
+        if (!File.Exists(assemblyFilePath))
         {
             return null;
         }
 
-        var nodes = MetadataHelper.GetMetadataNodes(AssemblyFilePath, classFilter, methodFilter).ToArray();
+        var nodes = MetadataHelper.GetMetadataNodes(assemblyFilePath, classFilter, methodFilter).ToArray();
 
         return FindTreeNode(nodes, x => HasMatch(x, treeNodeKey));
     }
