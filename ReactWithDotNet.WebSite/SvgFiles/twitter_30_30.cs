@@ -7,7 +7,7 @@ class twitter_30_30 : PureComponent
 
     protected override Element render()
     {
-        return new svg(wh(WidthHeight), svg.ViewBox(0, 0, 24, 24))
+        return new svg(Size(WidthHeight), svg.ViewBox(0, 0, 24, 24))
         {
             new path
             {

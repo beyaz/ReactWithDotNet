@@ -16,7 +16,7 @@ class RawCardViewer : PureComponent
             return GetSvgByClassName(Model.IconFile);
         }
 
-        return new svg(wh(30))
+        return new svg(Size(30))
         {
             fill    = "none",
             viewBox = "0 0 24 24",
