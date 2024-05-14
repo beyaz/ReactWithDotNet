@@ -243,11 +243,6 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier OverflowXScroll=> new(style => style.overflowX = "scroll");
 
-    /// <summary>
-    ///     width = '100%' , height = '100%'
-    /// </summary>
-    public static StyleModifier StretchWidthHeight => new(style => style.width_height = "100%");
-
     public static StyleModifier TextAlignCenter => TextAlign("center");
     public static StyleModifier TextAlignLeft => TextAlign("left");
     public static StyleModifier TextAlignRight => TextAlign("right");

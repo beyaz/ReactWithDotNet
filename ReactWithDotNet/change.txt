@@ -1,0 +1,5 @@
+﻿wh->Size
+WidthHeight=>size
+StretchWidthHeight=>SizeFull
+
+prop.width_height = removed

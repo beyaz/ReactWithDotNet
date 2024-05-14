@@ -93,17 +93,7 @@ partial class Style : Modifier, IEnumerable<StyleModifier>
             bottom = value;
         }
     }
-
-    [JsonIgnore]
-    public string width_height
-    {
-        set
-        {
-            width  = value;
-            height = value;
-        }
-    }
-
+    
     /// <summary>
     ///     Add given <paramref name="styleModifier" /> to <paramref name="style" />
     ///     <br />
