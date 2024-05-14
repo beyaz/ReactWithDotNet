@@ -20,16 +20,12 @@
 
     <ItemGroup>
       <None Remove="UIDesigner\Resources\Class.svg" />
-      <None Remove="UIDesigner\Resources\dll.svg" />
-      <None Remove="UIDesigner\Resources\Folder.svg" />
       <None Remove="UIDesigner\Resources\Method.svg" />
       <None Remove="UIDesigner\Resources\Namespace.svg" />
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Include="UIDesigner\Resources\Class.svg" />
-      <EmbeddedResource Include="UIDesigner\Resources\dll.svg" />
-      <EmbeddedResource Include="UIDesigner\Resources\Folder.svg" />
       <EmbeddedResource Include="UIDesigner\Resources\Method.svg" />
       <EmbeddedResource Include="UIDesigner\Resources\Namespace.svg" />
     </ItemGroup>
