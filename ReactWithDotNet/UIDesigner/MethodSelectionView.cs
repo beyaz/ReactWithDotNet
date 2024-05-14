@@ -188,12 +188,12 @@ class MethodSelectionView : Component
             if (node.Children?.Count > 0)
             {
                 var parent = AsTreeItem(node);
-                var chldrn = AsTreeView(node.Children);
+                var childrenOfParent = AsTreeView(node.Children);
 
                 return new Fragment
                 {
                     parent + OnClick(OnTreeItemClicked),
-                    chldrn
+                    childrenOfParent
                 };
             }
 
