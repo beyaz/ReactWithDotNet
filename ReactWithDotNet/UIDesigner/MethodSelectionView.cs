@@ -6,13 +6,13 @@ namespace ReactWithDotNet.UIDesigner;
 sealed record MetadataNode
 {
     public ImmutableList<MetadataNode> Children { get; init; } = ImmutableList.Create<MetadataNode>();
-    
+
     public bool IsClass { get; init; }
     public bool IsMethod { get; init; }
     public bool IsNamespace { get; init; }
 
     public string label { get; set; }
-    
+
     public MethodReference MethodReference { get; init; }
 
     public string NamespaceReference { get; init; }
@@ -32,7 +32,7 @@ sealed class MethodSelectionView : Component
     public required string SelectedMethodTreeNodeKey { get; init; }
 
     [ReactCustomEvent]
-    public required Func<string,Task> SelectionChanged { get; init; }
+    public required Func<string, Task> SelectionChanged { get; init; }
 
     public static MetadataNode FindTreeNode(string assemblyFilePath, string treeNodeKey, string classFilter, string methodFilter)
     {
@@ -56,7 +56,7 @@ sealed class MethodSelectionView : Component
         var nodes = GetNodes().ToList();
 
         Element content;
-        
+
         if (nodes.Count == 0)
         {
             content = new div(WordWrapBreakWord, Color("#c04747"), FontSize11)
@@ -216,7 +216,7 @@ sealed class MethodSelectionView : Component
     Task OnTreeItemClicked(MouseEvent e)
     {
         DispatchEvent(SelectionChanged, [e.currentTarget.id]);
-        
+
         return Task.CompletedTask;
     }
 }
