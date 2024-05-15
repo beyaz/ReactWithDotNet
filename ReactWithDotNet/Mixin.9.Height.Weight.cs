@@ -128,6 +128,17 @@ partial class Mixin
     });
     
     /// <summary>
+    ///     style.width = <paramref name="width" />
+    ///     <br/>
+    ///     style.height = <paramref name="height" />
+    /// </summary>
+    public static StyleModifier Size(string width, string height) => new(style =>
+    {
+        style.width  = width;
+        style.height = height;
+    });
+    
+    /// <summary>
     ///     style.minWidth = <paramref name="minWidth" /> + 'px'
     ///     <br/>
     ///     style.minHeight = <paramref name="minHeight" /> + 'px'
@@ -183,7 +194,7 @@ partial class Mixin
     ///     <br />
     ///     height: 100%
     /// </summary>
-    public static StyleModifier SizeFull => Size("100%");
+    public static StyleModifier SizeFull => Size("100%","100%");
     
     
     

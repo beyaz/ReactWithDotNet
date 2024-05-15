@@ -22,6 +22,17 @@ partial class svg
         x.width = width.AsPixel();
         x.height = height.AsPixel();
     });
+    
+    /// <summary>
+    ///     svg.width = <paramref name="width" />
+    ///     <br/>
+    ///     svg.height = <paramref name="height" />
+    /// </summary>
+    public static HtmlElementModifier Size(string width, string height) => Modify(x =>
+    {
+        x.width  = width;
+        x.height = height;
+    });
 
     /// <summary>
     ///     svg.width = <paramref name="size" /> + 'px'
