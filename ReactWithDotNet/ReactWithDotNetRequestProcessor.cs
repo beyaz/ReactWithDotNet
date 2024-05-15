@@ -140,7 +140,7 @@ partial class Mixin
             ComponentRequest = new ComponentRequest
             {
                 MethodName                        = "FetchComponent",
-                FullName                          = input.Component.GetType().GetFullName(),
+                FullName                          = input.Component.GetType().SerializeToString(),
                 LastUsedComponentUniqueIdentifier = 1,
                 ComponentUniqueIdentifier         = 1,
                 QueryString                       = input.QueryString
@@ -183,7 +183,7 @@ partial class Mixin
             ComponentRequest = new ComponentRequest
             {
                 MethodName                        = "FetchComponent",
-                FullName                          = input.Component.GetType().GetFullName(),
+                FullName                          = input.Component.GetType().SerializeToString(),
                 LastUsedComponentUniqueIdentifier = 1000,
                 ComponentUniqueIdentifier         = 1000,
                 QueryString                       = input.QueryString

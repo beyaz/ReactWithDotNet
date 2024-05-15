@@ -596,7 +596,7 @@ static partial class JsonSerializationOptionHelper
                 if (target is not null)
                 {
                     writer.WritePropertyName("TargetType");
-                    JsonSerializer.Serialize(writer, target.GetType().GetFullName(), options);
+                    JsonSerializer.Serialize(writer, target.GetType().SerializeToString(), options);
 
                     writer.WritePropertyName("Target");
                     JsonSerializer.Serialize(writer, target, options);

@@ -466,11 +466,6 @@ public static partial class Mixin
     
     public static StyleModifier Gap(CssUnit gap) => Gap(gap.ToString());
 
-    public static string GetFullName(this Type type)
-    {
-        return $"{type},{type.Assembly.GetName().Name}";
-    }
-    
     /// <summary>
     ///     style.height = 0px
     /// </summary>

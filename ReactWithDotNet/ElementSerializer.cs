@@ -696,12 +696,6 @@ static partial class ElementSerializer
         }
     }
     
-    
-    static string GetReactComponentTypeInfo(object reactStatefulComponent)
-    {
-        return reactStatefulComponent.GetType().GetFullName();
-    }
-
     static ValueExportInfo<object> GetStylePropertyValueOfHtmlElementForSerialize(ElementSerializerContext context, Node node, object instance, Style style)
     {
         var response = ConvertStyleToCssClass(context, node, style, false, context.DynamicStyles.GetClassName);

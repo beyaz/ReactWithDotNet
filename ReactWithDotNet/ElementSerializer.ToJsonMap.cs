@@ -253,7 +253,7 @@ partial class ElementSerializer
                 map.Add("$isPureComponent", 1);
                 map.Add("$DotNetComponentUniqueIdentifier", reactPureComponent.ComponentUniqueIdentifier);
                 map.Add(___RootNode___, node.DotNetComponentRootNode.ElementAsJsonMap);
-                map.Add(___Type___, GetReactComponentTypeInfo(reactPureComponent));
+                map.Add(___Type___, reactPureComponent.GetType().SerializeToString());
                 map.Add(nameof(Element.key), reactPureComponent.key);
 
                 await TransferProps(context,node,map,reactPureComponent.GetType().Calculated(),reactPureComponent);
@@ -314,7 +314,7 @@ partial class ElementSerializer
 
                 if (stateProperty is null)
                 {
-                    throw new MissingMemberException(dotNetTypeOfReactComponent.GetFullName(), "state");
+                    throw new MissingMemberException(dotNetTypeOfReactComponent.SerializeToString(), "state");
                 }
 
                 static void InitializeNodeLocationToRoot(Node node)
@@ -346,7 +346,7 @@ partial class ElementSerializer
                 {
                     if (true == stateTree.ChildStates?.TryGetValue(node.location, out var clientStateInfo))
                     {
-                        if (reactStatefulComponent.GetType().GetFullName() == clientStateInfo.FullTypeNameOfComponent)
+                        if (reactStatefulComponent.GetType().SerializeToString() == clientStateInfo.FullTypeNameOfComponent)
                         {
                             var stateValue = DeserializeJsonBySystemTextJson(clientStateInfo.StateAsJson, stateProperty.PropertyInfo.PropertyType);
                             stateProperty.SetValueFunc(reactStatefulComponent, stateValue);
@@ -500,7 +500,7 @@ partial class ElementSerializer
                 map.Add("$DotNetComponentUniqueIdentifier", reactStatefulComponent.ComponentUniqueIdentifier);
                 map.Add(___RootNode___, node.DotNetComponentRootNode.ElementAsJsonMap);
                 map.Add(dotNetState, state);
-                map.Add(___Type___, GetReactComponentTypeInfo(reactStatefulComponent));
+                map.Add(___Type___, reactStatefulComponent.GetType().SerializeToString());
                 map.Add(nameof(Element.key), reactStatefulComponent.key);
                 map.Add("DotNetProperties", dotNetProperties);
 
