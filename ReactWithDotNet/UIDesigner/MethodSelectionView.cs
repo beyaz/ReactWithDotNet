@@ -187,7 +187,7 @@ sealed class MethodSelectionView : Component
 
         Element toItem(MetadataNode node)
         {
-            if (node.Children.Count > 0)
+            if (node.HasChild)
             {
                 var parent = AsTreeItem(node);
                 var childrenOfParent = AsTreeView(node.Children);
