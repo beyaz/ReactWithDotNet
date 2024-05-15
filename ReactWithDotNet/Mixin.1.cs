@@ -468,7 +468,7 @@ public static partial class Mixin
 
     public static string GetFullName(this Type type)
     {
-        return $"{type.FullName},{type.Assembly.GetName().Name}";
+        return $"{type},{type.Assembly.GetName().Name}";
     }
     
     /// <summary>
