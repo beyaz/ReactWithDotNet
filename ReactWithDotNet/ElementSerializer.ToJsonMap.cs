@@ -249,14 +249,16 @@ partial class ElementSerializer
                     continue;
                 }
 
+                var typeInfo = reactPureComponent.GetType().Calculated();
+                
                 var map = new JsonMap();
                 map.Add("$isPureComponent", 1);
                 map.Add("$DotNetComponentUniqueIdentifier", reactPureComponent.ComponentUniqueIdentifier);
                 map.Add(___RootNode___, node.DotNetComponentRootNode.ElementAsJsonMap);
-                map.Add(___Type___, reactPureComponent.GetType().SerializeToString());
+                map.Add(___Type___, typeInfo.FullNameWithAssembly);
                 map.Add(nameof(Element.key), reactPureComponent.key);
 
-                await TransferProps(context,node,map,reactPureComponent.GetType().Calculated(),reactPureComponent);
+                await TransferProps(context,node,map,typeInfo,reactPureComponent);
                 
                 node.ElementAsJsonMap = map;
 
@@ -266,7 +268,7 @@ partial class ElementSerializer
 
                 if (node.End - node.Begin >= 3)
                 {
-                    tracer.Trace($"{reactPureComponent.GetType().FullName} rendered in {node.End - node.Begin} milliseconds");
+                    tracer.Trace($"{reactPureComponent.GetType()} rendered in {node.End - node.Begin} milliseconds");
                 }
 
                 continue;
@@ -500,7 +502,7 @@ partial class ElementSerializer
                 map.Add("$DotNetComponentUniqueIdentifier", reactStatefulComponent.ComponentUniqueIdentifier);
                 map.Add(___RootNode___, node.DotNetComponentRootNode.ElementAsJsonMap);
                 map.Add(dotNetState, state);
-                map.Add(___Type___, reactStatefulComponent.GetType().SerializeToString());
+                map.Add(___Type___, typeInfo.FullNameWithAssembly);
                 map.Add(nameof(Element.key), reactStatefulComponent.key);
                 map.Add("DotNetProperties", dotNetProperties);
 

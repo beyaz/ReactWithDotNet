@@ -97,7 +97,9 @@ partial class Mixin
 
             ComponentDidMountMethod = GetComponentDidMountMethod(type),
             
-            IsAnonymousType = isAnonymousType
+            IsAnonymousType = isAnonymousType,
+            
+            FullNameWithAssembly = type.SerializeToString()
         };
 
         CacheForTypeInfoCalculated.TryAdd(type, typeInfo);
@@ -233,4 +235,5 @@ sealed class TypeInfoCalculated
     public IReadOnlyList<PropertyInfoCalculated> ReactAttributedPropertiesOfType { get; init; }
     public PropertyInfoCalculated StateProperty { get; init; }
     public bool IsAnonymousType { get; init; }
+    public string FullNameWithAssembly { get; init; }
 }
