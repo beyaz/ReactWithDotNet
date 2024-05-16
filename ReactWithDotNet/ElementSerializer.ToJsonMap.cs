@@ -794,6 +794,12 @@ partial class ElementSerializer
         var current = element._head;
         while (current is not null)
         {
+            if (current.propertyDefinition.jsonIgnore)
+            {
+                current = current.next;
+                continue;
+            }
+            
             var value = await GetPropertyValueOfHtmlElement(context, element, current);
 
             jsonMap.Add(current.propertyDefinition.name, value);

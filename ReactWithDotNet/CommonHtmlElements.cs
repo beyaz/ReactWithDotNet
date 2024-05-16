@@ -5819,7 +5819,8 @@ public sealed class textarea : HtmlElement
     PropertyValueNode<int?> _valueBindDebounceTimeout;
     static readonly PropertyValueDefinition _valueBindDebounceTimeout_ = new()
     {
-        name = nameof(valueBindDebounceTimeout)
+        name = nameof(valueBindDebounceTimeout),
+        jsonIgnore = true
     };
     /// <summary>
     ///     if you want to handle when user iteraction finished see example below
@@ -5839,7 +5840,8 @@ public sealed class textarea : HtmlElement
     PropertyValueNode<Func<Task>> _valueBindDebounceHandler;
     static readonly PropertyValueDefinition _valueBindDebounceHandler_ = new()
     {
-        name = nameof(valueBindDebounceHandler)
+        name = nameof(valueBindDebounceHandler),
+        jsonIgnore = true
     };
     /// <summary>
     ///     if you want to handle when user iteraction finished see example below
@@ -6500,7 +6502,8 @@ public sealed class input : HtmlElement
     PropertyValueNode<int?> _valueBindDebounceTimeout;
     static readonly PropertyValueDefinition _valueBindDebounceTimeout_ = new()
     {
-        name = nameof(valueBindDebounceTimeout)
+        name = nameof(valueBindDebounceTimeout),
+        jsonIgnore = true
     };
     /// <summary>
     ///     if you want to handle when user iteraction finished see example below
@@ -6520,7 +6523,8 @@ public sealed class input : HtmlElement
     PropertyValueNode<Func<Task>> _valueBindDebounceHandler;
     static readonly PropertyValueDefinition _valueBindDebounceHandler_ = new()
     {
-        name = nameof(valueBindDebounceHandler)
+        name = nameof(valueBindDebounceHandler),
+        jsonIgnore = true
     };
     /// <summary>
     ///     if you want to handle when user iteraction finished see example below

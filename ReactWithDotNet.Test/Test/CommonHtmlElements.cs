@@ -1456,7 +1456,8 @@ public class ExportingCommonHtmlElements
                                  component.valueBind = ()=>state.UserInfo.Name
                                  component.valueBindDebounceTimeout = 600 // milliseconds
                                  component.valueBindDebounceHandler = OnUserIterationFinished
-                                 """ 
+                                 """,
+                        JsonIgnore = true
                     },
                     
                     new ()
@@ -1468,7 +1469,8 @@ public class ExportingCommonHtmlElements
                                  component.valueBind = ()=>state.UserInfo.Name
                                  component.valueBindDebounceTimeout = 600 // milliseconds
                                  component.valueBindDebounceHandler = OnUserIterationFinished
-                                 """ 
+                                 """ ,
+                        JsonIgnore = true
                     },
                 },
                 EnableCastFromString = false
@@ -1664,7 +1666,8 @@ public class ExportingCommonHtmlElements
                                  component.valueBind = ()=>state.UserInfo.Name
                                  component.valueBindDebounceTimeout = 600 // milliseconds
                                  component.valueBindDebounceHandler = OnUserIterationFinished
-                                 """ 
+                                 """ ,
+                        JsonIgnore = true
                     },
                     
                     new ()
@@ -1676,7 +1679,8 @@ public class ExportingCommonHtmlElements
                                  component.valueBind = ()=>state.UserInfo.Name
                                  component.valueBindDebounceTimeout = 600 // milliseconds
                                  component.valueBindDebounceHandler = OnUserIterationFinished
-                                 """ 
+                                 """ ,
+                        JsonIgnore = true
                     },
                     
                     new ()
@@ -1908,6 +1912,12 @@ public class ExportingCommonHtmlElements
                         list.Add($"{padding}{padding}bind = new(){{ targetProp = \"{attribute.Bind.targetProp}\", jsValueAccess = \"{attribute.Bind.jsValueAccess}\", eventName = \"{attribute.Bind.eventName}\" }}");
                     }
                     
+                    if (attribute.JsonIgnore)
+                    {
+                        list[^1] += ",";
+                        list.Add($"{padding}{padding}jsonIgnore = true");
+                    }
+                    
                     
                     
                     
@@ -2080,6 +2090,7 @@ public class ExportingCommonHtmlElements
         public bool IsBindingExpression { get; init; }
         public string TransformValueInClient { get; init; }
         public ReactBindAttribute Bind{ get; init; }
+        public bool JsonIgnore { get; init; }
     }
 
     sealed class TagInfo

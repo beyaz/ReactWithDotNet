@@ -236,6 +236,7 @@ abstract partial class HtmlElement : Element
         public bool isBindingExpression;
         public string transformValueInClient;
         public ReactBindAttribute bind;
+        public bool jsonIgnore;
     }
 
     
