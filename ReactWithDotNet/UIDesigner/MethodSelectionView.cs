@@ -75,6 +75,65 @@ sealed class MethodSelectionView : Component
         };
     }
 
+    static Element AsTreeItem(MetadataNode node, string SelectedMethodTreeNodeKey, MouseEventHandler OnTreeItemClicked)
+    {
+        if (node.IsMethod)
+        {
+            return new FlexRow(AlignItemsCenter)
+            {
+                new img { Src(GetSvgUrl("Method")), Size(11), MarginTop(5), MarginLeft(20) },
+
+                new div { Text(node.label), MarginLeft(5), FontSize13 },
+
+                Id(node.MethodReference.UUID),
+
+                arrangeBackground
+            };
+        }
+
+        if (node.IsClass)
+        {
+            return new FlexRow(AlignItemsCenter)
+            {
+                new img { Src(GetSvgUrl("Class")), Size(14), MarginLeft(10) },
+
+                new div { Text(node.label), MarginLeft(5), FontSize13 },
+
+                Id(node.TypeReference.FullName),
+
+                arrangeBackground
+            };
+        }
+
+        if (node.IsNamespace)
+        {
+            return new FlexRow(AlignItemsCenter)
+            {
+                new img { Src(GetSvgUrl("Namespace")), Size(14) },
+
+                new div { Text(node.label), MarginLeft(5), FontSize13 }
+            };
+        }
+
+        return new div();
+
+        void arrangeBackground(HtmlElement el)
+        {
+            var isSelected = HasMatch(node, SelectedMethodTreeNodeKey);
+
+            if (isSelected)
+            {
+                el += BackgroundImage(linear_gradient(90, rgb(136, 195, 242), rgb(242, 246, 249))) + BorderRadius(3);
+            }
+            else
+            {
+                el += Hover(BackgroundImage(linear_gradient(90, rgb(190, 220, 244), rgb(242, 246, 249))) + BorderRadius(3));
+            }
+
+            el.onClick = OnTreeItemClicked;
+        }
+    }
+
     static MetadataNode FindTreeNode(IEnumerable<MetadataNode> nodes, Func<MetadataNode, bool> hasMatch)
     {
         if (nodes == null)
@@ -127,65 +186,6 @@ sealed class MethodSelectionView : Component
     Element AsTreeItem(MetadataNode node)
     {
         return AsTreeItem(node, SelectedMethodTreeNodeKey, OnTreeItemClicked);
-    }
-    
-    static Element AsTreeItem(MetadataNode node, string SelectedMethodTreeNodeKey, MouseEventHandler OnTreeItemClicked)
-    {
-        if (node.IsMethod)
-        {
-            return new FlexRow(AlignItemsCenter)
-            {
-                new img { Src(GetSvgUrl("Method")), Size(11), MarginTop(5), MarginLeft(20) },
-
-                new div { Text(node.label), MarginLeft(5), FontSize13 },
-
-                Id(node.MethodReference.UUID),
-
-                arrangeBackground
-            };
-        }
-
-        if (node.IsClass)
-        {
-            return new FlexRow(AlignItemsCenter)
-            {
-                new img { Src(GetSvgUrl("Class")), Size(14), MarginLeft(10) },
-
-                new div { Text(node.label), MarginLeft(5), FontSize13 },
-
-                Id(node.TypeReference.FullName),
-                
-                arrangeBackground
-            };
-        }
-
-        if (node.IsNamespace)
-        {
-            return new FlexRow(AlignItemsCenter)
-            {
-                new img { Src(GetSvgUrl("Namespace")), Size(14) },
-
-                new div { Text(node.label), MarginLeft(5), FontSize13 }
-            };
-        }
-
-        return new div();
-
-        void arrangeBackground(HtmlElement el)
-        {
-            var isSelected = HasMatch(node, SelectedMethodTreeNodeKey);
-            
-            if (isSelected)
-            {
-                el += BackgroundImage(linear_gradient(90,  rgb(136, 195, 242), rgb(242, 246, 249))) + BorderRadius(3);
-            }
-            else
-            {
-                el += Hover(BackgroundImage(linear_gradient(90, rgb(190, 220, 244), rgb(242, 246, 249)))+ BorderRadius(3));
-            }
-
-            el.onClick = OnTreeItemClicked;
-        }
     }
 
     Element AsTreeView(IReadOnlyList<MetadataNode> nodes)
