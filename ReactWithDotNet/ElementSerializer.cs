@@ -433,7 +433,11 @@ static partial class ElementSerializer
             var method = instance.GetType().GetMethod(templateAttribute.MethodNameForGettingItemsSource, BindingFlags.Instance | BindingFlags.NonPublic);
             if (method == null)
             {
-                throw new MissingMethodException(templateAttribute.MethodNameForGettingItemsSource);
+                method = instance.GetType().GetProperty(templateAttribute.MethodNameForGettingItemsSource, BindingFlags.Instance | BindingFlags.Public)?.GetMethod;
+                if (method == null)
+                {
+                    throw new MissingMethodException(templateAttribute.MethodNameForGettingItemsSource);    
+                }
             }
 
             Task<IReadOnlyJsonMap> convertToReactNode(object item)

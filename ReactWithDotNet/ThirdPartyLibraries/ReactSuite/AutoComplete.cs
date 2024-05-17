@@ -17,6 +17,10 @@ public sealed class AutoComplete : ElementBase
 
     [ReactProp]
     public string placeholder { get; set; }
+    
+    [ReactProp]
+    [ReactTemplate(nameof(data))]
+    public Func<string,Element> renderMenuItem { get; set; }
 }
 
 
