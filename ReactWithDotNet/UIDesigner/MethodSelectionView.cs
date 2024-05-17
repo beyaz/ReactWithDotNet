@@ -126,6 +126,11 @@ sealed class MethodSelectionView : Component
 
     Element AsTreeItem(MetadataNode node)
     {
+        return AsTreeItem(node, SelectedMethodTreeNodeKey, OnTreeItemClicked);
+    }
+    
+    static Element AsTreeItem(MetadataNode node, string SelectedMethodTreeNodeKey, MouseEventHandler OnTreeItemClicked)
+    {
         if (node.IsMethod)
         {
             return new FlexRow(AlignItemsCenter)
