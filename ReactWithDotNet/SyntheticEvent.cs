@@ -82,7 +82,7 @@ public sealed class MouseEvent : UIEvent
     /// <summary>
     ///     this is the id of first element id which is 'has id value'
     /// </summary>
-    public string FirstNotEmptyId { get; set; }
+    public string FirstNotEmptyId { get; set; } // todo: remove
 
     public bool metaKey { get; init; }
 
