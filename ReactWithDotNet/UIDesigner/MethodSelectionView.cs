@@ -172,12 +172,16 @@ sealed class MethodSelectionView : Component
 
         void arrangeBackground(HtmlElement el)
         {
-            el += new[]
+            var isSelected = HasMatch(node, SelectedMethodTreeNodeKey);
+            
+            if (isSelected)
             {
-                Hover(BackgroundImage(linear_gradient(90, "#d5d5c1", "whitesmoke")), BorderRadius(3)),
-
-                When(HasMatch(node, SelectedMethodTreeNodeKey), BackgroundImage(linear_gradient(90, "#d1d1c8", "whitesmoke")), BorderRadius(3))
-            };
+                el += BackgroundImage(linear_gradient(90, "#d1d1c8", "whitesmoke")) + BorderRadius(3);
+            }
+            else
+            {
+                el += Hover(BackgroundImage(linear_gradient(90, "#ebebe8", "whitesmoke"))+ BorderRadius(3));
+            }
 
             el.onClick = OnTreeItemClicked;
         }
