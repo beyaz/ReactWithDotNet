@@ -176,11 +176,11 @@ sealed class MethodSelectionView : Component
             
             if (isSelected)
             {
-                el += BackgroundImage(linear_gradient(90, "#d1d1c8", "whitesmoke")) + BorderRadius(3);
+                el += BackgroundImage(linear_gradient(90,  rgb(136, 195, 242), rgb(242, 246, 249))) + BorderRadius(3);
             }
             else
             {
-                el += Hover(BackgroundImage(linear_gradient(90, "#ebebe8", "whitesmoke"))+ BorderRadius(3));
+                el += Hover(BackgroundImage(linear_gradient(90, rgb(190, 220, 244), rgb(242, 246, 249)))+ BorderRadius(3));
             }
 
             el.onClick = OnTreeItemClicked;
