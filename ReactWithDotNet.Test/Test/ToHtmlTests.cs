@@ -420,7 +420,7 @@ public class ToHtmlTests
 
               <style>AbC-X-
               .Y{
-              border:1px  solid red;
+              border:1px solid red;
               }
               </style>
 
