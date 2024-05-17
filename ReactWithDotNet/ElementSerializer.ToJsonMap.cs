@@ -1036,8 +1036,11 @@ partial class ElementSerializer
     {
         var htmlElement = node.ElementAsHtmlElement;
 
+        var tag = htmlElement.__type__;
+        
         var map = new JsonMap();
-        map.Add("$tag", htmlElement.__type__);
+        
+        map.Add("$tag", tag);
         map.Add("key", htmlElement.key);
 
         if (htmlElement._style is not null)
