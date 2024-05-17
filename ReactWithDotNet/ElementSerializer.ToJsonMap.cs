@@ -2,6 +2,7 @@ using System.Collections;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace ReactWithDotNet;
 
@@ -832,7 +833,7 @@ partial class ElementSerializer
 
         var map = await LeafToMap_Node(node, context);
 
-        if (childElements is not null)
+        if (childElements is not null && !node.SkipProcessChildren)
         {
             map.Add("$children", childElements);
         }
@@ -1087,6 +1088,39 @@ partial class ElementSerializer
             }
         }
 
+        if (tag == "style" && htmlElement._children?.Count > 1 && htmlElement.innerText is null)
+        {
+            var text = new StringBuilder();
+            
+            foreach (var child in htmlElement._children)
+            {
+                if (child is null)
+                {
+                    continue;
+                }
+                
+                if (child is HtmlTextNode htmlTextNode)
+                {
+                    if (htmlTextNode.stringBuilder is not null)
+                    {
+                        text.Append(htmlTextNode.stringBuilder);
+                    }
+                    else
+                    {
+                        text.Append(htmlTextNode.innerText);
+                    }
+                    
+                    continue;
+                }
+
+                throw DeveloperException("Invalid child in style tag");
+            }
+            
+            map.Add("$text", text.ToString());
+
+            node.SkipProcessChildren = true;
+        }
+        
         return map;
     }
 
@@ -1295,6 +1329,7 @@ partial class ElementSerializer
 
         public Node Parent { get; set; }
         public Stopwatch Stopwatch { get; set; }
+        public bool SkipProcessChildren { get; set; }
     }
 }
 
