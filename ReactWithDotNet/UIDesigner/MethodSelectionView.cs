@@ -154,6 +154,7 @@ sealed class MethodSelectionView : Component
                 new div { Text(node.label), MarginLeft(5), FontSize13 },
 
                 Id(node.TypeReference.FullName),
+                
                 arrangeBackground
             };
         }
