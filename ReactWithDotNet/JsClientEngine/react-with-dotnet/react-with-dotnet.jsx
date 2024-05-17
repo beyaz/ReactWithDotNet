@@ -489,6 +489,11 @@ function IfNull(value, defaultValue)
 
 const VisitFiberNodeForCaptureState = (parentScope, fiberNode) =>
 {
+    if (fiberNode.key === null)
+    {
+        return;
+    }
+
     var scope = parentScope;
 
     var breadcrumb = parentScope.breadcrumb + ',' + fiberNode.key;
