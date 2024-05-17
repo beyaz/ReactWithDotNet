@@ -62,7 +62,8 @@ public sealed class style : HtmlElement
         
         // todo: media queries
 
-        innerText += sb.ToString();
+        Add(sb.ToString());
+        
         return;
 
         static void writePseudo(StringBuilder sb, string cssClassName, Style pseudo, string pseudoName)

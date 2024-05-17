@@ -12,7 +12,7 @@ public class RSuiteAutoCompleteDemo : Component
     {
         return new div(SizeFull)
         {
-            new AutoComplete
+            new AutoComplete<string>
             {
                 onChange = e => Task.FromResult(SelectedValue = e),
 

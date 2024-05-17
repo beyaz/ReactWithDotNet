@@ -359,4 +359,79 @@ public class ToHtmlTests
 
         Assert(new div { sb }, expectedHtml);
     }
+    
+    [TestMethod]
+    public void StringBuilderTest1()
+    {
+        var sb = new StringBuilder();
+        
+        sb.Append("AbC");
+
+        const string expectedHtml
+            = """
+
+              <div>
+                <span>ABC</span>
+              </div>
+
+              """;
+
+        var element = new div
+        {
+            new span { sb }
+        };
+        
+        Assert(element, expectedHtml);
+    }
+    
+    [TestMethod]
+    public void StringBuilderTest2()
+    {
+        var sb = new StringBuilder();
+        
+        sb.Append("AbC");
+
+        const string expectedHtml
+            = """
+
+              <div>
+                <span>AbC-AbC</span>
+              </div>
+
+              """;
+
+        var element = new div
+        {
+            new span { sb ,"-" ,sb}
+        };
+        
+        Assert(element, expectedHtml);
+    }
+    
+    [TestMethod]
+    public void StyleTest1()
+    {
+        var sb = new StringBuilder();
+        
+        sb.Append("AbC");
+
+        const string expectedHtml
+            = """
+
+              <style>AbC-X-
+              .Y{
+              border:1px  solid red;
+              }
+              </style>
+
+              """;
+
+        var element = new style
+        {
+            sb,"-X-",
+            new CssClass("Y",[Border(1,solid,"red")])
+        };
+        
+        Assert(element, expectedHtml);
+    }
 }
