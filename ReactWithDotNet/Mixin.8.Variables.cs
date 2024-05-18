@@ -1,5 +1,7 @@
 ﻿// ReSharper disable all InconsistentNaming
 
+using Microsoft.AspNetCore.SignalR;
+
 namespace ReactWithDotNet;
 
 partial class Mixin
@@ -71,6 +73,30 @@ partial class Mixin
     /// </summary>
     public static string rgba(double red, double green, double blue, double alpha)
         => $"rgba({red},{green},{blue},{alpha})";
+
+
+    
+    /// <summary>
+    ///     Return new string as 'hsl(<paramref name="hue" />, <paramref name="saturation" />, <paramref name="lightness" />,
+    ///     <paramref name="alpha" />)'
+    /// </summary>
+    /// <param name="hue">Defines a degree on the color circle (from 0 to 360) - 0 (or 360) is red, 120 is green, 240 is blue</param>
+    /// <param name="saturation">Defines the saturation; 0% is a shade of gray and 100% is the full color (full saturation)</param>
+    /// <param name="lightness">Defines the lightness; 0% is black, 50% is normal, and 100% is white</param>
+    /// <param name="alpha">Defines the opacity as a number between 0.0 (fully transparent) and 1.0 (fully opaque)</param>
+    public static string hsl(int hue, int saturation, int lightness, double alpha)
+        => $"hsl({hue},{saturation},{lightness},{alpha})";
+    
+    /// <summary>
+    ///     Return new string as 'hsl(<paramref name="hue" />, <paramref name="saturation" />, <paramref name="lightness" />,
+    ///     <paramref name="alpha" />)'
+    /// </summary>
+    /// <param name="hue">Defines a degree on the color circle (from 0 to 360) - 0 (or 360) is red, 120 is green, 240 is blue</param>
+    /// <param name="saturation">Defines the saturation; 0% is a shade of gray and 100% is the full color (full saturation)</param>
+    /// <param name="lightness">Defines the lightness; 0% is black, 50% is normal, and 100% is white</param>
+    /// <param name="alpha">Defines the opacity as a number between 0.0 (fully transparent) and 1.0 (fully opaque)</param>
+    public static string hsla(int hue, int saturation, int lightness, double alpha)
+        => $"hsla({hue},{saturation},{lightness},{alpha})";
 
     /// <summary>
     ///     cubic-bezier(<paramref name="x1"/>, <paramref name="y1"/>, <paramref name="x2"/>, <paramref name="y2"/>)
