@@ -188,7 +188,7 @@ sealed class MethodSelectionView : Component
         return AsTreeItem(node, SelectedMethodTreeNodeKey, OnTreeItemClicked);
     }
 
-    Element AsTreeView(IReadOnlyList<MetadataNode> nodes)
+    Element AsTreeView(IEnumerable<MetadataNode> nodes)
     {
         return new Fragment
         {
