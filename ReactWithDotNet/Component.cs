@@ -27,7 +27,7 @@ public abstract class ReactComponentBase : Element, IReactComponent
 
     internal List<Modifier> Modifiers;
 
-    [System.Text.Json.Serialization.JsonIgnore]
+    [JsonIgnore]
     public Style style
     {
         get
@@ -40,7 +40,7 @@ public abstract class ReactComponentBase : Element, IReactComponent
 
     internal abstract bool IsStateNull { get; }
 
-    [System.Text.Json.Serialization.JsonIgnore]
+    [JsonIgnore]
     public Client Client 
     {
         get
@@ -53,7 +53,7 @@ public abstract class ReactComponentBase : Element, IReactComponent
 
     internal int ComponentUniqueIdentifier;
 
-    [System.Text.Json.Serialization.JsonIgnore]
+    [JsonIgnore]
     public ReactContext Context { get; internal set; }
 
     public static ReactComponentBase operator +(ReactComponentBase component, Style style)
