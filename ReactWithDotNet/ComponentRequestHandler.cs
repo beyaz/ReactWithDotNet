@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Http;
 
 namespace ReactWithDotNet;
 
-using static Array;
-
 sealed class ClientStateInfo
 {
     public int? ComponentUniqueIdentifier { get; set; }
@@ -415,7 +413,7 @@ static class ComponentRequestHandler
             var parameterInfoList = methodInfo.GetParameters();
             if (parameterInfoList.Length == 0)
             {
-                return (default, default, Empty<object>());
+                return (default, default, []);
             }
 
             var eventArguments = new object[parameterInfoList.Length];
