@@ -11,7 +11,7 @@ partial class Mixin
 
     public static void DispatchEvent<TDelegate>(this Client client, object[] eventArguments = null) where TDelegate : Delegate
     {
-        client.DispatchEvent(typeof(TDelegate).Name, eventArguments);
+        client.DispatchEvent(GetEventName<TDelegate>(), eventArguments);
     }
 
     public static void DispatchEvent(this Client client, string eventName)
@@ -71,7 +71,7 @@ partial class Mixin
 
     public static void ListenEvent<TDelegate>(this Client client, TDelegate handler) where TDelegate : Delegate
     {
-        ListenEvent(client, typeof(TDelegate).Name, handler.Method.GetAccessKey());
+        ListenEvent(client, GetEventName<TDelegate>(), handler.Method.GetAccessKey());
     }
 
     public static void ListenEvent(this Client client, string eventName, Func<Task> handler)
@@ -111,7 +111,7 @@ partial class Mixin
 
     public static void ListenEventOnlyOnce<TDelegate>(this Client client, TDelegate handler) where TDelegate : Delegate
     {
-        ListenEventOnlyOnce(client, typeof(TDelegate).Name, handler.Method.GetAccessKey());
+        ListenEventOnlyOnce(client, GetEventName<TDelegate>(), handler.Method.GetAccessKey());
     }
 
     /// <summary>
@@ -146,7 +146,7 @@ partial class Mixin
     /// </summary>
     public static void OnDispatchEventFinished<TDelegate>(this Client client, TDelegate handler) where TDelegate : Delegate
     {
-        ListenEvent(client, "$<<finished>>$" + typeof(TDelegate).Name + "$<<finished>>$", handler.Method.GetAccessKey());
+        ListenEvent(client, "$<<finished>>$" + GetEventName<TDelegate>() + "$<<finished>>$", handler.Method.GetAccessKey());
     }
     
     /// <summary>
@@ -156,7 +156,7 @@ partial class Mixin
     /// </summary>
     public static void OnDispatchEventFinishedOnlyOnce<TDelegate>(this Client client, TDelegate handler) where TDelegate : Delegate
     {
-        ListenEventOnlyOnce(client, "$<<finished>>$" + typeof(TDelegate).Name + "$<<finished>>$", handler.Method.GetAccessKey());
+        ListenEventOnlyOnce(client, "$<<finished>>$" + GetEventName<TDelegate>() + "$<<finished>>$", handler.Method.GetAccessKey());
     }
 
     public static void OnOutsideClicked(this Client client, string idOfElement, Func<Task> func)
@@ -264,4 +264,9 @@ partial class Mixin
     }
 
     #endregion
+    
+    static string GetEventName<TDelegate>() where TDelegate : Delegate
+    {
+        return typeof(TDelegate).FullName;
+    }
 }
