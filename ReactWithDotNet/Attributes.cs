@@ -11,9 +11,7 @@ public class ReactBindAttribute : Attribute
     public string targetProp { get; set; }
 }
 
-[Serializable]
-[AttributeUsage(AttributeTargets.Method)]
-public sealed class ReactStopPropagationAttribute : Attribute;
+
 
 [Serializable]
 public sealed class ReactTemplateAttribute : Attribute
@@ -62,8 +60,7 @@ public sealed class ReactGrabEventArgumentsByUsingFunctionAttribute : Attribute
     public string TransformFunction { get; }
 }
 
-[AttributeUsage(AttributeTargets.Property)]
-public sealed class ReactCustomEventAttribute : Attribute;
+
 
 [AttributeUsage(AttributeTargets.Method)]
 public sealed class CacheThisMethodByTheseParametersAttribute : Attribute
@@ -100,3 +97,10 @@ public sealed class ReactKeyboardEventCallOnlyAttribute : Attribute
 
     public IReadOnlyList<string> Keys { get; }
 }
+
+[Serializable]
+[AttributeUsage(AttributeTargets.Method)]
+public sealed class ReactStopPropagationAttribute : Attribute;
+
+[AttributeUsage(AttributeTargets.Property)]
+public sealed class ReactCustomEventAttribute : Attribute;
