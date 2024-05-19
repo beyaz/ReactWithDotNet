@@ -489,16 +489,14 @@ function IfNull(value, defaultValue)
 
 const VisitFiberNodeForCaptureState = (parentScope, fiberNode) =>
 {
-    if (fiberNode.key === null)
+    var breadcrumb = parentScope.breadcrumb;
+
+    if (fiberNode.key !== null)
     {
-        return;
+        breadcrumb = breadcrumb + ',' + fiberNode.key;
     }
 
-    var scope = parentScope;
-
-    var breadcrumb = parentScope.breadcrumb + ',' + fiberNode.key;
-
-    scope = { map: parentScope.map, breadcrumb: breadcrumb };
+    var scope = { map: parentScope.map, breadcrumb: breadcrumb };
 
     var isFiberNodeRelatedWithDotNetComponent = fiberNode.type && fiberNode.type[DotNetTypeOfReactComponent];
     if (isFiberNodeRelatedWithDotNetComponent)
