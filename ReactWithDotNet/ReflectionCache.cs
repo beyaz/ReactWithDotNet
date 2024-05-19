@@ -23,7 +23,7 @@ partial class Mixin
 
         var reactCustomEventProperties = new List<PropertyInfoCalculated>();
         {
-            foreach (var propertyInfo in serializableProperties.Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
+            foreach (var propertyInfo in serializableProperties.Where(x => x.GetCustomAttribute<CustomEventAttribute>() is not null))
             {
                 if (!propertyInfo.IsVoidTaskDelegate())
                 {
@@ -199,8 +199,8 @@ partial class Mixin
             return new()
             {
                 MethodInfo            = methodInfo,
-                HasStopPropagation    = methodInfo.GetCustomAttributes<ReactStopPropagationAttribute>().Any(),
-                KeyboardEventCallOnly = methodInfo.GetCustomAttributes<ReactKeyboardEventCallOnlyAttribute>().FirstOrDefault()?.Keys,
+                HasStopPropagation    = methodInfo.GetCustomAttributes<StopPropagationAttribute>().Any(),
+                KeyboardEventCallOnly = methodInfo.GetCustomAttributes<KeyboardEventCallOnlyAttribute>().FirstOrDefault()?.Keys,
                 NameWithToken         = methodInfo.GetAccessKey()
             };
         }

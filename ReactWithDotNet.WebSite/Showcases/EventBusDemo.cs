@@ -63,7 +63,7 @@ public class EventBusDemo : Component
             };
         }
 
-        [ReactStopPropagation]
+        [StopPropagation]
         Task OnClickHandler(MouseEvent e)
         {
             Client.DispatchEvent("MessageForA_0",["1"]);

@@ -31,7 +31,7 @@ sealed class MethodSelectionView : Component
 
     public required string SelectedMethodTreeNodeKey { get; init; }
 
-    [ReactCustomEvent]
+    [CustomEvent]
     public required Func<string, Task> SelectionChanged { get; init; }
 
     public static MetadataNode FindTreeNode(string assemblyFilePath, string treeNodeKey, string classFilter, string methodFilter)

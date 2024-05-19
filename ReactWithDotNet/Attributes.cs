@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet;
+﻿
+
+namespace ReactWithDotNet;
 
 [Serializable]
 public class ReactPropAttribute : Attribute;
@@ -88,9 +90,9 @@ public sealed class ReactTransformValueInServerSideAttribute : Attribute
 }
 
 [AttributeUsage(AttributeTargets.Method)]
-public sealed class ReactKeyboardEventCallOnlyAttribute : Attribute
+public sealed class KeyboardEventCallOnlyAttribute : Attribute
 {
-    public ReactKeyboardEventCallOnlyAttribute(params string[] keys)
+    public KeyboardEventCallOnlyAttribute(params string[] keys)
     {
         Keys = keys ?? throw new ArgumentNullException(nameof(keys));
     }
@@ -100,7 +102,7 @@ public sealed class ReactKeyboardEventCallOnlyAttribute : Attribute
 
 [Serializable]
 [AttributeUsage(AttributeTargets.Method)]
-public sealed class ReactStopPropagationAttribute : Attribute;
+public sealed class StopPropagationAttribute : Attribute;
 
 [AttributeUsage(AttributeTargets.Property)]
-public sealed class ReactCustomEventAttribute : Attribute;
+public sealed class CustomEventAttribute : Attribute;
