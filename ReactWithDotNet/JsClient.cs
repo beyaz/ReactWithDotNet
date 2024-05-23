@@ -121,7 +121,7 @@ partial class Mixin
     /// </summary>
     public static void ListenEventThenOnlyUpdateState<TDelegate>(this Client client, TDelegate handler) where TDelegate : Delegate
     {
-        client.CallJsFunction(Core + nameof(ListenEventThenOnlyUpdateState), handler.GetType().Name, handler.Method.GetAccessKey());
+        client.CallJsFunction(Core + nameof(ListenEventThenOnlyUpdateState), GetEventName<TDelegate>(), handler.Method.GetAccessKey());
     }
 
     public static void ListenWindowResizeEvent(this Client client, int resizeTimeout)
