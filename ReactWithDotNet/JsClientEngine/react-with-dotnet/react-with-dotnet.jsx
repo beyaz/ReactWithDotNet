@@ -2814,10 +2814,10 @@ function ProcessDynamicCssClasses(dynamicStyles)
         return;
     }
 
-    let key;
+    let cssSelector;
 
     // remove all related css of component
-    for (const cssSelector in dynamicStyles)
+    for (cssSelector in dynamicStyles)
     {
         if (dynamicStyles.hasOwnProperty(cssSelector))
         {
@@ -2836,12 +2836,11 @@ function ProcessDynamicCssClasses(dynamicStyles)
     }
 
     // Add new records
-    for (key in dynamicStyles)
+    for (cssSelector in dynamicStyles)
     {
-        if (dynamicStyles.hasOwnProperty(key))
+        if (dynamicStyles.hasOwnProperty(cssSelector))
         {
-            const cssSelector = key;
-            const cssBody = dynamicStyles[key];
+            const cssBody = dynamicStyles[cssSelector];
 
             DynamicStyles.push({
                 cssSelector: cssSelector,
