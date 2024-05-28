@@ -805,7 +805,7 @@ function GetFirstAssignedUniqueIdentifierValueOfComponent(componentUniqueIdentif
     return GetComponentByDotNetComponentUniqueIdentifier(componentUniqueIdentifier)[DotNetComponentUniqueIdentifiers][0];
 }
 
-function isEquivent(a, b)
+function isEquals(a, b)
 {
 	if(a === b)
 	{
@@ -829,7 +829,7 @@ function isTwoLiteralObjectEquals(o1, o2)
 	{
         if(o1.hasOwnProperty(p))
 		{
-            if(!isEquivent(o1[p], o2[p]))
+            if(!isEquals(o1[p], o2[p]))
 			{
                 return false;
             }
@@ -840,7 +840,7 @@ function isTwoLiteralObjectEquals(o1, o2)
 	{
         if(o2.hasOwnProperty(p))
 		{
-            if(!isEquivent(o1[p], o2[p]))
+            if(!isEquals(o1[p], o2[p]))
 			{
                 return false;
             }
@@ -879,7 +879,7 @@ function tryToFindCachedMethodInfo(component, remoteMethodName, eventArguments)
 
         if (cachedMethodInfo.MethodName === remoteMethodName && eventArguments.length === 1)
         {
-            if (isEquivent(eventArguments[0], cachedMethodInfo.Parameter))
+            if (isEquals(eventArguments[0], cachedMethodInfo.Parameter))
             {
                 return cachedMethodInfo;
             }
@@ -2241,7 +2241,7 @@ function RegisterCoreFunction(name, fn)
 ExternalJsObjectMap["ReactWithDotNet.GetExternalJsObject"] = GetExternalJsObject;
 
 RegisterCoreFunction('RegExp', (x) => new RegExp(x));
-RegisterCoreFunction('IsTwoObjectEquivent', isEquivent);
+RegisterCoreFunction('IsTwoObjectEquivent', isEquals);
 
 RegisterCoreFunction('CopyToClipboard', function (text)
 {
