@@ -9,10 +9,11 @@ import Autocomplete from '@mui/material/Autocomplete';
 /**
  * @param {string} dotNetFullClassNameOf3rdPartyComponent
  */
-ReactWithDotNet.OnThirdPartyComponentPropsCalculated('ReactWithDotNet.ThirdPartyLibraries.MUI.Material.Autocomplete', props => {
+ReactWithDotNet.OnThirdPartyComponentPropsCalculated('ReactWithDotNet.ThirdPartyLibraries.MUI.Material.Autocomplete', props => 
+{
     if (props.renderInput)
     {
-        var element = props.renderInput;
+        const element = props.renderInput;
 
         props.renderInput = (params) =>
         {
@@ -22,14 +23,15 @@ ReactWithDotNet.OnThirdPartyComponentPropsCalculated('ReactWithDotNet.ThirdParty
 
     if (props.getOptionLabel)
     {
-        var isTwoObjectEquivent = ReactWithDotNet.GetExternalJsObject('ReactWithDotNet::Core::IsTwoObjectEquivent');
+        const isTwoObjectEquals = ReactWithDotNet.GetExternalJsObject('ReactWithDotNet::Core::IsTwoObjectEquals');
 
-        var array = props.getOptionLabel;
+        const array = props.getOptionLabel;
+
         props.getOptionLabel = (option) =>
         {
-            for (var i = 0; i < array.length; i++)
+            for (let i = 0; i < array.length; i++)
             {
-                if (isTwoObjectEquivent(array[i].option, option))
+                if (isTwoObjectEquals(array[i].option, option))
                 {
                     return array[i].label;
                 }

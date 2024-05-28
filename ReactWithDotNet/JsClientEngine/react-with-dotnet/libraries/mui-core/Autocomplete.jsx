@@ -13,7 +13,7 @@ ReactWithDotNet.OnThirdPartyComponentPropsCalculated('ReactWithDotNet.ThirdParty
 {
     if (props.renderInput)
     {
-        var element = props.renderInput;
+        const element = props.renderInput;
 
         props.renderInput = (params) =>
         {
@@ -23,13 +23,13 @@ ReactWithDotNet.OnThirdPartyComponentPropsCalculated('ReactWithDotNet.ThirdParty
 
     if (props.getOptionLabel)
     {
-        var isTwoObjectEquals = ReactWithDotNet.GetExternalJsObject('ReactWithDotNet::Core::IsTwoObjectEquals');
+        const isTwoObjectEquals = ReactWithDotNet.GetExternalJsObject('ReactWithDotNet::Core::IsTwoObjectEquals');
 
-        var array = props.getOptionLabel;
+        const array = props.getOptionLabel;
 
         props.getOptionLabel = (option) =>
         {
-            for (var i = 0; i < array.length; i++)
+            for (let i = 0; i < array.length; i++)
             {
                 if (isTwoObjectEquals(array[i].option, option))
                 {
