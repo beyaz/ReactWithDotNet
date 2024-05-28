@@ -816,12 +816,13 @@ function isEquivent(a, b)
 
 	if(typeof a === 'object' && typeof b === 'object')
 	{
-		return isTwoLiteralObjectEquivent(a, b);
+		return isTwoLiteralObjectEquals(a, b);
 	}
 }
-function isTwoLiteralObjectEquivent(o1, o2)
+function isTwoLiteralObjectEquals(o1, o2)
 {
-    for(var p in o1)
+    let p;
+    for(p in o1)
 	{
         if(o1.hasOwnProperty(p))
 		{
@@ -832,7 +833,7 @@ function isTwoLiteralObjectEquivent(o1, o2)
         }
     }
 
-    for(var p in o2)
+    for(p in o2)
 	{
         if(o2.hasOwnProperty(p))
 		{
