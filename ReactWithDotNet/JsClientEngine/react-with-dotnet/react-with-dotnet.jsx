@@ -2817,12 +2817,10 @@ function ProcessDynamicCssClasses(dynamicStyles)
     let key;
 
     // remove all related css of component
-    for (key in dynamicStyles)
+    for (const cssSelector in dynamicStyles)
     {
-        if (dynamicStyles.hasOwnProperty(key))
+        if (dynamicStyles.hasOwnProperty(cssSelector))
         {
-            const cssSelector = key;
-
             var componentUniqueIdentifier = GetComponentUniqueIdentifierFromCssSelector(cssSelector);
 
             // remove all related css of component
