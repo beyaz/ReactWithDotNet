@@ -1749,21 +1749,6 @@ function RemoveComponentDynamicStyles(componentUniqueIdentifiers)
     }
 }
 
-// Custom Event
-function HasCustomEventListener(component, customEventListenerMapKey)
-{
-    const freeSpace = GetFreeSpaceOfComponent(component);
-
-    return freeSpace[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] != null;
-}
-
-function MarkCustomEventListener(component, customEventListenerMapKey)
-{
-    const freeSpace = GetFreeSpaceOfComponent(component);
-
-    return freeSpace[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] = 1;
-}
-
 // DESTROY UTILITY
 function InvokeComponentDestroyListeners(componentInstance)
 {
@@ -2609,6 +2594,8 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSe
         return;
     }
 
+    const map = GetFreeSpaceOfComponent(component)[CUSTOM_EVENT_LISTENER_MAP];
+
     const senderPropertyFullName = eventSenderInfo.SenderPropertyFullName;
     const senderComponentUniqueIdentifier = GetFirstAssignedUniqueIdentifierValueOfComponent(eventSenderInfo.SenderComponentUniqueIdentifier);
 
@@ -2635,27 +2622,26 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSe
     };
 
     // avoid multiple attach we need to ensure attach a listener at once
+    const key = [
+        'senderPropertyFullName:' + senderPropertyFullName,
+        'senderComponentUniqueIdentifier:' + senderComponentUniqueIdentifier,
+        'handlerComponentUniqueIdentifier:' + handlerComponentUniqueIdentifier
+    ].join(',');
+
+    if (map[key])
     {
-        const customEventListenerMapKey = [
-            'senderPropertyFullName:' + senderPropertyFullName,
-            'senderComponentUniqueIdentifier:' + senderComponentUniqueIdentifier,
-            'handlerComponentUniqueIdentifier:' + handlerComponentUniqueIdentifier
-        ].join(',');
-
-
-        if (HasCustomEventListener(component, customEventListenerMapKey))
-        {
-            return;
-        }
-
-        MarkCustomEventListener(component, customEventListenerMapKey, onEventFired);
+        return;
     }
+
+    map[key] = onEventFired;
 
     const eventName = GetRealNameOfDotNetEvent(senderPropertyFullName, senderComponentUniqueIdentifier);
 
     OnComponentDestroy(component, () =>
     {
         EventBus.Remove(eventName, onEventFired);
+
+        map[key] = null;
     });
 
     EventBus.On(eventName, onEventFired);
@@ -2701,34 +2687,35 @@ function OnOutsideClicked(component, operationType, idOfElement, remoteMethodNam
     }
 
     // avoid multiple attach we need to ensure attach a listener at once
+    
+    const key = 'OnOutsideClicked(IdOfElement:' + idOfElement + ', remoteMethodName:' + remoteMethodName + ', @handlerComponentUniqueIdentifier:' + handlerComponentUniqueIdentifier + ')';
+
+    if (map[key])
     {
-        const key = 'OnOutsideClicked(IdOfElement:' + idOfElement + ', remoteMethodName:' + remoteMethodName + ', @handlerComponentUniqueIdentifier:' + handlerComponentUniqueIdentifier + ')';
-
-        if (map[key])
-        {
-            if (isRemove)
-            {
-                document.removeEventListener('click', map[key]);
-
-                map[key] = null;
-            }
-
-            return;
-        }
-
         if (isRemove)
         {
-            return;
+            document.removeEventListener('click', map[key]);
+
+            map[key] = null;
         }
 
-        map[key] = onDocumentClick;
+        return;
     }
+
+    if (isRemove)
+    {
+        return;
+    }
+
+    map[key] = onDocumentClick;    
 
     document.addEventListener('click', onDocumentClick);
 
     OnComponentDestroy(component, () =>
     {
         document.removeEventListener('click', onDocumentClick);
+
+        map[key] = null;
     });
 }
 
