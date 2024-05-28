@@ -56,22 +56,16 @@
 		<Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
 		<Exec WorkingDirectory="$(AppRoot)" Command="npm install" />
 	</Target>
-	<Target Name="_NpmRunForDebug_" BeforeTargets="rebuild" Condition=" '$(Configuration)' == 'Debug' ">
+	<Target Name="_NpmRun_" BeforeTargets="rebuild">
 		<Exec Command="node --version" ContinueOnError="true">
 			<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
 		</Exec>
 		<Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
-		<Message Importance="high" Text="Runinning npm command: 'npm run dev'" />
+		<Message Importance="high" Text="Runinning npm command: 'npm run dev , build'" />
 		<Exec WorkingDirectory="$(AppRoot)" Command="npm run dev" />
-	</Target>
-	<Target Name="_NpmRunForRelease_" BeforeTargets="rebuild" Condition=" '$(Configuration)' == 'Release' ">
-		<Exec Command="node --version" ContinueOnError="true">
-			<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
-		</Exec>
-		<Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
-		<Message Importance="high" Text="Runinning npm command: 'npm run build'" />
 		<Exec WorkingDirectory="$(AppRoot)" Command="npm run build" />
 	</Target>
+	
 
 	<Target Name="_BeforePublish_" AfterTargets="ComputeFilesToPublish">
 		<RemoveDir Directories="$(AppRoot)dist/" />

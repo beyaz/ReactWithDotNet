@@ -1,10 +1,28 @@
 ﻿
+using System.IO;
+
 namespace ReactWithDotNet.WebSite;
 
 
 class MainLayout : PureComponent, IPageLayout
 {
+    
+    static string CompilerMode
+    {
+        get
+        {
+#if DEBUG
+            return "debug";
+#else
+                return "release";
+#endif
+        }
+    }
+    
+    
     public ComponentRenderInfo RenderInfo { get; set; }
+    
+    static string LastWriteTimeOfIndexJsFile;
     
     public string ContainerDomElementId => "app";
 
@@ -13,6 +31,8 @@ class MainLayout : PureComponent, IPageLayout
         const string root = "wwwroot";
         const string fonts = root + "/assets/fonts/";
 
+        LastWriteTimeOfIndexJsFile ??= new FileInfo($"/{root}/dist.{CompilerMode}/index.js").LastWriteTime.Ticks.ToString();
+        
         return new html
         {
             Lang("tr"),
@@ -65,7 +85,7 @@ class MainLayout : PureComponent, IPageLayout
                 {
                     rel         = "stylesheet",
                     type        = "text/css",
-                    href        = $"{root}/dist/index.css",
+                    href        = $"{root}/dist.{CompilerMode}/index.css",
                     crossOrigin = "anonymous"
                 },
                 
@@ -75,7 +95,7 @@ class MainLayout : PureComponent, IPageLayout
                     type="module",
                     text = $@"
 
-import {{ReactWithDotNet}} from './{root}/dist/index.js?v={Guid.NewGuid():N}';
+import {{ReactWithDotNet}} from './{root}/dist.{CompilerMode}/index.js?v={LastWriteTimeOfIndexJsFile}';
 
 ReactWithDotNet.StrictMode = false;
 
