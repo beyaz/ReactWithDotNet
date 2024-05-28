@@ -2814,8 +2814,10 @@ function ProcessDynamicCssClasses(dynamicStyles)
         return;
     }
 
+    let key;
+
     // remove all related css of component
-    for (var key in dynamicStyles)
+    for (key in dynamicStyles)
     {
         if (dynamicStyles.hasOwnProperty(key))
         {
@@ -2836,7 +2838,7 @@ function ProcessDynamicCssClasses(dynamicStyles)
     }
 
     // Add new records
-    for (var key in dynamicStyles)
+    for (key in dynamicStyles)
     {
         if (dynamicStyles.hasOwnProperty(key))
         {
