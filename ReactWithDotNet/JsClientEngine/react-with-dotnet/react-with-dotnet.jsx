@@ -8,7 +8,7 @@ import React from 'react';
 import {createRoot} from 'react-dom/client';
 
 
-var createElement = React.createElement;
+const createElement = React.createElement;
 
 const DotNetTypeOfReactComponent = '$Type';
 const RootNode = '$RootNode';
@@ -508,14 +508,11 @@ const VisitFiberNodeForCaptureState = (parentScope, fiberNode) =>
             throw CreateNewDeveloperError('Problem when traversing nodes');
         }
 
-        const stateInfo =
-        {
+        map[breadcrumb] = {
             StateAsJson: JSON.stringify(fiberNode.stateNode.state[DotNetState]),
             FullTypeNameOfComponent: fiberNode.stateNode.state[DotNetTypeOfReactComponent],
             ComponentUniqueIdentifier: fiberNode.stateNode.state[DotNetComponentUniqueIdentifier]
         };
-
-        map[breadcrumb] = stateInfo;
     }
 
     var child = fiberNode.child;
@@ -868,7 +865,7 @@ function isTwoLiteralObjectEquivent(o1, o2)
     }
 
     return true;
-};
+}
 
 function GetAllCachedMethodsOfComponent(component)
 {
@@ -2191,13 +2188,13 @@ function ConnectComponentFirstResponseToReactSystem(containerHtmlElementId, resp
 
     props[SyncId] = GetNextSequence();
 
-    const reactElement = React.createElement(component, props);
+    const reactElement = createElement(component, props);
 
     const root = createRoot(document.getElementById(containerHtmlElementId));
 
     if (ReactWithDotNet.StrictMode)
     {
-        root.render(React.createElement(React.StrictMode, null, reactElement));
+        root.render(createElement(React.StrictMode, null, reactElement));
     }
     else
     {
