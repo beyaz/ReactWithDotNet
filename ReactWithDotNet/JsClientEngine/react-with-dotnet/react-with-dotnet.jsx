@@ -1754,7 +1754,7 @@ function HasCustomEventListener(component, customEventListenerMapKey)
 {
     const freeSpace = GetFreeSpaceOfComponent(component);
 
-    return freeSpace[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] === 1;
+    return freeSpace[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] != null;
 }
 
 function MarkCustomEventListener(component, customEventListenerMapKey)
@@ -2614,6 +2614,26 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSe
 
     handlerComponentUniqueIdentifier = GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
 
+    const onEventFired = (eventArgumentsAsArray) =>
+    {
+        const handlerComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
+
+        const actionArguments =
+        {
+            component: handlerComponent,
+            remoteMethodName: remoteMethodName,
+            remoteMethodArguments: eventArgumentsAsArray
+        };
+
+        const entry = StartAction(actionArguments);
+
+        // guard for removed node before send to server
+        OnComponentDestroy(handlerComponent, () =>
+        {
+            entry.isValid = false;
+        });
+    };
+
     // avoid multiple attach we need to ensure attach a listener at once
     {
         const customEventListenerMapKey = [
@@ -2628,29 +2648,10 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSe
             return;
         }
 
-        MarkCustomEventListener(component, customEventListenerMapKey);
+        MarkCustomEventListener(component, customEventListenerMapKey, onEventFired);
     }
 
     const eventName = GetRealNameOfDotNetEvent(senderPropertyFullName, senderComponentUniqueIdentifier);
-
-    const onEventFired = (eventArgumentsAsArray) =>
-    {
-        const handlerComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
-
-        const actionArguments = {
-            component: handlerComponent,
-            remoteMethodName: remoteMethodName,
-            remoteMethodArguments: eventArgumentsAsArray
-        };
-
-        const entry = StartAction(actionArguments);
-
-        // guard for removed node before send to server
-        OnComponentDestroy(handlerComponent, () =>
-        {
-            entry.isValid = false;
-        });
-    };
 
     OnComponentDestroy(component, () =>
     {
@@ -2673,20 +2674,6 @@ RegisterCoreFunction("OnOutsideClicked", function (idOfElement, remoteMethodName
 {
     handlerComponentUniqueIdentifier = GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
 
-    const component = this;
-
-    // avoid multiple attach we need to ensure attach a listener at once
-    {
-        const customEventListenerMapKey = 'OnOutsideClicked(IdOfElement:' + idOfElement + ', remoteMethodName:' + remoteMethodName + ', @handlerComponentUniqueIdentifier:' + handlerComponentUniqueIdentifier + ')';
-
-        if (HasCustomEventListener(component, customEventListenerMapKey))
-        {
-            return;
-        }
-
-        MarkCustomEventListener(component, customEventListenerMapKey);
-    }
-
     function onDocumentClick(e)
     {
         const element = document.getElementById(idOfElement);
@@ -2708,6 +2695,22 @@ RegisterCoreFunction("OnOutsideClicked", function (idOfElement, remoteMethodName
             StartAction(actionArguments);
         }
     }
+
+    const component = this;
+
+    // avoid multiple attach we need to ensure attach a listener at once
+    {
+        const customEventListenerMapKey = 'OnOutsideClicked(IdOfElement:' + idOfElement + ', remoteMethodName:' + remoteMethodName + ', @handlerComponentUniqueIdentifier:' + handlerComponentUniqueIdentifier + ')';
+
+        if (HasCustomEventListener(component, customEventListenerMapKey))
+        {
+            return;
+        }
+
+        MarkCustomEventListener(component, customEventListenerMapKey, onDocumentClick);
+    }
+
+    
 
     document.addEventListener('click', onDocumentClick);
 
