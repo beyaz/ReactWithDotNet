@@ -126,7 +126,7 @@ const Before3rdPartyComponentAccessListeners = [];
 
 function Before3rdPartyComponentAccess(dotNetFullClassNameOf3rdPartyComponent)
 {
-    for (var i = 0; i < Before3rdPartyComponentAccessListeners.length; i++)
+    for (let i = 0; i < Before3rdPartyComponentAccessListeners.length; i++)
     {
         Before3rdPartyComponentAccessListeners[i](dotNetFullClassNameOf3rdPartyComponent);
     }
@@ -151,7 +151,7 @@ function OnThirdPartyComponentPropsCalculated(dotNetFullNameOfThirdPartyComponen
         throw CreateNewDeveloperError("Missing argument. @fn cannot be null.");
     }
 
-    var arr = ThirdPartyComponentPropsCalculatedListeners[dotNetFullNameOfThirdPartyComponent];
+    let arr = ThirdPartyComponentPropsCalculatedListeners[dotNetFullNameOfThirdPartyComponent];
     if (!arr)
     {
         arr = ThirdPartyComponentPropsCalculatedListeners[dotNetFullNameOfThirdPartyComponent] = [];
@@ -167,10 +167,10 @@ function OnThirdPartyComponentPropsCalculatedTryFire(dotNetFullNameOfThirdPartyC
         throw CreateNewDeveloperError("Missing argument. @dotNetFullNameOfThirdPartyComponent cannot be null.");
     }
 
-    var arr = ThirdPartyComponentPropsCalculatedListeners[dotNetFullNameOfThirdPartyComponent];
+    const arr = ThirdPartyComponentPropsCalculatedListeners[dotNetFullNameOfThirdPartyComponent];
     if (arr)
     {
-        for (var i = 0; i < arr.length; i++)
+        for (let i = 0; i < arr.length; i++)
         {
             props = arr[i](props, callerComponent);
         }
@@ -229,7 +229,7 @@ function GoUpwardFindFirst(htmlElement, findFunc)
 
 function OnDocumentReady(callback)
 {
-    var stateCheck = setInterval(function ()
+    const stateCheck = setInterval(function ()
     {
         if (document.readyState === "complete")
         {
@@ -247,7 +247,7 @@ function IsEmptyObject(obj)
         return false;
     }
 
-    for (var key in obj)
+    for (const key in obj)
     {
         if (Object.prototype.hasOwnProperty.call(obj, key))
         {
