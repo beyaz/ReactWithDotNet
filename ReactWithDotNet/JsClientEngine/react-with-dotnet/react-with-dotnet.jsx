@@ -2683,7 +2683,8 @@ RegisterCoreFunction("OnOutsideClicked", function (idOfElement, remoteMethodName
         const element = document.getElementById(idOfElement);
         if (element == null)
         {
-            throw CreateNewDeveloperError("Element not found for calculating OnOutsideClicked operation. id: " + idOfElement);
+            return;
+            //throw CreateNewDeveloperError("Element not found for calculating OnOutsideClicked operation. id: " + idOfElement);
         }
         const isClickedOutside = !element.contains(e.target)
         if (isClickedOutside)

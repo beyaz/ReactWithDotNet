@@ -175,6 +175,33 @@ partial class Mixin
             throw DeveloperException($"Handler method '{func.Method.Name}' should belong to React component");
         }
     }
+    
+    public static void OnOutsideClicked(this IFunctionalComponent callerComponent, string idOfElement, Func<Task> func)
+    {
+        if (callerComponent == null)
+        {
+            throw new ArgumentNullException(nameof(callerComponent));
+        }
+
+        if (string.IsNullOrWhiteSpace(idOfElement))
+        {
+            throw new ArgumentException(nameof(idOfElement));
+        }
+        
+        if (func == null)
+        {
+            throw new ArgumentNullException(nameof(func));
+        }
+        
+        var caller = (FunctionalComponent)callerComponent;
+
+        if (caller.ComponentUniqueIdentifier == 0)
+        {
+            throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + caller.GetType().FullName);
+        }
+
+        caller.Client.CallJsFunction(Core + nameof(OnOutsideClicked), idOfElement, func.Method.GetAccessKey(), caller.ComponentUniqueIdentifier);
+    }
 
     public static void OnWindowResize(this Client client, Func<Task> handler)
     {
