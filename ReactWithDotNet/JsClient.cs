@@ -66,6 +66,9 @@ partial class Mixin
 
     public static void HistoryReplaceState(this Client client, object stateObj, string title, string url)
     {
+        // avoid too many push history
+        client.TaskList.RemoveAll(x => x.JsFunctionPath == Core + nameof(HistoryReplaceState));
+        
         client.CallJsFunction(Core + nameof(HistoryReplaceState), stateObj, title, url);
     }
 
