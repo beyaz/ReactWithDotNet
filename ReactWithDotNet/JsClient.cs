@@ -159,49 +159,8 @@ partial class Mixin
         ListenEventOnlyOnce(client, "$<<finished>>$" + GetEventName<TDelegate>() + "$<<finished>>$", handler.Method.GetAccessKey());
     }
 
-    public static void OnOutsideClicked(this Client client, string idOfElement, Func<Task> func)
-    {
-        if (func.Target is ReactComponentBase target)
-        {
-            if (target.ComponentUniqueIdentifier == 0)
-            {
-                throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + target.GetType().FullName);
-            }
-
-            client.CallJsFunction(Core + nameof(OnOutsideClicked), idOfElement, func.Method.GetAccessKey(), target.ComponentUniqueIdentifier);
-        }
-        else
-        {
-            throw DeveloperException($"Handler method '{func.Method.Name}' should belong to React component");
-        }
-    }
-    
-    public static void OnOutsideClicked(this IFunctionalComponent callerComponent, string idOfElement, Func<Task> func)
-    {
-        if (callerComponent == null)
-        {
-            throw new ArgumentNullException(nameof(callerComponent));
-        }
-
-        if (string.IsNullOrWhiteSpace(idOfElement))
-        {
-            throw new ArgumentException(nameof(idOfElement));
-        }
-        
-        if (func == null)
-        {
-            throw new ArgumentNullException(nameof(func));
-        }
-        
-        var caller = (FunctionalComponent)callerComponent;
-
-        if (caller.ComponentUniqueIdentifier == 0)
-        {
-            throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + caller.GetType().FullName);
-        }
-
-        caller.Client.CallJsFunction(Core + nameof(OnOutsideClicked), idOfElement, func.Method.GetAccessKey(), caller.ComponentUniqueIdentifier);
-    }
+  
+  
 
     public static void OnWindowResize(this Client client, Func<Task> handler)
     {
@@ -300,6 +259,24 @@ partial class Mixin
 
 static partial class Mixin
 {
+    
+    //public static void OnOutsideClicked(this Client client, string idOfElement, Func<Task> func)
+    //{
+    //    if (func.Target is ReactComponentBase target)
+    //    {
+    //        if (target.ComponentUniqueIdentifier == 0)
+    //        {
+    //            throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + target.GetType().FullName);
+    //        }
+
+    //        client.CallJsFunction(Core + nameof(OnOutsideClicked), idOfElement, func.Method.GetAccessKey(), target.ComponentUniqueIdentifier);
+    //    }
+    //    else
+    //    {
+    //        throw DeveloperException($"Handler method '{func.Method.Name}' should belong to React component");
+    //    }
+    //}
+    
     public static void AddEventListener(string idOfElement, string eventName, Func<Task> func, IFunctionalComponent callerComponent)
     {
         if (callerComponent == null)
