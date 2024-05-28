@@ -42,13 +42,14 @@
 
 
 	<!-- npm -->
-	<ItemGroup>
-		<FilesInDistFolder Include="wwwroot\dist.$(Configuration)\*.*" />
-	</ItemGroup>
 	
 	<PropertyGroup>
 		<AppRoot>wwwroot\</AppRoot>		
 	</PropertyGroup>
+
+	<ItemGroup>
+		<FilesInDistFolder Include="wwwroot\dist.$(Configuration)\*.*" />
+	</ItemGroup>
 	
 	<Target Name="_EnsureNodeEnvironment_" BeforeTargets="rebuild;build" Condition=" !Exists('$(AppRoot)node_modules') ">
 		<Exec Command="node --version" ContinueOnError="true">
