@@ -1721,7 +1721,7 @@ const ComponentDefinitions = {};
  */
 function RemoveComponentDynamicStyles(componentUniqueIdentifiers)
 {
-    var hasChange = false;
+    let hasChange = false;
 
     for (let i = 0; i < DynamicStyles.length; i++)
     {
@@ -1760,7 +1760,7 @@ function InvokeComponentDestroyListeners(componentInstance)
 {
     const functionArray = GetFreeSpaceOfComponent(componentInstance)[ON_COMPONENT_DESTROY];
 
-    for (var i = 0; i < functionArray.length; i++)
+    for (let i = 0; i < functionArray.length; i++)
     {
         functionArray[i]();
     }
@@ -1804,7 +1804,7 @@ function HandleComponentClientTasks(component)
 
 function DefineComponent(componentDeclaration)
 {
-    var cacheKeyForComponentDefinitions = componentDeclaration[DotNetTypeOfReactComponent];
+    let cacheKeyForComponentDefinitions = componentDeclaration[DotNetTypeOfReactComponent];
 
     if (cacheKeyForComponentDefinitions === 'ReactWithDotNet.FunctionalComponent,ReactWithDotNet')
     {
@@ -2068,7 +2068,7 @@ function SendRequest(request, onSuccess, onFail)
     window.fetch(url, options).then(response => response.json()).then(json => onSuccess(json)).catch(onFail);
 }
 
-var LastUsedComponentUniqueIdentifier = 1;
+let LastUsedComponentUniqueIdentifier = 1;
 
 function ConnectComponentFirstResponseToReactSystem(containerHtmlElementId, response)
 {
@@ -2127,8 +2127,8 @@ function RenderComponentIn(input)
         return;
     }
 
-    var fullTypeNameOfReactComponent = input.fullTypeNameOfReactComponent;
-    var containerHtmlElementId       = input.containerHtmlElementId;
+    const fullTypeNameOfReactComponent = input.fullTypeNameOfReactComponent;
+    const containerHtmlElementId = input.containerHtmlElementId;
 
     OnDocumentReady(function()
     {
@@ -2181,7 +2181,7 @@ function RegisterExternalJsObject(key, value)
 }
 function GetExternalJsObject(key)
 {
-    var findResponse = TryFindExternalObject(key);
+    const findResponse = TryFindExternalObject(key);
     if (findResponse != null)
     {
         if (findResponse.isCacheEnabled === true)
@@ -2216,13 +2216,13 @@ function OnFindExternalObject(fn)
 
 function TryFindExternalObject(name)
 {
-    var items = FindExternalObjectFnList;
+    const items = FindExternalObjectFnList;
 
-    var length = items.length;
+    const length = items.length;
 
-    for (var i = 0; i < length; i++)
+    for (let i = 0; i < length; i++)
     {
-        var response = items[i](name);
+        const response = items[i](name);
         if (response == null)
         {
             continue;
@@ -2260,7 +2260,7 @@ RegisterCoreFunction('CopyToClipboard', function (text)
 
     if (document.queryCommandSupported && document.queryCommandSupported("copy"))
     {
-        var textarea = document.createElement("textarea");
+        const textarea = document.createElement("textarea");
         textarea.textContent = text;
         textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
         document.body.appendChild(textarea);
@@ -2313,7 +2313,7 @@ RegisterCoreFunction('ReplaceEmptyStringWhenIsNull', function(value)
 
 RegisterCoreFunction('ListenWindowResizeEvent', function (resizeTimeout)
 {
-    var timeout = null;
+    let timeout = null;
     window.addEventListener('resize', function ()
     {
         clearTimeout(timeout);
@@ -2362,7 +2362,7 @@ RegisterCoreFunction("CalculateSyntheticFocusEventArguments", (argumentsAsArray)
 
 function SetCookie(cookieName_StringNotNull, cookieValue_StringNotNull, expireDays_NumberNotNull)
 {
-    var exdate = new Date();
+    const exdate = new Date();
 
     exdate.setDate(exdate.getDate() + expireDays_NumberNotNull);
 
@@ -2653,7 +2653,7 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSe
 
 function NavigateTo(path)
 {
-    var location = window.location;
+    const location = window.location;
 
     location.assign(location.origin + path);
 }
@@ -2716,7 +2716,7 @@ function CreateNewDeveloperError(message)
 }
 
 const DynamicStyles = [];
-var ReactWithDotNetDynamicCssElement = null;
+let ReactWithDotNetDynamicCssElement = null;
 
 /**
  * 
@@ -2751,7 +2751,7 @@ function ProcessDynamicCssClasses(dynamicStyles)
     {
         if (dynamicStyles.hasOwnProperty(cssSelector))
         {
-            var componentUniqueIdentifier = GetComponentUniqueIdentifierFromCssSelector(cssSelector);
+            const componentUniqueIdentifier = GetComponentUniqueIdentifierFromCssSelector(cssSelector);
 
             // remove all related css of component
             for (let i = 0; i < DynamicStyles.length; i++)
@@ -2800,7 +2800,7 @@ function ApplyDynamicStylesToDom()
     }
 
     const arr = [];
-    for (var i = 0; i < DynamicStyles.length; i++)
+    for (let i = 0; i < DynamicStyles.length; i++)
     {
         const cssSelector = DynamicStyles[i].cssSelector;
         const cssBody = DynamicStyles[i].cssBody;
@@ -2835,7 +2835,7 @@ function IsTwoStringHasValueAndSame(a, b)
         return false;
     }
 
-    var anyWhiteSpaceRegex = /\s/g;
+    const anyWhiteSpaceRegex = /\s/g;
 
     a = a.replace(anyWhiteSpaceRegex, '');
     b = b.replace(anyWhiteSpaceRegex, '');
@@ -2858,7 +2858,7 @@ function IsDesktop()
     return IsMobile() === false && IsTablet() === false;
 }
 
-var ReactWithDotNet =
+const ReactWithDotNet =
 {
     StrictMode: false,
     RequestHandlerUrl: '/HandleReactWithDotNetRequest',
