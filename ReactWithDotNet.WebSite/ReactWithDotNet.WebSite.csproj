@@ -43,11 +43,13 @@
 
 	<!-- npm -->
 	<ItemGroup>
-		<JsFilesIdDist Include="wwwroot\dist\*.*" />
+		<FilesInDistFolder Include="wwwroot\dist.$(Configuration)\*.*" />
 	</ItemGroup>
+	
 	<PropertyGroup>
 		<AppRoot>wwwroot\</AppRoot>		
 	</PropertyGroup>
+	
 	<Target Name="_EnsureNodeEnvironment_" BeforeTargets="rebuild;build" Condition=" !Exists('$(AppRoot)node_modules') ">
 		<Exec Command="node --version" ContinueOnError="true">
 			<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
@@ -56,6 +58,7 @@
 		<Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
 		<Exec WorkingDirectory="$(AppRoot)" Command="npm install" />
 	</Target>
+	
 	<Target Name="_NpmRun_" BeforeTargets="rebuild">
 		<Exec Command="node --version" ContinueOnError="true">
 			<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
@@ -65,7 +68,6 @@
 		<Exec WorkingDirectory="$(AppRoot)" Command="npm run dev" />
 		<Exec WorkingDirectory="$(AppRoot)" Command="npm run build" />
 	</Target>
-	
 
 	<Target Name="_BeforePublish_" AfterTargets="ComputeFilesToPublish">
 		<RemoveDir Directories="$(AppRoot)dist/" />
@@ -74,7 +76,7 @@
 	</Target>
 
 	<Target Name="_AfterPublish_" AfterTargets="Publish">
-		<Copy SourceFiles="@(JsFilesIdDist)" DestinationFolder="$(PublishDir)/wwwroot/dist/" SkipUnchangedFiles="false" />
+		<Copy SourceFiles="@(FilesInDistFolder)" DestinationFolder="$(PublishDir)/wwwroot/dist.$(Configuration)/" SkipUnchangedFiles="false" />
 		<Delete Files="$(PublishDir)/ReactWithDotNet.pdb" />
 		<Delete Files="$(PublishDir)/ReactWithDotNet.xml" />
 		<Delete Files="$(PublishDir)/$(MSBuildProjectName).pdb" />
