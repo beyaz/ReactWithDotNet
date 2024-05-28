@@ -1530,9 +1530,9 @@ function ArrangeRemoteMethodArguments(remoteMethodArguments)
 {
     if (remoteMethodArguments)
     {
-        for (var i = 0; i < remoteMethodArguments.length; i++)
+        for (let i = 0; i < remoteMethodArguments.length; i++)
         {
-            var prm = remoteMethodArguments[i];
+            const prm = remoteMethodArguments[i];
 
             if (IsSyntheticBaseEvent(prm))
             {
