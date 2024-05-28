@@ -1725,67 +1725,6 @@ function CalculateNewStateFromJsonElement(componentState, jsonElement)
 const ComponentDefinitions = {};
 
 
-class ComponentDestroyQueue
-{
-    constructor()
-    {
-        this.queue = new LinkedList();
-    }
-
-    add(component)
-    {
-        const me = this;
-
-        var dotNetComponentUniqueIdentifiers = component[DotNetComponentUniqueIdentifiers].concat([]);
-
-        const queuedFunction = function ()
-        {
-            DestroyDotNetComponentInstance(component);
-            me.remove(component);
-        }
-
-        this.queue.add({
-            idArray: dotNetComponentUniqueIdentifiers,
-            queueFunctionAccess: PushToFunctionExecutionQueue(queuedFunction)
-        });
-    }
-
-    remove(component)
-    {
-        var dotNetComponentUniqueIdentifiers = component[DotNetComponentUniqueIdentifiers].concat([]);
-
-        const hasAnyIdMatch = (item) =>
-        {
-            for (let i = 0; i < dotNetComponentUniqueIdentifiers.length; i++)
-            {
-                const id = dotNetComponentUniqueIdentifiers[i];
-
-                if (item.idArray.indexOf(id) >= 0)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        };
-
-        const item = this.queue.first(hasAnyIdMatch);
-        if (item)
-        {
-            item.queueFunctionAccess.isValid = false;
-
-            this.queue.removeFirst(hasAnyIdMatch);
-
-            return true;
-        }
-
-        return false;
-    }
-}
-
-// todo: check usage or rethink
-const ComponentDestroyQueueInstance = new ComponentDestroyQueue();
-
 /**
  * @param {Int32Array} componentUniqueIdentifiers
  */
