@@ -2670,6 +2670,7 @@ function NavigateTo(path)
 
 RegisterCoreFunction("NavigateTo", NavigateTo);
 
+// todo: remove this usage
 RegisterCoreFunction("OnOutsideClicked", function (idOfElement, remoteMethodName, handlerComponentUniqueIdentifier)
 {
     handlerComponentUniqueIdentifier = GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
@@ -2720,8 +2721,90 @@ RegisterCoreFunction("OnOutsideClicked", function (idOfElement, remoteMethodName
     });
 });
 
+function OnOutsideClicked(component, operationType, idOfElement, remoteMethodName, handlerComponentUniqueIdentifier)
+{
+    const map = GetFreeSpaceOfComponent(component)[CUSTOM_EVENT_LISTENER_MAP];
 
+    const isRemove = operationType === "remove";
 
+    handlerComponentUniqueIdentifier = GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
+
+    function onDocumentClick(e)
+    {
+        const element = document.getElementById(idOfElement);
+        if (element == null)
+        {
+            return;
+        }
+        const isClickedOutside = !element.contains(e.target)
+        if (isClickedOutside)
+        {
+            const handlerComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
+
+            const actionArguments =
+            {
+                component: handlerComponent,
+                remoteMethodName: remoteMethodName,
+                remoteMethodArguments: []
+            };
+            StartAction(actionArguments);
+        }
+    }
+
+    // avoid multiple attach we need to ensure attach a listener at once
+    {
+        const key = 'OnOutsideClicked(IdOfElement:' + idOfElement + ', remoteMethodName:' + remoteMethodName + ', @handlerComponentUniqueIdentifier:' + handlerComponentUniqueIdentifier + ')';
+
+        if (map[key])
+        {
+            if (isRemove)
+            {
+                document.removeEventListener('click', map[key]);
+
+                map[key] = null;
+            }
+
+            return;
+        }
+
+        if (isRemove)
+        {
+            return;
+        }
+
+        map[key] = onDocumentClick;
+    }
+
+    document.addEventListener('click', onDocumentClick);
+
+    OnComponentDestroy(component, () =>
+    {
+        document.removeEventListener('click', onDocumentClick);
+    });
+}
+
+RegisterCoreFunction("AddEventListener", function (idOfElement, eventName, remoteMethodName, handlerComponentUniqueIdentifier)
+{
+    if (eventName === "OutsideClick")
+    {
+        OnOutsideClicked(this, "add", idOfElement, remoteMethodName, handlerComponentUniqueIdentifier)
+    }
+    else
+    {
+        throw CreateNewDeveloperError("InvalidUsageOfAddEventListener");
+    }
+});
+RegisterCoreFunction("RemoveEventListener", function (idOfElement, eventName, remoteMethodName, handlerComponentUniqueIdentifier)
+{
+    if (eventName === "OutsideClick")
+    {
+        OnOutsideClicked(this, "remove", idOfElement, remoteMethodName, handlerComponentUniqueIdentifier)
+    }
+    else
+    {
+        throw CreateNewDeveloperError("InvalidUsageOfRemoveEventListener");
+    }
+});
 
 function CreateNewDeveloperError(message)
 {
