@@ -1562,6 +1562,15 @@ function HandleAction(actionArguments)
     const remoteMethodName = actionArguments.remoteMethodName;
     let component = NotNull(actionArguments.component);
 
+    if (component.ComponentWillUnmountIsCalled)
+    {
+        IsWaitingRemoteResponse = false;
+
+        OnReactStateReady();
+
+        return;
+    }
+
     component = GetComponentByDotNetComponentUniqueIdentifier(component[DotNetComponentUniqueIdentifiers][0]);
 
     if (component._reactInternals == null)
