@@ -297,3 +297,60 @@ partial class Mixin
         return typeof(TDelegate).FullName;
     }
 }
+
+static partial class Mixin
+{
+    public static void AddEventListener(string idOfElement, string eventName, Func<Task> func, IFunctionalComponent callerComponent)
+    {
+        if (callerComponent == null)
+        {
+            throw new ArgumentNullException(nameof(callerComponent));
+        }
+
+        if (string.IsNullOrWhiteSpace(idOfElement))
+        {
+            throw new ArgumentException(nameof(idOfElement));
+        }
+        
+        if (func == null)
+        {
+            throw new ArgumentNullException(nameof(func));
+        }
+        
+        var caller = (FunctionalComponent)callerComponent;
+
+        if (caller.ComponentUniqueIdentifier == 0)
+        {
+            throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + caller.GetType().FullName);
+        }
+
+        caller.Client.CallJsFunction(Core + nameof(AddEventListener), [idOfElement,eventName, func.Method.GetAccessKey(), caller.ComponentUniqueIdentifier]);
+    }
+    
+    public static void RemoveEventListener(string idOfElement, string eventName, Func<Task> func, IFunctionalComponent callerComponent)
+    {
+        if (callerComponent == null)
+        {
+            throw new ArgumentNullException(nameof(callerComponent));
+        }
+
+        if (string.IsNullOrWhiteSpace(idOfElement))
+        {
+            throw new ArgumentException(nameof(idOfElement));
+        }
+        
+        if (func == null)
+        {
+            throw new ArgumentNullException(nameof(func));
+        }
+        
+        var caller = (FunctionalComponent)callerComponent;
+
+        if (caller.ComponentUniqueIdentifier == 0)
+        {
+            throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + caller.GetType().FullName);
+        }
+
+        caller.Client.CallJsFunction(Core + nameof(RemoveEventListener), [idOfElement,eventName, func.Method.GetAccessKey(), caller.ComponentUniqueIdentifier]);
+    }
+}
