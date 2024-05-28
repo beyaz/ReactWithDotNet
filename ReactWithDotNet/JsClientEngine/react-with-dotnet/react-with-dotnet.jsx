@@ -2670,57 +2670,6 @@ function NavigateTo(path)
 
 RegisterCoreFunction("NavigateTo", NavigateTo);
 
-// todo: remove this usage
-RegisterCoreFunction("OnOutsideClicked", function (idOfElement, remoteMethodName, handlerComponentUniqueIdentifier)
-{
-    handlerComponentUniqueIdentifier = GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
-
-    function onDocumentClick(e)
-    {
-        const element = document.getElementById(idOfElement);
-        if (element == null)
-        {
-            return;
-            //throw CreateNewDeveloperError("Element not found for calculating OnOutsideClicked operation. id: " + idOfElement);
-        }
-        const isClickedOutside = !element.contains(e.target)
-        if (isClickedOutside)
-        {
-            const handlerComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
-
-            const actionArguments = {
-                component: handlerComponent,
-                remoteMethodName: remoteMethodName,
-                remoteMethodArguments: []
-            };
-            StartAction(actionArguments);
-        }
-    }
-
-    const component = this;
-
-    // avoid multiple attach we need to ensure attach a listener at once
-    {
-        const customEventListenerMapKey = 'OnOutsideClicked(IdOfElement:' + idOfElement + ', remoteMethodName:' + remoteMethodName + ', @handlerComponentUniqueIdentifier:' + handlerComponentUniqueIdentifier + ')';
-
-        if (HasCustomEventListener(component, customEventListenerMapKey))
-        {
-            return;
-        }
-
-        MarkCustomEventListener(component, customEventListenerMapKey, onDocumentClick);
-    }
-
-    
-
-    document.addEventListener('click', onDocumentClick);
-
-    OnComponentDestroy(component, () =>
-    {
-        document.removeEventListener('click', onDocumentClick);
-    });
-});
-
 function OnOutsideClicked(component, operationType, idOfElement, remoteMethodName, handlerComponentUniqueIdentifier)
 {
     const map = GetFreeSpaceOfComponent(component)[CUSTOM_EVENT_LISTENER_MAP];
