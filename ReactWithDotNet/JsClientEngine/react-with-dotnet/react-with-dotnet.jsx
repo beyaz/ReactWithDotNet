@@ -1536,14 +1536,16 @@ function ArrangeRemoteMethodArguments(remoteMethodArguments)
 
             if (IsSyntheticBaseEvent(prm))
             {
-                if (prm._reactName)
+                const reactName = prm._reactName;
+
+                if (reactName)
                 {
-                    if (prm._reactName && prm._reactName.indexOf('Mouse') > 0)
+                    if (reactName.indexOf('Mouse') > 0)
                     {
                         remoteMethodArguments[i] = ConvertToSyntheticMouseEvent(prm);
                         continue;
                     }
-                    if (prm._reactName && prm._reactName === 'onScroll')
+                    if (reactName === 'onScroll')
                     {
                         remoteMethodArguments[i] = ConvertToSyntheticScrollEvent(prm);
                         continue;
