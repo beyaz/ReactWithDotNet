@@ -599,11 +599,11 @@ class LinkedList
 
     add(data)
     {
-	    var node = new LinkedListNode(data);
+        const node = new LinkedListNode(data);
 
-	    var current;
+        let current;
 
-	    if (this.head == null)
+        if (this.head == null)
         {
             this.head = node;
         }
@@ -625,8 +625,8 @@ class LinkedList
 
     removeFirst(isMatch)
     {
-	    var current = this.head;
-	    var prev = null;
+        let current = this.head;
+        let prev = null;
 
         while (current != null)
         {
@@ -651,9 +651,9 @@ class LinkedList
 
     first(isMatch)
     {
-	    var current = this.head;
+        let current = this.head;
 
-	    // iterate over the list
+        // iterate over the list
         while (current != null)
         {
             if (isMatch(current.data) === true)
@@ -671,7 +671,7 @@ function MergeDotNetComponentUniqueIdentifiers(sourceIdList, targetIdList)
 {
     for (let i = 0; i < sourceIdList.length; i++)
     {
-        var value = sourceIdList[i];
+        const value = sourceIdList[i];
 
         if (targetIdList.indexOf(value) >= 0)
         {
@@ -863,7 +863,7 @@ function tryToFindCachedMethodInfo(component, remoteMethodName, eventArguments)
         return null;
     }
 
-    for (var i = 0; i < cachedMethods.length; i++)
+    for (let i = 0; i < cachedMethods.length; i++)
     {
         const cachedMethodInfo = cachedMethods[i];
 
@@ -966,7 +966,7 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
         
         if (htmlElementScrollDebounceTimeout > 0)
         {
-            var eventName = eventArguments[0]._reactName;
+            const eventName = eventArguments[0]._reactName;
 
             const executionQueueItemName = eventName + '-debounce-' + GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
 
@@ -976,7 +976,7 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
 
             clearTimeout(targetComponent.state[timeoutKey]);
 
-            var newState = {};
+            const newState = {};
             newState[timeoutKey] = setTimeout(() =>
             {
                 const actionArguments = {
@@ -1020,9 +1020,9 @@ function FindRealNodeByFakeChild(fakeChildIndex, rootNodeInState, jsonNodeInProp
     {
         const length = childrenInState.length;
 
-        for (var i = 0; i < length; i++)
+        for (let i = 0; i < length; i++)
         {
-            var record = FindRealNodeByFakeChild(fakeChildIndex, childrenInState[i], childrenInProps[i]);
+            const record = FindRealNodeByFakeChild(fakeChildIndex, childrenInState[i], childrenInProps[i]);
             if (record != null)
             {
                 return record;
@@ -1118,13 +1118,13 @@ function ConvertToReactElement(jsonNode, component)
 
     let props = null;
 
-    var elementType = jsonNode.$tag;
+    let elementType = jsonNode.$tag;
     if (!elementType)
     {
         throw CreateNewDeveloperError('ReactNode is not recognized');
     }
 
-    var isThirdPartyComponent = false;
+    let isThirdPartyComponent = false;
 
     if (/* is component */elementType.indexOf('.') > 0)
     {
@@ -1571,7 +1571,7 @@ function HandleAction(actionArguments)
 
     const isComponentPreview = component[DotNetTypeOfReactComponent] === 'ReactWithDotNet.UIDesigner.ReactWithDotNetDesignerComponentPreview,ReactWithDotNet';
 
-    var capturedStateTreeResponse = SafeExecute(() => CaptureStateTreeFromFiberNode(component._reactInternals));
+    const capturedStateTreeResponse = SafeExecute(() => CaptureStateTreeFromFiberNode(component._reactInternals));
     if (capturedStateTreeResponse.fail)
     {
         if (isComponentPreview)
