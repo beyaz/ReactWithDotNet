@@ -61,7 +61,7 @@ class EventBusImp
 
     subscribe(eventName, callback)
     {
-        var listenerFunctions = this.map[eventName];
+        let listenerFunctions = this.map[eventName];
 
         if (!listenerFunctions)
         {
@@ -83,7 +83,7 @@ class EventBusImp
             throw CreateNewDeveloperError("Publish event arguments should be given in array. @Example: ReactWithDotNet.DispatchEvent('MovieNameChanged', ['The Shawshank Redemption']);");
         }
 
-        var listenerFunctions = this.map[eventName];
+        const listenerFunctions = this.map[eventName];
 
         if (!listenerFunctions)
         {
@@ -94,7 +94,7 @@ class EventBusImp
 
         const functionArray = listenerFunctions.slice(0);
 
-        for (var i = 0; i < functionArray.length; i++)
+        for (let i = 0; i < functionArray.length; i++)
         {
             if (listenerFunctions.indexOf(functionArray[i]) >= 0)
             {
@@ -1543,12 +1543,10 @@ function ArrangeRemoteMethodArguments(remoteMethodArguments)
                     if (reactName.indexOf('Mouse') > 0)
                     {
                         remoteMethodArguments[i] = ConvertToSyntheticMouseEvent(prm);
-                        continue;
                     }
-                    if (reactName === 'onScroll')
+                    else if (reactName === 'onScroll')
                     {
                         remoteMethodArguments[i] = ConvertToSyntheticScrollEvent(prm);
-                        continue;
                     }
                 }
             }
@@ -2375,14 +2373,14 @@ function SetCookie(cookieName_StringNotNull, cookieValue_StringNotNull, expireDa
 function GetCookie(cookieName)
 {
     // Split cookie string and get all individual name=value pairs in an array
-    var cookieArr = document.cookie.split(";");
+    const cookieArr = document.cookie.split(";");
     // Loop through the array elements
-    for (var i = 0; i < cookieArr.length; i++)
+    for (let i = 0; i < cookieArr.length; i++)
     {
-        var cookiePair = cookieArr[i].split("=");
+        const cookiePair = cookieArr[i].split("=");
         /* Removing whitespace at the beginning of the cookie name
         and compare it with the given string */
-        if (cookieName == cookiePair[0].trim())
+        if (cookieName === cookiePair[0].trim())
         {
             // Decode the cookie value and return
             return decodeURIComponent(cookiePair[1]);
