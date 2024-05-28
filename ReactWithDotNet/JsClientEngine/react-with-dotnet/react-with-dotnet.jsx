@@ -662,22 +662,6 @@ class LinkedList
 
 	    return null;
     }
-
-    visitAll(action)
-    {
-        if (this.head == null)
-        {
-            return;
-        }
-
-	    let current = this.head;
-
-        while (current.next)
-        {
-            action(current.data);
-			current = current.next;
-		}
-    }
 }
 
 function MergeDotNetComponentUniqueIdentifiers(sourceIdList, targetIdList)
@@ -789,11 +773,6 @@ class ComponentCache
     Unregister(component)
     {
         this.linkedList.removeFirst(item => item.component === component);
-    }
-
-    PrintAll()
-    {
-        this.linkedList.visitAll(console.log);
     }
 }
 
