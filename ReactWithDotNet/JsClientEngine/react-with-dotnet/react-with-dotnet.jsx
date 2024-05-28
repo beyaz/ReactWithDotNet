@@ -262,8 +262,8 @@ const EventDispatchingFinishCallbackFunctionsQueue = [];
 
 const FunctionExecutionQueue = [];
 
-var ReactIsBusy = false;
-var IsWaitingRemoteResponse = false;
+let ReactIsBusy = false;
+let IsWaitingRemoteResponse = false;
 
 function OnReactStateReady()
 {
@@ -276,6 +276,8 @@ function OnReactStateReady()
 
     EmitNextFunctionInFunctionExecutionQueue();
 }
+
+let FunctionExecutionQueueCurrentEntry = null;
 
 function EmitNextFunctionInFunctionExecutionQueue()
 {
@@ -307,8 +309,8 @@ function EmitNextFunctionInFunctionExecutionQueue()
     }
 }
 
-var FunctionExecutionQueueEntryUniqueIdentifier = 1;
-var FunctionExecutionQueueCurrentEntry = null;
+let FunctionExecutionQueueEntryUniqueIdentifier = 1;
+FunctionExecutionQueueCurrentEntry = null;
 
 function PushToFunctionExecutionQueue(fn, forceWait)
 {
@@ -337,7 +339,7 @@ function InvalidateQueuedFunctionsByName(name)
         FunctionExecutionQueueCurrentEntry.isValid = false;
     }
 
-    for (var i = 0; i < FunctionExecutionQueue.length; i++)
+    for (let i = 0; i < FunctionExecutionQueue.length; i++)
     {
         if (FunctionExecutionQueue[i].name === name)
         {
@@ -356,9 +358,9 @@ function TryGetValueInPath(obj, steps)
 {
     steps = typeof steps === "string" ? steps.split(".") : steps;
 
-    var len = steps.length;
+    const len = steps.length;
 
-    for (var i = 0; i < len; i++)
+    for (let i = 0; i < len; i++)
     {
         if (obj == null)
         {
@@ -398,11 +400,11 @@ function SetValueInPath(obj, steps, value)
         throw CreateNewDeveloperError("SetValueInPath->" + value);
     }
 
-    var len = steps.length;
+    const len = steps.length;
 
-    for (var i = 0; i < len; i++)
+    for (let i = 0; i < len; i++)
     {
-        var step = steps[i];
+        let step = steps[i];
 
         if (len === i + 3 && steps[i] === '[' && steps[i + 2] === ']')
         {
@@ -489,20 +491,20 @@ function IfNull(value, defaultValue)
 
 const VisitFiberNodeForCaptureState = (parentScope, fiberNode) =>
 {
-    var breadcrumb = parentScope.breadcrumb;
+    let breadcrumb = parentScope.breadcrumb;
 
     if (fiberNode.key !== null)
     {
         breadcrumb = breadcrumb + ',' + fiberNode.key;
     }
 
-    var scope = { map: parentScope.map, breadcrumb: breadcrumb };
+    const scope = {map: parentScope.map, breadcrumb: breadcrumb};
 
-    var isFiberNodeRelatedWithDotNetComponent = fiberNode.type && fiberNode.type[DotNetTypeOfReactComponent];
+    const isFiberNodeRelatedWithDotNetComponent = fiberNode.type && fiberNode.type[DotNetTypeOfReactComponent];
     if (isFiberNodeRelatedWithDotNetComponent)
     {
-        var map = parentScope.map;
-        
+        const map = parentScope.map;
+
         if (map[breadcrumb] !== undefined)
         {
             throw CreateNewDeveloperError('Problem when traversing nodes');
@@ -515,7 +517,7 @@ const VisitFiberNodeForCaptureState = (parentScope, fiberNode) =>
         };
     }
 
-    var child = fiberNode.child;
+    let child = fiberNode.child;
     while (child)
     {
         VisitFiberNodeForCaptureState(scope, child);
@@ -525,7 +527,7 @@ const VisitFiberNodeForCaptureState = (parentScope, fiberNode) =>
 
 const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
 {
-    // I'dont know what is going here :)
+    // I haven't known what is going here :)
     if (rootFiberNode.alternate && rootFiberNode.actualStartTime < rootFiberNode.alternate.actualStartTime)
     {
         rootFiberNode = rootFiberNode.alternate;
@@ -533,16 +535,16 @@ const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
 
     const rootNodeKey = rootFiberNode.key;
 
-    var map = {};
+    const map = {};
 
     map[rootNodeKey] =
     {
         StateAsJson: JSON.stringify(rootFiberNode.stateNode.state[DotNetState])
     };
 
-    var rootScope = { map: map, breadcrumb: rootNodeKey };
+    const rootScope = {map: map, breadcrumb: rootNodeKey};
 
-    var child = rootFiberNode.child;
+    let child = rootFiberNode.child;
     while (child)
     {
         VisitFiberNodeForCaptureState(rootScope, child);
@@ -565,13 +567,14 @@ const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
 
 const GetNextSequence = (() =>
 {
-    var sequence = 1;
+    let sequence = 1;
 
     return () => { return sequence++; };
 })();
 
 
-var DotNetComponentInstanceId_Next_Value = 1;
+let DotNetComponentInstanceId_Next_Value = 1;
+
 function InitializeDotNetComponentInstanceId(component)
 {
     component['$DotNetComponentInstanceId'] = DotNetComponentInstanceId_Next_Value++;
