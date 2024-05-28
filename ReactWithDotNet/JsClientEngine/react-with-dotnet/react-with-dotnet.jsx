@@ -1708,20 +1708,8 @@ function CalculateNewStateFromJsonElement(componentState, jsonElement)
 
     // new way
     jsonElement[SyncId] = GetNextSequence();
+
     return jsonElement;
-
-
-    // old way  todo: check usage
-    const newState = {};
-
-    newState[DotNetState]     = NotNull(jsonElement[DotNetState]);
-    newState[SyncId]          = GetNextSequence();
-    newState[RootNode]        = jsonElement[RootNode];
-    newState[ClientTasks]     = jsonElement[ClientTasks];
-    newState[DotNetProperties] = jsonElement[DotNetProperties];
-    newState[DotNetComponentUniqueIdentifier] = jsonElement[DotNetComponentUniqueIdentifier];
-
-    return newState;
 }
 
 const ComponentDefinitions = {};
