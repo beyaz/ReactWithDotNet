@@ -318,14 +318,14 @@ static class ComponentRequestHandler
                 var end = tracer.ElapsedMilliseconds;
                 if (end - begin >= 3)
                 {
-                    tracer.Trace($"Method '{methodInfo.Name}' invocation finished in {end - begin} milliseconds");
+                    tracer.Trace($"Method '{methodInfo.DeclaringType}::{methodInfo.Name}' invocation finished in {end - begin} milliseconds");
                 }
             }
             catch (Exception exception)
             {
                 return new()
                 {
-                    ErrorMessage = $"Error occured when invoking method.Method: {methodInfo.Name}.{Environment.NewLine}Exception: {exception}"
+                    ErrorMessage = $"Error occured when invoking method.Method: '{methodInfo.DeclaringType}::{methodInfo.Name}'. {Environment.NewLine}Exception: {exception}"
                 };
             }
 
