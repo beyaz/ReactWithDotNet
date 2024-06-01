@@ -880,7 +880,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         UpdatingProgress = newValue;
         if (UpdatingProgress <= 100)
         {
-            Client.GotoMethod(500, UpdateProgress, UpdatingProgress + 25);
+            Client.GotoMethod(100, UpdateProgress, UpdatingProgress + 25);
         }
 
         return Task.CompletedTask;
