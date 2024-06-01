@@ -318,7 +318,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         return new FlexRow(WidthFull, Height100vh, PrimaryBackground, FontFamily("system-ui"))
         {
             new HotReloadListener(),
-            new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative)
+            new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative,Transition("width", 300,"ease-in"))
             {
                 When(UpdatingProgress is > 0 and <= 100, () => new div(PositionAbsolute, TopRight(4))
                 {
