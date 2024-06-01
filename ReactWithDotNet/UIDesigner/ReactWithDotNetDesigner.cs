@@ -320,11 +320,11 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             new HotReloadListener(),
             new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative)
             {
-                When(UpdatingProgress is > 0 and <= 100, () => new div(PositionAbsolute, TopRight(5))
+                When(UpdatingProgress is > 0 and <= 100, () => new div(PositionAbsolute, TopRight(4))
                 {
                     When(state.PropertyPanelIsClosed, PositionStatic),
 
-                    new LoadingIcon() + Size(12, 12)
+                    new LoadingIcon() + Size(12)
                 }),
 
                 new div
@@ -333,14 +333,14 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                     OnClick(state.PropertyPanelIsClosed ? OpenPropertyPanel : ClosePropertyPanel),
                     PositionAbsolute,
                     TopRight(0),
-                    FontSize14,
+                    FontSize16,
                     FontWeight500,
                     Color("#c5d7e8"),
                     CursorPointer,
-                    Hover(FontSize17, Color("#9090f2")),
+                    Hover(Color("#9090f2")),
                     When(state.PropertyPanelIsClosed, PositionSticky),
 
-                    Size(12, 12),
+                    Size(16),
                     When(UpdatingProgress is > 0 and <= 100, DisplayNone)
                 },
 
