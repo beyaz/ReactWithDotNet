@@ -13,11 +13,14 @@ using static ReactWithDotNet.UIDesigner.Extensions;
 
 namespace ReactWithDotNet.UIDesigner;
 
-sealed class HotReloadListener : Component
+sealed class HotReloadListener : Component<HotReloadListener.State>
 {
+    internal record State
+    {
+        public int ChangeCount { get; init; }
+    }
+    
     public static int StaticChangeCount { get; private set; }
-
-    public int ChangeCount { get; set; }
 
     public static void UpdateApplication(Type[] _)
     {
@@ -26,12 +29,12 @@ sealed class HotReloadListener : Component
 
     public Task Refresh()
     {
-        if (ChangeCount != StaticChangeCount)
+        if (state.ChangeCount != StaticChangeCount)
         {
             Client.RefreshComponentPreview();
         }
 
-        ChangeCount = StaticChangeCount;
+        state = state with { ChangeCount = StaticChangeCount };
 
         Client.GotoMethod(1000, Refresh);
 
