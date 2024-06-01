@@ -2680,7 +2680,7 @@ function OnOutsideClicked(component, operationType, idOfElement, remoteMethodNam
             {
                 component: handlerComponent,
                 remoteMethodName: remoteMethodName,
-                remoteMethodArguments: []
+                remoteMethodArguments: [ConvertToSyntheticMouseEvent(e)]
             };
             StartAction(actionArguments);
         }
