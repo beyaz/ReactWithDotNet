@@ -13,7 +13,7 @@ using static ReactWithDotNet.UIDesigner.Extensions;
 
 namespace ReactWithDotNet.UIDesigner;
 
-class HotReloadListener : Component
+sealed class HotReloadListener : Component
 {
     public static int StaticChangeCount { get; private set; }
 
