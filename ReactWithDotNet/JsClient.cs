@@ -260,27 +260,25 @@ partial class Mixin
     }
 }
 
+// ReSharper disable once UnusedTypeParameter
+public sealed class EventName<TArgument>
+{
+    public string Name { get; init; }
+}
+
 static partial class Mixin
 {
+    public static readonly EventName<MouseEvent> click = new()
+    {
+        Name = "click"
+    };
     
-    //public static void OnOutsideClicked(this Client client, string idOfElement, Func<Task> func)
-    //{
-    //    if (func.Target is ReactComponentBase target)
-    //    {
-    //        if (target.ComponentUniqueIdentifier == 0)
-    //        {
-    //            throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + target.GetType().FullName);
-    //        }
-
-    //        client.CallJsFunction(Core + nameof(OnOutsideClicked), idOfElement, func.Method.GetAccessKey(), target.ComponentUniqueIdentifier);
-    //    }
-    //    else
-    //    {
-    //        throw DeveloperException($"Handler method '{func.Method.Name}' should belong to React component");
-    //    }
-    //}
+    public static readonly EventName<MouseEvent> OutsideClick = new()
+    {
+        Name = "OutsideClick"
+    };
     
-    public static void AddEventListener(string idOfElement, string eventName, Func<Task> func, IFunctionalComponent callerComponent)
+    public static void AddEventListener<TEventArgument>(string idOfElement, EventName<TEventArgument> eventName, Func<TEventArgument,Task> handlerMethod, IFunctionalComponent callerComponent)
     {
         if (callerComponent == null)
         {
@@ -292,9 +290,9 @@ static partial class Mixin
             throw new ArgumentException(nameof(idOfElement));
         }
         
-        if (func == null)
+        if (handlerMethod == null)
         {
-            throw new ArgumentNullException(nameof(func));
+            throw new ArgumentNullException(nameof(handlerMethod));
         }
         
         var caller = (FunctionalComponent)callerComponent;
@@ -304,10 +302,10 @@ static partial class Mixin
             throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + caller.GetType().FullName);
         }
 
-        caller.Client.CallJsFunction(Core + nameof(AddEventListener), [idOfElement,eventName, func.Method.GetAccessKey(), caller.ComponentUniqueIdentifier]);
+        caller.Client.CallJsFunction(Core + nameof(AddEventListener), [idOfElement,eventName.Name, handlerMethod.Method.GetAccessKey(), caller.ComponentUniqueIdentifier]);
     }
     
-    public static void RemoveEventListener(string idOfElement, string eventName, Func<Task> func, IFunctionalComponent callerComponent)
+    public static void RemoveEventListener<TEventArgument>(string idOfElement, EventName<TEventArgument> eventName, Func<TEventArgument,Task> handlerMethod, IFunctionalComponent callerComponent)
     {
         if (callerComponent == null)
         {
@@ -319,9 +317,9 @@ static partial class Mixin
             throw new ArgumentException(nameof(idOfElement));
         }
         
-        if (func == null)
+        if (handlerMethod == null)
         {
-            throw new ArgumentNullException(nameof(func));
+            throw new ArgumentNullException(nameof(handlerMethod));
         }
         
         var caller = (FunctionalComponent)callerComponent;
@@ -331,6 +329,6 @@ static partial class Mixin
             throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + caller.GetType().FullName);
         }
 
-        caller.Client.CallJsFunction(Core + nameof(RemoveEventListener), [idOfElement,eventName, func.Method.GetAccessKey(), caller.ComponentUniqueIdentifier]);
+        caller.Client.CallJsFunction(Core + nameof(RemoveEventListener), [idOfElement,eventName.Name, handlerMethod.Method.GetAccessKey(), caller.ComponentUniqueIdentifier]);
     }
 }
