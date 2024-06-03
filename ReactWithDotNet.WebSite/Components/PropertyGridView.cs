@@ -98,23 +98,43 @@ sealed class PropertyGridView : Component
 
     static Element CreateNodeView(PropertyGridNode Node)
     {
+        var isCollapsed = false;
+        
+        
+         
+            
         if (Node.Children.Any())
         {
-            return new fieldset(Padding(4), Background("white"))
+            
+            return FC(cmp =>
             {
-                Border("1px solid #d9d9d9"),
-                BorderRadius(4),
                 
-                new legend(DisplayFlexRow, AlignItemsCenter, PaddingLeftRight(1), FontSize12, FontWeight600)
-                {
-                    Node.Label, new ArrowUpDownIcon { IsArrowUp = true } 
-                },
                 
-                new FlexColumn(Gap(4))
+                
+                return new fieldset(Padding(4), Background("white"))
                 {
-                    Node.Children.Select(CreateNodeView)
+                    Border("1px solid #d9d9d9"),
+                    BorderRadius(4),
+                
+                    new legend(DisplayFlexRow, AlignItemsCenter, PaddingLeftRight(1), FontSize12, FontWeight600)
+                    {
+                        Node.Label, new ArrowUpDownIcon { IsArrowUp = isCollapsed , Size = 16} 
+                        ,OnClick(toggleCollapse)
+                    },
+                
+                    new FlexColumn(Gap(4) , isCollapsed ? DisplayNone : DisplayFlexColumn)
+                    {
+                        Node.Children.Select(CreateNodeView)
+                    }
+                };
+                
+                Task toggleCollapse(MouseEvent e)
+                {
+                    isCollapsed = !isCollapsed;
+                    
+                    return Task.CompletedTask;
                 }
-            };
+        });
         }
         
         return new FlexColumn
@@ -123,6 +143,10 @@ sealed class PropertyGridView : Component
             
             StringEditor("ABC2", Node.Value)
         };
+        
+        
+        
+       
     }
     static Element StringEditor(string Path, string Value)
     {
@@ -137,7 +161,7 @@ sealed class PropertyGridView : Component
                 valueBindDebounceHandler = onKeypressFinished,
                 style =
                 {
-                    FontSize12, Padding(4), Border(Solid(0.5, "#ced4da")), Focus(OutlineNone), BorderRadius(4), Color("#495057")
+                    FontSize12, Padding(4), Border(Solid(0.5, "#ced4da")), Focus(OutlineNone), BorderRadius(2), Color("#495057")
                 }
             };
 
