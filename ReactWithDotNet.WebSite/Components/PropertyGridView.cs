@@ -108,14 +108,14 @@ sealed class PropertyGridView : Component
             
             return FC(cmp =>
             {
-                
-                
+
                 
                 return new fieldset(Padding(4), Background("white"))
                 {
                     Border("1px solid #d9d9d9"),
                     BorderRadius(4),
                 
+                    isCollapsed ? OnMouseEnter(onMouseEnter) : null,
                     new legend(DisplayFlexRow, AlignItemsCenter, PaddingLeftRight(1), FontSize12, FontWeight600)
                     {
                         Node.Label, new ArrowUpDownIcon { IsArrowUp = isCollapsed , Size = 16} 
@@ -131,6 +131,13 @@ sealed class PropertyGridView : Component
                 Task toggleCollapse(MouseEvent e)
                 {
                     isCollapsed = !isCollapsed;
+                    
+                    return Task.CompletedTask;
+                }
+                
+                Task onMouseEnter(MouseEvent e)
+                {
+                    isCollapsed = false;
                     
                     return Task.CompletedTask;
                 }
