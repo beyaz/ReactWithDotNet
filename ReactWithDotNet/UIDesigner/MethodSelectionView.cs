@@ -21,8 +21,13 @@ sealed record MetadataNode
     public bool HasChild => Children.Count > 0;
 }
 
-sealed class MethodSelectionView : Component
+sealed class MethodSelectionView : Component<MethodSelectionView.State>
 {
+    internal sealed record State
+    {
+        public bool IsCollapsed { get; init; }
+    }
+    
     public required string AssemblyFilePath { get; init; }
 
     public required string ClassFilter { get; init; }
@@ -69,8 +74,28 @@ sealed class MethodSelectionView : Component
             content = AsTreeView(nodes);
         }
 
-        return new div(HeightFull, MarginLeftRight(3), OverflowYScroll, CursorPointer, Padding(5), Border(Solid(1, "rgb(217, 217, 217)")), BorderRadius(3))
+        var canShowCollapseIcon = false;
+        
+        var node = FindTreeNode(AssemblyFilePath, SelectedMethodTreeNodeKey, ClassFilter, MethodFilter);
+        if (node is not null)
         {
+            canShowCollapseIcon = true;
+            if (state.IsCollapsed)
+            {
+                content = AsTreeItem(node, SelectedMethodTreeNodeKey, null);
+            }
+                
+        }
+       
+        
+        return new fieldset(MinInlineSize("unset"), HeightFull, MarginLeftRight(3), OverflowYScroll, CursorPointer, Padding(5), Border(Solid(1, "rgb(217, 217, 217)")), BorderRadius(3))
+        {
+            canShowCollapseIcon ?
+            new legend(DisplayFlexRowCentered, OnClick(_ => Task.FromResult(state = state with{IsCollapsed = !state.IsCollapsed})))
+            {
+                new ArrowUpDownIcon{ IsArrowUp = state.IsCollapsed, Size = 16}
+            }:null,
+            
             content
         };
     }
@@ -228,5 +253,31 @@ sealed class MethodSelectionView : Component
         DispatchEvent(SelectionChanged, [e.currentTarget.id]);
 
         return Task.CompletedTask;
+    }
+    
+    sealed class ArrowUpDownIcon : PureComponent
+    {
+        public bool IsArrowUp { get; init; }
+
+        public int Size { get; init; } = 24;
+
+        protected override Element render()
+        {
+            var arrowDown = new svg(svg.ViewBox(0, 0, 24, 24), svg.Size(Size), Transition("all", 400))
+            {
+                new path { d = "M8.12 9.29 12 13.17l3.88-3.88c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-4.59 4.59c-.39.39-1.02.39-1.41 0L6.7 10.7a.9959.9959 0 0 1 0-1.41c.39-.38 1.03-.39 1.42 0z" }
+            };
+
+            if (IsArrowUp)
+            {
+                return arrowDown + WithStyle([
+                    Transform("rotate(-180deg)")
+                ]);
+            }
+
+            return arrowDown + WithStyle([
+                Transform("rotate(0deg)")
+            ]);
+        }
     }
 }
