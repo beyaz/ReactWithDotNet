@@ -83,7 +83,7 @@ sealed class MethodSelectionView : Component
             {
                 new img { Src(GetSvgUrl("Method")), Size(11), MarginTop(5), MarginLeft(20) },
 
-                new div { Text(node.label), MarginLeft(5), FontSize13 },
+                new div { Text(node.label), MarginLeft(5), FontSize13, WhiteSpaceNoWrap },
 
                 Id(node.MethodReference.UUID),
 
