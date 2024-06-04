@@ -134,7 +134,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             },
 
             SpaceY(5),
-            new FlexColumn(Flex(1,1,0), WidthFull, MaxHeight(250))
+            new FlexColumn(WidthFull, MaxHeight(250))
             {
                 new MethodSelectionView
                 {
