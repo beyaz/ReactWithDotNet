@@ -98,7 +98,7 @@ sealed class PropertyGridView : Component
 
     static Element CreateNodeView(PropertyGridNode Node)
     {
-        var isCollapsed = false;
+        var isCollapsed = true;
         
         
          
@@ -110,9 +110,9 @@ sealed class PropertyGridView : Component
             {
 
                 
-                return new fieldset(Padding(4), Background("white"))
+                return new fieldset(Padding(8), Background("white"))
                 {
-                    Border("1px solid #d9d9d9"),
+                    Border(0.5, "dotted","#d9d9d9"),
                     BorderRadius(4),
                 
                     isCollapsed ? OnMouseEnter(onMouseEnter) : null,
