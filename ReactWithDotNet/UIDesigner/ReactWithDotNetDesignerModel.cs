@@ -1,9 +1,9 @@
 ﻿namespace ReactWithDotNet.UIDesigner;
 
 [Serializable]
-public record ReactWithDotNetDesignerModel
+public sealed record ReactWithDotNetDesignerModel
 {
-    public string ClassFilter { get; set; }
+    public string ClassFilter { get; init; }
 
     public bool IsInstanceEditorActive { get; set; }
 
@@ -11,7 +11,7 @@ public record ReactWithDotNetDesignerModel
 
     public string JsonTextForDotNetMethodParameters { get; set; }
 
-    public string MethodFilter { get; set; }
+    public string MethodFilter { get; init; }
 
     public int ScreenWidth { get; set; } = 900;
 

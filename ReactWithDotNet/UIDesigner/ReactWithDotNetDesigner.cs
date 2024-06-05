@@ -650,8 +650,11 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             }
         }
 
-        state.ClassFilter  = classFilter;
-        state.MethodFilter = methodFileter;
+        state              = state with
+        {
+            ClassFilter = classFilter,
+            MethodFilter = methodFileter
+        };
 
         if (canShowInstanceEditor() && canShowParametersEditor() == false)
         {
