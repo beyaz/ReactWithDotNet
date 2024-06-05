@@ -192,7 +192,10 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<Modifier>
 
     IEnumerator<Modifier> IEnumerable<Modifier>.GetEnumerator()
     {
-        return Enumerable.Empty<Modifier>().GetEnumerator();
+        foreach (var item in Enumerable.Empty<Modifier>())
+        {
+            yield return item;
+        }
     }
 
     class ToStringHandlerComponent : PureComponent
