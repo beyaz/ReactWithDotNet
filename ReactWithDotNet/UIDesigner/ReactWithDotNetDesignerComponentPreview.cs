@@ -6,16 +6,6 @@ namespace ReactWithDotNet.UIDesigner;
 
 sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNetDesignerModel>
 {
-    static StyleModifier ComponentIndicatorStyle => new(s =>
-    {
-        if (s.border is not null || s.boxShadow is not null)
-        {
-            return;
-        }
-
-        s.border = $"0.5px dotted {Blue500}";
-    });
-
     public Task Refresh()
     {
         state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();

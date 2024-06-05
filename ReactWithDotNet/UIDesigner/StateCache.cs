@@ -12,7 +12,7 @@ static class StateCache
                                             Path.DirectorySeparatorChar;
 
     static readonly object fileLock = new();
-    static string StateFilePath => Path.Combine(CacheDirectory, $@"{nameof(ReactWithDotNetDesignerModel)}.json");
+    static string StateFilePath => Path.Combine(CacheDirectory, $"{nameof(ReactWithDotNetDesignerModel)}.json");
 
     public static ReactWithDotNetDesignerModel ReadState()
     {
@@ -127,7 +127,7 @@ static class StateCache
         }
     }
 
-    static string GetCacheFilePath(string type) => $@"{CacheDirectory}{type}.json";
+    static string GetCacheFilePath(string type) => $"{CacheDirectory}{type}.json";
 
     static string GetFileName(MethodReference methodReference) => methodReference.ToString().GetHashString();
     static string GetFileName(TypeReference typeReference) => typeReference.ToString().GetHashString();
