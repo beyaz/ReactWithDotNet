@@ -48,7 +48,7 @@ partial class Style
     [JsonIgnore]
     public List<MediaQuery> MediaQueries
     {
-        get { return _mediaQueries ??= new List<MediaQuery>(); }
+        get { return _mediaQueries ??= []; }
     }
 }
 

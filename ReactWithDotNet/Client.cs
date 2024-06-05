@@ -45,7 +45,7 @@ public sealed class Client
     }
     
     
-    internal readonly List<ClientTask> TaskList = new();
+    internal readonly List<ClientTask> TaskList = [];
     readonly ReactContext _reactContext;
 
     internal Client(ReactContext reactContext)

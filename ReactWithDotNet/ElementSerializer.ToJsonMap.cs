@@ -494,7 +494,7 @@ partial class ElementSerializer
 
                     if (item.HasReactAttribute)
                     {
-                        reactAttributeNames ??= new();
+                        reactAttributeNames ??= [];
                         reactAttributeNames.Add(item.PropertyInfo.Name);
                     }
                 }
@@ -661,7 +661,7 @@ partial class ElementSerializer
                                 {
                                     try
                                     {
-                                        var invocationResponse = cacheableMethod.Invoke(component, new[] { parameter });
+                                        var invocationResponse = cacheableMethod.Invoke(component, [parameter]);
                                         if (invocationResponse is Task invocationResponseAsTask)
                                         {
                                             await invocationResponseAsTask;
@@ -821,11 +821,11 @@ partial class ElementSerializer
             {
                 await context.TryCallBeforeSerializeElementToClient(child.Element, node.Element);
 
-                (childElements ??= new()).Add((object)child.ElementAsHtmlTextElement.innerText ?? child.ElementAsHtmlTextElement.stringBuilder);
+                (childElements ??= []).Add((object)child.ElementAsHtmlTextElement.innerText ?? child.ElementAsHtmlTextElement.stringBuilder);
             }
             else
             {
-                (childElements ??= new()).Add(child.ElementAsJsonMap);
+                (childElements ??= []).Add(child.ElementAsJsonMap);
             }
 
             child = child.NextSibling;

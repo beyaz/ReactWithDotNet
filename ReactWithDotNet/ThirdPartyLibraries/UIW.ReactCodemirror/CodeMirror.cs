@@ -38,7 +38,7 @@ public class CodeMirror : ThirdPartyReactComponent
 
     [ReactProp]
     //[ReactTransformValueInClient(Prefix + nameof(CodeMirror) + "::ConvertToExtension")]
-    public List<string> extensions { get; } = new();
+    public List<string> extensions { get; } = [];
 
 
     protected  override Element GetSuspenseFallbackElement()

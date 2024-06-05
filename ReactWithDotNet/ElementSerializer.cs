@@ -7,7 +7,7 @@ namespace ReactWithDotNet;
 
 sealed class Tracer
 {
-    internal readonly LinkedList<string> Messages = new();
+    internal readonly LinkedList<string> Messages = [];
 
     readonly Stopwatch stopwatch = new();
 
@@ -451,7 +451,7 @@ static partial class ElementSerializer
                 return reactNode.ToJsonMap(context);
             }
 
-            var itemTemplates = (IEnumerable)method.Invoke(instance, new object[] { });
+            var itemTemplates = (IEnumerable)method.Invoke(instance, []);
 
             var results = new List<ItemTemplateInfo>();
 

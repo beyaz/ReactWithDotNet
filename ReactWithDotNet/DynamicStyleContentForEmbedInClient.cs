@@ -4,7 +4,7 @@ namespace ReactWithDotNet;
 
 class DynamicStyleContentForEmbedInClient
 {
-    internal readonly List<CssClassInfo> ListOfClasses = new();
+    internal readonly List<CssClassInfo> ListOfClasses = [];
 
     public JsonMap CalculateCssClassList()
     {
