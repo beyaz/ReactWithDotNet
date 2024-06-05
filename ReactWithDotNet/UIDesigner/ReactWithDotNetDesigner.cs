@@ -86,7 +86,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
 
         state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
 
-        state.SelectedAssemblyFilePath = Assembly.GetEntryAssembly()?.Location;
+        state = state with { SelectedAssemblyFilePath = Assembly.GetEntryAssembly()?.Location };
 
         Client.ListenEvent("ComponentPreviewRefreshed", OnComponentPreviewRefreshed);
 
@@ -282,7 +282,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                 {
                     When(canShowInstanceEditor(), () => new div(Text("Instance json"))
                     {
-                        OnClick(_ => Task.FromResult(state.IsInstanceEditorActive = true)),
+                        OnClick(_ => Task.FromResult(state = state with { IsInstanceEditorActive = true })),
                         When(state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"), FontWeight600),
                         Padding(10),
                         FlexGrow(1),
@@ -291,7 +291,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
 
                     When(canShowParametersEditor(), () => new div(Text("Parameters json"))
                     {
-                        OnClick(_ => Task.FromResult(state.IsInstanceEditorActive = false)),
+                        OnClick(_ => Task.FromResult(state = state with { IsInstanceEditorActive = false })),
                         When(!state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"), FontWeight600),
                         Padding(10),
                         FlexGrow(1),
@@ -565,7 +565,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
 
     Task ClosePropertyPanel(MouseEvent _)
     {
-        state.PropertyPanelIsClosed = true;
+        state = state with { PropertyPanelIsClosed = true };
         SaveState();
 
         return Task.CompletedTask;
@@ -594,15 +594,18 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
 
     Task OnCommonSizeClicked(MouseEvent e)
     {
-        state.ScreenWidth = e.currentTarget.data["value"] switch
+        state = state with
         {
-            "M"   => 320,
-            "SM"  => 640,
-            "MD"  => 768,
-            "LG"  => 1024,
-            "XL"  => 1280,
-            "XXL" => 1536,
-            _     => throw new ArgumentOutOfRangeException()
+            ScreenWidth = e.currentTarget.data["value"] switch
+            {
+                "M"   => 320,
+                "SM"  => 640,
+                "MD"  => 768,
+                "LG"  => 1024,
+                "XL"  => 1280,
+                "XXL" => 1536,
+                _     => throw new ArgumentOutOfRangeException()
+            }
         };
 
         SaveState();
@@ -622,14 +625,15 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         var classFilter = state.ClassFilter;
         var methodFileter = state.MethodFilter;
 
-        state.SelectedType   = null;
-        state.SelectedMethod = null;
-
-        state.JsonTextForDotNetInstanceProperties = null;
-        state.JsonTextForDotNetMethodParameters   = null;
-
-        state.SelectedTreeNodeKey = keyOfSelectedTreeNode;
-
+        state                = state with
+        {
+            SelectedType = null,
+            SelectedMethod = null,
+            JsonTextForDotNetInstanceProperties = null,
+            JsonTextForDotNetMethodParameters   = null,
+            SelectedTreeNodeKey = keyOfSelectedTreeNode
+        };
+        
         var fullAssemblyPath = state.SelectedAssemblyFilePath;
 
         var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedTreeNodeKey, state.ClassFilter, state.MethodFilter);
@@ -637,14 +641,14 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         {
             if (node.IsClass)
             {
-                state.SelectedType = node.TypeReference;
+                state = state with { SelectedType = node.TypeReference };
 
                 state = StateCache.TryRead(state.SelectedType) ?? state;
             }
 
             if (node.IsMethod)
             {
-                state.SelectedMethod = node.MethodReference;
+                state = state with { SelectedMethod = node.MethodReference };
 
                 state = StateCache.TryRead(state.SelectedMethod) ?? state;
             }
@@ -658,12 +662,12 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
 
         if (canShowInstanceEditor() && canShowParametersEditor() == false)
         {
-            state.IsInstanceEditorActive = true;
+            state = state with { IsInstanceEditorActive = true };
         }
 
         if (canShowParametersEditor() && canShowInstanceEditor() == false)
         {
-            state.IsInstanceEditorActive = false;
+            state = state with { IsInstanceEditorActive = false };
         }
 
         if (canShowInstanceEditor())
@@ -782,11 +786,14 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                 }
             }
 
-            state.JsonTextForDotNetInstanceProperties = JsonSerializer.Serialize(map, new JsonSerializerOptions
+            state = state with
             {
-                WriteIndented          = true,
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-            });
+                JsonTextForDotNetInstanceProperties = JsonSerializer.Serialize(map, new JsonSerializerOptions
+                {
+                    WriteIndented          = true,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                })
+            };
         }
 
         void initializeParametersJson()
@@ -804,11 +811,14 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                 map.Add(name, ReflectionHelper.CreateDummyValue(parameterInfo.ParameterType));
             }
 
-            state.JsonTextForDotNetMethodParameters = JsonSerializer.Serialize(map, new JsonSerializerOptions
+            state = state with
             {
-                WriteIndented          = true,
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-            });
+                JsonTextForDotNetMethodParameters = JsonSerializer.Serialize(map, new JsonSerializerOptions
+                {
+                    WriteIndented          = true,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                })
+            };
         }
     }
 
@@ -828,11 +838,11 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
     {
         if (componentname == nameof(state.JsonTextForDotNetInstanceProperties))
         {
-            state.JsonTextForDotNetInstanceProperties = jsontext;
+            state = state with { JsonTextForDotNetInstanceProperties = jsontext };
         }
         else
         {
-            state.JsonTextForDotNetMethodParameters = jsontext;
+            state = state with { JsonTextForDotNetMethodParameters = jsontext };
         }
 
         SaveState();
@@ -851,21 +861,21 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
 
     Task OnMediaSizeMinusClicked(MouseEvent e)
     {
-        state.ScreenWidth -= 10;
+        state = state with { ScreenWidth = 10 };
 
         return OnMediaSizeChanged();
     }
 
     Task OnMediaSizePlusClicked(MouseEvent e)
     {
-        state.ScreenWidth += 10;
+        state = state with { ScreenWidth = 10 };
 
         return OnMediaSizeChanged();
     }
 
     Task OpenPropertyPanel(MouseEvent _)
     {
-        state.PropertyPanelIsClosed = false;
+        state = state with { PropertyPanelIsClosed = false };
         SaveState();
         return Task.CompletedTask;
     }

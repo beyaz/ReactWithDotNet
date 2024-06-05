@@ -5,27 +5,27 @@ public sealed record ReactWithDotNetDesignerModel
 {
     public string ClassFilter { get; init; }
 
-    public bool IsInstanceEditorActive { get; set; }
+    public bool IsInstanceEditorActive { get; init; }
 
-    public string JsonTextForDotNetInstanceProperties { get; set; }
+    public string JsonTextForDotNetInstanceProperties { get; init; }
 
-    public string JsonTextForDotNetMethodParameters { get; set; }
+    public string JsonTextForDotNetMethodParameters { get; init; }
 
     public string MethodFilter { get; init; }
 
-    public int ScreenWidth { get; set; } = 900;
+    public int ScreenWidth { get; init; } = 900;
 
-    public string SelectedAssemblyFilePath { get; set; }
+    public string SelectedAssemblyFilePath { get; init; }
 
-    public MethodReference SelectedMethod { get; set; }
+    public MethodReference SelectedMethod { get; init; }
 
-    public string SelectedTreeNodeKey { get; set; }
+    public string SelectedTreeNodeKey { get; init; }
 
-    public TypeReference SelectedType { get; set; }
+    public TypeReference SelectedType { get; init; }
     
-    public bool PropertyPanelIsClosed { get; set; }
+    public bool PropertyPanelIsClosed { get; init; }
 
-    public int ScreenHeight { get; set; } = 100;
+    public int ScreenHeight { get; init; } = 100;
     
     public bool IsMethodSelectionViewCollapsed { get; init; }
 }
