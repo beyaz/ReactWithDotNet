@@ -563,12 +563,11 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         return false;
     }
 
-    Task ClosePropertyPanel(MouseEvent _)
+    async Task ClosePropertyPanel(MouseEvent _)
     {
         state = state with { PropertyPanelIsClosed = true };
-        SaveState();
-
-        return Task.CompletedTask;
+     
+        await SaveState();
     }
 
     string GetQuery(string name)
@@ -592,7 +591,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         return nameValueCollection[name];
     }
 
-    Task OnCommonSizeClicked(MouseEvent e)
+    async Task OnCommonSizeClicked(MouseEvent e)
     {
         state = state with
         {
@@ -608,9 +607,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             }
         };
 
-        SaveState();
-
-        return Task.CompletedTask;
+        await SaveState();
     }
 
     Task OnComponentPreviewRefreshed()
@@ -620,7 +617,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         return Task.CompletedTask;
     }
 
-    Task OnElementSelected(string keyOfSelectedTreeNode)
+    async Task OnElementSelected(string keyOfSelectedTreeNode)
     {
         var classFilter = state.ClassFilter;
         var methodFileter = state.MethodFilter;
@@ -680,11 +677,11 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             IgnoreException(initializeParametersJson);
         }
 
-        SaveState();
+        await SaveState();
 
         Client.RefreshComponentPreview();
 
-        return Task.CompletedTask;
+        return;
 
         void initializeInstanceJson()
         {
@@ -829,12 +826,11 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             IsMethodSelectionViewCollapsed = false
         };
         
-        SaveState();
+        return SaveState();
         
-        return Task.CompletedTask;
     }
 
-    Task OnJsonTextChanged(string componentname, string jsontext)
+    async Task OnJsonTextChanged(string componentname, string jsontext)
     {
         if (componentname == nameof(state.JsonTextForDotNetInstanceProperties))
         {
@@ -845,18 +841,15 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             state = state with { JsonTextForDotNetMethodParameters = jsontext };
         }
 
-        SaveState();
+        await SaveState();
 
         Client.RefreshComponentPreview();
 
-        return Task.CompletedTask;
     }
 
-    Task OnMediaSizeChanged()
+    async Task OnMediaSizeChanged()
     {
-        SaveState();
-
-        return Task.CompletedTask;
+        await SaveState();
     }
 
     Task OnMediaSizeMinusClicked(MouseEvent e)
@@ -873,28 +866,27 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         return OnMediaSizeChanged();
     }
 
-    Task OpenPropertyPanel(MouseEvent _)
+    async Task OpenPropertyPanel(MouseEvent _)
     {
         state = state with { PropertyPanelIsClosed = false };
-        SaveState();
-        return Task.CompletedTask;
+        await SaveState();
     }
 
-    void SaveState()
+    async Task SaveState()
     {
         if (state.SelectedMethod is not null)
         {
-            StateCache.Save(state.SelectedMethod, state);
+            await StateCache.Save(state.SelectedMethod, state);
         }
 
         if (state.SelectedType is not null)
         {
-            StateCache.Save(state.SelectedType, state);
+            await StateCache.Save(state.SelectedType, state);
         }
 
-        StateCache.Save(state);
+        await StateCache.Save(state);
 
-        OnComponentPreviewRefreshed();
+        await OnComponentPreviewRefreshed();
     }
 
     Task UpdateProgress(int newValue)

@@ -47,7 +47,7 @@ static class StateCache
         return null;
     }
 
-    public static void Save(ReactWithDotNetDesignerModel state)
+    public static Task Save(ReactWithDotNetDesignerModel state)
     {
         lock (fileLock)
         {
@@ -57,11 +57,11 @@ static class StateCache
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             });
 
-            WriteAllText(StateFilePath, jsonContent);
+            return WriteAllText(StateFilePath, jsonContent);
         }
     }
 
-    public static void Save(TypeReference typeReference, ReactWithDotNetDesignerModel state)
+    public static Task Save(TypeReference typeReference, ReactWithDotNetDesignerModel state)
     {
         var jsonContent = JsonSerializer.Serialize(state, new JsonSerializerOptions
         {
@@ -69,10 +69,10 @@ static class StateCache
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         });
 
-        SaveToFile(GetFileName(typeReference), jsonContent);
+        return SaveToFile(GetFileName(typeReference), jsonContent);
     }
 
-    public static void Save(MethodReference methodReference, ReactWithDotNetDesignerModel state)
+    public static Task Save(MethodReference methodReference, ReactWithDotNetDesignerModel state)
     {
         var jsonContent = JsonSerializer.Serialize(state, new JsonSerializerOptions
         {
@@ -80,14 +80,14 @@ static class StateCache
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         });
 
-        SaveToFile(GetFileName(methodReference), jsonContent);
+        return SaveToFile(GetFileName(methodReference), jsonContent);
     }
 
-    public static void SaveToFile(string fileNameWithoutExtension, string jsonContent)
+    public static Task SaveToFile(string fileNameWithoutExtension, string jsonContent)
     {
         lock (fileLock)
         {
-            WriteAllText(GetCacheFilePath(fileNameWithoutExtension), jsonContent);
+            return WriteAllText(GetCacheFilePath(fileNameWithoutExtension), jsonContent);
         }
     }
 
@@ -132,7 +132,7 @@ static class StateCache
     static string GetFileName(MethodReference methodReference) => methodReference.ToString().GetHashString();
     static string GetFileName(TypeReference typeReference) => typeReference.ToString().GetHashString();
 
-    static void WriteAllText(string path, string contents)
+    static Task WriteAllText(string path, string contents)
     {
         var directoryName = Path.GetDirectoryName(path);
 
@@ -144,7 +144,7 @@ static class StateCache
             }
         }
 
-        File.WriteAllText(path, contents);
+        return File.WriteAllTextAsync(path, contents);
     }
 
 }
