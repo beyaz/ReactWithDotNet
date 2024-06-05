@@ -21,13 +21,8 @@ sealed record MetadataNode
     public bool HasChild => Children.Count > 0;
 }
 
-sealed class MethodSelectionView : Component<MethodSelectionView.State>
+sealed class MethodSelectionView : Component
 {
-    internal sealed record State
-    {
-        public bool IsCollapsed { get; init; }
-    }
-    
     public required string AssemblyFilePath { get; init; }
 
     public required string ClassFilter { get; init; }
@@ -38,6 +33,10 @@ sealed class MethodSelectionView : Component<MethodSelectionView.State>
 
     [CustomEvent]
     public required Func<string, Task> SelectionChanged { get; init; }
+
+    public bool IsCollapsed { get; init; }
+    
+    public MouseEventHandler OnCollapseClick { get; init; }
 
     public static MetadataNode FindTreeNode(string assemblyFilePath, string treeNodeKey, string classFilter, string methodFilter)
     {
@@ -80,7 +79,7 @@ sealed class MethodSelectionView : Component<MethodSelectionView.State>
         if (node is not null)
         {
             canShowCollapseIcon = true;
-            if (state.IsCollapsed)
+            if (IsCollapsed)
             {
                 content = AsTreeItem(node, SelectedMethodTreeNodeKey, null);
             }
@@ -91,9 +90,9 @@ sealed class MethodSelectionView : Component<MethodSelectionView.State>
         return new fieldset(MinInlineSize("unset"), HeightFull, MarginLeftRight(3), OverflowYScroll, CursorPointer, Padding(5), Border(Solid(1, "rgb(217, 217, 217)")), BorderRadius(3))
         {
             canShowCollapseIcon ?
-            new legend(DisplayFlexRowCentered, OnClick(_ => Task.FromResult(state = state with{IsCollapsed = !state.IsCollapsed})))
+            new legend(DisplayFlexRowCentered, OnClick(OnCollapseClick))
             {
-                new ArrowRightDownIcon{ IsArrowRight = state.IsCollapsed, Size = 16}
+                new ArrowRightDownIcon{ IsArrowRight = IsCollapsed, Size = 16}
             }:null,
             
             content

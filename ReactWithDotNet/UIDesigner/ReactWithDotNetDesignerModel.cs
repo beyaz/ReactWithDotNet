@@ -1,7 +1,7 @@
 ﻿namespace ReactWithDotNet.UIDesigner;
 
 [Serializable]
-public class ReactWithDotNetDesignerModel
+public record ReactWithDotNetDesignerModel
 {
     public string ClassFilter { get; set; }
 
@@ -26,5 +26,7 @@ public class ReactWithDotNetDesignerModel
     public bool PropertyPanelIsClosed { get; set; }
 
     public int ScreenHeight { get; set; } = 100;
+    
+    public bool IsMethodSelectionViewCollapsed { get; init; }
 }
 

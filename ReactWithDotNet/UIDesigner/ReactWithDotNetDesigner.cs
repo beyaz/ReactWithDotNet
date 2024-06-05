@@ -142,7 +142,9 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                     MethodFilter              = state.MethodFilter,
                     SelectedMethodTreeNodeKey = state.SelectedTreeNodeKey,
                     SelectionChanged          = OnElementSelected,
-                    AssemblyFilePath          = state.SelectedAssemblyFilePath
+                    AssemblyFilePath          = state.SelectedAssemblyFilePath,
+                    IsCollapsed = state.IsMethodSelectionViewCollapsed,
+                    OnCollapseClick = _ => Task.FromResult(state = state with{IsMethodSelectionViewCollapsed = !state.IsMethodSelectionViewCollapsed})
                 }
             },
 
@@ -809,6 +811,13 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
 
     Task OnFilterChanged()
     {
+        state = state with
+        {
+            IsMethodSelectionViewCollapsed = false
+        };
+        
+        SaveState();
+        
         return Task.CompletedTask;
     }
 
