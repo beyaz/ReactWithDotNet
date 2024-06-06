@@ -31,4 +31,11 @@ public sealed class ReactQuill : ThirdPartyReactComponent
     /// component.valueBindDebounceHandler = OnUserIterationFinished<br/>
     /// </summary>
     public int? valueBindDebounceTimeout { get; set; }
+
+    [ReactProp]
+    public Dictionary<string,dynamic> modules  { get; set; }
+    
+    
+    [ReactProp]
+    public string[] formats  { get; set; }
 }
