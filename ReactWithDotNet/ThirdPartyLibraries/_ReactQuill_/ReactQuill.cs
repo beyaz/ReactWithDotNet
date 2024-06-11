@@ -38,4 +38,8 @@ public sealed class ReactQuill : ThirdPartyReactComponent
     
     [ReactProp]
     public string[] formats  { get; set; }
+    
+    [ReactProp]
+    public string placeholder  { get; set; }
+    
 }

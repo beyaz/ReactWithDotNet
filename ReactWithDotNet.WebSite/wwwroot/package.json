@@ -39,8 +39,9 @@
     "google-map-react": "^2.2.0",
 
     "react-free-scrollbar": "^0.3.4",
-    
+
     "react-quill": "^2.0.0",
+    "quill-image-resize-module-react": "^3.0.0",
 
     "react-player": "^2.13.0",
 
