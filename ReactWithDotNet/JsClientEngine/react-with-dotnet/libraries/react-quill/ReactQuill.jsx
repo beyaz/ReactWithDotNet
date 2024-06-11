@@ -16,9 +16,11 @@ ReactWithDotNet.OnThirdPartyComponentPropsCalculated('ReactWithDotNet.ThirdParty
         props.modules =
         {
             toolbar: [
-                [{ header: '1' }, { header: '2' }, { font: [] }],
-                [{ size: [] }],
+                [{ header: [1, 2, 3, 4, 5, 6, false] }, { font: [] }],
                 ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                [{ align: [] }],
+                [{ color: [] }],
+                [{ background: [] }],
                 [
                     { list: 'ordered' },
                     { list: 'bullet' },
@@ -28,9 +30,14 @@ ReactWithDotNet.OnThirdPartyComponentPropsCalculated('ReactWithDotNet.ThirdParty
                 ['link', 'image', 'video'],
                 ['clean'],
             ],
-            clipboard: {
+            clipboard:
+            {
                 // toggle to add extra line breaks when pasting HTML:
                 matchVisual: false,
+            },
+            imageResize:
+            {
+                modules: ["Resize", "DisplaySize"]
             }
         };
     }
