@@ -135,6 +135,7 @@ sealed class PropertyGridView : Component
                     return Task.CompletedTask;
                 }
                 
+                [StopPropagation]
                 Task onMouseEnter(MouseEvent e)
                 {
                     isCollapsed = false;
