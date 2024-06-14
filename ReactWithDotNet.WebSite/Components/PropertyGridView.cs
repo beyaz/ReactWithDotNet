@@ -14,6 +14,7 @@ sealed record PropertyGridNode
     public ImmutableList<PropertyGridNode> Children { get; init; } = ImmutableList<PropertyGridNode>.Empty;
     
 }
+
 sealed class PropertyGridView : Component
 {
     public PropertyGridNode RootNode { get; init; }
