@@ -3,6 +3,29 @@ using System.Xml.Linq;
 
 namespace ReactWithDotNet.WebSite.Components;
 
+class DenemeA
+{
+    public string Prop1 { get; set; }
+    public string Prop2 { get; set; }
+    public int Prop3 { get; set; } = 5;
+    public DenemeA_Nested NestedA { get; set; }
+}
+
+class DenemeA_Nested
+{
+    public string PropA { get; set; }
+    public string PropB { get; set; }
+    public int PropC { get; set; } = 5;
+    
+    public DenemeA_Nested_Nested Nested { get; set; }
+}
+class DenemeA_Nested_Nested
+{
+    public string PropX { get; set; }
+    public string PropY { get; set; }
+    public int PropZ { get; set; } = 5;
+}
+
 sealed record PropertyGridNode
 {
     public string Label { get; init; }
@@ -18,144 +41,76 @@ sealed record PropertyGridNode
 sealed class PropertyGridView : Component
 {
     public PropertyGridNode RootNode { get; init; }
+    
+    public object Instance { get; set; }
 
     protected override Element render()
     {
-        var node = RootNode;
         if (DesignMode)
         {
-            node = new()
+            Instance = new DenemeA
             {
-                Label  = "A",
-                Value  = "ValueA",
-                Editor = "string",
-                Children = new PropertyGridNode []
-                {
-                    new ()
-                    {
-                        Label  = "C1",
-                        Value  = "C1Val",
-                        Editor = "string"
-                    },
-                    new ()
-                    {
-                        Label  = "C2",
-                        Value  = "Value2",
-                        Editor = "string"
-                    },
-                    new ()
-                    {
-                        Label  = "Users",
-                        Children =  new PropertyGridNode []
-                        {
-                            new ()
-                            {
-                                Label  = "0",
-                                Children = new PropertyGridNode[]
-                                {
-                                    new ()
-                                    {
-                                        Label  = "C1",
-                                        Value  = "C1Val",
-                                        Editor = "string"
-                                    },
-                                    new ()
-                                    {
-                                        Label  = "C2",
-                                        Value  = "Value2",
-                                        Editor = "string"
-                                    },
-                                }.ToImmutableList()
-                            },
-                            new ()
-                            {
-                                Label  = "1",
-                                Children = new PropertyGridNode[]
-                                {
-                                    new ()
-                                    {
-                                        Label  = "C3",
-                                        Value  = "C1Val",
-                                        Editor = "string"
-                                    },
-                                    new ()
-                                    {
-                                        Label  = "C2",
-                                        Value  = "Value2",
-                                        Editor = "string"
-                                    },
-                                }.ToImmutableList()
-                            }
-                            
-                            
-                        }.ToImmutableList()
-                    }
-                }.ToImmutableList()
+                Prop1 = "A",
+                Prop2 = "g",
+                Prop3 = 5
             };
         }
 
-        return CreateNodeView(node);
+        return CreateNodeView(typeof(DenemeA),"root",Instance);
     }
 
-    static Element CreateNodeView(PropertyGridNode Node)
+    static Element CreateNodeView(Type type, string label, object Value)
     {
-        var isCollapsed = true;
-        
-        
-         
-            
-        if (Node.Children.Any())
+        if (type == typeof(string)||
+            type == typeof(int))
         {
-            
-            return FC(cmp =>
+            return new FlexColumn
             {
-
-                
-                return new fieldset(Padding(8), Background("white"))
-                {
-                    Border(0.5, "dotted","#d9d9d9"),
-                    BorderRadius(4),
-                
-                    isCollapsed ? OnMouseEnter(onMouseEnter) : null,
-                    new legend(DisplayFlexRow, AlignItemsCenter, PaddingLeftRight(1), FontSize12, FontWeight600)
-                    {
-                        Node.Label, new ArrowUpDownIcon { IsArrowUp = isCollapsed , Size = 16} 
-                        ,OnClick(toggleCollapse)
-                    },
-                
-                    new FlexColumn(Gap(4) , isCollapsed ? DisplayNone : DisplayFlexColumn)
-                    {
-                        Node.Children.Select(CreateNodeView)
-                    }
-                };
-                
-                Task toggleCollapse(MouseEvent e)
-                {
-                    isCollapsed = !isCollapsed;
-                    
-                    return Task.CompletedTask;
-                }
-                
-                [StopPropagation]
-                Task onMouseEnter(MouseEvent e)
-                {
-                    isCollapsed = false;
-                    
-                    return Task.CompletedTask;
-                }
-        });
+                new label{ label, FontSize12, FontWeight600, Color("blue")},
+            
+                StringEditor("ABC2", Value?.ToString())
+            };
         }
         
-        return new FlexColumn
+        
+        var isCollapsed = true;
+         
+        return FC(cmp =>
         {
-            new label{ Node.Label, FontSize12, FontWeight600, Color("blue")},
-            
-            StringEditor("ABC2", Node.Value)
-        };
+            return new fieldset(Padding(8), Background("white"))
+            {
+                Border(0.5, "dotted","#d9d9d9"),
+                BorderRadius(4),
+                
+                isCollapsed ? OnMouseEnter(onMouseEnter) : null,
+                new legend(DisplayFlexRow, AlignItemsCenter, PaddingLeftRight(1), FontSize12, FontWeight600)
+                {
+                    label, new ArrowUpDownIcon { IsArrowUp = isCollapsed , Size = 16} 
+                    ,OnClick(toggleCollapse)
+                },
+                
+                new FlexColumn(Gap(4) , isCollapsed ? DisplayNone : DisplayFlexColumn)
+                {
+                    type.GetProperties().Select(p=>CreateNodeView(p.PropertyType, p.Name,  Value is null ? null: p.GetValue(Value)))
+                }
+            };
+                
+            Task toggleCollapse(MouseEvent e)
+            {
+                isCollapsed = !isCollapsed;
+                    
+                return Task.CompletedTask;
+            }
+                
+            [StopPropagation]
+            Task onMouseEnter(MouseEvent e)
+            {
+                isCollapsed = false;
+                    
+                return Task.CompletedTask;
+            }
+        });
         
-        
-        
-       
     }
     static Element StringEditor(string Path, string Value)
     {
