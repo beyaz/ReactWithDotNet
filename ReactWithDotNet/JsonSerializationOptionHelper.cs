@@ -239,6 +239,19 @@ partial class Mixin
                     style.Import(jsonElement.Deserialize<Dictionary<string, string>>());
                     return style;
                 }
+                
+                if (jsonElement.TryGetProperty("$type", out var typeProperty))
+                {
+                    var typeName = typeProperty.GetString();
+                    if (!string.IsNullOrWhiteSpace(typeName))
+                    {
+                        var type = Type.GetType(typeName);
+                        if (type is not null)
+                        {
+                            return jsonElement.Deserialize(type, JsonSerializerOptionsInstance);
+                        }
+                    }
+                }
 
                 return jsonElement.Deserialize(targetType, JsonSerializerOptionsInstance);
             }
@@ -296,6 +309,9 @@ static partial class JsonSerializationOptionHelper
         options.Converters.Add(new JsonConverterFactoryForCompilerGeneratedClass());
 
         options.Converters.Add(JsonConverterFactoryForDelegate.Instance);
+        
+        options.Converters.Add(JsonConverterFactoryForCommounUsage.Instance);
+        
         
         
         

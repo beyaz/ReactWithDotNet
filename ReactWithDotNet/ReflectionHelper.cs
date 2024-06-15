@@ -143,9 +143,9 @@ static class ReflectionHelper
         var ilGenerator = dmGet.GetILGenerator();
 
         ilGenerator.Emit(OpCodes.Ldarg_0);
-        ilGenerator.Emit(OpCodes.Castclass, declaringType);
+        ilGenerator.Emit(OpCodes.Castclass, declaringType); 
         ilGenerator.Emit(OpCodes.Ldarg_1);
-        ilGenerator.Emit(OpCodes.Castclass, propertyInfo.PropertyType);
+        ilGenerator.Emit( propertyInfo.PropertyType.IsValueType ? OpCodes.Unbox_Any : OpCodes.Castclass, propertyInfo.PropertyType);
         ilGenerator.Emit(OpCodes.Callvirt, setMethod);
         ilGenerator.Emit(OpCodes.Ret);
 
