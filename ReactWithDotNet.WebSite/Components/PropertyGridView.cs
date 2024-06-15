@@ -40,7 +40,7 @@ sealed record PropertyGridNode
 
 sealed class PropertyGridView : Component
 {
-    public PropertyGridNode RootNode { get; init; }
+    //public PropertyGridNode RootNode { get; init; }
     
     public object Instance { get; set; }
 
