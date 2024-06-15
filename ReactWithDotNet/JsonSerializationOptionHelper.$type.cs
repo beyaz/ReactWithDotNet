@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Reflection;
 using System.Text.Json;
@@ -67,6 +68,11 @@ partial class JsonSerializationOptionHelper
 
             static bool canConvertImpl(Type typeToConvert)
             {
+                if (isEnumerable(typeToConvert))
+                {
+                    return false;
+                }
+                
                 // ignore core types
                 if (typeToConvert.Assembly.GetName().Name == nameof(ReactWithDotNet))
                 {
@@ -78,8 +84,13 @@ partial class JsonSerializationOptionHelper
                 {
                     return false;
                 }
-
+                
                 return typeToConvert.IsClass;
+                
+                static bool isEnumerable(Type type)
+                {
+                    return typeof(IEnumerable).IsAssignableFrom(type);
+                }
             }
             
             static TypeSerializationInfo.PropertyInfoCalculated toCalculatedProperty(PropertyInfo propertyInfo)
@@ -125,7 +136,7 @@ partial class JsonSerializationOptionHelper
                     
                     writer.WritePropertyName(item.JsonPropertyName);
                     
-                    JsonSerializer.Serialize(writer, propertyValue, propertyValue?.GetType() ?? typeof(object), options);
+                    JsonSerializer.Serialize(writer, propertyValue, options);
                 }
 
                 writer.WriteEndObject();
