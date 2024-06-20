@@ -303,6 +303,8 @@ function EmitNextFunctionInFunctionExecutionQueue()
 
         ReactIsBusy = true;
 
+        item.prev = FunctionExecutionQueueCurrentEntry;
+
         FunctionExecutionQueueCurrentEntry = item;
 
         item.fn(item);
@@ -333,17 +335,41 @@ function PushToFunctionExecutionQueue(fn, forceWait)
 
 function InvalidateQueuedFunctionsByName(name)
 {
-    if (FunctionExecutionQueueCurrentEntry &&
-        FunctionExecutionQueueCurrentEntry.name === name)
+    const current = FunctionExecutionQueueCurrentEntry;
+
+    const queue = FunctionExecutionQueue;
+
+    let invalidateAll = false;
+
+    if (current)
     {
-        FunctionExecutionQueueCurrentEntry.isValid = false;
+        if (current.name === name || (current.prev && current.prev.name === name))
+        {
+            current.isValid = false;
+
+            invalidateAll = true;
+        }
     }
 
-    for (let i = 0; i < FunctionExecutionQueue.length; i++)
+    if (invalidateAll)
     {
-        if (FunctionExecutionQueue[i].name === name)
+        for (let i = 0; i < queue.length; i++)
         {
-            FunctionExecutionQueue[i].isValid = false;
+            queue[i].isValid = false;
+        }
+        return;
+    }
+
+    for (let i = 0; i < queue.length; i++)
+    {
+        if (queue[i].name === name)
+        {
+             // skip rest of functions
+            for (let j = i; j < queue.length; j++)
+            {
+                queue[j].isValid = false;
+            }
+            break;
         }
     }
 }
