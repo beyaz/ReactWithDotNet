@@ -1562,6 +1562,23 @@ public sealed class th : HtmlElement
     #endregion
 
 
+    #region string scope
+    PropertyValueNode<string> _scope;
+    static readonly PropertyValueDefinition _scope_ = new()
+    {
+        name = nameof(scope)
+    };
+    /// <summary>
+    ///     specifies whether a header cell is a header for a column, row, or group of columns or rows.
+    /// </summary>
+    public string scope
+    {
+        get => _scope?.value;
+        set => SetValue(_scope_, ref _scope, value);
+    }
+    #endregion
+
+
     public th() { }
 
     public th(params Modifier[] modifiers) : base(modifiers) { }
@@ -1574,6 +1591,13 @@ public sealed class th : HtmlElement
     public static HtmlElementModifier ColSpan(int? value) => Modify(x => x.colSpan = value);
 
     public static HtmlElementModifier RowSpan(int? value) => Modify(x => x.rowSpan = value);
+
+    /// <summary>
+    ///     scope = <paramref name="value"/>
+    /// <br/>
+    ///     specifies whether a header cell is a header for a column, row, or group of columns or rows.
+    /// </summary>
+    public static HtmlElementModifier Scope(string value) => Modify(x => x.scope = value);
 
 }
 

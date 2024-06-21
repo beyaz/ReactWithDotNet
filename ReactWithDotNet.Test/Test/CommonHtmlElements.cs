@@ -262,6 +262,12 @@ public class ExportingCommonHtmlElements
                     {
                         Name = "rowSpan",
                         Type = "int?"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "scope",
+                        Type = "string",
+                        Comment = "specifies whether a header cell is a header for a column, row, or group of columns or rows."
                     }
                 },
                 EnableCastFromString = false
