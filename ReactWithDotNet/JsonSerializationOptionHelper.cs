@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -258,6 +259,55 @@ partial class Mixin
 
             if (jsonElement.ValueKind == JsonValueKind.Array)
             {
+                var genericArguments = targetType.GetGenericArguments();
+
+                if (targetType.IsGenericType && genericArguments[0] == typeof(object))
+                {
+                    var objectArray = jsonElement.Deserialize<object[]>(JsonSerializerOptionsInstance);
+
+                    for (var i = 0; i < objectArray.Length; i++)
+                    {
+                        if (objectArray[i] is JsonElement itemAsJsonElement)
+                        {
+                            if (itemAsJsonElement.TryGetProperty("$type", out var typeProperty))
+                            {
+                                var typeName = typeProperty.GetString();
+                                if (!string.IsNullOrWhiteSpace(typeName))
+                                {
+                                    var type = Type.GetType(typeName);
+                                    if (type is not null)
+                                    {
+                                        objectArray[i]  = itemAsJsonElement.Deserialize(type, JsonSerializerOptionsInstance);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (targetType == typeof(IReadOnlyList<object>)||
+                        targetType == typeof(IList<object>)||
+                        targetType == typeof(ICollection<object>)||
+                        targetType == typeof(IEnumerable<object>)||
+                        targetType == typeof(object[]))
+                    {
+                        return objectArray;
+                    }
+
+                    if (targetType == typeof(List<object>))
+                    {
+                        return objectArray.ToList();
+                    }
+                    
+                    if (targetType == typeof(ImmutableList<object>))
+                    {
+                        return objectArray.ToImmutableList();
+                    }
+                    if (targetType == typeof(ImmutableArray<object>))
+                    {
+                        return objectArray.ToImmutableArray();
+                    }
+                }
+                
                 return jsonElement.Deserialize(targetType, JsonSerializerOptionsInstance);
             }
 
