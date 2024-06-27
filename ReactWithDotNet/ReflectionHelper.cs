@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections.Concurrent;
+using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 using static ReactWithDotNet.ReflectionHelper.PrimitiveTypeCache;
@@ -8,6 +9,8 @@ namespace ReactWithDotNet;
 
 static class ReflectionHelper
 {
+    static readonly ConcurrentDictionary<Type, Func<object>> CreateNewInstanceCache = new();
+
     public static object ConvertNonEmptyOrNullStringValueToPrimitiveType(string value, Type primitiveType)
     {
         if (primitiveType.Name == "Nullable`1" && primitiveType.Namespace == "System")
@@ -200,9 +203,16 @@ static class ReflectionHelper
 
     public static object CreateNewInstance(Type type)
     {
-        return Activator.CreateInstance(type);
+        if (!CreateNewInstanceCache.TryGetValue(type, out var createNewInstance))
+        {
+            createNewInstance = CreateInstanceCreatorFunction(type);
+
+            CreateNewInstanceCache.TryAdd(type, createNewInstance);
+        }
+
+        return createNewInstance();
     }
-    
+
     public static Action<object, object> CreateSetFunction(PropertyInfo propertyInfo)
     {
         var setMethod = propertyInfo.SetMethod;
