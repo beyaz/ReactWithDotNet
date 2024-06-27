@@ -41,7 +41,8 @@ partial class JsonSerializationOptionHelper
                 CanConvert             = true,
                 TypeKey                = $"{typeToConvert.FullName}, {typeToConvert.Assembly.GetName().Name}",
                 PropertiesAsList       = properties,
-                PropertiesAsDictionary = properties.ToDictionary(x => x.JsonPropertyName)
+                PropertiesAsDictionary = properties.ToDictionary(x => x.JsonPropertyName),
+                CreateNewInstance = ReflectionHelper.CreateInstanceCreatorFunction(typeToConvert)
             });
             return true;
 
@@ -125,20 +126,22 @@ partial class JsonSerializationOptionHelper
                             throw new JsonException($"Missing type: {typeKey}");
                         }
 
-                        var constructorInfoList = type.GetConstructors();
-                        if (constructorInfoList.Length == 1)
-                        {
-                            var parameterInfoList = constructorInfoList[0].GetParameters();
-                            if (parameterInfoList.Length > 0)
-                            {
-                                var parameters = parameterInfoList.Select(p => p.ParameterType.IsClass ? null : Activator.CreateInstance(p.ParameterType)).ToArray();
-                                instance = Activator.CreateInstance(type,parameters);
-                                continue;
-                            }
-                        }
+                        //var constructorInfoList = type.GetConstructors();
+                        //if (constructorInfoList.Length == 1)
+                        //{
+                        //    var parameterInfoList = constructorInfoList[0].GetParameters();
+                        //    if (parameterInfoList.Length > 0)
+                        //    {
+                        //        var parameters = parameterInfoList.Select(p => p.ParameterType.IsClass ? null : Activator.CreateInstance(p.ParameterType)).ToArray();
+                        //        instance = Activator.CreateInstance(type,parameters);
+                        //        continue;
+                        //    }
+                        //}
                         
                         instance = Activator.CreateInstance(type);
 
+                        instance = typeSerializationInfo.CreateNewInstance();
+                        
                         continue;
                     }
 
@@ -197,6 +200,8 @@ partial class JsonSerializationOptionHelper
             public IReadOnlyDictionary<string, PropertyInfoCalculated> PropertiesAsDictionary { get; init; }
 
             public string TypeKey { get; init; }
+            
+            public Func<object> CreateNewInstance { get; init; }
 
             public sealed record PropertyInfoCalculated
             {

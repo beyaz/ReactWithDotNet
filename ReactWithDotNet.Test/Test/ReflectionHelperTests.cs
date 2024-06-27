@@ -43,6 +43,34 @@ public class ReflectionHelperTests
         getFunc(instance).Should().Be("abc");
     }
     
+    public struct MyStruct
+    {
+        public int X;
+        public int Y;
+    }
+    record ConstructorTestRecordNoParameter();
+    
+    record ConstructorTestRecord(string a, int b, long l, MyStruct o,short s, MyStruct uu, decimal d, DateTime val);
+    
+    [TestMethod]
+    public void ConstructorTestNoParameter()
+    {
+        var createNewInstance = ReflectionHelper.CreateInstanceCreatorFunction(typeof(ConstructorTestRecordNoParameter));
+
+        var instance = (ConstructorTestRecordNoParameter)createNewInstance();
+
+        instance.Should().NotBeNull();
+    }
+    
+    [TestMethod]
+    public void ConstructorTest()
+    {
+        var createNewInstance = ReflectionHelper.CreateInstanceCreatorFunction(typeof(ConstructorTestRecord));
+
+        var instance = (ConstructorTestRecord)createNewInstance();
+
+        instance.a.Should().BeNull();
+    }
     
     
     

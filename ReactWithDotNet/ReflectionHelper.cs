@@ -122,6 +122,82 @@ static class ReflectionHelper
         return (Func<object, object>)dmGet.CreateDelegate(typeof(Func<object, object>));
     }
 
+    public static Func<object> CreateInstanceCreatorFunction(Type type)
+    {
+        if (type == null)
+        {
+            return null;
+        }
+
+        var constructorInfoArray = type.GetConstructors();
+
+        var parameterlessContstructorInfo = constructorInfoArray.FirstOrDefault(x => x.GetParameters().Length == 0);
+
+        if (parameterlessContstructorInfo is not null)
+        {
+            var dynamicMethod = new DynamicMethod("CreateInstance", type, Type.EmptyTypes, true);
+
+            var ilGenerator = dynamicMethod.GetILGenerator();
+
+            ilGenerator.Emit(OpCodes.Newobj, parameterlessContstructorInfo);
+            ilGenerator.Emit(OpCodes.Ret);
+
+            return (Func<object>)dynamicMethod.CreateDelegate(typeof(Func<object>));
+        }
+
+        {
+            var constructorInfo = constructorInfoArray[0];
+
+            var dynamicMethod = new DynamicMethod("CreateInstance", type, Type.EmptyTypes, true);
+
+            var ilGenerator = dynamicMethod.GetILGenerator();
+
+            var parameterInfoArray = constructorInfo.GetParameters();
+
+            foreach (var parameterInfo in parameterInfoArray)
+            {
+                if (parameterInfo.ParameterType.IsClass)
+                {
+                    ilGenerator.Emit(OpCodes.Ldnull);
+                    continue;
+                }
+
+                if (parameterInfo.ParameterType == typeof(sbyte) ||
+                    parameterInfo.ParameterType == typeof(byte) ||
+                    parameterInfo.ParameterType == typeof(short) ||
+                    parameterInfo.ParameterType == typeof(int))
+                {
+                    ilGenerator.Emit(OpCodes.Ldc_I4_0);
+                    continue;
+                }
+
+                if (parameterInfo.ParameterType == typeof(long))
+                {
+                    ilGenerator.Emit(OpCodes.Ldc_I4_0);
+                    ilGenerator.Emit(OpCodes.Conv_I8);
+                    continue;
+                }
+
+                if (parameterInfo.ParameterType == typeof(decimal))
+                {
+                    ilGenerator.Emit(OpCodes.Ldsfld, typeof(decimal).GetField(nameof(decimal.Zero), BindingFlags.Public | BindingFlags.Static)!);
+                    continue;
+                }
+
+                var localBuilder = ilGenerator.DeclareLocal(parameterInfo.ParameterType);
+
+                ilGenerator.Emit(OpCodes.Ldloca_S, localBuilder.LocalIndex);
+                ilGenerator.Emit(OpCodes.Initobj, parameterInfo.ParameterType);
+                ilGenerator.Emit(OpCodes.Ldloc, localBuilder.LocalIndex);
+            }
+
+            ilGenerator.Emit(OpCodes.Newobj, constructorInfo);
+            ilGenerator.Emit(OpCodes.Ret);
+
+            return (Func<object>)dynamicMethod.CreateDelegate(typeof(Func<object>));
+        }
+    }
+
     public static Action<object, object> CreateSetFunction(PropertyInfo propertyInfo)
     {
         var setMethod = propertyInfo.SetMethod;
