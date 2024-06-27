@@ -143,9 +143,9 @@ static class ReflectionHelper
         var ilGenerator = dmGet.GetILGenerator();
 
         ilGenerator.Emit(OpCodes.Ldarg_0);
-        ilGenerator.Emit(OpCodes.Castclass, declaringType); 
+        ilGenerator.Emit(OpCodes.Castclass, declaringType);
         ilGenerator.Emit(OpCodes.Ldarg_1);
-        ilGenerator.Emit( propertyInfo.PropertyType.IsValueType ? OpCodes.Unbox_Any : OpCodes.Castclass, propertyInfo.PropertyType);
+        ilGenerator.Emit(propertyInfo.PropertyType.IsValueType ? OpCodes.Unbox_Any : OpCodes.Castclass, propertyInfo.PropertyType);
         ilGenerator.Emit(OpCodes.Callvirt, setMethod);
         ilGenerator.Emit(OpCodes.Ret);
 
@@ -213,11 +213,6 @@ static class ReflectionHelper
         return null;
     }
 
-    public static bool IsCompilerGenerated(this Type type)
-    {
-        return Attribute.GetCustomAttribute(type, typeof(CompilerGeneratedAttribute)) != null;
-    }
-
     public static bool IsAnonymousType(this Type type)
     {
         if (type == null)
@@ -231,7 +226,12 @@ static class ReflectionHelper
                && (type.Name.StartsWith("<>") || type.Name.StartsWith("VB$"))
                && type.Attributes.HasFlag(TypeAttributes.NotPublic);
     }
-    
+
+    public static bool IsCompilerGenerated(this Type type)
+    {
+        return Attribute.GetCustomAttribute(type, typeof(CompilerGeneratedAttribute)) != null;
+    }
+
     public static bool IsVoidTaskDelegate(this PropertyInfo propertyInfo)
     {
         return propertyInfo.PropertyType.GetMethod("Invoke")?.ReturnType.FullName == "System.Threading.Tasks.Task";
@@ -294,7 +294,7 @@ static class SerializationHelperForCompilerGeneratedClasss
         return instance;
     }
 
-    public static IReadOnlyDictionary<string, object> Serialize(object compilerGeneratedTypeInstance, FunctionalComponent functionalComponent = null,ElementSerializerContext context = null)
+    public static IReadOnlyDictionary<string, object> Serialize(object compilerGeneratedTypeInstance, FunctionalComponent functionalComponent = null, ElementSerializerContext context = null)
     {
         var compilerGeneratedType = compilerGeneratedTypeInstance.GetType();
 
@@ -313,18 +313,16 @@ static class SerializationHelperForCompilerGeneratedClasss
 
             if (value is MulticastDelegate multicastDelegate)
             {
-                
-
                 var multicastDelegateTarget = multicastDelegate.Target;
                 if (multicastDelegateTarget != null)
                 {
                     var isHandled = false;
-                    
+
                     if (multicastDelegateTarget == compilerGeneratedTypeInstance)
                     {
                         // for avoid circular reference
                         value = Delegate.CreateDelegate(multicastDelegate.GetType(), null, multicastDelegate.Method);
-                    
+
                         isHandled = true;
                     }
 
@@ -333,7 +331,7 @@ static class SerializationHelperForCompilerGeneratedClasss
                         if (multicastDelegateTarget is ReactComponentBase componentBase && functionalComponent is not null)
                         {
                             // initialize event handler
-                    
+
                             var handlerComponentUniqueIdentifier = componentBase.ComponentUniqueIdentifier;
 
                             if (handlerComponentUniqueIdentifier == 0)
@@ -346,7 +344,7 @@ static class SerializationHelperForCompilerGeneratedClasss
                             var handlerMethod = multicastDelegate.Method.GetAccessKey();
 
                             functionalComponent.Client.InitializeDotnetComponentEventListener(eventSenderInfo, handlerMethod, handlerComponentUniqueIdentifier);
-                    
+
                             continue;
                         }
                     }
@@ -356,7 +354,7 @@ static class SerializationHelperForCompilerGeneratedClasss
                         var multicastDelegateTargetType = multicastDelegateTarget.GetType();
                         if (multicastDelegateTargetType.IsCompilerGenerated())
                         {
-                            var fieldInfoForComponentLocation = multicastDelegateTargetType.GetFields().FirstOrDefault(f=>f.FieldType.IsFunctionalComponent());
+                            var fieldInfoForComponentLocation = multicastDelegateTargetType.GetFields().FirstOrDefault(f => f.FieldType.IsFunctionalComponent());
                             if (fieldInfoForComponentLocation is not null)
                             {
                                 var nestedFunctionalComponent = (FunctionalComponent)fieldInfoForComponentLocation.GetValue(multicastDelegateTarget);
@@ -364,7 +362,7 @@ static class SerializationHelperForCompilerGeneratedClasss
                                 if (nestedFunctionalComponent is not null && functionalComponent is not null)
                                 {
                                     // initialize event handler
-                    
+
                                     var handlerComponentUniqueIdentifier = nestedFunctionalComponent.ComponentUniqueIdentifier;
 
                                     if (handlerComponentUniqueIdentifier == 0)
@@ -377,12 +375,11 @@ static class SerializationHelperForCompilerGeneratedClasss
                                     var handlerMethod = multicastDelegate.Method.GetAccessKey();
 
                                     functionalComponent.Client.InitializeDotnetComponentEventListener(eventSenderInfo, handlerMethod, handlerComponentUniqueIdentifier);
-                    
+
                                     continue;
-                                }  
+                                }
                             }
                         }
-                    
                     }
 
                     // maybe nested functional component
