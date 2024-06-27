@@ -125,21 +125,7 @@ partial class JsonSerializationOptionHelper
                         {
                             throw new JsonException($"Missing type: {typeKey}");
                         }
-
-                        //var constructorInfoList = type.GetConstructors();
-                        //if (constructorInfoList.Length == 1)
-                        //{
-                        //    var parameterInfoList = constructorInfoList[0].GetParameters();
-                        //    if (parameterInfoList.Length > 0)
-                        //    {
-                        //        var parameters = parameterInfoList.Select(p => p.ParameterType.IsClass ? null : Activator.CreateInstance(p.ParameterType)).ToArray();
-                        //        instance = Activator.CreateInstance(type,parameters);
-                        //        continue;
-                        //    }
-                        //}
                         
-                        instance = Activator.CreateInstance(type);
-
                         instance = typeSerializationInfo.CreateNewInstance();
                         
                         continue;

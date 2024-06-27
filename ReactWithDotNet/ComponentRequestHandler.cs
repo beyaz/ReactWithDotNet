@@ -145,7 +145,7 @@ static class ComponentRequestHandler
                 return new ComponentResponse { ErrorMessage = $"Type not found. {request.FullName}" };
             }
 
-            var instance = (Element)(input.Instance ?? Activator.CreateInstance(type));
+            var instance = (Element)(input.Instance ?? ReflectionHelper.CreateNewInstance(type));
             if (instance == null)
             {
                 return new ComponentResponse { ErrorMessage = $"Type instance not created. {request.FullName}" };
@@ -213,7 +213,7 @@ static class ComponentRequestHandler
                 return new ComponentResponse { ErrorMessage = $"Type not found.{request.FullName}" };
             }
 
-            var instance = (ReactComponentBase)Activator.CreateInstance(type);
+            var instance = (ReactComponentBase)ReflectionHelper.CreateNewInstance(type);
             if (instance == null)
             {
                 return new ComponentResponse { ErrorMessage = $"Instance not created.{request.FullName}" };
@@ -281,7 +281,7 @@ static class ComponentRequestHandler
                         // todo: think more and more comment here
                         if (methodInfo.DeclaringType != null && methodInfo.DeclaringType != targetInstance.GetType())
                         {
-                            var newTarget = Activator.CreateInstance(methodInfo.DeclaringType);
+                            var newTarget = ReflectionHelper.CreateNewInstance(methodInfo.DeclaringType);
                             foreach (var fieldInfo in methodInfo.DeclaringType.GetFields())
                             {
                                 if (fieldInfo.FieldType.IsFunctionalComponent())

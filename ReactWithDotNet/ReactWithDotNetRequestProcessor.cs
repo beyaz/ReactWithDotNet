@@ -52,7 +52,7 @@ partial class Mixin
             throw new ArgumentNullException(nameof(input.LayoutType));
         }
         
-        var instance = Activator.CreateInstance(layoutType);
+        var instance = ReflectionHelper.CreateNewInstance(layoutType);
 
         var layoutInstance = instance as IPageLayout;
         if (layoutInstance == null)
@@ -60,7 +60,7 @@ partial class Mixin
             throw DeveloperException($"{layoutType} should be support interface: {typeof(IPageLayout)}");
         }
 
-        var component = (Element)Activator.CreateInstance(input.MainContentType);
+        var component = (Element)ReflectionHelper.CreateNewInstance(input.MainContentType);
 
         var httpContext = input.HttpContext;
         

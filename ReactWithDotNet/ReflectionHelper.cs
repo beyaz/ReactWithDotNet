@@ -198,6 +198,11 @@ static class ReflectionHelper
         }
     }
 
+    public static object CreateNewInstance(Type type)
+    {
+        return Activator.CreateInstance(type);
+    }
+    
     public static Action<object, object> CreateSetFunction(PropertyInfo propertyInfo)
     {
         var setMethod = propertyInfo.SetMethod;

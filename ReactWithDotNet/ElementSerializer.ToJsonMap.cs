@@ -372,7 +372,7 @@ partial class ElementSerializer
                     if (reactStatefulComponent.IsStateNull)
                     {
                         // maybe developer forget init state
-                        stateProperty.SetValueFunc(reactStatefulComponent, Activator.CreateInstance(stateProperty.PropertyInfo.PropertyType));
+                        stateProperty.SetValueFunc(reactStatefulComponent, ReflectionHelper.CreateNewInstance(stateProperty.PropertyInfo.PropertyType));
                     }
                 }
 
