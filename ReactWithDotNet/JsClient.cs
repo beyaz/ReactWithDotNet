@@ -285,6 +285,16 @@ static partial class Mixin
             throw new ArgumentNullException(nameof(callerComponent));
         }
 
+        AddEventListener(idOfElement, eventName, handlerMethod, (ReactComponentBase)callerComponent);
+    }
+    
+    public static void AddEventListener<TEventArgument>(string idOfElement, EventName<TEventArgument> eventName, Func<TEventArgument,Task> handlerMethod, ReactComponentBase callerComponent)
+    {
+        if (callerComponent == null)
+        {
+            throw new ArgumentNullException(nameof(callerComponent));
+        }
+
         if (string.IsNullOrWhiteSpace(idOfElement))
         {
             throw new ArgumentException(nameof(idOfElement));
@@ -295,7 +305,7 @@ static partial class Mixin
             throw new ArgumentNullException(nameof(handlerMethod));
         }
         
-        var caller = (FunctionalComponent)callerComponent;
+        var caller = callerComponent;
 
         if (caller.ComponentUniqueIdentifier == 0)
         {
@@ -304,6 +314,7 @@ static partial class Mixin
 
         caller.Client.CallJsFunction(Core + nameof(AddEventListener), [idOfElement,eventName.Name, handlerMethod.Method.GetAccessKey(), caller.ComponentUniqueIdentifier]);
     }
+
     
     public static void RemoveEventListener<TEventArgument>(string idOfElement, EventName<TEventArgument> eventName, Func<TEventArgument,Task> handlerMethod, IFunctionalComponent callerComponent)
     {
