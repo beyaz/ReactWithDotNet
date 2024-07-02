@@ -22,4 +22,9 @@ public sealed class UploadButton  : ThirdPartyReactComponent
 {
    
 }
+public sealed class UploadProgress  : ThirdPartyReactComponent
+{
+   
+}
+
 
