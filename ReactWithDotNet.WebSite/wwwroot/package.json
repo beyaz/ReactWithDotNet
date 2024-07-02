@@ -59,6 +59,9 @@
 
     "@monaco-editor/react": "^4.5.2",
 
-    "react-split": "^2.0.14"
+    "react-split": "^2.0.14",
+
+    "@rpldy/uploady": "^1.8.1",
+    "@rpldy/upload-button": "^1.8.1"
   }
 }

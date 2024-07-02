@@ -1,3 +1,4 @@
+using System.IO;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -17,8 +18,9 @@ public static class ReactWithDotNetIntegration
             .Where(x => x is not null)
             .ToDictionary(x => x.Url, x => x, StringComparer.OrdinalIgnoreCase);
 
+       
         app.Use(async (httpContext, next) =>
-        {
+        {   
             var path = httpContext.Request.Path.Value ?? string.Empty;
 
             if (path == $"/{nameof(HandleReactWithDotNetRequest)}")
@@ -38,7 +40,12 @@ public static class ReactWithDotNetIntegration
                 await WriteHtmlResponse(httpContext, typeof(MainLayout), Page.DocDetail.page);
                 return;
             }
-
+            
+            if (path == "/UploadFile")
+            {
+                await UploadFileAndWriteResponse(httpContext);
+                return;
+            }
 #if DEBUG
             if (path == ReactWithDotNetDesigner.UrlPath)
             {
@@ -60,6 +67,37 @@ public static class ReactWithDotNetIntegration
             HttpContext           = httpContext,
             OnReactContextCreated = OnReactContextCreated
         });
+    }
+
+    static async Task UploadFileAndWriteResponse(HttpContext httpContext)
+    {
+        var uploadResult = await UploadFile(httpContext);
+
+        await uploadResult.ExecuteAsync(httpContext);
+    }
+    static async Task<IResult> UploadFile(HttpContext httpContext)
+    {
+        var request = httpContext.Request;
+        if (!request.HasFormContentType)
+        {
+            return Results.BadRequest("The request doesn't contain form content type");
+        }
+
+        var form = await request.ReadFormAsync();
+        var file = form.Files["file"];
+        if (file == null || file.Length == 0)
+        {
+            return Results.BadRequest("The file is empty or not provided");
+        }
+
+        var filePath = Path.Combine(@"C:\Users\beyaz\Downloads\", file.FileName);
+
+        await using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await file.CopyToAsync(stream);
+        }
+
+        return Results.Ok(new { FilePath = filePath });
     }
 
     static Task OnReactContextCreated(HttpContext httpContext, ReactContext context)
