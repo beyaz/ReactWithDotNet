@@ -43,3 +43,9 @@ public sealed class Modal : ElementBase
     
     public sealed class Body : ElementBase;
 }
+
+public sealed class Uploader : ElementBase
+{
+    [ReactProp]
+    public string action  { get; set; }
+}

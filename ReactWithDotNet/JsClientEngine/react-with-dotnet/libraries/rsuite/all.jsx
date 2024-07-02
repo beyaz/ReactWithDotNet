@@ -15,6 +15,7 @@ RegisterReactSuiteComponent("AutoComplete::OnChange", args => [args[0]]);
 RegisterReactSuiteComponent("Modal", React.lazy(() => import('./Modal')));
 RegisterReactSuiteComponent("Modal+Header", React.lazy(() => import('./Modal.Header')));
 RegisterReactSuiteComponent("Modal+Body", React.lazy(() => import('./Modal.Body')));
+RegisterReactSuiteComponent("Uploader", React.lazy(() => import('./Uploader'))); 
 
 var isFirstAccess = true;
 
