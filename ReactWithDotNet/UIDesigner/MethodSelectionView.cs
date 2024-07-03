@@ -34,10 +34,6 @@ sealed class MethodSelectionView : Component
     [CustomEvent]
     public required Func<string, Task> SelectionChanged { get; init; }
 
-    public bool IsCollapsed { get; init; }
-    
-    public MouseEventHandler OnCollapseClick { get; init; }
-
     public static MetadataNode FindTreeNode(string assemblyFilePath, string treeNodeKey, string classFilter, string methodFilter)
     {
         if (string.IsNullOrWhiteSpace(assemblyFilePath) || string.IsNullOrWhiteSpace(treeNodeKey))
@@ -73,28 +69,12 @@ sealed class MethodSelectionView : Component
             content = AsTreeView(nodes);
         }
 
-        var canShowCollapseIcon = false;
         
-        var node = FindTreeNode(AssemblyFilePath, SelectedMethodTreeNodeKey, ClassFilter, MethodFilter);
-        if (node is not null)
-        {
-            canShowCollapseIcon = true;
-            if (IsCollapsed)
-            {
-                content = AsTreeItem(node, SelectedMethodTreeNodeKey, null);
-            }
-                
-        }
+        
        
         
         return new fieldset(MinInlineSize("unset"), HeightFull, MarginLeftRight(3), OverflowYScroll, CursorPointer, Padding(5), Border(Solid(1, "rgb(217, 217, 217)")), BorderRadius(3))
         {
-            canShowCollapseIcon ?
-            new legend(DisplayFlexRowCentered, OnClick(OnCollapseClick))
-            {
-                new ArrowRightDownIcon{ IsArrowRight = IsCollapsed, Size = 16}
-            }:null,
-            
             content
         };
     }
@@ -254,29 +234,4 @@ sealed class MethodSelectionView : Component
         return Task.CompletedTask;
     }
     
-    sealed class ArrowRightDownIcon : PureComponent
-    {
-        public bool IsArrowRight { get; init; }
-
-        public int Size { get; init; } = 24;
-
-        protected override Element render()
-        {
-            var arrowDown = new svg(svg.ViewBox(0, 0, 24, 24), svg.Size(Size), Transition("all", 400))
-            {
-                new path { d = "M8.12 9.29 12 13.17l3.88-3.88c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-4.59 4.59c-.39.39-1.02.39-1.41 0L6.7 10.7a.9959.9959 0 0 1 0-1.41c.39-.38 1.03-.39 1.42 0z" }
-            };
-
-            if (IsArrowRight)
-            {
-                return arrowDown + WithStyle([
-                    Transform("rotate(-90deg)")
-                ]);
-            }
-
-            return arrowDown + WithStyle([
-                Transform("rotate(0deg)")
-            ]);
-        }
-    }
 }
