@@ -1,11 +1,8 @@
 ﻿using System.Reflection;
 using System.Reflection.Metadata;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
-using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
 using ReactWithDotNet.UIDesigner;
 using static ReactWithDotNet.UIDesigner.Extensions;
 
@@ -56,8 +53,6 @@ sealed class HotReloadListener : Component<HotReloadListener.State>
 
 public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 {
-    delegate Task JsonTextChanged(string componentName, string jsonText);
-
     public static string UrlPath => "/$";
 
     public int UpdatingProgress { get; set; }
@@ -89,8 +84,6 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         state = state with { SelectedAssemblyFilePath = Assembly.GetEntryAssembly()?.Location };
 
         Client.ListenEvent("ComponentPreviewRefreshed", OnComponentPreviewRefreshed);
-
-        Client.ListenEventThenOnlyUpdateState<JsonTextChanged>(OnJsonTextChanged);
 
         return Task.CompletedTask;
     }
@@ -134,7 +127,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             },
 
             SpaceY(5),
-            new FlexColumn(WidthFull, MaxHeight(250))
+            new FlexColumn(WidthFull, Flex(1,1,0))
             {
                 new MethodSelectionView
                 {
@@ -273,34 +266,6 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                         }
                     }
                 }
-            },
-
-            new FlexColumn(Flex(1,1,0))
-            {
-                // h e a d e r
-                new FlexRow(Color("#6c757d"), CursorPointer, TextAlignCenter)
-                {
-                    When(canShowInstanceEditor(), () => new div(Text("Instance json"))
-                    {
-                        OnClick(_ => Task.FromResult(state = state with { IsInstanceEditorActive = true })),
-                        When(state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"), FontWeight600),
-                        Padding(10),
-                        FlexGrow(1),
-                        FontSize13
-                    }),
-
-                    When(canShowParametersEditor(), () => new div(Text("Parameters json"))
-                    {
-                        OnClick(_ => Task.FromResult(state = state with { IsInstanceEditorActive = false })),
-                        When(!state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"), FontWeight600),
-                        Padding(10),
-                        FlexGrow(1),
-                        FontSize13
-                    })
-                },
-
-                // c o n t e n t
-                createJsonEditor()
             }
         };
 
@@ -433,25 +398,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             };
         }
 
-        Element createJsonEditor()
-        {
-            if (state.IsInstanceEditorActive)
-            {
-                return new JsonTextEditor
-                {
-                    JsonText            = state.JsonTextForDotNetInstanceProperties,
-                    Name                = nameof(state.JsonTextForDotNetInstanceProperties),
-                    SelectedTreeNodeKey = state.SelectedTreeNodeKey
-                };
-            }
-
-            return new JsonTextEditor
-            {
-                JsonText            = state.JsonTextForDotNetMethodParameters,
-                Name                = nameof(state.JsonTextForDotNetMethodParameters),
-                SelectedTreeNodeKey = state.SelectedTreeNodeKey
-            };
-        }
+        
 
         static Element createLabel(string text)
         {
@@ -543,25 +490,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         }
     }
 
-    bool canShowInstanceEditor()
-    {
-        if (state.SelectedMethod?.IsStatic == true)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    bool canShowParametersEditor()
-    {
-        if (state.SelectedMethod?.Parameters.Count > 0)
-        {
-            return true;
-        }
-
-        return false;
-    }
+   
 
     async Task ClosePropertyPanel(MouseEvent _)
     {
@@ -626,8 +555,6 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         {
             SelectedType = null,
             SelectedMethod = null,
-            JsonTextForDotNetInstanceProperties = null,
-            JsonTextForDotNetMethodParameters   = null,
             SelectedTreeNodeKey = keyOfSelectedTreeNode
         };
         
@@ -657,166 +584,16 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             MethodFilter = methodFileter
         };
 
-        if (canShowInstanceEditor() && canShowParametersEditor() == false)
-        {
-            state = state with { IsInstanceEditorActive = true };
-        }
+        
 
-        if (canShowParametersEditor() && canShowInstanceEditor() == false)
-        {
-            state = state with { IsInstanceEditorActive = false };
-        }
 
-        if (canShowInstanceEditor())
-        {
-            IgnoreException(initializeInstanceJson);
-        }
-
-        if (canShowParametersEditor())
-        {
-            IgnoreException(initializeParametersJson);
-        }
+       
 
         await SaveState();
 
         Client.RefreshComponentPreview();
 
-        return;
-
-        void initializeInstanceJson()
-        {
-            var typeOfInstance = state.SelectedType ?? state.SelectedMethod?.DeclaringType;
-
-            if (typeOfInstance == null)
-            {
-                return;
-            }
-
-            var map = DeserializeJsonBySystemTextJson<Dictionary<string, object>>(state.JsonTextForDotNetInstanceProperties ?? string.Empty) ?? new Dictionary<string, object>();
-
-            var instanceType = MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(typeOfInstance);
-
-            if (instanceType is not null)
-            {
-                var instance = Activator.CreateInstance(instanceType);
-
-                foreach (var propertyInfo in instanceType.GetProperties(BindingFlags.Instance | BindingFlags.Public))
-                {
-                    if (propertyInfo.CanWrite is false || propertyInfo.CanRead is false)
-                    {
-                        continue;
-                    }
-
-                    var name = propertyInfo.Name;
-                    var propertyType = propertyInfo.PropertyType;
-
-                    if (propertyType.GetInterfaces().Any(x => x == typeof(Modifier)))
-                    {
-                        continue;
-                    }
-
-                    if (propertyType.Namespace?.StartsWith("System.Linq.Expressions", StringComparison.OrdinalIgnoreCase) is true)
-                    {
-                        continue;
-                    }
-
-                    if (name is "state")
-                    {
-                        if (propertyType == typeof(EmptyState))
-                        {
-                            continue;
-                        }
-
-                        if (!map.ContainsKey(name))
-                        {
-                            map.Add(name, ReflectionHelper.CreateDummyValue(propertyType));
-                            continue;
-                        }
-                    }
-
-                    if (propertyInfo.DeclaringType == typeof(Element) ||
-                        propertyInfo.DeclaringType == typeof(ReactComponentBase) ||
-                        propertyInfo.DeclaringType == typeof(PureComponent))
-                    {
-                        continue;
-                    }
-
-                    if (propertyInfo.DeclaringType?.IsGenericType == true &&
-                        propertyInfo.DeclaringType.GetGenericTypeDefinition() == typeof(Component<>))
-                    {
-                        continue;
-                    }
-
-                    if (propertyType.BaseType == typeof(MulticastDelegate))
-                    {
-                        continue;
-                    }
-
-                    if (propertyType.IsAbstract && propertyType.IsClass)
-                    {
-                        continue;
-                    }
-
-                    var existingValue = propertyInfo.GetValue(instance);
-                    if (existingValue is not null)
-                    {
-                        if (propertyInfo.PropertyType.IsClass)
-                        {
-                            map.Add(name, existingValue);
-                            continue;
-                        }
-
-                        var defaultValue = Activator.CreateInstance(propertyInfo.PropertyType);
-
-                        var hasDefaultValue = defaultValue!.Equals(existingValue);
-                        if (!hasDefaultValue)
-                        {
-                            map.Add(name, existingValue);
-                            continue;
-                        }
-                    }
-
-                    if (!map.ContainsKey(name))
-                    {
-                        map.Add(name, ReflectionHelper.CreateDummyValue(propertyType));
-                    }
-                }
-            }
-
-            state = state with
-            {
-                JsonTextForDotNetInstanceProperties = JsonSerializer.Serialize(map, new JsonSerializerOptions
-                {
-                    WriteIndented          = true,
-                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-                })
-            };
-        }
-
-        void initializeParametersJson()
-        {
-            var map = DeserializeJsonBySystemTextJson<Dictionary<string, object>>(state.JsonTextForDotNetMethodParameters ?? string.Empty) ?? new Dictionary<string, object>();
-
-            foreach (var parameterInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(state.SelectedMethod)?.GetParameters() ?? [])
-            {
-                var name = parameterInfo.Name;
-                if (name == null || map.ContainsKey(name))
-                {
-                    continue;
-                }
-
-                map.Add(name, ReflectionHelper.CreateDummyValue(parameterInfo.ParameterType));
-            }
-
-            state = state with
-            {
-                JsonTextForDotNetMethodParameters = JsonSerializer.Serialize(map, new JsonSerializerOptions
-                {
-                    WriteIndented          = true,
-                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-                })
-            };
-        }
+       
     }
 
     Task OnFilterChanged()
@@ -830,22 +607,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         
     }
 
-    async Task OnJsonTextChanged(string componentname, string jsontext)
-    {
-        if (componentname == nameof(state.JsonTextForDotNetInstanceProperties))
-        {
-            state = state with { JsonTextForDotNetInstanceProperties = jsontext };
-        }
-        else
-        {
-            state = state with { JsonTextForDotNetMethodParameters = jsontext };
-        }
-
-        await SaveState();
-
-        Client.RefreshComponentPreview();
-
-    }
+   
 
     async Task OnMediaSizeChanged()
     {
@@ -900,67 +662,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         return Task.CompletedTask;
     }
 
-    class JsonTextEditor : Component<JsonTextEditor.JsonTextEditorState>
-    {
-        public required string JsonText { get; init; }
-        public required string Name { get; init; }
-        public required string SelectedTreeNodeKey { get; init; }
-
-        protected internal override Task OverrideStateFromPropsBeforeRender()
-        {
-            if (state.SelectedTreeNodeKey != SelectedTreeNodeKey)
-            {
-                state.SelectedTreeNodeKey = SelectedTreeNodeKey;
-                state.JsonText            = JsonText;
-            }
-
-            return Task.CompletedTask;
-        }
-
-        protected override Task constructor()
-        {
-            state = new()
-            {
-                JsonText            = JsonText,
-                SelectedTreeNodeKey = SelectedTreeNodeKey
-            };
-
-            return Task.CompletedTask;
-        }
-
-        protected override Element render()
-        {
-            return new Editor
-            {
-                defaultLanguage          = "json",
-                valueBind                = () => state.JsonText,
-                valueBindDebounceTimeout = 800,
-                valueBindDebounceHandler = OnKeypressFinished,
-                options =
-                {
-                    renderLineHighlight = "none",
-                    fontFamily          = "'IBM Plex Mono Medium', 'Courier New', monospace",
-                    fontSize            = 11,
-                    minimap             = new { enabled = false },
-                    lineNumbers         = "off",
-                    unicodeHighlight    = new { showExcludeOptions = false }
-                }
-            };
-        }
-
-        Task OnKeypressFinished()
-        {
-            Client.DispatchEvent<JsonTextChanged>([Name, state.JsonText]);
-
-            return Task.CompletedTask;
-        }
-
-        internal class JsonTextEditorState
-        {
-            public string JsonText { get; set; }
-            public string SelectedTreeNodeKey { get; set; }
-        }
-    }
+    
 
     // Taken from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader
     class LoadingIcon : PureComponent

@@ -5,12 +5,6 @@ public sealed record ReactWithDotNetDesignerModel
 {
     public string ClassFilter { get; init; }
 
-    public bool IsInstanceEditorActive { get; init; }
-
-    public string JsonTextForDotNetInstanceProperties { get; init; }
-
-    public string JsonTextForDotNetMethodParameters { get; init; }
-
     public string MethodFilter { get; init; }
 
     public int ScreenWidth { get; init; } = 900;

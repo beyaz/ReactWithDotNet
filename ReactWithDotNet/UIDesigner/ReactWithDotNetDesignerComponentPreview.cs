@@ -32,30 +32,13 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                         var methodParameters = methodInfo.GetParameters();
 
-                        var dictionary = new Dictionary<string, object>();
-
-                        if (state.JsonTextForDotNetMethodParameters.HasValue())
-                        {
-                            dictionary = DeserializeJsonBySystemTextJson<Dictionary<string, object>>(state.JsonTextForDotNetMethodParameters);
-                        }
-
-                        dictionary ??= new();
+                        
 
                         foreach (var parameterInfo in methodParameters)
                         {
-                            var parameterName = parameterInfo.Name;
                             var parameterType = parameterInfo.ParameterType;
 
-                            object parameterValue;
-
-                            if (parameterName is not null && dictionary.TryGetValue(parameterName, out var parameterValueAsJsonObject))
-                            {
-                                parameterValue = ArrangeValueForTargetType(parameterValueAsJsonObject, parameterType);
-                            }
-                            else
-                            {
-                                parameterValue = parameterType.IsClass ? null : Activator.CreateInstance(parameterType);
-                            }
+                            var parameterValue = parameterType.IsClass ? null : Activator.CreateInstance(parameterType);
 
                             invocationParameters.Add(parameterValue);
                         }
@@ -106,9 +89,6 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                             if (instance is ReactComponentBase component)
                             {
-                                tryUpdateStatePropertyFromJson(state.JsonTextForDotNetInstanceProperties, instance);
-
-                                ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
 
                                 if (component.IsStateNull)
                                 {
@@ -146,7 +126,6 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                             if (instance is PureComponent reactPureComponent)
                             {
-                                ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
 
                                 reactPureComponent.DesignerCustomizedRender = async () =>
                                 {
@@ -177,50 +156,9 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                     }
                 }
 
-                static void tryUpdateStatePropertyFromJson(string jsonTextForDotNetInstanceProperties, object instance)
-                {
-                    var type = instance.GetType();
+              
 
-                    if (string.IsNullOrWhiteSpace(jsonTextForDotNetInstanceProperties))
-                    {
-                        return;
-                    }
-
-                    var map = DeserializeJsonBySystemTextJson<Dictionary<string, object>>(jsonTextForDotNetInstanceProperties);
-
-                    if (map.TryGetValue("state", out var stateValue))
-                    {
-                        var stateProperty = type.GetProperty("state", BindingFlags.NonPublic | BindingFlags.Instance);
-                        if (stateProperty is null)
-                        {
-                            return;
-                        }
-
-                        stateProperty.SetValue(instance, ArrangeValueForTargetType(stateValue, stateProperty.PropertyType));
-                    }
-                }
-
-                static void ModifyElementByJson(string json, object instance)
-                {
-                    var type = instance.GetType();
-
-                    var propertyInfoList = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-
-                    var map = JsonSerializer.Deserialize<Dictionary<string, object>>(json.HasValue() ? json : "{}");
-                    foreach (var (propertyName, propertyValue) in map)
-                    {
-                        var propertyInfo = propertyInfoList.FirstOrDefault(p => p.Name == propertyName);
-                        if (propertyInfo is null)
-                        {
-                            propertyInfo = propertyInfoList.FirstOrDefault(p => p.Name.Equals(propertyName, StringComparison.OrdinalIgnoreCase));
-                        }
-
-                        if (propertyInfo is not null && propertyInfo.GetIndexParameters().Length == 0)
-                        {
-                            propertyInfo.SetValue(instance, ArrangeValueForTargetType(propertyValue, propertyInfo.PropertyType));
-                        }
-                    }
-                }
+                
 
                 if (state.SelectedType is not null)
                 {
@@ -239,9 +177,6 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                     if (instance is ReactComponentBase component)
                     {
-                        tryUpdateStatePropertyFromJson(state.JsonTextForDotNetInstanceProperties, instance);
-
-                        ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
 
                         if (component.IsStateNull)
                         {
@@ -258,7 +193,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                     if (instance is PureComponent reactPureComponent)
                     {
-                        ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
+                        //ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
 
                         return reactPureComponent;
                     }
