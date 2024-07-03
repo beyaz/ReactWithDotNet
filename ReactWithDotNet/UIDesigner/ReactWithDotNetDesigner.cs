@@ -609,14 +609,14 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
 
     Task OnMediaSizeMinusClicked(MouseEvent e)
     {
-        state = state with { ScreenWidth = 10 };
+        state = state with { ScreenWidth = state.ScreenWidth - 10 };
 
         return OnMediaSizeChanged();
     }
 
     Task OnMediaSizePlusClicked(MouseEvent e)
     {
-        state = state with { ScreenWidth = 10 };
+        state = state with { ScreenWidth = state.ScreenWidth + 10 };
 
         return OnMediaSizeChanged();
     }
