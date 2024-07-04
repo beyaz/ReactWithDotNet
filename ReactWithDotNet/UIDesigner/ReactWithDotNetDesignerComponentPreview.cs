@@ -180,6 +180,8 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                     var instance = createInstance(type);
 
+                    Element resultElement = null;
+                    
                     if (instance is ReactComponentBase component)
                     {
                         if (component.IsStateNull)
@@ -192,20 +194,26 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                             component.InvokeConstructor().GetAwaiter().GetResult();
                         }
 
-                        return component;
+                        resultElement = component;
                     }
-
-                    if (instance is PureComponent reactPureComponent)
+                    else if (instance is PureComponent reactPureComponent)
                     {
-                        return reactPureComponent;
+                        resultElement = reactPureComponent;
                     }
-
-                    if (instance is Element instanceAsElement)
+                    else if (instance is Element instanceAsElement)
                     {
-                        return instanceAsElement;
+                        resultElement = instanceAsElement;
                     }
 
-                    return new div { "Please select component inherited class." };
+                    if (resultElement is null)
+                    {
+                        return new div { "Please select component inherited class." };
+                    }
+
+                    tryInitializeProperties(resultElement);
+                    
+                    return resultElement;
+
                 }
             }
         }
@@ -275,6 +283,31 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
             }
 
             return null;
+        }
+
+        static void tryInitializeProperties(object instance)
+        {
+            foreach (var propertyInfo in instance.GetType().GetProperties())
+            {
+                if (propertyInfo.SetMethod is null && propertyInfo.GetMethod is null)
+                {
+                    continue;
+                }
+
+                var propertyValue = propertyInfo.GetValue(instance);
+                if (propertyValue is not null)
+                {
+                    continue;
+                }
+
+                propertyValue = tryGetDummyValue(instance.GetType().Assembly, propertyInfo.PropertyType);
+                if (propertyValue is null)
+                {
+                    continue;
+                }
+                
+                propertyInfo.SetValue(instance, propertyValue);
+            }
         }
     }
 
