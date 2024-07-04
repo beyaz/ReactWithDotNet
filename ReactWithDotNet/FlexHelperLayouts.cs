@@ -316,6 +316,17 @@ partial class Mixin
         style.display       = "flex";
         style.flexDirection = "column";
     });
+    
+    /// <summary>
+    ///     display = "flex"
+    ///     <br />
+    ///     flexDirection  = "column-reverse"
+    /// </summary>
+    public static StyleModifier DisplayFlexColumnReverse => CreateStyleModifier(style =>
+    {
+        style.display       = "flex";
+        style.flexDirection = "column-reverse";
+    });
 
     /// <summary>
     ///     display = "flex"
@@ -343,6 +354,17 @@ partial class Mixin
     {
         style.display       = "flex";
         style.flexDirection = "row";
+    });
+    
+    /// <summary>
+    ///     display = "flex"
+    ///     <br />
+    ///     flexDirection  = "row-reverse"
+    /// </summary>
+    public static StyleModifier DisplayFlexRowReverse => CreateStyleModifier(style =>
+    {
+        style.display       = "flex";
+        style.flexDirection = "row-reverse";
     });
 
     /// <summary>
