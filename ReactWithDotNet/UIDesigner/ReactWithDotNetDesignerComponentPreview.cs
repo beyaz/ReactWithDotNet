@@ -23,6 +23,23 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
             if (File.Exists(fullAssemblyPath))
             {
                 var assembly = MetadataHelper.LoadAssembly(fullAssemblyPath);
+
+                object calculateDummyValue(Type parameterType)
+                {
+                    var dummyValue = tryGetDummyValue(assembly, parameterType);
+                    if (dummyValue is not null)
+                    {
+                        return dummyValue;
+                    }
+
+                    if (parameterType.IsClass)
+                    {
+                        return null;
+                    }
+
+                    return Activator.CreateInstance(parameterType);
+                }
+
                 if (state.SelectedMethod is not null)
                 {
                     var methodInfo = assembly.TryLoadFrom(state.SelectedMethod);
@@ -32,15 +49,9 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                         var methodParameters = methodInfo.GetParameters();
 
-                        
-
                         foreach (var parameterInfo in methodParameters)
                         {
-                            var parameterType = parameterInfo.ParameterType;
-
-                            var parameterValue = parameterType.IsClass ? null : Activator.CreateInstance(parameterType);
-
-                            invocationParameters.Add(parameterValue);
+                            invocationParameters.Add(calculateDummyValue(parameterInfo.ParameterType));
                         }
 
                         if (methodInfo.IsStatic)
@@ -89,7 +100,6 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                             if (instance is ReactComponentBase component)
                             {
-
                                 if (component.IsStateNull)
                                 {
                                     tryUpdateStateFromStateTree(component, Context);
@@ -126,7 +136,6 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                             if (instance is PureComponent reactPureComponent)
                             {
-
                                 reactPureComponent.DesignerCustomizedRender = async () =>
                                 {
                                     var invocationResponse = methodInfo.Invoke(instance, invocationParameters.ToArray());
@@ -156,10 +165,6 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                     }
                 }
 
-              
-
-                
-
                 if (state.SelectedType is not null)
                 {
                     var type = assembly.TryLoadFrom(state.SelectedType);
@@ -177,7 +182,6 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                     if (instance is ReactComponentBase component)
                     {
-
                         if (component.IsStateNull)
                         {
                             tryUpdateStateFromStateTree(component, Context);
@@ -193,8 +197,6 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                     if (instance is PureComponent reactPureComponent)
                     {
-                        //ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
-
                         return reactPureComponent;
                     }
 
@@ -256,6 +258,23 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                     }
                 }
             }
+        }
+
+        static object tryGetDummyValue(Assembly assembly, Type targetDummyValueType)
+        {
+            var dummyValueProviderClass = assembly.GetTypes().FirstOrDefault(t => t.Name == "Dummy");
+            if (dummyValueProviderClass is not null)
+            {
+                foreach (var propertyInfo in dummyValueProviderClass.GetProperties())
+                {
+                    if (propertyInfo.PropertyType == targetDummyValueType)
+                    {
+                        return propertyInfo.GetValue(null, []);
+                    }
+                }
+            }
+
+            return null;
         }
     }
 
