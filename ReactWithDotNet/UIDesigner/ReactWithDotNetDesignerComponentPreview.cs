@@ -260,14 +260,28 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                     {
                         var propertyType = stateProperty.PropertyType;
 
-                        var val = DeserializeJsonBySystemTextJson(stateAsJson, propertyType);
+                        IgnoreException(() =>
+                        {
+                            var val = DeserializeJsonBySystemTextJson(stateAsJson, propertyType);
 
-                        stateProperty.SetValue(component, val);
+                            stateProperty.SetValue(component, val);
+                        });
                     }
                 }
             }
         }
 
+        static void IgnoreException(Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+        }
         static object tryGetDummyValue(Assembly assembly, Type targetDummyValueType)
         {
             var dummyValueProviderClass = assembly.GetTypes().FirstOrDefault(t => t.Name == "Dummy");
