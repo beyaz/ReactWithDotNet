@@ -181,7 +181,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                     var instance = createInstance(type);
 
                     Element resultElement = null;
-                    
+
                     if (instance is ReactComponentBase component)
                     {
                         if (component.IsStateNull)
@@ -211,9 +211,8 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                     }
 
                     tryInitializeProperties(resultElement);
-                    
-                    return resultElement;
 
+                    return resultElement;
                 }
             }
         }
@@ -282,6 +281,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                 // ignored
             }
         }
+
         static object tryGetDummyValue(Assembly assembly, string targetLocationName, Type targetLocationType)
         {
             var dummyValueProviderClass = assembly.GetTypes().FirstOrDefault(t => t.Name == "Dummy");
@@ -290,7 +290,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                 foreach (var propertyInfo in dummyValueProviderClass.GetProperties())
                 {
                     var hasMatch = false;
-                    
+
                     if (propertyInfo.PropertyType.IsValueType || propertyInfo.PropertyType == typeof(string))
                     {
                         if (propertyInfo.PropertyType == targetLocationType)
@@ -298,7 +298,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                             if (propertyInfo.Name.Equals(targetLocationName, StringComparison.OrdinalIgnoreCase))
                             {
                                 hasMatch = true;
-                            }    
+                            }
                         }
                     }
                     else if (propertyInfo.PropertyType == targetLocationType)
@@ -336,7 +336,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                 {
                     continue;
                 }
-                
+
                 propertyInfo.SetValue(instance, propertyValue);
             }
         }
