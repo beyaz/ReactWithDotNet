@@ -326,9 +326,17 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                 }
 
                 var propertyValue = propertyInfo.GetValue(instance);
-                if (propertyValue is not null)
+                if (propertyValue != null)
                 {
-                    continue;
+                    if (propertyInfo.PropertyType.IsClass)
+                    {
+                        continue;
+                    }
+
+                    if (!propertyValue.Equals(Activator.CreateInstance(propertyInfo.PropertyType)))
+                    {
+                        continue;
+                    }
                 }
 
                 propertyValue = tryGetDummyValue(instance.GetType().Assembly, propertyInfo.Name, propertyInfo.PropertyType);
