@@ -24,20 +24,20 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
             {
                 var assembly = MetadataHelper.LoadAssembly(fullAssemblyPath);
 
-                object calculateDummyValue(Type parameterType)
+                object calculateDummyParameter(ParameterInfo parameterInfo)
                 {
-                    var dummyValue = tryGetDummyValue(assembly, parameterType);
+                    var dummyValue = tryGetDummyValue(assembly, parameterInfo.Name, parameterInfo.ParameterType);
                     if (dummyValue is not null)
                     {
                         return dummyValue;
                     }
 
-                    if (parameterType.IsClass)
+                    if (parameterInfo.ParameterType.IsClass)
                     {
                         return null;
                     }
 
-                    return Activator.CreateInstance(parameterType);
+                    return Activator.CreateInstance(parameterInfo.ParameterType);
                 }
 
                 if (state.SelectedMethod is not null)
@@ -51,7 +51,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                         foreach (var parameterInfo in methodParameters)
                         {
-                            invocationParameters.Add(calculateDummyValue(parameterInfo.ParameterType));
+                            invocationParameters.Add(calculateDummyParameter(parameterInfo));
                         }
 
                         if (methodInfo.IsStatic)
@@ -282,14 +282,31 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                 // ignored
             }
         }
-        static object tryGetDummyValue(Assembly assembly, Type targetDummyValueType)
+        static object tryGetDummyValue(Assembly assembly, string targetLocationName, Type targetLocationType)
         {
             var dummyValueProviderClass = assembly.GetTypes().FirstOrDefault(t => t.Name == "Dummy");
             if (dummyValueProviderClass is not null)
             {
                 foreach (var propertyInfo in dummyValueProviderClass.GetProperties())
                 {
-                    if (propertyInfo.PropertyType == targetDummyValueType)
+                    var hasMatch = false;
+                    
+                    if (propertyInfo.PropertyType.IsValueType || propertyInfo.PropertyType == typeof(string))
+                    {
+                        if (propertyInfo.PropertyType == targetLocationType)
+                        {
+                            if (propertyInfo.Name.Equals(targetLocationName, StringComparison.OrdinalIgnoreCase))
+                            {
+                                hasMatch = true;
+                            }    
+                        }
+                    }
+                    else if (propertyInfo.PropertyType == targetLocationType)
+                    {
+                        hasMatch = true;
+                    }
+
+                    if (hasMatch)
                     {
                         return propertyInfo.GetValue(null, []);
                     }
@@ -314,7 +331,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                     continue;
                 }
 
-                propertyValue = tryGetDummyValue(instance.GetType().Assembly, propertyInfo.PropertyType);
+                propertyValue = tryGetDummyValue(instance.GetType().Assembly, propertyInfo.Name, propertyInfo.PropertyType);
                 if (propertyValue is null)
                 {
                     continue;
