@@ -362,13 +362,78 @@ static partial class JsonSerializationOptionHelper
         
         options.Converters.Add(JsonConverterFactoryForCommounUsage.Instance);
         
-        
-        
-        
+        options.Converters.Add(new JsonConverterFactoryForNullableNumbers());
 
         return options;
     }
+    
+    public class JsonConverterFactoryForNullableNumbers : JsonConverterFactory
+    {
+        public override bool CanConvert(Type typeToConvert)
+        {
+            if (typeToConvert.IsGenericType && typeToConvert.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                var genericArgument = typeToConvert.GetGenericArguments()[0];
+                
+                switch (Type.GetTypeCode(genericArgument))
+                {
+                    case TypeCode.Byte:
+                    case TypeCode.SByte:
+                    case TypeCode.UInt16:
+                    case TypeCode.UInt32:
+                    case TypeCode.UInt64:
+                    case TypeCode.Int16:
+                    case TypeCode.Int32:
+                    case TypeCode.Int64:
+                    case TypeCode.Decimal:
+                    case TypeCode.Double:
+                    case TypeCode.Single:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+            
+            return false;
+            
+        }
 
+        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+        {
+            return new Converter();
+        }
+
+        class Converter : JsonConverter<object>
+        {
+            public override object Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                if(reader.TokenType == JsonTokenType.String) 
+                {
+                    var str = reader.GetString();
+                    if (string.IsNullOrWhiteSpace(str))
+                    {
+                        return null;
+                    }
+                }
+                
+                return JsonSerializer.Deserialize(ref reader, typeToConvert.GetGenericArguments()[0], options);
+            }
+
+            public override void Write(Utf8JsonWriter writer, object value, JsonSerializerOptions options)
+            {
+                if (value is null)
+                {
+                    writer.WriteNullValue();
+                    return;
+                }
+
+                JsonSerializer.Serialize(writer, value, options);
+                
+            }
+        }
+    }
+    
+    
     public class JsonConverterFactoryForType : JsonConverterFactory
     {
         static readonly TypeConverter ConverterInstance = new();
