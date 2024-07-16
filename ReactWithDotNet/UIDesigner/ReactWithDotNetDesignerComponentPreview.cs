@@ -131,6 +131,8 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                                     return (Element)invocationResponse;
                                 };
 
+                                tryInitializeProperties(component);
+                                
                                 return component;
                             }
 
@@ -157,6 +159,8 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                                     return (Element)invocationResponse;
                                 };
 
+                                tryInitializeProperties(reactPureComponent);
+                                
                                 return reactPureComponent;
                             }
 
