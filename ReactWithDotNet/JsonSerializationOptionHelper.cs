@@ -367,7 +367,8 @@ static partial class JsonSerializationOptionHelper
         return options;
     }
     
-    public class JsonConverterFactoryForNullableNumbers : JsonConverterFactory
+    // todo: check performance
+    sealed class JsonConverterFactoryForNullableNumbers : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert)
         {
