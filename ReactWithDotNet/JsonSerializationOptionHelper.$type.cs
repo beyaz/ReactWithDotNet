@@ -30,9 +30,10 @@ partial class JsonSerializationOptionHelper
             }
 
             var properties = typeToConvert
-                .GetProperties(BindingFlags.Instance|BindingFlags.Public)
+                .GetProperties(BindingFlags.Instance | BindingFlags.Public)
                 .Where(p => p.GetIndexParameters().Length == 0)
                 .Where(p => p.GetCustomAttribute<JsonIgnoreAttribute>() is null)
+                .Where(p => p.CanRead && p.CanWrite)
                 .Select(toCalculatedProperty)
                 .ToList();
 
