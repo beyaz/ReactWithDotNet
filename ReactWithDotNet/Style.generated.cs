@@ -377,6 +377,7 @@ partial class Style
         public static readonly StyleAttributeNameInfo scrollTimelineAxis = new ("scrollTimelineAxis", "scroll-timeline-axis");
         public static readonly StyleAttributeNameInfo scrollTimelineName = new ("scrollTimelineName", "scroll-timeline-name");
         public static readonly StyleAttributeNameInfo scrollbarGutter = new ("scrollbarGutter", "scrollbar-gutter");
+        public static readonly StyleAttributeNameInfo scrollbarWidth = new ("scrollbarWidth", "scrollbar-width");
         public static readonly StyleAttributeNameInfo shapeImageThreshold = new ("shapeImageThreshold", "shape-image-threshold");
         public static readonly StyleAttributeNameInfo shapeMargin = new ("shapeMargin", "shape-margin");
         public static readonly StyleAttributeNameInfo shapeOutside = new ("shapeOutside", "shape-outside");
@@ -1010,6 +1011,7 @@ partial class Style
             scrollTimelineAxis,
             scrollTimelineName,
             scrollbarGutter,
+            scrollbarWidth,
             shapeImageThreshold,
             shapeMargin,
             shapeOutside,
@@ -1643,6 +1645,7 @@ partial class Style
     public string scrollTimelineAxis { get => Get(Names.scrollTimelineAxis); set => Set(Names.scrollTimelineAxis, value); }
     public string scrollTimelineName { get => Get(Names.scrollTimelineName); set => Set(Names.scrollTimelineName, value); }
     public string scrollbarGutter { get => Get(Names.scrollbarGutter); set => Set(Names.scrollbarGutter, value); }
+    public string scrollbarWidth { get => Get(Names.scrollbarWidth); set => Set(Names.scrollbarWidth, value); }
     public string shapeImageThreshold { get => Get(Names.shapeImageThreshold); set => Set(Names.shapeImageThreshold, value); }
     public string shapeMargin { get => Get(Names.shapeMargin); set => Set(Names.shapeMargin, value); }
     public string shapeOutside { get => Get(Names.shapeOutside); set => Set(Names.shapeOutside, value); }
@@ -3789,6 +3792,11 @@ partial class Mixin
     ///     style.scrollbarGutter = <paramref name="value" />
     /// </summary>
     public static StyleModifier ScrollbarGutter(string value) => new(style => style.scrollbarGutter = value);
+
+    /// <summary>
+    ///     style.scrollbarWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollbarWidth(string value) => new(style => style.scrollbarWidth = value);
 
     /// <summary>
     ///     style.shapeImageThreshold = <paramref name="value" />
