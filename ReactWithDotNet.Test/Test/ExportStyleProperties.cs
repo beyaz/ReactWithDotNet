@@ -546,6 +546,7 @@ public class ExportStyleProperties
                             scrollTimelineAxis
                             scrollTimelineName
                             scrollbarGutter
+                            scrollbarWidth
                             shapeImageThreshold
                             shapeMargin
                             shapeOutside
