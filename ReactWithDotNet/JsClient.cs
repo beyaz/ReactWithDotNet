@@ -9,9 +9,9 @@ partial class Mixin
         client.CallJsFunction(Core + nameof(CopyToClipboard), text);
     }
 
-    public static void DispatchEvent<TDelegate>(this Client client, object[] eventArguments = null) where TDelegate : Delegate
+    public static void DispatchEvent<TDelegate>(this Client client, object[] eventArguments = null, string senderId = null) where TDelegate : Delegate
     {
-        client.DispatchEvent(GetEventName<TDelegate>(), eventArguments);
+        client.DispatchEvent(GetEventName<TDelegate>(senderId), eventArguments);
     }
 
     public static void DispatchEvent(this Client client, string eventName)
@@ -122,9 +122,9 @@ partial class Mixin
     ///     <br />
     ///     Do not calls c# render method. Updates state of react component in client.
     /// </summary>
-    public static void ListenEventThenOnlyUpdateState<TDelegate>(this Client client, TDelegate handler) where TDelegate : Delegate
+    public static void ListenEventThenOnlyUpdateState<TDelegate>(this Client client, TDelegate handler, string senderId = null) where TDelegate : Delegate
     {
-        client.CallJsFunction(Core + nameof(ListenEventThenOnlyUpdateState), GetEventName<TDelegate>(), handler.Method.GetAccessKey());
+        client.CallJsFunction(Core + nameof(ListenEventThenOnlyUpdateState), GetEventName<TDelegate>(senderId), handler.Method.GetAccessKey());
     }
 
     public static void ListenWindowResizeEvent(this Client client, int resizeTimeout)
@@ -254,9 +254,16 @@ partial class Mixin
 
     #endregion
     
-    static string GetEventName<TDelegate>() where TDelegate : Delegate
+    static string GetEventName<TDelegate>(string senderId = null) where TDelegate : Delegate
     {
-        return typeof(TDelegate).FullName;
+        var name =  typeof(TDelegate).FullName;
+
+        if (string.IsNullOrWhiteSpace(senderId))
+        {
+            return name;
+        }
+
+        return $"{name} & {senderId}";
     }
 }
 
