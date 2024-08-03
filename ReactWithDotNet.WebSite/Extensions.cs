@@ -1,5 +1,7 @@
 ﻿using System.IO;
+using System.Net.Http;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Net.Http.Headers;
 using ReactWithDotNet.WebSite.Content;
 
 namespace ReactWithDotNet.WebSite;
@@ -37,6 +39,41 @@ static partial class Extensions
         return YamlHelper.DeserializeFromYaml<T>(File.ReadAllText(path));
     }
 
+    public static string GetRootFolder(this ReactContext context)
+    {
+        var path = getRequestPath(context.HttpContext);
+        
+        var deep = (path + "").Split('/', StringSplitOptions.RemoveEmptyEntries).Length;
+        if (deep > 1)
+        {
+            deep--;
+        }
+
+        return string.Join(string.Empty, Enumerable.Range(0, deep).Select(_ => "../")) + "wwwroot";
+        
+        static string getRequestPath(HttpContext httpContext)
+        {
+            if (httpContext.Request.Path == "/" + "HandleReactWithDotNetRequest")
+            {
+                if (httpContext.Request.Headers.TryGetValue(HeaderNames.Referer, out var referer) &&
+                    httpContext.Request.Headers.TryGetValue(HeaderNames.Host, out var host) &&
+                    referer[0] is not null &&
+                    host[0] is not null)
+                {
+                    var path = referer[0].Substring(referer[0].IndexOf(host[0], StringComparison.OrdinalIgnoreCase));
+
+                    path = path.Substring(path.IndexOf('/'));
+                    if (path.Length > 1)
+                    {
+                        return path;
+                    }
+                }
+            }
+
+            return httpContext.Request.Path;
+        }
+    }
+    
     public static string GetArticleHtmlContent(string filePathInContentFolder)
     {
         var path = Path.Combine("Content", filePathInContentFolder);
