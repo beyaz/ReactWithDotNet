@@ -1,11 +1,9 @@
 ﻿using System.Collections.Concurrent;
-using System.Drawing;
 using System.Text;
 using System.Web;
 using ReactWithDotNet.ThirdPartyLibraries._react_split_;
 using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
-using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
 
@@ -114,7 +112,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                 minimap             = new { enabled = false },
                 lineNumbers         = "off",
                 unicodeHighlight    = new { showExcludeOptions = false },
-                readOnly = true
+                readOnly            = true
             }
         };
 
@@ -148,7 +146,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                 CalculateOutput();
                 return Task.CompletedTask;
             },
-            style = { Width(50) }
+            style = { Width(50), Border(Solid(0.8, rgb(226, 232, 240))) }
         };
 
         return new FlexColumn
@@ -184,7 +182,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                                 htmlEditor
                             }
                         },
-                        
+
                         new GroupBox
                         {
                             Title = "c# output",
@@ -193,7 +191,6 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                                 csharpEditor
                             }
                         }
-                        
                     },
 
                     new GroupBox
@@ -201,26 +198,24 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                         Title = "Preview",
                         children =
                         {
-                            new div(SizeFull, BorderRadius(4))
+                            new FlexColumn(SizeFull, Padding(8))
                             {
-                                // paper
-                                BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
-                                BackgroundSize("10px 10px"),
-
-                                new FlexColumn(SizeFull, Padding(8))
+                                new iframe
                                 {
-                                    new iframe
-                                    {
-                                        id    = "g",
-                                        src   = Page.LiveEditor.Url + $"?utid={state.Utid}&preview=true",
-                                        style = { BorderNone, WidthFull, HeightFull },
-                                        title = "Live Editor Preview"
-                                    }
+                                    id    = "g",
+                                    src   = Page.LiveEditor.Url + $"?utid={state.Utid}&preview=true",
+                                    style = { BorderNone, WidthFull, HeightFull },
+                                    title = "Live Editor Preview"
                                 }
                             }
+                        },
+                        style =
+                        {
+                            // paper
+                            BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
+                            BackgroundSize("10px 10px")
                         }
                     }
-                    
                 }
             },
 
@@ -236,26 +231,6 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         }
     }
 
-    class GroupBox : PureComponent
-    {
-        public string Title { get; init; }
-
-        protected override Element render()
-        {
-            return new fieldset(SizeFull, Border(Solid(0.8, rgb(226, 232, 240))), BorderRadius(4))
-            {
-                new legend(MarginLeftRight(8), DisplayFlexRowCentered, Border(Solid(0.8, rgb(226, 232, 240))), BorderRadius(4))
-                {
-                    new label(FontWeight600,PaddingLeftRight(4))
-                    {
-                        Title
-                    }
-                },
-
-                children
-            };
-        }
-    }
     static Element CreatePreview(string utid)
     {
         if (utid is null)
@@ -400,6 +375,27 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         }
 
         CalculateOutput();
+    }
+
+    class GroupBox : PureComponent
+    {
+        public string Title { get; init; }
+
+        protected override Element render()
+        {
+            return new fieldset(SizeFull, Border(Solid(0.8, rgb(226, 232, 240))), BorderRadius(4))
+            {
+                new legend(MarginLeftRight(8), DisplayFlexRowCentered, Border(Solid(0.8, rgb(226, 232, 240))), BorderRadius(4))
+                {
+                    new label(FontWeight600, PaddingLeftRight(4))
+                    {
+                        Title
+                    }
+                },
+
+                children
+            };
+        }
     }
 
     class TwoRowSplittedForm : PureComponent
