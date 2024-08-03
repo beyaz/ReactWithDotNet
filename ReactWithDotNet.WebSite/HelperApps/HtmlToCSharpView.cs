@@ -221,14 +221,6 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
             statusMessageEditor
         };
-
-        static Element createLabel(string label)
-        {
-            return new label(FontWeight600, PaddingLeft(4))
-            {
-                label
-            };
-        }
     }
 
     static Element CreatePreview(string utid)
