@@ -1041,6 +1041,26 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return success($"{CamelCase(name)}(\"{value}\")");
         }
         
+        if (name == "borderLeft" || name == "borderRight" || name == "borderTop" || name == "borderBottom")
+        {
+            var parameterList = value.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
+            
+            if (parameterList.Count == 3 && parameterList[0].EndsWithPixel())
+            {
+                return success($"{CamelCase(name)}({parameterList[0].RemovePixelFromEnd()}, {asParameter(parameterList[1])}, {asParameter(parameterList[2])})");
+                
+                static string asParameter(string parameter)
+                {
+                    if (parameter == "solid")
+                    {
+                        return "solid";
+                    }
+                    
+                    return '"' + parameter + '"';
+                }
+            }
+            
+        }
 
         if (IsMarkedAsAlreadyCalculatedModifier(value))
         {
