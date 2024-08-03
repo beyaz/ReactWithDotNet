@@ -3,7 +3,6 @@ using System.Text;
 using System.Web;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
-using ReactWithDotNet.ThirdPartyLibraries.ReactSimpleCodeEditor;
 using ReactWithDotNet.ThirdPartyLibraries._react_split_;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
@@ -116,7 +115,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             return CreatePreview(UtidParameter);
         }
         
-        var htmlEditor = new ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact.Editor
+        var htmlEditor = new ThirdPartyLibraries.MonacoEditorReact.Editor
         {
             valueBind                = ()=>state.HtmlText,
             valueBindDebounceHandler = HtmlText_OnEditFinished,
@@ -133,7 +132,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             }
         };
 
-        var csharpEditor = new ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact.Editor
+        var csharpEditor = new ThirdPartyLibraries.MonacoEditorReact.Editor
         {
             valueBind                = ()=>state.CSharpCode,
             valueBindDebounceHandler = CSharpCode_OnEditFinished,
