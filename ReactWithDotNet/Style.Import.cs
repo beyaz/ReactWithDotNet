@@ -59,6 +59,11 @@ partial class Style
         {
             focus.Import(newStyle._focus);
         }
+        
+        if (newStyle._focusVisible is not null)
+        {
+            focusVisible.Import(newStyle._focusVisible);
+        }
 
         if (newStyle._mediaQueries is not null && newStyle._mediaQueries.Count > 0)
         {

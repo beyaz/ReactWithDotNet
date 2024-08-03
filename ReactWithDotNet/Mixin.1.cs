@@ -462,6 +462,11 @@ public static partial class Mixin
         return Pseudo(x => x.focus, modifiers);
     }
     
+    public static StyleModifier FocusVisible(params StyleModifier[] modifiers)
+    {
+        return Pseudo(x => x.focusVisible, modifiers);
+    }
+    
     public static StyleModifier Gap(double gap) => new(style => style.gap = gap.AsPixel());
     
     public static StyleModifier Gap(CssUnit gap) => Gap(gap.ToString());

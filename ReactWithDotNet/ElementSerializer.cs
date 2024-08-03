@@ -117,6 +117,17 @@ static partial class ElementSerializer
                 BodyOfCss = style._focus.ToCssWithImportant()
             });
         }
+        
+        if (style._focusVisible is not null)
+        {
+            pseudos ??= [];
+
+            pseudos.Add(new()
+            {
+                Name      = "focus-visible",
+                BodyOfCss = style._focusVisible.ToCssWithImportant()
+            });
+        }
 
         return pseudos;
     }

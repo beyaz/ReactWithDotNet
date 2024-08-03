@@ -12,6 +12,8 @@ partial class Style
 
     internal Style _focus;
     internal Style _hover;
+    
+    internal Style _focusVisible;
 
     internal List<MediaQuery> _mediaQueries;
 
@@ -37,6 +39,12 @@ partial class Style
     public Style focus
     {
         get { return _focus ??= new Style(); }
+    }
+    
+    [JsonIgnore]
+    public Style focusVisible
+    {
+        get { return _focusVisible ??= new Style(); }
     }
 
     [JsonIgnore]

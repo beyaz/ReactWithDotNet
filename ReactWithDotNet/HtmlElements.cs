@@ -59,6 +59,7 @@ public sealed class style : HtmlElement
         writePseudo(sb, nameOfClass, styleInstance._after, "after");
         writePseudo(sb, nameOfClass, styleInstance._active, "active");
         writePseudo(sb, nameOfClass, styleInstance._focus, "focus");
+        writePseudo(sb, nameOfClass, styleInstance._focusVisible, "focus-visible");
         
         // todo: media queries
 

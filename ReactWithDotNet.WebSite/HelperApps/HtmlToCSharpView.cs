@@ -146,7 +146,11 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                 CalculateOutput();
                 return Task.CompletedTask;
             },
-            style = { Width(50), Border(Solid(0.8, rgb(226, 232, 240))) }
+            style =
+            {
+                Width(50), Border(Solid(0.8, rgb(226, 232, 240))),
+                FocusVisible(Border(Solid(0.8, rgb(226, 232, 240))), OutlineNone)
+            }
         };
 
         return new FlexColumn
