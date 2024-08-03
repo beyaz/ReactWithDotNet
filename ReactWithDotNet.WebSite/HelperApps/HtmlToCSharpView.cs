@@ -149,6 +149,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             style =
             {
                 Width(30), BorderRadius(4),
+                TextAlignCenter,
                 Border(Solid(0.8, rgb(226, 232, 240))),
                 FocusVisible(Border(Solid(0.8, rgb(226, 232, 240))), OutlineNone)
             }
