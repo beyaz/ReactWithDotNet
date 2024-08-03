@@ -162,10 +162,19 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             Padding(10),
             FontSize13,
 
-            new div(FontSize23, Padding(10), TextAlignCenter)
+            new FlexRow(FontSize23, Padding(10), WidthFull, JustifyContentSpaceBetween)
             {
                 "Html to ReactWithDotNet",
-                (small)" ( paste any html text to left panel )"
+                new FlexRow
+                {
+                    new b(FontWeight500)
+                    {
+                        "Usage Info"
+                    },
+                    ": Paste any html input panel then c# code will be genered automatically.",
+
+                    FontSize12
+                }
             },
             new FlexRow(SizeFull)
             {
@@ -184,7 +193,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                                 }
                             }
                         },
-                        
+
                         new GroupBox
                         {
                             Title = "c# output",
@@ -208,7 +217,6 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                                         csharpEditor
                                     }
                                 }
-                              
                             }
                         }
                     },
