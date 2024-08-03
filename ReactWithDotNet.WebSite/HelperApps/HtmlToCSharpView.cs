@@ -148,7 +148,8 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             },
             style =
             {
-                Width(50), Border(Solid(0.8, rgb(226, 232, 240))),
+                Width(30), BorderRadius(4),
+                Border(Solid(0.8, rgb(226, 232, 240))),
                 FocusVisible(Border(Solid(0.8, rgb(226, 232, 240))), OutlineNone)
             }
         };
@@ -164,19 +165,11 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                 "Html to ReactWithDotNet",
                 (small)" ( paste any html text to left panel )"
             },
-            new FlexRow(Gap(5))
-            {
-                "Smart Mode", smartModeEditor
-            },
-            new FlexRow(Gap(5))
-            {
-                "Max attribute count per line", maxAttributeCountPerLineEditor
-            },
             new FlexRow(SizeFull)
             {
                 new TwoRowSplittedForm
                 {
-                    new FlexColumn(SizeFull, Gap(20))
+                    new FlexColumn(SizeFull, Gap(8))
                     {
                         new GroupBox
                         {
@@ -186,13 +179,27 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                                 htmlEditor
                             }
                         },
-
+                        
                         new GroupBox
                         {
                             Title = "c# output",
                             children =
                             {
-                                csharpEditor
+                                new FlexColumn(HeightFull)
+                                {
+                                    new FlexRow(Gap(8), JustifyContentFlexEnd)
+                                    {
+                                        new FlexRow(Gap(5))
+                                        {
+                                            "Smart Mode", smartModeEditor
+                                        },
+                                        new FlexRow(Gap(5))
+                                        {
+                                            "Max attribute count per line", maxAttributeCountPerLineEditor
+                                        }
+                                    },
+                                    csharpEditor
+                                }
                             }
                         }
                     },
