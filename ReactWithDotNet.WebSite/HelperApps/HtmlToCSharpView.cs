@@ -4,6 +4,7 @@ using System.Web;
 using ReactWithDotNet.ThirdPartyLibraries._react_split_;
 using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
+using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
 
@@ -12,7 +13,7 @@ class HtmlToCSharpViewModel
     public string CSharpCode { get; set; }
     public int EditCount { get; set; }
     public string HtmlText { get; set; }
-    public int MaxAttributeCountPerLine { get; set; }
+    public int? MaxAttributeCountPerLine { get; set; }
     public bool SmartMode { get; set; }
     public string StatusMessage { get; set; }
     public string Utid { get; set; }
@@ -177,7 +178,10 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                             Title = "Html input",
                             children =
                             {
-                                htmlEditor
+                                new FreeScrollBar
+                                {
+                                    htmlEditor
+                                }
                             }
                         },
                         
@@ -186,21 +190,25 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                             Title = "c# output",
                             children =
                             {
-                                new FlexColumn(HeightFull)
+                                new FreeScrollBar
                                 {
-                                    new FlexRow(Gap(8), JustifyContentFlexEnd)
+                                    new FlexColumn(HeightFull)
                                     {
-                                        new FlexRow(Gap(5))
+                                        new FlexRow(Gap(8), JustifyContentFlexEnd, PaddingRight(16))
                                         {
-                                            "Smart Mode", smartModeEditor
+                                            new FlexRow(Gap(5))
+                                            {
+                                                "Smart Mode", smartModeEditor
+                                            },
+                                            new FlexRow(Gap(5))
+                                            {
+                                                "Max attribute count per line", maxAttributeCountPerLineEditor
+                                            }
                                         },
-                                        new FlexRow(Gap(5))
-                                        {
-                                            "Max attribute count per line", maxAttributeCountPerLineEditor
-                                        }
-                                    },
-                                    csharpEditor
+                                        csharpEditor
+                                    }
                                 }
+                              
                             }
                         }
                     },
@@ -290,7 +298,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
     {
         try
         {
-            var renderBody = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText, state.SmartMode, state.MaxAttributeCountPerLine);
+            var renderBody = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText, state.SmartMode, state.MaxAttributeCountPerLine ?? 4);
 
             var sb = new StringBuilder();
             sb.AppendLine("using ReactWithDotNet;");
