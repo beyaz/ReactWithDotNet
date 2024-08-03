@@ -16,7 +16,7 @@ public class MainWindow : PureComponent
                 createContent
             },
             
-            new Footer()
+            new MainPageFooter()
             
         };
 

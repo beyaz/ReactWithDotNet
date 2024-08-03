@@ -20,7 +20,7 @@ class PageDocumentation : PureComponent
                 UI.SampleDocumentContent()
             },
             
-            //new Footer()
+            new MainPageFooter()
             
         };
     }

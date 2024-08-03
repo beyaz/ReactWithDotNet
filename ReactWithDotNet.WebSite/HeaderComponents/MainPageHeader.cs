@@ -1,12 +1,12 @@
 ﻿namespace ReactWithDotNet.WebSite.HeaderComponents;
 
-class MainPageHeader : PureComponent
+sealed class MainPageHeader : PureComponent
 {
     protected override Element render()
     {
-        return new header(DisplayFlex, JustifyContentCenter, BoxShadow($"inset 0px -1px 1px {Theme.grey_100}"))
+        return new header(DisplayFlex, WidthFull, Zindex2,  JustifyContentCenter, BoxShadow($"inset 0px -1px 1px {Theme.grey_100}"))
         {
-            PositionSticky, Top(0), BackgroundColor(rgba(255, 255, 255, 0.8)), BackdropFilterBlur(6),
+            PositionFixed, Top(0), BackgroundColor(rgba(255, 255, 255, 0.8)), BackdropFilterBlur(6),
             
             new div(ContainerStyle)
             {
@@ -16,11 +16,11 @@ class MainPageHeader : PureComponent
     }
 }
 
-class Footer : PureComponent
+sealed class MainPageFooter : PureComponent
 {
     protected override Element render()
     {
-        return new footer(BorderTop(Solid(1, Theme.grey_100)), Height(50),WidthFull)
+        return new footer(BorderTop(1, solid, Gray100), Height(50), WidthFull, Background("white"), PositionFixed, Bottom(0))
         {
             DisplayFlexRowCentered,
             new HighlightedText
