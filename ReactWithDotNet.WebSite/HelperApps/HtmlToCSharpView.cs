@@ -116,35 +116,37 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             return CreatePreview(UtidParameter);
         }
         
-        var htmlEditor = new Editor
+        var htmlEditor = new ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact.Editor
         {
             valueBind                = ()=>state.HtmlText,
             valueBindDebounceHandler = HtmlText_OnEditFinished,
             valueBindDebounceTimeout = 500,
-            highlight                = "html",
-            style =
+            defaultLanguage = "html",
+            options =
             {
-                BorderNone,
-                FontSize11,
-                LineHeight16,
-                BackgroundColorTransparent,
-                FontFamily("ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace")
+                renderLineHighlight = "none",
+                fontFamily          = "consolas, 'IBM Plex Mono Medium', 'Courier New', monospace",
+                fontSize            = 11,
+                minimap             = new { enabled = false },
+                lineNumbers         = "off",
+                unicodeHighlight    = new { showExcludeOptions = false }
             }
         };
 
-        var csharpEditor = new Editor
+        var csharpEditor = new ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact.Editor
         {
             valueBind                = ()=>state.CSharpCode,
             valueBindDebounceHandler = CSharpCode_OnEditFinished,
             valueBindDebounceTimeout = 500,
-            highlight                = "clike",
-            style =
+            defaultLanguage          = "csharp",
+            options =
             {
-                BorderNone,
-                FontSize11,
-                LineHeight16,
-                BackgroundColorTransparent,
-                FontFamily("ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace")
+                renderLineHighlight = "none",
+                fontFamily          = "consolas, 'IBM Plex Mono Medium', 'Courier New', monospace",
+                fontSize            = 11,
+                minimap             = new { enabled = false },
+                lineNumbers         = "off",
+                unicodeHighlight    = new { showExcludeOptions = false }
             }
         };
 
@@ -183,16 +185,10 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
         return new FlexColumn
         {
-            new style
-            {
-                text = @"
-.npm__react-simple-code-editor__textarea:focus{  outline: none; }
-
-"
-            },
+            
             SizeFull,
             Padding(10),
-
+            FontSize13,
 
             new div(FontSize23, Padding(10), TextAlignCenter)
             {
@@ -201,13 +197,13 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             },
             new FlexRow(Gap(5))
             {
-                "SmartMode", smartModeEditor
+                "Smart Mode", smartModeEditor
             },
             new FlexRow(Gap(5))
             {
-                "MaxAttributeCountPerLine", maxAttributeCountPerLineEditor
+                "Max attribute count per line", maxAttributeCountPerLineEditor
             },
-            new FlexRow(SizeFull, BorderForPaper, BorderRadiusForPaper)
+            new FlexRow(SizeFull)
             {
                 new TwoRowSplittedForm
                 {
@@ -223,15 +219,14 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                         }
                     },
 
-                    new FreeScrollBar(SizeFull)
+                    new FreeScrollBar(SizeFull, BorderRadius(4),OverflowAuto)
                     {
                         // paper
                         BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
                         BackgroundSize("10px 10px"),
 
-                        new FlexRowCentered(SizeFull, Padding(15))
+                        new FlexRowCentered(SizeFull, Padding(16))
                         {
-
                             new iframe
                             {
                                 id    = "g",
@@ -241,6 +236,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                             }
                         }
                     }
+                    
                 }
             },
 
@@ -258,7 +254,6 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                 {
                     new CssClass("gutter",
                     [
-                        Background("#eee"),
                         BackgroundRepeatNoRepeat,
                         BackgroundPosition("50%")
                     ]),
