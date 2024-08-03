@@ -1,60 +1,29 @@
 ﻿using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
-using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
-using ReactWithDotNet.ThirdPartyLibraries.UIW.ReactCodemirror;
 
 namespace ReactWithDotNet.WebSite.Components;
 
-class CSharpCodePanel : PureComponent
+sealed class CSharpCodePanel : PureComponent
 {
-    public string Code { get; set; }
+    public string Code { get; init; } = "using ...";
     
     protected override Element render()
     {
-        return new div
+        return new Editor
         {
-            SizeFull,
-            
-            //FontSize12,
-            
-            //new style
-            //{
-            //    $".cm-editor{{ {new Style
-            //    {
-            //        Background(Theme.EditorBackground),
-            //        BoxShadow(0, 4, 8, -3, rgba(0,0,0,0.1))
-
-            //    }.ToCss()
-            //    } }}"
-            //},
-            
-            new Editor
+            defaultLanguage = "csharp",
+                
+            value = Code,
+                
+            options =
             {
-                defaultLanguage          = "csharp",
-                
-                value                = Code,
-                
-                options =
-                {
-                    renderLineHighlight ="none",
-                    fontFamily          ="Consolas, monospace",
-                    fontSize            = 11,
-                    minimap             = new { enabled = false },
-                    lineNumbers         = "off",
-                    unicodeHighlight    = new { showExcludeOptions = false },
-                    readOnly = true
-                }
+                renderLineHighlight ="none",
+                fontFamily          ="Consolas, monospace",
+                fontSize            = 11,
+                minimap             = new { enabled = false },
+                lineNumbers         = "off",
+                unicodeHighlight    = new { showExcludeOptions = false },
+                readOnly            = true
             }
-            
-            //new CodeMirror
-            //{
-            //    extensions = { "java", "githubLight" },
-            //    value = Code,
-            //    basicSetup =
-            //    {
-            //        highlightActiveLine       = false,
-            //        highlightActiveLineGutter = false,
-            //    }
-            //}
         };
     }
 }

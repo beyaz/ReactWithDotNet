@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text;
 using HtmlAgilityPack;
 using PropertyInfo = System.Reflection.PropertyInfo;
@@ -56,7 +55,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return "UpperCase";
         }
 
-        return char.ToUpper(str[0], new CultureInfo("en-US")) + str.Substring(1);
+        return char.ToUpper(str[0], new("en-US")) + str.Substring(1);
     }
 
     static string ConvertToCSharpString(string value)
@@ -133,7 +132,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 return parts[0] + char.ToUpper(parts[1][0]) + parts[1][1..];
             }
-            
         }
 
         return name;
@@ -158,6 +156,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         htmlAttributeCollection.Remove(attribute);
 
         htmlAttributeCollection.Insert(index, attribute);
+    }
+
+    static bool IsEndsWithPixel(string x)
+    {
+        return x.EndsWith("px", StringComparison.OrdinalIgnoreCase);
     }
 
     static IReadOnlyList<HtmlAttribute> RemoveAll(this HtmlAttributeCollection htmlAttributeCollection, Func<HtmlAttribute, bool> match)
@@ -266,7 +269,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         var modifiers = new List<string>();
 
         var htmlNodeName = htmlNode.OriginalName;
-        if (htmlNodeName ==  "clippath")
+        if (htmlNodeName == "clippath")
         {
             htmlNodeName = "clipPath";
         }
@@ -280,15 +283,15 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             if (htmlNode.InnerText == "&nbsp;")
             {
-                return new List<string> { "nbsp" };
+                return new() { "nbsp" };
             }
 
-            return new List<string> { ConvertToCSharpString(htmlNode.InnerText) };
+            return new() { ConvertToCSharpString(htmlNode.InnerText) };
         }
 
         if (htmlNodeName == "br")
         {
-            return new List<string> { "br" };
+            return new() { "br" };
         }
 
         Style style = null;
@@ -350,13 +353,13 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 {
                     htmlNode.Attributes.Remove("xmlns");
                 }
-                
+
                 if (htmlNode.Attributes.Contains("width") &&
-                    htmlNode.Attributes.Contains("height") && 
+                    htmlNode.Attributes.Contains("height") &&
                     htmlNode.Attributes["width"].Value == htmlNode.Attributes["height"].Value)
                 {
-                    htmlNode.Attributes.Add("size",htmlNode.Attributes["width"].Value);
-                    
+                    htmlNode.Attributes.Add("size", htmlNode.Attributes["width"].Value);
+
                     htmlNode.Attributes.Remove("width");
                     htmlNode.Attributes.Remove("height");
                 }
@@ -366,10 +369,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 bool isStyleAttribute(HtmlAttribute htmlAttribute)
                 {
-                    if (htmlNode.Name == "svg" && "size".Equals(htmlAttribute.Name,StringComparison.OrdinalIgnoreCase))
+                    if (htmlNode.Name == "svg" && "size".Equals(htmlAttribute.Name, StringComparison.OrdinalIgnoreCase))
                     {
                         return false;
                     }
+
                     if (TryFindProperty(htmlNode.Name, htmlAttribute.Name) is null)
                     {
                         if (typeof(Style).GetProperty(htmlAttribute.Name.Replace("-", ""), BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase) is not null)
@@ -383,7 +387,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                 foreach (var htmlAttribute in htmlNode.Attributes.RemoveAll(isStyleAttribute))
                 {
-                    style ??= new Style();
+                    style ??= new();
 
                     style[htmlAttribute.Name] = htmlAttribute.Value;
                 }
@@ -579,8 +583,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                     style.marginLeft = style.marginRight = null;
                 }
-                
-                
+
                 // padding: SizeFull
                 if (style.width == "100%" && style.height == "100%")
                 {
@@ -588,7 +591,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                     style.height = null;
                 }
-                
+
                 // margin: WidthHeight
                 if (style.width.EndsWithPixel() &&
                     style.height.EndsWithPixel() &&
@@ -662,7 +665,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                             return [string.Join(", ", style.ToDictionary().Select(p => TryConvertToModifier_From_Mixin_Extension(p.Key, p.Value)).Where(x => x.success).Select(x => x.modifierCode))];
                         }
 
-                        return new List<string> { $"style = {{ {string.Join(", ", style.ToDictionary().Select(kv => kv.Key + " = \"" + kv.Value + "\""))} }}" };
+                        return new() { $"style = {{ {string.Join(", ", style.ToDictionary().Select(kv => kv.Key + " = \"" + kv.Value + "\""))} }}" };
                     }
 
                     var returnList = new List<string>
@@ -698,12 +701,12 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         if (propertyInfo.PropertyType.GetGenericTypeDefinition().Name.StartsWith("UnionProp`"))
                         {
                             var genericArguments = propertyInfo.PropertyType.GetGenericArguments();
-                            
+
                             if (genericArguments.Contains(typeof(double)) ||
                                 genericArguments.Contains(typeof(double)) ||
                                 genericArguments.Contains(typeof(double?)))
                             {
-                                if (double.TryParse(attribute.Value.Replace(".",""), out _))
+                                if (double.TryParse(attribute.Value.Replace(".", ""), out _))
                                 {
                                     return [$"{propertyInfo.Name} = {attribute.Value}"];
                                 }
@@ -740,7 +743,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 if (modifiers.Count == 0 && htmlNode.Attributes.Count == 0)
                 {
                     sb.Append("()");
-                    return new List<string>
+                    return new()
                     {
                         sb.ToString()
                     };
@@ -760,7 +763,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     sb.Append(" }");
                 }
 
-                return new List<string>
+                return new()
                 {
                     sb.ToString()
                 };
@@ -849,10 +852,10 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             if (htmlNode.Attributes.Count == 0 && style is null)
             {
-                return new List<string> { $"({htmlNodeName})" + ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText) };
+                return new() { $"({htmlNodeName})" + ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText) };
             }
 
-            return new List<string>
+            return new()
             {
                 // one line
                 $"new {htmlNodeName}({string.Join(", ", modifiers)})",
@@ -914,7 +917,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             return success($"svg.Size({value})");
         }
-        
+
         if (tagName == "svg" && name.Equals("width", StringComparison.OrdinalIgnoreCase) && double.TryParse(value, out _))
         {
             return success($"svg.Width({value})");
@@ -931,15 +934,17 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 return success($"svg.{nameof(svg.FocusableTrue)}");
             }
+
             if ("false".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return success($"svg.{nameof(svg.FocusableFalse)}");
             }
+
             if ("auto".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return success($"svg.{nameof(svg.FocusableAuto)}");
             }
-            
+
             return success($"svg.Focusable(\"{value}\")");
         }
 
@@ -959,8 +964,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return success($"ViewBox(\"{value}\")");
         }
 
-        
-        
         var response = TryConvertToModifier_From_Mixin_Extension(name, value);
         if (response.success)
         {
@@ -993,7 +996,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         static string UpperCaseFirstChar(string str)
         {
-            return char.ToUpper(str[0], new CultureInfo("en-US")) + str.Substring(1);
+            return char.ToUpper(str[0], new("en-US")) + str.Substring(1);
         }
 
         static (bool success, string[] parameters) tryParseViewBoxValues(string value)
@@ -1006,8 +1009,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             return default;
         }
-        
-        
     }
 
     static (bool success, string modifierCode) TryConvertToModifier_From_Mixin_Extension(string name, string value)
@@ -1030,36 +1031,36 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             return success("HeightFull");
         }
+
         if (name.Equals("boxShadow", StringComparison.OrdinalIgnoreCase))
         {
             var parseResponse = TryParseBoxShadow(value);
             if (parseResponse.success)
             {
-                return success($"BoxShadow({string.Join(", ", parseResponse.parameters)})");   
+                return success($"BoxShadow({string.Join(", ", parseResponse.parameters)})");
             }
-            
+
             return success($"{CamelCase(name)}(\"{value}\")");
         }
-        
+
         if (name == "borderLeft" || name == "borderRight" || name == "borderTop" || name == "borderBottom")
         {
             var parameterList = value.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
-            
+
             if (parameterList.Count == 3 && parameterList[0].EndsWithPixel())
             {
                 return success($"{CamelCase(name)}({parameterList[0].RemovePixelFromEnd()}, {asParameter(parameterList[1])}, {asParameter(parameterList[2])})");
-                
+
                 static string asParameter(string parameter)
                 {
                     if (parameter == "solid")
                     {
                         return "solid";
                     }
-                    
+
                     return '"' + parameter + '"';
                 }
             }
-            
         }
 
         if (IsMarkedAsAlreadyCalculatedModifier(value))
@@ -1070,37 +1071,34 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         if (name == nameof(Style.padding) || name == nameof(Style.margin) || name == nameof(Style.borderRadius))
         {
             var parameters = value.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
-            
+
             if (parameters.TrueForAll(IsEndsWithPixel))
             {
                 var methodName = CamelCase(name);
-                
-                var joinAllParameters = () =>
-                {
-                    return $"{methodName}({string.Join(", ", parameters.Select(x => x.RemovePixelFromEnd()))})";
-                };
+
+                var joinAllParameters = () => { return $"{methodName}({string.Join(", ", parameters.Select(x => x.RemovePixelFromEnd()))})"; };
 
                 switch (parameters.Count)
                 {
                     // 5px 5px
                     case 2 when parameters[0] == parameters[1]:
                         return success($"{methodName}({parameters[0].RemovePixelFromEnd()})");
-                    
+
                     // 5px 5px 5px 5px
-                    case 4 when parameters[0] == parameters[1] &&   
-                                parameters[0] == parameters[2] && 
+                    case 4 when parameters[0] == parameters[1] &&
+                                parameters[0] == parameters[2] &&
                                 parameters[0] == parameters[3]:
                         return success($"{methodName}({parameters[0].RemovePixelFromEnd()})");
-                    
+
                     // 5px 6px 5px 6px
-                    case 4 when parameters[0] == parameters[2] &&   
+                    case 4 when parameters[0] == parameters[2] &&
                                 parameters[1] == parameters[3]:
                         return success($"{methodName}({parameters[0].RemovePixelFromEnd()}, {parameters[1].RemovePixelFromEnd()})");
-                    
+
                     // 5px 6px
                     // 5px 6px 8px
                     // 5px 6px 7px 8px
-                    
+
                     case 1:
                     case 2:
                     case 3:
@@ -1140,53 +1138,49 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 return success($"{CamelCase(name)}({value})");
             }
 
-            if (value == none||
-                value == auto||
-                value == inherit||
+            if (value == none ||
+                value == auto ||
+                value == inherit ||
                 value == solid)
             {
-                return success($"{CamelCase(name)}({value})");    
+                return success($"{CamelCase(name)}({value})");
             }
+
             return success($"{CamelCase(name)}(\"{value}\")");
         }
 
         return default;
-        
+
         static (bool success, IReadOnlyList<string> parameters) TryParseBoxShadow(string boxShadow)
         {
             // sample: "0.1px 1px 2px rgba(28, 43, 61, 0.12)"
-        
+
             if (boxShadow is null)
             {
                 return default;
             }
-        
+
             var index = boxShadow.IndexOf("rgba", StringComparison.OrdinalIgnoreCase);
             if (index <= 0)
             {
                 index = boxShadow.IndexOf("rgb", StringComparison.OrdinalIgnoreCase);
             }
-        
-            if (index  > 0)
+
+            if (index > 0)
             {
                 var firstPart = boxShadow.Substring(0, index);
 
                 var list = firstPart.Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList();
-                if (list.TrueForAll(x=>x.EndsWithPixel()))
+                if (list.TrueForAll(x => x.EndsWithPixel()))
                 {
                     var parameters = list.Select(x => x.RemovePixelFromEnd()).ToList();
                     parameters.Add(boxShadow.Substring(index));
-                    return (success:true, parameters);
+                    return (success: true, parameters);
                 }
             }
-        
+
             return default;
         }
-    }
-
-    static bool IsEndsWithPixel(string x)
-    {
-        return x.EndsWith("px", StringComparison.OrdinalIgnoreCase);
     }
 
     static PropertyInfo TryFindProperty(string htmlTagName, string attributeName)
@@ -1219,6 +1213,4 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
     }
 
     #endregion
-
-   
 }
