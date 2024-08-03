@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet.WebSite.Components;
+﻿using ReactWithDotNet.WebSite.Pages;
+
+namespace ReactWithDotNet.WebSite.Components;
 
 static class UI
 {
@@ -38,6 +40,8 @@ static class UI
                 {
                     "Quis vel iste dicta"
                 },
+                
+                new PageModifiers(){ Size(700)},
                 new p(LineHeight28, MarginBottom(1.5 * rem))
                 {
                     "Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."

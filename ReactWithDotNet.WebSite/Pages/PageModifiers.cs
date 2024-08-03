@@ -5,18 +5,37 @@ class PageModifiers : PureComponent
 {
     protected override Element render()
     {
-        return new article(WidthFull)
+        return new article(SizeFull, DisplayFlexColumn)
         { 
             new h2{"Modifiers"},
             
-           new p
-           {
-               "Clasical way to create element"
-           },
-           
-           new CSharpCodePanel
-           {
-               Code = @"
+            new table(Height(600))
+            {
+                new tr
+                {
+                    new td
+                    {
+                        new p
+                        {
+                            "Clasical way to create element"
+                        }
+                    },
+                    new td
+                    {
+                        new p
+                        {
+                            "We suggest better alternatives"
+                        }
+                    }
+                },
+                
+                new tr
+                {
+                    new td
+                    {
+                        new CSharpCodePanel
+                        {
+                            Code = @"
 new div
 {
    new div
@@ -32,16 +51,13 @@ new div
 }
 
 "
-           } + MaxWidth(500),
-           
-           new p
-           {
-               "We suggest better alternatives"
-           },
-
-           new CSharpCodePanel
-           {
-               Code = @"
+                        } 
+                    },
+                    new td
+                    {
+                        new CSharpCodePanel
+                        {
+                            Code = @"
 new div
 {
    new div
@@ -57,7 +73,17 @@ new div
 }
 
 "
-           },
+                        }
+                    }
+                }
+            },
+          
+           
+           
+           
+           
+
+           
 
            new p
            {
@@ -76,7 +102,7 @@ new div
 }
 
 "
-           }
+           }+Size(300,400)
         };
     }
 }
