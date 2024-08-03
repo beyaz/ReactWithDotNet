@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Drawing;
 using System.Text;
 using System.Web;
 using ReactWithDotNet.ThirdPartyLibraries._react_split_;
@@ -175,40 +176,86 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                 {
                     new FlexColumn(SizeFull, Gap(20))
                     {
-                        new FreeScrollBar(SizeFull, Border(Solid(0.8, rgb(226, 232, 240))), BorderRadius(4))
+                        new GroupBox
                         {
-                            htmlEditor
+                            Title = "Html input",
+                            children =
+                            {
+                                htmlEditor
+                            }
                         },
-                        new FreeScrollBar(SizeFull, Border(Solid(0.8, rgb(226, 232, 240))), BorderRadius(4))
+                        
+                        new GroupBox
                         {
-                            csharpEditor
+                            Title = "c# output",
+                            children =
+                            {
+                                csharpEditor
+                            }
                         }
+                        
                     },
 
-                    new div(SizeFull, BorderRadius(4))
+                    new GroupBox
                     {
-                        // paper
-                        BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
-                        BackgroundSize("10px 10px"),
-
-                        new FlexRowCentered(SizeFull, Padding(16))
+                        Title = "Preview",
+                        children =
                         {
-                            new iframe
+                            new div(SizeFull, BorderRadius(4))
                             {
-                                id    = "g",
-                                src   = Page.LiveEditor.Url + $"?utid={state.Utid}&preview=true",
-                                style = { BorderNone, WidthFull, HeightFull },
-                                title = "Live Editor Preview"
+                                // paper
+                                BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
+                                BackgroundSize("10px 10px"),
+
+                                new FlexColumn(SizeFull, Padding(8))
+                                {
+                                    new iframe
+                                    {
+                                        id    = "g",
+                                        src   = Page.LiveEditor.Url + $"?utid={state.Utid}&preview=true",
+                                        style = { BorderNone, WidthFull, HeightFull },
+                                        title = "Live Editor Preview"
+                                    }
+                                }
                             }
                         }
                     }
+                    
                 }
             },
 
             statusMessageEditor
         };
+
+        static Element createLabel(string label)
+        {
+            return new label(FontWeight600, PaddingLeft(4))
+            {
+                label
+            };
+        }
     }
 
+    class GroupBox : PureComponent
+    {
+        public string Title { get; init; }
+
+        protected override Element render()
+        {
+            return new fieldset(SizeFull, Border(Solid(0.8, rgb(226, 232, 240))), BorderRadius(4))
+            {
+                new legend(MarginLeftRight(8), DisplayFlexRowCentered, Border(Solid(0.8, rgb(226, 232, 240))), BorderRadius(4))
+                {
+                    new label(FontWeight600,PaddingLeftRight(4))
+                    {
+                        Title
+                    }
+                },
+
+                children
+            };
+        }
+    }
     static Element CreatePreview(string utid)
     {
         if (utid is null)
