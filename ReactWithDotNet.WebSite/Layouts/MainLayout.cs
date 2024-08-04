@@ -28,7 +28,7 @@ class MainLayout : PureComponent, IPageLayout
 
     protected override Element render()
     {
-         string root = Context.GetRootFolder();
+         string root = Context.GetwwwrootFolder();
          
         string fonts = root + "/assets/fonts/";
 

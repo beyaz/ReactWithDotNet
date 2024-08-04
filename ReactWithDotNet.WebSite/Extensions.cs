@@ -39,11 +39,11 @@ static partial class Extensions
         return YamlHelper.DeserializeFromYaml<T>(File.ReadAllText(path));
     }
 
-    public static string GetRootFolder(this ReactContext context)
+    public static string GetwwwrootFolder(this ReactContext context)
     {
-        var path = getRequestPath(context.HttpContext);
+        var requestPath = getRequestPath(context.HttpContext);
         
-        var deep = (path + "").Split('/', StringSplitOptions.RemoveEmptyEntries).Length;
+        var deep = (requestPath + "").Split('/', StringSplitOptions.RemoveEmptyEntries).Length;
         if (deep > 1)
         {
             deep--;
@@ -53,10 +53,16 @@ static partial class Extensions
         
         static string getRequestPath(HttpContext httpContext)
         {
-            if (httpContext.Request.Path == "/" + "HandleReactWithDotNetRequest")
+            var request = httpContext.Request;
+
+            var requestPath = request.Path;
+            
+            if (requestPath == "/" + "HandleReactWithDotNetRequest")
             {
-                if (httpContext.Request.Headers.TryGetValue(HeaderNames.Referer, out var referer) &&
-                    httpContext.Request.Headers.TryGetValue(HeaderNames.Host, out var host) &&
+                var headers = request.Headers;
+                
+                if (headers.TryGetValue(HeaderNames.Referer, out var referer) &&
+                    headers.TryGetValue(HeaderNames.Host, out var host) &&
                     referer[0] is not null &&
                     host[0] is not null)
                 {
@@ -70,7 +76,7 @@ static partial class Extensions
                 }
             }
 
-            return httpContext.Request.Path;
+            return request.Path;
         }
     }
     
