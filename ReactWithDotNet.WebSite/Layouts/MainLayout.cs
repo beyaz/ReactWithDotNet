@@ -28,9 +28,9 @@ class MainLayout : PureComponent, IPageLayout
 
     protected override Element render()
     {
-         string root = Context.GetwwwrootFolder();
+        var root = Context.wwwroot;
          
-        string fonts = root + "/assets/fonts/";
+        var fonts = root + "/assets/fonts/";
 
         LastWriteTimeOfIndexJsFile ??= new FileInfo($"/{root}/dist.{CompilerMode}/index.js").LastWriteTime.Ticks.ToString();
         

@@ -23,6 +23,8 @@ public sealed class ReactContext
 {
     public required HttpContext HttpContext{ get; init; }
     
+    public string wwwroot { get; init; }
+    
     internal double? ClientWidth { get; init; }
     internal double? ClientHeight { get; init; }
     

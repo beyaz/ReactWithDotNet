@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Net.Http.Headers;
 
 namespace ReactWithDotNet;
 
@@ -87,7 +88,8 @@ static class ComponentRequestHandler
                     CapturedStateTree = request.CapturedStateTree,
                     ClientWidth       = request.ClientWidth,
                     ClientHeight      = request.ClientHeight,
-                    HttpContext       = input.HttpContext
+                    HttpContext       = input.HttpContext,
+                    wwwroot           = GetwwwrootFolder(input.HttpContext)
                 };
                 
                 context.Set(typeof(HttpContext).FullName, input.HttpContext);
@@ -447,6 +449,43 @@ static class ComponentRequestHandler
             }
 
             return (default, default, eventArguments);
+        }
+        
+        static string GetwwwrootFolder(HttpContext httpContext)
+        {
+            string requestPath;
+            {
+                var request = httpContext.Request;
+
+                requestPath = request.Path;
+
+                if (requestPath == "/" + "HandleReactWithDotNetRequest")
+                {
+                    var headers = request.Headers;
+
+                    if (headers.TryGetValue(HeaderNames.Referer, out var referer) &&
+                        headers.TryGetValue(HeaderNames.Host, out var host) &&
+                        referer[0] is not null &&
+                        host[0] is not null)
+                    {
+                        var path = referer[0].Substring(referer[0].IndexOf(host[0], StringComparison.OrdinalIgnoreCase));
+
+                        path = path.Substring(path.IndexOf('/'));
+                        if (path.Length > 1)
+                        {
+                            requestPath = path;
+                        }
+                    }
+                }
+            }
+        
+            var deep = (requestPath + "").Split('/', StringSplitOptions.RemoveEmptyEntries).Length;
+            if (deep > 1)
+            {
+                deep--;
+            }
+
+            return string.Join(string.Empty, Enumerable.Range(0, deep).Select(_ => "../")) + "wwwroot";
         }
     }
 
