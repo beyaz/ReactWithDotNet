@@ -28,7 +28,7 @@ static partial class Extensions
 
     internal static SiteRawData RawData => ReadContent<SiteRawData>("SiteRawData");
 
-    public static string Asset(string fileName) => $"wwwroot/assets/{fileName}";
+   
 
     public static T ReadContent<T>(string fileName)
     {

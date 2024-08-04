@@ -9,6 +9,8 @@ public abstract class Component : ReactWithDotNet.Component
     public  StyleModifier BackgroundForPaper => Background(Theme.background_default);
 
     public StyleModifier BorderForPaper => Border(Solid(1,Theme.grey_200));
+    
+    protected string Asset(string fileName) => $"{Context.wwwroot}/assets/{fileName}";
 }
 public abstract class PureComponent : ReactWithDotNet.PureComponent
 {
@@ -17,6 +19,8 @@ public abstract class PureComponent : ReactWithDotNet.PureComponent
     public StyleModifier BackgroundForPaper => Background(Theme.background_default);
 
     public StyleModifier BorderForPaper => Border(Solid(1, Theme.grey_200));
+    
+    protected string Asset(string fileName) => $"{Context.wwwroot}/assets/{fileName}";
 }
 
 public abstract class Component<TState> : ReactWithDotNet.Component<TState> where TState :class, new()
@@ -26,6 +30,8 @@ public abstract class Component<TState> : ReactWithDotNet.Component<TState> wher
     public StyleModifier BackgroundForPaper => Background(Theme.background_default);
 
     public StyleModifier BorderForPaper => Border(Solid(1, Theme.grey_200));
+    
+    protected string Asset(string fileName) => $"{Context.wwwroot}/assets/{fileName}";
 }
 
 static class QueryKey
