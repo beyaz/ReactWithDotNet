@@ -18,9 +18,9 @@ class MainPageContentDescription : PureComponent
             new div
             {
                 LineHeight30,
-                Color(Theme.grey_700),
+                Color(Gray700),
                 FontWeight400,
-                Text("MUI offers a comprehensive suite of UI tools to help you ship new features faster. Start with Material UI, our fully-loaded component library, or bring your own design system to our production-ready components.")
+                Text("ReactWithDotNet is a new way to build web applications. Build component tree in server side on .Net Core (c#) then sends component tree to react client side. When any component has any action then React client communicates serverside only required parts of application. Does not hold any state at .Net Core server side. Thousend of users can be handle at sime time. In summary, combines power of c#, .net and react.js")
             },
             SpaceY(40),
 
@@ -32,6 +32,39 @@ class MainPageContentDescription : PureComponent
         };
     }
 
+    
+    sealed class GetStartedButton : PureComponent
+    {
+        public string Text { get; init; }
+    
+        public string Href { get; init; }
+    
+        protected override Element render()
+        {
+            return new a(Href(Href), TextDecorationNone, CursorDefault)
+            {
+                text = Text,
+                style =
+                {
+                    backgroundImage = "linear-gradient(to right, #DA22FF 0%, #9733EE  51%, #DA22FF  100%)",
+                    padding         = "15px 45px",
+                    textAlign       = "center",
+                    transition      = "0.5s",
+                    backgroundSize  = "200% auto",
+                    color           = "white",
+                    boxShadow       = "0 0 20px #eee",
+                    borderRadius    = "10px",
+                
+                    hover =
+                    {
+                        backgroundPosition = "right center",
+                        color              = "#fff",
+                        textDecoration     = "none"
+                    }
+                }
+            };
+        }
+    }
    
 
     
