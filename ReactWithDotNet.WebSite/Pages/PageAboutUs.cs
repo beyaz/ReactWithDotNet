@@ -36,9 +36,3 @@ class PageAboutUs : PureComponent
         };
     }
 }
-
-
-
-
-
-
