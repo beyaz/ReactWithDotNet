@@ -95,15 +95,26 @@ static partial class Extensions
 
         PaddingLeftRight(24)
     };
-    
-    public static string Grey50 ="#F3F6F9";
-    public static string Grey100="#E5EAF2";
-    public static string Grey200="#DAE2ED";
-    public static string Grey300="#C7D0DD";
-    public static string Grey400="#B0B8C4";
-    public static string Grey500="#9DA8B7";
-    public static string Grey600="#6B7A90";
-    public static string Grey700="#434D5B";
-    public static string Grey800="#303740";
-    public static string Grey900="#1C2025";
+
+
+    public static Style PrimaryButtonStyle => new()
+    {
+        backgroundImage = "linear-gradient(to right, #DA22FF 0%, #9733EE  51%, #DA22FF  100%)",
+        padding         = "15px 45px",
+        textAlign       = "center",
+        transition      = "0.5s",
+        backgroundSize  = "200% auto",
+        color           = "white",
+        boxShadow       = "0 0 20px #eee",
+        borderRadius    = "10px",
+
+        textDecoration = "none",
+
+        hover =
+        {
+            backgroundPosition = "right center",
+
+        }
+    };
+
 }

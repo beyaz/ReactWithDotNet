@@ -7,11 +7,11 @@ class MainPageContentDescription : PureComponent
         return new FlexColumn(AlignItemsCenter)
         {
             SpaceY(60),
-            new div(FontFamily_PlusJakartaSans_ExtraBold, FontSize(56), FontWeight800, WhenMediaSizeLessThan(MD,TextAlignCenter))
+            new div(FontFamily_PlusJakartaSans_ExtraBold, FontSize(56), FontWeight800, WhenMediaSizeLessThan(MD, TextAlignCenter))
             {
                 LineHeight(62),
-                
-                new HighlightedText{Text = "Write [react.js]  application in [c#]  language"}
+
+                new HighlightedText { Text = "Write [react.js]  application in [c#]  language" }
             },
 
             SpaceY(20),
@@ -26,46 +26,23 @@ class MainPageContentDescription : PureComponent
 
             new FlexRow(JustifyContentFlexStart, WidthFull, FlexWrap, Gap(32))
             {
-                new BlueButton{ Text = "Documentation", Href = Page.Doc.Url } + WidthFull+ SM(Width(auto)),
-                new BlueButton{ Text = "Showcase", Href      = Page.Doc.Url } + WidthFull + SM(Width(auto))
+                new PrimaryLinkButton { Text = "Documentation", Href = Page.Doc.Url } + WidthFull + SM(Width(auto)),
+                new PrimaryLinkButton { Text = "Showcase", Href      = Page.Doc.Url } + WidthFull + SM(Width(auto))
             }
         };
     }
 
-    
-    sealed class BlueButton : PureComponent
+    sealed class PrimaryLinkButton : PureComponent
     {
-        public string Text { get; init; }
-    
         public string Href { get; init; }
-    
+        public string Text { get; init; }
+
         protected override Element render()
         {
-            return new a(Href(Href), TextDecorationNone, CursorDefault)
+            return new a(Href(Href), PrimaryButtonStyle)
             {
-                text = Text,
-                style =
-                {
-                    backgroundImage = "linear-gradient(to right, #DA22FF 0%, #9733EE  51%, #DA22FF  100%)",
-                    padding         = "15px 45px",
-                    textAlign       = "center",
-                    transition      = "0.5s",
-                    backgroundSize  = "200% auto",
-                    color           = "white",
-                    boxShadow       = "0 0 20px #eee",
-                    borderRadius    = "10px",
-                
-                    hover =
-                    {
-                        backgroundPosition = "right center",
-                        color              = "#fff",
-                        textDecoration     = "none"
-                    }
-                }
+                text = Text
             };
         }
     }
-   
-
-    
 }

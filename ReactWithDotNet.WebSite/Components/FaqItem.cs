@@ -16,7 +16,7 @@ class FaqItem : Component<FaqItemState>
     {
         return new div(Padding(5))
         {
-            new FlexColumn(Padding(16),Border(Solid(1,Grey100)), BorderRadius(12))
+            new FlexColumn(Padding(16),Border(Solid(1,Gray100)), BorderRadius(12))
             {
                 new FlexRow(JustifyContentSpaceBetween, AlignItemsCenter)
                 {
