@@ -26,14 +26,14 @@ class MainPageContentDescription : PureComponent
 
             new FlexRow(JustifyContentFlexStart, WidthFull, FlexWrap, Gap(32))
             {
-                new GetStartedButton{ Text = "Documentation", Href = Page.Doc.Url } + WidthFull+ SM(Width(auto)),
-                new GetStartedButton{ Text = "Showcase", Href      = Page.Doc.Url } + WidthFull + SM(Width(auto))
+                new BlueButton{ Text = "Documentation", Href = Page.Doc.Url } + WidthFull+ SM(Width(auto)),
+                new BlueButton{ Text = "Showcase", Href      = Page.Doc.Url } + WidthFull + SM(Width(auto))
             }
         };
     }
 
     
-    sealed class GetStartedButton : PureComponent
+    sealed class BlueButton : PureComponent
     {
         public string Text { get; init; }
     
