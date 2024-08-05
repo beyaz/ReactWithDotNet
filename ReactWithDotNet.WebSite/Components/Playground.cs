@@ -40,13 +40,16 @@ class Playground : Component<PlaygroundState>
 
     protected override Element render()
     {
-        return new FlexColumn(Size("100%"), BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), BorderRadius(3), CursorDefault)
+
+        var width = Width(100 * percent) + MD(Width(50 * percent));
+        
+        return new FlexColumn(SizeFull, BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), BorderRadius(3), CursorDefault)
         {
             Part_AppBar,
 
-            new FlexRow(SizeFull, JustifyContentSpaceBetween)
+            new FlexRow(SizeFull, JustifyContentSpaceBetween, FlexWrap)
             {
-                new FlexRowCentered(Width("50%"), BorderRight(Solid(1, rgb(235, 236, 240))))
+                new FlexRowCentered(width, BorderRight(Solid(1, rgb(235, 236, 240))))
                 {
                     new CSharpCodePanel
                     {
@@ -54,7 +57,7 @@ class Playground : Component<PlaygroundState>
                     }
                 },
 
-                new FlexRowCentered(Width("50%"), Background(rgb(246, 247, 249)))
+                new FlexRowCentered(width, Background(rgb(246, 247, 249)), MinSize(200))
                 {
                     Part_Preview
                 }

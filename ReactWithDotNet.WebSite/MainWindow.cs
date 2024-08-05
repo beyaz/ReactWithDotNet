@@ -3,31 +3,29 @@ using ReactWithDotNet.WebSite.Pages;
 
 namespace ReactWithDotNet.WebSite;
 
-public class MainWindow : PureComponent
+sealed class MainWindow : PureComponent
 {
     protected override Element render()
     {
-        return new div(WidthFull, HeightFull)
+        return new div(SizeFull)
         {
             new MainPageHeader(),
-
-            new main
+            
+            new main(PaddingY(48))
             {
                 createContent
             },
             
             new MainPageFooter()
-            
         };
 
         Element createContent()
         {
             var pageName = KeyForHttpContext[Context].Request.Query[QueryKey.Page];
-            
+
             var typeOfPage = Type.GetType($"ReactWithDotNet.WebSite.Pages.{pageName}") ?? typeof(PageMain);
 
             return (Element)Activator.CreateInstance(typeOfPage);
         }
     }
 }
-

@@ -24,9 +24,10 @@ class MainPageContentDescription : PureComponent
             },
             SpaceY(40),
 
-            new FlexRow(JustifyContentFlexStart, WidthFull, WhenMediaSizeLessThan(MD,JustifyContentCenter))
+            new FlexRow(JustifyContentFlexStart, WidthFull, FlexWrap, Gap(32))
             {
-                new GetStartedButton()
+                new GetStartedButton{ Text = "Documentation", Href = Page.Doc.Url } + WidthFull+ SM(Width(auto)),
+                new GetStartedButton{ Text = "Showcase", Href      = Page.Doc.Url } + WidthFull + SM(Width(auto))
             }
         };
     }

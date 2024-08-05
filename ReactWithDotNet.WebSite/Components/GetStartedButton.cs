@@ -1,25 +1,26 @@
 ﻿namespace ReactWithDotNet.WebSite.Components;
 
-class GetStartedButton : PureComponent
+sealed class GetStartedButton : PureComponent
 {
+    public string Text { get; init; }
+    
+    public string Href { get; init; }
+    
     protected override Element render()
     {
-        return new div(CursorDefault)
+        return new a(Href(Href), TextDecorationNone, CursorDefault)
         {
-            text = "Get Started",
+            text = Text,
             style =
             {
                 backgroundImage = "linear-gradient(to right, #DA22FF 0%, #9733EE  51%, #DA22FF  100%)",
-                //margin          = "10px",
                 padding         = "15px 45px",
                 textAlign       = "center",
-                textTransform   = "uppercase",
                 transition      = "0.5s",
                 backgroundSize  = "200% auto",
                 color           = "white",
                 boxShadow       = "0 0 20px #eee",
                 borderRadius    = "10px",
-                display         = "block",
                 
                 hover =
                 {
