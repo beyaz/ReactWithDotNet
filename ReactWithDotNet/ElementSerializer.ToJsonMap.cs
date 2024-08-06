@@ -1258,11 +1258,11 @@ partial class ElementSerializer
         return newNode;
     }
 
-    
 
-    
 
-    
+
+
+
 
     sealed class Node
     {
@@ -1276,60 +1276,60 @@ partial class ElementSerializer
         public Node PreviousSibling;
         public Element SuspenseFallbackElement;
         public Node SuspenseFallbackNode;
-        public long? Begin { get; set; }
-        public bool DotNetComponentRenderMethodInvoked { get; set; }
-        public Element DotNetComponentRootElement { get; set; }
-        public Node DotNetComponentRootNode { get; set; }
+        public long? Begin;
+        public bool DotNetComponentRenderMethodInvoked;
+        public Element DotNetComponentRootElement;
+        public Node DotNetComponentRootNode;
 
-        public Element Element { get; init; }
+        public Element Element;
 
-        public ReactComponentBase ElementAsDotNetReactComponent { get; init; }
+        public ReactComponentBase ElementAsDotNetReactComponent;
 
-        public FakeChild ElementAsFakeChild { get; init; }
-        public Fragment ElementAsFragment { get; init; }
+        public FakeChild ElementAsFakeChild;
+        public Fragment ElementAsFragment;
 
-        public HtmlElement ElementAsHtmlElement { get; init; }
-        public HtmlTextNode ElementAsHtmlTextElement { get; init; }
+        public HtmlElement ElementAsHtmlElement;
+        public HtmlTextNode ElementAsHtmlTextElement;
 
-        public IReadOnlyJsonMap ElementAsJsonMap { get; set; }
-        public ElementAsTask ElementAsTask { get; init; }
+        public IReadOnlyJsonMap ElementAsJsonMap;
+        public ElementAsTask ElementAsTask;
 
-        public ThirdPartyReactComponent ElementAsThirdPartyReactComponent { get; init; }
+        public ThirdPartyReactComponent ElementAsThirdPartyReactComponent;
 
-        public bool ElementIsDotNetReactComponent { get; init; }
+        public bool ElementIsDotNetReactComponent;
 
-        public bool ElementIsFakeChild { get; init; }
-        public bool ElementIsFragment { get; init; }
-        public bool ElementIsHtmlElement { get; init; }
-        public bool ElementIsHtmlTextElement { get; init; }
+        public bool ElementIsFakeChild;
+        public bool ElementIsFragment;
+        public bool ElementIsHtmlElement;
+        public bool ElementIsHtmlTextElement;
 
-        public bool ElementIsNull { get; init; }
-        public bool ElementIsTask { get; init; }
+        public bool ElementIsNull;
+        public bool ElementIsTask;
 
-        public bool ElementIsThirdPartyReactComponent { get; init; }
-        public long? End { get; set; }
+        public bool ElementIsThirdPartyReactComponent;
+        public long? End;
 
-        public Node FirstChild { get; set; }
+        public Node FirstChild;
 
-        public Node FirstChildTemp { get; set; }
+        public Node FirstChildTemp;
 
         public bool HasFirstChild => FirstChild is not null;
 
         public bool HasNextSibling => NextSibling is not null;
 
         public bool HasParent => Parent is not null;
-        public bool IsAllChildrenCompleted { get; set; }
+        public bool IsAllChildrenCompleted;
 
-        public bool IsChildrenOpened { get; set; }
+        public bool IsChildrenOpened;
 
-        public bool IsCompleted { get; set; }
-        public bool IsHighOrderComponent { get; set; }
+        public bool IsCompleted;
+        public bool IsHighOrderComponent;
 
-        public Node NextSibling { get; set; }
+        public Node NextSibling;
 
-        public Node Parent { get; set; }
-        public Stopwatch Stopwatch { get; set; }
-        public bool SkipProcessChildren { get; set; }
+        public Node Parent;
+        public Stopwatch Stopwatch;
+        public bool SkipProcessChildren;
     }
 }
 
