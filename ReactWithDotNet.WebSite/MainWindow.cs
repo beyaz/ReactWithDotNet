@@ -39,7 +39,7 @@ sealed class MainWindow : PureComponent
         {
             return new FlexRowCentered(WidthFull)
             {
-                new FlexColumn(ContainerStyle, PaddingY(32))
+                new FlexColumn(ContainerStyle, PaddingY(48))
                 {
                     children
                 }

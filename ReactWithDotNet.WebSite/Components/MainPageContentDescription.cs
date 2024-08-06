@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet.WebSite.Components;
+﻿using ReactWithDotNet.WebSite.Pages;
+
+namespace ReactWithDotNet.WebSite.Components;
 
 class MainPageContentDescription : PureComponent
 {
@@ -6,7 +8,7 @@ class MainPageContentDescription : PureComponent
     {
         return new FlexColumn(AlignItemsCenter)
         {
-            SpaceY(32),
+            SpaceY(16),
             new div(FontFamily_PlusJakartaSans_ExtraBold, FontSize(56), FontWeight800, WhenMediaSizeLessThan(MD, TextAlignCenter))
             {
                 LineHeight(62),
@@ -26,8 +28,9 @@ class MainPageContentDescription : PureComponent
 
             new FlexRow(JustifyContentFlexStart, WidthFull, FlexWrap, Gap(32))
             {
-                new PrimaryLinkButton { Text = "Documentation", Href = Page.Doc.Url } + WidthFull + SM(Width(auto)),
-                new PrimaryLinkButton { Text = "Showcase", Href      = Page.Doc.Url } + WidthFull + SM(Width(auto))
+                new PrimaryLinkButton { Text = "Documentation", Href      = Page.Doc.Url } + WidthFull + SM(Width(auto)),
+                new PrimaryLinkButton { Text = "Showcase", Href           =  "/?p="+nameof(PageShowcase) } + WidthFull + SM(Width(auto)),
+                new PrimaryLinkButton { Text = "Project Milestones", Href = "/?p="+nameof(PageMilestones) } + WidthFull + SM(Width(auto))
             }
         };
     }
