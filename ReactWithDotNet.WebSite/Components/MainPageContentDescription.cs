@@ -6,7 +6,7 @@ class MainPageContentDescription : PureComponent
     {
         return new FlexColumn(AlignItemsCenter)
         {
-            SpaceY(60),
+            SpaceY(32),
             new div(FontFamily_PlusJakartaSans_ExtraBold, FontSize(56), FontWeight800, WhenMediaSizeLessThan(MD, TextAlignCenter))
             {
                 LineHeight(62),
