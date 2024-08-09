@@ -32,6 +32,16 @@ sealed class PageMilestones : PureComponent
                 {
                     "After this part finished, you can write js code in c# language. I'm planning mini .net runtime in js language. My plan is not to build a new c# to js compiler. My plan is creating a new MSIL code runner in js language. Not getting all .net core assemblies. Only required part of MSIL codes will be downloaded into client side."
                 }
+            },
+            
+            new div
+            {
+                new h4{ "Milestone 4: React Native Integration" },
+                new Progressbar{ Value = 0},
+                new p
+                {
+                    "React native user interfaces will be build by server driven ui"
+                }
             }
         };
 
