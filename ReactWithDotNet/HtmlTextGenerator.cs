@@ -6,7 +6,10 @@ namespace ReactWithDotNet;
 
 static class HtmlTextGenerator
 {
-    static readonly string[] SelfClosingTags = "area,base,br,col,embed,hr,img,input,keygen,link,meta,param,source,track,wbr".Split(',');
+    static readonly string[] SelfClosingTags =
+    [
+        "area", "base", "br", "col", "embed", "hr", "img", "input", "keygen", "link", "meta", "param", "source", "track", "wbr"
+    ];
 
     static readonly string[] SkipThisProperties =
     [
