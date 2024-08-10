@@ -348,7 +348,7 @@ static class HtmlTextGenerator
                 return;
             }
 
-            closeTag();
+            closeTag(sb, htmlNode);
 
             return;
         }
@@ -456,7 +456,7 @@ static class HtmlTextGenerator
             sb.Append(htmlNode.Tag);
         }
 
-        void closeTag()
+        static void closeTag(StringBuilder sb,  HtmlNode htmlNode)
         {
             if (Array.IndexOf(SelfClosingTags, htmlNode.Tag) >= 0)
             {
