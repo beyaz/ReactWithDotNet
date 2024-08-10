@@ -7,6 +7,8 @@ namespace ReactWithDotNet;
 
 static class HtmlTextGenerator
 {
+    static readonly string[] IndentCache = Enumerable.Range(0, 20).Select(depth => "".PadLeft(depth * 2, ' ')).ToArray();
+
     static readonly string[] SelfClosingTags =
     [
         "area", "base", "br", "col", "embed", "hr", "img", "input", "keygen", "link", "meta", "param", "source", "track", "wbr"
@@ -415,8 +417,19 @@ static class HtmlTextGenerator
 
         static void pushIndent(StringBuilder sb, int depth)
         {
+            if (depth == 0)
+            {
+                return;
+            }
+
             if (sb.IsEndsWithNewLine())
             {
+                if (IndentCache.Length > depth)
+                {
+                    sb.Append(IndentCache[depth]);
+                    return;
+                }
+
                 sb.Append("".PadLeft(depth * 2, ' '));
             }
         }
