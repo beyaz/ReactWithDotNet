@@ -126,12 +126,6 @@ static class HtmlTextGenerator
         };
     }
 
-    class WriterContext
-    {
-        public StringBuilder sb;
-        public int openTagIndex;
-    }
-    
     static StringBuilder CalculateHtml(JsonMap element, JsonMap dynamicStyles)
     {
         var sb = new StringBuilder();
@@ -341,7 +335,7 @@ static class HtmlTextGenerator
 
         if (children is null)
         {
-            openTag(sb,depth,htmlNode);
+            openTag(sb, depth, htmlNode);
 
             appendAttributes(sb, htmlNode);
 
@@ -358,7 +352,7 @@ static class HtmlTextGenerator
             return;
         }
 
-        var openTagIndex = openTag(sb,depth,htmlNode);
+        var openTagIndex = openTag(sb, depth, htmlNode);
 
         appendAttributes(sb, htmlNode);
 
@@ -423,7 +417,7 @@ static class HtmlTextGenerator
         {
             if (Array.IndexOf(SelfClosingTags, htmlNode.Tag) >= 0)
             {
-                sb.Append("<"+htmlNode.Tag+">");
+                sb.Append("<" + htmlNode.Tag + ">");
                 return;
             }
 
@@ -440,22 +434,22 @@ static class HtmlTextGenerator
 
         static int openTag(StringBuilder sb, int depth, HtmlNode htmlNode)
         {
-            pushIndent(sb,depth);
+            pushIndent(sb, depth);
 
             if (htmlNode.Tag == "html")
             {
                 sb.AppendLine("<!DOCTYPE html>");
-                pushIndent(sb,depth);
+                pushIndent(sb, depth);
             }
 
             var tagIndex = sb.Length;
 
-            sb.Append("<"+htmlNode.Tag);
+            sb.Append("<" + htmlNode.Tag);
 
             return tagIndex;
         }
 
-        static void closeTag(StringBuilder sb,  HtmlNode htmlNode)
+        static void closeTag(StringBuilder sb, HtmlNode htmlNode)
         {
             if (Array.IndexOf(SelfClosingTags, htmlNode.Tag) >= 0)
             {
@@ -474,13 +468,13 @@ static class HtmlTextGenerator
             }
 
             var attributes = CollectionsMarshal.AsSpan(htmlNode.Attributes);
-            
+
             var length = attributes.Length;
 
             for (var i = 0; i < length; i++)
             {
                 var attribute = attributes[i];
-                
+
                 sb.Append(" " + attribute.Name + "=\"" + attribute.Value + "\"");
             }
         }
