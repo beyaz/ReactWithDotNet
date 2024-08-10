@@ -456,10 +456,7 @@ static class HtmlTextGenerator
                 return;
             }
 
-            sb.Append(">");
-            sb.Append("</");
-            sb.Append(htmlNode.Tag);
-            sb.Append(">");
+            sb.Append(">" + "</" + htmlNode.Tag + ">");
         }
 
         static void appendAttributes(StringBuilder sb, HtmlNode htmlNode)
@@ -471,7 +468,7 @@ static class HtmlTextGenerator
 
             foreach (var htmlAttribute in htmlNode.Attributes)
             {
-                sb.Append(" " + htmlAttribute.Name + '=' + '"' + htmlAttribute.Value + '"');
+                sb.Append(" " + htmlAttribute.Name + "=\"" + htmlAttribute.Value + "\"");
             }
         }
     }
