@@ -129,6 +129,7 @@ static class HtmlTextGenerator
     class WriterContext
     {
         public StringBuilder sb;
+        public int openTagIndex;
     }
     
     static StringBuilder CalculateHtml(JsonMap element, JsonMap dynamicStyles)
