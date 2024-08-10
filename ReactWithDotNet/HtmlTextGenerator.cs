@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Concurrent;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace ReactWithDotNet;
@@ -466,9 +467,15 @@ static class HtmlTextGenerator
                 return;
             }
 
-            foreach (var htmlAttribute in htmlNode.Attributes)
+            var attributes = CollectionsMarshal.AsSpan(htmlNode.Attributes);
+            
+            var length = attributes.Length;
+
+            for (var i = 0; i < length; i++)
             {
-                sb.Append(" " + htmlAttribute.Name + "=\"" + htmlAttribute.Value + "\"");
+                var attribute = attributes[i];
+                
+                sb.Append(" " + attribute.Name + "=\"" + attribute.Value + "\"");
             }
         }
     }
