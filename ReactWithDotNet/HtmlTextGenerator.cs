@@ -416,15 +416,11 @@ static class HtmlTextGenerator
         {
             if (Array.IndexOf(SelfClosingTags, htmlNode.Tag) >= 0)
             {
-                sb.Append("<");
-                sb.Append(htmlNode.Tag);
-                sb.Append(">");
+                sb.Append("<"+htmlNode.Tag+">");
                 return;
             }
 
-            sb.Append("</");
-            sb.Append(htmlNode.Tag);
-            sb.Append(">");
+            sb.Append("</" + htmlNode.Tag + ">");
         }
 
         static void pushIndent(StringBuilder sb, int depth)
@@ -447,8 +443,7 @@ static class HtmlTextGenerator
 
             var tagIndex = sb.Length;
 
-            sb.Append("<");
-            sb.Append(htmlNode.Tag);
+            sb.Append("<"+htmlNode.Tag);
 
             return tagIndex;
         }
@@ -476,12 +471,7 @@ static class HtmlTextGenerator
 
             foreach (var htmlAttribute in htmlNode.Attributes)
             {
-                sb.Append(" ");
-                sb.Append(htmlAttribute.Name);
-                sb.Append('=');
-                sb.Append('"');
-                sb.Append(htmlAttribute.Value);
-                sb.Append('"');
+                sb.Append(" " + htmlAttribute.Name + '=' + '"' + htmlAttribute.Value + '"');
             }
         }
     }
