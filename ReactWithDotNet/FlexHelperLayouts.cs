@@ -455,4 +455,14 @@ partial class Mixin
             style.flexBasis  = flexBasis.ToString();
         });
     }
+    
+    public static StyleModifier Flex(int flexGrow, int flexShrink, string flexBasis)
+    {
+        return new (style =>
+        {
+            style.flexGrow   = flexGrow.ToString();
+            style.flexShrink = flexShrink.ToString();
+            style.flexBasis  = flexBasis;
+        });
+    }
 }

@@ -153,7 +153,11 @@ public static partial class Mixin
     public static StyleModifier HeightAuto => new(style => style.height = "auto");
 
   
-
+    /// <summary>
+    ///     <para>justifyContent = "normal"</para>
+    /// </summary>
+    public static StyleModifier JustifyContentNormal => new(style => style.justifyContent = "normal");
+    
     /// <summary>
     ///     <para>justifyContent = "center"</para>
     /// </summary>
@@ -246,6 +250,7 @@ public static partial class Mixin
     public static StyleModifier TextAlignCenter => TextAlign("center");
     public static StyleModifier TextAlignLeft => TextAlign("left");
     public static StyleModifier TextAlignRight => TextAlign("right");
+    public static StyleModifier TextAlignStart => TextAlign("start");
 
     /// <summary>
     ///     textDecoration = 'line-through'
@@ -467,9 +472,14 @@ public static partial class Mixin
         return Pseudo(x => x.focusVisible, modifiers);
     }
     
-    public static StyleModifier Gap(double gap) => new(style => style.gap = gap.AsPixel());
-    
+    public static StyleModifier Gap(double gap) => Gap(gap.AsPixel());
     public static StyleModifier Gap(CssUnit gap) => Gap(gap.ToString());
+    
+    public static StyleModifier ColumnGap(double columnGap) => ColumnGap(columnGap.AsPixel());
+    public static StyleModifier ColumnGap(CssUnit columnGap) =>ColumnGap(columnGap.ToString());
+    
+    public static StyleModifier RowGap(double rowGap) => RowGap(rowGap.AsPixel());
+    public static StyleModifier RowGap(CssUnit rowGap) =>RowGap(rowGap.ToString());
 
     /// <summary>
     ///     style.height = 0px

@@ -1125,6 +1125,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 return success($"Flex({parameters[0]}, {parameters[1]}, {parameters[2]})");
             }
+            
+            if (parameters.Count == 3 &&  double.TryParse(parameters[0],out _) && double.TryParse(parameters[1],out _)  && parameters[2] == "auto")
+            {
+                return success($"Flex({parameters[0]}, {parameters[1]}, {parameters[2]})");
+            }
         }
 
         var modifierFullName = $"{CamelCase(name)}{CamelCase(value.RemovePixelFromEnd())}";
@@ -1152,6 +1157,18 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 value == auto ||
                 value == inherit ||
                 value == solid)
+            {
+                return success($"{CamelCase(name)}({value})");
+            }
+            
+            if (typeof(Mixin).GetMethod(CamelCase(name), [typeof(int)]) is not null &&
+                int.TryParse(value, out _))
+            {
+                return success($"{CamelCase(name)}({value})");
+            }
+            // todo: lineHeight fixme
+            if (typeof(Mixin).GetMethod(CamelCase(name), [typeof(double)]) is not null &&
+                double.TryParse(value, out _))
             {
                 return success($"{CamelCase(name)}({value})");
             }

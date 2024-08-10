@@ -5,6 +5,11 @@ partial class Mixin
     public static StyleModifier AlignItemsBaseline => new(style => style.alignItems = "baseline");
 
     /// <summary>
+    ///     <para>style.alignItems = "normal"</para>
+    /// </summary>
+    public static StyleModifier AlignItemsNormal => new(style => style.alignItems = "normal");
+    
+    /// <summary>
     ///     <para>style.alignItems = "center"</para>
     /// </summary>
     public static StyleModifier AlignItemsCenter => new(style => style.alignItems = "center");
@@ -92,4 +97,7 @@ partial class Mixin
     public static StyleModifier AlignSelfInherit => AlignSelf("inherit");
 
     #endregion
+    
+    
+    
 }
