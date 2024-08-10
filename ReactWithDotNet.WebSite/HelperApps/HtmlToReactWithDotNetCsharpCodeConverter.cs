@@ -998,7 +998,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     return success($"{tagName}.{UpperCaseFirstChar(propertyInfo.Name)}({valueAsInt32})");
                 }
             }
-
+            
             return success($"{tagName}.{UpperCaseFirstChar(propertyInfo.Name)}(\"{value}\")");
         }
 

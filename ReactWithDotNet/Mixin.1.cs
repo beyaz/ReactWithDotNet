@@ -927,5 +927,15 @@ public static partial class Mixin
     public static StyleModifier PaddingY(double topBottomPixel)=>PaddingTopBottom(topBottomPixel);
     #endregion
 
-    
+    #region VerticalAlign
+    public static StyleModifier VerticalAlign(double valueAsPixel) => VerticalAlign(valueAsPixel.AsPixel());
+    public static StyleModifier VerticalAlignBaseline => VerticalAlign("baseline");
+    public static StyleModifier VerticalAlignSub => VerticalAlign("sub");
+    public static StyleModifier VerticalAlignSuper => VerticalAlign("super");
+    public static StyleModifier VerticalAlignTextTop => VerticalAlign("text-top");
+    public static StyleModifier VerticalAlignTextBottom => VerticalAlign("text-bottom");
+    public static StyleModifier VerticalAlignMiddle => VerticalAlign("middle");
+    public static StyleModifier VerticalAlignTop => VerticalAlign("top");
+    public static StyleModifier VerticalAlignBottom => VerticalAlign("bottom");
+    #endregion
 }
