@@ -6,27 +6,27 @@ sealed class PageMilestones : PureComponent
     {
         return new FlexColumn(Gap(32))
         {
-            new div
+            new MilestoneContainer
             {
-                new h4{ "Milestone 1: Core Concept" },
+                new h5{ "Milestone 1: Core Concept" },
                 new Progressbar{ Value = 95},
                 new p
                 {
-                    "Core react conceps like Functional components, Class components, PureComponents and communication react js client and .net core server "
+                    "Core react conceps like Functional components, Class components, PureComponents and communication react js client and .net core server."
                 }
             },
-            new div
+            new MilestoneContainer
             {
-                new h4{ "Milestone 2: Creating wrapper classes of popular react libraries like MUI, AntDesign" },
+                new h5{ "Milestone 2: Creating wrapper classes of popular react libraries like MUI, AntDesign." },
                 new Progressbar{ Value = 5},
                 new p
                 {
                     "When this milestone completed, you can use MUI, or other famous components in your project. This insfrastructure is ready to use. We are plan to generate wrapper classes automatically."
                 },
             },
-            new div
+            new MilestoneContainer
             {
-                new h4{ "Milestone 3: Use Client option" },
+                new h5{ "Milestone 3: Use Client option" },
                 new Progressbar{ Value = 3},
                 new p
                 {
@@ -34,17 +34,28 @@ sealed class PageMilestones : PureComponent
                 }
             },
             
-            new div
+            new MilestoneContainer
             {
-                new h4{ "Milestone 4: React Native Integration" },
+                new h5{ "Milestone 4: React Native Integration" },
                 new Progressbar{ Value = 0},
                 new p
                 {
-                    "React native user interfaces will be build by server driven ui"
+                    "React native user interfaces will be build by server driven ui."
                 }
             }
         };
 
+    }
+
+    class MilestoneContainer : PureComponent
+    {
+        protected override Element render()
+        {
+            return new FlexColumn(Gap(4), Padding(32), BackgroundWhite, BorderRadius(8), Border(1,solid,Gray200), Hover(BorderColor(Gray300)))
+            {
+                children
+            };
+        }
     }
 
     class Progressbar : PureComponent
@@ -55,13 +66,10 @@ sealed class PageMilestones : PureComponent
         {
             return new div(SizeFull, BorderRadius(4), Border(1, solid, Gray300), Size(300,25))
             {
-                new FlexRowCentered(Width(Value, 100), Background(linear_gradient(90,Gray100, Gray300)), HeightFull, FontSize11)
-                {
-                    
-                },
+                new FlexRowCentered(Width(Value, 100), Background(linear_gradient(90,Gray100, Gray300)), HeightFull, FontSize11, BorderRadius(4)),
                 
                 PositionRelative,
-                new FlexRowCentered(PositionAbsolute,Inset0, FontWeight500)
+                new FlexRowCentered(PositionAbsolute,Inset0, FontWeight500, FontSize12)
                 {
                     "%"+Value
                 }
