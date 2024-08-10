@@ -438,11 +438,14 @@ static class HtmlTextGenerator
         {
             if (Array.IndexOf(SelfClosingTags, htmlNode.Tag) >= 0)
             {
-                sb.Append(">");
+                sb.Append('>');
                 return;
             }
 
-            sb.Append(">" + "</" + htmlNode.Tag + ">");
+            sb.Append('>');
+            sb.Append("</");
+            sb.Append(htmlNode.Tag);
+            sb.Append('>');
         }
 
         static void appendAttributes(StringBuilder sb, HtmlNode htmlNode)
