@@ -453,6 +453,10 @@ static class ComponentRequestHandler
         
         static string GetwwwrootFolder(HttpContext httpContext)
         {
+            if (httpContext == null)
+            {
+                return null;
+            }
             string requestPath;
             {
                 var request = httpContext.Request;
