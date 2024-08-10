@@ -100,22 +100,31 @@ static class HtmlTextGenerator
     {
         var sb = new StringBuilder();
 
-        var padding = "".PadLeft(4, ' ');
-
         dynamicStylesMap?.Foreach((cssSelector, cssBody) =>
         {
-            sb.Append(padding + cssSelector);
-            sb.AppendLine(padding + "{");
-            sb.Append(padding + "    ");
+            const string padding = "    ";
+
+            sb.Append(padding);
+            sb.Append(cssSelector);
+            sb.Append(padding);
+            sb.AppendLine("{");
+            
+            sb.Append(padding);
+            sb.Append(padding);
             sb.Append(cssBody);
+            
             if (cssSelector.IndexOf("@media ", StringComparison.OrdinalIgnoreCase) == 0)
             {
                 sb.AppendLine();
-                sb.AppendLine(padding + "}");
+                
+                sb.Append(padding);
+                sb.AppendLine("}");
             }
 
             sb.AppendLine();
-            sb.AppendLine(padding + "}");
+            
+            sb.Append(padding);
+            sb.AppendLine("}");
         });
 
         return new()
