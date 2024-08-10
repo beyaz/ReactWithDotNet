@@ -337,6 +337,11 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                         continue;
                     }
 
+                    if (propertyValue is IEnumerable)
+                    {
+                        continue;
+                    }
+
                     if (!propertyValue.Equals(Activator.CreateInstance(propertyInfo.PropertyType)))
                     {
                         continue;
