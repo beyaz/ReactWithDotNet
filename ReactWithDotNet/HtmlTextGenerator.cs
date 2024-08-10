@@ -352,7 +352,7 @@ static class HtmlTextGenerator
             return;
         }
 
-        var openTagIndex = openTag(sb, depth, htmlNode);
+        openTag(sb, depth, htmlNode);
 
         appendAttributes(sb, htmlNode);
 
@@ -371,6 +371,8 @@ static class HtmlTextGenerator
             return;
         }
 
+        var childrenHasNewLine = false;
+
         for (var i = 0; i < children.Count; i++)
         {
             var child = children[i];
@@ -381,6 +383,8 @@ static class HtmlTextGenerator
 
             if (canPushNewLine)
             {
+                childrenHasNewLine = true;
+
                 TryAddNewLine(sb);
                 childDepth = depth + 1;
             }
@@ -388,7 +392,7 @@ static class HtmlTextGenerator
             ToString(sb, childDepth, child);
         }
 
-        if (hasNewLineFromTagToEnd(sb, openTagIndex))
+        if (childrenHasNewLine)
         {
             TryAddNewLine(sb);
         }
@@ -397,21 +401,6 @@ static class HtmlTextGenerator
         finishTag(sb, htmlNode);
 
         return;
-
-        static bool hasNewLineFromTagToEnd(StringBuilder sb, int tagIndex)
-        {
-            var length = sb.Length;
-
-            for (var i = tagIndex; i < length; i++)
-            {
-                if (sb[i] == '\n')
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
 
         static void finishTag(StringBuilder sb, HtmlNode htmlNode)
         {
@@ -432,7 +421,7 @@ static class HtmlTextGenerator
             }
         }
 
-        static int openTag(StringBuilder sb, int depth, HtmlNode htmlNode)
+        static void openTag(StringBuilder sb, int depth, HtmlNode htmlNode)
         {
             pushIndent(sb, depth);
 
@@ -442,11 +431,7 @@ static class HtmlTextGenerator
                 pushIndent(sb, depth);
             }
 
-            var tagIndex = sb.Length;
-
             sb.Append("<" + htmlNode.Tag);
-
-            return tagIndex;
         }
 
         static void closeTag(StringBuilder sb, HtmlNode htmlNode)
