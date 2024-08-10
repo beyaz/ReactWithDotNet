@@ -298,8 +298,6 @@ static class HtmlTextGenerator
 
     static void ToString(StringBuilder sb, int depth, HtmlNode htmlNode)
     {
-        int? tagIndex;
-
         if (htmlNode.IsTextNode)
         {
             if (htmlNode.StringBuilder is not null)
@@ -336,7 +334,7 @@ static class HtmlTextGenerator
 
         if (children is null)
         {
-            openTag();
+            openTag(sb,depth,htmlNode);
 
             appendAttributes(sb, htmlNode);
 
@@ -344,7 +342,7 @@ static class HtmlTextGenerator
             {
                 sb.Append(">");
                 sb.Append(htmlNode.Text);
-                finishTag();
+                finishTag(sb, htmlNode);
                 return;
             }
 
@@ -353,7 +351,7 @@ static class HtmlTextGenerator
             return;
         }
 
-        openTag();
+        var tagIndex = openTag(sb,depth,htmlNode);
 
         appendAttributes(sb, htmlNode);
 
@@ -367,7 +365,7 @@ static class HtmlTextGenerator
         if (children.Count == 1 && children[0].IsTextNode)
         {
             ToString(sb, depth, children[0]);
-            finishTag();
+            finishTag(sb, htmlNode);
 
             return;
         }
@@ -394,30 +392,27 @@ static class HtmlTextGenerator
             TryAddNewLine(sb);
         }
 
-        pushIndent();
-        finishTag();
+        pushIndent(sb, depth);
+        finishTag(sb, htmlNode);
 
         return;
 
-        static bool hasNewLineFromTagToEnd(StringBuilder sb, int? tagIndex)
+        static bool hasNewLineFromTagToEnd(StringBuilder sb, int tagIndex)
         {
-            if (tagIndex.HasValue)
-            {
-                var length = sb.Length;
+            var length = sb.Length;
 
-                for (var i = tagIndex.Value; i < length; i++)
+            for (var i = tagIndex; i < length; i++)
+            {
+                if (sb[i] == '\n')
                 {
-                    if (sb[i] == '\n')
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
 
             return false;
         }
 
-        void finishTag()
+        static void finishTag(StringBuilder sb, HtmlNode htmlNode)
         {
             if (Array.IndexOf(SelfClosingTags, htmlNode.Tag) >= 0)
             {
@@ -432,7 +427,7 @@ static class HtmlTextGenerator
             sb.Append(">");
         }
 
-        void pushIndent()
+        static void pushIndent(StringBuilder sb, int depth)
         {
             if (sb.IsEndsWithNewLine())
             {
@@ -440,20 +435,22 @@ static class HtmlTextGenerator
             }
         }
 
-        void openTag()
+        static int openTag(StringBuilder sb, int depth, HtmlNode htmlNode)
         {
-            pushIndent();
+            pushIndent(sb,depth);
 
             if (htmlNode.Tag == "html")
             {
                 sb.AppendLine("<!DOCTYPE html>");
-                pushIndent();
+                pushIndent(sb,depth);
             }
 
-            tagIndex = sb.Length;
+            var tagIndex = sb.Length;
 
             sb.Append("<");
             sb.Append(htmlNode.Tag);
+
+            return tagIndex;
         }
 
         static void closeTag(StringBuilder sb,  HtmlNode htmlNode)
