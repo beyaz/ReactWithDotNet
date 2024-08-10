@@ -475,7 +475,12 @@ static class HtmlTextGenerator
             {
                 var attribute = attributes[i];
 
-                sb.Append(" " + attribute.Name + "=\"" + attribute.Value + "\"");
+                sb.Append(" ");
+                sb.Append(attribute.Name);
+                sb.Append('=');
+                sb.Append('"');
+                sb.Append(attribute.Value);
+                sb.Append('"');
             }
         }
     }
