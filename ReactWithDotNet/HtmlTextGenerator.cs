@@ -8,16 +8,16 @@ static class HtmlTextGenerator
 {
     static readonly string[] SelfClosingTags = "area,base,br,col,embed,hr,img,input,keygen,link,meta,param,source,track,wbr".Split(',');
 
-    static readonly IReadOnlyDictionary<string, bool> SkipThisProperties = new Dictionary<string, bool>
-    {
-        { "key", true },
-        { "DotNetProperties", true },
-        { "onClick", true },
-        { "$DotNetComponentUniqueIdentifier", true },
-        { "$State", true },
-        { "$Type", true },
-        { "$ClientTasks", true }
-    };
+    static readonly string[] SkipThisProperties =
+    [
+        "key",
+        "DotNetProperties",
+        "onClick",
+        "$DotNetComponentUniqueIdentifier",
+        "$State",
+        "$Type",
+        "$ClientTasks"
+    ];
 
     static readonly Type TypeOfBoolean = typeof(bool);
     static readonly Type TypeOfDouble = typeof(double);
@@ -159,7 +159,7 @@ static class HtmlTextGenerator
 
     static void ProcessJsonMapNode(HtmlNode htmlNode, string name, object value)
     {
-        if (SkipThisProperties.ContainsKey(name))
+        if (Array.IndexOf(SkipThisProperties, name) >= 0)
         {
             return;
         }
