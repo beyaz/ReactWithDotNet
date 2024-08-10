@@ -611,7 +611,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         if (smartMode && style is not null)
         {
-            modifiers.AddRange(htmlNode.Attributes.Select(ToModifier));
+            modifiers.AddRange(htmlNode.Attributes.Select(TryConvertToModifier).Where(x=>x.success).Select(x=>x.modifierCode));
 
             ((ICollection<HtmlAttribute>)htmlNode.Attributes).Clear();
             modifiers.AddRange(style.ToDictionary().Select(p => TryConvertToModifier_From_Mixin_Extension(p.Key, p.Value)).Where(x => x.success).Select(x => x.modifierCode));
@@ -693,7 +693,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 {
                     if (smartMode)
                     {
-                        return [ToModifier(attribute)];
+                        return [TryConvertToModifier(attribute).modifierCode];
                     }
 
                     if (propertyInfo.PropertyType.IsGenericType)
@@ -840,7 +840,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         foreach (var htmlAttribute in htmlNode.Attributes)
         {
-            modifiers.Add(ToModifier(htmlAttribute));
+            var (success, modifierCode) = TryConvertToModifier(htmlAttribute);
+            if (success)
+            {
+                modifiers.Add(modifierCode);    
+            }
         }
 
         if (style is not null)
@@ -900,10 +904,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         }
     }
 
-    static string ToModifier(HtmlAttribute htmlAttribute)
-    {
-        return TryConvertToModifier(htmlAttribute).modifierCode;
-    }
+    
 
     static (bool success, string modifierCode) TryConvertToModifier(HtmlAttribute htmlAttribute)
     {
