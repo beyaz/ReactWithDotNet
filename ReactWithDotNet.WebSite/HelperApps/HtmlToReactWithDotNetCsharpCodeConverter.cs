@@ -266,7 +266,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             smartMode = false;
         }
 
-        var modifiers = new List<string>();
+        var modifiers = new List<ModifierCode>();
 
         var htmlNodeName = htmlNode.OriginalName;
         if (htmlNodeName == "clippath")
@@ -327,7 +327,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 return $"Aria(\"{htmlAttribute.Name.RemoveFromStart("aria-")}\", \"{htmlAttribute.Value}\")";
             }
 
-            modifiers.AddRange(htmlNode.Attributes.RemoveAll(isAriaAttribute).Select(toAriaModifier));
+            modifiers.AddRange(htmlNode.Attributes.RemoveAll(isAriaAttribute).Select(toAriaModifier).Select(ModifierCode.FromString));
         }
 
         // data-*
@@ -342,7 +342,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 return $"Data(\"{htmlAttribute.Name.RemoveFromStart("data-")}\", \"{htmlAttribute.Value}\")";
             }
 
-            modifiers.AddRange(htmlNode.Attributes.RemoveAll(isDataAttribute).Select(toDataModifier));
+            modifiers.AddRange(htmlNode.Attributes.RemoveAll(isDataAttribute).Select(toDataModifier).Select(ModifierCode.FromString));
         }
 
         // remove svg.xmlns
@@ -611,10 +611,10 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         if (smartMode && style is not null)
         {
-            modifiers.AddRange(htmlNode.Attributes.Select(TryConvertToModifier).Where(x=>x.success).Select(x=>x.modifierCode));
+            modifiers.AddRange(htmlNode.Attributes.Select(TryConvertToModifier).Select(ModifierCode.From));
 
             ((ICollection<HtmlAttribute>)htmlNode.Attributes).Clear();
-            modifiers.AddRange(style.ToDictionary().Select(p => TryConvertToModifier_From_Mixin_Extension(p.Key, p.Value)).Where(x => x.success).Select(x => x.modifierCode));
+            modifiers.AddRange(style.ToDictionary().Select(p => TryConvertToModifier_From_Mixin_Extension(p.Key, p.Value)).Select(ModifierCode.From));
 
             style = null;
         }
@@ -734,7 +734,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 if (smartMode && modifiers.Count > 0)
                 {
-                    return [$"new {htmlNodeName} {{ {string.Join(", ", modifiers)} }}"];
+                    return [$"new {htmlNodeName} {{ {JoinModifiers(modifiers)} }}"];
                 }
 
                 var sb = new StringBuilder();
@@ -752,7 +752,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 if (modifiers.Count > 0)
                 {
                     sb.Append("(");
-                    sb.Append(string.Join(", ", modifiers));
+                    sb.Append(JoinModifiers(modifiers));
                     sb.Append(")");
                 }
 
@@ -781,7 +781,12 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                             "{"
                         };
 
-                        foreach (var modifier in modifiers)
+                        foreach (var modifier in modifiers.Where(x => !x.Success).Select(x => x.Code))
+                        {
+                            lines.Add($"// {modifier}");
+                        }
+
+                        foreach (var modifier in modifiers.Where(x => x.Success).Select(x => x.Code))
                         {
                             lines.Add(modifier);
 
@@ -843,7 +848,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             var (success, modifierCode) = TryConvertToModifier(htmlAttribute);
             if (success)
             {
-                modifiers.Add(modifierCode);    
+                modifiers.Add(modifierCode);
             }
         }
 
@@ -862,7 +867,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return new()
             {
                 // one line
-                $"new {htmlNodeName}({string.Join(", ", modifiers)})",
+                $"new {htmlNodeName}({JoinModifiers(modifiers)})",
                 "{",
                 ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText),
                 "}"
@@ -874,7 +879,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             var partConstructor = "";
             if (modifiers.Count > 0)
             {
-                partConstructor = $"({string.Join(", ", modifiers)})";
+                partConstructor = $"({JoinModifiers(modifiers)})";
             }
 
             var lines = new List<string>
@@ -902,9 +907,13 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             return lines;
         }
-    }
 
-    
+        static string JoinModifiers(IReadOnlyList<ModifierCode> modifiers)
+        {
+            return string.Join(" ", modifiers.Where(ModifierCode.IsFail).Select(x => x.Code)) +
+                   string.Join(", ", modifiers.Where(ModifierCode.IsSuccess).Select(x => x.Code));
+        }
+    }
 
     static (bool success, string modifierCode) TryConvertToModifier(HtmlAttribute htmlAttribute)
     {
@@ -993,7 +1002,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return success($"{tagName}.{UpperCaseFirstChar(propertyInfo.Name)}(\"{value}\")");
         }
 
-        return (success: false, modifierCode: $"null/* {tagName}.{name} = \"{value}\"*/");
+        return (success: false, modifierCode: $"/* {tagName}.{name} = \"{value}\"*/");
 
         static string UpperCaseFirstChar(string str)
         {
@@ -1194,6 +1203,37 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
     static Type TryFindTypeOfHtmlTag(string htmlTagName)
     {
         return typeof(div).Assembly.GetType(nameof(ReactWithDotNet) + "." + htmlTagName, false, true);
+    }
+
+    class ModifierCode
+    {
+        public string Code { get; init; }
+        public bool Success { get; init; }
+
+        public static ModifierCode From((bool success, string modifierCode) tuple)
+        {
+            return new() { Code = tuple.modifierCode, Success = tuple.success };
+        }
+
+        public static ModifierCode FromString(string code)
+        {
+            return new() { Code = code, Success = true };
+        }
+
+        public static bool IsFail(ModifierCode item)
+        {
+            return item.Success is false;
+        }
+
+        public static bool IsSuccess(ModifierCode item)
+        {
+            return item.Success;
+        }
+
+        public static implicit operator ModifierCode(string code)
+        {
+            return FromString(code);
+        }
     }
 
     #region already calculated modifier
