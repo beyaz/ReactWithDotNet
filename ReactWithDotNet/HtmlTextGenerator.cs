@@ -126,6 +126,11 @@ static class HtmlTextGenerator
         };
     }
 
+    class WriterContext
+    {
+        public StringBuilder sb;
+    }
+    
     static StringBuilder CalculateHtml(JsonMap element, JsonMap dynamicStyles)
     {
         var sb = new StringBuilder();
@@ -352,7 +357,7 @@ static class HtmlTextGenerator
             return;
         }
 
-        var tagIndex = openTag(sb,depth,htmlNode);
+        var openTagIndex = openTag(sb,depth,htmlNode);
 
         appendAttributes(sb, htmlNode);
 
@@ -388,7 +393,7 @@ static class HtmlTextGenerator
             ToString(sb, childDepth, child);
         }
 
-        if (hasNewLineFromTagToEnd(sb, tagIndex))
+        if (hasNewLineFromTagToEnd(sb, openTagIndex))
         {
             TryAddNewLine(sb);
         }
