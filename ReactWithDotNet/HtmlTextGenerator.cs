@@ -8,6 +8,25 @@ static class HtmlTextGenerator
 {
     static readonly string[] SelfClosingTags = "area,base,br,col,embed,hr,img,input,keygen,link,meta,param,source,track,wbr".Split(',');
 
+    static readonly IReadOnlyDictionary<string, bool> SkipThisProperties = new Dictionary<string, bool>
+    {
+        { "key", true },
+        { "DotNetProperties", true },
+        { "onClick", true },
+        { "$DotNetComponentUniqueIdentifier", true },
+        { "$State", true },
+        { "$Type", true },
+        { "$ClientTasks", true }
+    };
+
+    static readonly Type TypeOfBoolean = typeof(bool);
+    static readonly Type TypeOfDouble = typeof(double);
+    static readonly Type TypeOfInt16 = typeof(short);
+    static readonly Type TypeOfInt32 = typeof(int);
+
+    static readonly Type TypeOfString = typeof(string);
+    static readonly Type TypeOfUnionProp = typeof(UnionProp<,>);
+
     public static StringBuilder ToHtml(ComponentResponse componentResponse)
     {
         return CalculateHtml((JsonMap)componentResponse.ElementAsJson, (JsonMap)componentResponse.DynamicStyles);
@@ -32,19 +51,6 @@ static class HtmlTextGenerator
         AddChild(parentHtmlNode, htmlNode);
     }
 
-    static string Repeat(this string text, int n)
-    {
-        var textAsSpan = text.AsSpan();
-        
-        var span = new Span<char>(new char[textAsSpan.Length * n]);
-        for (var i = 0; i < n; i++)
-        {
-            textAsSpan.CopyTo(span.Slice(i * textAsSpan.Length, textAsSpan.Length));
-        }
-
-        return span.ToString();
-    }
-    
     static HtmlNode AsHtmlNode(JsonMap jsonMap)
     {
         var htmlNode = new HtmlNode();
@@ -70,7 +76,7 @@ static class HtmlTextGenerator
             ProcessJsonMapNode(htmlNode, node.Key, node.Value);
             node = node.Next;
         }
-        
+
         return htmlNode;
     }
 
@@ -78,6 +84,7 @@ static class HtmlTextGenerator
     {
         return new() { IsTextNode = true, Text = text };
     }
+
     static HtmlNode AsHtmlTextNode(StringBuilder stringBuilder)
     {
         return new() { IsTextNode = true, StringBuilder = stringBuilder };
@@ -105,7 +112,7 @@ static class HtmlTextGenerator
             sb.AppendLine(padding + "}");
         });
 
-        return new HtmlNode
+        return new()
         {
             Tag = "style",
 
@@ -150,17 +157,6 @@ static class HtmlTextGenerator
         return length > 2 && sb[length - 2] == '\r' && sb[length - 1] == '\n';
     }
 
-    static readonly IReadOnlyDictionary<string, bool> SkipThisProperties = new Dictionary<string, bool>
-    {
-        {"key",true},
-        {"DotNetProperties",true},
-        {"onClick",true},
-        {"$DotNetComponentUniqueIdentifier",true},
-        {"$State",true},
-        {"$Type",true},
-        {"$ClientTasks",true}
-    };
-    
     static void ProcessJsonMapNode(HtmlNode htmlNode, string name, object value)
     {
         if (SkipThisProperties.ContainsKey(name))
@@ -204,7 +200,7 @@ static class HtmlTextGenerator
         {
             if (value is Style valueAsStyle)
             {
-                AddAttribute(htmlNode, new HtmlAttribute { Name = "style", Value = valueAsStyle.ToCss() });
+                AddAttribute(htmlNode, new() { Name = "style", Value = valueAsStyle.ToCss() });
                 return;
             }
 
@@ -227,15 +223,15 @@ static class HtmlTextGenerator
         if (name[0] != '$')
         {
             var valueType = value.GetType();
-            
+
             if (valueType == TypeOfString ||
-                valueType == TypeOfDouble||
-                valueType == TypeOfInt32||
-                valueType == TypeOfInt16||
-                valueType == TypeOfBoolean||
+                valueType == TypeOfDouble ||
+                valueType == TypeOfInt32 ||
+                valueType == TypeOfInt16 ||
+                valueType == TypeOfBoolean ||
                 (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == TypeOfUnionProp))
             {
-                AddAttribute(htmlNode, new () { Name = PascalToKebabCaseHelper.PascalToKebabCase(name), Value = value.ToString() });
+                AddAttribute(htmlNode, new() { Name = PascalToKebabCaseHelper.PascalToKebabCase(name), Value = value.ToString() });
                 return;
             }
         }
@@ -260,6 +256,7 @@ static class HtmlTextGenerator
                     AddChild(htmlNode, AsHtmlTextNode(childAsString));
                     continue;
                 }
+
                 if (child is StringBuilder stringBuilder)
                 {
                     AddChild(htmlNode, AsHtmlTextNode(stringBuilder));
@@ -283,12 +280,18 @@ static class HtmlTextGenerator
         }
     }
 
-    static readonly Type TypeOfString = typeof(string);
-    static readonly Type TypeOfInt32= typeof(int);
-    static readonly Type TypeOfInt16= typeof(short);
-    static readonly Type TypeOfDouble= typeof(double);
-    static readonly Type TypeOfBoolean = typeof(bool);
-    static readonly Type TypeOfUnionProp= typeof(UnionProp<,>);
+    static string Repeat(this string text, int n)
+    {
+        var textAsSpan = text.AsSpan();
+
+        var span = new Span<char>(new char[textAsSpan.Length * n]);
+        for (var i = 0; i < n; i++)
+        {
+            textAsSpan.CopyTo(span.Slice(i * textAsSpan.Length, textAsSpan.Length));
+        }
+
+        return span.ToString();
+    }
 
     static void ToString(StringBuilder sb, int depth, HtmlNode htmlNode)
     {
@@ -299,8 +302,9 @@ static class HtmlTextGenerator
             if (htmlNode.StringBuilder is not null)
             {
                 sb.Append(htmlNode.StringBuilder);
-                return;    
+                return;
             }
+
             sb.Append(htmlNode.Text);
             return;
         }
@@ -331,7 +335,7 @@ static class HtmlTextGenerator
         {
             openTag();
 
-            appendAttributes(sb,htmlNode);
+            appendAttributes(sb, htmlNode);
 
             if (htmlNode.Text != null)
             {
@@ -389,7 +393,7 @@ static class HtmlTextGenerator
 
         pushIndent();
         finishTag();
-        
+
         return;
 
         static bool hasNewLineFromTagToEnd(StringBuilder sb, int? tagIndex)
@@ -492,6 +496,77 @@ static class HtmlTextGenerator
         sb.AppendLine();
     }
 
+    static class PascalToKebabCaseHelper
+    {
+        static readonly ConcurrentDictionary<string, string> Cache = new();
+
+        static PascalToKebabCaseHelper()
+        {
+            Cache.TryAdd("className", "class");
+            Cache.TryAdd("htmlFor", "for");
+            Cache.TryAdd("cssFloat", "float");
+            Cache.TryAdd("viewBox", "viewBox");
+        }
+
+        public static string PascalToKebabCase(string dotnetPropertyName)
+        {
+            if (Cache.TryGetValue(dotnetPropertyName, out var value))
+            {
+                return value;
+            }
+
+            if (dotnetPropertyName.StartsWith("aria-", StringComparison.OrdinalIgnoreCase) ||
+                dotnetPropertyName.StartsWith("data-", StringComparison.OrdinalIgnoreCase))
+            {
+                return dotnetPropertyName;
+            }
+
+            var upperCharIndex = indexOfUpperChar(dotnetPropertyName, 1);
+            if (upperCharIndex < 0)
+            {
+                Cache.TryAdd(dotnetPropertyName, dotnetPropertyName);
+
+                return dotnetPropertyName;
+            }
+
+            value = pascalToKebabCaseInternal(dotnetPropertyName);
+
+            Cache.TryAdd(dotnetPropertyName, value);
+
+            return value;
+
+            static string pascalToKebabCaseInternal(string str)
+            {
+                return string.Concat(str.SelectMany(convertChar));
+
+                static IEnumerable<char> convertChar(char c, int index)
+                {
+                    if (char.IsUpper(c) && index != 0)
+                    {
+                        yield return '-';
+                    }
+
+                    yield return char.ToLower(c, CultureInfo_en_US);
+                }
+            }
+
+            static int indexOfUpperChar(ReadOnlySpan<char> str, int from)
+            {
+                var length = str.Length;
+
+                for (var i = from; i < length; i++)
+                {
+                    if (char.IsUpper(str[i]))
+                    {
+                        return i;
+                    }
+                }
+
+                return -1;
+            }
+        }
+    }
+
     sealed class HtmlAttribute
     {
         public string Name, Value;
@@ -506,82 +581,9 @@ static class HtmlTextGenerator
         public bool IsThirdPartyComponent;
         public bool IsVirtualNode;
 
+        public StringBuilder StringBuilder;
+
         public string Tag;
         public string Text;
-        
-        public StringBuilder StringBuilder;
-    }
-    
-    static class PascalToKebabCaseHelper
-    {
-        static PascalToKebabCaseHelper()
-        {
-            Cache.TryAdd("className", "class");
-            Cache.TryAdd("htmlFor","for");
-            Cache.TryAdd("cssFloat","float");
-            Cache.TryAdd("viewBox","viewBox");
-        }
-
-        static readonly ConcurrentDictionary<string, string> Cache = new();
-        
-        public static string PascalToKebabCase(string dotnetPropertyName)
-        {
-            if (Cache.TryGetValue(dotnetPropertyName, out var value))
-            {
-                return value;
-            }
-
-            if (dotnetPropertyName.StartsWith("aria-", StringComparison.OrdinalIgnoreCase) ||
-                dotnetPropertyName.StartsWith("data-", StringComparison.OrdinalIgnoreCase))
-            {
-                return dotnetPropertyName;
-            }
-            
-            var upperCharIndex = indexOfUpperChar(dotnetPropertyName, 1);
-            if (upperCharIndex < 0)
-            {
-                Cache.TryAdd(dotnetPropertyName, dotnetPropertyName);
-                
-                return dotnetPropertyName;
-            }
-
-            value = pascalToKebabCaseInternal(dotnetPropertyName);
-            
-            Cache.TryAdd(dotnetPropertyName, value);
-            
-            return value;
-
-            static string pascalToKebabCaseInternal(string str)
-            {
-                return string.Concat(str.SelectMany(convertChar));
-            
-                static IEnumerable<char> convertChar(char c, int index)
-                {
-                    if (char.IsUpper(c) && index != 0)
-                    {
-                        yield return '-';
-                    }
-                    yield return char.ToLower(c, CultureInfo_en_US);
-                }
-            }
-        
-            static int indexOfUpperChar(ReadOnlySpan<char> str, int from)
-            {
-                var length = str.Length;
-            
-                for (var i = from; i < length; i++)
-                {
-                    if (char.IsUpper(str[i]))
-                    {
-                        return i;
-                    }
-                }
-                
-                return -1;
-            }
-        
-        
-        
-        }
     }
 }
