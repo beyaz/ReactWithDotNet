@@ -168,7 +168,7 @@ static class UI
             return url?.EndsWith(uuu) == true;
         }
 
-        return new nav(FontSize14, LineHeight24, PositionSticky, Top(100))
+        return new nav(FontSize14, LineHeight24, PositionSticky, Top(100), PaddingBottom(32))
         {
             new ul(DisplayFlexColumn, Gap(2 * rem), Role("list"))
             {
