@@ -6,7 +6,7 @@ namespace ReactWithDotNet;
 
 static class HtmlTextGenerator
 {
-    static readonly IReadOnlyList<string> SelfClosingTags = "area,base,br,col,embed,hr,img,input,keygen,link,meta,param,source,track,wbr".Split(',');
+    static readonly string[] SelfClosingTags = "area,base,br,col,embed,hr,img,input,keygen,link,meta,param,source,track,wbr".Split(',');
 
     public static StringBuilder ToHtml(ComponentResponse componentResponse)
     {
@@ -412,7 +412,7 @@ static class HtmlTextGenerator
 
         void finishTag()
         {
-            if (SelfClosingTags.Contains(htmlNode.Tag))
+            if (Array.IndexOf(SelfClosingTags, htmlNode.Tag) >= 0)
             {
                 sb.Append("<");
                 sb.Append(htmlNode.Tag);
@@ -451,7 +451,7 @@ static class HtmlTextGenerator
 
         void closeTag()
         {
-            if (SelfClosingTags.Contains(htmlNode.Tag))
+            if (Array.IndexOf(SelfClosingTags, htmlNode.Tag) >= 0)
             {
                 sb.Append(">");
                 return;
