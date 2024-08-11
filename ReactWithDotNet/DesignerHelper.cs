@@ -90,7 +90,7 @@ static class DesignerHelper
 
         if (tokenAt0?.tokenType == TokenType.QuotedString)
         {
-            return success1(new()
+            return ok(new()
             {
                 IsStringNode = true,
                 StringValue  = tokenAt0.value
@@ -101,36 +101,36 @@ static class DesignerHelper
         {
             if (tokenAt1?.tokenType == TokenType.Dot)
             {
-                return success1(new()
-                                {
-                                    IsDoubleNode = true,
-                                    DoubleValue  = double.Parse(tokenAt0.value + '.' + tokenAt2?.value)
-                                },
-                                endIndex: i + 2);
+                return ok(new()
+                {
+                    IsDoubleNode = true,
+                    DoubleValue  = double.Parse(tokenAt0.value + '.' + tokenAt2?.value)
+                }, endIndex: i + 2);
             }
 
             if (tokenAt0.value.All(char.IsNumber))
             {
-                return success1(new()
-                                {
-                                    IsNumberNode = true,
-                                    NumberValue  = long.Parse(tokenAt0.value)
-                                },
-                                endIndex: i);
+                return ok(new()
+                {
+                    IsNumberNode = true,
+                    NumberValue  = long.Parse(tokenAt0.value)
+                }, endIndex: i);
             }
 
             if (startIndex == endIndex)
             {
-                return success1(new()
-                                {
-                                    Name = tokenAt0.value
-                                },
-                                endIndex: i);
+                return ok(new()
+                {
+                    Name = tokenAt0.value
+                }, endIndex: i);
             }
 
             if (tokenAt1?.tokenType == TokenType.Comma)
             {
-                return success1(new() { Name = tokens[i].value }, endIndex: i);
+                return ok(new()
+                {
+                    Name = tokens[i].value
+                }, endIndex: i);
             }
 
             if (tokenAt1?.tokenType == TokenType.LeftParenthesis)
@@ -143,7 +143,7 @@ static class DesignerHelper
                     {
                         if (rightParenthesisIndex == indexOfPair)
                         {
-                            return success1(new()
+                            return ok(new()
                             {
                                 Name       = tokens[i].value,
                                 Parameters = parameterNodes
@@ -156,7 +156,7 @@ static class DesignerHelper
 
         return default;
 
-        static (bool success, Node node, int endIndex) success1(Node node, int endIndex)
+        static (bool success, Node node, int endIndex) ok(Node node, int endIndex)
         {
             return (true, node, endIndex);
         }
