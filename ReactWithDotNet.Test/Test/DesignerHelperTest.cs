@@ -10,13 +10,8 @@ public class DesignerHelperTest
     [TestMethod]
     public void _0_()
     {
-        const string inputCode = """
-
-                                 Padding(22.56)
-
-                                 """;
-
-        const string expectedCode = "Padding(22.56)";
+        const string inputCode = "Margin(4), Padding(22.56)";
+        const string expectedCode = "Margin(4), Padding(22.56)";
 
         Assert(inputCode, expectedCode);
     }
@@ -43,7 +38,7 @@ public class DesignerHelperTest
 
         tokens = tokens.Where(x=>x.tokenType != TokenType.Space).ToList();
 
-        var (success, nodes, i) = DesignerHelper.TryReadNodes(tokens,0,tokens.Count);
+        var (success, nodes, i) = DesignerHelper.TryReadNodes(tokens,0,tokens.Count-1);
        
         success.Should().BeTrue();
 

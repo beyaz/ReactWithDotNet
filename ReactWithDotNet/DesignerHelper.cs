@@ -95,6 +95,11 @@ static class DesignerHelper
         
         public override string ToString()
         {
+            if (Parameters?.Count > 0)
+            {
+                return $"{Name}({string.Join(", ", Parameters)})";
+            }
+            
             return Lexer.ToString(Tokens, Start, End);
         }
     }
@@ -104,11 +109,38 @@ static class DesignerHelper
     public static (bool success, Node node, int i) TryReadNode(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
     {
         var i = startIndex;
+
+        var tokenAt0 = i + 0 < tokens.Count ? tokens[i + 0] : null;
+        var tokenAt1 = i + 1 < tokens.Count ? tokens[i + 1] : null;
+        var tokenAt2 = i + 2 < tokens.Count ? tokens[i + 2] : null;
+        var tokenAt3 = i + 3 < tokens.Count ? tokens[i + 3] : null;
         
-        if (tokens[i].tokenType == TokenType.AlfaNumeric)
+        
+        if (tokenAt0?.tokenType == TokenType.AlfaNumeric)
         {
+            if (tokenAt1?.tokenType == TokenType.Dot)
+            {
+                return (success: true, node: new()
+                    {
+                        Tokens = tokens,
+                        Start  = i,
+                        End = i+2
+                    },
+                    i: i + 2);
+            }
+
+            if (tokenAt0.value.All(char.IsNumber))
+            {
+                return (success: true, node: new()
+                    {
+                        Tokens = tokens,
+                        Start  = i,
+                        End    = i
+                    },
+                    i: i );
+            }
             
-            if (i +1 == endIndex ||    i < tokens.Count && tokens[i + 1].tokenType == TokenType.Comma)
+            if (i + 1 == endIndex ||    i < tokens.Count && tokens[i + 1].tokenType == TokenType.Comma)
             {
                 return (success: true, new() { Name = tokens[i].value, Tokens = tokens, Start = i, End = i}, i + 2);
             }
@@ -118,7 +150,24 @@ static class DesignerHelper
                 var (isFound, indexOfPair) = FindPair(tokens, i + 1, x => x.tokenType == TokenType.RightParenthesis);
                 if (isFound)
                 {
-                    return (success: true, new() { Name = tokens[i].value, Tokens = tokens, Start = i, End = indexOfPair}, indexOfPair + 1);    
+                    var (success, parameterNodes, rightParenthesisIndex) = TryReadNodes(tokens,  i + 2, indexOfPair-1);
+                    if (success)
+                    {
+                        if (rightParenthesisIndex == indexOfPair)
+                        {
+                            return (success: true, new()
+                            {
+                                Name = tokens[i].value, 
+                                Tokens = tokens, 
+                                Start = i,
+                                End = indexOfPair,
+                                Parameters = parameterNodes
+                                
+                            }, indexOfPair + 1);        
+                        }
+                    }
+
+                    
                 }
             }
         }
@@ -133,7 +182,7 @@ static class DesignerHelper
         
         var i = startIndex;
         
-        while (i < endIndex)
+        while (i <= endIndex)
         {
             if (tokens[i].tokenType == TokenType.Comma)
             {
@@ -147,7 +196,7 @@ static class DesignerHelper
                 return (success: false, nodes, i);
             }
 
-            i = newIndex;
+            i = newIndex+1;
             
             nodes.Add(node);
 
