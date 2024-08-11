@@ -90,47 +90,47 @@ static class DesignerHelper
 
         if (tokenAt0?.tokenType == TokenType.QuotedString)
         {
-            return ok(new()
+            return ok(endIndex: i, new()
             {
                 IsStringNode = true,
                 StringValue  = tokenAt0.value
-            }, endIndex: i);
+            });
         }
 
         if (tokenAt0?.tokenType == TokenType.AlfaNumeric)
         {
             if (tokenAt1?.tokenType == TokenType.Dot)
             {
-                return ok(new()
+                return ok(endIndex: i + 2, new()
                 {
                     IsDoubleNode = true,
                     DoubleValue  = double.Parse(tokenAt0.value + '.' + tokenAt2?.value)
-                }, endIndex: i + 2);
+                });
             }
 
             if (tokenAt0.value.All(char.IsNumber))
             {
-                return ok(new()
+                return ok(endIndex: i, new()
                 {
                     IsNumberNode = true,
                     NumberValue  = long.Parse(tokenAt0.value)
-                }, endIndex: i);
+                });
             }
 
             if (startIndex == endIndex)
             {
-                return ok(new()
+                return ok(endIndex: i, new()
                 {
                     Name = tokenAt0.value
-                }, endIndex: i);
+                });
             }
 
             if (tokenAt1?.tokenType == TokenType.Comma)
             {
-                return ok(new()
+                return ok(endIndex: i, new()
                 {
                     Name = tokens[i].value
-                }, endIndex: i);
+                });
             }
 
             if (tokenAt1?.tokenType == TokenType.LeftParenthesis)
@@ -143,11 +143,11 @@ static class DesignerHelper
                     {
                         if (rightParenthesisIndex == indexOfPair)
                         {
-                            return ok(new()
+                            return ok(endIndex: indexOfPair, new()
                             {
                                 Name       = tokens[i].value,
                                 Parameters = parameterNodes
-                            }, endIndex: indexOfPair);
+                            });
                         }
                     }
                 }
@@ -156,7 +156,7 @@ static class DesignerHelper
 
         return default;
 
-        static (bool success, Node node, int endIndex) ok(Node node, int endIndex)
+        static (bool success, Node node, int endIndex) ok(int endIndex, Node node)
         {
             return (true, node, endIndex);
         }
