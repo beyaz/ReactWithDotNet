@@ -90,63 +90,47 @@ static class DesignerHelper
 
         if (tokenAt0?.tokenType == TokenType.QuotedString)
         {
-            return (success: true,
-                node: new()
-                {
-                    Tokens = tokens,
-                    Start  = i,
-                    End    = i,
-
-                    IsStringNode = true,
-                    StringValue  = tokenAt0.value
-                }, endIndex: i);
+            return success1(new()
+            {
+                IsStringNode = true,
+                StringValue  = tokenAt0.value
+            }, endIndex: i);
         }
 
         if (tokenAt0?.tokenType == TokenType.AlfaNumeric)
         {
             if (tokenAt1?.tokenType == TokenType.Dot)
             {
-                return (success: true, node: new()
-                    {
-                        Tokens = tokens,
-                        Start  = i,
-                        End    = i + 2,
-
-                        IsDoubleNode = true,
-                        DoubleValue  = double.Parse(tokenAt0.value + '.' + tokenAt2?.value)
-                    },
-                    endIndex: i + 2);
+                return success1(new()
+                                {
+                                    IsDoubleNode = true,
+                                    DoubleValue  = double.Parse(tokenAt0.value + '.' + tokenAt2?.value)
+                                },
+                                endIndex: i + 2);
             }
 
             if (tokenAt0.value.All(char.IsNumber))
             {
-                return (success: true, node: new()
-                    {
-                        Tokens = tokens,
-                        Start  = i,
-                        End    = i,
-
-                        IsNumberNode = true,
-                        NumberValue  = long.Parse(tokenAt0.value)
-                    },
-                    endIndex: i);
+                return success1(new()
+                                {
+                                    IsNumberNode = true,
+                                    NumberValue  = long.Parse(tokenAt0.value)
+                                },
+                                endIndex: i);
             }
 
             if (startIndex == endIndex)
             {
-                return (success: true, node: new()
-                    {
-                        Tokens = tokens,
-                        Start  = i,
-                        End    = i,
-                        Name = tokenAt0.value
-                    },
-                    endIndex: i);
+                return success1(new()
+                                {
+                                    Name = tokenAt0.value
+                                },
+                                endIndex: i);
             }
 
             if (tokenAt1?.tokenType == TokenType.Comma)
             {
-                return (success: true, new() { Name = tokens[i].value, Tokens = tokens, Start = i, End = i }, i);
+                return success1(new() { Name = tokens[i].value }, endIndex: i);
             }
 
             if (tokenAt1?.tokenType == TokenType.LeftParenthesis)
@@ -159,14 +143,11 @@ static class DesignerHelper
                     {
                         if (rightParenthesisIndex == indexOfPair)
                         {
-                            return (success: true, new()
+                            return success1(new()
                             {
                                 Name       = tokens[i].value,
-                                Tokens     = tokens,
-                                Start      = i,
-                                End        = indexOfPair,
                                 Parameters = parameterNodes
-                            }, indexOfPair);
+                            }, endIndex: indexOfPair);
                         }
                     }
                 }
@@ -174,6 +155,11 @@ static class DesignerHelper
         }
 
         return default;
+
+        static (bool success, Node node, int endIndex) success1(Node node, int endIndex)
+        {
+            return (true, node, endIndex);
+        }
     }
 
     public static (bool success, IReadOnlyList<Node> nodes, int i) TryReadNodes(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
@@ -207,7 +193,6 @@ static class DesignerHelper
     public sealed class Node
     {
         public double DoubleValue { get; init; }
-        public int End { get; init; }
         public bool IsDoubleNode { get; init; }
         public bool IsNumberNode { get; init; }
 
@@ -218,11 +203,7 @@ static class DesignerHelper
 
         public IReadOnlyList<Node> Parameters { get; init; }
 
-        public int Start { get; init; }
-
         public string StringValue { get; init; }
-
-        public required IReadOnlyList<Token> Tokens { get; init; }
 
         public override string ToString()
         {
@@ -247,8 +228,6 @@ static class DesignerHelper
             }
 
             return Name;
-
-            //return Lexer.ToString(Tokens, Start, End);
         }
     }
 }
