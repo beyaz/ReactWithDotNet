@@ -103,12 +103,7 @@ static class TsLexer
 
         // comment
         {
-            var (exception, hasRead, endIndex, value) = TryReadComment(content, startIndex);
-            if (exception is not null)
-            {
-                return (exception, hasRead: false, -1, null);
-            }
-
+            var (hasRead, endIndex, value) = TryReadComment(content, startIndex);
             if (hasRead)
             {
                 return (exception: null, hasRead: true, endIndex, new Token(startIndex, endIndex, TokenType.Comment, value));
@@ -218,13 +213,13 @@ static class TsLexer
         return (hasRead: false, i + 1, content[i]);
     }
 
-    static (Exception exception, bool hasRead, int endIndex, string comment) TryReadComment(string content, int startIndex)
+    static (bool hasRead, int endIndex, string comment) TryReadComment(string content, int startIndex)
     {
         var i = startIndex;
 
         if (content.Length <= i + 2)
         {
-            return (exception: null, hasRead: false, -1, null);
+            return (hasRead: false, -1, null);
         }
 
         if (content.Substring(i, 2) == "/*")
@@ -234,7 +229,7 @@ static class TsLexer
             {
                 endIndex += 2;
 
-                return (exception: null, hasRead: true, endIndex, content.Substring(i, endIndex - i));
+                return (hasRead: true, endIndex, content.Substring(i, endIndex - i));
             }
         }
 
@@ -245,11 +240,11 @@ static class TsLexer
             {
                 endIndex += 2;
 
-                return (exception: null, hasRead: true, endIndex, content.Substring(i, endIndex - i));
+                return (hasRead: true, endIndex, content.Substring(i, endIndex - i));
             }
         }
 
-        return (exception: null, hasRead: false, -1, null);
+        return (hasRead: false, -1, null);
     }
 
     static (bool hasRead, int endIndex, string value) TryReadSpaces(string content, int startIndex)
