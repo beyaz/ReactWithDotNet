@@ -1,4 +1,5 @@
-﻿using ReactWithDotNet.Tokenizing;
+﻿using System.Globalization;
+using ReactWithDotNet.Tokenizing;
 using static ReactWithDotNet.Tokenizing.Lexer;
 
 namespace ReactWithDotNet;
@@ -84,18 +85,21 @@ static class DesignerHelper
 
         var tokenAt0 = i + 0 < tokens.Count ? tokens[i + 0] : null;
         var tokenAt1 = i + 1 < tokens.Count ? tokens[i + 1] : null;
-        //var tokenAt2 = i + 2 < tokens.Count ? tokens[i + 2] : null;
+        var tokenAt2 = i + 2 < tokens.Count ? tokens[i + 2] : null;
         //var tokenAt3 = i + 3 < tokens.Count ? tokens[i + 3] : null;
 
         if (tokenAt0?.tokenType == TokenType.QuotedString)
         {
-            return (success: true, node: new()
+            return (success: true,
+                node: new()
                 {
                     Tokens = tokens,
                     Start  = i,
-                    End    = i
-                },
-                endIndex: i);
+                    End    = i,
+
+                    IsStringNode = true,
+                    StringValue  = tokenAt0.value
+                }, endIndex: i);
         }
 
         if (tokenAt0?.tokenType == TokenType.AlfaNumeric)
@@ -106,18 +110,36 @@ static class DesignerHelper
                     {
                         Tokens = tokens,
                         Start  = i,
-                        End    = i + 2
+                        End    = i + 2,
+
+                        IsDoubleNode = true,
+                        DoubleValue  = double.Parse(tokenAt0.value + '.' + tokenAt2?.value)
                     },
                     endIndex: i + 2);
             }
 
-            if (tokenAt0.value.All(char.IsNumber) || startIndex == endIndex)
+            if (tokenAt0.value.All(char.IsNumber))
             {
                 return (success: true, node: new()
                     {
                         Tokens = tokens,
                         Start  = i,
-                        End    = i
+                        End    = i,
+
+                        IsNumberNode = true,
+                        NumberValue  = long.Parse(tokenAt0.value)
+                    },
+                    endIndex: i);
+            }
+
+            if (startIndex == endIndex)
+            {
+                return (success: true, node: new()
+                    {
+                        Tokens = tokens,
+                        Start  = i,
+                        End    = i,
+                        Name = tokenAt0.value
                     },
                     endIndex: i);
             }
@@ -184,23 +206,49 @@ static class DesignerHelper
 
     public sealed class Node
     {
+        public double DoubleValue { get; init; }
         public int End { get; init; }
+        public bool IsDoubleNode { get; init; }
+        public bool IsNumberNode { get; init; }
+
+        public bool IsStringNode { get; init; }
+
         public string Name { get; init; }
+        public long NumberValue { get; init; }
 
         public IReadOnlyList<Node> Parameters { get; init; }
 
         public int Start { get; init; }
 
+        public string StringValue { get; init; }
+
         public required IReadOnlyList<Token> Tokens { get; init; }
 
         public override string ToString()
         {
+            if (IsStringNode)
+            {
+                return '"' + StringValue + '"';
+            }
+
+            if (IsDoubleNode)
+            {
+                return DoubleValue.ToString(CultureInfo.InvariantCulture);
+            }
+
+            if (IsNumberNode)
+            {
+                return NumberValue.ToString(CultureInfo.InvariantCulture);
+            }
+
             if (Parameters?.Count > 0)
             {
                 return $"{Name}({string.Join(", ", Parameters)})";
             }
 
-            return Lexer.ToString(Tokens, Start, End);
+            return Name;
+
+            //return Lexer.ToString(Tokens, Start, End);
         }
     }
 }
