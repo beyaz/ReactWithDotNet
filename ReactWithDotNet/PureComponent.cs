@@ -10,7 +10,6 @@ namespace ReactWithDotNet;
 /// </summary>
 public abstract class PureComponent : Element
 {
-    
     /// <summary>
     ///   Indicates component is in design mode.
     /// </summary>

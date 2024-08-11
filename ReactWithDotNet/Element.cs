@@ -8,6 +8,10 @@ namespace ReactWithDotNet;
 /// </summary>
 public abstract class Element : IEnumerable<Element>, IEnumerable<Modifier>
 {
+    // ReSharper disable once UnassignedGetOnlyAutoProperty
+    protected internal virtual DesignerCode  Designer { get; }
+    
+    
     internal ElementCollection _children;
 
     /// <summary>

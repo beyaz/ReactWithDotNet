@@ -12,7 +12,6 @@ public interface IReactComponent
 }
 public abstract class ReactComponentBase : Element, IReactComponent
 {
-
     /// <summary>
     ///   Indicates component is in design mode.
     /// </summary>

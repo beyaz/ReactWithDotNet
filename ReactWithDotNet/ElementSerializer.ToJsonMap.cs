@@ -239,6 +239,8 @@ partial class ElementSerializer
                                 ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, modifier);
                             }
                         }
+                        
+                        DesignerHelper.Override(node.Element, node.DotNetComponentRootElement);
                     }
 
                     node.DotNetComponentRootNode = ConvertToNode(node.DotNetComponentRootElement);
@@ -458,6 +460,8 @@ partial class ElementSerializer
                                 ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, modifier);
                             }
                         }
+                        
+                        DesignerHelper.Override(node.Element, node.DotNetComponentRootElement);
                     }
 
                     reactStatefulComponent.ConvertReactEventsToTaskForEventBus(context);
