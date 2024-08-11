@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
+namespace ReactWithDotNet.Tokenizing;
 
 [DebuggerDisplay("{value}")]
 record Token(int startIndex, int endIndex, TokenType tokenType, string value);

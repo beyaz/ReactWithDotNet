@@ -1,5 +1,6 @@
 using System.IO;
 using System.Text;
+using ReactWithDotNet.Tokenizing;
 
 namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
 

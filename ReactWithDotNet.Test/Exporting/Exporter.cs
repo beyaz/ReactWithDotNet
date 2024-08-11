@@ -1,6 +1,7 @@
 using ReactWithDotNet.TypeScriptCodeAnalyzer;
 using System.Collections.Generic;
 using System.Globalization;
+using ReactWithDotNet.Tokenizing;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.TokenMatch;
 
 namespace ReactWithDotNet.Exporting;
