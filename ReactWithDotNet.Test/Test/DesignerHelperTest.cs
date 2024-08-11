@@ -10,8 +10,8 @@ public class DesignerHelperTest
     [TestMethod]
     public void _0_()
     {
-        const string inputCode = "Margin(4), Padding(22.56)";
-        const string expectedCode = "Margin(4), Padding(22.56)";
+        const string inputCode = "Margin(1, 2, 3, 4), Margin(4), Padding(22.56), BackgroundWhite,  Background(\"yellow\")";
+        const string expectedCode = "Margin(1, 2, 3, 4), Margin(4), Padding(22.56), BackgroundWhite, Background(\"yellow\")";
 
         Assert(inputCode, expectedCode);
     }

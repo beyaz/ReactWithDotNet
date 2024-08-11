@@ -83,8 +83,6 @@ static class DesignerHelper
     {
         public string Name { get; init; }
         
-        public string StringValue { get; init; }
-
         public IReadOnlyList<Node> Parameters { get; init; }
 
         public required IReadOnlyList<Token> Tokens { get; init; }
@@ -106,7 +104,7 @@ static class DesignerHelper
 
   
 
-    public static (bool success, Node node, int i) TryReadNode(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
+    public static (bool success, Node node, int endIndex) TryReadNode(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
     {
         var i = startIndex;
 
@@ -114,7 +112,17 @@ static class DesignerHelper
         var tokenAt1 = i + 1 < tokens.Count ? tokens[i + 1] : null;
         var tokenAt2 = i + 2 < tokens.Count ? tokens[i + 2] : null;
         var tokenAt3 = i + 3 < tokens.Count ? tokens[i + 3] : null;
-        
+
+        if (tokenAt0?.tokenType == TokenType.QuotedString)
+        {
+            return (success: true, node: new()
+                {
+                    Tokens = tokens,
+                    Start  = i,
+                    End    = i
+                },
+                endIndex: i );
+        }
         
         if (tokenAt0?.tokenType == TokenType.AlfaNumeric)
         {
@@ -126,7 +134,7 @@ static class DesignerHelper
                         Start  = i,
                         End = i+2
                     },
-                    i: i + 2);
+                    endIndex: i + 2);
             }
 
             if (tokenAt0.value.All(char.IsNumber))
@@ -137,12 +145,12 @@ static class DesignerHelper
                         Start  = i,
                         End    = i
                     },
-                    i: i );
+                    endIndex: i );
             }
             
-            if (i + 1 == endIndex ||    i < tokens.Count && tokens[i + 1].tokenType == TokenType.Comma)
+            if (tokenAt1?.tokenType == TokenType.Comma)
             {
-                return (success: true, new() { Name = tokens[i].value, Tokens = tokens, Start = i, End = i}, i + 2);
+                return (success: true, new() { Name = tokens[i].value, Tokens = tokens, Start = i, End = i}, i);
             }
             
             if (i < tokens.Count && tokens[i + 1].tokenType == TokenType.LeftParenthesis)
@@ -163,7 +171,7 @@ static class DesignerHelper
                                 End = indexOfPair,
                                 Parameters = parameterNodes
                                 
-                            }, indexOfPair + 1);        
+                            }, indexOfPair);        
                         }
                     }
 

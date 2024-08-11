@@ -44,7 +44,7 @@ static class Lexer
     {
         if (startIndex == endIndex)
         {
-            return tokens[startIndex].value;
+            return tokenToString(tokens[startIndex]);
         }
         return string.Join(string.Empty, tokens.Skip(startIndex).Take(endIndex - startIndex + 1).Select(tokenToString));
 
