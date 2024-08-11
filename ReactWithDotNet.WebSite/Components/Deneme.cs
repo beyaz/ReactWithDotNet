@@ -7,7 +7,7 @@ class Deneme : PureComponent
     protected override DesignerCode Designer => new()
     {
         { [0], [Padding(22), Background("yellow"), WidthFitContent] },
-        { [0, 0], [Size(200), Background("green")] }
+        { [0, 0], [Size(200), Background("green"), Hover(Background("blue"), BorderRadius(8))] }
     };
 
     #endregion

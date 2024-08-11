@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace ReactWithDotNet.Tokenizing;
 
@@ -34,6 +35,20 @@ enum TokenType
 
 static class Lexer
 {
+    public static string ToString(IReadOnlyList<Token> tokens)
+    {
+        return string.Join(string.Empty, tokens.Select(t => t.value));
+    }
+    
+    public static string ToString(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
+    {
+        if (startIndex == endIndex)
+        {
+            return tokens[startIndex].value;
+        }
+        return string.Join(string.Empty, tokens.Skip(startIndex).Take(endIndex - startIndex + 1).Select(t => t.value));
+    }
+    
     public static (bool isFound, int indexOfPair) FindPair(IReadOnlyList<Token> tokens, int startIndex, Func<Token, bool> isPair)
     {
         var i = startIndex;

@@ -88,7 +88,7 @@ static class Ast
     {
         var (hasRead, readValues, newIndex) = TryReadWhile(tokens, startIndex, x => x.tokenType == TokenType.AlfaNumeric || x.tokenType == TokenType.Dot);
 
-        return (hasRead, ToString(readValues), newIndex);
+        return (hasRead, Lexer.ToString(readValues), newIndex);
     }
 
 
@@ -478,10 +478,7 @@ static class Ast
 
    
 
-    static string ToString(this IReadOnlyList<Token> tokens)
-    {
-        return string.Join(string.Empty, tokens.Select(t => t.value));
-    }
+    
 
     static (bool hasRead, IReadOnlyList<Token> readValues, int newIndex) TryReadWhile(IReadOnlyList<Token> tokens, int startIndex, Func<Token, bool> isOk)
     {

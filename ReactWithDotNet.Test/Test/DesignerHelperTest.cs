@@ -12,7 +12,7 @@ public class DesignerHelperTest
     {
         const string inputCode = """
 
-                                 BackgroundWhite
+                                 BackgroundWhite, Padding(22),  WidthFitContent
 
                                  """;
 
@@ -22,8 +22,9 @@ public class DesignerHelperTest
 
         tokens = tokens.Where(x=>x.tokenType != TokenType.Space).ToList();
 
-        var (success, node, i) = DesignerHelper.TryReadNode(tokens,0,0);
-
-
+        var (success, nodes, i) = DesignerHelper.TryReadNodes(tokens,0,tokens.Count);
+       
+        success.Should().BeTrue();
+        string.Join(", ", nodes).Should().Be("BackgroundWhite, Padding(22), WidthFitContent");
     }
 }
