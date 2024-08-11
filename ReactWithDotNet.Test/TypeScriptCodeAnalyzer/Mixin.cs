@@ -36,7 +36,7 @@ static class Mixin
 
         var valueAsTokens = reactNode.tokens;
         
-        if (Ast.FindMatch(tokens, startIndex, valueAsTokens).isFound)
+        if (Lexer.FindMatch(tokens, startIndex, valueAsTokens).isFound)
         {
             return true;
         }
@@ -63,7 +63,7 @@ static class Mixin
                 {
                     for (var i = 0; i < valueAsTokens.Count; i++)
                     {
-                        if (!Ast.IsEquals(valueAsTokens[i], tokens[tokens.Count - valueAsTokens.Count + i]))
+                        if (!Lexer.IsEquals(valueAsTokens[i], tokens[tokens.Count - valueAsTokens.Count + i]))
                         {
                             return false;
                         }
@@ -127,7 +127,7 @@ static class Mixin
                 {
                     startIndexB = tokenIndexB+1;
                     
-                    if (Ast.IsEquals(tokenA, tokenB))
+                    if (Lexer.IsEquals(tokenA, tokenB))
                     {
                         continue;
                     }
@@ -185,7 +185,7 @@ static class Mixin
                 {
                     for (var i = 0; i < valueAsTokens.Count; i++)
                     {
-                        if (!Ast.IsEquals(valueAsTokens[i], tokens[tokens.Count - valueAsTokens.Count + i]))
+                        if (!Lexer.IsEquals(valueAsTokens[i], tokens[tokens.Count - valueAsTokens.Count + i]))
                         {
                             return false;
                         }

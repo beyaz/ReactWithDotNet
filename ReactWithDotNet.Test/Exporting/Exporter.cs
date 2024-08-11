@@ -298,7 +298,7 @@ static class Exporter
             return (null, new List<string>());
         }
 
-        var (isFound, indexOfLastMatchedToken) = Ast.FindMatch(tokens, 0, Lexer.ParseTokens(input.StartFrom, 0).tokens);
+        var (isFound, indexOfLastMatchedToken) = Lexer.FindMatch(tokens, 0, Lexer.ParseTokens(input.StartFrom, 0).tokens);
         if (!isFound)
         {
             return (null, new List<string>());

@@ -1,4 +1,7 @@
-﻿namespace ReactWithDotNet;
+﻿using ReactWithDotNet.Tokenizing;
+using static ReactWithDotNet.Tokenizing.Lexer;
+
+namespace ReactWithDotNet;
 
 public sealed class DesignerCode : List<(IReadOnlyList<int> VisualLocation, IReadOnlyList<Modifier> Modifiers)>
 {
@@ -73,5 +76,31 @@ static class DesignerHelper
                 return node;
             }
         }
+    }
+    
+    
+    public sealed class Node
+    {
+        public string Name { get; init; }
+    }
+
+    public static (bool success, Node node, int i) TryReadNode(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
+    {
+        var i = startIndex;
+        
+        while (i <= endIndex)
+        {
+            if (tokens[i].tokenType == TokenType.AlfaNumeric)
+            {
+                if (i == endIndex)
+                {
+                    return (success: true, new() { Name = tokens[i].value }, i);
+                }
+            }
+            i++;
+        }
+        
+
+        return default;
     }
 }

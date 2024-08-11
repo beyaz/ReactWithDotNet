@@ -1,8 +1,8 @@
 using ReactWithDotNet.Exporting;
 using ReactWithDotNet.Tokenizing;
+using static ReactWithDotNet.Tokenizing.Lexer;
 
 namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
-
 
 class TsTypeReference
 {
@@ -80,83 +80,9 @@ static class Ast
         return returnValue;
     }
     
-    public static (bool isFound, int indexOfLastMatchedToken) FindMatch(IReadOnlyList<Token> tokens, int startIndex, IReadOnlyList<Token> searchTokens)
-    {
-        var i = startIndex;
+    
 
-        while (tokens.Count > i)
-        {
-            var isFound = true;
-
-            var j = i;
-
-            foreach (var searchToken in searchTokens)
-            {
-                if (searchToken.tokenType == TokenType.Space)
-                {
-                    continue;
-                }
-
-                while (tokens.Count > j && tokens[j].tokenType == TokenType.Space)
-                {
-                    j++;
-                }
-
-                if (tokens.Count == j)
-                {
-                    break;
-                }
-
-                if (!IsEquals(tokens[j], searchToken))
-                {
-                    isFound = false;
-                    break;
-                }
-
-                j++;
-            }
-
-            if (isFound)
-            {
-                return (isFound: true, j - 1);
-            }
-
-            i++;
-        }
-
-        return (false, -1);
-    }
-
-    public static (bool isFound, int indexOfPair) FindPair(IReadOnlyList<Token> tokens, int startIndex, Func<Token, bool> isPair)
-    {
-        var i = startIndex;
-
-        var stack = new Stack<Token>();
-
-        stack.Push(tokens[i]);
-
-        i++;
-        while (tokens.Count > i)
-        {
-            if (tokens[i].tokenType == tokens[startIndex].tokenType)
-            {
-                stack.Push(tokens[i]);
-            }
-
-            if (isPair(tokens[i]))
-            {
-                stack.Pop();
-                if (stack.Count == 0)
-                {
-                    return (true, i);
-                }
-            }
-
-            i++;
-        }
-
-        return (false, -1);
-    }
+  
 
     public static (bool hasRead, string value, int newIndex) TryReadAlfaNumericOrDotSeparetedAlfanumeric(IReadOnlyList<Token> tokens, int startIndex)
     {
@@ -550,7 +476,7 @@ static class Ast
         }
     }
 
-    public static bool IsEquals(Token a, Token b) => a.tokenType == b.tokenType && a.value == b.value;
+   
 
     static string ToString(this IReadOnlyList<Token> tokens)
     {
