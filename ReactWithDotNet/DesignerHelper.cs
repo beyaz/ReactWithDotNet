@@ -7,7 +7,7 @@ public sealed class DesignerCode : List<(IReadOnlyList<int> VisualLocation, IRea
 {
     public void Add(IReadOnlyList<int> VisualLocation, IReadOnlyList<Modifier> Modifiers)
     {
-        Add((VisualLocation,Modifiers));
+        Add((VisualLocation, Modifiers));
     }
 }
 
@@ -77,32 +77,6 @@ static class DesignerHelper
             }
         }
     }
-    
-    
-    public sealed class Node
-    {
-        public string Name { get; init; }
-        
-        public IReadOnlyList<Node> Parameters { get; init; }
-
-        public required IReadOnlyList<Token> Tokens { get; init; }
-
-        public int Start { get; init; }
-
-        public int End { get; init; }
-        
-        public override string ToString()
-        {
-            if (Parameters?.Count > 0)
-            {
-                return $"{Name}({string.Join(", ", Parameters)})";
-            }
-            
-            return Lexer.ToString(Tokens, Start, End);
-        }
-    }
-
-  
 
     public static (bool success, Node node, int endIndex) TryReadNode(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
     {
@@ -110,8 +84,8 @@ static class DesignerHelper
 
         var tokenAt0 = i + 0 < tokens.Count ? tokens[i + 0] : null;
         var tokenAt1 = i + 1 < tokens.Count ? tokens[i + 1] : null;
-        var tokenAt2 = i + 2 < tokens.Count ? tokens[i + 2] : null;
-        var tokenAt3 = i + 3 < tokens.Count ? tokens[i + 3] : null;
+        //var tokenAt2 = i + 2 < tokens.Count ? tokens[i + 2] : null;
+        //var tokenAt3 = i + 3 < tokens.Count ? tokens[i + 3] : null;
 
         if (tokenAt0?.tokenType == TokenType.QuotedString)
         {
@@ -121,9 +95,9 @@ static class DesignerHelper
                     Start  = i,
                     End    = i
                 },
-                endIndex: i );
+                endIndex: i);
         }
-        
+
         if (tokenAt0?.tokenType == TokenType.AlfaNumeric)
         {
             if (tokenAt1?.tokenType == TokenType.Dot)
@@ -132,7 +106,7 @@ static class DesignerHelper
                     {
                         Tokens = tokens,
                         Start  = i,
-                        End = i+2
+                        End    = i + 2
                     },
                     endIndex: i + 2);
             }
@@ -145,51 +119,47 @@ static class DesignerHelper
                         Start  = i,
                         End    = i
                     },
-                    endIndex: i );
+                    endIndex: i);
             }
-            
+
             if (tokenAt1?.tokenType == TokenType.Comma)
             {
-                return (success: true, new() { Name = tokens[i].value, Tokens = tokens, Start = i, End = i}, i);
+                return (success: true, new() { Name = tokens[i].value, Tokens = tokens, Start = i, End = i }, i);
             }
-            
-            if (i < tokens.Count && tokens[i + 1].tokenType == TokenType.LeftParenthesis)
+
+            if (tokenAt1?.tokenType == TokenType.LeftParenthesis)
             {
                 var (isFound, indexOfPair) = FindPair(tokens, i + 1, x => x.tokenType == TokenType.RightParenthesis);
                 if (isFound)
                 {
-                    var (success, parameterNodes, rightParenthesisIndex) = TryReadNodes(tokens,  i + 2, indexOfPair-1);
+                    var (success, parameterNodes, rightParenthesisIndex) = TryReadNodes(tokens, i + 2, indexOfPair - 1);
                     if (success)
                     {
                         if (rightParenthesisIndex == indexOfPair)
                         {
                             return (success: true, new()
                             {
-                                Name = tokens[i].value, 
-                                Tokens = tokens, 
-                                Start = i,
-                                End = indexOfPair,
+                                Name       = tokens[i].value,
+                                Tokens     = tokens,
+                                Start      = i,
+                                End        = indexOfPair,
                                 Parameters = parameterNodes
-                                
-                            }, indexOfPair);        
+                            }, indexOfPair);
                         }
                     }
-
-                    
                 }
             }
         }
-        
 
         return default;
     }
-    
+
     public static (bool success, IReadOnlyList<Node> nodes, int i) TryReadNodes(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
     {
         var nodes = new List<Node>();
-        
+
         var i = startIndex;
-        
+
         while (i <= endIndex)
         {
             if (tokens[i].tokenType == TokenType.Comma)
@@ -197,20 +167,40 @@ static class DesignerHelper
                 i++;
                 continue;
             }
-            
+
             var (success, node, newIndex) = TryReadNode(tokens, i, endIndex);
             if (!success)
             {
                 return (success: false, nodes, i);
             }
 
-            i = newIndex+1;
-            
-            nodes.Add(node);
+            i = newIndex + 1;
 
-            
+            nodes.Add(node);
         }
 
         return (success: true, nodes, i);
+    }
+
+    public sealed class Node
+    {
+        public int End { get; init; }
+        public string Name { get; init; }
+
+        public IReadOnlyList<Node> Parameters { get; init; }
+
+        public int Start { get; init; }
+
+        public required IReadOnlyList<Token> Tokens { get; init; }
+
+        public override string ToString()
+        {
+            if (Parameters?.Count > 0)
+            {
+                return $"{Name}({string.Join(", ", Parameters)})";
+            }
+
+            return Lexer.ToString(Tokens, Start, End);
+        }
     }
 }
