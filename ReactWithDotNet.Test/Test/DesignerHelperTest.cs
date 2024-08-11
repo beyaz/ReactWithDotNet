@@ -19,16 +19,12 @@ public class DesignerHelperTest
     [TestMethod]
     public void _1_()
     {
-        const string inputCode = """
-
-                                 BackgroundWhite, Padding(22.56), Background("yellow"),   WidthFitContent, Margin(5,8), Hover( Padding(56), Margin(7,8) )
-
-                                 """;
-
-        const string expectedCode = "BackgroundWhite, Padding(22.56), Background(\"yellow\"), WidthFitContent, Margin(5,8), Hover(Padding(56), Margin(7,8))";
+        const string inputCode = "Opacity(0.5), Focus(DisplayNone), Hover(Margin(1, 2, 3, 4), Margin(4), Padding(22.56), BackgroundWhite,  Background(\"yellow\"))";
+        const string expectedCode = "Opacity(0.5), Focus(DisplayNone), Hover(Margin(1, 2, 3, 4), Margin(4), Padding(22.56), BackgroundWhite, Background(\"yellow\"))";
 
         Assert(inputCode, expectedCode);
     }
+    
 
     static void Assert(string inputCode, string expectedCode)
     {

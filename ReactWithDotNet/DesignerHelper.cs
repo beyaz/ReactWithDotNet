@@ -137,7 +137,7 @@ static class DesignerHelper
                     endIndex: i + 2);
             }
 
-            if (tokenAt0.value.All(char.IsNumber))
+            if (tokenAt0.value.All(char.IsNumber) || startIndex == endIndex)
             {
                 return (success: true, node: new()
                     {
