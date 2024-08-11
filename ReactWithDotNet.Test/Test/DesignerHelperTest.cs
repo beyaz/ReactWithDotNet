@@ -19,8 +19,8 @@ public class DesignerHelperTest
     [TestMethod]
     public void _1_()
     {
-        const string inputCode = "Opacity(0.5), Focus(DisplayNone), Active(FontSize23, TextAlign(\"center\")), Hover(Margin(1, 2, 3, 4), Margin(4), Padding(22.56), BackgroundWhite,  Background(\"yellow\"))";
-        const string expectedCode = "Opacity(0.5), Focus(DisplayNone), Active(FontSize23, TextAlign(\"center\")), Hover(Margin(1, 2, 3, 4), Margin(4), Padding(22.56), BackgroundWhite, Background(\"yellow\"))";
+        const string inputCode = "Opacity(0.5), Focus(DisplayNone),   Border(1, solid, Gray100), Active(FontSize23, TextAlign(\"center\")), Hover(Margin(1, 2, 3, 4), Margin(4), Padding(22.56), BackgroundWhite,  Background(\"yellow\"))";
+        const string expectedCode = "Opacity(0.5), Focus(DisplayNone), Border(1, solid, Gray100), Active(FontSize23, TextAlign(\"center\")), Hover(Margin(1, 2, 3, 4), Margin(4), Padding(22.56), BackgroundWhite, Background(\"yellow\"))";
 
         Assert(inputCode, expectedCode);
     }
