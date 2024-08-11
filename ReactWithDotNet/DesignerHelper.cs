@@ -83,8 +83,6 @@ static class DesignerHelper
     {
         public string Name { get; init; }
         
-        public bool IsLeaf { get; init; }
-
         public string StringValue { get; init; }
 
         public IReadOnlyList<Node> Parameters { get; init; }
@@ -109,6 +107,7 @@ static class DesignerHelper
         
         if (tokens[i].tokenType == TokenType.AlfaNumeric)
         {
+            
             if (i +1 == endIndex ||    i < tokens.Count && tokens[i + 1].tokenType == TokenType.Comma)
             {
                 return (success: true, new() { Name = tokens[i].value, Tokens = tokens, Start = i, End = i}, i + 2);
