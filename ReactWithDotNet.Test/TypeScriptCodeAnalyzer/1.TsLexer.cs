@@ -34,7 +34,7 @@ enum TokenType
 
 static class TsLexer
 {
-    public static (Exception exception, bool hasRead, int endIndex, IReadOnlyList<Token> tokens) ParseTokens(string content, int startIndex)
+    public static (bool hasRead, int endIndex, IReadOnlyList<Token> tokens) ParseTokens(string content, int startIndex)
     {
         var tokens = new List<Token>();
 
@@ -44,12 +44,7 @@ static class TsLexer
 
         while (totalLength > i)
         {
-            var (exception, hasRead, endIndex, token) = ReadNextToken(content, i);
-            if (exception is not null)
-            {
-                return (exception, hasRead: false, startIndex, Enumerable.Empty<Token>().ToList());
-            }
-
+            var (hasRead, endIndex, token) = ReadNextToken(content, i);
             if (hasRead)
             {
                 i = endIndex;
@@ -59,10 +54,10 @@ static class TsLexer
                 continue;
             }
 
-            return (exception: new Exception("Next token not recognized"), hasRead: false, -1, null);
+            return (hasRead: false, default, default);
         }
 
-        return (exception: null, hasRead: true, i, tokens);
+        return (hasRead: true, i, tokens);
     }
 
     static (bool hasRead, int endIndex, string value) HasMatch(string content, int startIndex, string value)
@@ -81,14 +76,14 @@ static class TsLexer
         return (hasRead: false, -1, null);
     }
 
-    static (Exception exception, bool hasRead, int endIndex, Token token) ReadNextToken(string content, int startIndex)
+    static (bool hasRead, int endIndex, Token token) ReadNextToken(string content, int startIndex)
     {
         // Space
         {
             var (hasRead, endIndex, value) = TryReadSpaces(content, startIndex);
             if (hasRead)
             {
-                return (exception: null, hasRead: true, endIndex, new Token(startIndex, endIndex, TokenType.Space, value));
+                return (hasRead: true, endIndex, new(startIndex, endIndex, TokenType.Space, value));
             }
         }
 
@@ -97,7 +92,7 @@ static class TsLexer
             var (hasRead, endIndex, value) = ReadQuotedString(content, startIndex);
             if (hasRead)
             {
-                return (exception: null, hasRead: true, endIndex, new Token(startIndex, endIndex, TokenType.QuotedString, value));
+                return (hasRead: true, endIndex, new(startIndex, endIndex, TokenType.QuotedString, value));
             }
         }
 
@@ -106,7 +101,7 @@ static class TsLexer
             var (hasRead, endIndex, value) = TryReadComment(content, startIndex);
             if (hasRead)
             {
-                return (exception: null, hasRead: true, endIndex, new Token(startIndex, endIndex, TokenType.Comment, value));
+                return (hasRead: true, endIndex, new(startIndex, endIndex, TokenType.Comment, value));
             }
         }
 
@@ -115,13 +110,13 @@ static class TsLexer
             var (hasRead, endIndex, value) = HasMatch(content, startIndex, "=>");
             if (hasRead)
             {
-                return (exception: null, hasRead: true, endIndex, new Token(startIndex, endIndex, TokenType.Lambda, value));
+                return (hasRead: true, endIndex, new(startIndex, endIndex, TokenType.Lambda, value));
             }
         }
 
         // | < > , ? :
         {
-            var specialCharachters = "|<>,?:;{}.*&()[]=-";
+            const string specialCharachters = "|<>,?:;{}.*&()[]=-";
 
             var (hasRead, endIndex, value) = TryRead(content, startIndex, specialCharachters.Contains);
             if (hasRead)
@@ -149,24 +144,22 @@ static class TsLexer
                     _   => null
                 };
 
-                if (tokenType == null)
+                if (tokenType != null)
                 {
-                    return (exception: new Exception($"Token not recognized. @value:{value}"), hasRead: false, -1, null);
+                    return (hasRead: true, endIndex, new(startIndex, endIndex, tokenType.Value, value.ToString()));
                 }
-
-                return (exception: null, hasRead: true, endIndex, new Token(startIndex, endIndex, tokenType.Value, value.ToString()));
             }
         }
 
         {
-            var (hasRead, endIndex, value) = TryReadWhile(content, startIndex, c=>char.IsLetterOrDigit(c) || c=='_');
+            var (hasRead, endIndex, value) = TryReadWhile(content, startIndex, c => char.IsLetterOrDigit(c) || c == '_');
             if (hasRead)
             {
-                return (exception: null, hasRead: true, endIndex, new Token(startIndex, endIndex, TokenType.AlfaNumeric, value));
+                return (hasRead: true, endIndex, new(startIndex, endIndex, TokenType.AlfaNumeric, value));
             }
         }
 
-        return (exception: new Exception("Token not recognized"), hasRead: false, -1, null);
+        return (hasRead: false, default, default);
     }
 
     static (bool hasRead, int newIndex, string value) ReadQuotedString(string content, int startIndex)
@@ -198,7 +191,10 @@ static class TsLexer
 
         return (false, 0, null);
 
-        static bool isStringStartOrEnd(char chr) => chr == '"' || chr == "'"[0];
+        static bool isStringStartOrEnd(char chr)
+        {
+            return chr == '"' || chr == "'"[0];
+        }
     }
 
     static (bool hasRead, int endIndex, char value) TryRead(string content, int startIndex, Func<char, bool> isOk)

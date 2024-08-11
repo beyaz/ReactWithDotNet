@@ -9,6 +9,21 @@ namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
 public class TsParserTests
 {
     [TestMethod]
+    public void ParseDesignerCode()
+    {
+        var inputText = """
+                        protected override  DesignerCode Designer => new()
+                        {
+                            { [0], [Padding(22), Background("yellow"), WidthFitContent] },
+                            { [0, 0], [Size(200), Background("green")] }
+                        };
+                        """;
+        
+        ParseTokens(inputText, 0).hasRead.Should().BeTrue();
+
+    }
+    
+    [TestMethod]
     public void FullMatchTest()
     {
         var tokens = ParseTokens("Partial<    AlertClasses >  ;", 0).tokens;

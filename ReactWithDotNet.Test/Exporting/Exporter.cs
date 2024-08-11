@@ -290,11 +290,7 @@ static class Exporter
 
     static (Exception exception, IReadOnlyList<string> lines) CalculateCSharpFileContentLines(ExportInput input)
     {
-        var (exception, hasRead, _, tokens) = TsLexer.ParseTokens(input.DefinitionTsCode, 0);
-        if (exception is not null)
-        {
-            return (exception, null);
-        }
+        var (hasRead, _, tokens) = TsLexer.ParseTokens(input.DefinitionTsCode, 0);
 
         if (!hasRead)
         {
