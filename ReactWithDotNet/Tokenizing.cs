@@ -46,7 +46,17 @@ static class Lexer
         {
             return tokens[startIndex].value;
         }
-        return string.Join(string.Empty, tokens.Skip(startIndex).Take(endIndex - startIndex + 1).Select(t => t.value));
+        return string.Join(string.Empty, tokens.Skip(startIndex).Take(endIndex - startIndex + 1).Select(tokenToString));
+
+        static string tokenToString(Token token)
+        {
+            if (token.tokenType == TokenType.QuotedString)
+            {
+                return '"' + token.value + '"';
+            }
+
+            return token.value;
+        }
     }
     
     public static (bool isFound, int indexOfPair) FindPair(IReadOnlyList<Token> tokens, int startIndex, Func<Token, bool> isPair)
