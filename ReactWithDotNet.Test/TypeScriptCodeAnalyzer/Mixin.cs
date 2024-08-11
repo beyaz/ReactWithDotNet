@@ -28,7 +28,7 @@ static class Mixin
             return false;
         }
         
-        var reactNode = TsLexer.ParseTokens(value, 0);
+        var reactNode = Lexer.ParseTokens(value, 0);
         if (!reactNode.hasRead)
         {
             return false;
@@ -54,7 +54,7 @@ static class Mixin
         tokens = tokens.Where(IsNotSpace).ToList();
         if (tokens.Count > 1)
         {
-            var reactNode = TsLexer.ParseTokens(value, 0);
+            var reactNode = Lexer.ParseTokens(value, 0);
             if (reactNode.hasRead)
             {
                 var valueAsTokens = reactNode.tokens.Where(IsNotSpace).ToList();
@@ -176,7 +176,7 @@ static class Mixin
         tokens = tokens?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();
         if (tokens.Count > 1)
         {
-            var reactNode = TsLexer.ParseTokens(value, 0);
+            var reactNode = Lexer.ParseTokens(value, 0);
             if (reactNode.hasRead)
             {
                 var valueAsTokens = reactNode.tokens.Where(IsNotSpace).Where(IsNotColon).ToList();

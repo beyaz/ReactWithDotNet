@@ -1,7 +1,7 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReactWithDotNet.Exporting;
-using static ReactWithDotNet.Tokenizing.TsLexer;
+using static ReactWithDotNet.Tokenizing.Lexer;
 
 namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
 
