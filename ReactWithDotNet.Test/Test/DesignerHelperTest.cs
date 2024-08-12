@@ -26,7 +26,7 @@ public class DesignerHelperTest
     }
     
     [TestMethod]
-    public void _2_()
+    public void _3_()
     {
         var node = new DesignerHelper.Node
         {
@@ -53,7 +53,7 @@ public class DesignerHelperTest
     
      
     [TestMethod]
-    public void _3_()
+    public void _2_()
     {
         var node = new DesignerHelper.Node
         {
@@ -70,7 +70,22 @@ public class DesignerHelperTest
 
     }
     
+    [TestMethod]
+    public void _4_()
+    {
+        var tokens = Lexer.ParseTokens("Hover(DisplayNone)",0).tokens.Where(x=>x.tokenType != TokenType.Space).ToList();
+        
+        var node = DesignerHelper.TryReadNode(tokens,0,tokens.Count).node;
 
+        var (success, methodInfo, methodParameters) = DesignerHelper.ToModifier(node);
+        
+        success.Should().BeTrue();
+
+        methodInfo.Name.Should().Be("Hover");
+
+        methodParameters.Length.Should().Be(1);
+
+    }
     static void Assert(string inputCode, string expectedCode)
     {
         var (hasRead, _, tokens) = Lexer.ParseTokens(inputCode, 0);
