@@ -81,36 +81,6 @@ static class DesignerHelper
         }
     }
 
-
-    static (bool success, Modifier value) Compile((bool success, MethodInfo methodInfo, object[] methodParameters) response)
-    {
-        if (!response.success)
-        {
-            return default;
-        }
-
-        var value = (Modifier)response.methodInfo.Invoke(null, response.methodParameters);
-
-        return (success: true, value);
-    }
-
-    static (bool success, IReadOnlyList<T> values) Fold<T>(this IEnumerable<(bool success, T value)> items)
-    {
-        var resultList = new List<T>();
-        
-        foreach (var (success, value) in items)
-        {
-            if (!success)
-            {
-                return default;
-            }    
-            
-            resultList.Add(value);
-        }
-
-        return (true, resultList);
-    }
-    
     public static (bool success, MethodInfo methodInfo, object[] methodParameters) ToModifier(Node node)
     {
         if (node.Name.HasValue())
@@ -125,7 +95,7 @@ static class DesignerHelper
 
                 return default;
             }
-            
+
             if (node.Parameters.All(isNumberOrStringNode))
             {
                 var namedMethods = typeof(Mixin).GetMethods().Where(m => m.Name == node.Name && m.GetParameters().Length == node.Parameters.Count).ToList();
@@ -150,21 +120,16 @@ static class DesignerHelper
             }
 
             {
-
                 var targetMethodInfo = typeof(Mixin).GetMethod(node.Name, [typeof(StyleModifier[])]);
                 if (targetMethodInfo is not null)
                 {
                     var (success, values) = node.Parameters.Select(ToModifier).Select(Compile).Fold();
                     if (success)
                     {
-                        return (success: true, targetMethodInfo, values.Select(x=>(object)x).ToArray());
+                        return (success: true, targetMethodInfo, values.Select(x => (object)x).ToArray());
                     }
                 }
-
             }
-            
-            
-            
         }
 
         return default;
@@ -359,6 +324,35 @@ static class DesignerHelper
         }
 
         return (success: true, nodes, i);
+    }
+
+    static (bool success, Modifier value) Compile((bool success, MethodInfo methodInfo, object[] methodParameters) response)
+    {
+        if (!response.success)
+        {
+            return default;
+        }
+
+        var value = (Modifier)response.methodInfo.Invoke(null, response.methodParameters);
+
+        return (success: true, value);
+    }
+
+    static (bool success, IReadOnlyList<T> values) Fold<T>(this IEnumerable<(bool success, T value)> items)
+    {
+        var resultList = new List<T>();
+
+        foreach (var (success, value) in items)
+        {
+            if (!success)
+            {
+                return default;
+            }
+
+            resultList.Add(value);
+        }
+
+        return (true, resultList);
     }
 
     public sealed class Node
