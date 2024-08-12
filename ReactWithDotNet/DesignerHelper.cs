@@ -85,6 +85,17 @@ static class DesignerHelper
     {
         if (node.Name.HasValue())
         {
+            if (node.Parameters is null || node.Parameters.Count is 0)
+            {
+                var propertyInfo = typeof(Mixin).GetProperty(node.Name);
+                if (propertyInfo is not null)
+                {
+                    return (true, propertyInfo.GetMethod, []);
+                }
+
+                return default;
+            }
+            
             if (node.Parameters.Count > 0 && node.Parameters.All(isNumberOrStringNode))
             {
                 var namedMethods = typeof(Mixin).GetMethods().Where(m => m.Name == node.Name && m.GetParameters().Length == node.Parameters.Count).ToList();

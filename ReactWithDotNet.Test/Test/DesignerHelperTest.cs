@@ -51,6 +51,25 @@ public class DesignerHelperTest
 
     }
     
+     
+    [TestMethod]
+    public void _3_()
+    {
+        var node = new DesignerHelper.Node
+        {
+            Name = "DisplayNone"
+        };
+
+        var (success, methodInfo, methodParameters) = DesignerHelper.ToModifier(node);
+        
+        success.Should().BeTrue();
+
+        methodInfo.Name.Should().Be("get_DisplayNone");
+
+        methodParameters.Length.Should().Be(0);
+
+    }
+    
 
     static void Assert(string inputCode, string expectedCode)
     {
