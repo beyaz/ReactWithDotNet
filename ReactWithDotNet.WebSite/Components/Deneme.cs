@@ -2,6 +2,8 @@
 
 class Deneme : PureComponent
 {
+    public string aaa { get; set; }
+
     #region Designer Code [Do not edit manually]
 
     protected override DesignerCode Designer => new()
