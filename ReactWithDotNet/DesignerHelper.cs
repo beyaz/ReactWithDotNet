@@ -338,6 +338,15 @@ static class DesignerHelper
         return (success: true, value);
     }
 
+    static (bool success, B value) Then<A,B>(this (bool success, A value) item, Func<A,(bool success, B b)> next)
+    {
+        if (!item.success)
+        {
+            return default;
+        }
+
+        return  next(item.value);
+    }
     static (bool success, IReadOnlyList<T> values) Fold<T>(this IEnumerable<(bool success, T value)> items)
     {
         var resultList = new List<T>();
@@ -394,5 +403,103 @@ static class DesignerHelper
 
             return Name;
         }
+    }
+
+    public static (bool success, IReadOnlyList<Token> tokens) ReadDesignerCodeTokens(string classDefinitionCode)
+    {
+        string csharpCode;
+        {
+            const string startLine = "#region Designer Code [Do not edit manually]";
+
+            const string endLine = "#endregion Designer Code [Do not edit manually]";
+
+            var startIndex = classDefinitionCode.IndexOf(startLine, StringComparison.OrdinalIgnoreCase);
+            if (startIndex < 0)
+            {
+                return default;
+            }
+
+            var endIndex = classDefinitionCode.IndexOf(endLine, StringComparison.OrdinalIgnoreCase);
+            if (endIndex < 0)
+            {
+                return default;
+            }
+
+            csharpCode = classDefinitionCode.Substring(startIndex, endIndex - startIndex);
+        }
+
+        // remove region
+        csharpCode = string.Join(Environment.NewLine, csharpCode.Split(Environment.NewLine).Skip(1));
+
+        {
+            var (hasRead, _, tokens) = ParseTokens(csharpCode, 0);
+            if (!hasRead)
+            {
+                return default;
+            }
+
+            var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
+
+
+            return (true, tokenList);
+            
+
+            
+            
+
+        }
+        
+        
+    }
+
+    public static (bool success, DesignerCode designerCode) ReadDesignerCode(string classDefinitionCode)
+    {
+        return ReadDesignerCodeTokens(classDefinitionCode).Then(ReadDesignerValueFromTokens);
+    }
+    
+    public static (bool success, DesignerCode designerCode) ReadDesignerValueFromTokens(IReadOnlyList<Token> tokens)
+    {
+        var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
+
+        var leftBracketIndex  = tokenList.FindIndex(x => x.tokenType == TokenType.LeftBrace);
+        if (leftBracketIndex < 0)
+        {
+            return default;
+        }
+
+        var i = leftBracketIndex;
+
+        i++;
+
+        while (i<tokens.Count)
+        {
+            var token = tokens[i];
+            
+            if (token.tokenType == TokenType.Comma)
+            {
+                i++;
+                continue;
+            }
+                
+            
+            // read entry
+            {
+                if (tokens[i].tokenType == TokenType.LeftBrace)
+                {
+                    i++;
+                    
+                    if (tokens[i].tokenType == TokenType.Colon)
+                    {
+                        i++;
+                    
+                    }
+                    
+                }
+            }
+        }
+
+        
+        
+        return default;
     }
 }

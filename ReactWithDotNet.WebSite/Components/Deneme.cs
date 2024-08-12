@@ -12,7 +12,7 @@ class Deneme : PureComponent
         { [0, 0], [Size(200), Background("green"), Hover(Background("blue"), BorderRadius(8))] }
     };
 
-    #endregion
+    #endregion Designer Code [Do not edit manually]
 
     protected override Element render()
     {
