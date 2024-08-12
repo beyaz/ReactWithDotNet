@@ -60,7 +60,7 @@ static class Exporter
         }
         
         // is object
-        if (tokens[startIndex].tokenType == TokenType.LeftBrace && tokens[endIndex].tokenType == TokenType.RightBrace)
+        if (tokens[startIndex].tokenType == TokenType.LeftCurlyBracket && tokens[endIndex].tokenType == TokenType.RightCurlyBracket)
         {
             return "dynamic";
         }

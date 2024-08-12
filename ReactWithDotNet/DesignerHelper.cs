@@ -461,7 +461,7 @@ static class DesignerHelper
     {
         var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
 
-        var leftBracketIndex  = tokenList.FindIndex(x => x.tokenType == TokenType.LeftBrace);
+        var leftBracketIndex  = tokenList.FindIndex(x => x.tokenType == TokenType.LeftCurlyBracket);
         if (leftBracketIndex < 0)
         {
             return default;
@@ -484,7 +484,7 @@ static class DesignerHelper
             
             // read entry
             {
-                if (tokens[i].tokenType == TokenType.LeftBrace)
+                if (tokens[i].tokenType == TokenType.LeftCurlyBracket)
                 {
                     i++;
                     

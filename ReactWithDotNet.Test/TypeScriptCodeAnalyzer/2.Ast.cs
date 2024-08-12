@@ -51,9 +51,9 @@ static class Ast
         while (j < endIndex)
         {
             // o b j e c t
-            if (tokens[j].tokenType == TokenType.LeftBrace)
+            if (tokens[j].tokenType == TokenType.LeftCurlyBracket)
             {
-                var (isFound, indexOfPair) = FindPair(tokens, j, x => x.tokenType == TokenType.RightBrace);
+                var (isFound, indexOfPair) = FindPair(tokens, j, x => x.tokenType == TokenType.RightCurlyBracket);
                 if (!isFound)
                 {
                     return Fail("Left brace pair nor found.");
@@ -98,9 +98,9 @@ static class Ast
         var i = startIndex;
 
 
-        if (tokens[i].tokenType == TokenType.LeftBrace)
+        if (tokens[i].tokenType == TokenType.LeftCurlyBracket)
         {
-            var (isFound, indexOfPair) = FindPair(tokens, i, x => x.tokenType == TokenType.RightBrace);
+            var (isFound, indexOfPair) = FindPair(tokens, i, x => x.tokenType == TokenType.RightCurlyBracket);
             if (isFound)
             {
                 var response = ParseToMemberTokens(tokens, i+1, indexOfPair-1);
@@ -320,9 +320,9 @@ static class Ast
                         var (isFound, indexOfPair) = FindPair(tokens, i, x => x.tokenType == TokenType.GreaterThan);
                         if (isFound)
                         {
-                            if (tokens[indexOfPair + 1].tokenType == TokenType.LeftBracket)// [..]
+                            if (tokens[indexOfPair + 1].tokenType == TokenType.LeftSquareBracket)// [..]
                             {
-                                var (isFound2, indexOfPair2) = FindPair(tokens, indexOfPair + 1, x => x.tokenType == TokenType.RightBracket);
+                                var (isFound2, indexOfPair2) = FindPair(tokens, indexOfPair + 1, x => x.tokenType == TokenType.RightSquareBracket);
                                 if (isFound2)
                                 {
                                     indexOfPair = indexOfPair2;
@@ -400,9 +400,9 @@ static class Ast
             }
 
             // o b j e c t
-            if (tokens[i].tokenType == TokenType.LeftBrace)
+            if (tokens[i].tokenType == TokenType.LeftCurlyBracket)
             {
-                var (isFound, indexOfPair) = FindPair(tokens, i, x => x.tokenType == TokenType.RightBrace);
+                var (isFound, indexOfPair) = FindPair(tokens, i, x => x.tokenType == TokenType.RightCurlyBracket);
                 if (isFound)
                 {
                     var tsTypeReference = new TsTypeReference
@@ -421,7 +421,7 @@ static class Ast
 
         // union string sample |'left' | 'right'
         if (tokens[i].tokenType == TokenType.Union ||
-            tokens[i].tokenType == TokenType.LeftBracket ||
+            tokens[i].tokenType == TokenType.LeftSquareBracket ||
             tokens[i].tokenType == TokenType.QuotedString)
         {
             var (hasRead, readValues, newIndex) = TryReadWhile(tokens, i, x => x.tokenType != TokenType.SemiColon);
