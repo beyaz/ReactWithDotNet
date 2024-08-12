@@ -1,5 +1,7 @@
 ﻿using System.Globalization;
+using System.Reflection;
 using ReactWithDotNet.Tokenizing;
+using ReactWithDotNet.UIDesigner;
 using static ReactWithDotNet.Tokenizing.Lexer;
 
 namespace ReactWithDotNet;
@@ -76,6 +78,117 @@ static class DesignerHelper
 
                 return node;
             }
+        }
+    }
+
+    public static (bool success, MethodInfo methodInfo, object[] methodParameters) ToModifier(Node node)
+    {
+        if (node.Name.HasValue())
+        {
+            if (node.Parameters.Count > 0 && node.Parameters.All(isNumberOrStringNode))
+            {
+                var namedMethods = typeof(Mixin).GetMethods().Where(m => m.Name == node.Name && m.GetParameters().Length == node.Parameters.Count).ToList();
+
+                for (var i = 0; i < node.Parameters.Count; i++)
+                {
+                    var parameterNode = node.Parameters[i];
+
+                    namedMethods = namedMethods.Where(m => hasMatch(parameterNode, m.GetParameters()[i])).ToList();
+                }
+
+                if (namedMethods.Count == 1)
+                {
+                    var targetMethod = namedMethods[0];
+
+                    var (success, parameters) = calculateParameters(targetMethod, node.Parameters);
+                    if (success)
+                    {
+                        return (success: true, targetMethod, parameters);
+                    }
+                }
+            }
+        }
+
+        return default;
+
+        static (bool success, object[] parameters) calculateParameters(MethodInfo methodInfo, IReadOnlyList<Node> parameterNodes)
+        {
+            var parameterInfoList = methodInfo.GetParameters();
+
+            var parameters = new List<object>();
+
+            foreach (var parameterInfo in parameterInfoList)
+            {
+                var (success, value) = tryConvertToTargetType(parameterNodes[parameterInfo.Position], parameterInfo);
+                if (!success)
+                {
+                    return default;
+                }
+
+                parameters.Add(value);
+            }
+
+            return (true, parameters.ToArray());
+
+            static (bool success, object value) tryConvertToTargetType(Node node, ParameterInfo parameterInfo)
+            {
+                if (node.IsStringNode)
+                {
+                    return (true, node.StringValue);
+                }
+
+                if (node.IsDoubleNode)
+                {
+                    return (true, node.DoubleValue);
+                }
+
+                if (node.IsNumberNode)
+                {
+                    if (parameterInfo.ParameterType == typeof(double))
+                    {
+                        return (true, Convert.ToDouble(node.NumberValue));
+                    }
+
+                    if (parameterInfo.ParameterType == typeof(int))
+                    {
+                        return (true, Convert.ToInt32(node.NumberValue));
+                    }
+                }
+
+                return default;
+            }
+        }
+
+        static bool hasMatch(Node node, ParameterInfo parameterInfo)
+        {
+            if (node.IsStringNode)
+            {
+                if (parameterInfo.ParameterType == typeof(string))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            if (node.IsNumberNode || node.IsDoubleNode)
+            {
+                if (parameterInfo.ParameterType == typeof(byte) ||
+                    parameterInfo.ParameterType == typeof(short) ||
+                    parameterInfo.ParameterType == typeof(int) ||
+                    parameterInfo.ParameterType == typeof(long) ||
+                    parameterInfo.ParameterType == typeof(double))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        static bool isNumberOrStringNode(Node node)
+        {
+            return node.IsNumberNode || node.IsDoubleNode || node.IsStringNode;
         }
     }
 

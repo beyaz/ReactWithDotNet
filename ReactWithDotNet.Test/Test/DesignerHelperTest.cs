@@ -25,6 +25,32 @@ public class DesignerHelperTest
         Assert(inputCode, expectedCode);
     }
     
+    [TestMethod]
+    public void _2_()
+    {
+        var node = new DesignerHelper.Node
+        {
+            Name = "Opacity",
+            Parameters =
+            [
+                new()
+                {
+                    IsDoubleNode = true,
+                    DoubleValue  = 0.7
+                }
+            ]
+        };
+
+        var (success, methodInfo, methodParameters) = DesignerHelper.ToModifier(node);
+        
+        success.Should().BeTrue();
+
+        methodInfo.Name.Should().Be("Opacity");
+
+        methodParameters[0].Should().Be(0.7);
+
+    }
+    
 
     static void Assert(string inputCode, string expectedCode)
     {
