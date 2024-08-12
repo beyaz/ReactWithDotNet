@@ -461,13 +461,13 @@ static class DesignerHelper
     {
         var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
 
-        var leftBracketIndex  = tokenList.FindIndex(x => x.tokenType == TokenType.LeftCurlyBracket);
-        if (leftBracketIndex < 0)
+        var leftCurlyBracketIndex  = tokenList.FindIndex(x => x.tokenType == TokenType.LeftCurlyBracket);
+        if (leftCurlyBracketIndex < 0)
         {
             return default;
         }
 
-        var i = leftBracketIndex;
+        var i = leftCurlyBracketIndex;
 
         i++;
 
@@ -480,6 +480,11 @@ static class DesignerHelper
                 i++;
                 continue;
             }
+            
+            if (token.tokenType == TokenType.RightCurlyBracket)
+            {
+                break;
+            }
                 
             
             // read entry
@@ -488,17 +493,34 @@ static class DesignerHelper
                 {
                     i++;
                     
-                    if (tokens[i].tokenType == TokenType.Colon)
+                    if (tokens[i].tokenType == TokenType.LeftSquareBracket)
                     {
+                        var (isFound, indexOfPair) = Lexer.FindPair(tokens, i, x => x.tokenType == TokenType.RightSquareBracket);
+                        if (!isFound)
+                        {
+                            return default;
+                        }
+
+                        var partLocation = Lexer.ToString(tokens, i, indexOfPair);
+                        
+                        
+                        var (isFound2, indexOfPair2) = Lexer.FindPair(tokens, indexOfPair+2, x => x.tokenType == TokenType.RightSquareBracket);
+                        if (!isFound2)
+                        {
+                            return default;
+                        }
+
+
+                        i = indexOfPair2;
                         i++;
-                    
+                        i++;
+                        continue;
+
                     }
                     
                 }
             }
         }
-
-        
         
         return default;
     }
