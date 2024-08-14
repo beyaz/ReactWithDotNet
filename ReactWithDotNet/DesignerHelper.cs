@@ -560,7 +560,7 @@ static class DesignerHelper
                 var (success, errorMessage, newIndex) = readLeftCurlyBracket(tokens, i);
                 if (!success)
                 {
-                    return (false, errorMessage, default);
+                    return nok(errorMessage);
                 }
         
                 i = newIndex;
@@ -570,7 +570,7 @@ static class DesignerHelper
                 var (success, errorMessage, newIndex) = readToken(tokens, i,TokenType.LeftSquareBracket);
                 if (!success)
                 {
-                    return (false, errorMessage, default);
+                    return nok(errorMessage);
                 }
         
                 i = newIndex;
@@ -578,10 +578,10 @@ static class DesignerHelper
             
             
                     
-            var (isFound, indexOfPair) = Lexer.FindPair(tokens, i, x => x.tokenType == TokenType.RightSquareBracket);
+            var (isFound, indexOfPair) = Lexer.FindPair(tokens, i-1, x => x.tokenType == TokenType.RightSquareBracket);
             if (!isFound)
             {
-                return default;
+                return nok($"Close pair not found. At: {tokens[i-1].startIndex}");
             }
 
             var partLocation = Lexer.ToString(tokens, i, indexOfPair);
@@ -594,6 +594,11 @@ static class DesignerHelper
             }
 
             return default;
+
+            static (bool success, string errorMessage, int newIndex) nok(string errorMessage)
+            {
+                return (default, errorMessage, default);
+            }
         }
         
     }
