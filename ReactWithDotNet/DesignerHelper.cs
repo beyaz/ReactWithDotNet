@@ -471,13 +471,13 @@ static class DesignerHelper
 
         // readLeftCurlyBracket
         {
-            var (success, errorMessage, newIndex) = readLeftCurlyBracket(tokens, i);
-            if (!success)
+            var response = readToken(tokens, i,TokenType.LeftCurlyBracket);
+            if (!response.Success)
             {
-                return (false, errorMessage, default);
+                return (false, response.ErrorMessage, default);
             }
         
-            i = newIndex;
+            i = response.NewIndex;
         }
         
       
@@ -535,45 +535,44 @@ static class DesignerHelper
         
         return default;
 
-        static (bool success, string errorMessage, int newIndex) readLeftCurlyBracket(IReadOnlyList<Token> tokens, int i)
-        {
-            return readToken(tokens, i, TokenType.LeftCurlyBracket);
-        }
         
-        static (bool success, string errorMessage, int newIndex) readToken(IReadOnlyList<Token> tokens, int i, TokenType tokenType)
+        
+        
+        
+        static TokenReadResponse readToken(IReadOnlyList<Token> tokens, int i, TokenType tokenType)
         {
-            if (tokens.Count > 0 && i >= 0)
+            if (tokens.Count > i && i >= 0)
             {
                 if (tokens[i].tokenType == tokenType)
                 {
-                    return (true, default, i + 1);
+                    return (tokens[i], i + 1);
                 }
             }
 
-            return (success: false, $"Expected token:{tokenType}", default);
+            return $"Expected token:{tokenType}";
         }
         
         static (bool success, string errorMessage, int newIndex) readEntry(IReadOnlyList<Token> tokens, int i)
         {
             // readLeftCurlyBracket
             {
-                var (success, errorMessage, newIndex) = readLeftCurlyBracket(tokens, i);
-                if (!success)
+                var leftCurlyBracket = readToken(tokens, i,TokenType.LeftCurlyBracket);
+                if (!leftCurlyBracket.Success)
                 {
-                    return nok(errorMessage);
+                    return nok(leftCurlyBracket.ErrorMessage);
                 }
         
-                i = newIndex;
+                i = leftCurlyBracket.NewIndex;
             }
             
             {
-                var (success, errorMessage, newIndex) = readToken(tokens, i,TokenType.LeftSquareBracket);
-                if (!success)
+                var leftSquareBracket = readToken(tokens, i,TokenType.LeftSquareBracket);
+                if (!leftSquareBracket.Success)
                 {
-                    return nok(errorMessage);
+                    return nok(leftSquareBracket.ErrorMessage);
                 }
         
-                i = newIndex;
+                i = leftSquareBracket.NewIndex;
             }
             
             
@@ -601,5 +600,27 @@ static class DesignerHelper
             }
         }
         
+    }
+
+
+    record TokenReadResponse
+    {
+        public bool Success { get; init; }
+        
+        public string ErrorMessage { get; init; }
+        
+        public Token Token{ get; init; }
+
+        public int NewIndex { get; init; }
+
+        public static implicit operator TokenReadResponse(string errorMessage)
+        {
+            return new() { ErrorMessage = errorMessage };
+        }
+        
+        public static implicit operator TokenReadResponse((Token token, int newIndex) tuple)
+        {
+            return new() { Success = true, NewIndex = tuple.newIndex, Token = tuple.token };
+        }
     }
 }
