@@ -338,11 +338,11 @@ static class DesignerHelper
         return (success: true, value);
     }
 
-    static (bool success, B value) Then<A,B>(this (bool success, A value) item, Func<A,(bool success, B b)> next)
+    static (bool success, string errorMessage, B value) Then<A,B>(this (bool success, A value) item, Func<A,(bool success, string errorMessage, B b)> next)
     {
         if (!item.success)
         {
-            return default;
+            return (false, default, default);
         }
 
         return  next(item.value);
@@ -452,12 +452,12 @@ static class DesignerHelper
         
     }
 
-    public static (bool success, DesignerCode designerCode) ReadDesignerCode(string classDefinitionCode)
+    public static (bool success, string errorMessage, DesignerCode designerCode) ReadDesignerCode(string classDefinitionCode)
     {
         return ReadDesignerCodeTokens(classDefinitionCode).Then(ReadDesignerValueFromTokens);
     }
     
-    public static (bool success, DesignerCode designerCode) ReadDesignerValueFromTokens(IReadOnlyList<Token> tokens)
+    public static (bool success, string errorMessage, DesignerCode designerCode) ReadDesignerValueFromTokens(IReadOnlyList<Token> tokens)
     {
         var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
 
@@ -469,7 +469,18 @@ static class DesignerHelper
 
         var i = leftCurlyBracketIndex;
 
-        i++;
+        // readLeftCurlyBracket
+        {
+            var (success, errorMessage, newIndex) = readLeftCurlyBracket(tokens, i);
+            if (!success)
+            {
+                return (false, errorMessage, default);
+            }
+        
+            i = newIndex;
+        }
+        
+      
 
         while (i<tokens.Count)
         {
@@ -523,5 +534,67 @@ static class DesignerHelper
         }
         
         return default;
+
+        static (bool success, string errorMessage, int newIndex) readLeftCurlyBracket(IReadOnlyList<Token> tokens, int i)
+        {
+            return readToken(tokens, i, TokenType.LeftCurlyBracket);
+        }
+        
+        static (bool success, string errorMessage, int newIndex) readToken(IReadOnlyList<Token> tokens, int i, TokenType tokenType)
+        {
+            if (tokens.Count > 0 && i >= 0)
+            {
+                if (tokens[i].tokenType == tokenType)
+                {
+                    return (true, default, i + 1);
+                }
+            }
+
+            return (success: false, $"Expected token:{tokenType}", default);
+        }
+        
+        static (bool success, string errorMessage, int newIndex) readEntry(IReadOnlyList<Token> tokens, int i)
+        {
+            // readLeftCurlyBracket
+            {
+                var (success, errorMessage, newIndex) = readLeftCurlyBracket(tokens, i);
+                if (!success)
+                {
+                    return (false, errorMessage, default);
+                }
+        
+                i = newIndex;
+            }
+            
+            {
+                var (success, errorMessage, newIndex) = readToken(tokens, i,TokenType.LeftSquareBracket);
+                if (!success)
+                {
+                    return (false, errorMessage, default);
+                }
+        
+                i = newIndex;
+            }
+            
+            
+                    
+            var (isFound, indexOfPair) = Lexer.FindPair(tokens, i, x => x.tokenType == TokenType.RightSquareBracket);
+            if (!isFound)
+            {
+                return default;
+            }
+
+            var partLocation = Lexer.ToString(tokens, i, indexOfPair);
+                        
+                        
+            var (isFound2, indexOfPair2) = Lexer.FindPair(tokens, indexOfPair+2, x => x.tokenType == TokenType.RightSquareBracket);
+            if (!isFound2)
+            {
+                return default;
+            }
+
+            return default;
+        }
+        
     }
 }
