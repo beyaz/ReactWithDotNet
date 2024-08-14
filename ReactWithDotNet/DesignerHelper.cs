@@ -592,12 +592,20 @@ static class DesignerHelper
                 return default;
             }
 
+         
+            
             return default;
 
+            nokk:
+            return nok("ttt");
+            
+            
             static (bool success, string errorMessage, int newIndex) nok(string errorMessage)
             {
                 return (default, errorMessage, default);
             }
+            
+           
         }
         
     }
