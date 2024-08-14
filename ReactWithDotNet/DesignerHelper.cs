@@ -545,35 +545,48 @@ static class DesignerHelper
             {
                 if (tokens[i].tokenType == tokenType)
                 {
-                    return (tokens[i], i + 1);
+                    return (i + 1, tokens[i]);
                 }
             }
 
             return $"Expected token:{tokenType}";
         }
         
+        static TokenReadResponse readTokens(IReadOnlyList<Token> tokens, int i,  TokenType[] tokenTypes)
+        {
+            var items = new List<Token>();
+            
+            foreach (var tokenType in tokenTypes)
+            {
+                var response = readToken(tokens, i, tokenType);
+                if (!response.Success)
+                {
+                    return response.ErrorMessage;
+                }
+                
+                items.AddRange(response.Tokens);
+
+                i = response.NewIndex;
+            }
+
+
+
+            return (i, items);
+        }
+        
         static (bool success, string errorMessage, int newIndex) readEntry(IReadOnlyList<Token> tokens, int i)
         {
             // readLeftCurlyBracket
             {
-                var leftCurlyBracket = readToken(tokens, i,TokenType.LeftCurlyBracket);
-                if (!leftCurlyBracket.Success)
+                var response = readTokens(tokens, i,[TokenType.LeftCurlyBracket, TokenType.LeftSquareBracket]);
+                if (!response.Success)
                 {
-                    return nok(leftCurlyBracket.ErrorMessage);
+                    return nok(response.ErrorMessage);
                 }
         
-                i = leftCurlyBracket.NewIndex;
+                i = response.NewIndex;
             }
             
-            {
-                var leftSquareBracket = readToken(tokens, i,TokenType.LeftSquareBracket);
-                if (!leftSquareBracket.Success)
-                {
-                    return nok(leftSquareBracket.ErrorMessage);
-                }
-        
-                i = leftSquareBracket.NewIndex;
-            }
             
             
                     
@@ -617,7 +630,7 @@ static class DesignerHelper
         
         public string ErrorMessage { get; init; }
         
-        public Token Token{ get; init; }
+        public IReadOnlyList<Token> Tokens { get; init; }
 
         public int NewIndex { get; init; }
 
@@ -626,9 +639,14 @@ static class DesignerHelper
             return new() { ErrorMessage = errorMessage };
         }
         
-        public static implicit operator TokenReadResponse((Token token, int newIndex) tuple)
+        public static implicit operator TokenReadResponse((int newIndex,  IReadOnlyList<Token> tokens) tuple)
         {
-            return new() { Success = true, NewIndex = tuple.newIndex, Token = tuple.token };
+            return new() { Success = true, NewIndex = tuple.newIndex, Tokens = tuple.tokens };
+        }
+        
+        public static implicit operator TokenReadResponse((int newIndex, Token token) tuple)
+        {
+            return new() { Success = true, NewIndex = tuple.newIndex, Tokens = [tuple.token] };
         }
     }
 }
