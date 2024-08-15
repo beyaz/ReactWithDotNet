@@ -470,7 +470,7 @@ static class DesignerHelper
 
         // readLeftCurlyBracket
         {
-            var response = readToken(tokens, i,TokenType.LeftCurlyBracket);
+            var response = ReadToken(tokens, i,TokenType.LeftCurlyBracket);
             if (!response.Success)
             {
                 return response.ErrorMessage;
@@ -520,7 +520,7 @@ static class DesignerHelper
     
     internal static TokenReadResponse<long[]> ReadInt64Array(IReadOnlyList<Token> tokens, int i)
     {
-        var response = readToken(tokens, i,TokenType.LeftSquareBracket);
+        var response = ReadToken(tokens, i,TokenType.LeftSquareBracket);
         if (!response.Success)
         {
             return response.ErrorMessage;
@@ -563,7 +563,7 @@ static class DesignerHelper
     
     internal static TokenReadResponse<long> ReadInt64(IReadOnlyList<Token> tokens, int i)
     {
-        return readToken(tokens, i, TokenType.AlfaNumeric).Then(t => TryParseLong(t.value));
+        return ReadToken(tokens, i, TokenType.AlfaNumeric).Then(t => TryParseLong(t.value));
     }
 
     
@@ -575,7 +575,7 @@ static class DesignerHelper
         
         // readLeftCurlyBracket
         {
-            var response = readToken(tokens, i,TokenType.LeftCurlyBracket);
+            var response = ReadToken(tokens, i,TokenType.LeftCurlyBracket);
             if (!response.Success)
             {
                 return nok(response.ErrorMessage);
@@ -597,7 +597,7 @@ static class DesignerHelper
         }
         
         {
-            var response = readToken(tokens, i,TokenType.Comma);
+            var response = ReadToken(tokens, i,TokenType.Comma);
             if (!response.Success)
             {
                 return nok(response.ErrorMessage);
@@ -607,7 +607,7 @@ static class DesignerHelper
         }
             
         {
-            var response = readToken(tokens, i,TokenType.LeftSquareBracket);
+            var response = ReadToken(tokens, i,TokenType.LeftSquareBracket);
             if (!response.Success)
             {
                 return nok(response.ErrorMessage);
@@ -633,7 +633,7 @@ static class DesignerHelper
         }
 
         {
-            var response = readToken(tokens, i,TokenType.RightCurlyBracket);
+            var response = ReadToken(tokens, i,TokenType.RightCurlyBracket);
             if (!response.Success)
             {
                 return nok(response.ErrorMessage);
@@ -671,7 +671,7 @@ static class DesignerHelper
         }
     }
     
-    static TokenReadResponse readToken(IReadOnlyList<Token> tokens, int i, TokenType tokenType)
+    internal static TokenReadResponse ReadToken(IReadOnlyList<Token> tokens, int i, TokenType tokenType)
     {
         if (tokens.Count > i && i >= 0)
         {
@@ -684,9 +684,13 @@ static class DesignerHelper
         return $"Expected token:{tokenType}";
     }
     
+    internal static class Reader
+    {
+        
+    }
     
 
-    record TokenReadResponse
+    internal record TokenReadResponse
     {
         public bool Success { get; init; }
         
