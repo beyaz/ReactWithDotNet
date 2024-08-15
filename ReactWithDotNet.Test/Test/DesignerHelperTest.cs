@@ -75,7 +75,7 @@ public class DesignerHelperTest
     {
         var tokens = Lexer.ParseTokens("Hover(DisplayNone)",0).tokens.Where(x=>x.tokenType != TokenType.Space).ToList();
         
-        var node = DesignerHelper.TryReadNode(tokens,0,tokens.Count).node;
+        var node = DesignerHelper.NodeReader.TryReadNode(tokens,0,tokens.Count).node;
 
         var (success, methodInfo, methodParameters) = DesignerHelper.ToModifier(node);
         
@@ -90,7 +90,7 @@ public class DesignerHelperTest
     [TestMethod]
     public void _5_()
     {
-        DesignerHelper.ReadInt64Array(GetTokens("[4,6,8,987]"),0).Value.Should().BeEquivalentTo([4,6,8,987]);
+        DesignerHelper.Reader.ReadInt64Array(GetTokens("[4,6,8,987]"),0).Value.Should().BeEquivalentTo([4,6,8,987]);
     }
 
     static IReadOnlyList<Token> GetTokens(string text)
@@ -137,7 +137,7 @@ public class DesignerHelperTest
 
         tokens = tokens.Where(x=>x.tokenType != TokenType.Space).ToList();
 
-        var (success, nodes, i) = DesignerHelper.TryReadNodes(tokens,0,tokens.Count-1);
+        var (success, nodes, i) = DesignerHelper.NodeReader.TryReadNodes(tokens,0,tokens.Count-1);
        
         success.Should().BeTrue();
 
