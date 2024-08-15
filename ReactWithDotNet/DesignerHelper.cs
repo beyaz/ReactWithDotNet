@@ -297,7 +297,7 @@ static class DesignerHelper
         }
     }
 
-    public static (bool success, IReadOnlyList<Node> nodes, int i) TryReadNodes(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
+    public static (bool success, IReadOnlyList<Node> nodes, int endIndex) TryReadNodes(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
     {
         var nodes = new List<Node>();
 
@@ -337,14 +337,14 @@ static class DesignerHelper
         return (success: true, value);
     }
 
-    static (bool success, string errorMessage, B value) Then<A,B>(this (bool success, A value) item, Func<A,(bool success, string errorMessage, B b)> next)
+    static Result<B> Then<A,B>(this Maybe<A> maybe, Func<A,Result<B>> next)
     {
-        if (!item.success)
+        if (maybe.IsNone)
         {
-            return (false, default, default);
+            return default(B);
         }
 
-        return  next(item.value);
+        return  next(maybe.Value);
     }
     static (bool success, IReadOnlyList<T> values) Fold<T>(this IEnumerable<(bool success, T value)> items)
     {
@@ -404,7 +404,7 @@ static class DesignerHelper
         }
     }
 
-    public static (bool success, IReadOnlyList<Token> tokens) ReadDesignerCodeTokens(string classDefinitionCode)
+    public static Maybe<IReadOnlyList<Token>> ReadDesignerCodeTokens(string classDefinitionCode)
     {
         string csharpCode;
         {
@@ -415,13 +415,13 @@ static class DesignerHelper
             var startIndex = classDefinitionCode.IndexOf(startLine, StringComparison.OrdinalIgnoreCase);
             if (startIndex < 0)
             {
-                return default;
+                return None;
             }
 
             var endIndex = classDefinitionCode.IndexOf(endLine, StringComparison.OrdinalIgnoreCase);
             if (endIndex < 0)
             {
-                return default;
+                return None;
             }
 
             csharpCode = classDefinitionCode.Substring(startIndex, endIndex - startIndex);
@@ -434,13 +434,13 @@ static class DesignerHelper
             var (hasRead, _, tokens) = ParseTokens(csharpCode, 0);
             if (!hasRead)
             {
-                return default;
+                return None;
             }
 
             var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
 
 
-            return (true, tokenList);
+            return tokenList;
             
 
             
@@ -451,12 +451,12 @@ static class DesignerHelper
         
     }
 
-    public static (bool success, string errorMessage, DesignerCode designerCode) ReadDesignerCode(string classDefinitionCode)
+    public static Result<DesignerCode> ReadDesignerCode(string classDefinitionCode)
     {
         return ReadDesignerCodeTokens(classDefinitionCode).Then(ReadDesignerValueFromTokens);
     }
     
-    public static (bool success, string errorMessage, DesignerCode designerCode) ReadDesignerValueFromTokens(IReadOnlyList<Token> tokens)
+    public static Result<DesignerCode> ReadDesignerValueFromTokens(IReadOnlyList<Token> tokens)
     {
         var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
 
@@ -473,7 +473,7 @@ static class DesignerHelper
             var response = readToken(tokens, i,TokenType.LeftCurlyBracket);
             if (!response.Success)
             {
-                return (false, response.ErrorMessage, default);
+                return response.ErrorMessage;
             }
         
             i = response.NewIndex;
@@ -495,9 +495,12 @@ static class DesignerHelper
             {
                 break;
             }
+
+            var entry = ReadElementEntry(tokens, i);
+            if (!entry.Success)
+            {
                 
-           // read entry 
-           
+            }
         }
         
         return default;
@@ -567,8 +570,8 @@ static class DesignerHelper
     static Result<(long[] location, IReadOnlyList<Node> nodes, int newIndex)> ReadElementEntry(IReadOnlyList<Token> tokens, int i)
     {
 
-        long[] location = null;
-        IReadOnlyList<Node> nodes = null;
+        long[] location;
+        IReadOnlyList<Node> nodes;
         
         // readLeftCurlyBracket
         {
@@ -717,6 +720,8 @@ static class DesignerHelper
 
         public bool Success { get; init; }
 
+        public bool Fail =>!Success;
+
         public static implicit operator Result<TValue>(Exception exception)
         {
             return new() { Exception = exception };
@@ -732,7 +737,27 @@ static class DesignerHelper
             return new() { Exception = new (errorMessage) };
         }
     }
+
+    internal sealed class NoneObj;
+
+    internal static readonly NoneObj None = new();
     
+    internal record Maybe<TValue>
+    {
+        public TValue Value { get; init; }
+
+        public bool IsNone { get; init; }
+        
+        public static implicit operator Maybe<TValue>(NoneObj noneObj)
+        {
+            return new() { IsNone = true};
+        }
+
+        public static implicit operator Maybe<TValue>(TValue value)
+        {
+            return new() { Value = value };
+        }
+    }
     internal record TokenReadResponse<TValue>
     {
         public bool Success { get; init; }
@@ -774,4 +799,5 @@ static class DesignerHelper
 
         return result.Exception;
     }
+    
 }
