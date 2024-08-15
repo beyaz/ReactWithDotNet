@@ -702,7 +702,10 @@ static class DesignerHelper
             i = response.NewIndex;
 
             location = response.Value;
+            
         }
+
+        i++;
         
         {
             var response = Reader.ReadToken(tokens, i,TokenType.Comma);
