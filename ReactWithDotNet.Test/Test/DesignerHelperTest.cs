@@ -86,9 +86,20 @@ public class DesignerHelperTest
         methodParameters.Length.Should().Be(1);
 
     }
-    
+
     [TestMethod]
     public void _5_()
+    {
+        DesignerHelper.ReadInt64Array(GetTokens("[4,6,8,987]"),0).Value.Should().BeEquivalentTo([4,6,8,987]);
+    }
+
+    static IReadOnlyList<Token> GetTokens(string text)
+    {
+        return Lexer.ParseTokens(text, 0).tokens.Where(x => x.tokenType != TokenType.Space).ToList();
+    }
+    
+    [TestMethod]
+    public void _6_()
     {
         var classDefinitionCode = """
                                   class Deneme : PureComponent
