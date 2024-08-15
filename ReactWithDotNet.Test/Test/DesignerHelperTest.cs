@@ -90,7 +90,7 @@ public class DesignerHelperTest
     [TestMethod]
     public void _5_()
     {
-        DesignerHelper.Reader.ReadInt64Array(GetTokens("[4,6,8,987]"),0).Value.Should().BeEquivalentTo([4,6,8,987]);
+        DesignerHelper.Reader.ReadInt64Array(GetTokens("[4,6,8,987]"),0).Value.value.Should().BeEquivalentTo([4,6,8,987]);
     }
 
     static IReadOnlyList<Token> GetTokens(string text)
