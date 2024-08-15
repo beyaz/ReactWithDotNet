@@ -3,6 +3,7 @@ using System.Reflection;
 using ReactWithDotNet.Tokenizing;
 using ReactWithDotNet.UIDesigner;
 using static ReactWithDotNet.Tokenizing.Lexer;
+using static ReactWithDotNet.DesignerHelper.FP;
 
 namespace ReactWithDotNet;
 
@@ -16,6 +17,137 @@ public sealed class DesignerCode : List<(IReadOnlyList<int> VisualLocation, IRea
 
 static class DesignerHelper
 {
+    
+    public static class FP
+    {
+        internal record TokenReadResponse
+    {
+        public bool Success { get; init; }
+        
+        public string ErrorMessage { get; init; }
+        
+        public IReadOnlyList<Token> Tokens { get; init; }
+
+        public int NewIndex { get; init; }
+
+        public static implicit operator TokenReadResponse(string errorMessage)
+        {
+            return new() { ErrorMessage = errorMessage };
+        }
+        
+        public static implicit operator TokenReadResponse((int newIndex,  IReadOnlyList<Token> tokens) tuple)
+        {
+            return new() { Success = true, NewIndex = tuple.newIndex, Tokens = tuple.tokens };
+        }
+        
+        public static implicit operator TokenReadResponse((int newIndex, Token token) tuple)
+        {
+            return new() { Success = true, NewIndex = tuple.newIndex, Tokens = [tuple.token] };
+        }
+        
+        public TokenReadResponse<T> Then<T>(Func<Token,Result<T>> convert)
+        {
+            var response = this;
+            if (!response.Success)
+            {
+                return response.ErrorMessage;
+            }
+
+            var result = convert(response.Tokens[0]);
+            if (result.Success)
+            {
+                return (response.NewIndex, result.Value);
+            }
+
+            return result.Exception;
+        }
+    }
+
+    internal sealed record Result<TValue>
+    {
+        public TValue Value { get; init; }
+        
+        public Exception Exception { get; init; }
+
+        public bool Success { get; init; }
+
+        public bool Fail =>!Success;
+
+        public static implicit operator Result<TValue>(Exception exception)
+        {
+            return new() { Exception = exception };
+        }
+
+        public static implicit operator Result<TValue>(TValue value)
+        {
+            return new() { Value = value, Success = true };
+        }
+
+        public static implicit operator Result<TValue>(string errorMessage)
+        {
+            return new() { Exception = new (errorMessage) };
+        }
+    }
+
+    internal sealed class NoneObj;
+
+    internal static readonly NoneObj None = new();
+    
+    internal record Maybe<TValue>
+    {
+        public TValue Value { get; init; }
+
+        public bool IsNone { get; init; }
+        
+        public static implicit operator Maybe<TValue>(NoneObj noneObj)
+        {
+            return new() { IsNone = true};
+        }
+
+        public static implicit operator Maybe<TValue>(TValue value)
+        {
+            return new() { Value = value };
+        }
+        
+        
+        public Result<B> Then<B>( Func<TValue,Result<B>> next)
+        {
+            var maybe = this;
+            if (maybe.IsNone)
+            {
+                return default(B);
+            }
+
+            return  next(maybe.Value);
+        }
+    }
+    internal record TokenReadResponse<TValue>
+    {
+        public bool Success { get; init; }
+        
+        public string ErrorMessage { get; init; }
+        
+        public TValue Value { get; init; }
+
+        public int NewIndex { get; init; }
+
+        public static implicit operator TokenReadResponse<TValue>(string errorMessage)
+        {
+            return new() { ErrorMessage = errorMessage };
+        }
+        
+        public static implicit operator TokenReadResponse<TValue>(Exception exception)
+        {
+            return new() { ErrorMessage = exception.Message };
+        }
+        
+        public static implicit operator TokenReadResponse<TValue>((int newIndex,  TValue value) tuple)
+        {
+            return new() { Success = true, NewIndex = tuple.newIndex, Value = tuple.value };
+        }
+    }
+    }
+    
     public static void Override(Element component, Element rootNode)
     {
         var designer = component.Designer;
@@ -342,16 +474,9 @@ static class DesignerHelper
 
         return (success: true, value);
     }
-
-    static Result<B> Then<A,B>(this Maybe<A> maybe, Func<A,Result<B>> next)
-    {
-        if (maybe.IsNone)
-        {
-            return default(B);
-        }
-
-        return  next(maybe.Value);
-    }
+    
+    
+    
     static (bool success, IReadOnlyList<T> values) Fold<T>(this IEnumerable<(bool success, T value)> items)
     {
         var resultList = new List<T>();
@@ -704,118 +829,8 @@ static class DesignerHelper
     }
     
 
-    internal record TokenReadResponse
-    {
-        public bool Success { get; init; }
-        
-        public string ErrorMessage { get; init; }
-        
-        public IReadOnlyList<Token> Tokens { get; init; }
+   
 
-        public int NewIndex { get; init; }
-
-        public static implicit operator TokenReadResponse(string errorMessage)
-        {
-            return new() { ErrorMessage = errorMessage };
-        }
-        
-        public static implicit operator TokenReadResponse((int newIndex,  IReadOnlyList<Token> tokens) tuple)
-        {
-            return new() { Success = true, NewIndex = tuple.newIndex, Tokens = tuple.tokens };
-        }
-        
-        public static implicit operator TokenReadResponse((int newIndex, Token token) tuple)
-        {
-            return new() { Success = true, NewIndex = tuple.newIndex, Tokens = [tuple.token] };
-        }
-    }
-
-    internal sealed record Result<TValue>
-    {
-        public TValue Value { get; init; }
-        
-        public Exception Exception { get; init; }
-
-        public bool Success { get; init; }
-
-        public bool Fail =>!Success;
-
-        public static implicit operator Result<TValue>(Exception exception)
-        {
-            return new() { Exception = exception };
-        }
-
-        public static implicit operator Result<TValue>(TValue value)
-        {
-            return new() { Value = value, Success = true };
-        }
-
-        public static implicit operator Result<TValue>(string errorMessage)
-        {
-            return new() { Exception = new (errorMessage) };
-        }
-    }
-
-    internal sealed class NoneObj;
-
-    internal static readonly NoneObj None = new();
     
-    internal record Maybe<TValue>
-    {
-        public TValue Value { get; init; }
-
-        public bool IsNone { get; init; }
-        
-        public static implicit operator Maybe<TValue>(NoneObj noneObj)
-        {
-            return new() { IsNone = true};
-        }
-
-        public static implicit operator Maybe<TValue>(TValue value)
-        {
-            return new() { Value = value };
-        }
-    }
-    internal record TokenReadResponse<TValue>
-    {
-        public bool Success { get; init; }
-        
-        public string ErrorMessage { get; init; }
-        
-        public TValue Value { get; init; }
-
-        public int NewIndex { get; init; }
-
-        public static implicit operator TokenReadResponse<TValue>(string errorMessage)
-        {
-            return new() { ErrorMessage = errorMessage };
-        }
-        
-        public static implicit operator TokenReadResponse<TValue>(Exception exception)
-        {
-            return new() { ErrorMessage = exception.Message };
-        }
-        
-        public static implicit operator TokenReadResponse<TValue>((int newIndex,  TValue value) tuple)
-        {
-            return new() { Success = true, NewIndex = tuple.newIndex, Value = tuple.value };
-        }
-    }
-
-    static TokenReadResponse<T> Then<T>(this TokenReadResponse response, Func<Token,Result<T>> convert)
-    {
-        if (!response.Success)
-        {
-            return response.ErrorMessage;
-        }
-
-        var result = convert(response.Tokens[0]);
-        if (result.Success)
-        {
-            return (response.NewIndex, result.Value);
-        }
-
-        return result.Exception;
-    }
     
 }
