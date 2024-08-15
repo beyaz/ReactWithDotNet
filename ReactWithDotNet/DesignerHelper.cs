@@ -222,7 +222,6 @@ static class DesignerHelper
         var tokenAt0 = i + 0 < tokens.Count ? tokens[i + 0] : null;
         var tokenAt1 = i + 1 < tokens.Count ? tokens[i + 1] : null;
         var tokenAt2 = i + 2 < tokens.Count ? tokens[i + 2] : null;
-        //var tokenAt3 = i + 3 < tokens.Count ? tokens[i + 3] : null;
 
         if (tokenAt0?.tokenType == TokenType.QuotedString)
         {
@@ -497,40 +496,8 @@ static class DesignerHelper
                 break;
             }
                 
-            
-            // read entry
-            {
-                if (tokens[i].tokenType == TokenType.LeftCurlyBracket)
-                {
-                    i++;
-                    
-                    if (tokens[i].tokenType == TokenType.LeftSquareBracket)
-                    {
-                        var (isFound, indexOfPair) = Lexer.FindPair(tokens, i, x => x.tokenType == TokenType.RightSquareBracket);
-                        if (!isFound)
-                        {
-                            return default;
-                        }
-
-                        var partLocation = Lexer.ToString(tokens, i, indexOfPair);
-                        
-                        
-                        var (isFound2, indexOfPair2) = Lexer.FindPair(tokens, indexOfPair+2, x => x.tokenType == TokenType.RightSquareBracket);
-                        if (!isFound2)
-                        {
-                            return default;
-                        }
-
-
-                        i = indexOfPair2;
-                        i++;
-                        i++;
-                        continue;
-
-                    }
-                    
-                }
-            }
+           // read entry 
+           
         }
         
         return default;
@@ -541,27 +508,7 @@ static class DesignerHelper
         
         
         
-        static TokenReadResponse readTokens(IReadOnlyList<Token> tokens, int i,  TokenType[] tokenTypes)
-        {
-            var items = new List<Token>();
-            
-            foreach (var tokenType in tokenTypes)
-            {
-                var response = readToken(tokens, i, tokenType);
-                if (!response.Success)
-                {
-                    return response.ErrorMessage;
-                }
-                
-                items.AddRange(response.Tokens);
-
-                i = response.NewIndex;
-            }
-
-
-
-            return (i, items);
-        }
+        
 
         
         
@@ -617,8 +564,12 @@ static class DesignerHelper
     }
 
     
-    static (bool success, string errorMessage, int newIndex) readEntry(IReadOnlyList<Token> tokens, int i)
+    static Result<(long[] location, IReadOnlyList<Node> nodes, int newIndex)> ReadElementEntry(IReadOnlyList<Token> tokens, int i)
     {
+
+        long[] location = null;
+        IReadOnlyList<Node> nodes = null;
+        
         // readLeftCurlyBracket
         {
             var response = readToken(tokens, i,TokenType.LeftCurlyBracket);
@@ -638,6 +589,8 @@ static class DesignerHelper
             }
         
             i = response.NewIndex;
+
+            location = response.Value;
         }
         
         {
@@ -665,13 +618,15 @@ static class DesignerHelper
                 return nok($"Close pair not found. At: {tokens[i-1].startIndex}");
             }
 
-            var (success, nodes, i1) = TryReadNodes(tokens, i, indexOfPair - 1);
+            var (success, nodeList, i1) = TryReadNodes(tokens, i, indexOfPair - 1);
             if (!success)
             {
                 return nok("todo");
             }
 
             i = i1;
+
+            nodes = nodeList;
         }
 
         {
@@ -683,7 +638,7 @@ static class DesignerHelper
         
             i = response.NewIndex;
 
-            return (true, default, i);
+            return (location, nodes, i);
         }
         
         
@@ -691,9 +646,9 @@ static class DesignerHelper
        
             
             
-        static (bool success, string errorMessage, int newIndex) nok(string errorMessage)
+        static Result<(long[] location, IReadOnlyList<Node> nodes, int newIndex)> nok(string errorMessage)
         {
-            return (default, errorMessage, default);
+            return errorMessage;
         }
             
            
