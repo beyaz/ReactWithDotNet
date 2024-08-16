@@ -463,7 +463,7 @@ static class DesignerHelper
 
     public static class NodeReader
     {
-        public static (bool success, Node node, int endIndex) TryReadNode(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
+        public static Result<(int endIndex, Node node)> TryReadNode(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
         {
             var i = startIndex;
 
@@ -473,7 +473,7 @@ static class DesignerHelper
 
             if (tokenAt0?.tokenType == TokenType.QuotedString)
             {
-                return ok(endIndex: i, new()
+                return (endIndex: i, new()
                 {
                     IsStringNode = true,
                     StringValue  = tokenAt0.value
@@ -484,7 +484,7 @@ static class DesignerHelper
             {
                 if (tokenAt1?.tokenType == TokenType.Dot)
                 {
-                    return ok(endIndex: i + 2, new()
+                    return (endIndex: i + 2, new()
                     {
                         IsDoubleNode = true,
                         DoubleValue  = double.Parse(tokenAt0.value + '.' + tokenAt2?.value)
@@ -493,7 +493,7 @@ static class DesignerHelper
 
                 if (tokenAt0.value.All(char.IsNumber))
                 {
-                    return ok(endIndex: i, new()
+                    return (endIndex: i, new()
                     {
                         IsNumberNode = true,
                         NumberValue  = long.Parse(tokenAt0.value)
@@ -502,7 +502,7 @@ static class DesignerHelper
 
                 if (startIndex == endIndex)
                 {
-                    return ok(endIndex: i, new()
+                    return (endIndex: i, new()
                     {
                         Name = tokenAt0.value
                     });
@@ -510,7 +510,7 @@ static class DesignerHelper
 
                 if (tokenAt1?.tokenType == TokenType.Comma)
                 {
-                    return ok(endIndex: i, new()
+                    return (endIndex: i, new()
                     {
                         Name = tokens[i].value
                     });
@@ -521,31 +521,30 @@ static class DesignerHelper
                     var (isFound, indexOfPair) = FindPair(tokens, i + 1, x => x.tokenType == TokenType.RightParenthesis);
                     if (isFound)
                     {
-                        var (success, parameterNodes, rightParenthesisIndex) = TryReadNodes(tokens, i + 2, indexOfPair - 1);
-                        if (success)
+                        var response = TryReadNodes(tokens, i + 2, indexOfPair - 1);
+                        if (response.Fail)
                         {
-                            if (rightParenthesisIndex == indexOfPair)
+                            return response.Exception;
+                        }
+                        
+                        if (response.Value.endIndex == indexOfPair)
+                        {
+                            return (endIndex: indexOfPair, new()
                             {
-                                return ok(endIndex: indexOfPair, new()
-                                {
-                                    Name       = tokens[i].value,
-                                    Parameters = parameterNodes
-                                });
-                            }
+                                Name       = tokens[i].value,
+                                Parameters = response.Value.nodes
+                            });
                         }
                     }
                 }
             }
 
-            return default;
+            return $"Node not resolved.{tokenAt0}";
 
-            static (bool success, Node node, int endIndex) ok(int endIndex, Node node)
-            {
-                return (true, node, endIndex);
-            }
+            
         }
 
-        public static (bool success, IReadOnlyList<Node> nodes, int endIndex) TryReadNodes(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
+        public static Result<(IReadOnlyList<Node> nodes, int endIndex)> TryReadNodes(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
         {
             var nodes = new List<Node>();
 
@@ -559,18 +558,18 @@ static class DesignerHelper
                     continue;
                 }
 
-                var (success, node, newIndex) = TryReadNode(tokens, i, endIndex);
-                if (!success)
+                var response = TryReadNode(tokens, i, endIndex);
+                if (response.Fail)
                 {
-                    return (success: false, nodes, i);
+                    return response.Exception;
                 }
 
-                i = newIndex + 1;
+                i = response.Value.endIndex + 1;
 
-                nodes.Add(node);
+                nodes.Add(response.Value.node);
             }
 
-            return (success: true, nodes, i);
+            return (nodes, i);
         }
     }
 
@@ -630,15 +629,15 @@ static class DesignerHelper
                     return nok($"Close pair not found. At: {tokens[i - 1].startIndex}");
                 }
 
-                var (success, nodeList, i1) = NodeReader.TryReadNodes(tokens, i, indexOfPair - 1);
-                if (!success)
+                var nodeListResponse = NodeReader.TryReadNodes(tokens, i, indexOfPair - 1);
+                if (nodeListResponse.Fail)
                 {
-                    return nok("todo");
+                    return nodeListResponse.Exception;
                 }
 
-                i = i1 + 1;
+                i = nodeListResponse.Value.endIndex + 1;
 
-                nodes = nodeList;
+                nodes = nodeListResponse.Value.nodes;
             }
 
             {
