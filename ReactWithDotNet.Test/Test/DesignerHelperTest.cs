@@ -176,7 +176,7 @@ public class DesignerHelperTest
                    #endregion Designer Code [Do not edit manually]
                    """;
 
-        InjectReadDesignerCSharpCodeWithRegions(csharpCodeOfFile, designerCSharpCode).Value
+        InjectDesignerCSharpCodeWithRegions(csharpCodeOfFile, designerCSharpCode).Value
             .Should().Be(csharpCodeOfFile.Replace("123A4","765B4"));
     }
 
@@ -223,7 +223,7 @@ public class DesignerHelperTest
                                }X
                                """;
 
-        InjectReadDesignerCSharpCodeWithRegions(csharpCodeInFile, designerCSharpCode).Value
+        InjectDesignerCSharpCodeWithRegions(csharpCodeInFile, designerCSharpCode).Value
             .Should().Be(csharpCodeInFileExpected);
     }
     

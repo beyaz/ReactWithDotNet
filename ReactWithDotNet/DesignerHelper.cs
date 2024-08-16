@@ -94,7 +94,7 @@ static class DesignerHelper
         return tokens.Where(t => t.tokenType != TokenType.Space).ToList();
     }
 
-    internal static Result<string> InjectReadDesignerCSharpCodeWithRegions(string csharpCodeInFile, string designerCode)
+    internal static Result<string> InjectDesignerCSharpCodeWithRegions(string csharpCodeInFile, string designerCode)
     {
         var maybe = ReadDesignerCSharpCodeWithRegions(csharpCodeInFile);
         if (maybe.IsNone)
