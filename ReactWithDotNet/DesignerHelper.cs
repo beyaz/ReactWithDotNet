@@ -56,6 +56,16 @@ static class DesignerHelper
 
             return onSuccess(Value);
         }
+        
+        public Result<T> Then<T>(Func<TValue,T> onSuccess)
+        {
+            if (Fail)
+            {
+                return Exception;
+            }
+
+            return onSuccess(Value);
+        }
     }
 
     internal sealed class NoneObj;
@@ -200,13 +210,14 @@ static class DesignerHelper
                 var targetMethodInfo = typeof(Mixin).GetMethod(node.Name, [typeof(StyleModifier[])]);
                 if (targetMethodInfo is not null)
                 {
-                    var modifiers = node.Parameters.Select(ToModifier).Select(Compile).Fold();
-                    if (modifiers.Fail)
+                    return node.Parameters.Select(ToModifier).Select(Compile).Fold().Then(modifiers =>
                     {
-                        return modifiers.Exception;
-                    }
-                    
-                    return (targetMethodInfo, modifiers.Value.Select(x => (object)x).ToArray());
+                        StyleModifier[] styleModifiers = modifiers.Select(x => (StyleModifier)x).ToArray();
+                        
+                        object[] prm = [styleModifiers];
+                        
+                        return (targetMethodInfo, prm);
+                    });
                 }
             }
         }
