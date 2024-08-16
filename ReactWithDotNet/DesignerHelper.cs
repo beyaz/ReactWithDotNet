@@ -87,7 +87,12 @@ static class DesignerHelper
         return ReadDesignerCodeTokens(classDefinitionCode).Then(x => ReadDesignerValueFromTokens(x.tokens));
     }
 
-    public static Result<(MethodInfo methodInfo, object[] methodParameters)> ToModifier(Node node)
+    internal static IReadOnlyList<Token> ClearSpaceTokens(IReadOnlyList<Token> tokens)
+    {
+        return tokens.Where(t => t.tokenType != TokenType.Space).ToList();
+    }
+
+    internal static Result<(MethodInfo methodInfo, object[] methodParameters)> ToModifier(Node node)
     {
         if (node.Name.HasValue())
         {
@@ -220,11 +225,6 @@ static class DesignerHelper
         {
             return node.IsNumberNode || node.IsDoubleNode || node.IsStringNode;
         }
-    }
-
-    internal static IReadOnlyList<Token> ClearSpaceTokens(IReadOnlyList<Token> tokens)
-    {
-        return tokens.Where(t => t.tokenType != TokenType.Space).ToList();
     }
 
     static Modifier Compile((MethodInfo methodInfo, object[] methodParameters) tuple)
