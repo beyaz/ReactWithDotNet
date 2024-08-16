@@ -17,92 +17,6 @@ public sealed class DesignerCode : List<(IReadOnlyList<int> VisualLocation, IRea
 
 static class DesignerHelper
 {
-    
-    public static class FP
-    {
-       
-
-    internal sealed record Result<TValue>
-    {
-        public TValue Value { get; init; }
-        
-        public Exception Exception { get; init; }
-
-        public bool Success { get; init; }
-
-        public bool Fail =>!Success;
-
-        public static implicit operator Result<TValue>(Exception exception)
-        {
-            return new() { Exception = exception };
-        }
-
-        public static implicit operator Result<TValue>(TValue value)
-        {
-            return new() { Value = value, Success = true };
-        }
-
-        public static implicit operator Result<TValue>(string errorMessage)
-        {
-            return new() { Exception = new (errorMessage) };
-        }
-
-        public Result<T> Then<T>(Func<TValue,Result<T>> onSuccess)
-        {
-            if (Fail)
-            {
-                return Exception;
-            }
-
-            return onSuccess(Value);
-        }
-        
-        public Result<T> Then<T>(Func<TValue,T> onSuccess)
-        {
-            if (Fail)
-            {
-                return Exception;
-            }
-
-            return onSuccess(Value);
-        }
-    }
-
-    internal sealed class NoneObj;
-
-    internal static readonly NoneObj None = new();
-    
-    internal record Maybe<TValue>
-    {
-        public TValue Value { get; init; }
-
-        public bool IsNone { get; init; }
-        
-        public static implicit operator Maybe<TValue>(NoneObj noneObj)
-        {
-            return new() { IsNone = true};
-        }
-
-        public static implicit operator Maybe<TValue>(TValue value)
-        {
-            return new() { Value = value };
-        }
-        
-        
-        public Result<B> Then<B>( Func<TValue,Result<B>> next)
-        {
-            var maybe = this;
-            if (maybe.IsNone)
-            {
-                return default(B);
-            }
-
-            return  next(maybe.Value);
-        }
-    }
-
-    }
-    
     public static void Override(Element component, Element rootNode)
     {
         var designer = component.Designer;
@@ -168,6 +82,117 @@ static class DesignerHelper
         }
     }
 
+    public static Result<DesignerCode> ReadDesignerCode(string classDefinitionCode)
+    {
+        return ReadDesignerCodeTokens(classDefinitionCode).Then(ReadDesignerValueFromTokens);
+    }
+
+    public static Maybe<IReadOnlyList<Token>> ReadDesignerCodeTokens(string classDefinitionCode)
+    {
+        string csharpCode;
+        {
+            const string startLine = "#region Designer Code [Do not edit manually]";
+
+            const string endLine = "#endregion";
+
+            var startIndex = classDefinitionCode.IndexOf(startLine, StringComparison.OrdinalIgnoreCase);
+            if (startIndex < 0)
+            {
+                return None;
+            }
+
+            var endIndex = classDefinitionCode.IndexOf(endLine, StringComparison.OrdinalIgnoreCase);
+            if (endIndex < 0)
+            {
+                return None;
+            }
+
+            csharpCode = classDefinitionCode.Substring(startIndex, endIndex - startIndex);
+        }
+
+        // remove region
+        csharpCode = string.Join(Environment.NewLine, csharpCode.Split(Environment.NewLine).Skip(1));
+
+        {
+            var (hasRead, _, tokens) = ParseTokens(csharpCode, 0);
+            if (!hasRead)
+            {
+                return None;
+            }
+
+            var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
+
+            return tokenList;
+        }
+    }
+
+    public static Result<DesignerCode> ReadDesignerValueFromTokens(IReadOnlyList<Token> tokens)
+    {
+        var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
+
+        var leftCurlyBracketIndex = tokenList.FindIndex(x => x.tokenType == TokenType.LeftCurlyBracket);
+        if (leftCurlyBracketIndex < 0)
+        {
+            return default;
+        }
+
+        var i = leftCurlyBracketIndex;
+
+        // readLeftCurlyBracket
+        {
+            var response = Reader.ReadToken(tokens, i, TokenType.LeftCurlyBracket);
+            if (!response.Success)
+            {
+                return response.Exception;
+            }
+
+            i++;
+        }
+
+        var returnList = new List<(long[] location, IReadOnlyList<Node> nodes)>();
+
+        while (i < tokens.Count)
+        {
+            var token = tokens[i];
+
+            if (token.tokenType == TokenType.Comma)
+            {
+                i++;
+                continue;
+            }
+
+            if (token.tokenType == TokenType.RightCurlyBracket)
+            {
+                break;
+            }
+
+            var entry = Reader.ReadElementEntry(tokens, i);
+            if (!entry.Success)
+            {
+                return entry.Exception;
+            }
+
+            returnList.Add((entry.Value.location, entry.Value.nodes));
+
+            i = entry.Value.lastUsedIndex + 1;
+        }
+
+        var returnObject = new DesignerCode();
+
+        foreach (var (location, nodes) in returnList)
+        {
+            var modifiers = nodes.Select(ToModifier).Select(Compile).Fold();
+            if (modifiers.Fail)
+            {
+                return modifiers.Exception;
+            }
+
+            returnObject.Add(location.Select(Convert.ToInt32).ToArray(), modifiers.Value);
+        }
+
+        return returnObject;
+    }
+
     public static Result<(MethodInfo methodInfo, object[] methodParameters)> ToModifier(Node node)
     {
         if (node.Name.HasValue())
@@ -213,7 +238,7 @@ static class DesignerHelper
                     return node.Parameters.Select(ToModifier).Select(Compile).Fold().Then(modifiers =>
                     {
                         object[] prm = [modifiers.Select(x => (StyleModifier)x).ToArray()];
-                        
+
                         return (targetMethodInfo, prm);
                     });
                 }
@@ -303,129 +328,11 @@ static class DesignerHelper
         }
     }
 
-    
-    public static class NodeReader
-    {
-         public static (bool success, Node node, int endIndex) TryReadNode(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
-    {
-        var i = startIndex;
-
-        var tokenAt0 = i + 0 < tokens.Count ? tokens[i + 0] : null;
-        var tokenAt1 = i + 1 < tokens.Count ? tokens[i + 1] : null;
-        var tokenAt2 = i + 2 < tokens.Count ? tokens[i + 2] : null;
-
-        if (tokenAt0?.tokenType == TokenType.QuotedString)
-        {
-            return ok(endIndex: i, new()
-            {
-                IsStringNode = true,
-                StringValue  = tokenAt0.value
-            });
-        }
-
-        if (tokenAt0?.tokenType == TokenType.AlfaNumeric)
-        {
-            if (tokenAt1?.tokenType == TokenType.Dot)
-            {
-                return ok(endIndex: i + 2, new()
-                {
-                    IsDoubleNode = true,
-                    DoubleValue  = double.Parse(tokenAt0.value + '.' + tokenAt2?.value)
-                });
-            }
-
-            if (tokenAt0.value.All(char.IsNumber))
-            {
-                return ok(endIndex: i, new()
-                {
-                    IsNumberNode = true,
-                    NumberValue  = long.Parse(tokenAt0.value)
-                });
-            }
-
-            if (startIndex == endIndex)
-            {
-                return ok(endIndex: i, new()
-                {
-                    Name = tokenAt0.value
-                });
-            }
-
-            if (tokenAt1?.tokenType == TokenType.Comma)
-            {
-                return ok(endIndex: i, new()
-                {
-                    Name = tokens[i].value
-                });
-            }
-
-            if (tokenAt1?.tokenType == TokenType.LeftParenthesis)
-            {
-                var (isFound, indexOfPair) = FindPair(tokens, i + 1, x => x.tokenType == TokenType.RightParenthesis);
-                if (isFound)
-                {
-                    var (success, parameterNodes, rightParenthesisIndex) = TryReadNodes(tokens, i + 2, indexOfPair - 1);
-                    if (success)
-                    {
-                        if (rightParenthesisIndex == indexOfPair)
-                        {
-                            return ok(endIndex: indexOfPair, new()
-                            {
-                                Name       = tokens[i].value,
-                                Parameters = parameterNodes
-                            });
-                        }
-                    }
-                }
-            }
-        }
-
-        return default;
-
-        static (bool success, Node node, int endIndex) ok(int endIndex, Node node)
-        {
-            return (true, node, endIndex);
-        }
-    }
-
-    public static (bool success, IReadOnlyList<Node> nodes, int endIndex) TryReadNodes(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
-    {
-        var nodes = new List<Node>();
-
-        var i = startIndex;
-
-        while (i <= endIndex)
-        {
-            if (tokens[i].tokenType == TokenType.Comma)
-            {
-                i++;
-                continue;
-            }
-
-            var (success, node, newIndex) = TryReadNode(tokens, i, endIndex);
-            if (!success)
-            {
-                return (success: false, nodes, i);
-            }
-
-            i = newIndex + 1;
-
-            nodes.Add(node);
-        }
-
-        return (success: true, nodes, i);
-    }
-
-    }
-    
-   
     static Modifier Compile((MethodInfo methodInfo, object[] methodParameters) tuple)
     {
         return (Modifier)tuple.methodInfo.Invoke(null, tuple.methodParameters);
     }
-    
-    
-    
+
     static Result<IReadOnlyList<T>> Fold<T>(this IEnumerable<Result<T>> items)
     {
         var resultList = new List<T>();
@@ -441,6 +348,375 @@ static class DesignerHelper
         }
 
         return resultList;
+    }
+
+    static IEnumerable<Result<B>> Select<A, B>(this IEnumerable<Result<A>> enumerable, Func<A, B> func)
+    {
+        foreach (var result in enumerable)
+        {
+            if (result.Fail)
+            {
+                yield return result.Exception;
+            }
+
+            yield return func(result.Value);
+        }
+    }
+
+    static Result<T> Try<T>(Func<T> func)
+    {
+        try
+        {
+            return func();
+        }
+        catch (Exception exception)
+        {
+            return exception;
+        }
+    }
+
+    static Result<long> TryParseLong(string x)
+    {
+        return Try(() => long.Parse(x));
+    }
+
+    public static class FP
+    {
+        internal static readonly NoneObj None = new();
+
+        internal sealed class NoneObj;
+
+        internal sealed record Result<TValue>
+        {
+            public TValue Value { get; init; }
+
+            public Exception Exception { get; init; }
+
+            public bool Success { get; init; }
+
+            public bool Fail => !Success;
+
+            public static implicit operator Result<TValue>(Exception exception)
+            {
+                return new() { Exception = exception };
+            }
+
+            public static implicit operator Result<TValue>(TValue value)
+            {
+                return new() { Value = value, Success = true };
+            }
+
+            public static implicit operator Result<TValue>(string errorMessage)
+            {
+                return new() { Exception = new(errorMessage) };
+            }
+
+            public Result<T> Then<T>(Func<TValue, Result<T>> onSuccess)
+            {
+                if (Fail)
+                {
+                    return Exception;
+                }
+
+                return onSuccess(Value);
+            }
+
+            public Result<T> Then<T>(Func<TValue, T> onSuccess)
+            {
+                if (Fail)
+                {
+                    return Exception;
+                }
+
+                return onSuccess(Value);
+            }
+        }
+
+        internal record Maybe<TValue>
+        {
+            public TValue Value { get; init; }
+
+            public bool IsNone { get; init; }
+
+            public static implicit operator Maybe<TValue>(NoneObj noneObj)
+            {
+                return new() { IsNone = true };
+            }
+
+            public static implicit operator Maybe<TValue>(TValue value)
+            {
+                return new() { Value = value };
+            }
+
+            public Result<B> Then<B>(Func<TValue, Result<B>> next)
+            {
+                var maybe = this;
+                if (maybe.IsNone)
+                {
+                    return default(B);
+                }
+
+                return next(maybe.Value);
+            }
+        }
+    }
+
+    public static class NodeReader
+    {
+        public static (bool success, Node node, int endIndex) TryReadNode(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
+        {
+            var i = startIndex;
+
+            var tokenAt0 = i + 0 < tokens.Count ? tokens[i + 0] : null;
+            var tokenAt1 = i + 1 < tokens.Count ? tokens[i + 1] : null;
+            var tokenAt2 = i + 2 < tokens.Count ? tokens[i + 2] : null;
+
+            if (tokenAt0?.tokenType == TokenType.QuotedString)
+            {
+                return ok(endIndex: i, new()
+                {
+                    IsStringNode = true,
+                    StringValue  = tokenAt0.value
+                });
+            }
+
+            if (tokenAt0?.tokenType == TokenType.AlfaNumeric)
+            {
+                if (tokenAt1?.tokenType == TokenType.Dot)
+                {
+                    return ok(endIndex: i + 2, new()
+                    {
+                        IsDoubleNode = true,
+                        DoubleValue  = double.Parse(tokenAt0.value + '.' + tokenAt2?.value)
+                    });
+                }
+
+                if (tokenAt0.value.All(char.IsNumber))
+                {
+                    return ok(endIndex: i, new()
+                    {
+                        IsNumberNode = true,
+                        NumberValue  = long.Parse(tokenAt0.value)
+                    });
+                }
+
+                if (startIndex == endIndex)
+                {
+                    return ok(endIndex: i, new()
+                    {
+                        Name = tokenAt0.value
+                    });
+                }
+
+                if (tokenAt1?.tokenType == TokenType.Comma)
+                {
+                    return ok(endIndex: i, new()
+                    {
+                        Name = tokens[i].value
+                    });
+                }
+
+                if (tokenAt1?.tokenType == TokenType.LeftParenthesis)
+                {
+                    var (isFound, indexOfPair) = FindPair(tokens, i + 1, x => x.tokenType == TokenType.RightParenthesis);
+                    if (isFound)
+                    {
+                        var (success, parameterNodes, rightParenthesisIndex) = TryReadNodes(tokens, i + 2, indexOfPair - 1);
+                        if (success)
+                        {
+                            if (rightParenthesisIndex == indexOfPair)
+                            {
+                                return ok(endIndex: indexOfPair, new()
+                                {
+                                    Name       = tokens[i].value,
+                                    Parameters = parameterNodes
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            return default;
+
+            static (bool success, Node node, int endIndex) ok(int endIndex, Node node)
+            {
+                return (true, node, endIndex);
+            }
+        }
+
+        public static (bool success, IReadOnlyList<Node> nodes, int endIndex) TryReadNodes(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
+        {
+            var nodes = new List<Node>();
+
+            var i = startIndex;
+
+            while (i <= endIndex)
+            {
+                if (tokens[i].tokenType == TokenType.Comma)
+                {
+                    i++;
+                    continue;
+                }
+
+                var (success, node, newIndex) = TryReadNode(tokens, i, endIndex);
+                if (!success)
+                {
+                    return (success: false, nodes, i);
+                }
+
+                i = newIndex + 1;
+
+                nodes.Add(node);
+            }
+
+            return (success: true, nodes, i);
+        }
+    }
+
+    internal static class Reader
+    {
+        internal static Result<(long[] location, IReadOnlyList<Node> nodes, int lastUsedIndex)> ReadElementEntry(IReadOnlyList<Token> tokens, int i)
+        {
+            long[] location;
+            IReadOnlyList<Node> nodes;
+
+            {
+                var response = ReadToken(tokens, i, TokenType.LeftCurlyBracket);
+                if (!response.Success)
+                {
+                    return response.Exception;
+                }
+
+                i++;
+            }
+
+            {
+                var response = ReadInt64Array(tokens, i);
+                if (!response.Success)
+                {
+                    return response.Exception;
+                }
+
+                i = response.Value.lastUsedIndex;
+
+                location = response.Value.value;
+
+                i++;
+            }
+
+            {
+                var response = ReadToken(tokens, i, TokenType.Comma);
+                if (!response.Success)
+                {
+                    return response.Exception;
+                }
+
+                i++;
+            }
+
+            {
+                var response = ReadToken(tokens, i, TokenType.LeftSquareBracket);
+                if (!response.Success)
+                {
+                    return response.Exception;
+                }
+
+                i++;
+
+                var (isFound, indexOfPair) = FindPair(tokens, i - 1, x => x.tokenType == TokenType.RightSquareBracket);
+                if (!isFound)
+                {
+                    return nok($"Close pair not found. At: {tokens[i - 1].startIndex}");
+                }
+
+                var (success, nodeList, i1) = NodeReader.TryReadNodes(tokens, i, indexOfPair - 1);
+                if (!success)
+                {
+                    return nok("todo");
+                }
+
+                i = i1 + 1;
+
+                nodes = nodeList;
+            }
+
+            {
+                var response = ReadToken(tokens, i, TokenType.RightCurlyBracket);
+                if (!response.Success)
+                {
+                    return response.Exception;
+                }
+
+                return (location, nodes, i);
+            }
+
+            static Result<(long[] location, IReadOnlyList<Node> nodes, int lastUsedIndex)> nok(string errorMessage)
+            {
+                return errorMessage;
+            }
+        }
+
+        internal static Result<long> ReadInt64(IReadOnlyList<Token> tokens, int i)
+        {
+            return ReadToken(tokens, i, TokenType.AlfaNumeric).Then(t => TryParseLong(t.value));
+        }
+
+        internal static Result<(long[] value, int lastUsedIndex)> ReadInt64Array(IReadOnlyList<Token> tokens, int i)
+        {
+            var response = ReadToken(tokens, i, TokenType.LeftSquareBracket);
+            if (response.Fail)
+            {
+                return response.Exception;
+            }
+
+            i++;
+
+            var items = new List<long>();
+
+            while (true)
+            {
+                if (tokens.Count <= i)
+                {
+                    return "Expected ] charachter";
+                }
+
+                var token = tokens[i];
+                if (token.tokenType == TokenType.RightSquareBracket)
+                {
+                    return (items.ToArray(), i);
+                }
+
+                if (token.tokenType == TokenType.Comma)
+                {
+                    i++;
+                    continue;
+                }
+
+                var tokenReadResponse = ReadInt64(tokens, i);
+                if (!tokenReadResponse.Success)
+                {
+                    return tokenReadResponse.Exception;
+                }
+
+                items.Add(tokenReadResponse.Value);
+
+                i++;
+            }
+        }
+
+        internal static Result<Token> ReadToken(IReadOnlyList<Token> tokens, int i, TokenType tokenType)
+        {
+            if (tokens.Count > i && i >= 0)
+            {
+                if (tokens[i].tokenType == tokenType)
+                {
+                    return tokens[i];
+                }
+            }
+
+            return $"Expected token: {tokenType}";
+        }
     }
 
     public sealed class Node
@@ -483,338 +759,4 @@ static class DesignerHelper
             return Name;
         }
     }
-
-    public static Maybe<IReadOnlyList<Token>> ReadDesignerCodeTokens(string classDefinitionCode)
-    {
-        string csharpCode;
-        {
-            const string startLine = "#region Designer Code [Do not edit manually]";
-
-            const string endLine = "#endregion Designer Code [Do not edit manually]";
-
-            var startIndex = classDefinitionCode.IndexOf(startLine, StringComparison.OrdinalIgnoreCase);
-            if (startIndex < 0)
-            {
-                return None;
-            }
-
-            var endIndex = classDefinitionCode.IndexOf(endLine, StringComparison.OrdinalIgnoreCase);
-            if (endIndex < 0)
-            {
-                return None;
-            }
-
-            csharpCode = classDefinitionCode.Substring(startIndex, endIndex - startIndex);
-        }
-
-        // remove region
-        csharpCode = string.Join(Environment.NewLine, csharpCode.Split(Environment.NewLine).Skip(1));
-
-        {
-            var (hasRead, _, tokens) = ParseTokens(csharpCode, 0);
-            if (!hasRead)
-            {
-                return None;
-            }
-
-            var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
-
-
-            return tokenList;
-            
-
-            
-            
-
-        }
-        
-        
-    }
-
-    public static Result<DesignerCode> ReadDesignerCode(string classDefinitionCode)
-    {
-        return ReadDesignerCodeTokens(classDefinitionCode).Then(ReadDesignerValueFromTokens);
-    }
-    
-    public static Result<DesignerCode> ReadDesignerValueFromTokens(IReadOnlyList<Token> tokens)
-    {
-        var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
-
-        var leftCurlyBracketIndex  = tokenList.FindIndex(x => x.tokenType == TokenType.LeftCurlyBracket);
-        if (leftCurlyBracketIndex < 0)
-        {
-            return default;
-        }
-
-        var i = leftCurlyBracketIndex;
-
-        // readLeftCurlyBracket
-        {
-            var response = Reader.ReadToken(tokens, i,TokenType.LeftCurlyBracket);
-            if (!response.Success)
-            {
-                return response.Exception;
-            }
-
-            i++;
-        }
-
-
-        var returnList = new List<(long[] location, IReadOnlyList<Node> nodes)>();
-
-        while (i<tokens.Count)
-        {
-            var token = tokens[i];
-            
-            if (token.tokenType == TokenType.Comma)
-            {
-                i++;
-                continue;
-            }
-            
-            if (token.tokenType == TokenType.RightCurlyBracket)
-            {
-                break;
-            }
-
-            var entry = Reader.ReadElementEntry(tokens, i);
-            if (!entry.Success)
-            {
-                return entry.Exception;
-            }
-
-            returnList.Add((entry.Value.location, entry.Value.nodes));
-            
-            i = entry.Value.lastUsedIndex + 1;
-        }
-        
-        
-        var returnObject = new DesignerCode();
-
-        foreach (var (location, nodes) in returnList)
-        {
-            var modifiers = nodes.Select(ToModifier).Select(Compile).Fold();
-            if (modifiers.Fail)
-            {
-                return modifiers.Exception;
-            }
-            
-            returnObject.Add(location.Select(Convert.ToInt32).ToArray(), modifiers.Value);
-        }
-        
-        return returnObject;
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-        
-        
-        
-    }
-
-
-
-
-    static IEnumerable<Result<B>> Select<A, B>(this IEnumerable<Result<A>> enumerable, Func<A, B> func)
-    {
-        foreach (var result in enumerable)
-        {
-            if (result.Fail)
-            {
-                yield return result.Exception;
-            }
-
-            yield return func(result.Value);
-        }
-    }
-    
-    
-    
-    static Result<long> TryParseLong(string x) => Try(()=>long.Parse(x));
-
-    static Result<T> Try<T>(Func<T> func)
-    {
-        try
-        {
-            return func();
-        }
-        catch (Exception exception)
-        {
-            return exception;
-        }
-    }
-    
-   
-    
-    internal static class Reader
-    {
-        
-        internal static Result<(long[] location, IReadOnlyList<Node> nodes, int lastUsedIndex)> ReadElementEntry(IReadOnlyList<Token> tokens, int i)
-    {
-
-        long[] location;
-        IReadOnlyList<Node> nodes;
-        
-        {
-            var response = ReadToken(tokens, i,TokenType.LeftCurlyBracket);
-            if (!response.Success)
-            {
-                return response.Exception;
-            }
-
-            i++;
-        }
-
-        {
-            var response = ReadInt64Array(tokens, i);
-            if (!response.Success)
-            {
-                return response.Exception;
-            }
-        
-            i = response.Value.lastUsedIndex;
-
-            location = response.Value.value;
-
-            i++;
-
-        }
-
-     
-        
-        {
-            var response = ReadToken(tokens, i,TokenType.Comma);
-            if (!response.Success)
-            {
-                return response.Exception;
-            }
-
-            i++;
-        }
-            
-        {
-            var response = ReadToken(tokens, i,TokenType.LeftSquareBracket);
-            if (!response.Success)
-            {
-                return response.Exception;
-            }
-
-            i++;
-            
-            var (isFound, indexOfPair) = FindPair(tokens, i-1, x => x.tokenType == TokenType.RightSquareBracket);
-            if (!isFound)
-            {
-                return nok($"Close pair not found. At: {tokens[i-1].startIndex}");
-            }
-
-            var (success, nodeList, i1) = NodeReader.TryReadNodes(tokens, i, indexOfPair - 1);
-            if (!success)
-            {
-                return nok("todo");
-            }
-
-            i = i1+1;
-
-            nodes = nodeList;
-        }
-
-        {
-            var response = Reader.ReadToken(tokens, i,TokenType.RightCurlyBracket);
-            if (!response.Success)
-            {
-                return response.Exception;
-            }
-
-          
-
-            return (location, nodes, i);
-        }
-        
-        
-
-       
-            
-            
-        static Result<(long[] location, IReadOnlyList<Node> nodes, int lastUsedIndex)> nok(string errorMessage)
-        {
-            return errorMessage;
-        }
-            
-           
-    }
-        
-        internal static Result<(long[] value, int lastUsedIndex)> ReadInt64Array(IReadOnlyList<Token> tokens, int i)
-        {
-            var response = ReadToken(tokens, i,TokenType.LeftSquareBracket);
-            if (response.Fail)
-            {
-                return response.Exception;
-            }
-
-            i++;
-
-            var items = new List<long>();
-        
-            while (true)
-            {
-                if (tokens.Count <= i)
-                {
-                    return "Expected ] charachter";
-                }
-            
-                var token = tokens[i];
-                if (token.tokenType == TokenType.RightSquareBracket)
-                {
-                    return (items.ToArray(), i);
-                }
-
-                if (token.tokenType == TokenType.Comma)
-                {
-                    i++;
-                    continue;
-                }
-
-                var tokenReadResponse = ReadInt64(tokens, i);
-                if (!tokenReadResponse.Success)
-                {
-                    return tokenReadResponse.Exception;
-                }
-            
-                items.Add(tokenReadResponse.Value);
-
-                i++;
-            }
-        }
-        
-        
-        internal static Result<Token> ReadToken(IReadOnlyList<Token> tokens, int i, TokenType tokenType)
-        {
-            if (tokens.Count > i && i >= 0)
-            {
-                if (tokens[i].tokenType == tokenType)
-                {
-                    return tokens[i];
-                }
-            }
-
-            return $"Expected token: {tokenType}";
-        }
-        
-        internal static Result<long> ReadInt64(IReadOnlyList<Token> tokens, int i)
-        {
-            return ReadToken(tokens, i, TokenType.AlfaNumeric).Then(t => TryParseLong(t.value));
-        }
-    }
-    
-
-   
-
-    
-    
 }
