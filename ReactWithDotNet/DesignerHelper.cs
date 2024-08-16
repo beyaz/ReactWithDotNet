@@ -17,7 +17,7 @@ public sealed class DesignerCode : List<(IReadOnlyList<int> VisualLocation, IRea
 
 static class DesignerHelper
 {
-    static Element GetElementTree(Element rootNode)
+    public static Element GetElementTree(Element rootNode)
     {
         return new FlexColumn(BorderLeft("1px dotted #d9d9d9"), Width(300), PositionFixed, Right(0), Top(0), Height100vh,
                               FontFamily("consolas, sans-serif"), FontSize11, Padding(5))
