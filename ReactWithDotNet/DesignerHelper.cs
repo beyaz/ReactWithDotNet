@@ -94,7 +94,7 @@ static class DesignerHelper
         return tokens.Where(t => t.tokenType != TokenType.Space).ToList();
     }
 
-    internal static Maybe<(int startIndex, int endIndex)> ReadDesignerCodeWithRegions(string classDefinitionCode)
+    internal static Maybe<(int startIndex, int endIndex)> ReadDesignerCSharpCodeWithRegions(string classDefinitionCode)
     {
         const string startLine = "#region Designer Code [Do not edit manually]";
 
@@ -292,15 +292,15 @@ static class DesignerHelper
 
     static Maybe<IReadOnlyList<Token>> ReadDesignerCodeTokens(string classDefinitionCode)
     {
-        var maybeDesignerCsharpCode = ReadDesignerCodeWithRegions(classDefinitionCode);
-        if (maybeDesignerCsharpCode.IsNone)
+        var maybeDesignerCSharpCode = ReadDesignerCSharpCodeWithRegions(classDefinitionCode);
+        if (maybeDesignerCSharpCode.IsNone)
         {
             return None;
         }
 
-        var designerCsharpCode = maybeDesignerCsharpCode.Value;
+        var designerCSharpCode = maybeDesignerCSharpCode.Value;
 
-        var csharpCode = classDefinitionCode.Substring(designerCsharpCode.startIndex, designerCsharpCode.endIndex - designerCsharpCode.startIndex);
+        var csharpCode = classDefinitionCode.Substring(designerCSharpCode.startIndex, designerCSharpCode.endIndex - designerCSharpCode.startIndex);
 
         csharpCode = RemoveRegions(csharpCode);
 

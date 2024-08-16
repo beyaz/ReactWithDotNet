@@ -114,7 +114,7 @@ public class DesignerHelperTest
                                   }
                                   """;
 
-        ReadDesignerCodeWithRegions(classDefinitionCode).Value.Should().Be((76,417));
+        ReadDesignerCSharpCodeWithRegions(classDefinitionCode).Value.Should().Be((76,417));
     }
     
     [TestMethod]
