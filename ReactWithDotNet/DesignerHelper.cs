@@ -85,7 +85,7 @@ static class DesignerHelper
     public static Result<DesignerCode> ReadDesignerCode(string classDefinitionCode)
     {
         return ReadDesignerCodeTokens(classDefinitionCode)
-            .Then(x => ReadDesignerValueFromTokens(x.tokens))
+            .Then(ReadDesignerValueFromTokens)
             .Then(ToDesignerCode);
     }
 
@@ -294,38 +294,24 @@ static class DesignerHelper
     {
         return 
         string.Join(Environment.NewLine, csharpCode.Split(Environment.NewLine)
-                        .Where(line => line.Trim().StartsWith("#region", StringComparison.OrdinalIgnoreCase) ||
-                                       line.Trim().StartsWith("#endregion", StringComparison.OrdinalIgnoreCase)));
+                        .Where(line => !(line.Trim().StartsWith("#region", StringComparison.OrdinalIgnoreCase) ||
+                                       line.Trim().StartsWith("#endregion", StringComparison.OrdinalIgnoreCase))));
     }
     
-    static Maybe<(IReadOnlyList<Token> tokens, int startIndex, int endIndex)> ReadDesignerCodeTokens(string classDefinitionCode)
+    static Maybe<IReadOnlyList<Token>> ReadDesignerCodeTokens(string classDefinitionCode)
     {
-        int startIndex;
-        int endIndex;
-
-        string csharpCode;
+        var maybeDesignerCsharpCode = ReadDesignerCodeWithRegions(classDefinitionCode);
+        if (maybeDesignerCsharpCode.IsNone)
         {
-            const string startLine = "#region Designer Code [Do not edit manually]";
-
-            const string endLine = "#endregion";
-
-            startIndex = classDefinitionCode.IndexOf(startLine, StringComparison.OrdinalIgnoreCase);
-            if (startIndex < 0)
-            {
-                return None;
-            }
-
-            endIndex = classDefinitionCode.IndexOf(endLine, StringComparison.OrdinalIgnoreCase);
-            if (endIndex < 0)
-            {
-                return None;
-            }
-
-            csharpCode = classDefinitionCode.Substring(startIndex, endIndex - startIndex);
+            return None;
         }
 
-        // remove region
-        csharpCode = string.Join(Environment.NewLine, csharpCode.Split(Environment.NewLine).Skip(1));
+        var designerCsharpCode = maybeDesignerCsharpCode.Value;
+        
+        var csharpCode = classDefinitionCode.Substring(designerCsharpCode.startIndex, designerCsharpCode.endIndex - designerCsharpCode.startIndex);
+
+        csharpCode = RemoveRegions(csharpCode);
+
 
         var (hasRead, _, tokens) = ParseTokens(csharpCode, 0);
         if (!hasRead)
@@ -333,7 +319,7 @@ static class DesignerHelper
             return None;
         }
 
-        return (ClearSpaceTokens(tokens), startIndex, endIndex);
+        return new(){ Value = ClearSpaceTokens(tokens)};
     }
 
     static Result<IReadOnlyList<(long[] location, IReadOnlyList<Node> nodes)>> ReadDesignerValueFromTokens(IReadOnlyList<Token> tokens)
