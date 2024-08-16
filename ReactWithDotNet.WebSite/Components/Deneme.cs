@@ -18,7 +18,17 @@ class Deneme : PureComponent
     {
         return new div
         {
-            new div()
+            new div
+            {
+                new div
+                {
+                    
+                },
+                new div
+                {
+                    new span("abc")
+                }
+            }
         };
     }
 }
