@@ -84,7 +84,7 @@ static class DesignerHelper
 
     public static Result<DesignerCode> ReadDesignerCode(string classDefinitionCode)
     {
-        return ReadDesignerCodeTokens(classDefinitionCode).Then(ReadDesignerValueFromTokens);
+        return ReadDesignerCodeTokens(classDefinitionCode).Then(x => ReadDesignerValueFromTokens(x.tokens));
     }
 
     public static Result<(MethodInfo methodInfo, object[] methodParameters)> ToModifier(Node node)
@@ -222,9 +222,30 @@ static class DesignerHelper
         }
     }
 
+    internal static IReadOnlyList<Token> ClearSpaceTokens(IReadOnlyList<Token> tokens)
+    {
+        return tokens.Where(t => t.tokenType != TokenType.Space).ToList();
+    }
+
     static Modifier Compile((MethodInfo methodInfo, object[] methodParameters) tuple)
     {
         return (Modifier)tuple.methodInfo.Invoke(null, tuple.methodParameters);
+    }
+
+    static int FindIndex<T>(this IReadOnlyList<T> items, Predicate<T> match)
+    {
+        var i = 0;
+        foreach (var item in items)
+        {
+            if (match(item))
+            {
+                return i;
+            }
+
+            i++;
+        }
+
+        return -1;
     }
 
     static Result<IReadOnlyList<T>> Fold<T>(this IEnumerable<Result<T>> items)
@@ -244,11 +265,11 @@ static class DesignerHelper
         return resultList;
     }
 
-    static Maybe<IReadOnlyList<Token>> ReadDesignerCodeTokens(string classDefinitionCode)
+    static Maybe<(IReadOnlyList<Token> tokens, int startIndex, int endIndex)> ReadDesignerCodeTokens(string classDefinitionCode)
     {
         int startIndex;
         int endIndex;
-        
+
         string csharpCode;
         {
             const string startLine = "#region Designer Code [Do not edit manually]";
@@ -273,22 +294,20 @@ static class DesignerHelper
         // remove region
         csharpCode = string.Join(Environment.NewLine, csharpCode.Split(Environment.NewLine).Skip(1));
 
-        
-            var (hasRead, _, tokens) = ParseTokens(csharpCode, 0);
-            if (!hasRead)
-            {
-                return None;
-            }
+        var (hasRead, _, tokens) = ParseTokens(csharpCode, 0);
+        if (!hasRead)
+        {
+            return None;
+        }
 
-            var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
+        var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
 
-            return tokenList;
-        
+        return (tokenList, startIndex, endIndex);
     }
 
     static Result<DesignerCode> ReadDesignerValueFromTokens(IReadOnlyList<Token> tokens)
     {
-        var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
+        var tokenList = ClearSpaceTokens(tokens);
 
         var leftCurlyBracketIndex = tokenList.FindIndex(x => x.tokenType == TokenType.LeftCurlyBracket);
         if (leftCurlyBracketIndex < 0)
