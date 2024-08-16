@@ -246,19 +246,22 @@ static class DesignerHelper
 
     static Maybe<IReadOnlyList<Token>> ReadDesignerCodeTokens(string classDefinitionCode)
     {
+        int startIndex;
+        int endIndex;
+        
         string csharpCode;
         {
             const string startLine = "#region Designer Code [Do not edit manually]";
 
             const string endLine = "#endregion";
 
-            var startIndex = classDefinitionCode.IndexOf(startLine, StringComparison.OrdinalIgnoreCase);
+            startIndex = classDefinitionCode.IndexOf(startLine, StringComparison.OrdinalIgnoreCase);
             if (startIndex < 0)
             {
                 return None;
             }
 
-            var endIndex = classDefinitionCode.IndexOf(endLine, StringComparison.OrdinalIgnoreCase);
+            endIndex = classDefinitionCode.IndexOf(endLine, StringComparison.OrdinalIgnoreCase);
             if (endIndex < 0)
             {
                 return None;
@@ -270,7 +273,7 @@ static class DesignerHelper
         // remove region
         csharpCode = string.Join(Environment.NewLine, csharpCode.Split(Environment.NewLine).Skip(1));
 
-        {
+        
             var (hasRead, _, tokens) = ParseTokens(csharpCode, 0);
             if (!hasRead)
             {
@@ -280,7 +283,7 @@ static class DesignerHelper
             var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
 
             return tokenList;
-        }
+        
     }
 
     static Result<DesignerCode> ReadDesignerValueFromTokens(IReadOnlyList<Token> tokens)
