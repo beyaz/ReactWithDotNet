@@ -71,7 +71,7 @@ public class DesignerHelperTest
     {
         var tokens = Lexer.ParseTokens("Hover(DisplayNone)",0).tokens.Where(x=>x.tokenType != TokenType.Space).ToList();
         
-        var node = DesignerHelper.NodeReader.TryReadNode(tokens,0,tokens.Count).node;
+        var node = DesignerHelper.NodeReader.TryReadNode(tokens,0,tokens.Count-1).node;
 
         var (methodInfo, methodParameters) = DesignerHelper.ToModifier(node).Value;
         

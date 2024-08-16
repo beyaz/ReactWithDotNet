@@ -203,8 +203,10 @@ static class DesignerHelper
                     var modifiers = node.Parameters.Select(ToModifier).Select(Compile).Fold();
                     if (modifiers.Fail)
                     {
-                        return (targetMethodInfo, modifiers.Value.Select(x => (object)x).ToArray());
+                        return modifiers.Exception;
                     }
+                    
+                    return (targetMethodInfo, modifiers.Value.Select(x => (object)x).ToArray());
                 }
             }
         }
