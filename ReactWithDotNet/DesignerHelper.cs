@@ -94,36 +94,39 @@ static class DesignerHelper
         return tokens.Where(t => t.tokenType != TokenType.Space).ToList();
     }
 
-    internal static string InjectReadDesignerCSharpCodeWithRegions(string csharpCodeInFile, string designerCode)
+    internal static Result<string> InjectReadDesignerCSharpCodeWithRegions(string csharpCodeInFile, string designerCode)
     {
         var maybe = ReadDesignerCSharpCodeWithRegions(csharpCodeInFile);
         if (maybe.IsNone)
         {
-            var classTextIndex = csharpCodeInFile.IndexOf("class ",StringComparison.OrdinalIgnoreCase);
-            if (classTextIndex == -1)
+            var classTextIndex = csharpCodeInFile.IndexOf("class ", StringComparison.OrdinalIgnoreCase);
+            if (classTextIndex < 0)
             {
-                
+                return new Exception("class text not found");
             }
 
             var indexOfLeftCurlyBracket = csharpCodeInFile.IndexOf("{", classTextIndex, StringComparison.OrdinalIgnoreCase);
 
-            return csharpCodeInFile.Substring(0, indexOfLeftCurlyBracket+1) +
-                Environment.NewLine +
-                
-                string.Join(Environment.NewLine, designerCode.Split(Environment.NewLine).Select(line => "    " + line))+
-                
-                Environment.NewLine +
-                csharpCodeInFile.Substring(indexOfLeftCurlyBracket+1, csharpCodeInFile.Length - indexOfLeftCurlyBracket-1);
-            
+            var newContent = csharpCodeInFile.Substring(0, indexOfLeftCurlyBracket + 1) +
+                             Environment.NewLine +
+                             string.Join(Environment.NewLine, designerCode.Split(Environment.NewLine).Select(line => "    " + line)) +
+                             Environment.NewLine +
+                             csharpCodeInFile.Substring(indexOfLeftCurlyBracket + 1, csharpCodeInFile.Length - indexOfLeftCurlyBracket - 1);
+
+            return new() { Success = true, Value = newContent };
         }
 
-        var startIndex = maybe.Value.startIndex;
-        var endIndex = maybe.Value.endIndex;
-        var padding = maybe.Value.padding;
+        {
+            var startIndex = maybe.Value.startIndex;
+            var endIndex = maybe.Value.endIndex;
+            var padding = maybe.Value.padding;
 
-        designerCode = string.Join(Environment.NewLine, designerCode.Split(Environment.NewLine).Select(line => padding + line));
+            designerCode = string.Join(Environment.NewLine, designerCode.Split(Environment.NewLine).Select(line => padding + line));
 
-        return csharpCodeInFile.Substring(0, startIndex) + designerCode.Trim() + csharpCodeInFile.Substring(endIndex, csharpCodeInFile.Length - endIndex);
+            var newContent = csharpCodeInFile.Substring(0, startIndex) + designerCode.Trim() + csharpCodeInFile.Substring(endIndex, csharpCodeInFile.Length - endIndex);
+
+            return new() { Success = true, Value = newContent };
+        }
     }
 
     internal static Maybe<(int startIndex, int endIndex, string padding)> ReadDesignerCSharpCodeWithRegions(string csharpCodeInFile)
