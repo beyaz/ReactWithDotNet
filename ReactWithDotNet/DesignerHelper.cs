@@ -87,112 +87,6 @@ static class DesignerHelper
         return ReadDesignerCodeTokens(classDefinitionCode).Then(ReadDesignerValueFromTokens);
     }
 
-    public static Maybe<IReadOnlyList<Token>> ReadDesignerCodeTokens(string classDefinitionCode)
-    {
-        string csharpCode;
-        {
-            const string startLine = "#region Designer Code [Do not edit manually]";
-
-            const string endLine = "#endregion";
-
-            var startIndex = classDefinitionCode.IndexOf(startLine, StringComparison.OrdinalIgnoreCase);
-            if (startIndex < 0)
-            {
-                return None;
-            }
-
-            var endIndex = classDefinitionCode.IndexOf(endLine, StringComparison.OrdinalIgnoreCase);
-            if (endIndex < 0)
-            {
-                return None;
-            }
-
-            csharpCode = classDefinitionCode.Substring(startIndex, endIndex - startIndex);
-        }
-
-        // remove region
-        csharpCode = string.Join(Environment.NewLine, csharpCode.Split(Environment.NewLine).Skip(1));
-
-        {
-            var (hasRead, _, tokens) = ParseTokens(csharpCode, 0);
-            if (!hasRead)
-            {
-                return None;
-            }
-
-            var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
-
-            return tokenList;
-        }
-    }
-
-    public static Result<DesignerCode> ReadDesignerValueFromTokens(IReadOnlyList<Token> tokens)
-    {
-        var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
-
-        var leftCurlyBracketIndex = tokenList.FindIndex(x => x.tokenType == TokenType.LeftCurlyBracket);
-        if (leftCurlyBracketIndex < 0)
-        {
-            return default;
-        }
-
-        var i = leftCurlyBracketIndex;
-
-        // readLeftCurlyBracket
-        {
-            var response = Reader.ReadToken(tokens, i, TokenType.LeftCurlyBracket);
-            if (!response.Success)
-            {
-                return response.Exception;
-            }
-
-            i++;
-        }
-
-        var returnList = new List<(long[] location, IReadOnlyList<Node> nodes)>();
-
-        while (i < tokens.Count)
-        {
-            var token = tokens[i];
-
-            if (token.tokenType == TokenType.Comma)
-            {
-                i++;
-                continue;
-            }
-
-            if (token.tokenType == TokenType.RightCurlyBracket)
-            {
-                break;
-            }
-
-            var entry = Reader.ReadElementEntry(tokens, i);
-            if (!entry.Success)
-            {
-                return entry.Exception;
-            }
-
-            returnList.Add((entry.Value.location, entry.Value.nodes));
-
-            i = entry.Value.lastUsedIndex + 1;
-        }
-
-        var returnObject = new DesignerCode();
-
-        foreach (var (location, nodes) in returnList)
-        {
-            var modifiers = nodes.Select(ToModifier).Select(Compile).Fold();
-            if (modifiers.Fail)
-            {
-                return modifiers.Exception;
-            }
-
-            returnObject.Add(location.Select(Convert.ToInt32).ToArray(), modifiers.Value);
-        }
-
-        return returnObject;
-    }
-
     public static Result<(MethodInfo methodInfo, object[] methodParameters)> ToModifier(Node node)
     {
         if (node.Name.HasValue())
@@ -348,6 +242,112 @@ static class DesignerHelper
         }
 
         return resultList;
+    }
+
+    static Maybe<IReadOnlyList<Token>> ReadDesignerCodeTokens(string classDefinitionCode)
+    {
+        string csharpCode;
+        {
+            const string startLine = "#region Designer Code [Do not edit manually]";
+
+            const string endLine = "#endregion";
+
+            var startIndex = classDefinitionCode.IndexOf(startLine, StringComparison.OrdinalIgnoreCase);
+            if (startIndex < 0)
+            {
+                return None;
+            }
+
+            var endIndex = classDefinitionCode.IndexOf(endLine, StringComparison.OrdinalIgnoreCase);
+            if (endIndex < 0)
+            {
+                return None;
+            }
+
+            csharpCode = classDefinitionCode.Substring(startIndex, endIndex - startIndex);
+        }
+
+        // remove region
+        csharpCode = string.Join(Environment.NewLine, csharpCode.Split(Environment.NewLine).Skip(1));
+
+        {
+            var (hasRead, _, tokens) = ParseTokens(csharpCode, 0);
+            if (!hasRead)
+            {
+                return None;
+            }
+
+            var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
+
+            return tokenList;
+        }
+    }
+
+    static Result<DesignerCode> ReadDesignerValueFromTokens(IReadOnlyList<Token> tokens)
+    {
+        var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
+
+        var leftCurlyBracketIndex = tokenList.FindIndex(x => x.tokenType == TokenType.LeftCurlyBracket);
+        if (leftCurlyBracketIndex < 0)
+        {
+            return default;
+        }
+
+        var i = leftCurlyBracketIndex;
+
+        // readLeftCurlyBracket
+        {
+            var response = Reader.ReadToken(tokens, i, TokenType.LeftCurlyBracket);
+            if (!response.Success)
+            {
+                return response.Exception;
+            }
+
+            i++;
+        }
+
+        var returnList = new List<(long[] location, IReadOnlyList<Node> nodes)>();
+
+        while (i < tokens.Count)
+        {
+            var token = tokens[i];
+
+            if (token.tokenType == TokenType.Comma)
+            {
+                i++;
+                continue;
+            }
+
+            if (token.tokenType == TokenType.RightCurlyBracket)
+            {
+                break;
+            }
+
+            var entry = Reader.ReadElementEntry(tokens, i);
+            if (!entry.Success)
+            {
+                return entry.Exception;
+            }
+
+            returnList.Add((entry.Value.location, entry.Value.nodes));
+
+            i = entry.Value.lastUsedIndex + 1;
+        }
+
+        var returnObject = new DesignerCode();
+
+        foreach (var (location, nodes) in returnList)
+        {
+            var modifiers = nodes.Select(ToModifier).Select(Compile).Fold();
+            if (modifiers.Fail)
+            {
+                return modifiers.Exception;
+            }
+
+            returnObject.Add(location.Select(Convert.ToInt32).ToArray(), modifiers.Value);
+        }
+
+        return returnObject;
     }
 
     static IEnumerable<Result<B>> Select<A, B>(this IEnumerable<Result<A>> enumerable, Func<A, B> func)
@@ -526,7 +526,7 @@ static class DesignerHelper
                         {
                             return response.Exception;
                         }
-                        
+
                         if (response.Value.endIndex == indexOfPair)
                         {
                             return (endIndex: indexOfPair, new()
@@ -540,8 +540,6 @@ static class DesignerHelper
             }
 
             return $"Node not resolved.{tokenAt0}";
-
-            
         }
 
         public static Result<(IReadOnlyList<Node> nodes, int endIndex)> TryReadNodes(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
