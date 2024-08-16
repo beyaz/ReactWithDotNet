@@ -84,7 +84,9 @@ static class DesignerHelper
 
     public static Result<DesignerCode> ReadDesignerCode(string classDefinitionCode)
     {
-        return ReadDesignerCodeTokens(classDefinitionCode).Then(x => ReadDesignerValueFromTokens(x.tokens));
+        return ReadDesignerCodeTokens(classDefinitionCode)
+            .Then(x => ReadDesignerValueFromTokens(x.tokens))
+            .Then(ToDesignerCode);
     }
 
     internal static IReadOnlyList<Token> ClearSpaceTokens(IReadOnlyList<Token> tokens)
@@ -303,14 +305,16 @@ static class DesignerHelper
         return (ClearSpaceTokens(tokens), startIndex, endIndex);
     }
 
-    static Result<DesignerCode> ReadDesignerValueFromTokens(IReadOnlyList<Token> tokens)
+    static Result<IReadOnlyList<(long[] location, IReadOnlyList<Node> nodes)>> ReadDesignerValueFromTokens(IReadOnlyList<Token> tokens)
     {
+        var returnList = new List<(long[] location, IReadOnlyList<Node> nodes)>();
+
         var tokenList = ClearSpaceTokens(tokens);
 
         var leftCurlyBracketIndex = tokenList.FindIndex(x => x.tokenType == TokenType.LeftCurlyBracket);
         if (leftCurlyBracketIndex < 0)
         {
-            return default;
+            return returnList;
         }
 
         var i = leftCurlyBracketIndex;
@@ -325,8 +329,6 @@ static class DesignerHelper
 
             i++;
         }
-
-        var returnList = new List<(long[] location, IReadOnlyList<Node> nodes)>();
 
         while (i < tokens.Count)
         {
@@ -354,20 +356,7 @@ static class DesignerHelper
             i = entry.Value.lastUsedIndex + 1;
         }
 
-        var returnObject = new DesignerCode();
-
-        foreach (var (location, nodes) in returnList)
-        {
-            var modifiers = nodes.Select(ToModifier).Select(Compile).Fold();
-            if (modifiers.Fail)
-            {
-                return modifiers.Exception;
-            }
-
-            returnObject.Add(location.Select(Convert.ToInt32).ToArray(), modifiers.Value);
-        }
-
-        return returnObject;
+        return returnList;
     }
 
     static IEnumerable<Result<B>> Select<A, B>(this IEnumerable<Result<A>> enumerable, Func<A, B> func)
@@ -381,6 +370,24 @@ static class DesignerHelper
 
             yield return func(result.Value);
         }
+    }
+
+    static Result<DesignerCode> ToDesignerCode(this IReadOnlyList<(long[] location, IReadOnlyList<Node> nodes)> records)
+    {
+        var returnObject = new DesignerCode();
+
+        foreach (var (location, nodes) in records)
+        {
+            var modifiers = nodes.Select(ToModifier).Select(Compile).Fold();
+            if (modifiers.Fail)
+            {
+                return modifiers.Exception;
+            }
+
+            returnObject.Add(location.Select(Convert.ToInt32).ToArray(), modifiers.Value);
+        }
+
+        return returnObject;
     }
 
     static Result<T> Try<T>(Func<T> func)
