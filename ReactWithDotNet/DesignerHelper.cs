@@ -99,7 +99,22 @@ static class DesignerHelper
         var maybe = ReadDesignerCSharpCodeWithRegions(csharpCodeInFile);
         if (maybe.IsNone)
         {
-            return default;
+            var classTextIndex = csharpCodeInFile.IndexOf("class ",StringComparison.OrdinalIgnoreCase);
+            if (classTextIndex == -1)
+            {
+                
+            }
+
+            var indexOfLeftCurlyBracket = csharpCodeInFile.IndexOf("{", classTextIndex, StringComparison.OrdinalIgnoreCase);
+
+            return csharpCodeInFile.Substring(0, indexOfLeftCurlyBracket+1) +
+                Environment.NewLine +
+                
+                string.Join(Environment.NewLine, designerCode.Split(Environment.NewLine).Select(line => "    " + line))+
+                
+                Environment.NewLine +
+                csharpCodeInFile.Substring(indexOfLeftCurlyBracket+1, csharpCodeInFile.Length - indexOfLeftCurlyBracket-1);
+            
         }
 
         var startIndex = maybe.Value.startIndex;

@@ -176,9 +176,56 @@ public class DesignerHelperTest
                    #endregion Designer Code [Do not edit manually]
                    """;
 
-        InjectReadDesignerCSharpCodeWithRegions(csharpCodeOfFile, designerCSharpCode).Should().Be(csharpCodeOfFile.Replace("123A4","765B4"));
+        InjectReadDesignerCSharpCodeWithRegions(csharpCodeOfFile, designerCSharpCode)
+            .Should().Be(csharpCodeOfFile.Replace("123A4","765B4"));
     }
 
+    [TestMethod]
+    public void _9_()
+    {
+        var csharpCodeInFile = """
+                               class Deneme : PureComponent
+                               {
+                                   public string aaa { get; set; }
+                               
+                                   protected override Element render()
+                                   {
+                                       return new div
+                                       {
+                                           new div()
+                                       };
+                                   }
+                               }X
+                               """;
+
+        var designerCSharpCode = """
+                                 #region Designer Code [Do not edit manually]
+                                 765B4
+                                 #endregion Designer Code [Do not edit manually]
+                                 """;
+        
+        var csharpCodeInFileExpected = """
+                               class Deneme : PureComponent
+                               {
+                                   #region Designer Code [Do not edit manually]
+                                   765B4
+                                   #endregion Designer Code [Do not edit manually]
+                                   
+                                   public string aaa { get; set; }
+                               
+                                   protected override Element render()
+                                   {
+                                       return new div
+                                       {
+                                           new div()
+                                       };
+                                   }
+                               }X
+                               """;
+
+        InjectReadDesignerCSharpCodeWithRegions(csharpCodeInFile, designerCSharpCode)
+            .Should().Be(csharpCodeInFileExpected);
+    }
     
     static void Assert(string inputCode, string expectedCode)
     {
