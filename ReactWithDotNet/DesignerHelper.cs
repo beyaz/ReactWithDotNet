@@ -300,9 +300,7 @@ static class DesignerHelper
             return None;
         }
 
-        var tokenList = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
-
-        return (tokenList, startIndex, endIndex);
+        return (ClearSpaceTokens(tokens), startIndex, endIndex);
     }
 
     static Result<DesignerCode> ReadDesignerValueFromTokens(IReadOnlyList<Token> tokens)

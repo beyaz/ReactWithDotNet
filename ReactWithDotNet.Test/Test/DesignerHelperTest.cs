@@ -1,6 +1,9 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReactWithDotNet.Tokenizing;
+using static ReactWithDotNet.DesignerHelper;
+using static ReactWithDotNet.DesignerHelper.NodeReader;
+using static ReactWithDotNet.DesignerHelper.Reader;
 
 namespace ReactWithDotNet.Test;
 
@@ -15,7 +18,7 @@ public class DesignerHelperTest
 
         Assert(inputCode, expectedCode);
     }
-    
+
     [TestMethod]
     public void _1_()
     {
@@ -24,11 +27,26 @@ public class DesignerHelperTest
 
         Assert(inputCode, expectedCode);
     }
-    
+
+    [TestMethod]
+    public void _2_()
+    {
+        var node = new Node
+        {
+            Name = "DisplayNone"
+        };
+
+        var (methodInfo, methodParameters) = ToModifier(node).Value;
+
+        methodInfo.Name.Should().Be("get_DisplayNone");
+
+        methodParameters.Length.Should().Be(0);
+    }
+
     [TestMethod]
     public void _3_()
     {
-        var node = new DesignerHelper.Node
+        var node = new Node
         {
             Name = "Opacity",
             Parameters =
@@ -41,57 +59,33 @@ public class DesignerHelperTest
             ]
         };
 
-        var (methodInfo, methodParameters) = DesignerHelper.ToModifier(node).Value;
-        
+        var (methodInfo, methodParameters) = ToModifier(node).Value;
+
         methodInfo.Name.Should().Be("Opacity");
 
         methodParameters[0].Should().Be(0.7);
-
     }
-    
-     
-    [TestMethod]
-    public void _2_()
-    {
-        var node = new DesignerHelper.Node
-        {
-            Name = "DisplayNone"
-        };
 
-        var (methodInfo, methodParameters) = DesignerHelper.ToModifier(node).Value;
-        
-        methodInfo.Name.Should().Be("get_DisplayNone");
-
-        methodParameters.Length.Should().Be(0);
-
-    }
-    
     [TestMethod]
     public void _4_()
     {
-        var tokens = Lexer.ParseTokens("Hover(DisplayNone)",0).tokens.Where(x=>x.tokenType != TokenType.Space).ToList();
-        
-        var node = DesignerHelper.NodeReader.TryReadNode(tokens,0,tokens.Count-1).Value.node;
+        var tokens = ClearSpaceTokens(Lexer.ParseTokens("Hover(DisplayNone)", 0).tokens);
 
-        var (methodInfo, methodParameters) = DesignerHelper.ToModifier(node).Value;
-        
+        var node = TryReadNode(tokens, 0, tokens.Count - 1).Value.node;
+
+        var (methodInfo, methodParameters) = ToModifier(node).Value;
+
         methodInfo.Name.Should().Be("Hover");
 
         methodParameters.Length.Should().Be(1);
-
     }
 
     [TestMethod]
     public void _5_()
     {
-        DesignerHelper.Reader.ReadInt64Array(GetTokens("[4,6,8,987]"),0).Value.value.Should().BeEquivalentTo([4,6,8,987]);
+        ReadInt64Array(GetTokens("[4,6,8,987]"), 0).Value.value.Should().BeEquivalentTo([4, 6, 8, 987]);
     }
 
-    static IReadOnlyList<Token> GetTokens(string text)
-    {
-        return Lexer.ParseTokens(text, 0).tokens.Where(x => x.tokenType != TokenType.Space).ToList();
-    }
-    
     [TestMethod]
     public void _6_()
     {
@@ -120,23 +114,26 @@ public class DesignerHelperTest
                                   }
                                   """;
 
-        DesignerHelper.ReadDesignerCode(classDefinitionCode);
-
+        ReadDesignerCode(classDefinitionCode);
     }
+
     static void Assert(string inputCode, string expectedCode)
     {
         var (hasRead, _, tokens) = Lexer.ParseTokens(inputCode, 0);
 
         hasRead.Should().BeTrue();
 
-        tokens = tokens.Where(x=>x.tokenType != TokenType.Space).ToList();
+        tokens = ClearSpaceTokens(tokens);
 
-        var nodes = DesignerHelper.NodeReader.TryReadNodes(tokens,0,tokens.Count-1);
-       
+        var nodes = TryReadNodes(tokens, 0, tokens.Count - 1);
+
         nodes.Success.Should().BeTrue();
 
         string.Join(", ", nodes.Value.nodes).Should().Be(expectedCode);
     }
-    
-    
+
+    static IReadOnlyList<Token> GetTokens(string text)
+    {
+        return ClearSpaceTokens(Lexer.ParseTokens(text, 0).tokens);
+    }
 }
