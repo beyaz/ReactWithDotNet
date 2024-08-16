@@ -585,12 +585,22 @@ static class DesignerHelper
         }
         
         
-        
-        return new DesignerCode
-        {
-            
-        };
+        var returnObject = new DesignerCode();
 
+        foreach (var (location, nodes) in returnList)
+        {
+            var (success, modifiers) = nodes.Select(ToModifier).Select(Compile).Fold();
+            if (!success)
+            {
+                return returnObject;
+            }
+            
+            returnObject.Add(location.Select(Convert.ToInt32).ToArray(), modifiers);
+        }
+        
+        return returnObject;
+        
+        
         
         
         
