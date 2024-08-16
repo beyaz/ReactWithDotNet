@@ -212,9 +212,7 @@ static class DesignerHelper
                 {
                     return node.Parameters.Select(ToModifier).Select(Compile).Fold().Then(modifiers =>
                     {
-                        StyleModifier[] styleModifiers = modifiers.Select(x => (StyleModifier)x).ToArray();
-                        
-                        object[] prm = [styleModifiers];
+                        object[] prm = [modifiers.Select(x => (StyleModifier)x).ToArray()];
                         
                         return (targetMethodInfo, prm);
                     });
