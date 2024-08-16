@@ -89,6 +89,8 @@ static class DesignerHelper
             .Then(ToDesignerCode);
     }
 
+    public static readonly Dictionary<Type, DesignerCode> Cache = new();
+    
     internal static IReadOnlyList<Token> ClearSpaceTokens(IReadOnlyList<Token> tokens)
     {
         return tokens.Where(t => t.tokenType != TokenType.Space).ToList();
