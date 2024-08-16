@@ -12,11 +12,6 @@ namespace ReactWithDotNet.UIDesigner;
 
 sealed class HotReloadListener : Component<HotReloadListener.State>
 {
-    internal record State
-    {
-        public int ChangeCount { get; init; }
-    }
-    
     public static int StaticChangeCount { get; private set; }
 
     public static void UpdateApplication(Type[] _)
@@ -48,6 +43,11 @@ sealed class HotReloadListener : Component<HotReloadListener.State>
     protected override Element render()
     {
         return null;
+    }
+
+    internal record State
+    {
+        public int ChangeCount { get; init; }
     }
 }
 
@@ -127,7 +127,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             },
 
             SpaceY(5),
-            new FlexColumn(WidthFull, Flex(1,1,0))
+            new FlexColumn(WidthFull, Flex(1, 1, 0))
             {
                 new MethodSelectionView
                 {
@@ -283,7 +283,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         return new FlexRow(WidthFull, Height100vh, PrimaryBackground, FontFamily("system-ui"))
         {
             new HotReloadListener(),
-            new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative,Transition("width", 300,"ease-in"))
+            new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative, Transition("width", 300, "ease-in"))
             {
                 When(UpdatingProgress is > 0 and <= 100, () => new div(PositionAbsolute, TopRight(4))
                 {
@@ -396,8 +396,6 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             };
         }
 
-        
-
         static Element createLabel(string text)
         {
             return new small(Text(text), Color("rgb(73 86 193)"), FontWeight600, UserSelect(none));
@@ -488,12 +486,10 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         }
     }
 
-   
-
     async Task ClosePropertyPanel(MouseEvent _)
     {
         state = state with { PropertyPanelIsClosed = true };
-     
+
         await SaveState();
     }
 
@@ -549,13 +545,13 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         var classFilter = state.ClassFilter;
         var methodFileter = state.MethodFilter;
 
-        state                = state with
+        state = state with
         {
             SelectedType = null,
             SelectedMethod = null,
             SelectedTreeNodeKey = keyOfSelectedTreeNode
         };
-        
+
         var fullAssemblyPath = state.SelectedAssemblyFilePath;
 
         var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedTreeNodeKey, state.ClassFilter, state.MethodFilter);
@@ -576,31 +572,21 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             }
         }
 
-        state              = state with
+        state = state with
         {
             ClassFilter = classFilter,
             MethodFilter = methodFileter
         };
 
-        
-
-
-       
-
         await SaveState();
 
         Client.RefreshComponentPreview();
-
-       
     }
 
     Task OnFilterChanged()
     {
         return SaveState();
-        
     }
-
-   
 
     async Task OnMediaSizeChanged()
     {
@@ -654,8 +640,6 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
 
         return Task.CompletedTask;
     }
-
-    
 
     // Taken from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader
     class LoadingIcon : PureComponent
