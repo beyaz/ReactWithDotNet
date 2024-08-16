@@ -41,10 +41,8 @@ public class DesignerHelperTest
             ]
         };
 
-        var (success, methodInfo, methodParameters) = DesignerHelper.ToModifier(node);
+        var (methodInfo, methodParameters) = DesignerHelper.ToModifier(node).Value;
         
-        success.Should().BeTrue();
-
         methodInfo.Name.Should().Be("Opacity");
 
         methodParameters[0].Should().Be(0.7);
@@ -60,10 +58,8 @@ public class DesignerHelperTest
             Name = "DisplayNone"
         };
 
-        var (success, methodInfo, methodParameters) = DesignerHelper.ToModifier(node);
+        var (methodInfo, methodParameters) = DesignerHelper.ToModifier(node).Value;
         
-        success.Should().BeTrue();
-
         methodInfo.Name.Should().Be("get_DisplayNone");
 
         methodParameters.Length.Should().Be(0);
@@ -77,10 +73,8 @@ public class DesignerHelperTest
         
         var node = DesignerHelper.NodeReader.TryReadNode(tokens,0,tokens.Count).node;
 
-        var (success, methodInfo, methodParameters) = DesignerHelper.ToModifier(node);
+        var (methodInfo, methodParameters) = DesignerHelper.ToModifier(node).Value;
         
-        success.Should().BeTrue();
-
         methodInfo.Name.Should().Be("Hover");
 
         methodParameters.Length.Should().Be(1);
@@ -137,7 +131,7 @@ public class DesignerHelperTest
 
         tokens = tokens.Where(x=>x.tokenType != TokenType.Space).ToList();
 
-        var (success, nodes, i) = DesignerHelper.NodeReader.TryReadNodes(tokens,0,tokens.Count-1);
+        var (success, nodes, _) = DesignerHelper.NodeReader.TryReadNodes(tokens,0,tokens.Count-1);
        
         success.Should().BeTrue();
 
