@@ -185,7 +185,7 @@ public class DesignerHelperTest
     {
         var csharpCodeInFile = """
                                class Deneme : PureComponent
-                               {
+                               {ABC
                                    public string aaa { get; set; }
                                
                                    protected override Element render()
@@ -210,7 +210,7 @@ public class DesignerHelperTest
                                    #region Designer Code [Do not edit manually]
                                    765B4
                                    #endregion Designer Code [Do not edit manually]
-                                   
+                               ABC
                                    public string aaa { get; set; }
                                
                                    protected override Element render()
