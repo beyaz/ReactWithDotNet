@@ -158,7 +158,7 @@ static class DesignerHelper
         }
     }
 
-    public static (bool success, MethodInfo methodInfo, object[] methodParameters) ToModifier(Node node)
+    public static Result<(MethodInfo methodInfo, object[] methodParameters)> ToModifier(Node node)
     {
         if (node.Name.HasValue())
         {
@@ -167,7 +167,7 @@ static class DesignerHelper
                 var propertyInfo = typeof(Mixin).GetProperty(node.Name);
                 if (propertyInfo is not null)
                 {
-                    return (true, propertyInfo.GetMethod, []);
+                    return (propertyInfo.GetMethod, []);
                 }
 
                 return default;
@@ -191,7 +191,7 @@ static class DesignerHelper
                     var (success, parameters) = calculateParameters(targetMethod, node.Parameters);
                     if (success)
                     {
-                        return (success: true, targetMethod, parameters);
+                        return (targetMethod, parameters);
                     }
                 }
             }
@@ -200,16 +200,16 @@ static class DesignerHelper
                 var targetMethodInfo = typeof(Mixin).GetMethod(node.Name, [typeof(StyleModifier[])]);
                 if (targetMethodInfo is not null)
                 {
-                    var (success, values) = node.Parameters.Select(ToModifier).Select(Compile).Fold();
-                    if (success)
+                    var modifiers = node.Parameters.Select(ToModifier).Select(Compile).Fold();
+                    if (modifiers.Fail)
                     {
-                        return (success: true, targetMethodInfo, values.Select(x => (object)x).ToArray());
+                        return (targetMethodInfo, modifiers.Value.Select(x => (object)x).ToArray());
                     }
                 }
             }
         }
 
-        return default;
+        return $"{node} not converted to modifier";
 
         static (bool success, object[] parameters) calculateParameters(MethodInfo methodInfo, IReadOnlyList<Node> parameterNodes)
         {
@@ -408,35 +408,28 @@ static class DesignerHelper
     }
     
    
-    static (bool success, Modifier value) Compile((bool success, MethodInfo methodInfo, object[] methodParameters) response)
+    static Modifier Compile((MethodInfo methodInfo, object[] methodParameters) tuple)
     {
-        if (!response.success)
-        {
-            return default;
-        }
-
-        var value = (Modifier)response.methodInfo.Invoke(null, response.methodParameters);
-
-        return (success: true, value);
+        return (Modifier)tuple.methodInfo.Invoke(null, tuple.methodParameters);
     }
     
     
     
-    static (bool success, IReadOnlyList<T> values) Fold<T>(this IEnumerable<(bool success, T value)> items)
+    static Result<IReadOnlyList<T>> Fold<T>(this IEnumerable<Result<T>> items)
     {
         var resultList = new List<T>();
 
-        foreach (var (success, value) in items)
+        foreach (var item in items)
         {
-            if (!success)
+            if (item.Fail)
             {
-                return default;
+                return item.Exception;
             }
 
-            resultList.Add(value);
+            resultList.Add(item.Value);
         }
 
-        return (true, resultList);
+        return resultList;
     }
 
     public sealed class Node
@@ -589,13 +582,13 @@ static class DesignerHelper
 
         foreach (var (location, nodes) in returnList)
         {
-            var (success, modifiers) = nodes.Select(ToModifier).Select(Compile).Fold();
-            if (!success)
+            var modifiers = nodes.Select(ToModifier).Select(Compile).Fold();
+            if (modifiers.Fail)
             {
-                return returnObject;
+                return modifiers.Exception;
             }
             
-            returnObject.Add(location.Select(Convert.ToInt32).ToArray(), modifiers);
+            returnObject.Add(location.Select(Convert.ToInt32).ToArray(), modifiers.Value);
         }
         
         return returnObject;
@@ -613,11 +606,22 @@ static class DesignerHelper
         
         
     }
-    
-    
-    
-    
 
+
+
+
+    static IEnumerable<Result<B>> Select<A, B>(this IEnumerable<Result<A>> enumerable, Func<A, B> func)
+    {
+        foreach (var result in enumerable)
+        {
+            if (result.Fail)
+            {
+                yield return result.Exception;
+            }
+
+            yield return func(result.Value);
+        }
+    }
     
     
     
