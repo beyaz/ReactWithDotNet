@@ -94,6 +94,29 @@ static class DesignerHelper
         return tokens.Where(t => t.tokenType != TokenType.Space).ToList();
     }
 
+    internal static Maybe<(int startIndex, int endIndex)> ReadDesignerCodeWithRegions(string classDefinitionCode)
+    {
+        const string startLine = "#region Designer Code [Do not edit manually]";
+
+        const string endLine = "#endregion";
+
+        var startIndex = classDefinitionCode.IndexOf(startLine, StringComparison.OrdinalIgnoreCase);
+        if (startIndex < 0)
+        {
+            return None;
+        }
+
+        var endIndex = classDefinitionCode.IndexOf(endLine, StringComparison.OrdinalIgnoreCase);
+        if (endIndex < 0)
+        {
+            return None;
+        }
+
+        endIndex = classDefinitionCode.IndexOf(Environment.NewLine, endIndex, StringComparison.OrdinalIgnoreCase);
+
+        return (startIndex, endIndex);
+    }
+
     internal static Result<(MethodInfo methodInfo, object[] methodParameters)> ToModifier(Node node)
     {
         if (node.Name.HasValue())
@@ -267,37 +290,6 @@ static class DesignerHelper
         return resultList;
     }
 
-    internal static Maybe<(int startIndex, int endIndex)> ReadDesignerCodeWithRegions(string classDefinitionCode)
-    {
-        const string startLine = "#region Designer Code [Do not edit manually]";
-
-        const string endLine = "#endregion";
-
-        var startIndex = classDefinitionCode.IndexOf(startLine, StringComparison.OrdinalIgnoreCase);
-        if (startIndex < 0)
-        {
-            return None;
-        }
-
-        var endIndex = classDefinitionCode.IndexOf(endLine, StringComparison.OrdinalIgnoreCase);
-        if (endIndex < 0)
-        {
-            return None;
-        }
-
-        endIndex = classDefinitionCode.IndexOf(Environment.NewLine, endIndex,StringComparison.OrdinalIgnoreCase);
-
-        return (startIndex, endIndex);
-    }
-
-    static string RemoveRegions(string csharpCode)
-    {
-        return 
-        string.Join(Environment.NewLine, csharpCode.Split(Environment.NewLine)
-                        .Where(line => !(line.Trim().StartsWith("#region", StringComparison.OrdinalIgnoreCase) ||
-                                       line.Trim().StartsWith("#endregion", StringComparison.OrdinalIgnoreCase))));
-    }
-    
     static Maybe<IReadOnlyList<Token>> ReadDesignerCodeTokens(string classDefinitionCode)
     {
         var maybeDesignerCsharpCode = ReadDesignerCodeWithRegions(classDefinitionCode);
@@ -307,11 +299,10 @@ static class DesignerHelper
         }
 
         var designerCsharpCode = maybeDesignerCsharpCode.Value;
-        
+
         var csharpCode = classDefinitionCode.Substring(designerCsharpCode.startIndex, designerCsharpCode.endIndex - designerCsharpCode.startIndex);
 
         csharpCode = RemoveRegions(csharpCode);
-
 
         var (hasRead, _, tokens) = ParseTokens(csharpCode, 0);
         if (!hasRead)
@@ -319,7 +310,7 @@ static class DesignerHelper
             return None;
         }
 
-        return new(){ Value = ClearSpaceTokens(tokens)};
+        return new() { Value = ClearSpaceTokens(tokens) };
     }
 
     static Result<IReadOnlyList<(long[] location, IReadOnlyList<Node> nodes)>> ReadDesignerValueFromTokens(IReadOnlyList<Token> tokens)
@@ -374,6 +365,14 @@ static class DesignerHelper
         }
 
         return returnList;
+    }
+
+    static string RemoveRegions(string csharpCode)
+    {
+        return
+            string.Join(Environment.NewLine, csharpCode.Split(Environment.NewLine)
+                            .Where(line => !(line.Trim().StartsWith("#region", StringComparison.OrdinalIgnoreCase) ||
+                                             line.Trim().StartsWith("#endregion", StringComparison.OrdinalIgnoreCase))));
     }
 
     static IEnumerable<Result<B>> Select<A, B>(this IEnumerable<Result<A>> enumerable, Func<A, B> func)
