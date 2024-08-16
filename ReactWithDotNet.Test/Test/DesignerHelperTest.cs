@@ -114,7 +114,7 @@ public class DesignerHelperTest
                                   }
                                   """;
 
-        ReadDesignerCSharpCodeWithRegions(classDefinitionCode).Value.Should().Be((76,417));
+        ReadDesignerCSharpCodeWithRegions(classDefinitionCode).Value.Should().Be((76,417,"    "));
     }
     
     [TestMethod]
@@ -148,6 +148,38 @@ public class DesignerHelperTest
         ReadDesignerCode(classDefinitionCode);
     }
 
+    [TestMethod]
+    public void _8_()
+    {
+        var csharpCodeOfFile = """
+                                  class Deneme : PureComponent
+                                  {
+                                      public string aaa { get; set; }
+                                  
+                                      #region Designer Code [Do not edit manually]
+                                      123A4
+                                      #endregion Designer Code [Do not edit manually]
+                                  
+                                      protected override Element render()
+                                      {
+                                          return new div
+                                          {
+                                              new div()
+                                          };
+                                      }
+                                  }
+                                  """;
+
+        var designerCSharpCode = """
+                   #region Designer Code [Do not edit manually]
+                   765B4
+                   #endregion Designer Code [Do not edit manually]
+                   """;
+
+        InjectReadDesignerCSharpCodeWithRegions(csharpCodeOfFile, designerCSharpCode).Should().Be(csharpCodeOfFile.Replace("123A4","765B4"));
+    }
+
+    
     static void Assert(string inputCode, string expectedCode)
     {
         var (hasRead, _, tokens) = Lexer.ParseTokens(inputCode, 0);

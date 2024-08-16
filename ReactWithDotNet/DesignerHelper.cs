@@ -94,27 +94,52 @@ static class DesignerHelper
         return tokens.Where(t => t.tokenType != TokenType.Space).ToList();
     }
 
-    internal static Maybe<(int startIndex, int endIndex)> ReadDesignerCSharpCodeWithRegions(string classDefinitionCode)
+    internal static string InjectReadDesignerCSharpCodeWithRegions(string csharpCodeInFile, string designerCode)
+    {
+        var maybe = ReadDesignerCSharpCodeWithRegions(csharpCodeInFile);
+        if (maybe.IsNone)
+        {
+            return default;
+        }
+
+        var startIndex = maybe.Value.startIndex;
+        var endIndex = maybe.Value.endIndex;
+        var padding = maybe.Value.padding;
+
+        designerCode = string.Join(Environment.NewLine, designerCode.Split(Environment.NewLine).Select(line => padding + line));
+
+        return csharpCodeInFile.Substring(0, startIndex) + designerCode.Trim() + csharpCodeInFile.Substring(endIndex, csharpCodeInFile.Length - endIndex);
+    }
+
+    internal static Maybe<(int startIndex, int endIndex, string padding)> ReadDesignerCSharpCodeWithRegions(string csharpCodeInFile)
     {
         const string startLine = "#region Designer Code [Do not edit manually]";
 
         const string endLine = "#endregion";
 
-        var startIndex = classDefinitionCode.IndexOf(startLine, StringComparison.OrdinalIgnoreCase);
+        var startIndex = csharpCodeInFile.IndexOf(startLine, StringComparison.OrdinalIgnoreCase);
         if (startIndex < 0)
         {
             return None;
         }
 
-        var endIndex = classDefinitionCode.IndexOf(endLine, StringComparison.OrdinalIgnoreCase);
+        var lastIndexOfNewLine = csharpCodeInFile.LastIndexOf(Environment.NewLine, startIndex, StringComparison.OrdinalIgnoreCase);
+        if (lastIndexOfNewLine < 0)
+        {
+            return None;
+        }
+
+        var padding = csharpCodeInFile.Substring(lastIndexOfNewLine + Environment.NewLine.Length, startIndex - lastIndexOfNewLine - Environment.NewLine.Length);
+
+        var endIndex = csharpCodeInFile.IndexOf(endLine, StringComparison.OrdinalIgnoreCase);
         if (endIndex < 0)
         {
             return None;
         }
 
-        endIndex = classDefinitionCode.IndexOf(Environment.NewLine, endIndex, StringComparison.OrdinalIgnoreCase);
+        endIndex = csharpCodeInFile.IndexOf(Environment.NewLine, endIndex, StringComparison.OrdinalIgnoreCase);
 
-        return (startIndex, endIndex);
+        return (startIndex, endIndex, padding);
     }
 
     internal static Result<(MethodInfo methodInfo, object[] methodParameters)> ToModifier(Node node)
