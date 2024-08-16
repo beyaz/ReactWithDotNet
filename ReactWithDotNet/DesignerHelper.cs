@@ -267,6 +267,37 @@ static class DesignerHelper
         return resultList;
     }
 
+    internal static Maybe<(int startIndex, int endIndex)> ReadDesignerCodeWithRegions(string classDefinitionCode)
+    {
+        const string startLine = "#region Designer Code [Do not edit manually]";
+
+        const string endLine = "#endregion";
+
+        var startIndex = classDefinitionCode.IndexOf(startLine, StringComparison.OrdinalIgnoreCase);
+        if (startIndex < 0)
+        {
+            return None;
+        }
+
+        var endIndex = classDefinitionCode.IndexOf(endLine, StringComparison.OrdinalIgnoreCase);
+        if (endIndex < 0)
+        {
+            return None;
+        }
+
+        endIndex = classDefinitionCode.IndexOf(Environment.NewLine, endIndex,StringComparison.OrdinalIgnoreCase);
+
+        return (startIndex, endIndex);
+    }
+
+    static string RemoveRegions(string csharpCode)
+    {
+        return 
+        string.Join(Environment.NewLine, csharpCode.Split(Environment.NewLine)
+                        .Where(line => line.Trim().StartsWith("#region", StringComparison.OrdinalIgnoreCase) ||
+                                       line.Trim().StartsWith("#endregion", StringComparison.OrdinalIgnoreCase)));
+    }
+    
     static Maybe<(IReadOnlyList<Token> tokens, int startIndex, int endIndex)> ReadDesignerCodeTokens(string classDefinitionCode)
     {
         int startIndex;
