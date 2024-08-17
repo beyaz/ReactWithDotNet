@@ -1,3 +1,4 @@
+using ReactWithDotNet.UIDesigner;
 using System.Collections;
 using System.Diagnostics;
 using System.Reflection;
@@ -205,6 +206,12 @@ partial class ElementSerializer
                     }
 
                     node.DotNetComponentRootElement = await reactPureComponent.InvokeRender();
+                    
+                    // todo: find better solution for better performance
+                    if (node.Parent?.Element is ReactWithDotNetDesignerComponentPreview)
+                    {
+                        DesignerHelper.CurrentPreviewingComponentRoot = node.DotNetComponentRootElement;
+                    }
 
                     if (node.DotNetComponentRootElement is not null)
                     {
@@ -415,6 +422,11 @@ partial class ElementSerializer
                     }
 
                     node.DotNetComponentRootElement = await reactStatefulComponent.InvokeRender();
+                    // todo: find better solution for better performance
+                    if (node.Parent?.Element is ReactWithDotNetDesignerComponentPreview)
+                    {
+                        DesignerHelper.CurrentPreviewingComponentRoot = node.DotNetComponentRootElement;
+                    }
 
                     if (node.IsFunctionalComponent == true)
                     {

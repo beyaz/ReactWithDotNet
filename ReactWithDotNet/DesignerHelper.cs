@@ -17,83 +17,7 @@ public sealed class DesignerCode : List<(IReadOnlyList<int> VisualLocation, IRea
 
 static class DesignerHelper
 {
-    public static Element GetElementTree(Element rootNode)
-    {
-        return new FlexColumn(BorderLeft("1px dotted #d9d9d9"), Width(300), PositionFixed, Right(0), Top(0), Height100vh,
-                              FontFamily("consolas, sans-serif"), FontSize11, Padding(5))
-        {
-            CreateElementTree(rootNode) + FlexGrow(1),
-            //CreateStyleEditor() + FlexGrow(3)
-        };
-    }
     
-    static Element CreateElementTree(Element rootNode)
-    {
-        if (rootNode is null)
-        {
-            return "-";
-        }
-        
-        var tree = new FlexColumn
-        {
-            CursorDefault, FontWeight500, FontStyleItalic
-        };
-
-        addNode(rootNode,"0",2);
-        
-        return tree;
-        
-        void addNode(Element node, string path, int leftIndent)
-        {
-            if (node is null)
-            {
-                tree.Add(new div(PaddingLeft(leftIndent)){"null"});
-                return;
-            }
-
-            var name = node.GetType().Name;
-
-            var treeNode = createNewTreeNode(name);
-
-            treeNode.Add(Data("path", path));
-            //treeNode.onClick = OnComponentElementTreeNodeClicked;
-
-            //if (path == state.ComponentElementTreeSelectedNodePath)
-            {
-                treeNode.Add(BackgroundColor("#e7eaff"));
-            }
-            
-            treeNode.Add(PaddingLeft(leftIndent));
-            
-            tree.Add(treeNode);
-
-            if (node._children is null)
-            {
-                return;
-            }
-
-            var childIndex = 0;
-            foreach (var child in node._children)
-            {
-                var newPath = path + "," + childIndex;
-                
-                addNode(child, newPath, leftIndent + 8);
-                
-                childIndex++;
-            }
-
-            static HtmlElement createNewTreeNode(string label)
-            {
-                return new div
-                {
-                    label,
-                    Hover(BackgroundColor("#f4f5fe"))
-                };
-            }
-            
-
-        }
-    }
     
     
     public static void Override(Element component, Element rootNode)
@@ -923,4 +847,6 @@ static class DesignerHelper
             return Name;
         }
     }
+
+    public static Element CurrentPreviewingComponentRoot { get; set; }
 }

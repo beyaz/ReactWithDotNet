@@ -373,6 +373,8 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
         var element = await CreateElement(state, Context);
 
         // element += ComponentIndicatorStyle;
+        
+        Client.RefreshComponentPreviewCompleted();
 
         return element;
     }

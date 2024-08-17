@@ -84,10 +84,18 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         state = state with { SelectedAssemblyFilePath = Assembly.GetEntryAssembly()?.Location };
 
         Client.ListenEvent("ComponentPreviewRefreshed", OnComponentPreviewRefreshed);
+        
+        Client.ListenEvent("RefreshComponentPreviewCompleted",OnRefreshComponentPreviewCompleted);
 
         return Task.CompletedTask;
     }
 
+    Task OnRefreshComponentPreviewCompleted()
+    {
+        // refresh element tree
+        return Task.CompletedTask;
+    }
+    
     protected override Element render()
     {
         if (Preview)
@@ -311,14 +319,17 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             BoxShadow(0, 4, 12, 0, rgba(0, 0, 0, 0.1))
         };
 
-        var stylerPanel = new div(Border("1px dotted #d9d9d9"), Width(300), PositionRelative, Transition("width", 300, "ease-in"))
+        var stylerPanel = new div(Border("1px dotted #d9d9d9"), PositionRelative, Transition("width", 300, "ease-in"))
         {
             PositionFixed,
             Bottom(0),
             Left(300),
             BorderTopRightRadius(8),
             MinHeight(200),
-            Background(rgba(255,255,255,0.6))
+            Background(rgba(255,255,255,0.6)),
+            FontFamily("consolas, sans-serif"), FontSize11, Padding(5),
+            
+            GetCurrentPreviewingComponentElementTree
         };
         
         return new FlexRow(Width100vw, Height100vh, PrimaryBackground, FontFamily("system-ui"))
@@ -688,6 +699,99 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
 
                 new div { className = "loader-designer-react-with-dot-net", style = { SizeFull } }
             };
+        }
+    }
+    
+    
+    
+    Element GetCurrentPreviewingComponentElementTree()
+    {
+        return new FlexRow
+        {
+            CreateElementTree(DesignerHelper.CurrentPreviewingComponentRoot),
+            new FlexRowCentered
+            {
+                state.ComponentElementTreeSelectedNodePath
+            }
+        };
+    }
+
+    async Task OnComponentElementTreeNodeClicked(MouseEvent e)
+    {
+        state = state with
+        {
+            ComponentElementTreeSelectedNodePath = e.target.data["path"]
+        };
+     
+        
+        await SaveState();
+    }
+    
+    Element CreateElementTree(Element rootNode)
+    {
+        if (rootNode is null)
+        {
+            return "-";
+        }
+        
+        var tree = new FlexColumn
+        {
+            CursorDefault, FontWeight500, FontStyleItalic
+        };
+
+        addNode(rootNode,"0",2);
+        
+        return tree;
+        
+        void addNode(Element node, string path, int leftIndent)
+        {
+            if (node is null)
+            {
+                tree.Add(new div(PaddingLeft(leftIndent)){"null"});
+                return;
+            }
+
+            var name = node.GetType().Name;
+
+            var treeNode = createNewTreeNode(name);
+
+            treeNode.Add(Data("path", path));
+            treeNode.onClick = OnComponentElementTreeNodeClicked;
+
+            if (path == state.ComponentElementTreeSelectedNodePath)
+            {
+                treeNode.Add(BackgroundColor("#e7eaff"));
+            }
+            
+            treeNode.Add(PaddingLeft(leftIndent));
+            
+            tree.Add(treeNode);
+
+            if (node._children is null)
+            {
+                return;
+            }
+
+            var childIndex = 0;
+            foreach (var child in node._children)
+            {
+                var newPath = path + "," + childIndex;
+                
+                addNode(child, newPath, leftIndent + 8);
+                
+                childIndex++;
+            }
+
+            static HtmlElement createNewTreeNode(string label)
+            {
+                return new div
+                {
+                    label,
+                    Hover(BackgroundColor("#f4f5fe"), BorderRadius(4))
+                };
+            }
+            
+
         }
     }
 }

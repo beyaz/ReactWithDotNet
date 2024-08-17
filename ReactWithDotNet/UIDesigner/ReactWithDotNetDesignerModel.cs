@@ -20,5 +20,7 @@ public sealed record ReactWithDotNetDesignerModel
     public bool PropertyPanelIsClosed { get; init; }
 
     public int ScreenHeight { get; init; } = 100;
+    
+    public string ComponentElementTreeSelectedNodePath { get; init; }
 }
 
