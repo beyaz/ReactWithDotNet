@@ -311,6 +311,11 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             BoxShadow(0, 4, 12, 0, rgba(0, 0, 0, 0.1))
         };
 
+        var stylerPanel = new div(BorderLeft("1px dotted #d9d9d9"), Width(300), PositionRelative, Transition("width", 300, "ease-in"))
+        {
+            Background("yellow")
+        };
+        
         return new FlexRow(WidthFull, Height100vh, PrimaryBackground, FontFamily("system-ui"))
         {
             new HotReloadListener(),
