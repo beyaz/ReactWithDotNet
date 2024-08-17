@@ -95,7 +95,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             return new ReactWithDotNetDesignerComponentPreview();
         }
 
-        var propertyPanelContent = new FlexColumn(Height("100%"), Width("100%"), FontSize15)
+        var propertyPanelContent = new FlexColumn(SizeFull, FontSize15)
         {
             new link { href = "https://fonts.cdnfonts.com/css/ibm-plex-mono-3", rel = "stylesheet" },
 
