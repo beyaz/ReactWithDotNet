@@ -95,7 +95,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             return new ReactWithDotNetDesignerComponentPreview();
         }
 
-        var propertyPanel = new FlexColumn(Height("100%"), Width("100%"), FontSize15)
+        var propertyPanelContent = new FlexColumn(Height("100%"), Width("100%"), FontSize15)
         {
             new link { href = "https://fonts.cdnfonts.com/css/ibm-plex-mono-3", rel = "stylesheet" },
 
@@ -267,6 +267,37 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             }
         };
 
+        var propertyPanel = new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative, Transition("width", 300, "ease-in"))
+        {
+            When(UpdatingProgress is > 0 and <= 100, () => new div(PositionAbsolute, TopRight(4))
+            {
+                When(state.PropertyPanelIsClosed, PositionStatic),
+
+                new LoadingIcon() + Size(12)
+            }),
+
+            new div
+            {
+                state.PropertyPanelIsClosed ? "→" : "←",
+                OnClick(state.PropertyPanelIsClosed ? OpenPropertyPanel : ClosePropertyPanel),
+                PositionAbsolute,
+                TopRight(0),
+                FontSize16,
+                FontWeight500,
+                Color("#c5d7e8"),
+                CursorPointer,
+                Hover(Color("#9090f2")),
+                When(state.PropertyPanelIsClosed, PositionSticky),
+
+                Size(16),
+                When(UpdatingProgress is > 0 and <= 100, DisplayNone)
+            },
+
+            state.PropertyPanelIsClosed ? null : propertyPanelContent,
+
+            When(state.PropertyPanelIsClosed, Width(15))
+        };
+        
         var outputPanel = new FlexRow(JustifyContentFlexStart, PositionRelative)
         {
             BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
@@ -283,36 +314,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         return new FlexRow(WidthFull, Height100vh, PrimaryBackground, FontFamily("system-ui"))
         {
             new HotReloadListener(),
-            new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative, Transition("width", 300, "ease-in"))
-            {
-                When(UpdatingProgress is > 0 and <= 100, () => new div(PositionAbsolute, TopRight(4))
-                {
-                    When(state.PropertyPanelIsClosed, PositionStatic),
-
-                    new LoadingIcon() + Size(12)
-                }),
-
-                new div
-                {
-                    state.PropertyPanelIsClosed ? "→" : "←",
-                    OnClick(state.PropertyPanelIsClosed ? OpenPropertyPanel : ClosePropertyPanel),
-                    PositionAbsolute,
-                    TopRight(0),
-                    FontSize16,
-                    FontWeight500,
-                    Color("#c5d7e8"),
-                    CursorPointer,
-                    Hover(Color("#9090f2")),
-                    When(state.PropertyPanelIsClosed, PositionSticky),
-
-                    Size(16),
-                    When(UpdatingProgress is > 0 and <= 100, DisplayNone)
-                },
-
-                state.PropertyPanelIsClosed ? null : propertyPanel,
-
-                When(state.PropertyPanelIsClosed, Width(15))
-            },
+            propertyPanel,
             new FlexColumn(AlignItemsCenter, FlexGrow(1), Padding(7), MarginLeft(40))
             {
                 createHorizontalRuler() + Width(state.ScreenWidth) + MarginTop(5),
