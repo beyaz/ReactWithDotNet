@@ -311,9 +311,14 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             BoxShadow(0, 4, 12, 0, rgba(0, 0, 0, 0.1))
         };
 
-        var stylerPanel = new div(BorderLeft("1px dotted #d9d9d9"), Width(300), PositionRelative, Transition("width", 300, "ease-in"))
+        var stylerPanel = new div(Border("1px dotted #d9d9d9"), Width(300), PositionRelative, Transition("width", 300, "ease-in"))
         {
-            Background("yellow")
+            PositionFixed,
+            Bottom(0),
+            Left(300),
+            BorderTopRightRadius(8),
+            MinHeight(200),
+            Background(rgba(255,255,255,0.6))
         };
         
         return new FlexRow(Width100vw, Height100vh, PrimaryBackground, FontFamily("system-ui"))
@@ -324,7 +329,8 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             {
                 createHorizontalRuler() + Width(state.ScreenWidth) + MarginTop(5),
                 outputPanel
-            }
+            },
+            stylerPanel
         };
 
         static Element createVerticleRuler()
