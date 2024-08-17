@@ -4,6 +4,7 @@ using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
 using ReactWithDotNet.UIDesigner;
+using static ReactWithDotNet.DesignerHelper;
 using static ReactWithDotNet.UIDesigner.Extensions;
 
 [assembly: MetadataUpdateHandler(typeof(HotReloadListener))]
@@ -708,7 +709,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
     {
         return new FlexRow(Gap(8))
         {
-            CreateElementTree(DesignerHelper.CurrentPreviewingComponentRoot),
+            CreateElementTree(CurrentPreviewingComponentRoot),
             new FlexColumn
             {
                 new StyleSearchInput
@@ -734,13 +735,13 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             return null;
         }
 
-        var sourceFile = DesignerHelper.TryFindTypeSourceFile(state.SelectedType.FullName);
+        var sourceFile = TryFindTypeSourceFile(state.SelectedType.FullName);
         if (sourceFile.IsNone)
         {
             return null;
         }
 
-        var designerCodeSyntaxTree = DesignerHelper.ReadDesignerCodeSyntaxTree(File.ReadAllText(sourceFile.Value.FullName));
+        var designerCodeSyntaxTree = ReadDesignerCodeSyntaxTree(File.ReadAllText(sourceFile.Value.FullName));
         if (designerCodeSyntaxTree.Fail || designerCodeSyntaxTree.Value is null)
         {
             return null;
@@ -753,9 +754,80 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         }
 
 
-        return entry.nodes.Count;
+        return new FlexColumn
+        {
+            entry.nodes.Select((n,i)=>new NodeEditor
+            {
+                Node  = n,
+                Index = i
+            })
+        };
     }
 
+    class NodeEditor : Component<Node>
+    {
+        public Node Node { get; init; }
+        public int Index { get; init; }
+
+        protected override Task constructor()
+        {
+            state = Node;
+            
+            return base.constructor();
+        }
+
+        protected override Element render()
+        {
+            if (state.IsStringNode)
+            {
+                return new input
+                {
+                    type="text",
+                    valueBind = () => state.StringValue,
+                    style =
+                    {
+                        BorderNone, 
+                        WidthAuto,
+                        MinWidth("10ch"),
+                        BoxSizingContentBox,
+                        Focus(OutlineNone)
+                    }
+                };
+            }
+            
+            if (state.IsNumberNode)
+            {
+                return new input
+                {
+                    type = "text", valueBind = () => state.NumberValue,
+                    style =
+                    {
+                        BorderNone, WidthAuto,
+                        
+                    }
+                };
+            }
+
+            if (state.Parameters is null || state.Parameters.Count is 0)
+            {
+                return state.Name;
+            }
+
+            return new FlexRow
+            {
+                state.Name,
+                "(",
+
+                new FlexRow
+                {
+                    state.Parameters.Select(p => new NodeEditor { Node = p })
+                },
+                ")"
+
+            };
+        }
+    }
+    
    
     async Task OnComponentElementTreeNodeClicked(MouseEvent e)
     {
