@@ -10,6 +10,15 @@ namespace ReactWithDotNet.Test;
 [TestClass]
 public class DesignerHelperTest
 {
+    
+    [TestMethod]
+    public void _10_()
+    {
+        var searchDirectory = @"C:\github\ReactWithDotNet\ReactWithDotNet.WebSite";
+        TryFindRelatedFile(searchDirectory, "ReactWithDotNet.WebSite.HeaderComponents.MainPageFooter").IsNone.Should().BeFalse();
+        
+    }
+    
     [TestMethod]
     public void _0_()
     {

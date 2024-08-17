@@ -849,4 +849,40 @@ static class DesignerHelper
     }
 
     public static Element CurrentPreviewingComponentRoot { get; set; }
+
+    public static Maybe<FileInfo> TryFindRelatedFile(string searchDirectory, string searchTypeFullName)
+    {
+
+        var namespaceName = string.Join(".", searchTypeFullName.Split('.').SkipLast(1));
+        var className = searchTypeFullName.Split('.').Last();
+        
+        foreach (var file in Directory.GetFiles(searchDirectory, "*.cs",SearchOption.AllDirectories))
+        {
+            if (file.Contains("bin") || file.Contains("obj")||file.Contains("wwwroot"))
+            {
+                continue;
+            }
+
+            var fileContent = File.ReadAllText(file);
+            if (hasMatch(fileContent))
+            {
+                return new FileInfo(file);
+            }
+        }
+
+        return None;
+        
+        bool hasMatch(string fileContent)
+        {
+            if (fileContent.Contains($"namespace {namespaceName};", StringComparison.OrdinalIgnoreCase))
+            {
+                if (fileContent.Contains($"class {className} ", StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }   
+            }
+
+            return false;
+        }
+    }
 }
