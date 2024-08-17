@@ -87,9 +87,14 @@ static class DesignerHelper
 
     public static Result<DesignerCode> ReadDesignerCode(string classDefinitionCode)
     {
-        return ReadDesignerCodeTokens(classDefinitionCode)
-            .Then(ReadDesignerValueFromTokens)
+        return ReadDesignerCodeSyntaxTree(classDefinitionCode)
             .Then(ToDesignerCode);
+    }
+    
+    public static Result<IReadOnlyList<(long[] location, IReadOnlyList<Node> nodes)>> ReadDesignerCodeSyntaxTree(string classDefinitionCode)
+    {
+        return ReadDesignerCodeTokens(classDefinitionCode)
+            .Then(ReadDesignerValueFromTokens);
     }
 
     public static readonly Dictionary<Type, DesignerCode> Cache = new();
@@ -850,7 +855,7 @@ static class DesignerHelper
 
     public static Element CurrentPreviewingComponentRoot { get; set; }
 
-    public static Maybe<FileInfo> TryFindTypeSourceFile(string searchTypeFullName, string searchDirectory)
+    public static Maybe<FileInfo> TryFindTypeSourceFile(string searchTypeFullName, string searchDirectory = null)
     {
         searchDirectory ??= Directory.GetCurrentDirectory();
 

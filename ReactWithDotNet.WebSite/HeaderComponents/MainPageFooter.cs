@@ -13,4 +13,13 @@ sealed class MainPageFooter : PureComponent
             }
         };
     }
+    
+    #region Designer Code [Do not edit manually]
+                                  
+    protected override DesignerCode Designer => new()
+    {
+        { [0], [WidthFull, Background("white"), Bottom(0)] }
+    };
+                                  
+    #endregion
 }

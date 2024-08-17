@@ -716,19 +716,44 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                     Value = state.ComponentElementTreeSelectedNodePath
                 },
                 
-                new div{"border-radius: ", (b)"5px"},
-                new div{"BorderRadius(5)"},
-                new div{"border-radius: ", (b)"5px"},
-                new div{"BorderRadius(5)"},
-                new div{"border-radius: ", (b)"5px"},
-                new div{"BorderRadius(5)"},
-                new div{"border-radius: ", (b)"5px"},
-                new div{"BorderRadius(5)"},
-                new div{"border-radius: ", (b)"5px"},
-                new div{"BorderRadius(5)"}
+                CreateModifierEditors
                 
             }
         };
+    }
+
+    Element CreateModifierEditors()
+    {
+        if (state.SelectedType is null)
+        {
+            return null;
+        }
+
+        if (state.ComponentElementTreeSelectedNodePath is null)
+        {
+            return null;
+        }
+
+        var sourceFile = DesignerHelper.TryFindTypeSourceFile(state.SelectedType.FullName);
+        if (sourceFile.IsNone)
+        {
+            return null;
+        }
+
+        var designerCodeSyntaxTree = DesignerHelper.ReadDesignerCodeSyntaxTree(File.ReadAllText(sourceFile.Value.FullName));
+        if (designerCodeSyntaxTree.Fail || designerCodeSyntaxTree.Value is null)
+        {
+            return null;
+        }
+
+        var entry = designerCodeSyntaxTree.Value.FirstOrDefault(x=>string.Join(", ", x.location) == state.ComponentElementTreeSelectedNodePath);
+        if (entry.location is null)
+        {
+            return null;
+        }
+
+
+        return entry.nodes.Count;
     }
 
    
