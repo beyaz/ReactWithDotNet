@@ -15,7 +15,7 @@ public class DesignerHelperTest
     public void _10_()
     {
         var searchDirectory = @"C:\github\ReactWithDotNet\ReactWithDotNet.WebSite";
-        TryFindRelatedFile(searchDirectory, "ReactWithDotNet.WebSite.HeaderComponents.MainPageFooter").IsNone.Should().BeFalse();
+        TryFindTypeSourceFile(searchDirectory, "ReactWithDotNet.WebSite.HeaderComponents.MainPageFooter").IsNone.Should().BeFalse();
         
     }
     

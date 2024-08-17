@@ -850,7 +850,7 @@ static class DesignerHelper
 
     public static Element CurrentPreviewingComponentRoot { get; set; }
 
-    public static Maybe<FileInfo> TryFindRelatedFile(string searchDirectory, string searchTypeFullName)
+    public static Maybe<FileInfo> TryFindTypeSourceFile(string searchDirectory, string searchTypeFullName)
     {
 
         var namespaceName = string.Join(".", searchTypeFullName.Split('.').SkipLast(1));
