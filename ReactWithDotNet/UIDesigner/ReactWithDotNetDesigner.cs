@@ -324,7 +324,8 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             {
                 createHorizontalRuler() + Width(state.ScreenWidth) + MarginTop(5),
                 outputPanel
-            }
+            },
+            stylerPanel
         };
 
         static Element createVerticleRuler()
