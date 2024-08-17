@@ -316,7 +316,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             Background("yellow")
         };
         
-        return new FlexRow(WidthFull, Height100vh, PrimaryBackground, FontFamily("system-ui"))
+        return new FlexRow(Width100vw, Height100vh, PrimaryBackground, FontFamily("system-ui"))
         {
             new HotReloadListener(),
             propertyPanel,
