@@ -706,16 +706,32 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
     
     Element GetCurrentPreviewingComponentElementTree()
     {
-        return new FlexRow
+        return new FlexRow(Gap(8))
         {
             CreateElementTree(DesignerHelper.CurrentPreviewingComponentRoot),
-            new FlexRowCentered
+            new FlexColumn
             {
-                state.ComponentElementTreeSelectedNodePath
+                new StyleSearchInput
+                {
+                    Value = state.ComponentElementTreeSelectedNodePath
+                },
+                
+                new div{"border-radius: ", (b)"5px"},
+                new div{"BorderRadius(5)"},
+                new div{"border-radius: ", (b)"5px"},
+                new div{"BorderRadius(5)"},
+                new div{"border-radius: ", (b)"5px"},
+                new div{"BorderRadius(5)"},
+                new div{"border-radius: ", (b)"5px"},
+                new div{"BorderRadius(5)"},
+                new div{"border-radius: ", (b)"5px"},
+                new div{"BorderRadius(5)"}
+                
             }
         };
     }
 
+   
     async Task OnComponentElementTreeNodeClicked(MouseEvent e)
     {
         state = state with
@@ -784,10 +800,10 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
 
             static HtmlElement createNewTreeNode(string label)
             {
-                return new div
+                return new div(PaddingRight(4), BorderRadius(4))
                 {
                     label,
-                    Hover(BackgroundColor("#f4f5fe"), BorderRadius(4))
+                    Hover(BackgroundColor("#f4f5fe"))
                 };
             }
             
