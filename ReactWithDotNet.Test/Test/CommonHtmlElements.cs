@@ -1830,8 +1830,7 @@ public class ExportingCommonHtmlElements
                     {
                         Name = "onScroll",
                         Type = "ScrollEventHandler",
-                        IsIsVoidTaskDelegate = true,
-                        isScrollEvent = true
+                        IsIsVoidTaskDelegate = true
                     },
                     new ()
                     {
@@ -1909,11 +1908,6 @@ public class ExportingCommonHtmlElements
                     {
                         list[^1] += ",";
                         list.Add($"{padding}{padding}isIsVoidTaskDelegate = true");
-                    }
-                    if (attribute.isScrollEvent)
-                    {
-                        list[^1] += ",";
-                        list.Add($"{padding}{padding}isScrollEvent = true");
                     }
                     if (attribute.IsBindingExpression)
                     {
@@ -2106,7 +2100,6 @@ public class ExportingCommonHtmlElements
         public string Type { get; init; } = "string";
         public string GrabEventArgumentsByUsingFunction { get; init; }
         public bool IsIsVoidTaskDelegate { get; init; }
-        public bool isScrollEvent { get; init; }
         public bool IsBindingExpression { get; init; }
         public string TransformValueInClient { get; init; }
         public ReactBindAttribute Bind{ get; init; }
