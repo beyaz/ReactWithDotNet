@@ -812,7 +812,7 @@ static class DesignerHelper
         }
     }
 
-    public sealed class Node
+    public sealed record Node
     {
         public double DoubleValue { get; init; }
         public bool IsDoubleNode { get; init; }
