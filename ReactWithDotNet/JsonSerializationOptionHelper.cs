@@ -772,7 +772,6 @@ sealed class RemoteMethodInfo
     public string FunctionNameOfGrabEventArguments { get; set; }
 
     public int? HandlerComponentUniqueIdentifier { get; set; }
-    public int? HtmlElementScrollDebounceTimeout { get; set; }
 
     [JsonPropertyName("$isRemoteMethod")]
     public bool IsRemoteMethod { get; set; }

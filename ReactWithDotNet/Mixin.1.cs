@@ -676,12 +676,10 @@ public static partial class Mixin
     public static HtmlElementModifier OnMouseLeave(MouseEventHandler onMouseLeaveHandler)
         => CreateHtmlElementModifier<HtmlElement>(element => element.onMouseLeave = onMouseLeaveHandler);
 
-    public static HtmlElementModifier OnScroll(ScrollEventHandler handler, int debounceTimeout = 400) 
+    public static HtmlElementModifier OnScroll(ScrollEventHandler handler) 
         => CreateHtmlElementModifier<HtmlElement>(element =>
         {
             element.onScroll = handler;
-            
-            element.onScrollDebounceTimeout = debounceTimeout;
         });
     
     public static HtmlElementModifier OnKeyDown(KeyboardEventHandler onKeyDownHandler)

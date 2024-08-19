@@ -990,7 +990,8 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
 
             return;
         }
-        
+
+        // todo: use debounceTimeout
         if (htmlElementScrollDebounceTimeout > 0)
         {
             const eventName = eventArguments[0]._reactName;

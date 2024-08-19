@@ -340,12 +340,6 @@ static partial class ElementSerializer
 
             var handlerComponentUniqueIdentifier = TryFindHandlerComponentUniqueIdentifier(context, handlerDelegateTarget);
             
-            int? htmlElementScrollDebounceTimeout = null;
-            if (propertyInfo.Name == nameof(HtmlElement.onScroll) && propertyInfo.DeclaringType == typeof(HtmlElement))
-            {
-                htmlElementScrollDebounceTimeout = ((HtmlElement)instance).onScrollDebounceTimeout;
-            }
-                    
             return new RemoteMethodInfo
             {
                 IsRemoteMethod                   = true,
@@ -353,8 +347,8 @@ static partial class ElementSerializer
                 HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier,
                 FunctionNameOfGrabEventArguments = property.FunctionNameOfGrabEventArguments,
                 StopPropagation                  = handlerDelegate.Method.GetCalculated().HasStopPropagation,
-                HtmlElementScrollDebounceTimeout = htmlElementScrollDebounceTimeout,
-                KeyboardEventCallOnly            = handlerDelegate.Method.GetCalculated().KeyboardEventCallOnly
+                KeyboardEventCallOnly            = handlerDelegate.Method.GetCalculated().KeyboardEventCallOnly,
+                DebounceTimeout                  = handlerDelegate.Method.GetCalculated().DebounceTimeout
             };
         }
 
@@ -587,7 +581,7 @@ static partial class ElementSerializer
 
             var handlerMethod = handlerDelegate.Method.GetCalculated();
             
-            var remoteMethodInfo = new RemoteMethodInfo
+            return  new RemoteMethodInfo
             {
                 IsRemoteMethod                   = true,
                 remoteMethodName                 = handlerMethod.NameWithToken,
@@ -597,12 +591,6 @@ static partial class ElementSerializer
                 KeyboardEventCallOnly            = handlerMethod.KeyboardEventCallOnly,
                 DebounceTimeout = handlerMethod.DebounceTimeout
             };
-            if (propertyDefinition.isScrollEvent)
-            {
-                remoteMethodInfo.HtmlElementScrollDebounceTimeout = instance.onScrollDebounceTimeout;
-            }
-                
-            return remoteMethodInfo;
         }
         
         if (propertyDefinition.isBindingExpression)

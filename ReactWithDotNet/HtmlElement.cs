@@ -108,11 +108,6 @@ abstract partial class HtmlElement : Element
     #endregion
 
     /// <summary>
-    ///     Default value: 400 <br />
-    /// </summary>
-    public int? onScrollDebounceTimeout { get; set; } = 400; // TODO: refactor to debounce timeout
-
-    /// <summary>
     ///     Gets the style.
     /// </summary>
     [JsonIgnore]
