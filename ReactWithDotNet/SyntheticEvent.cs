@@ -30,6 +30,8 @@ public sealed class ShadowHtmlElement
 
     public string value { get; init; }
     
+    public string textContent { get; init; }
+    
     public IReadOnlyDictionary<string,string> data { get;  set; }
 
     internal static void Fix(ShadowHtmlElement shadowHtmlElement)

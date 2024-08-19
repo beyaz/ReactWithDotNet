@@ -6760,12 +6760,12 @@ public  partial class HtmlElement
 
 
     #region string contentEditable
-    PropertyValueNode<string> _contentEditable;
+    PropertyValueNode<UnionProp<string,bool>> _contentEditable;
     static readonly PropertyValueDefinition _contentEditable_ = new()
     {
         name = nameof(contentEditable)
     };
-    public string contentEditable
+    public UnionProp<string,bool> contentEditable
     {
         get => _contentEditable?.value;
         set => SetValue(_contentEditable_, ref _contentEditable, value);
@@ -7006,13 +7006,29 @@ public  partial class HtmlElement
     #endregion
 
 
+    #region string onInput
+    PropertyValueNode<ChangeEventHandler> _onInput;
+    static readonly PropertyValueDefinition _onInput_ = new()
+    {
+        name = nameof(onInput),
+        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments",
+        isIsVoidTaskDelegate = true
+    };
+    public ChangeEventHandler onInput
+    {
+        get => _onInput?.value;
+        set => SetValue(_onInput_, ref _onInput, value);
+    }
+    #endregion
+
+
 
     public static HtmlElementModifier Modify(Action<HtmlElement> modifyAction) => CreateHtmlElementModifier(modifyAction);
     public static HtmlElementModifier Accesskey(string value) => Modify(x => x.accesskey = value);
 
     public static HtmlElementModifier Draggable(string value) => Modify(x => x.draggable = value);
 
-    public static HtmlElementModifier ContentEditable(string value) => Modify(x => x.contentEditable = value);
+    public static HtmlElementModifier ContentEditable(UnionProp<string,bool> value) => Modify(x => x.contentEditable = value);
 
     public static HtmlElementModifier ClassName(string value) => Modify(x => x.className = value);
 
@@ -7045,6 +7061,8 @@ public  partial class HtmlElement
     public static HtmlElementModifier OnScroll(ScrollEventHandler value) => Modify(x => x.onScroll = value);
 
     public static HtmlElementModifier OnKeyDown(KeyboardEventHandler value) => Modify(x => x.onKeyDown = value);
+
+    public static HtmlElementModifier OnInput(ChangeEventHandler value) => Modify(x => x.onInput = value);
 
 }
 

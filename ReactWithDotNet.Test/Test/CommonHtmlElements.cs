@@ -1751,7 +1751,8 @@ public class ExportingCommonHtmlElements
                     },
                     new ()
                     {
-                        Name = "contentEditable"
+                        Name = "contentEditable",
+                        Type = "UnionProp<string,bool>"
                     },
                     new ()
                     {
@@ -1831,6 +1832,13 @@ public class ExportingCommonHtmlElements
                         Name                 = "onKeyDown",
                         Type                 = "KeyboardEventHandler",
                         IsIsVoidTaskDelegate = true,
+                    },
+                    new ()
+                    {
+                        Name                              = "onInput",
+                        Type                              = "ChangeEventHandler",
+                        IsIsVoidTaskDelegate              = true,
+                        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments"
                     }
                 ],
                 EnableCastFromString = false

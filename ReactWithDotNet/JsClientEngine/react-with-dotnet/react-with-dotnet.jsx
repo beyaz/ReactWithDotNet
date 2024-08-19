@@ -1453,6 +1453,11 @@ function ConvertToSyntheticChangeEvent(e)
 {
     const target = ConvertToShadowHtmlElement(e.target);
 
+    if (e._reactName === 'onInput')
+    {
+        target.textContent = e.target.textContent;
+    }
+
     return {
         bubbles:   e.bubbles,
         target:    target,
