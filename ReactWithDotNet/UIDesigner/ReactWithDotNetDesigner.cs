@@ -716,8 +716,11 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                 {
                     Value = state.ComponentElementTreeSelectedNodePath
                 },
-                
-                CreateModifierEditors
+                SpaceY(8),
+                new FlexColumn
+                {
+                    CreateModifierEditors
+                }
                 
             }
         };
@@ -784,11 +787,15 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                 {
                     type="text",
                     valueBind = () => state.StringValue,
+                    valueBindDebounceTimeout = 700,
+                    valueBindDebounceHandler = ValueBindDebounceHandler,
                     style =
                     {
-                        BorderNone, 
-                        WidthAuto,
-                        MinWidth("10ch"),
+                        Border(0.1, solid, "#bcc4e3"),
+                        BorderRadius(3),
+                        FontSize12,
+                        TextAlignCenter,
+                        Width( state.StringValue.Length+"ch"),
                         BoxSizingContentBox,
                         Focus(OutlineNone)
                     }
@@ -799,11 +806,18 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             {
                 return new input
                 {
-                    type = "text", valueBind = () => state.NumberValue,
+                    type                     = "text", valueBind = () => state.NumberValue,
+                    valueBindDebounceTimeout = 700,
+                    valueBindDebounceHandler = ValueBindDebounceHandler,
                     style =
                     {
-                        BorderNone, WidthAuto,
-                        
+                        Border(0.1, solid, "#bcc4e3"),
+                        BorderRadius(3),
+                        FontSize12,
+                        TextAlignCenter,
+                        Width( state.NumberValue.ToString().Length+"ch"),
+                        BoxSizingContentBox,
+                        Focus(OutlineNone)
                     }
                 };
             }
@@ -818,13 +832,18 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                 state.Name,
                 "(",
 
-                new FlexRow
+                new FlexRow(Gap(4))
                 {
                     state.Parameters.Select(p => new NodeEditor { Node = p })
                 },
                 ")"
 
             };
+        }
+
+        Task ValueBindDebounceHandler()
+        {
+            return Task.CompletedTask;
         }
     }
     

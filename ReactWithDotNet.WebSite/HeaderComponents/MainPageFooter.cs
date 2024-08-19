@@ -18,7 +18,7 @@ sealed class MainPageFooter : PureComponent
                                   
     protected override DesignerCode Designer => new()
     {
-        { [0], [WidthFull, Background("white"), Bottom(0)] }
+        { [0], [WidthFull, Background("white"), Bottom(10),Background("white"),Background(rgb(4,5,6))] }
     };
                                   
     #endregion
