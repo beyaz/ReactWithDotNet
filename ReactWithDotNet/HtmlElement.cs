@@ -227,7 +227,6 @@ abstract partial class HtmlElement : Element
         public string GrabEventArgumentsByUsingFunction;
         public bool isOnClickPreview;
         public bool isIsVoidTaskDelegate;
-        public bool isScrollEvent;
         public bool isBindingExpression;
         public string transformValueInClient;
         public ReactBindAttribute bind;
