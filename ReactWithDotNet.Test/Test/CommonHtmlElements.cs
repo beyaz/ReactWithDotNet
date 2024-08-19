@@ -1756,6 +1756,12 @@ public class ExportingCommonHtmlElements
                     },
                     new ()
                     {
+                        Name = "suppressContentEditableWarning",
+                        Type = "bool?"
+                    },
+                    
+                    new ()
+                    {
                         Name = "className"
                     },
                     new ()

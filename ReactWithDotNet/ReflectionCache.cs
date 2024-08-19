@@ -186,6 +186,8 @@ partial class Mixin
 
     internal sealed class MethodInfoCalculated
     {
+        public int? DebounceTimeout { get; init; }
+        
         public required bool HasStopPropagation { get; init; }
 
         public required IReadOnlyList<string> KeyboardEventCallOnly { get; init; }
@@ -198,12 +200,15 @@ partial class Mixin
         {
             return new()
             {
-                MethodInfo            = methodInfo,
-                HasStopPropagation    = methodInfo.GetCustomAttributes<StopPropagationAttribute>().Any(),
-                KeyboardEventCallOnly = methodInfo.GetCustomAttributes<KeyboardEventCallOnlyAttribute>().FirstOrDefault()?.Keys,
-                NameWithToken         = methodInfo.GetAccessKey()
+                MethodInfo                   = methodInfo,
+                HasStopPropagation           = methodInfo.GetCustomAttributes<StopPropagationAttribute>().Any(),
+                KeyboardEventCallOnly        = methodInfo.GetCustomAttributes<KeyboardEventCallOnlyAttribute>().FirstOrDefault()?.Keys,
+                DebounceTimeout              = methodInfo.GetCustomAttributes<DebounceTimeoutAttribute>().FirstOrDefault()?.Millisecond,
+                NameWithToken                = methodInfo.GetAccessKey()
             };
         }
+
+        
     }
 }
 

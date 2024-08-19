@@ -6773,6 +6773,20 @@ public  partial class HtmlElement
     #endregion
 
 
+    #region string suppressContentEditableWarning
+    PropertyValueNode<bool?> _suppressContentEditableWarning;
+    static readonly PropertyValueDefinition _suppressContentEditableWarning_ = new()
+    {
+        name = nameof(suppressContentEditableWarning)
+    };
+    public bool? suppressContentEditableWarning
+    {
+        get => _suppressContentEditableWarning?.value;
+        set => SetValue(_suppressContentEditableWarning_, ref _suppressContentEditableWarning, value);
+    }
+    #endregion
+
+
     #region string className
     PropertyValueNode<string> _className;
     static readonly PropertyValueDefinition _className_ = new()
@@ -7029,6 +7043,8 @@ public  partial class HtmlElement
     public static HtmlElementModifier Draggable(string value) => Modify(x => x.draggable = value);
 
     public static HtmlElementModifier ContentEditable(UnionProp<string,bool> value) => Modify(x => x.contentEditable = value);
+
+    public static HtmlElementModifier SuppressContentEditableWarning(bool? value) => Modify(x => x.suppressContentEditableWarning = value);
 
     public static HtmlElementModifier ClassName(string value) => Modify(x => x.className = value);
 

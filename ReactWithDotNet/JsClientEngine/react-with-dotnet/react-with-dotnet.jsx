@@ -923,6 +923,7 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
     const stopPropagation = remoteMethodInfo.StopPropagation;
     const htmlElementScrollDebounceTimeout = remoteMethodInfo.HtmlElementScrollDebounceTimeout;
     const keyboardEventCallOnly = remoteMethodInfo.KeyboardEventCallOnly;
+    const debounceTimeout = remoteMethodInfo.DebounceTimeout;
 
     NotNull(remoteMethodName);
     NotNull(handlerComponentUniqueIdentifier);
@@ -989,7 +990,8 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
 
             return;
         }
-        
+
+        // todo: use debounceTimeout
         if (htmlElementScrollDebounceTimeout > 0)
         {
             const eventName = eventArguments[0]._reactName;
@@ -1014,6 +1016,38 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
                 executionEntry.name = executionQueueItemName;
 
             }, htmlElementScrollDebounceTimeout);
+
+            newState[SyncId] = GetNextSequence();
+
+            targetComponent.setState(newState);
+
+            return;
+        }
+
+        if (debounceTimeout > 0)
+        {
+            const eventName = eventArguments[0]._reactName;
+
+            const executionQueueItemName = eventName + '-debounce-' + GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
+
+            InvalidateQueuedFunctionsByName(executionQueueItemName);
+
+            const timeoutKey = eventName + '-debounceTimeoutId';
+
+            clearTimeout(targetComponent.state[timeoutKey]);
+
+            const newState = {};
+            newState[timeoutKey] = setTimeout(() =>
+            {
+                const actionArguments = {
+                    component: targetComponent,
+                    remoteMethodName: remoteMethodName,
+                    remoteMethodArguments: eventArguments
+                };
+                const executionEntry = StartAction(actionArguments);
+                executionEntry.name = executionQueueItemName;
+
+            }, debounceTimeout);
 
             newState[SyncId] = GetNextSequence();
 

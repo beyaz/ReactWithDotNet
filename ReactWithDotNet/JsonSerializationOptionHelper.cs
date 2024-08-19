@@ -782,6 +782,8 @@ sealed class RemoteMethodInfo
     public string remoteMethodName { get; set; }
 
     public bool? StopPropagation { get; set; }
+    
+    public int? DebounceTimeout { get; init; }
 }
 
 [Serializable]

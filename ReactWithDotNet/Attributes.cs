@@ -106,3 +106,15 @@ public sealed class StopPropagationAttribute : Attribute;
 
 [AttributeUsage(AttributeTargets.Property)]
 public sealed class CustomEventAttribute : Attribute;
+
+
+[AttributeUsage(AttributeTargets.Method)]
+public sealed class DebounceTimeoutAttribute: Attribute
+{
+    public DebounceTimeoutAttribute(int millisecond)
+    {
+        Millisecond = millisecond;
+    }
+
+    public int Millisecond { get; }
+}

@@ -594,7 +594,8 @@ static partial class ElementSerializer
                 HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier,
                 FunctionNameOfGrabEventArguments = propertyDefinition.GrabEventArgumentsByUsingFunction,
                 StopPropagation                  = handlerMethod.HasStopPropagation,
-                KeyboardEventCallOnly            = handlerMethod.KeyboardEventCallOnly
+                KeyboardEventCallOnly            = handlerMethod.KeyboardEventCallOnly,
+                DebounceTimeout = handlerMethod.DebounceTimeout
             };
             if (propertyDefinition.isScrollEvent)
             {
