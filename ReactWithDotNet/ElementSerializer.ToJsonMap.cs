@@ -1,4 +1,3 @@
-using ReactWithDotNet.UIDesigner;
 using System.Collections;
 using System.Diagnostics;
 using System.Reflection;
@@ -207,12 +206,6 @@ partial class ElementSerializer
 
                     node.DotNetComponentRootElement = await reactPureComponent.InvokeRender();
                     
-                    // todo: find better solution for better performance
-                    if (node.Parent?.Element is ReactWithDotNetDesignerComponentPreview)
-                    {
-                        DesignerHelper.CurrentPreviewingComponentRoot = node.DotNetComponentRootElement;
-                    }
-
                     if (node.DotNetComponentRootElement is not null)
                     {
                         node.DotNetComponentRootElement.key = "0";
@@ -246,8 +239,6 @@ partial class ElementSerializer
                                 ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, modifier);
                             }
                         }
-                        
-                        DesignerHelper.Override(node.Element, node.DotNetComponentRootElement);
                     }
 
                     node.DotNetComponentRootNode = ConvertToNode(node.DotNetComponentRootElement);
@@ -422,12 +413,7 @@ partial class ElementSerializer
                     }
 
                     node.DotNetComponentRootElement = await reactStatefulComponent.InvokeRender();
-                    // todo: find better solution for better performance
-                    if (node.Parent?.Element is ReactWithDotNetDesignerComponentPreview)
-                    {
-                        DesignerHelper.CurrentPreviewingComponentRoot = node.DotNetComponentRootElement;
-                    }
-
+                    
                     if (node.IsFunctionalComponent == true)
                     {
                         if (node.FunctionalComponent.Constructor is not null &&
@@ -472,8 +458,6 @@ partial class ElementSerializer
                                 ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, modifier);
                             }
                         }
-                        
-                        DesignerHelper.Override(node.Element, node.DotNetComponentRootElement);
                     }
 
                     reactStatefulComponent.ConvertReactEventsToTaskForEventBus(context);
