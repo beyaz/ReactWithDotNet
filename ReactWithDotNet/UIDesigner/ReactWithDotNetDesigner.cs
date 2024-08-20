@@ -293,7 +293,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                 FontSize16,
                 FontWeight500,
                 Color("#c5d7e8"),
-                CursorPointer,
+                CursorDefault,
                 Hover(Color("#9090f2")),
                 When(state.PropertyPanelIsClosed, PositionSticky),
 
@@ -335,7 +335,31 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             const int maxHeight = 5000;
 
             const int step = 50;
-            var max = maxHeight / step + 1;
+            const int max = maxHeight / step + 1;
+
+            return new div(SizeFull, Width(30), MarginLeft(-30), OverflowHidden, PositionRelative)
+            {
+                Enumerable.Range(0, max).Select(number => new div(PositionAbsolute)
+                {
+                    Right(3), Top(number * step),
+                    new FlexRow(FontSize8, LineHeight6, FontWeight500, Gap(4))
+                    {
+                        new div(MarginTop(number == 0 ? 0 : -3))
+                        {
+                            (number * step).ToString()
+                        },
+                        new div
+                        {
+                            Height(0.5),
+                            Width(7),
+
+                            Background("green")
+                        }
+                    }
+                }),
+
+                createTenPoints()
+            };
 
             IReadOnlyList<Element> createTenPoints()
             {
@@ -369,30 +393,6 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
 
                 return returnList;
             }
-
-            return new div(SizeFull, Width(30), MarginLeft(-30), OverflowHidden, PositionRelative)
-            {
-                Enumerable.Range(0, max).Select(number => new div(PositionAbsolute)
-                {
-                    Right(3), Top(number * step),
-                    new FlexRow(FontSize8, LineHeight6, FontWeight500, Gap(4))
-                    {
-                        new div(MarginTop(number == 0 ? 0 : -3))
-                        {
-                            (number * step).ToString()
-                        },
-                        new div
-                        {
-                            Height(0.5),
-                            Width(7),
-
-                            Background("green")
-                        }
-                    }
-                }),
-
-                createTenPoints()
-            };
         }
 
         static Element createElement()
