@@ -290,7 +290,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                 OnClick(state.PropertyPanelIsClosed ? OpenPropertyPanel : ClosePropertyPanel),
                 PositionAbsolute,
                 TopRight(0),
-                FontSize16,
+                FontSize19,
                 FontWeight500,
                 Color("#c5d7e8"),
                 CursorDefault,
