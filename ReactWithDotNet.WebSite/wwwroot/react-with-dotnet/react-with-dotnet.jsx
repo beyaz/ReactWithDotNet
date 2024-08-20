@@ -921,7 +921,6 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
     const handlerComponentUniqueIdentifier = remoteMethodInfo.HandlerComponentUniqueIdentifier;
     const functionNameOfGrabEventArguments = remoteMethodInfo.FunctionNameOfGrabEventArguments;
     const stopPropagation = remoteMethodInfo.StopPropagation;
-    const htmlElementScrollDebounceTimeout = remoteMethodInfo.HtmlElementScrollDebounceTimeout;
     const keyboardEventCallOnly = remoteMethodInfo.KeyboardEventCallOnly;
     const debounceTimeout = remoteMethodInfo.DebounceTimeout;
 
@@ -985,39 +984,6 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
         if (cachedMethodInfo)
         {
             const newState = CalculateNewStateFromJsonElement(targetComponent.state, cachedMethodInfo.ElementAsJson);
-
-            targetComponent.setState(newState);
-
-            return;
-        }
-
-        // todo: use debounceTimeout
-        if (htmlElementScrollDebounceTimeout > 0)
-        {
-            const eventName = eventArguments[0]._reactName;
-
-            const executionQueueItemName = eventName + '-debounce-' + GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
-
-            InvalidateQueuedFunctionsByName(executionQueueItemName);
-
-            const timeoutKey = eventName + '-debounceTimeoutId';
-
-            clearTimeout(targetComponent.state[timeoutKey]);
-
-            const newState = {};
-            newState[timeoutKey] = setTimeout(() =>
-            {
-                const actionArguments = {
-                    component: targetComponent,
-                    remoteMethodName: remoteMethodName,
-                    remoteMethodArguments: eventArguments
-                };
-                const executionEntry = StartAction(actionArguments);
-                executionEntry.name = executionQueueItemName;
-
-            }, htmlElementScrollDebounceTimeout);
-
-            newState[SyncId] = GetNextSequence();
 
             targetComponent.setState(newState);
 
