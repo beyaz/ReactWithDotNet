@@ -1534,8 +1534,72 @@ public class ExportingCommonHtmlElements
                 Attributes = [
                     new ()
                     {
-                        Name = "src"
+                        Name    = "src",
+                        Comment = "Specifies the URL of the document to embed in the iframe"
+                    },
+                    new ()
+                    {
+                        Name    = "srcDoc",
+                        Comment = "Provides the HTML content to be embedded directly within the iframe"
+                    },
+                    new ()
+                    {
+                        Name    = "name",
+                        Comment = "Assigns a name to the iframe, which can be used for targeting links"
+                    },
+                    new ()
+                    {
+                        Name    = "width",
+                        Comment = "Defines the width of the iframe"
+                    },
+                    new ()
+                    {
+                        Name    = "height",
+                        Comment = "Defines the height of the iframe"
+                    },
+                    new ()
+                    {
+                        Name    = "sandbox",
+                        Comment = "Enables an extra set of restrictions for the content in the iframe"
+                    },
+                    new ()
+                    {
+                        Name    = "allow",
+                        Comment = "Controls features within the iframe, such as fullscreen, camera, microphone, etc."
+                    },
+                    new ()
+                    {
+                        Name    = "allowFullScreen",
+                        Comment = "Allows the iframe to display content in fullscreen mode"
+                    },
+                    new ()
+                    {
+                        Name    = "referrerPolicy",
+                        Comment = "Controls how much referrer information should be included with requests"
+                    },
+                    new ()
+                    {
+                        Name    = "loading",
+                        Comment = "Specifies whether the iframe should be loaded lazily or eagerly"
+                    },
+                   
+                    
+                    new ()
+                    {
+                        Name    = "csp",
+                        Comment = "Adds a Content Security Policy for the iframe's content"
+                    },
+                    new ()
+                    {
+                        Name    = "title",
+                        Comment = "Provides advisory information about the content of the iframe"
+                    },
+                    new ()
+                    {
+                        Name    = "hidden",
+                        Comment = "Hides the iframe"
                     }
+
                 ],
                 EnableCastFromString = false
             },

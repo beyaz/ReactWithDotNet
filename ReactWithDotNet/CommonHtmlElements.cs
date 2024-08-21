@@ -6188,10 +6188,217 @@ public sealed class iframe : HtmlElement
     {
         name = nameof(src)
     };
+    /// <summary>
+    ///     Specifies the URL of the document to embed in the iframe
+    /// </summary>
     public string src
     {
         get => _src?.value;
         set => SetValue(_src_, ref _src, value);
+    }
+    #endregion
+
+
+    #region string srcDoc
+    PropertyValueNode<string> _srcDoc;
+    static readonly PropertyValueDefinition _srcDoc_ = new()
+    {
+        name = nameof(srcDoc)
+    };
+    /// <summary>
+    ///     Provides the HTML content to be embedded directly within the iframe
+    /// </summary>
+    public string srcDoc
+    {
+        get => _srcDoc?.value;
+        set => SetValue(_srcDoc_, ref _srcDoc, value);
+    }
+    #endregion
+
+
+    #region string name
+    PropertyValueNode<string> _name;
+    static readonly PropertyValueDefinition _name_ = new()
+    {
+        name = nameof(name)
+    };
+    /// <summary>
+    ///     Assigns a name to the iframe, which can be used for targeting links
+    /// </summary>
+    public string name
+    {
+        get => _name?.value;
+        set => SetValue(_name_, ref _name, value);
+    }
+    #endregion
+
+
+    #region string width
+    PropertyValueNode<string> _width;
+    static readonly PropertyValueDefinition _width_ = new()
+    {
+        name = nameof(width)
+    };
+    /// <summary>
+    ///     Defines the width of the iframe
+    /// </summary>
+    public string width
+    {
+        get => _width?.value;
+        set => SetValue(_width_, ref _width, value);
+    }
+    #endregion
+
+
+    #region string height
+    PropertyValueNode<string> _height;
+    static readonly PropertyValueDefinition _height_ = new()
+    {
+        name = nameof(height)
+    };
+    /// <summary>
+    ///     Defines the height of the iframe
+    /// </summary>
+    public string height
+    {
+        get => _height?.value;
+        set => SetValue(_height_, ref _height, value);
+    }
+    #endregion
+
+
+    #region string sandbox
+    PropertyValueNode<string> _sandbox;
+    static readonly PropertyValueDefinition _sandbox_ = new()
+    {
+        name = nameof(sandbox)
+    };
+    /// <summary>
+    ///     Enables an extra set of restrictions for the content in the iframe
+    /// </summary>
+    public string sandbox
+    {
+        get => _sandbox?.value;
+        set => SetValue(_sandbox_, ref _sandbox, value);
+    }
+    #endregion
+
+
+    #region string allow
+    PropertyValueNode<string> _allow;
+    static readonly PropertyValueDefinition _allow_ = new()
+    {
+        name = nameof(allow)
+    };
+    /// <summary>
+    ///     Controls features within the iframe, such as fullscreen, camera, microphone, etc.
+    /// </summary>
+    public string allow
+    {
+        get => _allow?.value;
+        set => SetValue(_allow_, ref _allow, value);
+    }
+    #endregion
+
+
+    #region string allowFullScreen
+    PropertyValueNode<string> _allowFullScreen;
+    static readonly PropertyValueDefinition _allowFullScreen_ = new()
+    {
+        name = nameof(allowFullScreen)
+    };
+    /// <summary>
+    ///     Allows the iframe to display content in fullscreen mode
+    /// </summary>
+    public string allowFullScreen
+    {
+        get => _allowFullScreen?.value;
+        set => SetValue(_allowFullScreen_, ref _allowFullScreen, value);
+    }
+    #endregion
+
+
+    #region string referrerPolicy
+    PropertyValueNode<string> _referrerPolicy;
+    static readonly PropertyValueDefinition _referrerPolicy_ = new()
+    {
+        name = nameof(referrerPolicy)
+    };
+    /// <summary>
+    ///     Controls how much referrer information should be included with requests
+    /// </summary>
+    public string referrerPolicy
+    {
+        get => _referrerPolicy?.value;
+        set => SetValue(_referrerPolicy_, ref _referrerPolicy, value);
+    }
+    #endregion
+
+
+    #region string loading
+    PropertyValueNode<string> _loading;
+    static readonly PropertyValueDefinition _loading_ = new()
+    {
+        name = nameof(loading)
+    };
+    /// <summary>
+    ///     Specifies whether the iframe should be loaded lazily or eagerly
+    /// </summary>
+    public string loading
+    {
+        get => _loading?.value;
+        set => SetValue(_loading_, ref _loading, value);
+    }
+    #endregion
+
+
+    #region string csp
+    PropertyValueNode<string> _csp;
+    static readonly PropertyValueDefinition _csp_ = new()
+    {
+        name = nameof(csp)
+    };
+    /// <summary>
+    ///     Adds a Content Security Policy for the iframe's content
+    /// </summary>
+    public string csp
+    {
+        get => _csp?.value;
+        set => SetValue(_csp_, ref _csp, value);
+    }
+    #endregion
+
+
+    #region string title
+    PropertyValueNode<string> _title;
+    static readonly PropertyValueDefinition _title_ = new()
+    {
+        name = nameof(title)
+    };
+    /// <summary>
+    ///     Provides advisory information about the content of the iframe
+    /// </summary>
+    public string title
+    {
+        get => _title?.value;
+        set => SetValue(_title_, ref _title, value);
+    }
+    #endregion
+
+
+    #region string hidden
+    PropertyValueNode<string> _hidden;
+    static readonly PropertyValueDefinition _hidden_ = new()
+    {
+        name = nameof(hidden)
+    };
+    /// <summary>
+    ///     Hides the iframe
+    /// </summary>
+    public string hidden
+    {
+        get => _hidden?.value;
+        set => SetValue(_hidden_, ref _hidden, value);
     }
     #endregion
 
@@ -6205,7 +6412,96 @@ public sealed class iframe : HtmlElement
     public iframe(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<iframe> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     src = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the URL of the document to embed in the iframe
+    /// </summary>
     public static HtmlElementModifier Src(string value) => Modify(x => x.src = value);
+
+    /// <summary>
+    ///     srcDoc = <paramref name="value"/>
+    /// <br/>
+    ///     Provides the HTML content to be embedded directly within the iframe
+    /// </summary>
+    public static HtmlElementModifier SrcDoc(string value) => Modify(x => x.srcDoc = value);
+
+    /// <summary>
+    ///     name = <paramref name="value"/>
+    /// <br/>
+    ///     Assigns a name to the iframe, which can be used for targeting links
+    /// </summary>
+    public static HtmlElementModifier Name(string value) => Modify(x => x.name = value);
+
+    /// <summary>
+    ///     width = <paramref name="value"/>
+    /// <br/>
+    ///     Defines the width of the iframe
+    /// </summary>
+    public static HtmlElementModifier Width(string value) => Modify(x => x.width = value);
+
+    /// <summary>
+    ///     height = <paramref name="value"/>
+    /// <br/>
+    ///     Defines the height of the iframe
+    /// </summary>
+    public static HtmlElementModifier Height(string value) => Modify(x => x.height = value);
+
+    /// <summary>
+    ///     sandbox = <paramref name="value"/>
+    /// <br/>
+    ///     Enables an extra set of restrictions for the content in the iframe
+    /// </summary>
+    public static HtmlElementModifier Sandbox(string value) => Modify(x => x.sandbox = value);
+
+    /// <summary>
+    ///     allow = <paramref name="value"/>
+    /// <br/>
+    ///     Controls features within the iframe, such as fullscreen, camera, microphone, etc.
+    /// </summary>
+    public static HtmlElementModifier Allow(string value) => Modify(x => x.allow = value);
+
+    /// <summary>
+    ///     allowFullScreen = <paramref name="value"/>
+    /// <br/>
+    ///     Allows the iframe to display content in fullscreen mode
+    /// </summary>
+    public static HtmlElementModifier AllowFullScreen(string value) => Modify(x => x.allowFullScreen = value);
+
+    /// <summary>
+    ///     referrerPolicy = <paramref name="value"/>
+    /// <br/>
+    ///     Controls how much referrer information should be included with requests
+    /// </summary>
+    public static HtmlElementModifier ReferrerPolicy(string value) => Modify(x => x.referrerPolicy = value);
+
+    /// <summary>
+    ///     loading = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies whether the iframe should be loaded lazily or eagerly
+    /// </summary>
+    public static HtmlElementModifier Loading(string value) => Modify(x => x.loading = value);
+
+    /// <summary>
+    ///     csp = <paramref name="value"/>
+    /// <br/>
+    ///     Adds a Content Security Policy for the iframe's content
+    /// </summary>
+    public static HtmlElementModifier Csp(string value) => Modify(x => x.csp = value);
+
+    /// <summary>
+    ///     title = <paramref name="value"/>
+    /// <br/>
+    ///     Provides advisory information about the content of the iframe
+    /// </summary>
+    public static HtmlElementModifier Title(string value) => Modify(x => x.title = value);
+
+    /// <summary>
+    ///     hidden = <paramref name="value"/>
+    /// <br/>
+    ///     Hides the iframe
+    /// </summary>
+    public static HtmlElementModifier Hidden(string value) => Modify(x => x.hidden = value);
 
 }
 
