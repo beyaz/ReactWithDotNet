@@ -923,6 +923,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         var success = (string modifierCode) => (true, modifierCode);
 
+        if (tagName == "iframe" && name.Equals("src", StringComparison.OrdinalIgnoreCase))
+        {
+            return success($"iframe.Src({value})");
+        }
+        
         if (tagName == "svg" && name.Equals("size", StringComparison.OrdinalIgnoreCase) && double.TryParse(value, out _))
         {
             return success($"svg.Size({value})");
