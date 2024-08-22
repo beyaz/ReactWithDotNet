@@ -1641,9 +1641,9 @@ function HandleAction(actionArguments)
     };
 
 
-    if (actionArguments.onlyUpdateState)
+    if (actionArguments.skipRender)
     {
-        request.OnlyUpdateState = true;
+        request.SkipRender = true;
         request.CapturedStateTree = { };
         request.CapturedStateTree[capturedStateTreeRootNodeKey] = capturedStateTree[capturedStateTreeRootNodeKey];
 
@@ -1689,7 +1689,7 @@ function HandleAction(actionArguments)
             OnReactStateReady();
         }
 
-        if (actionArguments.onlyUpdateState)
+        if (actionArguments.skipRender)
         {
             // note: setState not used here because this is special case. we don't want to trigger render.
             component.state[DotNetState] = response.NewState;
@@ -2564,7 +2564,7 @@ RegisterCoreFunction("ListenEventThenOnlyUpdateState", function (eventName, remo
             component: component,
             remoteMethodName: remoteMethodName,
             remoteMethodArguments: eventArgumentsAsArray,
-            onlyUpdateState: true
+            skipRender: true
         };
 
         const entry = StartAction(actionArguments);
