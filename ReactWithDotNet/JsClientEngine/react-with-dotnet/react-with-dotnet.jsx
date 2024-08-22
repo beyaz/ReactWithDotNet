@@ -1646,7 +1646,6 @@ function HandleAction(actionArguments)
         request.SkipRender = true;
         request.CapturedStateTree = { };
         request.CapturedStateTree[capturedStateTreeRootNodeKey] = capturedStateTree[capturedStateTreeRootNodeKey];
-
     }
     
 
