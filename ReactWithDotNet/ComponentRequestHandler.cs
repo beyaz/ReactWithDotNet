@@ -14,33 +14,33 @@ sealed class ClientStateInfo
 
 sealed class ComponentRequest
 {
-    public int CallFunctionId { get; set; }
+    public int CallFunctionId { get; init; }
 
-    public IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; set; }
+    public IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; init; }
 
-    public string CapturedStateTreeRootNodeKey { get; set; }
+    public string CapturedStateTreeRootNodeKey { get; init; }
 
-    public double? ClientHeight { get; set; }
+    public double? ClientHeight { get; init; }
 
-    public double? ClientWidth { get; set; }
+    public double? ClientWidth { get; init; }
 
     public int ComponentKey { get; set; }
 
     public int ComponentUniqueIdentifier { get; set; }
 
-    public string[] EventArgumentsAsJsonArray { get; set; }
+    public string[] EventArgumentsAsJsonArray { get; init; }
 
-    public string EventHandlerMethodName { get; set; }
+    public string EventHandlerMethodName { get; init; }
 
-    public string FullName { get; set; }
+    public string FullName { get; init; }
 
-    public int LastUsedComponentUniqueIdentifier { get; set; }
+    public int LastUsedComponentUniqueIdentifier { get; init; }
 
-    public string MethodName { get; set; }
+    public string MethodName { get; init; }
 
-    public string QueryString { get; set; }
+    public string QueryString { get; init; }
     
-    public bool OnlyUpdateState { get; set; }
+    public bool SkipRender { get; init; }
 }
 
 class ComponentResponse
@@ -331,7 +331,7 @@ static class ComponentRequestHandler
                 };
             }
 
-            if (request.OnlyUpdateState || methodInfo.GetCalculated().SkipRender)
+            if (request.SkipRender || methodInfo.GetCalculated().SkipRender)
             {
                 var typeInfo = type.Calculated();
 
