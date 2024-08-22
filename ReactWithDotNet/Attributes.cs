@@ -118,3 +118,7 @@ public sealed class DebounceTimeoutAttribute: Attribute
 
     public int Millisecond { get; }
 }
+
+
+[AttributeUsage(AttributeTargets.Method)]
+public sealed class SkipRenderAttribute: Attribute;

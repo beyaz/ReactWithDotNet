@@ -331,7 +331,7 @@ static class ComponentRequestHandler
                 };
             }
 
-            if (request.OnlyUpdateState)
+            if (request.OnlyUpdateState || methodInfo.GetCalculated().SkipRender)
             {
                 var typeInfo = type.Calculated();
 
