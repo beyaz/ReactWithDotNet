@@ -49,18 +49,19 @@ class ComponentResponse
 
     public object DynamicStyles { get; set; }
 
-    public object ElementAsJson { get; set; }
+    public object ElementAsJson { get; init; }
     
-    public object NewState { get; set; }
-    public JsonMap NewDotNetProperties { get; set; }
-    public IReadOnlyList<Client.ClientTask> ClientTaskList{ get; set; }
+    public object NewState { get; init; }
     
-    public string ErrorMessage { get; set; }
+    public JsonMap NewDotNetProperties { get; init; }
+    
+    public IReadOnlyList<Client.ClientTask> ClientTaskList{ get; init; }
+    
+    public string ErrorMessage { get; init; }
 
     public int LastUsedComponentUniqueIdentifier { get; set; }
 
     public IReadOnlyCollection<string> Trace { get; set; }
-    
 
     internal ReactContext ReactContext;
 }
