@@ -39,8 +39,6 @@ sealed class ComponentRequest
     public string MethodName { get; init; }
 
     public string QueryString { get; init; }
-    
-    public bool SkipRender { get; init; }
 }
 
 class ComponentResponse
@@ -64,6 +62,8 @@ class ComponentResponse
     public IReadOnlyCollection<string> Trace { get; set; }
 
     internal ReactContext ReactContext;
+    
+    public bool? SkipRender { get; init; }
 }
 
 static class ComponentRequestHandler
@@ -332,7 +332,7 @@ static class ComponentRequestHandler
                 };
             }
 
-            if (request.SkipRender || methodInfo.GetCalculated().SkipRender)
+            if (methodInfo.GetCalculated().SkipRender)
             {
                 var typeInfo = type.Calculated();
 
@@ -360,6 +360,7 @@ static class ComponentRequestHandler
                 
                 return new()
                 {
+                    SkipRender = true,
                     NewState            = newState,
                     NewDotNetProperties = dotNetProperties,
                     ClientTaskList =instance._client is not null && instance._client.TaskList.Count > 0 ? instance._client.TaskList: null,

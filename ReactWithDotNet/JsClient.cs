@@ -72,11 +72,11 @@ partial class Mixin
         client.CallJsFunction(Core + nameof(HistoryReplaceState), stateObj, title, url);
     }
 
-    public static void ListenEvent<TDelegate>(this Client client, TDelegate handler) where TDelegate : Delegate
+    public static void ListenEvent<TDelegate>(this Client client, TDelegate handler, string senderId = null) where TDelegate : Delegate
     {
-        ListenEvent(client, GetEventName<TDelegate>(), handler.Method.GetAccessKey());
+        ListenEvent(client, GetEventName<TDelegate>(senderId), handler.Method.GetAccessKey());
     }
-
+    
     public static void ListenEvent(this Client client, string eventName, Func<Task> handler)
     {
         ListenEvent(client, eventName, handler.Method.GetAccessKey());
@@ -116,17 +116,7 @@ partial class Mixin
     {
         ListenEventOnlyOnce(client, GetEventName<TDelegate>(), handler.Method.GetAccessKey());
     }
-
-    /// <summary>
-    ///     When event fired then updates only component state
-    ///     <br />
-    ///     Do not calls c# render method. Updates state of react component in client.
-    /// </summary>
-    public static void ListenEventThenOnlyUpdateState<TDelegate>(this Client client, TDelegate handler, string senderId = null) where TDelegate : Delegate
-    {
-        client.CallJsFunction(Core + nameof(ListenEventThenOnlyUpdateState), GetEventName<TDelegate>(senderId), handler.Method.GetAccessKey());
-    }
-
+    
     public static void ListenWindowResizeEvent(this Client client, int resizeTimeout)
     {
         client.CallJsFunction(Core + nameof(ListenWindowResizeEvent), resizeTimeout);

@@ -120,5 +120,8 @@ public sealed class DebounceTimeoutAttribute: Attribute
 }
 
 
+/// <summary>
+///     Skips call c# render method of component.
+/// </summary>
 [AttributeUsage(AttributeTargets.Method)]
 public sealed class SkipRenderAttribute: Attribute;

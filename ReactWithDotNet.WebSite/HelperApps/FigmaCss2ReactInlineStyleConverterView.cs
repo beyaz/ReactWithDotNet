@@ -33,7 +33,7 @@ color: #4A4A49;
         };
         state.ReactInlineStyle = FigmaCssToReactInlineCss(state.FigmaCss);
 
-        Client.ListenEventThenOnlyUpdateState<CopyClick>(OnCopyClicked);
+        Client.ListenEvent<CopyClick>(OnCopyClicked);
         
         
         return Task.CompletedTask;
@@ -154,6 +154,7 @@ color: #4A4A49;
 
     }
     
+    [SkipRender]
     Task OnCopyClicked()
     {
         Client.CopyToClipboard(state.ReactInlineStyle);

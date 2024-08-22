@@ -1640,16 +1640,6 @@ function HandleAction(actionArguments)
         CallFunctionId: actionArguments.executionQueueEntry.id
     };
 
-
-    if (actionArguments.skipRender)
-    {
-        request.SkipRender = true;
-        request.CapturedStateTree = { };
-        request.CapturedStateTree[capturedStateTreeRootNodeKey] = capturedStateTree[capturedStateTreeRootNodeKey];
-
-    }
-    
-
     ArrangeRemoteMethodArguments(actionArguments.remoteMethodArguments);
 
     request.EventArgumentsAsJsonArray = actionArguments.remoteMethodArguments.map(JSON.stringify);
@@ -1689,7 +1679,7 @@ function HandleAction(actionArguments)
             OnReactStateReady();
         }
 
-        if (actionArguments.skipRender)
+        if (response.SkipRender)
         {
             // note: setState not used here because this is special case. we don't want to trigger render.
             component.state[DotNetState] = response.NewState;
@@ -2548,42 +2538,6 @@ RegisterCoreFunction("ListenEvent", function (eventName, remoteMethodName)
 
     EventBus.On(eventName, onEventFired);
 });
-
-RegisterCoreFunction("ListenEventThenOnlyUpdateState", function (eventName, remoteMethodName)
-{
-    const component = this;
-
-    const onEventFired = (eventArgumentsAsArray) =>
-    {
-        if (component.ComponentWillUnmountIsCalled)
-        {
-            return;
-        }
-
-        const actionArguments = {
-            component: component,
-            remoteMethodName: remoteMethodName,
-            remoteMethodArguments: eventArgumentsAsArray,
-            skipRender: true
-        };
-
-        const entry = StartAction(actionArguments);
-
-        // guard for removed node before send to server
-        OnComponentDestroy(component, () =>
-        {
-            entry.isValid = false;
-        });
-    };
-    
-    OnComponentDestroy(component, () =>
-    {
-        EventBus.Remove(eventName, onEventFired);
-    });
-
-    EventBus.On(eventName, onEventFired);
-});
-
 
 RegisterCoreFunction("ListenEventOnlyOnce", function (eventName, remoteMethodName)
 {
