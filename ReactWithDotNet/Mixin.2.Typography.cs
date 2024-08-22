@@ -62,6 +62,8 @@ partial class Mixin
 
     public static StyleModifier FontStyleNormal => FontStyle("normal");
 
+    public static StyleModifier FontWeight100 => FontWeight("100");
+    public static StyleModifier FontWeight200 => FontWeight("200");
     public static StyleModifier FontWeight300 => FontWeight("300");
     public static StyleModifier FontWeight400 => FontWeight("400");
     public static StyleModifier FontWeight500 => FontWeight("500");
