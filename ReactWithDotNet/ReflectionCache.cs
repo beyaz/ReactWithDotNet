@@ -137,27 +137,39 @@ partial class Mixin
         return methodInfoCalculated;
     }
 
-    static PropertyInfoCalculated Calculate(this PropertyInfo propertyInfo)
+    static DebounceMethods CalculateDebounceMethods(PropertyInfo propertyInfo)
     {
         Func<object, object> debounceTimeoutGetFunc = null;
         Func<object, object> debounceHandlerGetFunc = null;
-
-        var isBindingExpression = IsBindingExpression(propertyInfo.PropertyType);
-        if (isBindingExpression)
+        
+        var debounceTimeoutPropertyInfo = propertyInfo.DeclaringType?.GetProperty(propertyInfo.Name + "DebounceTimeout");
+        if (debounceTimeoutPropertyInfo is not null)
         {
-            var debounceTimeoutPropertyInfo = propertyInfo.DeclaringType?.GetProperty(propertyInfo.Name + "DebounceTimeout");
-            if (debounceTimeoutPropertyInfo is not null)
-            {
-                debounceTimeoutGetFunc = ReflectionHelper.CreateGetFunction(debounceTimeoutPropertyInfo);
+            debounceTimeoutGetFunc = ReflectionHelper.CreateGetFunction(debounceTimeoutPropertyInfo);
 
-                var debounceHandlerPropertyInfo = propertyInfo.DeclaringType?.GetProperty(propertyInfo.Name + "DebounceHandler");
-                if (debounceHandlerPropertyInfo is not null)
-                {
-                    debounceHandlerGetFunc = ReflectionHelper.CreateGetFunction(debounceHandlerPropertyInfo);
-                }
+            var debounceHandlerPropertyInfo = propertyInfo.DeclaringType?.GetProperty(propertyInfo.Name + "DebounceHandler");
+            if (debounceHandlerPropertyInfo is not null)
+            {
+                debounceHandlerGetFunc = ReflectionHelper.CreateGetFunction(debounceHandlerPropertyInfo);
             }
         }
 
+        return new()
+        {
+            DebounceTimeoutGetFunc = debounceTimeoutGetFunc, 
+            DebounceHandlerGetFunc = debounceHandlerGetFunc
+        };
+    }
+    
+    internal sealed class DebounceMethods
+    {
+        public Func<object, object> DebounceHandlerGetFunc;
+        public Func<object, object> DebounceTimeoutGetFunc;
+    }
+    static PropertyInfoCalculated Calculate(this PropertyInfo propertyInfo)
+    {
+        var debounceMethods = CalculateDebounceMethods(propertyInfo);
+        
         return new()
         {
             SetValueFunc                   = ReflectionHelper.CreateSetFunction(propertyInfo),
@@ -180,10 +192,10 @@ partial class Mixin
 
             IsEnum = propertyInfo.PropertyType.IsEnum,
 
-            IsBindingExpression = isBindingExpression,
+            IsBindingExpression = IsBindingExpression(propertyInfo.PropertyType),
 
-            DebounceTimeoutGetFunc = debounceTimeoutGetFunc,
-            DebounceHandlerGetFunc = debounceHandlerGetFunc
+            DebounceTimeoutGetFunc = debounceMethods.DebounceTimeoutGetFunc,
+            DebounceHandlerGetFunc = debounceMethods.DebounceHandlerGetFunc
         };
 
         static Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> getTransformValueInServerSideTransformFunction(PropertyInfo propertyInfo)
@@ -249,7 +261,6 @@ partial class Mixin
 sealed class PropertyInfoCalculated
 {
     public Func<object, object> DebounceHandlerGetFunc;
-
     public Func<object, object> DebounceTimeoutGetFunc;
 
     public bool IsBindingExpression;
