@@ -17,7 +17,6 @@ partial class Mixin
         }
 
         var isAnonymousType = type.IsAnonymousType();
-        
 
         var serializableProperties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty | BindingFlags.GetProperty);
 
@@ -43,7 +42,7 @@ partial class Mixin
                     dotNetPropertiesOfType.Add(propertyInfo.Calculate());
                     continue;
                 }
-                
+
                 if (propertyInfo.Name == nameof(ReactComponentBase.Context)
                     || propertyInfo.Name == nameof(Element.children)
                     || propertyInfo.Name == nameof(ReactComponentBase.key)
@@ -96,9 +95,9 @@ partial class Mixin
             GetPropertyValueForSerializeToClient = getPropertyValueForSerializeToClientFunc,
 
             ComponentDidMountMethod = GetComponentDidMountMethod(type),
-            
+
             IsAnonymousType = isAnonymousType,
-            
+
             FullNameWithAssembly = type.SerializeToString()
         };
 
@@ -142,12 +141,10 @@ partial class Mixin
     {
         Func<object, object> debounceTimeoutGetFunc = null;
         Func<object, object> debounceHandlerGetFunc = null;
-        
-        
+
         var isBindingExpression = IsBindingExpression(propertyInfo.PropertyType);
         if (isBindingExpression)
         {
-
             var debounceTimeoutPropertyInfo = propertyInfo.DeclaringType?.GetProperty(propertyInfo.Name + "DebounceTimeout");
             if (debounceTimeoutPropertyInfo is not null)
             {
@@ -158,10 +155,9 @@ partial class Mixin
                 {
                     debounceHandlerGetFunc = ReflectionHelper.CreateGetFunction(debounceHandlerPropertyInfo);
                 }
-                
             }
         }
-        
+
         return new()
         {
             SetValueFunc                   = ReflectionHelper.CreateSetFunction(propertyInfo),
@@ -181,11 +177,11 @@ partial class Mixin
             FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
 
             NameOfTransformValueInClient = propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>()?.TransformFunction,
-            
-            IsEnum                       = propertyInfo.PropertyType.IsEnum,
-            
+
+            IsEnum = propertyInfo.PropertyType.IsEnum,
+
             IsBindingExpression = isBindingExpression,
-            
+
             DebounceTimeoutGetFunc = debounceTimeoutGetFunc,
             DebounceHandlerGetFunc = debounceHandlerGetFunc
         };
@@ -211,23 +207,21 @@ partial class Mixin
         {
             return propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>()?.TransformFunction;
         }
+    }
 
-        static bool IsBindingExpression(Type type)
-        {
-            return type == typeof(Expression<Func<int>>) ||
-                   type == typeof(Expression<Func<double>>) ||
-                   type == typeof(Expression<Func<string>>) ||
-                   type == typeof(Expression<Func<bool>>) ||
-                   type == typeof(Expression<Func<InputValueBinder>>);
-        }
+    static bool IsBindingExpression(Type type)
+    {
+        return type == typeof(Expression<Func<int>>) ||
+               type == typeof(Expression<Func<double>>) ||
+               type == typeof(Expression<Func<string>>) ||
+               type == typeof(Expression<Func<bool>>) ||
+               type == typeof(Expression<Func<InputValueBinder>>);
     }
 
     internal sealed class MethodInfoCalculated
     {
-        public bool SkipRender { get; init; }
-        
         public int? DebounceTimeout { get; init; }
-        
+
         public required bool HasStopPropagation { get; init; }
 
         public required IReadOnlyList<string> KeyboardEventCallOnly { get; init; }
@@ -235,6 +229,7 @@ partial class Mixin
         public required MethodInfo MethodInfo { get; init; }
 
         public required string NameWithToken { get; init; }
+        public bool SkipRender { get; init; }
 
         public static MethodInfoCalculated From(MethodInfo methodInfo)
         {
@@ -248,13 +243,18 @@ partial class Mixin
                 NameWithToken         = methodInfo.GetAccessKey()
             };
         }
-
-        
     }
 }
 
 sealed class PropertyInfoCalculated
 {
+    public Func<object, object> DebounceHandlerGetFunc;
+
+    public Func<object, object> DebounceTimeoutGetFunc;
+
+    public bool IsBindingExpression;
+
+    public bool IsEnum;
     public object DefaultValue { get; init; }
     public string FunctionNameOfGrabEventArguments { get; init; }
     public Func<object, object> GetValueFunc { get; init; }
@@ -268,14 +268,6 @@ sealed class PropertyInfoCalculated
     public ReactTemplateAttribute TemplateAttribute { get; init; }
     public string TransformValueInClientFunction { get; init; }
     public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
-    
-
-    public bool IsEnum;
-
-    public bool IsBindingExpression;
-
-    public Func<object, object> DebounceTimeoutGetFunc;
-    public Func<object, object> DebounceHandlerGetFunc;
 }
 
 sealed class TypeInfoCalculated
@@ -284,10 +276,10 @@ sealed class TypeInfoCalculated
     public string ComponentDidMountMethod { get; init; }
     public IReadOnlyList<PropertyInfoCalculated> CustomEventPropertiesOfType { get; init; }
     public IReadOnlyList<PropertyInfoCalculated> DotNetPropertiesOfType { get; init; }
+    public string FullNameWithAssembly { get; init; }
     public Func<object, string, (bool needToExport, object value)> GetPropertyValueForSerializeToClient { get; init; }
+    public bool IsAnonymousType { get; init; }
     public IReadOnlyList<MethodInfo> ParameterizedCacheableMethodInfoList { get; init; }
     public IReadOnlyList<PropertyInfoCalculated> ReactAttributedPropertiesOfType { get; init; }
     public PropertyInfoCalculated StateProperty { get; init; }
-    public bool IsAnonymousType { get; init; }
-    public string FullNameWithAssembly { get; init; }
 }
