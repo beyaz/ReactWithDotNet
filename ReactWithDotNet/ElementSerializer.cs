@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -503,6 +504,8 @@ static partial class ElementSerializer
         return propertyValue;
     }
 
+    static readonly ConcurrentDictionary<Type, ConcurrentDictionary<string, DebounceMethods>> DebounceMethodCache = new();
+    
     static async Task<object> GetPropertyValueOfHtmlElement(ElementSerializerContext context, HtmlElement instance, HtmlElement.PropertyValueNode propertyValueNode)
     {
         var propertyDefinition = propertyValueNode.propertyDefinition;
@@ -609,13 +612,38 @@ static partial class ElementSerializer
 
             bindInfo.HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier;
 
-            var debounceTimeout = instance.GetType().GetProperty(propertyDefinition.name + "DebounceTimeout")?.GetValue(instance) as int?;
-            if (debounceTimeout > 0)
+
+            // initialize binding debounce information
             {
-                if (instance.GetType().GetProperty(propertyDefinition.name + "DebounceHandler")?.GetValue(instance) is Func<Task> debounceHandler)
+                DebounceMethods debounceMethods;
                 {
-                    bindInfo.DebounceTimeout = debounceTimeout;
-                    bindInfo.DebounceHandler = debounceHandler.Method.GetAccessKey();
+                    var instanceType = instance.GetType();
+            
+                    if (!DebounceMethodCache.TryGetValue(instanceType, out var map))
+                    {
+                        var propertyInfo = instanceType.GetProperty(propertyDefinition.name);
+
+                        map = new();
+
+                        map.TryAdd(propertyDefinition.name, CalculateDebounceMethods(propertyInfo));
+                    }
+            
+                    if (!map.TryGetValue(propertyDefinition.name, out debounceMethods))
+                    {
+                        var propertyInfo = instanceType.GetProperty(propertyDefinition.name);
+                
+                        debounceMethods = CalculateDebounceMethods(propertyInfo);
+                    }
+                }
+            
+                var debounceTimeout = debounceMethods.DebounceTimeoutGetFunc(instance) as int?;
+                if (debounceTimeout > 0)
+                {
+                    if (debounceMethods.DebounceHandlerGetFunc(instance) is Func<Task> debounceHandler)
+                    {
+                        bindInfo.DebounceTimeout = debounceTimeout;
+                        bindInfo.DebounceHandler = debounceHandler.Method.GetAccessKey();
+                    }
                 }
             }
 

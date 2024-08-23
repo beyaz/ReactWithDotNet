@@ -137,7 +137,7 @@ partial class Mixin
         return methodInfoCalculated;
     }
 
-    static DebounceMethods CalculateDebounceMethods(PropertyInfo propertyInfo)
+    internal static DebounceMethods CalculateDebounceMethods(PropertyInfo propertyInfo)
     {
         Func<object, object> debounceTimeoutGetFunc = null;
         Func<object, object> debounceHandlerGetFunc = null;
