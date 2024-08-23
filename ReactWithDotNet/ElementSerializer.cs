@@ -33,6 +33,8 @@ sealed class ElementSerializerContext
     public bool CalculateSuspenseFallbackForThirdPartyReactComponents { get; set; }
 
     public int ComponentUniqueIdentifierNextValue { get; set; }
+    public Stack<FunctionalComponent> FunctionalComponentStack { get; set; }
+    public bool IsCapturingPreview { get; set; }
 
     public ReactContext ReactContext { get; init; }
 
@@ -40,8 +42,6 @@ sealed class ElementSerializerContext
 
     public StateTree StateTree { get; init; }
     public Tracer Tracer { get; init; }
-    public bool IsCapturingPreview { get; set; }
-    public Stack<FunctionalComponent> FunctionalComponentStack { get; set; }
 }
 
 static partial class ElementSerializer
@@ -49,7 +49,6 @@ static partial class ElementSerializer
     const string ___ComponentDidMountMethod___ = "$ComponentDidMountMethod";
     const string ___RootNode___ = "$RootNode";
     const string ___Type___ = "$Type";
-    
 
     static readonly ValueExportInfo<object> NotExportableObject = ValueExportInfo<object>.NotExportable;
 
@@ -117,7 +116,7 @@ static partial class ElementSerializer
                 BodyOfCss = style._focus.ToCssWithImportant()
             });
         }
-        
+
         if (style._focusVisible is not null)
         {
             pseudos ??= [];
@@ -157,35 +156,33 @@ static partial class ElementSerializer
         }
     }
 
-    static int UpclimbForComponentUniqueIdentifier(ElementSerializerContext context,Node node)
+    internal static int? TryFindHandlerComponentUniqueIdentifier(ElementSerializerContext context, object handlerDelegateTarget)
     {
-        while (node is not null)
+        if (handlerDelegateTarget is ReactComponentBase target)
         {
-            if (node.ElementIsDotNetReactPureComponent)
-            {
-                return CheckComponentUniqueIdentifierHasValue(node.ElementAsDotNetReactPureComponent.ComponentUniqueIdentifier);
-            }
-            if (node.ElementIsDotNetReactComponent)
-            {
-                return CheckComponentUniqueIdentifierHasValue(node.ElementAsDotNetReactComponent.ComponentUniqueIdentifier);
-            }
-            
-            node = node.Parent;
+            return target.ComponentUniqueIdentifier;
         }
 
-        return context.ComponentUniqueIdentifierNextValue++;
-
-        static int CheckComponentUniqueIdentifierHasValue(int componentUniqueIdentifier)
+        if (context.FunctionalComponentStack?.Count > 0)
         {
-            if (componentUniqueIdentifier == 0)
+            foreach (var item in context.FunctionalComponentStack)
             {
-                throw FatalError("componentUniqueIdentifier should be initialize before usage");
+                if (item.state.CompilerGeneratedType == handlerDelegateTarget.GetType())
+                {
+                    return item.ComponentUniqueIdentifier;
+                }
+
+                var scope = handlerDelegateTarget.GetType().GetFields().FirstOrDefault(f => f.FieldType.IsFunctionalComponent())?.GetValue(handlerDelegateTarget);
+                if (scope is not null && scope == item)
+                {
+                    return item.ComponentUniqueIdentifier;
+                }
             }
-                
-            return componentUniqueIdentifier;
         }
+
+        return null;
     }
-    
+
     static (bool needToExport, string cssClassName) ConvertStyleToCssClass(ElementSerializerContext context, Node node, Style style, bool fullExport, Func<CssClassInfo, string> getCssClassName)
     {
         if (style is null)
@@ -211,7 +208,7 @@ static partial class ElementSerializer
         }
 
         var componentUniqueIdentifier = UpclimbForComponentUniqueIdentifier(context, node);
-        
+
         var cssClassInfo = new CssClassInfo
         {
             ComponentUniqueIdentifier = componentUniqueIdentifier,
@@ -261,7 +258,21 @@ static partial class ElementSerializer
         }
     }
 
-    
+    static (bool success, int value, bool handlerIsReactComponent) GetHandlerComponentUniqueIdentifierFromBindingExpression(ElementSerializerContext context, LambdaExpression lambdaExpression)
+    {
+        var (success, targetValue) = GetTargetValueFromExpression(lambdaExpression);
+        if (success)
+        {
+            var handlerComponentUniqueIdentifier = TryFindHandlerComponentUniqueIdentifier(context, targetValue);
+
+            if (handlerComponentUniqueIdentifier.HasValue)
+            {
+                return (true, handlerComponentUniqueIdentifier.Value, targetValue is ReactComponentBase);
+            }
+        }
+
+        return default;
+    }
 
     static string GetPropertyName(PropertyInfoCalculated propertyInfoCalculated)
     {
@@ -309,7 +320,7 @@ static partial class ElementSerializer
             }
 
             {
-                var (needToExport, newValue) = property.TransformValueInServerSide(propertyValue, new TransformValueInServerSideContext(convertStyleToCssClass));
+                var (needToExport, newValue) = property.TransformValueInServerSide(propertyValue, new(convertStyleToCssClass));
                 if (needToExport == false)
                 {
                     return NotExportableObject;
@@ -330,7 +341,7 @@ static partial class ElementSerializer
         if (property.PropertyTypeIsIsVoidTaskDelegate)
         {
             var handlerDelegate = (Delegate)propertyValue;
-            
+
             var handlerDelegateTarget = handlerDelegate.Target;
 
             if (handlerDelegateTarget is null)
@@ -339,9 +350,9 @@ static partial class ElementSerializer
             }
 
             var handlerComponentUniqueIdentifier = TryFindHandlerComponentUniqueIdentifier(context, handlerDelegateTarget);
-            
+
             var handlerMethod = handlerDelegate.Method.GetCalculated();
-            
+
             return new RemoteMethodInfo
             {
                 IsRemoteMethod                   = true,
@@ -362,7 +373,7 @@ static partial class ElementSerializer
         if (propertyValue is Expression<Func<int>> ||
             propertyValue is Expression<Func<double>> ||
             propertyValue is Expression<Func<string>> ||
-            propertyValue is Expression<Func<bool>>||
+            propertyValue is Expression<Func<bool>> ||
             propertyValue is Expression<Func<InputValueBinder>>)
         {
             var propertyValueAsLambdaExpression = (LambdaExpression)propertyValue;
@@ -385,7 +396,7 @@ static partial class ElementSerializer
                 transformFunction = property.NameOfTransformValueInClient
             };
 
-            var (success, handlerComponentUniqueIdentifier, handlerIsReactComponent) = GetHandlerComponentUniqueIdentifierFromBindingExpression(context,propertyValueAsLambdaExpression);
+            var (success, handlerComponentUniqueIdentifier, handlerIsReactComponent) = GetHandlerComponentUniqueIdentifierFromBindingExpression(context, propertyValueAsLambdaExpression);
             if (!success)
             {
                 throw HandlerMethodShouldBelongToReactComponent(propertyInfo, propertyValueAsLambdaExpression.ToString());
@@ -394,7 +405,7 @@ static partial class ElementSerializer
             if (handlerIsReactComponent is false)
             {
                 bindInfo.sourceIsState = true;
-                bindInfo.sourcePath    = new[]{nameof(FunctionalComponent.State.Scope)}.Concat(bindInfo.sourcePath).ToList();
+                bindInfo.sourcePath    = new[] { nameof(FunctionalComponent.State.Scope) }.Concat(bindInfo.sourcePath).ToList();
             }
 
             bindInfo.HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier;
@@ -443,7 +454,7 @@ static partial class ElementSerializer
                 method = instance.GetType().GetProperty(templateAttribute.MethodNameForGettingItemsSource, BindingFlags.Instance | BindingFlags.Public)?.GetMethod;
                 if (method == null)
                 {
-                    throw new MissingMethodException(templateAttribute.MethodNameForGettingItemsSource);    
+                    throw new MissingMethodException(templateAttribute.MethodNameForGettingItemsSource);
                 }
             }
 
@@ -466,7 +477,7 @@ static partial class ElementSerializer
             {
                 foreach (var item in itemTemplates)
                 {
-                    results.Add(new ItemTemplateInfo { Item = item, ElementAsJson = await convertToReactNode(item) });
+                    results.Add(new() { Item = item, ElementAsJson = await convertToReactNode(item) });
                 }
             }
 
@@ -495,36 +506,11 @@ static partial class ElementSerializer
 
         return propertyValue;
     }
-    internal static int? TryFindHandlerComponentUniqueIdentifier(ElementSerializerContext context, object handlerDelegateTarget)
-    {
-        if (handlerDelegateTarget is ReactComponentBase target)
-        {
-            return target.ComponentUniqueIdentifier;
-        }
 
-        if (context.FunctionalComponentStack?.Count > 0)
-        {
-            foreach (var item in context.FunctionalComponentStack)
-            {
-                if (item.state.CompilerGeneratedType == handlerDelegateTarget.GetType())
-                {
-                    return item.ComponentUniqueIdentifier;
-                }
-
-                var scope = handlerDelegateTarget.GetType().GetFields().FirstOrDefault(f => f.FieldType.IsFunctionalComponent())?.GetValue(handlerDelegateTarget);
-                if (scope is not null && scope == item)
-                {
-                    return item.ComponentUniqueIdentifier;
-                }
-            }
-        }
-
-        return null;
-    }
     static async Task<object> GetPropertyValueOfHtmlElement(ElementSerializerContext context, HtmlElement instance, HtmlElement.PropertyValueNode propertyValueNode)
     {
         var propertyDefinition = propertyValueNode.propertyDefinition;
-        
+
         var propertyValue = propertyValueNode._value;
 
         if (propertyDefinition.isOnClickPreview)
@@ -540,7 +526,7 @@ static partial class ElementSerializer
             {
                 throw HandlerMethodShouldBelongToReactComponent("onClickPreview", action.Target);
             }
-                    
+
             var newTarget = (ReactComponentBase)target.Clone();
 
             var newTargetTypeInfo = target.GetType().Calculated();
@@ -552,9 +538,9 @@ static partial class ElementSerializer
                     newTargetTypeInfo.StateProperty.SetValueFunc(newTarget, ReflectionHelper.DeepCopy(targetState));
                 }
             }
-                    
+
             action.Method.Invoke(newTarget, null);
-                        
+
             await newTarget.InvokeRender();
 
             context.IsCapturingPreview = true;
@@ -563,7 +549,7 @@ static partial class ElementSerializer
 
             return (JsonMap)newMap;
         }
-        
+
         if (propertyDefinition.isIsVoidTaskDelegate)
         {
             var handlerDelegate = (Delegate)propertyValue;
@@ -574,16 +560,16 @@ static partial class ElementSerializer
             {
                 throw HandlerMethodShouldBelongToReactComponent(propertyDefinition.name, null);
             }
-            
-            var handlerComponentUniqueIdentifier =  TryFindHandlerComponentUniqueIdentifier(context, handlerDelegateTarget);
+
+            var handlerComponentUniqueIdentifier = TryFindHandlerComponentUniqueIdentifier(context, handlerDelegateTarget);
             if (handlerComponentUniqueIdentifier is null)
             {
                 throw HandlerMethodShouldBelongToReactComponent(propertyDefinition.name, handlerDelegateTarget);
             }
 
             var handlerMethod = handlerDelegate.Method.GetCalculated();
-            
-            return  new RemoteMethodInfo
+
+            return new RemoteMethodInfo
             {
                 IsRemoteMethod                   = true,
                 remoteMethodName                 = handlerMethod.NameWithToken,
@@ -591,14 +577,14 @@ static partial class ElementSerializer
                 FunctionNameOfGrabEventArguments = propertyDefinition.GrabEventArgumentsByUsingFunction,
                 StopPropagation                  = handlerMethod.HasStopPropagation,
                 KeyboardEventCallOnly            = handlerMethod.KeyboardEventCallOnly,
-                DebounceTimeout = handlerMethod.DebounceTimeout
+                DebounceTimeout                  = handlerMethod.DebounceTimeout
             };
         }
-        
+
         if (propertyDefinition.isBindingExpression)
         {
             var propertyValueAsLambdaExpression = (LambdaExpression)propertyValue;
-            
+
             var reactBindAttribute = propertyDefinition.bind;
 
             var (path, isConnectedToState) = propertyValueAsLambdaExpression.AsBindingPath();
@@ -613,24 +599,24 @@ static partial class ElementSerializer
                 transformFunction = propertyDefinition.transformValueInClient
             };
 
-            var (success, handlerComponentUniqueIdentifier, handlerIsReactComponent) = GetHandlerComponentUniqueIdentifierFromBindingExpression(context,propertyValueAsLambdaExpression);
+            var (success, handlerComponentUniqueIdentifier, handlerIsReactComponent) = GetHandlerComponentUniqueIdentifierFromBindingExpression(context, propertyValueAsLambdaExpression);
             if (!success)
             {
                 throw HandlerMethodShouldBelongToReactComponent(propertyDefinition.name, propertyValueAsLambdaExpression.ToString());
             }
-            
+
             if (handlerIsReactComponent is false)
             {
                 bindInfo.sourceIsState = true;
-                bindInfo.sourcePath    = new[]{nameof(FunctionalComponent.State.Scope)}.Concat(bindInfo.sourcePath).ToList();
+                bindInfo.sourcePath    = new[] { nameof(FunctionalComponent.State.Scope) }.Concat(bindInfo.sourcePath).ToList();
             }
 
             bindInfo.HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier;
 
-            var debounceTimeout = instance.GetType().GetProperty(propertyDefinition.name+ "DebounceTimeout")?.GetValue(instance) as int?;
+            var debounceTimeout = instance.GetType().GetProperty(propertyDefinition.name + "DebounceTimeout")?.GetValue(instance) as int?;
             if (debounceTimeout > 0)
             {
-                if (instance.GetType().GetProperty(propertyDefinition.name+ "DebounceHandler")?.GetValue(instance) is Func<Task> debounceHandler)
+                if (instance.GetType().GetProperty(propertyDefinition.name + "DebounceHandler")?.GetValue(instance) is Func<Task> debounceHandler)
                 {
                     bindInfo.DebounceTimeout = debounceTimeout;
                     bindInfo.DebounceHandler = debounceHandler.Method.GetAccessKey();
@@ -639,7 +625,7 @@ static partial class ElementSerializer
 
             return bindInfo;
         }
-        
+
         if (propertyDefinition.transformValueInClient is not null)
         {
             var jsonMap = new JsonMap();
@@ -653,55 +639,6 @@ static partial class ElementSerializer
         return propertyValue;
     }
 
-    static (bool success, int value, bool handlerIsReactComponent) GetHandlerComponentUniqueIdentifierFromBindingExpression(ElementSerializerContext context, LambdaExpression lambdaExpression)
-    {
-        var (success, targetValue) = GetTargetValueFromExpression(lambdaExpression);
-        if (success)
-        {
-            var handlerComponentUniqueIdentifier = TryFindHandlerComponentUniqueIdentifier(context, targetValue);
-
-            if (handlerComponentUniqueIdentifier.HasValue)
-            {
-                return  (true, handlerComponentUniqueIdentifier.Value, targetValue is ReactComponentBase);
-            }
-        }
-
-        return default;
-    }
-    
-    static (bool success, object value) GetTargetValueFromExpression(LambdaExpression lambdaExpression)
-    {
-        var expression = lambdaExpression.Body;
-        while (true)
-        {
-            if (expression is UnaryExpression unaryExpression)
-            {
-                expression = unaryExpression.Operand;
-
-                continue;
-            }
-                    
-            if (expression is MemberExpression memberExpression)
-            {
-                expression = memberExpression.Expression;
-                continue;
-            }
-
-            if (expression is ConstantExpression constantExpression)
-            {
-                return (true, constantExpression.Value);
-            }
-
-            if (expression is MethodCallExpression methodCallExpression)
-            {
-                expression = methodCallExpression.Object;
-                continue;
-            }
-
-            return default;
-        }
-    }
-    
     static ValueExportInfo<object> GetStylePropertyValueOfHtmlElementForSerialize(ElementSerializerContext context, Node node, object instance, Style style)
     {
         var response = ConvertStyleToCssClass(context, node, style, false, context.DynamicStyles.GetClassName);
@@ -742,7 +679,40 @@ static partial class ElementSerializer
 
         return style;
     }
-    
+
+    static (bool success, object value) GetTargetValueFromExpression(LambdaExpression lambdaExpression)
+    {
+        var expression = lambdaExpression.Body;
+        while (true)
+        {
+            if (expression is UnaryExpression unaryExpression)
+            {
+                expression = unaryExpression.Operand;
+
+                continue;
+            }
+
+            if (expression is MemberExpression memberExpression)
+            {
+                expression = memberExpression.Expression;
+                continue;
+            }
+
+            if (expression is ConstantExpression constantExpression)
+            {
+                return (true, constantExpression.Value);
+            }
+
+            if (expression is MethodCallExpression methodCallExpression)
+            {
+                expression = methodCallExpression.Object;
+                continue;
+            }
+
+            return default;
+        }
+    }
+
     static Task TryCallBeforeSerializeElementToClient(this ElementSerializerContext context, Element element, Element parent)
     {
         if (element is null || context.BeforeSerializeElementToClient is null)
@@ -751,6 +721,36 @@ static partial class ElementSerializer
         }
 
         return context.BeforeSerializeElementToClient(context.ReactContext, element, parent);
+    }
+
+    static int UpclimbForComponentUniqueIdentifier(ElementSerializerContext context, Node node)
+    {
+        while (node is not null)
+        {
+            if (node.ElementIsDotNetReactPureComponent)
+            {
+                return CheckComponentUniqueIdentifierHasValue(node.ElementAsDotNetReactPureComponent.ComponentUniqueIdentifier);
+            }
+
+            if (node.ElementIsDotNetReactComponent)
+            {
+                return CheckComponentUniqueIdentifierHasValue(node.ElementAsDotNetReactComponent.ComponentUniqueIdentifier);
+            }
+
+            node = node.Parent;
+        }
+
+        return context.ComponentUniqueIdentifierNextValue++;
+
+        static int CheckComponentUniqueIdentifierHasValue(int componentUniqueIdentifier)
+        {
+            if (componentUniqueIdentifier == 0)
+            {
+                throw FatalError("componentUniqueIdentifier should be initialize before usage");
+            }
+
+            return componentUniqueIdentifier;
+        }
     }
 
     class CacheableMethodInfo
@@ -781,7 +781,7 @@ static partial class ElementSerializer
 
         public static implicit operator ValueExportInfo<TValue>(TValue value)
         {
-            return new ValueExportInfo<TValue>(value);
+            return new(value);
         }
     }
 }
