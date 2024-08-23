@@ -365,16 +365,7 @@ static partial class ElementSerializer
             };
         }
 
-        if (propertyValue is Enum enumValue)
-        {
-            propertyValue = enumValue.ToString();
-        }
-
-        if (propertyValue is Expression<Func<int>> ||
-            propertyValue is Expression<Func<double>> ||
-            propertyValue is Expression<Func<string>> ||
-            propertyValue is Expression<Func<bool>> ||
-            propertyValue is Expression<Func<InputValueBinder>>)
+        if (property.IsBindingExpression)
         {
             var propertyValueAsLambdaExpression = (LambdaExpression)propertyValue;
 
@@ -422,11 +413,20 @@ static partial class ElementSerializer
 
             return bindInfo;
         }
-
+        
         if (propertyValue is HtmlTextNode htmlTextNode)
         {
             return htmlTextNode.innerText;
         }
+        
+        if (property.IsEnum)
+        {
+            propertyValue = propertyValue.ToString();
+        }
+
+        
+
+        
 
         if (propertyValue is Element element)
         {

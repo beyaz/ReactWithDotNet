@@ -158,7 +158,13 @@ partial class Mixin
 
             FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
 
-            NameOfTransformValueInClient = propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>()?.TransformFunction
+            NameOfTransformValueInClient = propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>()?.TransformFunction,
+            
+            IsBindingExpression = isBindingExpression(propertyInfo.PropertyType),
+            
+            
+            IsEnum = propertyInfo.PropertyType.IsEnum
+            
         };
 
         static Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> getTransformValueInServerSideTransformFunction(PropertyInfo propertyInfo)
@@ -181,6 +187,15 @@ partial class Mixin
         static string TryGetTransformValueInClientFunctionName(PropertyInfo propertyInfo)
         {
             return propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>()?.TransformFunction;
+        }
+
+        static bool isBindingExpression(Type type)
+        {
+            return type == typeof(Expression<Func<int>>) ||
+                   type == typeof(Expression<Func<double>>) ||
+                   type == typeof(Expression<Func<string>>) ||
+                   type == typeof(Expression<Func<bool>>) ||
+                   type == typeof(Expression<Func<InputValueBinder>>);
         }
     }
 
@@ -230,6 +245,9 @@ sealed class PropertyInfoCalculated
     public ReactTemplateAttribute TemplateAttribute { get; init; }
     public string TransformValueInClientFunction { get; init; }
     public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
+    public bool IsEnum;
+
+    public bool IsBindingExpression;
 }
 
 sealed class TypeInfoCalculated
