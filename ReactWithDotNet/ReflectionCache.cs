@@ -140,7 +140,27 @@ partial class Mixin
 
     static PropertyInfoCalculated Calculate(this PropertyInfo propertyInfo)
     {
+        Func<object, object> debounceTimeoutGetFunc = null;
+        Func<object, object> debounceHandlerGetFunc = null;
+        
+        
         var isBindingExpression = IsBindingExpression(propertyInfo.PropertyType);
+        if (isBindingExpression)
+        {
+
+            var debounceTimeoutPropertyInfo = propertyInfo.DeclaringType?.GetProperty(propertyInfo.Name + "DebounceTimeout");
+            if (debounceTimeoutPropertyInfo is not null)
+            {
+                debounceTimeoutGetFunc = ReflectionHelper.CreateGetFunction(debounceTimeoutPropertyInfo);
+
+                var debounceHandlerPropertyInfo = propertyInfo.DeclaringType?.GetProperty(propertyInfo.Name + "DebounceHandler");
+                if (debounceHandlerPropertyInfo is not null)
+                {
+                    debounceHandlerGetFunc = ReflectionHelper.CreateGetFunction(debounceHandlerPropertyInfo);
+                }
+                
+            }
+        }
         
         return new()
         {
@@ -162,11 +182,12 @@ partial class Mixin
 
             NameOfTransformValueInClient = propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>()?.TransformFunction,
             
+            IsEnum                       = propertyInfo.PropertyType.IsEnum,
+            
             IsBindingExpression = isBindingExpression,
             
-            
-            IsEnum = propertyInfo.PropertyType.IsEnum
-            
+            DebounceTimeoutGetFunc = debounceTimeoutGetFunc,
+            DebounceHandlerGetFunc = debounceHandlerGetFunc
         };
 
         static Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> getTransformValueInServerSideTransformFunction(PropertyInfo propertyInfo)
@@ -247,9 +268,14 @@ sealed class PropertyInfoCalculated
     public ReactTemplateAttribute TemplateAttribute { get; init; }
     public string TransformValueInClientFunction { get; init; }
     public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
+    
+
     public bool IsEnum;
 
     public bool IsBindingExpression;
+
+    public Func<object, object> DebounceTimeoutGetFunc;
+    public Func<object, object> DebounceHandlerGetFunc;
 }
 
 sealed class TypeInfoCalculated

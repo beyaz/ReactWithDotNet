@@ -401,10 +401,10 @@ static partial class ElementSerializer
 
             bindInfo.HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier;
 
-            var debounceTimeout = instance.GetType().GetProperty(propertyInfo.Name + "DebounceTimeout")?.GetValue(instance) as int?;
+            var debounceTimeout = property.DebounceTimeoutGetFunc(instance) as int?;
             if (debounceTimeout > 0)
             {
-                if (instance.GetType().GetProperty(propertyInfo.Name + "DebounceHandler")?.GetValue(instance) is Func<Task> debounceHandler)
+                if (property.DebounceHandlerGetFunc(instance) is Func<Task> debounceHandler)
                 {
                     bindInfo.DebounceTimeout = debounceTimeout;
                     bindInfo.DebounceHandler = debounceHandler.Method.GetAccessKey();
