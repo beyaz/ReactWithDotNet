@@ -413,26 +413,22 @@ static partial class ElementSerializer
 
             return bindInfo;
         }
-        
+
         if (propertyValue is HtmlTextNode htmlTextNode)
         {
             return htmlTextNode.innerText;
         }
-        
+
         if (property.IsEnum)
         {
             propertyValue = propertyValue.ToString();
         }
 
-        
-
-        
-
         if (propertyValue is Element element)
         {
             element.key ??= propertyInfo.Name;
 
-            propertyValue = new InnerElementInfo
+            return new InnerElementInfo
             {
                 IsElement = true,
                 Element   = await element.ToJsonMap(context)
