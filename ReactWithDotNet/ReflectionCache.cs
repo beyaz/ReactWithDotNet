@@ -140,6 +140,8 @@ partial class Mixin
 
     static PropertyInfoCalculated Calculate(this PropertyInfo propertyInfo)
     {
+        var isBindingExpression = IsBindingExpression(propertyInfo.PropertyType);
+        
         return new()
         {
             SetValueFunc                   = ReflectionHelper.CreateSetFunction(propertyInfo),
@@ -160,7 +162,7 @@ partial class Mixin
 
             NameOfTransformValueInClient = propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>()?.TransformFunction,
             
-            IsBindingExpression = isBindingExpression(propertyInfo.PropertyType),
+            IsBindingExpression = isBindingExpression,
             
             
             IsEnum = propertyInfo.PropertyType.IsEnum
@@ -189,7 +191,7 @@ partial class Mixin
             return propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>()?.TransformFunction;
         }
 
-        static bool isBindingExpression(Type type)
+        static bool IsBindingExpression(Type type)
         {
             return type == typeof(Expression<Func<int>>) ||
                    type == typeof(Expression<Func<double>>) ||
