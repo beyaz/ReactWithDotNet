@@ -340,15 +340,17 @@ static partial class ElementSerializer
 
             var handlerComponentUniqueIdentifier = TryFindHandlerComponentUniqueIdentifier(context, handlerDelegateTarget);
             
+            var handlerMethod = handlerDelegate.Method.GetCalculated();
+            
             return new RemoteMethodInfo
             {
                 IsRemoteMethod                   = true,
                 remoteMethodName                 = handlerDelegate.Method.GetAccessKey(),
                 HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier,
                 FunctionNameOfGrabEventArguments = property.FunctionNameOfGrabEventArguments,
-                StopPropagation                  = handlerDelegate.Method.GetCalculated().HasStopPropagation,
-                KeyboardEventCallOnly            = handlerDelegate.Method.GetCalculated().KeyboardEventCallOnly,
-                DebounceTimeout                  = handlerDelegate.Method.GetCalculated().DebounceTimeout
+                StopPropagation                  = handlerMethod.HasStopPropagation,
+                KeyboardEventCallOnly            = handlerMethod.KeyboardEventCallOnly,
+                DebounceTimeout                  = handlerMethod.DebounceTimeout
             };
         }
 
