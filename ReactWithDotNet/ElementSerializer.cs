@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -504,8 +503,6 @@ static partial class ElementSerializer
         return propertyValue;
     }
 
-    static readonly ConcurrentDictionary<Type, ConcurrentDictionary<string, DebounceMethods>> DebounceMethodCache = new();
-    
     static async Task<object> GetPropertyValueOfHtmlElement(ElementSerializerContext context, HtmlElement instance, HtmlElement.PropertyValueNode propertyValueNode)
     {
         var propertyDefinition = propertyValueNode.propertyDefinition;
@@ -612,32 +609,10 @@ static partial class ElementSerializer
 
             bindInfo.HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier;
 
-
             // initialize binding debounce information
             {
-                DebounceMethods debounceMethods;
-                {
-                    var instanceType = instance.GetType();
-            
-                    if (!DebounceMethodCache.TryGetValue(instanceType, out var map))
-                    {
-                        var propertyInfo = instanceType.GetProperty(propertyDefinition.name);
+                var debounceMethods = DebounceHelper.GetDebounceMethods(instance.GetType(), propertyDefinition.name);
 
-                        map = new();
-
-                        map.TryAdd(propertyDefinition.name, CalculateDebounceMethods(propertyInfo));
-
-                        DebounceMethodCache.TryAdd(instanceType, map);
-                    }
-            
-                    if (!map.TryGetValue(propertyDefinition.name, out debounceMethods))
-                    {
-                        var propertyInfo = instanceType.GetProperty(propertyDefinition.name);
-                
-                        debounceMethods = CalculateDebounceMethods(propertyInfo);
-                    }
-                }
-            
                 var debounceTimeout = debounceMethods.DebounceTimeoutGetFunc(instance) as int?;
                 if (debounceTimeout > 0)
                 {

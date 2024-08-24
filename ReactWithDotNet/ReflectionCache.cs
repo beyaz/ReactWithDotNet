@@ -137,39 +137,10 @@ partial class Mixin
         return methodInfoCalculated;
     }
 
-    internal static DebounceMethods CalculateDebounceMethods(PropertyInfo propertyInfo)
-    {
-        Func<object, object> debounceTimeoutGetFunc = null;
-        Func<object, object> debounceHandlerGetFunc = null;
-        
-        var debounceTimeoutPropertyInfo = propertyInfo.DeclaringType?.GetProperty(propertyInfo.Name + "DebounceTimeout");
-        if (debounceTimeoutPropertyInfo is not null)
-        {
-            debounceTimeoutGetFunc = ReflectionHelper.CreateGetFunction(debounceTimeoutPropertyInfo);
-
-            var debounceHandlerPropertyInfo = propertyInfo.DeclaringType?.GetProperty(propertyInfo.Name + "DebounceHandler");
-            if (debounceHandlerPropertyInfo is not null)
-            {
-                debounceHandlerGetFunc = ReflectionHelper.CreateGetFunction(debounceHandlerPropertyInfo);
-            }
-        }
-
-        return new()
-        {
-            DebounceTimeoutGetFunc = debounceTimeoutGetFunc, 
-            DebounceHandlerGetFunc = debounceHandlerGetFunc
-        };
-    }
-    
-    internal sealed class DebounceMethods
-    {
-        public Func<object, object> DebounceHandlerGetFunc;
-        public Func<object, object> DebounceTimeoutGetFunc;
-    }
     static PropertyInfoCalculated Calculate(this PropertyInfo propertyInfo)
     {
-        var debounceMethods = CalculateDebounceMethods(propertyInfo);
-        
+        var debounceMethods = DebounceHelper.CalculateDebounceMethods(propertyInfo);
+
         return new()
         {
             SetValueFunc                   = ReflectionHelper.CreateSetFunction(propertyInfo),
