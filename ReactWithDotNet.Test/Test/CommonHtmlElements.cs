@@ -1620,9 +1620,9 @@ public class ExportingCommonHtmlElements
                     },
                     new ()
                     {
-                        Name                   = "valueBind",
-                        Type                   = "Expression<Func<string>>", // TODO: check int and other types
-                        IsBindingExpression    = true,
+                        Name                = "valueBind",
+                        Type                = "Expression<Func<InputValueBinder>>",
+                        IsBindingExpression = true,
                         Bind =new ()
                         {
                             targetProp = "value", jsValueAccess = "e.target.value", eventName = "onChange"
@@ -1632,10 +1632,36 @@ public class ExportingCommonHtmlElements
                     new ()
                     {
                         Name                              = "onChange",
-                        Type                              = "Func<ChangeEvent, Task>", // TODO: changeEvent delegate
+                        Type                              = "ChangeEventHandler",
                         IsIsVoidTaskDelegate              = true,
                         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments"
                     },
+                    
+                    new ()
+                    {
+                        Name = "valueBindDebounceTimeout",
+                        Type = "int?",
+                        Comment ="""
+                                 if you want to handle when user iteraction finished see example below
+                                 component.valueBind = ()=>state.UserInfo.Name
+                                 component.valueBindDebounceTimeout = 600 // milliseconds
+                                 component.valueBindDebounceHandler = OnUserIterationFinished
+                                 """ ,
+                        JsonIgnore = true
+                    },
+                    
+                    new ()
+                    {
+                        Name = "valueBindDebounceHandler",
+                        Type = "Func<Task>",
+                        Comment ="""
+                                 if you want to handle when user iteraction finished see example below
+                                 component.valueBind = ()=>state.UserInfo.Name
+                                 component.valueBindDebounceTimeout = 600 // milliseconds
+                                 component.valueBindDebounceHandler = OnUserIterationFinished
+                                 """ ,
+                        JsonIgnore = true
+                    }
                 ],
                 EnableCastFromString = false
             },
@@ -1783,7 +1809,7 @@ public class ExportingCommonHtmlElements
                     new ()
                     {
                         Name                              = "onChange",
-                        Type                              = "Func<ChangeEvent, Task>", // TODO: changeEvent delegate
+                        Type                              = "ChangeEventHandler",
                         IsIsVoidTaskDelegate              = true,
                         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments"
                     },
