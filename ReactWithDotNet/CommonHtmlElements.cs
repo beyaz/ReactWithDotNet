@@ -6536,14 +6536,14 @@ public sealed class select : HtmlElement
 
 
     #region string valueBind
-    PropertyValueNode<Expression<Func<string>>> _valueBind;
+    PropertyValueNode<Expression<Func<InputValueBinder>>> _valueBind;
     static readonly PropertyValueDefinition _valueBind_ = new()
     {
         name = nameof(valueBind),
         isBindingExpression = true,
         bind = new(){ targetProp = "value", jsValueAccess = "e.target.value", eventName = "onChange" }
     };
-    public Expression<Func<string>> valueBind
+    public Expression<Func<InputValueBinder>> valueBind
     {
         get => _valueBind?.value;
         set => SetValue(_valueBind_, ref _valueBind, value);
@@ -6552,17 +6552,59 @@ public sealed class select : HtmlElement
 
 
     #region string onChange
-    PropertyValueNode<Func<ChangeEvent, Task>> _onChange;
+    PropertyValueNode<ChangeEventHandler> _onChange;
     static readonly PropertyValueDefinition _onChange_ = new()
     {
         name = nameof(onChange),
         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments",
         isIsVoidTaskDelegate = true
     };
-    public Func<ChangeEvent, Task> onChange
+    public ChangeEventHandler onChange
     {
         get => _onChange?.value;
         set => SetValue(_onChange_, ref _onChange, value);
+    }
+    #endregion
+
+
+    #region string valueBindDebounceTimeout
+    PropertyValueNode<int?> _valueBindDebounceTimeout;
+    static readonly PropertyValueDefinition _valueBindDebounceTimeout_ = new()
+    {
+        name = nameof(valueBindDebounceTimeout),
+        jsonIgnore = true
+    };
+    /// <summary>
+    ///     if you want to handle when user iteraction finished see example below
+    ///     component.valueBind = ()=>state.UserInfo.Name
+    ///     component.valueBindDebounceTimeout = 600 // milliseconds
+    ///     component.valueBindDebounceHandler = OnUserIterationFinished
+    /// </summary>
+    public int? valueBindDebounceTimeout
+    {
+        get => _valueBindDebounceTimeout?.value;
+        set => SetValue(_valueBindDebounceTimeout_, ref _valueBindDebounceTimeout, value);
+    }
+    #endregion
+
+
+    #region string valueBindDebounceHandler
+    PropertyValueNode<Func<Task>> _valueBindDebounceHandler;
+    static readonly PropertyValueDefinition _valueBindDebounceHandler_ = new()
+    {
+        name = nameof(valueBindDebounceHandler),
+        jsonIgnore = true
+    };
+    /// <summary>
+    ///     if you want to handle when user iteraction finished see example below
+    ///     component.valueBind = ()=>state.UserInfo.Name
+    ///     component.valueBindDebounceTimeout = 600 // milliseconds
+    ///     component.valueBindDebounceHandler = OnUserIterationFinished
+    /// </summary>
+    public Func<Task> valueBindDebounceHandler
+    {
+        get => _valueBindDebounceHandler?.value;
+        set => SetValue(_valueBindDebounceHandler_, ref _valueBindDebounceHandler, value);
     }
     #endregion
 
@@ -6580,9 +6622,29 @@ public sealed class select : HtmlElement
 
     public static HtmlElementModifier Disabled(string value) => Modify(x => x.disabled = value);
 
-    public static HtmlElementModifier ValueBind(Expression<Func<string>> value) => Modify(x => x.valueBind = value);
+    public static HtmlElementModifier ValueBind(Expression<Func<InputValueBinder>> value) => Modify(x => x.valueBind = value);
 
-    public static HtmlElementModifier OnChange(Func<ChangeEvent, Task> value) => Modify(x => x.onChange = value);
+    public static HtmlElementModifier OnChange(ChangeEventHandler value) => Modify(x => x.onChange = value);
+
+    /// <summary>
+    ///     valueBindDebounceTimeout = <paramref name="value"/>
+    /// <br/>
+    ///     if you want to handle when user iteraction finished see example below
+    ///     component.valueBind = ()=>state.UserInfo.Name
+    ///     component.valueBindDebounceTimeout = 600 // milliseconds
+    ///     component.valueBindDebounceHandler = OnUserIterationFinished
+    /// </summary>
+    public static HtmlElementModifier ValueBindDebounceTimeout(int? value) => Modify(x => x.valueBindDebounceTimeout = value);
+
+    /// <summary>
+    ///     valueBindDebounceHandler = <paramref name="value"/>
+    /// <br/>
+    ///     if you want to handle when user iteraction finished see example below
+    ///     component.valueBind = ()=>state.UserInfo.Name
+    ///     component.valueBindDebounceTimeout = 600 // milliseconds
+    ///     component.valueBindDebounceHandler = OnUserIterationFinished
+    /// </summary>
+    public static HtmlElementModifier ValueBindDebounceHandler(Func<Task> value) => Modify(x => x.valueBindDebounceHandler = value);
 
 }
 
@@ -6911,14 +6973,14 @@ public sealed class input : HtmlElement
 
 
     #region string onChange
-    PropertyValueNode<Func<ChangeEvent, Task>> _onChange;
+    PropertyValueNode<ChangeEventHandler> _onChange;
     static readonly PropertyValueDefinition _onChange_ = new()
     {
         name = nameof(onChange),
         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments",
         isIsVoidTaskDelegate = true
     };
-    public Func<ChangeEvent, Task> onChange
+    public ChangeEventHandler onChange
     {
         get => _onChange?.value;
         set => SetValue(_onChange_, ref _onChange, value);
@@ -7019,7 +7081,7 @@ public sealed class input : HtmlElement
     /// </summary>
     public static HtmlElementModifier OnBlur(FocusEventHandler value) => Modify(x => x.onBlur = value);
 
-    public static HtmlElementModifier OnChange(Func<ChangeEvent, Task> value) => Modify(x => x.onChange = value);
+    public static HtmlElementModifier OnChange(ChangeEventHandler value) => Modify(x => x.onChange = value);
 
     public static HtmlElementModifier OnFocus(FocusEventHandler value) => Modify(x => x.onFocus = value);
 
