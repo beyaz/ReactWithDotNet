@@ -87,7 +87,7 @@ class EventBusImp
 
         if (listenerFunctions == null || listenerFunctions.length === 0)
         {
-            return { ThereIsNoListener: true };
+            return;
         }
 
         // NOTE: maybe user removed some listeners so we need to protect array modification
@@ -114,7 +114,7 @@ const EventBus =
     },
     Dispatch: function (eventName, eventArgumentsAsArray)
     {
-        return EventBus.bus.publish(eventName, eventArgumentsAsArray);
+        EventBus.bus.publish(eventName, eventArgumentsAsArray);
     },
     Remove: function(event, callback)
     {
@@ -2462,14 +2462,7 @@ function DispatchEvent(eventName, eventArguments, timeout)
 {
     setTimeout(() =>
     {
-        PushToFunctionExecutionQueue(() =>
-        {
-            const response = EventBus.Dispatch(eventName, eventArguments || []);
-            if (response?.ThereIsNoListener === true)
-            {
-                OnReactStateReady();
-            }
-        });
+        EventBus.Dispatch(eventName, eventArguments || []);
 
     }, timeout)
    
