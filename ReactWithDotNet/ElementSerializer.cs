@@ -626,6 +626,8 @@ static partial class ElementSerializer
                         map = new();
 
                         map.TryAdd(propertyDefinition.name, CalculateDebounceMethods(propertyInfo));
+
+                        DebounceMethodCache.TryAdd(instanceType, map);
                     }
             
                     if (!map.TryGetValue(propertyDefinition.name, out debounceMethods))
