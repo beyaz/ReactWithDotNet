@@ -85,9 +85,9 @@ class EventBusImp
 
         const listenerFunctions = this.map[eventName];
 
-        if (!listenerFunctions)
+        if (listenerFunctions == null || listenerFunctions.length === 0)
         {
-            return;
+            return { ThereIsNoListener: true };
         }
 
         // NOTE: maybe user removed some listeners so we need to protect array modification
@@ -114,7 +114,7 @@ const EventBus =
     },
     Dispatch: function (eventName, eventArgumentsAsArray)
     {
-        EventBus.bus.publish(eventName, eventArgumentsAsArray);
+        return EventBus.bus.publish(eventName, eventArgumentsAsArray);
     },
     Remove: function(event, callback)
     {
@@ -258,8 +258,6 @@ function IsEmptyObject(obj)
     return true;
 }
 
-const EventDispatchingFinishCallbackFunctionsQueue = [];
-
 const FunctionExecutionQueue = [];
 
 let ReactIsBusy = false;
@@ -284,11 +282,6 @@ function EmitNextFunctionInFunctionExecutionQueue()
     if (ReactIsBusy === true)
     {
         throw CreateNewDeveloperError("ReactWithDotNet event queue problem occured.");
-    }
-
-    if (FunctionExecutionQueue.length === 0 && EventDispatchingFinishCallbackFunctionsQueue.length > 0)
-    {
-        PushToFunctionExecutionQueue(EventDispatchingFinishCallbackFunctionsQueue.shift())
     }
 
     if (FunctionExecutionQueue.length > 0)
@@ -2469,13 +2462,13 @@ function DispatchEvent(eventName, eventArguments, timeout)
 {
     setTimeout(() =>
     {
-        EventBus.Dispatch(eventName, eventArguments || []);
-
-        EventDispatchingFinishCallbackFunctionsQueue.push(function ()
+        PushToFunctionExecutionQueue(() =>
         {
-            EventBus.Dispatch("$<<finished>>$" + eventName + "$<<finished>>$", eventArguments || []);
-
-            OnReactStateReady();
+            const response = EventBus.Dispatch(eventName, eventArguments || []);
+            if (response?.ThereIsNoListener === true)
+            {
+                OnReactStateReady();
+            }
         });
 
     }, timeout)

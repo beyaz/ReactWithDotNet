@@ -134,27 +134,6 @@ partial class Mixin
         client.CallJsFunction(Core + nameof(NavigateTo), path);
     }
 
-    /// <summary>
-    ///     Occurs when event dispatching finished.
-    /// </summary>
-    public static void OnDispatchEventFinished<TDelegate>(this Client client, TDelegate handler) where TDelegate : Delegate
-    {
-        ListenEvent(client, "$<<finished>>$" + GetEventName<TDelegate>() + "$<<finished>>$", handler.Method.GetAccessKey());
-    }
-    
-    /// <summary>
-    ///     Occurs when event dispatching finished.
-    ///     <br/>
-    ///     After first call then do not listen finished event again
-    /// </summary>
-    public static void OnDispatchEventFinishedOnlyOnce<TDelegate>(this Client client, TDelegate handler) where TDelegate : Delegate
-    {
-        ListenEventOnlyOnce(client, "$<<finished>>$" + GetEventName<TDelegate>() + "$<<finished>>$", handler.Method.GetAccessKey());
-    }
-
-  
-  
-
     public static void OnWindowResize(this Client client, Func<Task> handler)
     {
         client.ListenEvent(Core + nameof(OnWindowResize), handler.Method.GetAccessKey());
