@@ -6,7 +6,7 @@ sealed class BlogPageLayout : PureComponent
     {
         return new main(PaddingY(48), Background("#f9f9fa"), DisplayFlexRow, JustifyContentCenter)
         {
-            new FlexColumn(MaxWidth(820),SizeFull)
+            new FlexColumn(MaxWidth(820), SizeFull, PaddingX(24))
             {
                 children
             }
