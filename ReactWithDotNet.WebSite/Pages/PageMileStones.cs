@@ -1,14 +1,14 @@
-﻿namespace ReactWithDotNet.WebSite.Pages.Blogs;
+﻿namespace ReactWithDotNet.WebSite.Pages;
 
 sealed class PageMilestones : PureComponent
 {
     protected override Element render()
     {
-        return new FlexColumnCentered(WidthFull)
+        return new BlogContainer
         {
             new FlexColumn(MaxWidth(820))
             {
-                new H1
+                new BlogH1
                 {
                     "Project Milestones"
                 },

@@ -1,6 +1,6 @@
-﻿namespace ReactWithDotNet.WebSite.Pages.Blogs;
+﻿namespace ReactWithDotNet.WebSite.Components;
 
-sealed class H1 : PureComponent
+sealed class BlogH1 : PureComponent
 {
     protected override Element render()
     {
@@ -13,6 +13,18 @@ sealed class H1 : PureComponent
             LetterSpacing(-0.2),
             FontWeight600,
             Color(rgb(15, 18, 20)),
+        };
+    }
+}
+
+
+sealed class BlogContainer : PureComponent
+{
+    protected override Element render()
+    {
+        return new FlexColumnCentered(WidthFull, Background("#f9f9fa"))
+        {
+            children
         };
     }
 }
