@@ -23,13 +23,15 @@ class IconArrowUp: PureComponent
 {
     public string Color { get; init; } = "#1C2B3D";
 
-    public int Size { get; init; } = 24;
+    public int? Size { get; init; }
     
     protected override Element render()
     {
-        return new div(Size(Size))
+        var size = Size ?? 24;
+        
+        return new div(Size(size))
         {
-            new svg(ViewBox(0, 0, Size, Size), svg.FocusableFalse, svg.Size(Size))
+            new svg(ViewBox(0, 0, 24, 24), svg.FocusableFalse, svg.Size(size))
             {
                 new path { d = "M20.23 17.885L22 16.115L12 6.11501L2 16.115L3.77 17.885L12 9.65501L20.23 17.885Z", fill = Color}
             }

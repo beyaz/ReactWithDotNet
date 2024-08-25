@@ -56,6 +56,28 @@ sealed class PageFrequendlyAskedQuestions : PureComponent
                             {
                                 "Modifiers are small functions that modify html node or css properties."
                             }
+                        },
+                        new Accordion
+                        {
+                            new p
+                            {
+                                "What is the differences between Blazor?"
+                            },
+                            new p
+                            {
+                                "Blazor and ReactWithDowNet are different mechanism."
+                            }
+                        },
+                        new Accordion
+                        {
+                            new p
+                            {
+                                "How is bindings working?"
+                            },
+                            new p
+                            {
+                                "İf you are on the server you should binding system."
+                            }
                         }
                     }
                 }
@@ -63,7 +85,7 @@ sealed class PageFrequendlyAskedQuestions : PureComponent
         };
     }
 
-    class Accordion : Component<Accordion.State>
+    sealed class Accordion : Component<Accordion.State>
     {
         public bool IsExpanded { get; init; }
 
@@ -79,17 +101,18 @@ sealed class PageFrequendlyAskedQuestions : PureComponent
 
         protected override Element render()
         {
-            return new FlexColumn(AlignItemsFlexStart, AlignSelfStretch, BackgroundWhite, Border("1px #D6DDE6 solid"), BorderRadius(8), Gap(16), JustifyContentFlexStart, Padding(20))
+            return new FlexColumn(AlignItemsFlexStart, AlignSelfStretch, BackgroundWhite, Border(1, solid, Gray200), BorderRadius(8), Gap(16), JustifyContentFlexStart, Padding(20))
             {
                 state.IsExpanded ? null : OnClick(ToggleCollapse),
 
                 new FlexRow(AlignItemsFlexStart, AlignSelfStretch, JustifyContentSpaceBetween, Gap(8), CursorDefault)
                 {
+                    FontWeight500,
                     state.IsExpanded ? OnClick(ToggleCollapse) : null,
 
                     children[0],
 
-                    new ArrowUpDownIcon { IsDirectionUp = !state.IsExpanded }
+                    new ArrowUpDownIcon { IsDirectionUp = !state.IsExpanded, Size = 18 }
                 },
                 new div(SizeFull, state.IsExpanded ? null : DisplayNone)
                 {
@@ -115,7 +138,7 @@ sealed class PageFrequendlyAskedQuestions : PureComponent
             {
                 var element = new IconArrowUp
                 {
-                    Size.HasValue ? Size(Size.Value) : null
+                    Size = Size
                 };
 
                 element.style.Add(style);
