@@ -30,7 +30,7 @@ class MainPageContentDescription : PureComponent
             {
                 new PrimaryLinkButton { Text = "Documentation", Href      = Page.Doc.Url } + WidthFull + SM(Width(auto)),
                 new PrimaryLinkButton { Text = "Showcase", Href           =  "/?p="+nameof(PageShowcase) } + WidthFull + SM(Width(auto)),
-                new PrimaryLinkButton { Text = "Project Milestones", Href = "/?p="+nameof(PageMilestones) } + WidthFull + SM(Width(auto))
+                new PrimaryLinkButton { Text = "Project Milestones", Href = "/?p="+nameof(ReactWithDotNet.WebSite.Pages.Blogs.PageMilestones) } + WidthFull + SM(Width(auto))
             }
         };
     }

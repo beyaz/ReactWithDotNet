@@ -1,4 +1,4 @@
-﻿namespace ReactWithDotNet.WebSite.Pages;
+﻿namespace ReactWithDotNet.WebSite.Pages.Blogs;
 
 sealed class PageMilestones : PureComponent
 {
@@ -6,8 +6,18 @@ sealed class PageMilestones : PureComponent
     {
         return new FlexColumnCentered(WidthFull)
         {
-            new FlexColumn(Gap(32),MaxWidth(820))
+            new FlexColumn(MaxWidth(820))
             {
+                new H1
+                {
+                    "Project Milestones"
+                },
+                SpaceY(16),
+                new p
+                {
+                    "The main milestones of this project are listed below."
+                },
+                SpaceY(16),
                 new MilestoneContainer
                 {
                     new h5{ "Milestone 1: Core Concept" },
