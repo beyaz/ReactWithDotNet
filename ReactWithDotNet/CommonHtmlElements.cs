@@ -5363,6 +5363,283 @@ public sealed partial class symbol : HtmlElement
 
 }
 
+public sealed partial class video : HtmlElement
+{
+    #region string src
+    PropertyValueNode<string> _src;
+    static readonly PropertyValueDefinition _src_ = new()
+    {
+        name = nameof(src)
+    };
+    /// <summary>
+    ///     Specifies the URL of the video file.
+    /// </summary>
+    public string src
+    {
+        get => _src?.value;
+        set => SetValue(_src_, ref _src, value);
+    }
+    #endregion
+
+
+    #region string controls
+    PropertyValueNode<string> _controls;
+    static readonly PropertyValueDefinition _controls_ = new()
+    {
+        name = nameof(controls)
+    };
+    /// <summary>
+    ///     Specifies that video controls (play, pause, etc.) should be displayed.
+    /// </summary>
+    public string controls
+    {
+        get => _controls?.value;
+        set => SetValue(_controls_, ref _controls, value);
+    }
+    #endregion
+
+
+    #region string autoplay
+    PropertyValueNode<string> _autoplay;
+    static readonly PropertyValueDefinition _autoplay_ = new()
+    {
+        name = nameof(autoplay)
+    };
+    /// <summary>
+    ///     Specifies that the video will start playing as soon as it is ready.
+    /// </summary>
+    public string autoplay
+    {
+        get => _autoplay?.value;
+        set => SetValue(_autoplay_, ref _autoplay, value);
+    }
+    #endregion
+
+
+    #region string loop
+    PropertyValueNode<string> _loop;
+    static readonly PropertyValueDefinition _loop_ = new()
+    {
+        name = nameof(loop)
+    };
+    /// <summary>
+    ///     Specifies that the video will start over again, every time it is finished.
+    /// </summary>
+    public string loop
+    {
+        get => _loop?.value;
+        set => SetValue(_loop_, ref _loop, value);
+    }
+    #endregion
+
+
+    #region string muted
+    PropertyValueNode<string> _muted;
+    static readonly PropertyValueDefinition _muted_ = new()
+    {
+        name = nameof(muted)
+    };
+    /// <summary>
+    ///     Specifies that the audio output of the video should be muted.
+    /// </summary>
+    public string muted
+    {
+        get => _muted?.value;
+        set => SetValue(_muted_, ref _muted, value);
+    }
+    #endregion
+
+
+    #region string poster
+    PropertyValueNode<string> _poster;
+    static readonly PropertyValueDefinition _poster_ = new()
+    {
+        name = nameof(poster)
+    };
+    /// <summary>
+    ///     Specifies an image to be shown while the video is downloading or until the user hits the play button.
+    /// </summary>
+    public string poster
+    {
+        get => _poster?.value;
+        set => SetValue(_poster_, ref _poster, value);
+    }
+    #endregion
+
+
+    #region string preload
+    PropertyValueNode<string> _preload;
+    static readonly PropertyValueDefinition _preload_ = new()
+    {
+        name = nameof(preload)
+    };
+    /// <summary>
+    ///     Specifies how the video should be loaded when the page loads. Values include 'auto', 'metadata', or 'none'.
+    /// </summary>
+    public string preload
+    {
+        get => _preload?.value;
+        set => SetValue(_preload_, ref _preload, value);
+    }
+    #endregion
+
+
+    #region string width
+    PropertyValueNode<string> _width;
+    static readonly PropertyValueDefinition _width_ = new()
+    {
+        name = nameof(width)
+    };
+    /// <summary>
+    ///     Sets the width of the video player.
+    /// </summary>
+    public string width
+    {
+        get => _width?.value;
+        set => SetValue(_width_, ref _width, value);
+    }
+    #endregion
+
+
+    #region string height
+    PropertyValueNode<string> _height;
+    static readonly PropertyValueDefinition _height_ = new()
+    {
+        name = nameof(height)
+    };
+    /// <summary>
+    ///     Sets the height of the video player.
+    /// </summary>
+    public string height
+    {
+        get => _height?.value;
+        set => SetValue(_height_, ref _height, value);
+    }
+    #endregion
+
+
+    #region string playsinline
+    PropertyValueNode<string> _playsinline;
+    static readonly PropertyValueDefinition _playsinline_ = new()
+    {
+        name = nameof(playsinline)
+    };
+    /// <summary>
+    ///     Specifies that the video should play inline on mobile devices instead of going fullscreen.
+    /// </summary>
+    public string playsinline
+    {
+        get => _playsinline?.value;
+        set => SetValue(_playsinline_, ref _playsinline, value);
+    }
+    #endregion
+
+
+    #region string crossorigin
+    PropertyValueNode<string> _crossorigin;
+    static readonly PropertyValueDefinition _crossorigin_ = new()
+    {
+        name = nameof(crossorigin)
+    };
+    /// <summary>
+    ///     Specifies how the element handles cross-origin requests for the video.
+    /// </summary>
+    public string crossorigin
+    {
+        get => _crossorigin?.value;
+        set => SetValue(_crossorigin_, ref _crossorigin, value);
+    }
+    #endregion
+
+
+    public video() { }
+
+    public video(params Modifier[] modifiers) : base(modifiers) { }
+
+    public video(Style style) : base(style) { }
+
+    public video(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<video> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     src = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the URL of the video file.
+    /// </summary>
+    public static HtmlElementModifier Src(string value) => Modify(x => x.src = value);
+
+    /// <summary>
+    ///     controls = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies that video controls (play, pause, etc.) should be displayed.
+    /// </summary>
+    public static HtmlElementModifier Controls(string value) => Modify(x => x.controls = value);
+
+    /// <summary>
+    ///     autoplay = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies that the video will start playing as soon as it is ready.
+    /// </summary>
+    public static HtmlElementModifier Autoplay(string value) => Modify(x => x.autoplay = value);
+
+    /// <summary>
+    ///     loop = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies that the video will start over again, every time it is finished.
+    /// </summary>
+    public static HtmlElementModifier Loop(string value) => Modify(x => x.loop = value);
+
+    /// <summary>
+    ///     muted = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies that the audio output of the video should be muted.
+    /// </summary>
+    public static HtmlElementModifier Muted(string value) => Modify(x => x.muted = value);
+
+    /// <summary>
+    ///     poster = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies an image to be shown while the video is downloading or until the user hits the play button.
+    /// </summary>
+    public static HtmlElementModifier Poster(string value) => Modify(x => x.poster = value);
+
+    /// <summary>
+    ///     preload = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies how the video should be loaded when the page loads. Values include 'auto', 'metadata', or 'none'.
+    /// </summary>
+    public static HtmlElementModifier Preload(string value) => Modify(x => x.preload = value);
+
+    /// <summary>
+    ///     width = <paramref name="value"/>
+    /// <br/>
+    ///     Sets the width of the video player.
+    /// </summary>
+    public static HtmlElementModifier Width(string value) => Modify(x => x.width = value);
+
+    /// <summary>
+    ///     height = <paramref name="value"/>
+    /// <br/>
+    ///     Sets the height of the video player.
+    /// </summary>
+    public static HtmlElementModifier Height(string value) => Modify(x => x.height = value);
+
+    /// <summary>
+    ///     playsinline = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies that the video should play inline on mobile devices instead of going fullscreen.
+    /// </summary>
+    public static HtmlElementModifier Playsinline(string value) => Modify(x => x.playsinline = value);
+
+    /// <summary>
+    ///     crossorigin = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies how the element handles cross-origin requests for the video.
+    /// </summary>
+    public static HtmlElementModifier Crossorigin(string value) => Modify(x => x.crossorigin = value);
+
+}
+
 public sealed class stop : HtmlElement
 {
     #region string offset

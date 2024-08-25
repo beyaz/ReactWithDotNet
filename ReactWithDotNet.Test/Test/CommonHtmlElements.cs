@@ -1297,6 +1297,71 @@ public class ExportingCommonHtmlElements
             
             new()
             {
+                Tag                  = "video",
+                CreateClassAsPartial = true,
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "src",
+                        Comment = "Specifies the URL of the video file."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "controls",
+                        Comment = "Specifies that video controls (play, pause, etc.) should be displayed."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "autoplay",
+                        Comment = "Specifies that the video will start playing as soon as it is ready."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "loop",
+                        Comment = "Specifies that the video will start over again, every time it is finished."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "muted",
+                        Comment = "Specifies that the audio output of the video should be muted."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "poster",
+                        Comment = "Specifies an image to be shown while the video is downloading or until the user hits the play button."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "preload",
+                        Comment = "Specifies how the video should be loaded when the page loads. Values include 'auto', 'metadata', or 'none'."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "width",
+                        Comment = "Sets the width of the video player."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "height",
+                        Comment = "Sets the height of the video player."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "playsinline",
+                        Comment = "Specifies that the video should play inline on mobile devices instead of going fullscreen."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "crossorigin",
+                        Comment = "Specifies how the element handles cross-origin requests for the video."
+                    }
+                },
+                EnableCastFromString = false
+            },
+            
+            new()
+            {
                 Tag                  = "stop",
                 CreateClassAsPartial = false,
                 Attributes = new[]
