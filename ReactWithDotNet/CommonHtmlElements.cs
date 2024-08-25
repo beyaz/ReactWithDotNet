@@ -5640,6 +5640,235 @@ public sealed partial class video : HtmlElement
 
 }
 
+public sealed partial class source : HtmlElement
+{
+    #region string src
+    PropertyValueNode<string> _src;
+    static readonly PropertyValueDefinition _src_ = new()
+    {
+        name = nameof(src)
+    };
+    /// <summary>
+    ///     Specifies the URL of the media file.
+    /// </summary>
+    public string src
+    {
+        get => _src?.value;
+        set => SetValue(_src_, ref _src, value);
+    }
+    #endregion
+
+
+    #region string type
+    PropertyValueNode<string> _type;
+    static readonly PropertyValueDefinition _type_ = new()
+    {
+        name = nameof(type)
+    };
+    /// <summary>
+    ///     Specifies the MIME type of the media resource.
+    /// </summary>
+    public string type
+    {
+        get => _type?.value;
+        set => SetValue(_type_, ref _type, value);
+    }
+    #endregion
+
+
+    #region string srcset
+    PropertyValueNode<string> _srcset;
+    static readonly PropertyValueDefinition _srcset_ = new()
+    {
+        name = nameof(srcset)
+    };
+    /// <summary>
+    ///     Specifies a list of image sources for responsive images.
+    /// </summary>
+    public string srcset
+    {
+        get => _srcset?.value;
+        set => SetValue(_srcset_, ref _srcset, value);
+    }
+    #endregion
+
+
+    #region string sizes
+    PropertyValueNode<string> _sizes;
+    static readonly PropertyValueDefinition _sizes_ = new()
+    {
+        name = nameof(sizes)
+    };
+    /// <summary>
+    ///     Specifies the sizes of images for different viewport widths.
+    /// </summary>
+    public string sizes
+    {
+        get => _sizes?.value;
+        set => SetValue(_sizes_, ref _sizes, value);
+    }
+    #endregion
+
+
+    #region string media
+    PropertyValueNode<string> _media;
+    static readonly PropertyValueDefinition _media_ = new()
+    {
+        name = nameof(media)
+    };
+    /// <summary>
+    ///     Specifies the media condition that must be met for the resource to be used.
+    /// </summary>
+    public string media
+    {
+        get => _media?.value;
+        set => SetValue(_media_, ref _media, value);
+    }
+    #endregion
+
+
+    #region string width
+    PropertyValueNode<string> _width;
+    static readonly PropertyValueDefinition _width_ = new()
+    {
+        name = nameof(width)
+    };
+    /// <summary>
+    ///     Specifies the width of the image for the srcset attribute.
+    /// </summary>
+    public string width
+    {
+        get => _width?.value;
+        set => SetValue(_width_, ref _width, value);
+    }
+    #endregion
+
+
+    #region string height
+    PropertyValueNode<string> _height;
+    static readonly PropertyValueDefinition _height_ = new()
+    {
+        name = nameof(height)
+    };
+    /// <summary>
+    ///     Specifies the height of the image for the srcset attribute.
+    /// </summary>
+    public string height
+    {
+        get => _height?.value;
+        set => SetValue(_height_, ref _height, value);
+    }
+    #endregion
+
+
+    #region string keytype
+    PropertyValueNode<string> _keytype;
+    static readonly PropertyValueDefinition _keytype_ = new()
+    {
+        name = nameof(keytype)
+    };
+    /// <summary>
+    ///     Specifies the type of key for media encryption (used in some DRM scenarios).
+    /// </summary>
+    public string keytype
+    {
+        get => _keytype?.value;
+        set => SetValue(_keytype_, ref _keytype, value);
+    }
+    #endregion
+
+
+    #region string referrerpolicy
+    PropertyValueNode<string> _referrerpolicy;
+    static readonly PropertyValueDefinition _referrerpolicy_ = new()
+    {
+        name = nameof(referrerpolicy)
+    };
+    /// <summary>
+    ///     Specifies the referrer information to send when fetching the resource.
+    /// </summary>
+    public string referrerpolicy
+    {
+        get => _referrerpolicy?.value;
+        set => SetValue(_referrerpolicy_, ref _referrerpolicy, value);
+    }
+    #endregion
+
+
+    public source() { }
+
+    public source(params Modifier[] modifiers) : base(modifiers) { }
+
+    public source(Style style) : base(style) { }
+
+    public source(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<source> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     src = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the URL of the media file.
+    /// </summary>
+    public static HtmlElementModifier Src(string value) => Modify(x => x.src = value);
+
+    /// <summary>
+    ///     type = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the MIME type of the media resource.
+    /// </summary>
+    public static HtmlElementModifier Type(string value) => Modify(x => x.type = value);
+
+    /// <summary>
+    ///     srcset = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies a list of image sources for responsive images.
+    /// </summary>
+    public static HtmlElementModifier Srcset(string value) => Modify(x => x.srcset = value);
+
+    /// <summary>
+    ///     sizes = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the sizes of images for different viewport widths.
+    /// </summary>
+    public static HtmlElementModifier Sizes(string value) => Modify(x => x.sizes = value);
+
+    /// <summary>
+    ///     media = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the media condition that must be met for the resource to be used.
+    /// </summary>
+    public static HtmlElementModifier Media(string value) => Modify(x => x.media = value);
+
+    /// <summary>
+    ///     width = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the width of the image for the srcset attribute.
+    /// </summary>
+    public static HtmlElementModifier Width(string value) => Modify(x => x.width = value);
+
+    /// <summary>
+    ///     height = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the height of the image for the srcset attribute.
+    /// </summary>
+    public static HtmlElementModifier Height(string value) => Modify(x => x.height = value);
+
+    /// <summary>
+    ///     keytype = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the type of key for media encryption (used in some DRM scenarios).
+    /// </summary>
+    public static HtmlElementModifier Keytype(string value) => Modify(x => x.keytype = value);
+
+    /// <summary>
+    ///     referrerpolicy = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the referrer information to send when fetching the resource.
+    /// </summary>
+    public static HtmlElementModifier Referrerpolicy(string value) => Modify(x => x.referrerpolicy = value);
+
+}
+
 public sealed class stop : HtmlElement
 {
     #region string offset

@@ -1299,67 +1299,121 @@ public class ExportingCommonHtmlElements
             {
                 Tag                  = "video",
                 CreateClassAsPartial = true,
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new()
                     {
                         Name    = "src",
                         Comment = "Specifies the URL of the video file."
                     },
-                    new AttributeInfo
+                    new()
                     {
                         Name    = "controls",
                         Comment = "Specifies that video controls (play, pause, etc.) should be displayed."
                     },
-                    new AttributeInfo
+                    new()
                     {
                         Name    = "autoplay",
                         Comment = "Specifies that the video will start playing as soon as it is ready."
                     },
-                    new AttributeInfo
+                    new()
                     {
                         Name    = "loop",
                         Comment = "Specifies that the video will start over again, every time it is finished."
                     },
-                    new AttributeInfo
+                    new()
                     {
                         Name    = "muted",
                         Comment = "Specifies that the audio output of the video should be muted."
                     },
-                    new AttributeInfo
+                    new()
                     {
                         Name    = "poster",
                         Comment = "Specifies an image to be shown while the video is downloading or until the user hits the play button."
                     },
-                    new AttributeInfo
+                    new()
                     {
                         Name    = "preload",
                         Comment = "Specifies how the video should be loaded when the page loads. Values include 'auto', 'metadata', or 'none'."
                     },
-                    new AttributeInfo
+                    new()
                     {
                         Name    = "width",
                         Comment = "Sets the width of the video player."
                     },
-                    new AttributeInfo
+                    new()
                     {
                         Name    = "height",
                         Comment = "Sets the height of the video player."
                     },
-                    new AttributeInfo
+                    new()
                     {
                         Name    = "playsinline",
                         Comment = "Specifies that the video should play inline on mobile devices instead of going fullscreen."
                     },
-                    new AttributeInfo
+                    new()
                     {
                         Name    = "crossorigin",
                         Comment = "Specifies how the element handles cross-origin requests for the video."
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
-            
+             new()
+            {
+                Tag                  = "source",
+                CreateClassAsPartial = true,
+                Attributes =
+                [
+                    new()
+                    {
+                        Name    = "src",
+                        Comment = "Specifies the URL of the media file."
+                    },
+                    new()
+                    {
+                        Name    = "type",
+                        Comment = "Specifies the MIME type of the media resource."
+                    },
+                    new()
+                    {
+                        Name    = "srcset",
+                        Comment = "Specifies a list of image sources for responsive images."
+                    },
+                    new()
+                    {
+                        Name    = "sizes",
+                        Comment = "Specifies the sizes of images for different viewport widths."
+                    },
+                    new()
+                    {
+                        Name    = "media",
+                        Comment = "Specifies the media condition that must be met for the resource to be used."
+                    },
+                    new()
+                    {
+                        Name    = "width",
+                        Comment = "Specifies the width of the image for the srcset attribute."
+                    },
+                    new()
+                    {
+                        Name    = "height",
+                        Comment = "Specifies the height of the image for the srcset attribute."
+                    },
+                    new()
+                    {
+                        Name    = "keytype",
+                        Comment = "Specifies the type of key for media encryption (used in some DRM scenarios)."
+                    },
+                    new()
+                    {
+                        Name    = "referrerpolicy",
+                        Comment = "Specifies the referrer information to send when fetching the resource."
+                    }
+
+                ],
+                EnableCastFromString = false
+            },
             new()
             {
                 Tag                  = "stop",
