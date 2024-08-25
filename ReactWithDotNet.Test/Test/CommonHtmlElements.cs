@@ -1249,6 +1249,51 @@ public class ExportingCommonHtmlElements
                 },
                 EnableCastFromString = false
             },
+            new()
+            {
+                Tag                  = "symbol",
+                CreateClassAsPartial = true,
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "viewBox",
+                        Comment = "Defines the position and dimension, in user space, of an SVG viewport."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "preserveAspectRatio",
+                        Comment = "Indicates how an element should preserve its aspect ratio when the viewBox is different from the viewport."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "externalResourcesRequired",
+                        Comment = "Specifies whether the rendering of the <symbol> element is dependent on external resources."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "transform",
+                        Comment = "Applies a transformation to the element, such as scaling, rotating, or translating."
+                    },
+                    //new AttributeInfo
+                    //{
+                    //    Name    = "xml:base",
+                    //    Comment = "Specifies the base URI for resolving relative URIs within the element."
+                    //},
+                    //new AttributeInfo
+                    //{
+                    //    Name    = "xml:lang",
+                    //    Comment = "Defines the language of the content within the <symbol> element."
+                    //},
+                    //new AttributeInfo
+                    //{
+                    //    Name    = "xml:space",
+                    //    Comment = "Controls how white space is handled inside the element."
+                    //}
+
+                },
+                EnableCastFromString = false
+            },
             
             new()
             {

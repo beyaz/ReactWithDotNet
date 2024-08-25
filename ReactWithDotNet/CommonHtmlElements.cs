@@ -5254,6 +5254,115 @@ public sealed partial class svg : HtmlElement
 
 }
 
+public sealed partial class symbol : HtmlElement
+{
+    #region string viewBox
+    PropertyValueNode<string> _viewBox;
+    static readonly PropertyValueDefinition _viewBox_ = new()
+    {
+        name = nameof(viewBox)
+    };
+    /// <summary>
+    ///     Defines the position and dimension, in user space, of an SVG viewport.
+    /// </summary>
+    public string viewBox
+    {
+        get => _viewBox?.value;
+        set => SetValue(_viewBox_, ref _viewBox, value);
+    }
+    #endregion
+
+
+    #region string preserveAspectRatio
+    PropertyValueNode<string> _preserveAspectRatio;
+    static readonly PropertyValueDefinition _preserveAspectRatio_ = new()
+    {
+        name = nameof(preserveAspectRatio)
+    };
+    /// <summary>
+    ///     Indicates how an element should preserve its aspect ratio when the viewBox is different from the viewport.
+    /// </summary>
+    public string preserveAspectRatio
+    {
+        get => _preserveAspectRatio?.value;
+        set => SetValue(_preserveAspectRatio_, ref _preserveAspectRatio, value);
+    }
+    #endregion
+
+
+    #region string externalResourcesRequired
+    PropertyValueNode<string> _externalResourcesRequired;
+    static readonly PropertyValueDefinition _externalResourcesRequired_ = new()
+    {
+        name = nameof(externalResourcesRequired)
+    };
+    /// <summary>
+    ///     Specifies whether the rendering of the <symbol> element is dependent on external resources.
+    /// </summary>
+    public string externalResourcesRequired
+    {
+        get => _externalResourcesRequired?.value;
+        set => SetValue(_externalResourcesRequired_, ref _externalResourcesRequired, value);
+    }
+    #endregion
+
+
+    #region string transform
+    PropertyValueNode<string> _transform;
+    static readonly PropertyValueDefinition _transform_ = new()
+    {
+        name = nameof(transform)
+    };
+    /// <summary>
+    ///     Applies a transformation to the element, such as scaling, rotating, or translating.
+    /// </summary>
+    public string transform
+    {
+        get => _transform?.value;
+        set => SetValue(_transform_, ref _transform, value);
+    }
+    #endregion
+
+
+    public symbol() { }
+
+    public symbol(params Modifier[] modifiers) : base(modifiers) { }
+
+    public symbol(Style style) : base(style) { }
+
+    public symbol(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<symbol> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     viewBox = <paramref name="value"/>
+    /// <br/>
+    ///     Defines the position and dimension, in user space, of an SVG viewport.
+    /// </summary>
+    public static HtmlElementModifier ViewBox(string value) => Modify(x => x.viewBox = value);
+
+    /// <summary>
+    ///     preserveAspectRatio = <paramref name="value"/>
+    /// <br/>
+    ///     Indicates how an element should preserve its aspect ratio when the viewBox is different from the viewport.
+    /// </summary>
+    public static HtmlElementModifier PreserveAspectRatio(string value) => Modify(x => x.preserveAspectRatio = value);
+
+    /// <summary>
+    ///     externalResourcesRequired = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies whether the rendering of the <symbol> element is dependent on external resources.
+    /// </summary>
+    public static HtmlElementModifier ExternalResourcesRequired(string value) => Modify(x => x.externalResourcesRequired = value);
+
+    /// <summary>
+    ///     transform = <paramref name="value"/>
+    /// <br/>
+    ///     Applies a transformation to the element, such as scaling, rotating, or translating.
+    /// </summary>
+    public static HtmlElementModifier Transform(string value) => Modify(x => x.transform = value);
+
+}
+
 public sealed class stop : HtmlElement
 {
     #region string offset
