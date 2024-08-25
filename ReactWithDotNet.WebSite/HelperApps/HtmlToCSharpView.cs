@@ -333,6 +333,15 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
             sb.AppendLine("  }");
 
+            sb.AppendLine("  protected override Element componentDidCatch(Exception exceptionOccurredInRender)");
+            sb.AppendLine("  {");
+            sb.AppendLine("    return new pre(Color(Red300))");
+            sb.AppendLine("    {");
+            sb.AppendLine("      exceptionOccurredInRender.ToString()");
+            sb.AppendLine("    };");
+            sb.AppendLine("  }");
+            
+            
             sb.AppendLine("}");
 
             state.CSharpCode = sb.ToString();
