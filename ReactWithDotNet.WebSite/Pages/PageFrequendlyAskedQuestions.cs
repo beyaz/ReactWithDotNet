@@ -12,7 +12,11 @@ public sealed record FaqItemInfo
 
 sealed class PageFrequendlyAskedQuestions : PureComponent
 {
-    public required IReadOnlyList<FaqItemInfo> FaqList { get; init; } = [new FaqItemInfo{  Title = "abc", HtmlContent = "fgh"}];
+    public required IReadOnlyList<FaqItemInfo> FaqList { get; init; } = [
+        new FaqItemInfo{  Title = "abc", HtmlContent = "fgh"},
+        new FaqItemInfo{  Title = "abc", HtmlContent = "fgh"},
+        new FaqItemInfo{  Title = "abtc", HtmlContent = "fgth"}
+    ];
 
     protected override Element render()
     {
@@ -33,6 +37,17 @@ sealed class PageFrequendlyAskedQuestions : PureComponent
 
         Element ToItem(FaqItemInfo Item, int Index)
         {
+            return new Accordion
+            {
+                new p
+                {
+                    Item.Title
+                },
+                new p
+                {
+                    Item.HtmlContent
+                },
+            };
             var isCollapsed = Index > 0;
             
             return FC(_ => new FlexColumn(AlignItemsFlexStart, AlignSelfStretch, BackgroundWhite, Border("1px #D6DDE6 solid"), BorderRadius(8), Gap(16), JustifyContentFlexStart, Padding(20))
@@ -135,6 +150,53 @@ sealed class PageFrequendlyAskedQuestions : PureComponent
                 {
                     element
                 }
+            };
+        }
+    }
+
+
+    class Accordion : Component<Accordion.State>
+    {
+        public bool IsCollapsed { get; init; }
+
+        internal record State
+        {
+            public bool IsCollapsed { get; init; }
+        }
+
+        protected override Task constructor()
+        {
+            state = new()
+            {
+                IsCollapsed = IsCollapsed
+            };
+            
+            return Task.CompletedTask;
+        }
+
+        Task ToggleCollapse(MouseEvent _)
+        {
+            state = state with { IsCollapsed = !state.IsCollapsed };
+
+            return Task.CompletedTask;
+        }
+        
+        protected override Element render()
+        {
+            return new FlexColumn(AlignItemsFlexStart, AlignSelfStretch, BackgroundWhite, Border("1px #D6DDE6 solid"), BorderRadius(8), Gap(16), JustifyContentFlexStart, Padding(20))
+            {
+                state.IsCollapsed ? OnClick(ToggleCollapse) : null,
+
+                new FlexRow(AlignItemsCenter, AlignSelfStretch, JustifyContentFlexStart)
+                {
+                    state.IsCollapsed ? null : OnClick(ToggleCollapse),
+
+                    children[0],
+                    new ArrowUpDownIcon { IsCollapsed = state.IsCollapsed }
+                },
+                state.IsCollapsed
+                    ? null
+                    :children[1]
             };
         }
     }
