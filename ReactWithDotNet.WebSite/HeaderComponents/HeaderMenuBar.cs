@@ -14,7 +14,7 @@ class HeaderMenuBar : PureComponent
             new FlexRow(AlignItemsCenter)
             {
                 new Logo(),
-                SpaceX(10),
+                SpaceX(16),
                 new nav(DisplayFlex, AlignItemsCenter, WhenMediaSizeLessThan(MD,DisplayNone))
                 {
                     RawData.MenuList.Select(AsTooltip)
@@ -59,7 +59,8 @@ class HeaderMenuBar : PureComponent
             classes = { { "tooltip", new Style { Background(Theme.common_background), Padding(0),BorderRadius } } },
             title = new FlexColumn(BorderRadius, Border(Solid(1, Theme.grey_200)), Width(400), BoxShadow("rgba(170, 180, 190, 0.3) 0px 4px 20px"))
             {
-                m.Children.ToListOf(AsTooltipRow)
+                m.Children.ToListOf(AsTooltipRow),
+                
             },
             children =
             {
@@ -67,7 +68,7 @@ class HeaderMenuBar : PureComponent
                 {
                     Text(m.Title),
                     Padding(10),
-                    Hover(Background(Theme.grey_50)),
+                    Hover(Background(Theme.grey_50), Border(1,solid,Gray200)),
                     BorderRadius,
                     FontSize14,
                     FontWeight700,

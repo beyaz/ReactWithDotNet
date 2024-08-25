@@ -67,7 +67,7 @@ class HighlightedText : PureComponent
         return ParseSpecialString("[]", str).Select(x => x.isSpecial ? CreateAttractiveText(x.value) : x.value);
     }
 
-    Element CreateAttractiveText(string text)
+    public static Element CreateAttractiveText(string text)
     {
         return new span
         {
@@ -76,7 +76,7 @@ class HighlightedText : PureComponent
             {
                 PaddingLeftRight(3),
                 WebkitTextFillColor(Transparent),
-                Background(linear_gradientTo("right", Theme.Blue400, Theme.Blue600)),
+                Background(linear_gradientTo("right", Blue400, Blue600)),
                 BackgroundClipText,
                 WebkitBackgroundClipText
             }
