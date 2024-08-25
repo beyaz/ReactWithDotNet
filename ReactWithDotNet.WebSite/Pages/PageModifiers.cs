@@ -107,61 +107,6 @@ new div
     }
 }
 
-class PageTechnicalDetail : PureComponent
-{
-    protected override Element render()
-    {
-        return new article(WidthFull)
-        {
-            new h2{"Technical Details"},
-            new p
-            {
-                "How is it working? How to connect React and c# language?"
-            },
-
-            new p
-            {
-                "ReactWithDotNet is working on the .net core. Creates ReactNode hierarchy in c# language then serialize to client.",
-                br,
-                "Our client engine recalculates ReactNodes from incoming c# generated nodes",
-                br,
-                "If any react event occurs then serialize only sub react nodes values to server"
-            },
-            
-            new ImageTutorialView
-            {
-                Items = new []
-                {
-                    new TutorialItem
-                    {
-                        Title = "Aloha",
-                        Description = "accc",
-                        ImageSrc = Asset("doc.svg")
-                    },
-                    new TutorialItem
-                    {
-                        Title       = "Aloha3",
-                        Description = "accc2",
-                        ImageSrc    = Asset("2.png")
-                    },
-                    new TutorialItem
-                    {
-                        Title       = "Aloha2",
-                        Description = "accc2",
-                        ImageSrc    = Asset("react.svg")
-                    },
-                    new TutorialItem
-                    {
-                        Title       = "Aloha3",
-                        Description = "accc2",
-                        ImageSrc    = Asset("1.png")
-                    }
-                }
-            }
-        };
-    }
-}
-
 class PageDocuments : PureComponent
 {
     protected override Element render()
