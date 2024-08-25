@@ -344,7 +344,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             modifiers.AddRange(htmlNode.Attributes.RemoveAll(isDataAttribute).Select(toDataModifier).Select(ModifierCode.FromString));
         }
-
+        
         // remove svg.xmlns
         {
             if (htmlNode.Name == "svg")
@@ -931,6 +931,15 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         if (tagName == "svg" && name.Equals("size", StringComparison.OrdinalIgnoreCase) && double.TryParse(value, out _))
         {
             return success($"svg.Size({value})");
+        }
+        
+        if (tagName == "symbol" && name.Equals("viewBox", StringComparison.OrdinalIgnoreCase))
+        {
+            return success($"symbol.ViewBox(\"{value}\")");
+        }
+        if (tagName == "source" && name.Equals("src", StringComparison.OrdinalIgnoreCase))
+        {
+            return success($"source.Src(\"{value}\")");
         }
 
         if (tagName == "svg" && name.Equals("width", StringComparison.OrdinalIgnoreCase) && double.TryParse(value, out _))
