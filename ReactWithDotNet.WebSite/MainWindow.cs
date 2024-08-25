@@ -10,16 +10,9 @@ sealed class MainWindow : PureComponent
         return new div(SizeFull)
         {
             new MainPageHeader(),
-            
-            new main(PaddingY(48))
-            {
-                new CommonPageLayout
-                {
-                    createContent
-                }
-                
-            },
-            
+
+            createContent,
+
             new MainPageFooter()
         };
 
@@ -30,20 +23,6 @@ sealed class MainWindow : PureComponent
             var typeOfPage = Type.GetType($"ReactWithDotNet.WebSite.Pages.{pageName}") ?? typeof(PageMain);
 
             return (Element)Activator.CreateInstance(typeOfPage);
-        }
-    }
-    
-    sealed class CommonPageLayout: PureComponent
-    {
-        protected override Element render()
-        {
-            return new FlexRowCentered(WidthFull)
-            {
-                new FlexColumn(ContainerStyle, PaddingY(48))
-                {
-                    children
-                }
-            };
         }
     }
 }

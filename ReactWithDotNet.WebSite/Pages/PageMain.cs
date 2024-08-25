@@ -1,18 +1,19 @@
-﻿
-namespace ReactWithDotNet.WebSite.Pages;
+﻿namespace ReactWithDotNet.WebSite.Pages;
 
-class PageMain: PureComponent
+class PageMain : PureComponent
 {
     protected override Element render()
     {
-        return new FlexColumn(Gap(20))
+        return new CommonPageLayout
         {
-            new MainPageContentDescription(),
+            new FlexColumn(Gap(20))
+            {
+                new MainPageContentDescription(),
 
-            SpaceY(15),
+                SpaceY(15),
 
-            new MainPageContentSample { Height(300) }
+                new MainPageContentSample { Height(300) }
+            }
         };
     }
 }
-

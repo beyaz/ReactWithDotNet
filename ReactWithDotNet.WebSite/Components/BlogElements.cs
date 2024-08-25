@@ -17,14 +17,14 @@ sealed class BlogH1 : PureComponent
     }
 }
 
-
-sealed class BlogContainer : PureComponent
+sealed class BlogP : PureComponent
 {
     protected override Element render()
     {
-        return new FlexColumnCentered(WidthFull, Background("#f9f9fa"))
+        return new p
         {
-            children
+            children,
+            FontSize14
         };
     }
 }

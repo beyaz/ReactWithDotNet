@@ -6,6 +6,8 @@ namespace ReactWithDotNet.WebSite;
 
 static partial class Extensions
 {
+    
+    
     public static readonly ReactContextKey<LightTheme> ThemeKey = new(nameof(ThemeKey));
     public static readonly ReactContextKey<HttpContext> KeyForHttpContext = new(nameof(KeyForHttpContext));
         
