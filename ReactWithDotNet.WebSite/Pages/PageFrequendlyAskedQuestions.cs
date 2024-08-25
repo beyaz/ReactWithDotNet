@@ -30,7 +30,42 @@ sealed class PageFrequendlyAskedQuestions : PureComponent
                 },
                 new FlexColumn(AlignItemsFlexStart, AlignSelfStretch, Gap(16), JustifyContentFlexStart)
                 {
-                    FaqList.Select(ToItem)
+                    new Accordion
+                    {
+                        new p
+                        {
+                            "What is ReactWithDotNet? What is the target? What problems does it solve?"
+                        },
+                        new p
+                        {
+                            "It is a project that is partly on the server and partly on the browser.",
+                            "It is not only js or c# library."
+                        }
+                    },
+                    new Accordion
+                    {
+                        new p
+                        {
+                            "Can you explain ReactWithDotNet working mechanism in simple way?"
+                        },
+                        new p
+                        {
+                            "Imagine you are building react UI nodes in c# server then ReactWithDotNet serialize this nodes to browser.",
+                            "After this nodes come to browser then ReactWithDotNet integrates this incoming nodes to React.js system.",
+                            "When any action occurs then this engine transfer only required states to server then recalculates UI nodes."
+                        }
+                    },
+                    new Accordion
+                    {
+                        new p
+                        {
+                            "What is modifiers?"
+                        },
+                        new p
+                        {
+                            "Modifiers are small functions that modify html node or css properties."
+                        }
+                    }
                 }
             }
         }};
@@ -157,18 +192,18 @@ sealed class PageFrequendlyAskedQuestions : PureComponent
 
     class Accordion : Component<Accordion.State>
     {
-        public bool IsCollapsed { get; init; }
+        public bool IsExpanded { get; init; }
 
         internal record State
         {
-            public bool IsCollapsed { get; init; }
+            public bool IsExpanded { get; init; }
         }
 
         protected override Task constructor()
         {
             state = new()
             {
-                IsCollapsed = IsCollapsed
+                IsExpanded = IsExpanded
             };
             
             return Task.CompletedTask;
@@ -176,7 +211,7 @@ sealed class PageFrequendlyAskedQuestions : PureComponent
 
         Task ToggleCollapse(MouseEvent _)
         {
-            state = state with { IsCollapsed = !state.IsCollapsed };
+            state = state with { IsExpanded = !state.IsExpanded };
 
             return Task.CompletedTask;
         }
@@ -185,18 +220,16 @@ sealed class PageFrequendlyAskedQuestions : PureComponent
         {
             return new FlexColumn(AlignItemsFlexStart, AlignSelfStretch, BackgroundWhite, Border("1px #D6DDE6 solid"), BorderRadius(8), Gap(16), JustifyContentFlexStart, Padding(20))
             {
-                state.IsCollapsed ? OnClick(ToggleCollapse) : null,
+                state.IsExpanded ? OnClick(ToggleCollapse) : null,
 
-                new FlexRow(AlignItemsCenter, AlignSelfStretch, JustifyContentFlexStart)
+                new FlexRow(AlignItemsFlexStart, AlignSelfStretch, JustifyContentSpaceBetween, Gap(8))
                 {
-                    state.IsCollapsed ? null : OnClick(ToggleCollapse),
+                    state.IsExpanded ? null : OnClick(ToggleCollapse),
 
                     children[0],
-                    new ArrowUpDownIcon { IsCollapsed = state.IsCollapsed }
+                    new ArrowUpDownIcon { IsCollapsed = !state.IsExpanded }
                 },
-                state.IsCollapsed
-                    ? null
-                    :children[1]
+                state.IsExpanded ? null :children[1]
             };
         }
     }
