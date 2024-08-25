@@ -1,6 +1,8 @@
 ﻿using ReactWithDotNet.ThirdPartyLibraries.FramerMotion;
 
 namespace ReactWithDotNet.WebSite.Pages;
+using h1 = BlogH1;
+using p = BlogP;
 
 public sealed record FaqItemInfo
 {
@@ -12,39 +14,22 @@ sealed class PageFrequendlyAskedQuestions : PureComponent
 {
     public required IReadOnlyList<FaqItemInfo> FaqList { get; init; } = [new FaqItemInfo{  Title = "abc", HtmlContent = "fgh"}];
 
-    public string Id { get; init; }
-
     protected override Element render()
     {
-        if (FaqList.Count == 0)
-        {
-            return new div{id = Id};
-        }
-
-        return new section(DisplayFlexRowCentered)
+        return new BlogPageLayout{new section(DisplayFlexRowCentered)
         {
             new InlineFlexColumn(AlignItemsFlexStart, Flex(1, 1, 0), Gap(12), JustifyContentFlexStart)
             {
-                new InlineFlexRow(AlignItemsCenter, AlignSelfStretch, Gap(423), JustifyContentFlexStart)
+                new h1
                 {
-                    new div(Id(Id))
-                    {
-                        "Sıkça Sorulan Sorular",
-                        Color("#1C2B3D"),
-                        FontFamily("Inter"),
-                        FontSize26,
-                        FontWeight700,
-                        LetterSpacing(0.25),
-                        LineHeight(32.11),
-                        WordWrapBreakWord
-                    }
+                    "Frequendly Asked Questions"
                 },
                 new FlexColumn(AlignItemsFlexStart, AlignSelfStretch, Gap(16), JustifyContentFlexStart)
                 {
                     FaqList.Select(ToItem)
                 }
             }
-        };
+        }};
 
         Element ToItem(FaqItemInfo Item, int Index)
         {
@@ -73,7 +58,7 @@ sealed class PageFrequendlyAskedQuestions : PureComponent
                 },
                 isCollapsed
                     ? null
-                    : new div
+                    : new p
                     {
                         DangerouslySetInnerHTML(Item.HtmlContent),
                         new[]

@@ -7,7 +7,7 @@ sealed class PageTechnicalDetail : PureComponent
 {
     protected override Element render()
     {
-        return new article(WidthFull)
+        return new BlogPageLayout
         {
             new h1{"Technical Details"},
             new p

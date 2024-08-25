@@ -5,7 +5,8 @@ class PageAboutUs : PureComponent
 {
     protected override Element render()
     {
-        return  new FlexColumn(AlignItemsCenter)
+        
+        return  new BlogPageLayout{new FlexColumn(AlignItemsCenter)
         {
             SpaceY(70),
             new MainContentContainer(JustifyContentCenter, WidthFull, FlexDirectionColumn)
@@ -33,6 +34,6 @@ class PageAboutUs : PureComponent
                 
                 
             }
-        };
+        }};
     }
 }
