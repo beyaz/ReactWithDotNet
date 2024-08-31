@@ -2,22 +2,23 @@
 
 namespace ReactWithDotNet.WebSite.Showcases;
 
-class MonacoEditorDemo : Component<MonacoEditorDemo.State>
+sealed class MonacoEditorDemo : Component<MonacoEditorDemo.State>
 {
     protected override Task constructor()
     {
+        const string sampleJsonContent =
+            """
+            {
+              "name": "xyz",
+              "year": 6,
+              "hasValue": false
+            }
+            """;
+
         state = new()
         {
-            Content = """
-                      {
-                        "name": "xyz",
-                        "year": 6,
-                        "hasValue": null
-                      }
-                      """
+            Content = sampleJsonContent
         };
-
-        OnKeypressFinished();
 
         return Task.CompletedTask;
     }
@@ -39,30 +40,39 @@ class MonacoEditorDemo : Component<MonacoEditorDemo.State>
 
                 options =
                 {
-                    renderLineHighlight = "none",
+                    renderLineHighlight = none,
                     fontFamily          = "'IBM Plex Mono Medium', 'Courier New', monospace",
-                    minimap             = new { enabled            = false },
-                    unicodeHighlight    = new { showExcludeOptions = false }
+                    minimap = new
+                    {
+                        enabled = false
+                    },
+                    unicodeHighlight = new
+                    {
+                        showExcludeOptions = false
+                    }
                 }
             },
             new FlexRow
             {
-                (b)"Letter Count:", state.LetterCount
+                (b)"Letter Count: ", state.LetterCount
             }
         };
     }
 
     Task OnKeypressFinished()
     {
-        state.LetterCount = state.Content.Length;
+        state = state with
+        {
+            LetterCount = state.Content.Length
+        };
 
         return Task.CompletedTask;
     }
 
     internal sealed record State
     {
-        public string Content { get; set; }
+        public string Content { get; init; }
 
-        public int LetterCount { get; set; }
+        public int LetterCount { get; init; }
     }
 }
