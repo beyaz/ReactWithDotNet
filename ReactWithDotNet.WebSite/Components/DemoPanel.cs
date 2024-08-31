@@ -8,6 +8,19 @@ sealed class DemoPanel : Component<DemoPanel.State>
 
     public required string FullNameOfElement { get; init; }
 
+    protected override Task OverrideStateFromPropsBeforeRender()
+    {
+        if (FullNameOfElement != state.FullNameOfElement)
+        {
+            state = new()
+            {
+                FullNameOfElement = FullNameOfElement
+            };
+        }
+        
+        return Task.CompletedTask;
+    }
+
     protected override Element render()
     {
         return new FlexColumn(WidthFull, Padding(8), Gap(8), BorderRadius(4), BoxShadow(0, 2, 5, 0, rgba(0, 0, 0, 0.34)), MD(DisplayFlexRow, Gap(8)))
@@ -21,7 +34,7 @@ sealed class DemoPanel : Component<DemoPanel.State>
                     ShowHideButton
                 }
             },
-            state.IsSourceCodeVisible is false ? null : new FlexRow(WidthFull, OverflowAuto, Height(300), MarginTop(-8))
+            state.IsSourceCodeVisible is false ? null : new FlexRow(WidthFull, OverflowAuto, MinHeight(300), MarginTop(-8))
             {
                 new SourceCodeView { CSharpCode = CSharpCode }
             }
@@ -86,5 +99,7 @@ sealed class DemoPanel : Component<DemoPanel.State>
     internal sealed record State
     {
         public bool IsSourceCodeVisible { get; init; }
+        
+        public string FullNameOfElement { get; init; }
     }
 }
