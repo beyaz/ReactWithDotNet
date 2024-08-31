@@ -4,7 +4,7 @@ namespace ReactWithDotNet.WebSite.Components;
 
 sealed class CSharpCodePanel : PureComponent
 {
-    public required string Code { get; init; } = "using System;";
+    public required string Code { get; init; }
 
     protected override Element render()
     {
