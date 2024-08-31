@@ -51,6 +51,30 @@
 	<ItemGroup>
 		<FilesInDistFolder Include="wwwroot\dist.$(Configuration)\*.*" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Showcases\MonacoEditorDemo.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	  <Compile Update="Showcases\MuiCardDemo.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	  <Compile Update="Showcases\MuiTextFieldDemo.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	  <Compile Update="Showcases\PrimeReactTabViewDemo.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	  <Compile Update="Showcases\ReactPlayerDemo.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	  <Compile Update="Showcases\RSuiteAutoCompleteDemo.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	  <Compile Update="Showcases\SwiperThumbsGalleryDemo.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	</ItemGroup>
 	
 	<Target Name="_EnsureNodeEnvironment_" BeforeTargets="rebuild;build" Condition=" !Exists('$(AppRoot)node_modules') ">
 		<Exec Command="node --version" ContinueOnError="true">

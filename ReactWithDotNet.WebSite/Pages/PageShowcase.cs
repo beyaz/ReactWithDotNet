@@ -1,4 +1,5 @@
-﻿using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
+﻿using System.IO;
+using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 using ReactWithDotNet.WebSite.Showcases;
 
 namespace ReactWithDotNet.WebSite.Pages;
@@ -41,7 +42,7 @@ sealed class PageShowcase : Component<PageShowcase.State>
                         new DemoPanel
                         {
                             FullNameOfElement = state.FullTypeNameOfSelectedSample,
-                            CSharpCode        = "new MuiCardDemo()"
+                            CSharpCode        = File.ReadAllText("Showcases\\"+state.FullTypeNameOfSelectedSample.Split('.').Last()+".cs")
                         }
                     }
                 }

@@ -1,30 +1,28 @@
 ﻿using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
-namespace ReactWithDotNet.WebSite.Showcases
+namespace ReactWithDotNet.WebSite.Showcases;
+
+public class MuiTextFieldDemo : PureComponent
 {
-    public class MuiTextFieldDemo : PureComponent
+    protected override Element render()
     {
-        protected override Element render()
+        return new Paper
         {
-            return new Paper
+            component = "form",
+            sx        = { p = "2px 4px", display = "flex", alignItems = "center", width = 400 },
+            children =
             {
-                component = "form",
-                sx        = { p = "2px 4px", display = "flex", alignItems = "center", width = 400 },
-                children =
+                new TextField { sx = { ml = 1, flex = 1 }, size = "small" },
+                new IconButton
                 {
-                    // new InputBase { sx  = { ml = 1, flex = 1 }, placeholder = "Search in samples" },
-                    new TextField { sx = { ml = 1, flex = 1 } },
-                    new IconButton
+                    type = "button",
+                    sx   = { p = "10px" },
+                    children =
                     {
-                        type = "button",
-                        sx   = { p = "10px" },
-                        children =
-                        {
-                            new span { className = "material-icons", text = "search" }
-                        }
+                        new span { className = "material-icons", text = "search" }
                     }
                 }
-            };
-        }
+            }
+        };
     }
 }
