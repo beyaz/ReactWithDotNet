@@ -30,7 +30,7 @@ class MobileMenu : Component
 
                 RawData.MenuList.Select(m => new MenuView
                 {
-                    Modify<MenuView>(ui => ui.Model = m),
+                    (MenuView ui) => ui.Model = m,
 
                     m.Children.Select(x => new a
                     {
