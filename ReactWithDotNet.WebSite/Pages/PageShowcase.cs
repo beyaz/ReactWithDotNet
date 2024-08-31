@@ -3,33 +3,48 @@ using ReactWithDotNet.WebSite.Showcases;
 
 namespace ReactWithDotNet.WebSite.Pages;
 
-class PageShowcase : Component
+sealed class PageShowcase : Component<PageShowcase.State>
 {
-    public string SearchValue { get; set; }
+    static readonly IReadOnlyList<Type> TypeListOfShowcaseElement =
+    [
+        typeof(MuiCardDemo),
+        typeof(MuiTextFieldDemo),
+        typeof(PrimeReactTabViewDemo),
+        typeof(RSuiteAutoCompleteDemo),
+        typeof(SwiperThumbsGalleryDemo),
+        typeof(ReactPlayerDemo),
+        typeof(MonacoEditorDemo)
+    ];
 
-    public string FullTypeNameOfSelectedSample { get; set; } = TypeListOfShowcaseElement[0].FullName;
-    
     protected override Element render()
     {
         var boxShadowOfWindow = BoxShadow("0 2px 10px 2px rgb(0 0 0 / 10%)");
-        
-        return new FlexColumn(WidthFull, boxShadowOfWindow, BorderRadius(5))
-        {
-            new FlexRow{(h4)"Showcases"+ MarginLeft(30)+FontWeight500 + FontSize19, BorderBottom("1px solid rgba(5, 5, 5, 0.1)"), AlignItemsCenter },
-            new FlexRow(WidthFull, Padding(10))
-            {
-                LeftMenu,
 
-                new div(Padding(10),WidthFull)
+        return new CommonPageLayout
+        {
+            new FlexColumn(WidthFull, boxShadowOfWindow, BorderRadius(5))
+            {
+                new FlexRow(PaddingLeft(16), PaddingTopBottom(8))
                 {
-                    new DemoPanel
+                    (h4)"Showcases" ,
+                    
+                    FontWeight400 ,
+                    FontSize15,
+                    BorderBottom(1, solid, rgba(5, 5, 5, 0.1))
+                },
+                new FlexRow(WidthFull, Padding(10))
+                {
+                    LeftMenu,
+
+                    new div(Padding(10), WidthFull)
                     {
-                        FullNameOfElement = FullTypeNameOfSelectedSample,
-                        CSharpCode        = "new MuiCardDemo()"
+                        new DemoPanel
+                        {
+                            FullNameOfElement = state.FullTypeNameOfSelectedSample,
+                            CSharpCode        = "new MuiCardDemo()"
+                        }
                     }
                 }
-
-
             }
         };
     }
@@ -37,30 +52,29 @@ class PageShowcase : Component
     Element LeftMenu()
     {
         var menuItems = TypeListOfShowcaseElement;
-        
-        if (string.IsNullOrWhiteSpace(SearchValue) is false)
+
+        if (string.IsNullOrWhiteSpace(state.SearchValue) is false)
         {
-            menuItems = menuItems.Where(t => t.Name.Contains(SearchValue, StringComparison.OrdinalIgnoreCase)).ToList();
+            menuItems = menuItems.Where(t => t.Name.Contains(state.SearchValue, StringComparison.OrdinalIgnoreCase)).ToList();
         }
-        
-        return new FlexColumn(Padding(5), Gap(5))
+
+        return new FlexColumn(Padding(8))
         {
-            new FlexRow(Gap(5),AlignItemsCenter)
+            new FlexRow
             {
-                new span(FontSize(30))
-                {
-                    className = "material-icons",
-                    text      = "filter_list"
-                },
+                new IconFilter{Size = 32},
+                SpaceX(8),
                 new TextField
                 {
-                    size="small",
-                    valueBind                = ()=>SearchValue,
-                    valueBindDebounceTimeout = 500,
-                    valueBindDebounceHandler = OnSearchFinished
+                    size                     = "small",
+                    valueBind                = () => state.SearchValue,
+                    valueBindDebounceTimeout = 700,
+                    valueBindDebounceHandler = OnSearchFinished,
+                    style = { WidthFull }
                 }
             },
-            new FlexColumn(Gap(5))
+            SpaceY(8),  
+            new FlexColumn(Gap(8))
             {
                 menuItems.Select(asMenuItem)
             }
@@ -68,40 +82,33 @@ class PageShowcase : Component
 
         Element asMenuItem(Type t)
         {
-            var isSelected = FullTypeNameOfSelectedSample == t.FullName;
-            
+            var isSelected = state.FullTypeNameOfSelectedSample == t.FullName;
+
             return new FlexRowCentered
             {
                 Id(t.FullName),
-                Text(t.Name), 
-                BorderRadius(6), 
-                PaddingTopBottom(5), 
-                PaddingLeftRight(15), 
-                Border($"1px solid {Theme.grey_100}"),
+                Text(t.Name),
+                BorderRadius(6),
+                PaddingTopBottom(5),
+                PaddingLeftRight(15),
+                Border(1, solid, Gray200),
                 CursorDefault,
-                When(isSelected,Background(Theme.grey_100)),
-                When(!isSelected, Hover(Background(Theme.grey_100))),
-                OnClick(e=>Task.FromResult(FullTypeNameOfSelectedSample = e.target.id))
+                When(isSelected, Background(Gray100)),
+                When(!isSelected, Hover(Background(Gray50))),
+                OnClick(e => Task.FromResult(state.FullTypeNameOfSelectedSample = e.target.id))
             };
         }
     }
 
-    static IReadOnlyList<Type> TypeListOfShowcaseElement = new[]
-    {
-        typeof(MuiCardDemo),
-        typeof(MuiTextFieldDemo),
-        typeof(PrimeReactTabViewDemo),
-        typeof(RSuiteAutoCompleteDemo),
-        typeof(SwiperThumbsGalleryDemo),
-        typeof(EventBusDemo),
-        typeof(EventBusDemo2),
-        typeof(ReactPlayerDemo),
-        typeof(OnClickPreviewDemo),
-        typeof(MonacoEditorDemo)
-    };
-
     Task OnSearchFinished()
     {
         return Task.CompletedTask;
+    }
+
+    internal record State
+    {
+        public string FullTypeNameOfSelectedSample { get; set; } = TypeListOfShowcaseElement[0].FullName;
+
+        public string SearchValue { get; set; }
     }
 }

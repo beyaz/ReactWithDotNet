@@ -1,6 +1,6 @@
 ﻿namespace ReactWithDotNet.WebSite;
 
-sealed class CommonPageLayout: PureComponent
+sealed class CommonPageLayout: Component
 {
     protected override Element render()
     {
