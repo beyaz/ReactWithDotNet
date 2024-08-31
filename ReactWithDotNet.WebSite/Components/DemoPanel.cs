@@ -21,7 +21,10 @@ sealed class DemoPanel : Component<DemoPanel.State>
                     ShowHideButton
                 }
             },
-            state.IsSourceCodeVisible ? new SourceCodeView { CSharpCode = CSharpCode } : null
+            state.IsSourceCodeVisible ? new FlexRowCentered(WidthFull, MinHeight(300))
+            {
+                new SourceCodeView { CSharpCode = CSharpCode }
+            } : null
         };
 
         Element creatElement()
