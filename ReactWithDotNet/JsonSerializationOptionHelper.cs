@@ -805,10 +805,10 @@ public sealed class BindInfo
     public string transformFunction { get; set; }
 }
 
-public class InnerElementInfo
+public sealed class InnerElementInfo
 {
-    public object Element { get; set; }
+    public object Element { get; init; }
 
     [JsonPropertyName("$isElement")]
-    public bool IsElement { get; set; }
+    public bool IsElement { get; init; }
 }
