@@ -178,25 +178,13 @@ partial class JsonSerializationOptionHelper
         }
     }
 
-    class UnionPropFactory : JsonConverterFactory
+    sealed class UnionPropFactory : JsonConverterFactory
     {
-        static readonly Type[] UnionPropTypesCache =
-        [
-            typeof(UnionProp<,>),
-            typeof(UnionProp<,,>),
-            typeof(UnionProp<,,,>)
-        ];
+        static readonly Type TypeOfUnionTypeBase = typeof(UnionPropBase);
         
         public override bool CanConvert(Type typeToConvert)
         {
-            if (typeToConvert.IsGenericType is false)
-            {
-                return false;
-            }
-
-            var genericTypeDefinition = typeToConvert.GetGenericTypeDefinition();
-
-            return Array.IndexOf(UnionPropTypesCache, genericTypeDefinition) >= 0;
+            return typeToConvert.BaseType == TypeOfUnionTypeBase;
         }
 
         static readonly Type[] UnionPropConverterTypesCache =

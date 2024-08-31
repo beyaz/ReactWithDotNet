@@ -45,7 +45,7 @@ sealed class DemoPanel : Component<DemoPanel.State>
         {
             return new FormControlLabel
             {
-                label = state.IsSourceCodeVisible ? "Hide Source Code" : "Show Source Code",
+                label = ((span)(state.IsSourceCodeVisible ? "Hide Source Code" : "Show Source Code")) + FontSize12,
                 control = new Switch
                 {
                     size     = "small",
