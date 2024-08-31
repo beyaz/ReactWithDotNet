@@ -29,7 +29,7 @@ ReactWithDotNet.OnFindExternalObject(name =>
     if (isFirstAccess)
     {
         isFirstAccess = false;
-        ReactWithDotNet.TryLoadCssByHref("https://cdnjs.cloudflare.com/ajax/libs/rsuite/5.28.0/rsuite.min.css");
+        ReactWithDotNet.TryLoadCssByHref("https://cdnjs.cloudflare.com/ajax/libs/rsuite/5.70.0/rsuite.min.css");
     }
 
     return null;

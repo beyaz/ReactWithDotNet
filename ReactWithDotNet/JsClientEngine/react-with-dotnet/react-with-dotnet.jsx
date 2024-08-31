@@ -1285,6 +1285,11 @@ function ConvertToReactElement(jsonNode, component)
             {
                 props[propName] = function(item)
                 {
+                    if (React.isValidElement(item))
+                    {
+                        return item;
+                    }
+
                     if (item == null && itemTemplateForNull)
                     {
                         return ConvertToReactElement(itemTemplateForNull);
