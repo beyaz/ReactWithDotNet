@@ -10,6 +10,20 @@ sealed class DemoPanel : Component<DemoPanel.State>
 
     protected override Element render()
     {
+        return new FlexRow(WidthFull, FlexWrap, Padding(8), BorderRadius(4), BoxShadow(0, 2, 5, 0, rgba(0, 0, 0, 0.34)))
+        {
+            new FlexRowCentered(BackgroundColor(Gray200), Padding(40), WidthFull, BorderRadius(8), PositionRelative)
+            {
+                creatElement,
+
+                new FlexRow(PositionAbsolute, RightBottom(1))
+                {
+                    ShowHideButton
+                }
+            },
+            state.IsSourceCodeVisible ? new SourceCodeView { CSharpCode = CSharpCode } : null
+        };
+
         Element creatElement()
         {
             if (FullNameOfElement is not null)
@@ -43,27 +57,6 @@ sealed class DemoPanel : Component<DemoPanel.State>
                 }
             };
         }
-
-        return new FlexRow(BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"),
-                           Padding(10),
-                           BorderRadius(5),
-                           MarginTopBottom(1),
-                           FlexWrap,
-                           //MediaQueryOnDesktop(MinWidth(500)), 
-                           WidthFull,
-                           FontSize10)
-        {
-            new FlexRowCentered(BackgroundColor(Theme.grey_100), Padding(40), WidthFull, BorderRadius(10), PositionRelative)
-            {
-                creatElement,
-
-                new FlexRow(PositionAbsolute, Right(1), Bottom(1))
-                {
-                    ShowHideButton
-                }
-            },
-            state.IsSourceCodeVisible ? new SourceCodeView { CSharpCode = CSharpCode } : null
-        };
     }
 
     sealed class SourceCodeView : PureComponent
