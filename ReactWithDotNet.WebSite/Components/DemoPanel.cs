@@ -10,9 +10,9 @@ sealed class DemoPanel : Component<DemoPanel.State>
 
     protected override Element render()
     {
-        return new FlexColumn(WidthFull, Padding(8), BorderRadius(4), BoxShadow(0, 2, 5, 0, rgba(0, 0, 0, 0.34)), MD(DisplayFlexRow, Gap(8)))
+        return new FlexColumn(WidthFull, Padding(8), Gap(8), BorderRadius(4), BoxShadow(0, 2, 5, 0, rgba(0, 0, 0, 0.34)), MD(DisplayFlexRow, Gap(8)))
         {
-            new FlexRowCentered(BackgroundColor(Gray200), Padding(40), WidthFull, BorderRadius(8), PositionRelative)
+            new FlexRowCentered(BackgroundColor(Gray200), Padding(40), WidthFull, BorderRadius(8), PositionRelative, MinWidth(250))
             {
                 creatElement,
 
@@ -21,7 +21,7 @@ sealed class DemoPanel : Component<DemoPanel.State>
                     ShowHideButton
                 }
             },
-            state.IsSourceCodeVisible is false ? null : new FlexRowCentered(WidthFull, MinHeight(300))
+            state.IsSourceCodeVisible is false ? null : new FlexRow(WidthFull,  Height(300), MarginTop(-8))
             {
                 new SourceCodeView { CSharpCode = CSharpCode }
             }
@@ -68,11 +68,11 @@ sealed class DemoPanel : Component<DemoPanel.State>
 
         protected override Element render()
         {
-            return new fieldset(Border(1, solid, Gray200), SizeFull)
+            return new fieldset(Border(1, solid, Gray200), SizeFull, OverflowScroll)
             {
                 new legend(DisplayFlexColumnCentered, MarginLeft(8), MarginBottom(-8))
                 {
-                    new img { Src(Asset("csharp.svg")), Size(24), PaddingX(4), Zindex2 }
+                    new img { Src(Asset("csharp.svg")), Size(20), PaddingX(4), Zindex2, Height(16) }
                 },
 
                 new FlexRowCentered(SizeFull, Padding(0, 4, 4, 4))
