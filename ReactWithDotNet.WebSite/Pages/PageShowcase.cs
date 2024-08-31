@@ -36,7 +36,7 @@ sealed class PageShowcase : Component<PageShowcase.State>
                 {
                     LeftMenu,
 
-                    new div(Padding(10), WidthFull)
+                    new div(Padding(10), WidthFull, OverflowAuto)
                     {
                         new DemoPanel
                         {
