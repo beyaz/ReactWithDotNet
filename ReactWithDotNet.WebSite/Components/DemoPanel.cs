@@ -10,7 +10,7 @@ sealed class DemoPanel : Component<DemoPanel.State>
 
     protected override Element render()
     {
-        return new FlexRow(WidthFull, Padding(8), BorderRadius(4), BoxShadow(0, 2, 5, 0, rgba(0, 0, 0, 0.34)), MD(FlexWrap))
+        return new FlexColumn(WidthFull, Padding(8), BorderRadius(4), BoxShadow(0, 2, 5, 0, rgba(0, 0, 0, 0.34)), MD(DisplayFlexRow, Gap(8)))
         {
             new FlexRowCentered(BackgroundColor(Gray200), Padding(40), WidthFull, BorderRadius(8), PositionRelative)
             {
