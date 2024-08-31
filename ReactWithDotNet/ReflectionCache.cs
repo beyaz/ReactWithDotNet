@@ -140,6 +140,8 @@ partial class Mixin
     static PropertyInfoCalculated Calculate(this PropertyInfo propertyInfo)
     {
         var debounceMethods = DebounceHelper.CalculateDebounceMethods(propertyInfo);
+        
+        
 
         return new()
         {
@@ -166,7 +168,11 @@ partial class Mixin
             IsBindingExpression = IsBindingExpression(propertyInfo.PropertyType),
 
             DebounceTimeoutGetFunc = debounceMethods.DebounceTimeoutGetFunc,
-            DebounceHandlerGetFunc = debounceMethods.DebounceHandlerGetFunc
+            DebounceHandlerGetFunc = debounceMethods.DebounceHandlerGetFunc,
+            
+            IsUnionProperty = propertyInfo.PropertyType.IsSubclassOf(typeof(UnionPropBase))
+            
+            
         };
 
         static Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> getTransformValueInServerSideTransformFunction(PropertyInfo propertyInfo)
@@ -250,6 +256,7 @@ sealed class PropertyInfoCalculated
     public ReactTemplateAttribute TemplateAttribute { get; init; }
     public string TransformValueInClientFunction { get; init; }
     public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
+    public bool IsUnionProperty;
 }
 
 sealed class TypeInfoCalculated

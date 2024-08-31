@@ -4,23 +4,29 @@ using System.Text.Json.Serialization;
 namespace ReactWithDotNet;
 
 [Serializable]
-public sealed class UnionProp<A, B>
+public abstract class UnionPropBase
 {
     internal readonly object value;
-
-    internal UnionProp(object value)
+    
+    internal UnionPropBase(object value)
     {
         this.value = value;
     }
+}
+
+[Serializable]
+public sealed class UnionProp<A, B> : UnionPropBase
+{
+    internal UnionProp(object value) : base(value) { }
 
     public static implicit operator UnionProp<A, B>(A a)
     {
-        return new UnionProp<A, B>(a);
+        return new(a);
     }
 
     public static implicit operator UnionProp<A, B>(B b)
     {
-        return new UnionProp<A, B>(b);
+        return new(b);
     }
 
     public static implicit operator A(UnionProp<A, B> union)
@@ -40,28 +46,23 @@ public sealed class UnionProp<A, B>
 }
 
 [Serializable]
-public sealed class UnionProp<A, B, C>
+public sealed class UnionProp<A, B, C> : UnionPropBase
 {
-    internal readonly object value;
-
-    internal UnionProp(object value)
-    {
-        this.value = value;
-    }
+    internal UnionProp(object value): base(value) { }
 
     public static implicit operator UnionProp<A, B, C>(A a)
     {
-        return new UnionProp<A, B, C>(a);
+        return new(a);
     }
 
     public static implicit operator UnionProp<A, B, C>(B b)
     {
-        return new UnionProp<A, B, C>(b);
+        return new(b);
     }
 
     public static implicit operator UnionProp<A, B, C>(C c)
     {
-        return new UnionProp<A, B, C>(c);
+        return new(c);
     }
 
     public static implicit operator A(UnionProp<A, B, C> union)
@@ -86,33 +87,28 @@ public sealed class UnionProp<A, B, C>
 }
 
 [Serializable]
-public sealed class UnionProp<A, B, C, D>
+public sealed class UnionProp<A, B, C, D>: UnionPropBase
 {
-    internal readonly object value;
-
-    internal UnionProp(object value)
-    {
-        this.value = value;
-    }
+    internal UnionProp(object value): base(value) { }
 
     public static implicit operator UnionProp<A, B, C, D>(A a)
     {
-        return new UnionProp<A, B, C, D>(a);
+        return new(a);
     }
 
     public static implicit operator UnionProp<A, B, C, D>(B b)
     {
-        return new UnionProp<A, B, C, D>(b);
+        return new(b);
     }
 
     public static implicit operator UnionProp<A, B, C, D>(C c)
     {
-        return new UnionProp<A, B, C, D>(c);
+        return new(c);
     }
 
     public static implicit operator UnionProp<A, B, C, D>(D d)
     {
-        return new UnionProp<A, B, C, D>(d);
+        return new(d);
     }
 
     public static implicit operator A(UnionProp<A, B, C, D> union)

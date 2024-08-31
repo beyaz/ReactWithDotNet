@@ -297,6 +297,11 @@ static partial class ElementSerializer
             return NotExportableObject;
         }
 
+        if (property.IsUnionProperty)
+        {
+            propertyValue = ((UnionPropBase)propertyValue).value;
+        }
+
         if (typeInfoCalculated.GetPropertyValueForSerializeToClient is not null)
         {
             var output = typeInfoCalculated.GetPropertyValueForSerializeToClient(instance, propertyInfo.Name);
