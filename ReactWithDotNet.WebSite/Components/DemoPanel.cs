@@ -10,7 +10,7 @@ sealed class DemoPanel : Component<DemoPanel.State>
 
     protected override Element render()
     {
-        return new FlexRow(WidthFull, FlexWrap, Padding(8), BorderRadius(4), BoxShadow(0, 2, 5, 0, rgba(0, 0, 0, 0.34)))
+        return new FlexRow(WidthFull, Padding(8), BorderRadius(4), BoxShadow(0, 2, 5, 0, rgba(0, 0, 0, 0.34)), MD(FlexWrap))
         {
             new FlexRowCentered(BackgroundColor(Gray200), Padding(40), WidthFull, BorderRadius(8), PositionRelative)
             {
@@ -21,10 +21,10 @@ sealed class DemoPanel : Component<DemoPanel.State>
                     ShowHideButton
                 }
             },
-            state.IsSourceCodeVisible ? new FlexRowCentered(WidthFull, MinHeight(300))
+            state.IsSourceCodeVisible is false ? null : new FlexRowCentered(WidthFull, MinHeight(300))
             {
                 new SourceCodeView { CSharpCode = CSharpCode }
-            } : null
+            }
         };
 
         Element creatElement()
