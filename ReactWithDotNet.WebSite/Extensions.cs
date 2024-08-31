@@ -20,14 +20,7 @@ static partial class Extensions
 
     public static StyleModifier DisplayNoneWhenMobile => WhenMediaSizeLessThan(MD,DisplayNone);
     public static StyleModifier DisplayNoneWhenNotMobile => MD(DisplayNone);
-
-    public static IEnumerable<Element> PrimeReactCssLibs => new[] // TODO: can be remove
-    {
-        new link { rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/themes/saga-blue/theme.css" },
-        new link { rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css" },
-        new link { rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primeicons@5.0.0/primeicons.css" },
-    };
-
+    
     internal static SiteRawData RawData => ReadContent<SiteRawData>("SiteRawData");
 
    

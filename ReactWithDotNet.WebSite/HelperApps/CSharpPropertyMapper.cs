@@ -88,7 +88,6 @@ class AnyClass
             SizeFull,
             Padding(10),
 
-            PrimeReactCssLibs,
             new div(FontSize23, Padding(10), TextAlignCenter)
             {
                 "C# code property mapper generator",

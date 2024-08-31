@@ -79,9 +79,9 @@ function RegisterComponents()
 
 function RegisterGlobalStyles()
 {
-    ReactWithDotNet.TryLoadCssByHref("https://cdn.jsdelivr.net/npm/primeicons/primeicons.min.css");
-    ReactWithDotNet.TryLoadCssByHref("https://cdn.jsdelivr.net/npm/primereact/resources/primereact.min.css");
-    ReactWithDotNet.TryLoadCssByHref("https://cdn.jsdelivr.net/npm/primereact/resources/themes/saga-blue/theme.min.css");
+    ReactWithDotNet.TryLoadCssByHref("https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/themes/saga-blue/theme.css");
+    ReactWithDotNet.TryLoadCssByHref("https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css");
+    ReactWithDotNet.TryLoadCssByHref("https://cdn.jsdelivr.net/npm/primeicons@5.0.0/primeicons.css");
 }
 
 var isFirstLoad = false;

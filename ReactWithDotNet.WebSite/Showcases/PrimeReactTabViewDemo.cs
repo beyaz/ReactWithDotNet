@@ -8,7 +8,6 @@ sealed class PrimeReactTabViewDemo : PureComponent
     {
         return new div(SizeFull)
         {
-            PrimeReactCssLibs,
             new TabView
             {
                 new TabPanel
