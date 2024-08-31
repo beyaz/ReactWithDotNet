@@ -18,11 +18,11 @@ sealed class PageShowcase : Component<PageShowcase.State>
 
     protected override Element render()
     {
-        var boxShadowOfWindow = BoxShadow("0 2px 10px 2px rgb(0 0 0 / 10%)");
+        var boxShadowOfWindow = BoxShadow(0, 2, 10, 2, rgba(0, 0, 0, 0.1));
 
         return new CommonPageLayout
         {
-            new FlexColumn(WidthFull, boxShadowOfWindow, BorderRadius(5))
+            new FlexColumn(WidthFull, boxShadowOfWindow, BorderRadius(4))
             {
                 new FlexRow(PaddingLeft(16), PaddingTopBottom(8))
                 {

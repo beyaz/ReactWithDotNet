@@ -49,17 +49,7 @@ class DemoPanel : Component
             };
         }
 
-        Element createSourceCode()
-        {
-            return new fieldset(Border("1px solid #dee2e6"), WidthFull)
-            {
-                new legend{new img{Src(Asset("csharp.svg")), Width(25), Height(20)}},
-                new FlexColumn(AlignItemsFlexStart,WidthFull, HeightFull)
-                {
-                    new CSharpCodePanel{ Code = CSharpCode}
-                }
-            };
-        }
+       
         
         return new FlexRow(BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), 
                            Padding(10), 
@@ -80,7 +70,28 @@ class DemoPanel : Component
                 })
                 
             },
-            When(IsSourceCodeVisible, createSourceCode)
+            IsSourceCodeVisible ? new SourceCodeView{CSharpCode = CSharpCode} : null
         };
+    }
+    
+    sealed class SourceCodeView : PureComponent
+    {
+        public string CSharpCode { get; init; }
+        
+        protected override Element render()
+        {
+            return new fieldset(Border(1, solid ,Gray200), SizeFull)
+            {
+                new legend(DisplayFlexColumnCentered, MarginLeft(8), MarginBottom(-8))
+                {
+                    new img{Src(Asset("csharp.svg")), Size(24), PaddingX(4), Zindex2}
+                },
+                
+                new FlexRowCentered(SizeFull, Padding(0,4,4,4))
+                {
+                    new CSharpCodePanel{ Code = CSharpCode}
+                }
+            };
+        }
     }
 }
