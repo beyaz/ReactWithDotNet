@@ -1,17 +1,12 @@
-﻿
-using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
+﻿using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
 namespace ReactWithDotNet.WebSite.Components;
 
-class DemoPanel : Component
+sealed class DemoPanel : Component<DemoPanel.State>
 {
-    public string CSharpCode { get; set; }
+    public required string CSharpCode { get; init; }
 
-    public string FullNameOfElement { get; set; }
-
-    public bool IsSourceCodeVisible { get; set; }
-
-    public bool HideSourceCodeVisibilityButton{ get; set; }
+    public required string FullNameOfElement { get; init; }
 
     protected override Element render()
     {
@@ -33,28 +28,26 @@ class DemoPanel : Component
         {
             return new FormControlLabel
             {
-                label = IsSourceCodeVisible ? "Hide Source Code" : "Show Source Code",
+                label = state.IsSourceCodeVisible ? "Hide Source Code" : "Show Source Code",
                 control = new Switch
                 {
                     size     = "small",
-                    value    = (!IsSourceCodeVisible).ToString(),
-                    @checked = IsSourceCodeVisible,
+                    value    = (!state.IsSourceCodeVisible).ToString(),
+                    @checked = state.IsSourceCodeVisible,
                     onChange = _ =>
                     {
-                         IsSourceCodeVisible = !IsSourceCodeVisible;
-                         
-                         return Task.CompletedTask;
+                        state = state with { IsSourceCodeVisible = !state.IsSourceCodeVisible };
+
+                        return Task.CompletedTask;
                     }
                 }
             };
         }
 
-       
-        
-        return new FlexRow(BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), 
-                           Padding(10), 
-                           BorderRadius(5), 
-                           MarginTopBottom(1), 
+        return new FlexRow(BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"),
+                           Padding(10),
+                           BorderRadius(5),
+                           MarginTopBottom(1),
                            FlexWrap,
                            //MediaQueryOnDesktop(MinWidth(500)), 
                            WidthFull,
@@ -64,34 +57,38 @@ class DemoPanel : Component
             {
                 creatElement,
 
-                When(!HideSourceCodeVisibilityButton, ()=>new FlexRow(PositionAbsolute, Right(1), Bottom(1) )
+                new FlexRow(PositionAbsolute, Right(1), Bottom(1))
                 {
                     ShowHideButton
-                })
-                
+                }
             },
-            IsSourceCodeVisible ? new SourceCodeView{CSharpCode = CSharpCode} : null
+            state.IsSourceCodeVisible ? new SourceCodeView { CSharpCode = CSharpCode } : null
         };
     }
-    
+
     sealed class SourceCodeView : PureComponent
     {
         public string CSharpCode { get; init; }
-        
+
         protected override Element render()
         {
-            return new fieldset(Border(1, solid ,Gray200), SizeFull)
+            return new fieldset(Border(1, solid, Gray200), SizeFull)
             {
                 new legend(DisplayFlexColumnCentered, MarginLeft(8), MarginBottom(-8))
                 {
-                    new img{Src(Asset("csharp.svg")), Size(24), PaddingX(4), Zindex2}
+                    new img { Src(Asset("csharp.svg")), Size(24), PaddingX(4), Zindex2 }
                 },
-                
-                new FlexRowCentered(SizeFull, Padding(0,4,4,4))
+
+                new FlexRowCentered(SizeFull, Padding(0, 4, 4, 4))
                 {
-                    new CSharpCodePanel{ Code = CSharpCode}
+                    new CSharpCodePanel { Code = CSharpCode }
                 }
             };
         }
+    }
+
+    internal sealed record State
+    {
+        public bool IsSourceCodeVisible { get; init; }
     }
 }
