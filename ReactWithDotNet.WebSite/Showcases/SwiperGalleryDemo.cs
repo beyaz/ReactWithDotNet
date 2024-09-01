@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.WebSite.Showcases;
 
-class SwiperGalleryDemo : PureComponent
+sealed class SwiperGalleryDemo : PureComponent
 {
     protected override Element render()
     {
