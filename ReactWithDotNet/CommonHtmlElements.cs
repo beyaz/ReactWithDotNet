@@ -1940,7 +1940,7 @@ public sealed class ellipse : HtmlElement
 public sealed class line : HtmlElement
 {
     #region string x1
-    PropertyValueNode<string> _x1;
+    PropertyValueNode<UnionProp<string,double>> _x1;
     static readonly PropertyValueDefinition _x1_ = new()
     {
         name = nameof(x1)
@@ -1948,7 +1948,7 @@ public sealed class line : HtmlElement
     /// <summary>
     ///     The x-coordinate of the start point of the line.
     /// </summary>
-    public string x1
+    public UnionProp<string,double> x1
     {
         get => _x1?.value;
         set => SetValue(_x1_, ref _x1, value);
@@ -1957,7 +1957,7 @@ public sealed class line : HtmlElement
 
 
     #region string y1
-    PropertyValueNode<string> _y1;
+    PropertyValueNode<UnionProp<string,double>> _y1;
     static readonly PropertyValueDefinition _y1_ = new()
     {
         name = nameof(y1)
@@ -1965,7 +1965,7 @@ public sealed class line : HtmlElement
     /// <summary>
     ///     The y-coordinate of the start point of the line.
     /// </summary>
-    public string y1
+    public UnionProp<string,double> y1
     {
         get => _y1?.value;
         set => SetValue(_y1_, ref _y1, value);
@@ -1974,7 +1974,7 @@ public sealed class line : HtmlElement
 
 
     #region string x2
-    PropertyValueNode<string> _x2;
+    PropertyValueNode<UnionProp<string,double>> _x2;
     static readonly PropertyValueDefinition _x2_ = new()
     {
         name = nameof(x2)
@@ -1982,7 +1982,7 @@ public sealed class line : HtmlElement
     /// <summary>
     ///     The x-coordinate of the end point of the line.
     /// </summary>
-    public string x2
+    public UnionProp<string,double> x2
     {
         get => _x2?.value;
         set => SetValue(_x2_, ref _x2, value);
@@ -1991,7 +1991,7 @@ public sealed class line : HtmlElement
 
 
     #region string y2
-    PropertyValueNode<string> _y2;
+    PropertyValueNode<UnionProp<string,double>> _y2;
     static readonly PropertyValueDefinition _y2_ = new()
     {
         name = nameof(y2)
@@ -1999,7 +1999,7 @@ public sealed class line : HtmlElement
     /// <summary>
     ///     The y-coordinate of the end point of the line.
     /// </summary>
-    public string y2
+    public UnionProp<string,double> y2
     {
         get => _y2?.value;
         set => SetValue(_y2_, ref _y2, value);
@@ -2123,28 +2123,28 @@ public sealed class line : HtmlElement
     /// <br/>
     ///     The x-coordinate of the start point of the line.
     /// </summary>
-    public static HtmlElementModifier X1(string value) => Modify(x => x.x1 = value);
+    public static HtmlElementModifier X1(UnionProp<string,double> value) => Modify(x => x.x1 = value);
 
     /// <summary>
     ///     y1 = <paramref name="value"/>
     /// <br/>
     ///     The y-coordinate of the start point of the line.
     /// </summary>
-    public static HtmlElementModifier Y1(string value) => Modify(x => x.y1 = value);
+    public static HtmlElementModifier Y1(UnionProp<string,double> value) => Modify(x => x.y1 = value);
 
     /// <summary>
     ///     x2 = <paramref name="value"/>
     /// <br/>
     ///     The x-coordinate of the end point of the line.
     /// </summary>
-    public static HtmlElementModifier X2(string value) => Modify(x => x.x2 = value);
+    public static HtmlElementModifier X2(UnionProp<string,double> value) => Modify(x => x.x2 = value);
 
     /// <summary>
     ///     y2 = <paramref name="value"/>
     /// <br/>
     ///     The y-coordinate of the end point of the line.
     /// </summary>
-    public static HtmlElementModifier Y2(string value) => Modify(x => x.y2 = value);
+    public static HtmlElementModifier Y2(UnionProp<string,double> value) => Modify(x => x.y2 = value);
 
     /// <summary>
     ///     stroke = <paramref name="value"/>

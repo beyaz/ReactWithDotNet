@@ -25,62 +25,62 @@ public class ExportingCommonHtmlElements
             new()
             {
                 Tag = "button",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "type",
                         Type    = "string",
                         Comment = "Specifies the type of button. button, reset, submit"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "value",
                         Type    = "string",
                         Comment = "Specifies an initial value for the button"
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "autofocus",
                         Comment = "Specifies that the button should have input focus when the page loads. Only one element in a document can have this attribute."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "disabled",
                         Comment = "Specifies that the button should be disabled. A disabled button cannot be clicked."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "form",
                         Comment = "Specifies the form that the button is associated with."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "formaction",
                         Comment = "Specifies the URL of the form action when the button is clicked."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "formenctype",
                         Comment = "Specifies the form encoding method (e.g., application/x-www-form-urlencoded, multipart/form-data) when the button is clicked."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "formmethod",
                         Comment = "Specifies the form submission method (e.g., GET, POST) when the button is clicked."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "formnovalidate",
                         Comment = "Specifies that the form should not be validated before submission when the button is clicked."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "name",
                         Comment = "Specifies a name for the button. The name attribute is used to reference form-data after the form has been submitted, or to reference the element in JavaScript."
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
@@ -100,14 +100,14 @@ public class ExportingCommonHtmlElements
             new()
             {
                 Tag = "time",
-                Attributes = new AttributeInfo[]
-                {
+                Attributes = 
+                [
                     new ()
                     {
                         Name    = "datetime",
                         Comment = "Represent a machine-readable format of the 'time' element"
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
             new()
@@ -228,19 +228,19 @@ public class ExportingCommonHtmlElements
             new()
             {
                 Tag = "table",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name = "cellSpacing",
                         Type = "double?"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "cellPadding",
                         Type = "double?"
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
@@ -251,321 +251,325 @@ public class ExportingCommonHtmlElements
             new()
             {
                 Tag = "th",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name = "colSpan",
                         Type = "int?"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "rowSpan",
                         Type = "int?"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "scope",
                         Type = "string",
                         Comment = "specifies whether a header cell is a header for a column, row, or group of columns or rows."
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
             new()
             {
                 Tag = "td",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name = "colSpan",
                         Type = "int?"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "rowSpan",
                         Type = "int?"
                     }
-                },
+                ],
                 EnableCastFromString = true
             },
             new()
             {
                 Tag = "tr",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name = "colSpan",
                         Type = "int?"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "rowSpan",
                         Type = "int?"
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
             new()
             {
                 Tag = "option",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name = "selected",
                         Type = "bool?"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "disabled",
                         Type = "string"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "value",
                         Type = "string"
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
             new()
             {
                 Tag = "ellipse",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "cx",
                         Comment = "The x-coordinate of the center of the ellipse."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "cy",
                         Comment = "The y-coordinate of the center of the ellipse."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "rx",
                         Comment = "The radius of the ellipse along the x-axis."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "ry",
                         Comment = "The radius of the ellipse along the y-axis."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "fill",
                         Comment = "The fill color of the ellipse."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke",
                         Comment = "The stroke color of the ellipse."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke-width",
                         Comment = "The width of the stroke.",
                         Type    = "UnionProp<string,double>"
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
             new()
             {
                 Tag = "line",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "x1",
-                        Comment = "The x-coordinate of the start point of the line."
+                        Comment = "The x-coordinate of the start point of the line.",
+                        Type    = "UnionProp<string,double>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "y1",
-                        Comment = "The y-coordinate of the start point of the line."
+                        Comment = "The y-coordinate of the start point of the line.",
+                        Type    = "UnionProp<string,double>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "x2",
-                        Comment = "The x-coordinate of the end point of the line."
+                        Comment = "The x-coordinate of the end point of the line.",
+                        Type    = "UnionProp<string,double>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "y2",
-                        Comment = "The y-coordinate of the end point of the line."
+                        Comment = "The y-coordinate of the end point of the line.",
+                        Type    = "UnionProp<string,double>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke",
                         Comment = "The stroke (outline) color of the line."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke-width",
                         Comment = "The width of the line's outline.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke-dasharray",
                         Comment = "Pattern of dashes and gaps used in the line's stroke."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke-linecap",
                         Comment = "The style of the line's endpoints."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke-linejoin",
                         Comment = "The style of the line's corners."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke-opacity",
                         Comment = "The opacity (transparency) of the line's stroke."
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
             new()
             {
                 Tag = "polyline",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "points",
                         Comment = "A list of points defining the vertices of the polyline."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "fill",
                         Comment = "The fill color of the polyline."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke",
                         Comment = "The stroke (outline) color of the polyline."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke-width",
                         Comment = "The width of the polyline's outline.",
                         Type    = "UnionProp<string,double>"
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
             new()
             {
                 Tag = "circle",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "cx",
                         Comment = "The x-coordinate of the center of the circle.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "cy",
                         Comment = "The y-coordinate of the center of the circle.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "r",
                         Comment = "The radius of the circle.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "fill",
                         Comment = "The fill color of the circle."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke",
                         Comment = "The stroke color of the circle."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke-width",
                         Comment = "The width of the stroke of the circle.",
                         Type = "UnionProp<string,double>"
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
             new()
             {
                 Tag = "polygon",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "points",
                         Comment = "Specifies the coordinates of the polygon's vertices, in (x, y) pairs, separated by commas."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "fill",
                         Comment = "Specifies the fill color of the polygon."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke",
                         Comment = "Specifies the stroke color of the polygon."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke-width",
                         Comment = "Specifies the width of the polygon's stroke, in pixels.",
                         Type    = "UnionProp<string,double>"
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke-linecap",
                         Comment = "Specifies the type of line cap used for the polygon's stroke."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke-linejoin",
                         Comment = "Specifies the type of line join used for the polygon's stroke."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "fill-rule",
                         Comment = "Specifies how the polygon is filled."
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
             new()
             {
                 Tag = "use",
                 Attributes = [
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "xlinkHref"
                     },
@@ -575,456 +579,519 @@ public class ExportingCommonHtmlElements
             new()
             {
                 Tag = "rect",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "x",
                         Comment = "The x-coordinate of the top-left corner of the rectangle.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "y",
                         Comment = "The y-coordinate of the top-left corner of the rectangle.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "width",
                         Comment = "The width of the rectangle.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "height",
                         Comment = "The height of the rectangle.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "rx",
                         Comment = "The border radius of the rectangle on the horizontal axis.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "ry",
                         Comment = "The border radius of the rectangle on the vertical axis.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "fill",
                         Comment = "The fill color of the rectangle."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke",
                         Comment = "The stroke color of the rectangle."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke-width",
                         Comment = "The width of the rectangle's stroke.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke-linecap",
                         Comment = "The linecap style of the rectangle's stroke."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke-linejoin",
                         Comment = "The linejoin style of the rectangle's stroke."
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
+             
+            new()
+            {
+                Tag = "marker",
+                Attributes =
+                [
+                    new ()
+                    {
+                        Name    = "id",
+                        Comment = "Defines a unique identifier (ID) for the marker element.",
+                        Type    = "string"
+                    },
+                    new ()
+                    {
+                        Name    = "markerHeight",
+                        Comment = "Specifies the height of the marker viewport.",
+                        Type    = "length (string or number)"
+                    },
+                    new ()
+                    {
+                        Name    = "markerUnits",
+                        Comment = "Specifies the coordinate system for the marker width and height. Possible values are 'strokeWidth' or 'userSpaceOnUse'.",
+                        Type    = "string"
+                    },
+                    new ()
+                    {
+                        Name    = "markerWidth",
+                        Comment = "Specifies the width of the marker viewport.",
+                        Type    = "length (string or number)"
+                    },
+                    new ()
+                    {
+                        Name    = "orient",
+                        Comment = "Defines the rotation angle for the marker, in degrees. Accepts 'auto', 'auto-start-reverse', or a specific angle.",
+                        Type    = "string"
+                    },
+                    new ()
+                    {
+                        Name    = "preserveAspectRatio",
+                        Comment = "Indicates how the marker should scale its dimensions.",
+                        Type    = "string"
+                    },
+                    new ()
+                    {
+                        Name    = "refX",
+                        Comment = "Defines the x-coordinate in the marker’s coordinate system.",
+                        Type    = "length (string or number)"
+                    },
+                    new ()
+                    {
+                        Name    = "refY",
+                        Comment = "Defines the y-coordinate in the marker’s coordinate system.",
+                        Type    = "length (string or number)"
+                    },
+                    new ()
+                    {
+                        Name    = "viewBox",
+                        Comment = "Specifies the position and dimension of the marker’s viewport.",
+                        Type    = "string"
+                    }
 
+                ],
+                EnableCastFromString = false
+            },
             new()
             {
                 Tag = "radialGradient",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "cx",
                         Comment = "The x-coordinate of the center of the gradient."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "cy",
                         Comment = "The y-coordinate of the center of the gradient."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "fx",
                         Comment = "The x-coordinate of the focal point of the gradient."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "fy",
                         Comment = "The y-coordinate of the focal point of the gradient."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "r",
                         Comment = "The radius of the gradient."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "spreadMethod",
                         Comment = "The method used to spread the gradient."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "gradientUnits",
                         Comment = "The units used to specify the gradient."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "gradientTransform",
                         Comment = "A transform to apply to the gradient."
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
             new()
             {
                 Tag = "clipPath",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "clip-rule",
                         Comment = "Specifies the fill rule for the clipping path."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "clip-box",
                         Comment = "Specifies the reference box for the clipping path."
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
             new()
             {
                 Tag = "path",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "d",
                         Comment = "Path data"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "fill",
                         Comment = "Fill color"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke",
                         Comment = "Stroke color"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "stroke-width",
                         Comment = "Stroke width",
                         Type    = "UnionProp<string,double>"
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "fillRule"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "clipRule"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "strokeLinecap"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "strokeLinejoin"
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
             new()
             {
                 Tag = "g",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name = "opacity"
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "clipPath"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "transform"
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
             new()
             {
                 Tag = "mask",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "height",
                         Comment = "This attribute defines the height of the masking area. Value type: length ; Default value: 120%; Animatable: yes"
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "maskContentUnits",
                         Comment = "This attribute defines the coordinate system for the contents of the mask. Value type: userSpaceOnUse|objectBoundingBox ; Default value: userSpaceOnUse; Animatable: yes"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "maskUnits",
                         Comment = "This attribute defines the coordinate system for attributes x, y, width and height on the mask. Value type: userSpaceOnUse|objectBoundingBox ; Default value: objectBoundingBox; Animatable: yes"
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "x",
                         Comment = "This attribute defines the x-axis coordinate of the top-left corner of the masking area. Value type: 'coordinate' ; Default value: -10%; Animatable: yes"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "y",
                         Comment = "This attribute defines the y-axis coordinate of the top-left corner of the masking area. Value type: 'coordinate' ; Default value: -10%; Animatable: yes"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "width",
                         Comment = "This attribute defines the width of the masking area. Value type: 'length' ; Default value: 120%; Animatable: yes"
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
             new()
             {
                 Tag = "meta",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "charset",
                         Comment = "Specifies the character encoding of the document."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "http-equiv",
                         Comment = "Specifies the name of the HTTP header that the meta tag should be equivalent to."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "name",
                         Comment = "Specifies the name of the metadata property."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "content",
                         Comment = "Specifies the value of the metadata property."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "scheme",
                         Comment = "Specifies the URL scheme for the content attribute of the meta tag."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "itemprop",
                         Comment = "Specifies the Microdata item property that the meta tag represents."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "property",
                         Comment = "Specifies the schema.org property that the meta tag represents."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "src",
                         Comment = "Specifies the URL for a resource associated with the meta tag."
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
             new()
             {
                 Tag = "body",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "background",
                         Comment = "Specifies the URL of a background image to be displayed behind the document's content."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "bgcolor",
                         Comment = "Specifies the background color of the document's body."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "link",
                         Comment = "Specifies the color of unvisited links in the document's body."
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
             new()
             {
                 Tag = "script",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "async",
                         Comment = "Specifies that the script should be executed asynchronously. This means that the browser will not wait for the script to finish executing before continuing to parse the rest of the HTML."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "defer",
                         Comment = "Specifies that the script should be executed after the browser has finished parsing the rest of the HTML. This is similar to async, but it ensures that scripts are executed in the order they are specified in the HTML."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "integrity",
                         Comment = "Specifies a subresource integrity (SRI) hash for the script. This helps to protect against man-in-the-middle attacks."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "language",
                         Comment = "Specifies the scripting language of the script. This is deprecated, but is still supported by most browsers."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "nomodule",
                         Comment = "Specifies that the script should be ignored if the browser does not support modules."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "src",
                         Comment = "Specifies the URL of an external script file."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "type",
                         Comment = "Specifies the type of the script. The most common value is application/javascript."
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
             new()
             {
                 Tag = "title",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "language",
                         Comment = "Specifies the language of the title."
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
             new()
             {
                 Tag = "head",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "profile",
                         Comment = "Provides a URL to a profile document for the current document."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "link",
                         Comment = "Provides a link to an external resource, such as a stylesheet or script file."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "meta",
                         Comment = "Provides metadata about the document, such as the character encoding, author, and keywords."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "script",
                         Comment = "Provides JavaScript code to be executed in the browser."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "noscript",
                         Comment = "Provides content to be displayed if the browser does not support JavaScript."
                     }
-                    //new AttributeInfo
+                    //new ()
                     //{
                     //    Name    = "base",
                     //    Comment = "Specifies the base URL for all relative URLs in the document.",
                     //}
-                },
+                ],
                 EnableCastFromString = false
             },
 
             new()
             {
                 Tag = "html",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "hidden",
                         Comment = "Hides the element from display."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "manifest",
                         Comment = "Specifies the URL of a manifest file, which provides information about the web app."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name         = "xmlns",
                         Comment      = "Specifies the namespace of the element.",
                         DefaultValue = "http://www.w3.org/1999/xhtml"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "prefix",
                         Comment = "Specifies the prefix of the element."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "version",
                         Comment = "Specifies the version of the HTML specification to which the element conforms."
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
@@ -1032,161 +1099,161 @@ public class ExportingCommonHtmlElements
             {
                 Tag                  = "label",
                 EnableCastFromString = true,
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "htmlFor",
                         Comment = "Specifies which form element a label is bound to."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "dropzone",
                         Comment = "Specifies whether the element is a drop target."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "hidden",
                         Comment = "Hides the element from view."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "tabindex",
                         Comment = "Specifies the element's position in the tab order."
                     }
-                }
+                ]
             },
 
             new()
             {
                 Tag = "a",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "href",
                         Comment = "The URL of the linked resource."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "target",
                         Comment = "Specifies where the linked resource should be opened. Can be `_blank`, `_self`, `_parent`, or `_top`."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "rel",
                         Comment = "Specifies the relationship between the current document and the linked resource. Can be `alternate`, `author`, `bookmark`, `canonical`, `external`, `help`, `license`, `next`, `nofollow`, `noreferrer`, `noopener`, `prev`, `search`, `sponsored`, or `stylesheet`."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "type",
                         Comment = "Specifies the MIME type of the linked resource, if applicable."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "download",
                         Comment = "Specifies whether the linked resource should be downloaded or opened in a new browser tab."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "ping",
                         Comment = "A list of URLs to which a ping should be sent when the user clicks on the link."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "media",
                         Comment = "Specifies the media types for which the link is relevant."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "hreflang",
                         Comment = "Specifies the language of the linked resource."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "name",
                         Comment = "Specifies a name for the link. This can be used to target the link with JavaScript."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "tabindex",
                         Comment = "Specifies the tab order of the link."
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
             new()
             {
                 Tag = "img",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "src",
                         Comment = "The URL of the image file."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "srcset",
                         Comment = "A list of image files to use in different situations, such as different screen sizes or device types."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "usemap",
                         Comment = "Specifies an image as a client-side image map."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "alt",
                         Comment = "An alternate text for the image, if the image for some reason cannot be displayed."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "width",
                         Comment = "The width of the image, in pixels.",
                         Type    = "UnionProp<string,double?>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "height",
                         Comment = "The height of the image, in pixels.",
                         Type    = "UnionProp<string,double?>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "ismap",
                         Comment = "A Boolean attribute that indicates whether the image is an image map."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "longdesc",
                         Comment = "A longer description of the image, for use by screen readers and other assistive technologies."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "crossorigin",
                         Comment = "A string that specifies the CORS setting for the image."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "loading",
                         Comment = "A string that specifies how the image should be loaded."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "decoding",
                         Comment = "A string that specifies how the image should be decoded."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "referrerpolicy",
                         Comment = "A string that specifies how much referrer information is sent with requests for the image."
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
 
@@ -1194,104 +1261,104 @@ public class ExportingCommonHtmlElements
             {
                 Tag                  = "svg",
                 CreateClassAsPartial = true,
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name = "focusable"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "xlinkHref"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "xmlnsXlink"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "preserveAspectRatio",
                         Comment = "Specifies how the SVG element should be scaled and aligned to fit its viewport."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "width",
                         Comment = "The width of the SVG element in pixels."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "height",
                         Comment = "The height of the SVG element in pixels."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name         = "xmlns",
                         Comment      = "The namespace URI for the SVG element.",
                         DefaultValue = "http://www.w3.org/2000/svg"
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "version",
                         Comment = "The SVG version of the element."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "viewBox"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "fill"
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
             new()
             {
                 Tag                  = "symbol",
                 CreateClassAsPartial = true,
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "viewBox",
                         Comment = "Defines the position and dimension, in user space, of an SVG viewport."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "preserveAspectRatio",
                         Comment = "Indicates how an element should preserve its aspect ratio when the viewBox is different from the viewport."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "externalResourcesRequired",
                         Comment = "Specifies whether the rendering of the <symbol> element is dependent on external resources."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "transform",
                         Comment = "Applies a transformation to the element, such as scaling, rotating, or translating."
-                    },
-                    //new AttributeInfo
+                    }
+                    //new ()
                     //{
                     //    Name    = "xml:base",
                     //    Comment = "Specifies the base URI for resolving relative URIs within the element."
                     //},
-                    //new AttributeInfo
+                    //new ()
                     //{
                     //    Name    = "xml:lang",
                     //    Comment = "Defines the language of the content within the <symbol> element."
                     //},
-                    //new AttributeInfo
+                    //new ()
                     //{
                     //    Name    = "xml:space",
                     //    Comment = "Controls how white space is handled inside the element."
                     //}
 
-                },
+                ],
                 EnableCastFromString = false
             },
             
@@ -1418,21 +1485,21 @@ public class ExportingCommonHtmlElements
             {
                 Tag                  = "stop",
                 CreateClassAsPartial = false,
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name = "offset"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "stopColor"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "stopOpacity"
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
             
@@ -1462,136 +1529,136 @@ public class ExportingCommonHtmlElements
             {
                 Tag = "form",
                 CreateClassAsPartial = false,
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "action",
                         Comment = "Specifies the URL of the page where the form data will be submitted."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "method",
                         Comment = "Specifies how the form data will be sent to the server. Possible values are 'get' and 'post'."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "enctype",
                         Comment = "Specifies the encoding type for form data. Possible values are 'application/x-www-form-urlencoded' and 'multipart/form-data'."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "target",
                         Comment = "Specifies the name of the frame where the form will be submitted. The default value is '_self', which means the form will be submitted in the current frame."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "name",
                         Comment = "Specifies a name for the form. This name is used to reference the form in JavaScript or to reference form data after a form is submitted."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "novalidate",
                         Comment = "Disables form validation. This attribute is useful when you want to submit the form without validating the user input."
                     },
 
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "autocomplete",
                         Comment = "Specifies whether the browser should automatically fill in form fields based on the user's past input."
                     }
-                },
+                ],
                 EnableCastFromString = false
             },
             
              new()
             {
                 Tag = "textarea",
-                Attributes = new[]
-                {
-                    new AttributeInfo
+                Attributes =
+                [
+                    new ()
                     {
                         Name    = "name",
                         Comment = "Specifies a name for the textarea element."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "cols",
                         Comment = "Specifies the visible width of the textarea element in characters.",
                         Type = "UnionProp<string,int?>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "rows",
                         Comment = "Specifies the number of visible lines in the textarea element.",
                         Type    = "UnionProp<string,int?>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "placeholder",
                         Comment = "Specifies a short hint that describes the expected value of the textarea element."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "readOnly",
                         Comment = "Disables user input in the textarea element.",
                         Type    = "UnionProp<string,bool>"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "required",
                         Comment = "Indicates that the textarea element must be filled out before the form is submitted."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "autofocus",
                         Comment = "Automatically gives focus to the textarea element when the page loads."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "autocomplete",
                         Comment = "Specifies that the user's browser should automatically complete the textarea element's value."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "dirname",
                         Comment = "Specifies the directory to use as the default value for the 'file' input type."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "form",
                         Comment = "Specifies the ID of the form that the textarea element belongs to."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "maxlength",
                         Comment = "Specifies the maximum number of characters that can be entered into the textarea element."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "minlength",
                         Comment = "Specifies the minimum number of characters that must be entered into the textarea element."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "wrap",
                         Comment = "Specifies whether the text in the textarea element should wrap to the next line when it reaches the end of the visible area."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "defaultValue",
                         Comment = "A string. Specifies the initial value for a text area."
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name    = "value"
                     },
-                    new AttributeInfo
+                    new ()
                     {
                         Name = "disabled"
                     },
@@ -1641,8 +1708,8 @@ public class ExportingCommonHtmlElements
                                  component.valueBindDebounceHandler = OnUserIterationFinished
                                  """ ,
                         JsonIgnore = true
-                    },
-                },
+                    }
+                ],
                 EnableCastFromString = false
             },
              
@@ -2371,10 +2438,11 @@ public class ExportingCommonHtmlElements
 }
 
 // List attribute names of html 'ellipse' tag in this format
-// new AttributeInfo
+// new ()
 // {
 //     Name    = "#name",
-//     Comment = "#description"
+//     Comment = "#description",
+//     Type = "#valueType"
 // },
 
 
