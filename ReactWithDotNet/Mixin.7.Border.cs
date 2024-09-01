@@ -155,7 +155,10 @@ partial class Mixin
         style.borderRight = borderValue;
     });
 
-  
+    public static StyleModifier BoxShadow( string type,string color, double offsetX, double offsetY, double blurRadius, double spreadRadius)
+        => BoxShadow($"{type} {color} {offsetX.AsPixel()} {offsetY.AsPixel()} {blurRadius.AsPixel()} {spreadRadius.AsPixel()}");
+
+    
     public static StyleModifier BoxShadow( string type, double offsetX, double offsetY, double blurRadius, double spreadRadius, string color)
         => BoxShadow($"{type} {offsetX.AsPixel()} {offsetY.AsPixel()} {blurRadius.AsPixel()} {spreadRadius.AsPixel()} {color}");
     
