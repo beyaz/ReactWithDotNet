@@ -23,13 +23,13 @@ sealed class PageShowcase : Component<PageShowcase.State>
 
         return new CommonPageLayout
         {
-            new FlexColumn(WidthFull, boxShadowOfWindow, BorderRadius(4))
+            new FlexColumn(WidthFull, MinHeight(500), boxShadowOfWindow, BorderRadius(4))
             {
                 new FlexRow(PaddingLeft(16), PaddingTopBottom(8))
                 {
-                    (h4)"Showcases" ,
-                    
-                    FontWeight400 ,
+                    (h4)"Showcases",
+
+                    FontWeight400,
                     FontSize15,
                     BorderBottom(1, solid, rgba(5, 5, 5, 0.1))
                 },
@@ -42,7 +42,7 @@ sealed class PageShowcase : Component<PageShowcase.State>
                         new DemoPanel
                         {
                             FullNameOfElement = state.FullTypeNameOfSelectedSample,
-                            CSharpCode        = File.ReadAllText("Showcases\\"+state.FullTypeNameOfSelectedSample.Split('.').Last()+".cs")
+                            CSharpCode        = File.ReadAllText("Showcases\\" + state.FullTypeNameOfSelectedSample.Split('.').Last() + ".cs")
                         }
                     }
                 }
@@ -63,7 +63,7 @@ sealed class PageShowcase : Component<PageShowcase.State>
         {
             new FlexRow
             {
-                new IconFilter{Size = 32},
+                new IconFilter { Size = 32 },
                 SpaceX(8),
                 new TextField
                 {
@@ -71,10 +71,10 @@ sealed class PageShowcase : Component<PageShowcase.State>
                     valueBind                = () => state.SearchValue,
                     valueBindDebounceTimeout = 700,
                     valueBindDebounceHandler = OnSearchFinished,
-                    style = { WidthFull }
+                    style                    = { WidthFull }
                 }
             },
-            SpaceY(8),  
+            SpaceY(8),
             new FlexColumn(Gap(8))
             {
                 menuItems.Select(asMenuItem)
@@ -96,7 +96,12 @@ sealed class PageShowcase : Component<PageShowcase.State>
                 CursorDefault,
                 When(isSelected, Background(Gray100)),
                 When(!isSelected, Hover(Background(Gray50))),
-                OnClick(e => Task.FromResult(state.FullTypeNameOfSelectedSample = e.target.id))
+                OnClick(e =>
+                {
+                    state = state with { FullTypeNameOfSelectedSample = e.target.id };
+
+                    return Task.CompletedTask;
+                })
             };
         }
     }
@@ -108,8 +113,8 @@ sealed class PageShowcase : Component<PageShowcase.State>
 
     internal record State
     {
-        public string FullTypeNameOfSelectedSample { get; set; } = TypeListOfShowcaseElement[0].FullName;
+        public string FullTypeNameOfSelectedSample { get; init; } = TypeListOfShowcaseElement[0].FullName;
 
-        public string SearchValue { get; set; }
+        public string SearchValue { get; init; }
     }
 }
