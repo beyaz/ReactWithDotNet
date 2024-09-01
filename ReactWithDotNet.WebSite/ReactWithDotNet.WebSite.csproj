@@ -62,7 +62,7 @@
 	  <Compile Update="Showcases\RSuiteAutoCompleteDemo.cs">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Compile>
-	  <Compile Update="Showcases\SwiperThumbsGalleryDemo.cs">
+	  <Compile Update="Showcases\SwiperGalleryDemo.cs">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Compile>
 	</ItemGroup>

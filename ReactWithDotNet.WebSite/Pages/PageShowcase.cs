@@ -12,7 +12,7 @@ sealed class PageShowcase : Component<PageShowcase.State>
         typeof(MuiTextFieldDemo),
         typeof(PrimeReactTabViewDemo),
         typeof(RSuiteAutoCompleteDemo),
-        typeof(SwiperThumbsGalleryDemo),
+        typeof(SwiperGalleryDemo),
         typeof(ReactPlayerDemo),
         typeof(MonacoEditorDemo)
     ];
