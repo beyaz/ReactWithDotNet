@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Text;
 using HtmlAgilityPack;
+using YamlDotNet.Core.Tokens;
 using PropertyInfo = System.Reflection.PropertyInfo;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
@@ -684,6 +685,10 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                     static string toLine(KeyValuePair<string, string> kv)
                     {
+                        if (IsGlobalDeclaredStringVariable(kv.Value))
+                        {
+                            return kv.Key + " = " + kv.Value + ",";
+                        }
                         return kv.Key + " = \"" + kv.Value + "\",";
                     }
                 }
@@ -714,6 +719,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         }
                     }
 
+                    if (IsGlobalDeclaredStringVariable(attribute.Value))
+                    {
+                        return [$"{propertyInfo.Name} = {attribute.Value}"];
+                    }
+                    
                     return [$"{propertyInfo.Name} = \"{attribute.Value}\""];
                 }
 
@@ -1167,10 +1177,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 return success($"{CamelCase(name)}({value})");
             }
 
-            if (value == none ||
-                value == auto ||
-                value == inherit ||
-                value == solid)
+            if (IsGlobalDeclaredStringVariable(value))
             {
                 return success($"{CamelCase(name)}({value})");
             }
@@ -1222,6 +1229,21 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             return default;
         }
+    }
+
+    static bool IsGlobalDeclaredStringVariable(string value)
+    {
+        if (value == none ||
+            value == auto ||
+            value == inset ||
+            value == inherit ||
+            value == transparent ||
+            value == solid)
+        {
+            return true;
+        }
+        
+        return false;
     }
 
     static PropertyInfo TryFindProperty(string htmlTagName, string attributeName)
