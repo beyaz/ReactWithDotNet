@@ -16,7 +16,7 @@ sealed class HeaderMenuBar : PureComponent
                 SpaceX(24),
                 new nav(DisplayFlex, AlignItemsCenter, WhenMediaSizeLessThan(MD, DisplayNone))
                 {
-                    MenuAccess.MenuList.Select(x=>new TooltipView{m=x})
+                    MenuAccess.MenuList.Select(x => new TooltipView { Model = x })
                 }
             },
 
@@ -25,71 +25,6 @@ sealed class HeaderMenuBar : PureComponent
             new SocialMediaLinks()
         };
     }
-
- 
-    
-    sealed class TooltipView : PureComponent
-    {
-        public Menu m { get; init; } = MenuAccess.MenuList.First();
-        
-        protected override Element render()
-        {
-            return new Tooltip
-            {
-                classes = { { "tooltip", new() { Background(Theme.common_background), Padding(0), BorderRadius } } },
-                title = new FlexColumn(BorderRadius, Border(Solid(1, Theme.grey_200)), Width(400), BoxShadow("rgba(170, 180, 190, 0.3) 0px 4px 20px"))
-                {
-                    m.Children.ToListOf(x=>new TooltipRowView{ model = x})
-                },
-                children =
-                {
-                    new div
-                    {
-                        Text(m.Title),
-                        Padding(10),
-                        Hover(Background(Theme.grey_50), Border(1, solid, Gray200)),
-                        BorderRadius,
-                        FontSize14,
-                        FontWeight700,
-                        CursorDefault
-                    }
-                }
-            };
-        }
-    }
-
-    sealed class TooltipRowView : PureComponent
-    {
-        public MenuItem model { get; init; } = MenuAccess.MenuList.First().Children.First();
-        
-        protected override Element render()
-        {
-            return new a(PaddingTopBottom(20), BorderRadius, PaddingLeft(20), PaddingRight(30), TextDecorationNone, CursorDefault)
-            {
-                GetPageLink(model.PageName),
-
-                LetterSpacingNormal,
-                BackgroundForPaper,
-                Hover(Background(Gray50)),
-
-                new FlexRow(AlignItemsCenter, Gap(20), BorderRadius)
-                {
-                    new img { Src(Asset(model.SvgFileName)), Size(36) },
-                    new FlexColumn
-                    {
-                        FontFamily_IBM_Plex_Sans,
-                        LineHeight21,
-                        FontSize14,
-                        Color(text_primary),
-
-                        new div(FontWeight600) { model.Title },
-                        new div(FontWeight400) { model.Description }
-                    }
-                }
-            };
-        }
-    }
-    
 
     sealed class SocialMediaLinks : PureComponent
     {
@@ -142,6 +77,68 @@ sealed class HeaderMenuBar : PureComponent
                         }
                     }
                 })
+            };
+        }
+    }
+
+    sealed class TooltipRowView : PureComponent
+    {
+        public MenuItem Model { get; init; } = MenuAccess.MenuList.First().Children.First();
+
+        protected override Element render()
+        {
+            return new a(PaddingTopBottom(20), BorderRadius, PaddingLeft(20), PaddingRight(30), TextDecorationNone, CursorDefault)
+            {
+                GetPageLink(Model.PageName),
+
+                LetterSpacingNormal,
+                BackgroundForPaper,
+                Hover(Background(Gray50)),
+
+                new FlexRow(AlignItemsCenter, Gap(20), BorderRadius)
+                {
+                    new img { Src(Asset(Model.SvgFileName)), Size(36) },
+                    new FlexColumn
+                    {
+                        FontFamily_IBM_Plex_Sans,
+                        LineHeight21,
+                        FontSize14,
+                        Color(text_primary),
+
+                        new div(FontWeight600) { Model.Title },
+                        new div(FontWeight400) { Model.Description }
+                    }
+                }
+            };
+        }
+    }
+
+    sealed class TooltipView : PureComponent
+    {
+        public Menu Model { get; init; } = MenuAccess.MenuList.First();
+
+        protected override Element render()
+        {
+            return new Tooltip
+            {
+                classes = { { "tooltip", new() { Background(Theme.common_background), Padding(0), BorderRadius } } },
+                title = new FlexColumn(BorderRadius, Border(Solid(1, Theme.grey_200)), Width(400), BoxShadow("rgba(170, 180, 190, 0.3) 0px 4px 20px"))
+                {
+                    Model.Children.ToListOf(x => new TooltipRowView { Model = x })
+                },
+                children =
+                {
+                    new div
+                    {
+                        Text(Model.Title),
+                        Padding(10),
+                        Hover(Background(Theme.grey_50), Border(1, solid, Gray200)),
+                        BorderRadius,
+                        FontSize14,
+                        FontWeight700,
+                        CursorDefault
+                    }
+                }
             };
         }
     }
