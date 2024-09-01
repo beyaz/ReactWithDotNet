@@ -2943,6 +2943,235 @@ public sealed class rect : HtmlElement
 
 }
 
+public sealed class marker : HtmlElement
+{
+    #region string id
+    PropertyValueNode<string> _id;
+    static readonly PropertyValueDefinition _id_ = new()
+    {
+        name = nameof(id)
+    };
+    /// <summary>
+    ///     Defines a unique identifier (ID) for the marker element.
+    /// </summary>
+    public string id
+    {
+        get => _id?.value;
+        set => SetValue(_id_, ref _id, value);
+    }
+    #endregion
+
+
+    #region string markerHeight
+    PropertyValueNode<UnionProp<string,double>> _markerHeight;
+    static readonly PropertyValueDefinition _markerHeight_ = new()
+    {
+        name = nameof(markerHeight)
+    };
+    /// <summary>
+    ///     Specifies the height of the marker viewport.
+    /// </summary>
+    public UnionProp<string,double> markerHeight
+    {
+        get => _markerHeight?.value;
+        set => SetValue(_markerHeight_, ref _markerHeight, value);
+    }
+    #endregion
+
+
+    #region string markerUnits
+    PropertyValueNode<string> _markerUnits;
+    static readonly PropertyValueDefinition _markerUnits_ = new()
+    {
+        name = nameof(markerUnits)
+    };
+    /// <summary>
+    ///     Specifies the coordinate system for the marker width and height. Possible values are 'strokeWidth' or 'userSpaceOnUse'.
+    /// </summary>
+    public string markerUnits
+    {
+        get => _markerUnits?.value;
+        set => SetValue(_markerUnits_, ref _markerUnits, value);
+    }
+    #endregion
+
+
+    #region string markerWidth
+    PropertyValueNode<UnionProp<string,double>> _markerWidth;
+    static readonly PropertyValueDefinition _markerWidth_ = new()
+    {
+        name = nameof(markerWidth)
+    };
+    /// <summary>
+    ///     Specifies the width of the marker viewport.
+    /// </summary>
+    public UnionProp<string,double> markerWidth
+    {
+        get => _markerWidth?.value;
+        set => SetValue(_markerWidth_, ref _markerWidth, value);
+    }
+    #endregion
+
+
+    #region string orient
+    PropertyValueNode<string> _orient;
+    static readonly PropertyValueDefinition _orient_ = new()
+    {
+        name = nameof(orient)
+    };
+    /// <summary>
+    ///     Defines the rotation angle for the marker, in degrees. Accepts 'auto', 'auto-start-reverse', or a specific angle.
+    /// </summary>
+    public string orient
+    {
+        get => _orient?.value;
+        set => SetValue(_orient_, ref _orient, value);
+    }
+    #endregion
+
+
+    #region string preserveAspectRatio
+    PropertyValueNode<string> _preserveAspectRatio;
+    static readonly PropertyValueDefinition _preserveAspectRatio_ = new()
+    {
+        name = nameof(preserveAspectRatio)
+    };
+    /// <summary>
+    ///     Indicates how the marker should scale its dimensions.
+    /// </summary>
+    public string preserveAspectRatio
+    {
+        get => _preserveAspectRatio?.value;
+        set => SetValue(_preserveAspectRatio_, ref _preserveAspectRatio, value);
+    }
+    #endregion
+
+
+    #region string refX
+    PropertyValueNode<UnionProp<string,double>> _refX;
+    static readonly PropertyValueDefinition _refX_ = new()
+    {
+        name = nameof(refX)
+    };
+    /// <summary>
+    ///     Defines the x-coordinate in the marker’s coordinate system.
+    /// </summary>
+    public UnionProp<string,double> refX
+    {
+        get => _refX?.value;
+        set => SetValue(_refX_, ref _refX, value);
+    }
+    #endregion
+
+
+    #region string refY
+    PropertyValueNode<UnionProp<string,double>> _refY;
+    static readonly PropertyValueDefinition _refY_ = new()
+    {
+        name = nameof(refY)
+    };
+    /// <summary>
+    ///     Defines the y-coordinate in the marker’s coordinate system.
+    /// </summary>
+    public UnionProp<string,double> refY
+    {
+        get => _refY?.value;
+        set => SetValue(_refY_, ref _refY, value);
+    }
+    #endregion
+
+
+    #region string viewBox
+    PropertyValueNode<string> _viewBox;
+    static readonly PropertyValueDefinition _viewBox_ = new()
+    {
+        name = nameof(viewBox)
+    };
+    /// <summary>
+    ///     Specifies the position and dimension of the marker’s viewport.
+    /// </summary>
+    public string viewBox
+    {
+        get => _viewBox?.value;
+        set => SetValue(_viewBox_, ref _viewBox, value);
+    }
+    #endregion
+
+
+    public marker() { }
+
+    public marker(params Modifier[] modifiers) : base(modifiers) { }
+
+    public marker(Style style) : base(style) { }
+
+    public marker(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<marker> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     id = <paramref name="value"/>
+    /// <br/>
+    ///     Defines a unique identifier (ID) for the marker element.
+    /// </summary>
+    public static HtmlElementModifier Id(string value) => Modify(x => x.id = value);
+
+    /// <summary>
+    ///     markerHeight = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the height of the marker viewport.
+    /// </summary>
+    public static HtmlElementModifier MarkerHeight(UnionProp<string,double> value) => Modify(x => x.markerHeight = value);
+
+    /// <summary>
+    ///     markerUnits = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the coordinate system for the marker width and height. Possible values are 'strokeWidth' or 'userSpaceOnUse'.
+    /// </summary>
+    public static HtmlElementModifier MarkerUnits(string value) => Modify(x => x.markerUnits = value);
+
+    /// <summary>
+    ///     markerWidth = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the width of the marker viewport.
+    /// </summary>
+    public static HtmlElementModifier MarkerWidth(UnionProp<string,double> value) => Modify(x => x.markerWidth = value);
+
+    /// <summary>
+    ///     orient = <paramref name="value"/>
+    /// <br/>
+    ///     Defines the rotation angle for the marker, in degrees. Accepts 'auto', 'auto-start-reverse', or a specific angle.
+    /// </summary>
+    public static HtmlElementModifier Orient(string value) => Modify(x => x.orient = value);
+
+    /// <summary>
+    ///     preserveAspectRatio = <paramref name="value"/>
+    /// <br/>
+    ///     Indicates how the marker should scale its dimensions.
+    /// </summary>
+    public static HtmlElementModifier PreserveAspectRatio(string value) => Modify(x => x.preserveAspectRatio = value);
+
+    /// <summary>
+    ///     refX = <paramref name="value"/>
+    /// <br/>
+    ///     Defines the x-coordinate in the marker’s coordinate system.
+    /// </summary>
+    public static HtmlElementModifier RefX(UnionProp<string,double> value) => Modify(x => x.refX = value);
+
+    /// <summary>
+    ///     refY = <paramref name="value"/>
+    /// <br/>
+    ///     Defines the y-coordinate in the marker’s coordinate system.
+    /// </summary>
+    public static HtmlElementModifier RefY(UnionProp<string,double> value) => Modify(x => x.refY = value);
+
+    /// <summary>
+    ///     viewBox = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the position and dimension of the marker’s viewport.
+    /// </summary>
+    public static HtmlElementModifier ViewBox(string value) => Modify(x => x.viewBox = value);
+
+}
+
 public sealed class radialGradient : HtmlElement
 {
     #region string cx
