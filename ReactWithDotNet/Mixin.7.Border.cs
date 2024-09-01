@@ -171,6 +171,9 @@ partial class Mixin
     public static StyleModifier BoxShadow(double offsetX, double offsetY, double blurRadius, string color)
         => BoxShadow($"{offsetX.AsPixel()} {offsetY.AsPixel()} {blurRadius.AsPixel()} {color}");
     
+    public static StyleModifier BoxShadow(string color, double offsetX, double offsetY, double blurRadius)
+        => BoxShadow($"{color} {offsetX.AsPixel()} {offsetY.AsPixel()} {blurRadius.AsPixel()}");
+    
     /// <summary>
     ///     style.boxShadow = <strong>none</strong>
     /// </summary>
