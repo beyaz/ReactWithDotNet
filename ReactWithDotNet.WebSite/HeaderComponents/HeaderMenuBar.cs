@@ -60,7 +60,7 @@ sealed class HeaderMenuBar : PureComponent
                     Border(Solid(1, Theme.grey_50)),
                     BorderRadius,
                     Padding(7),
-                    Transition("background-color", 200, cubic_bezier(0.4, 0, 0.2, 1), 0),
+                    Transition(BackgroundColor, 200, cubic_bezier(0.4, 0, 0.2, 1), 0),
                     Hover(Border(Solid(1, Theme.grey_300)), Background(Theme.grey_50)),
 
                     new Tooltip

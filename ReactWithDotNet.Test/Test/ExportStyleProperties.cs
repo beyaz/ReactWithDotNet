@@ -129,45 +129,7 @@ public class ExportStyleProperties
 
             return styleKey;
         }
-        static string ConvertCamelCaseToKebapCase(string input)
-        {
-            if (string.IsNullOrEmpty(input))
-            {
-                return input;
-            }
-
-            var resultBuilder = new StringBuilder();
-            bool lastCharWasUpper = false;
-
-            foreach (char c in input.AsSpan())
-            {
-                if (char.IsUpper(c))
-                {
-                    if (!lastCharWasUpper)
-                    {
-                        if (resultBuilder.Length > 0)
-                        {
-                            resultBuilder.Append('-');
-                        }
-
-                        resultBuilder.Append(char.ToLower(c));
-                    }
-                    else
-                    {
-                        resultBuilder.Append(c);
-                    }
-
-                    lastCharWasUpper = true;
-                }
-                else
-                {
-                    resultBuilder.Append(c);
-                    lastCharWasUpper = false;
-                }
-            }
-
-            return resultBuilder.ToString();
-        }
+        
     }
 
     static IReadOnlyList<string> GetPropertyNamesOfStyleClass()
