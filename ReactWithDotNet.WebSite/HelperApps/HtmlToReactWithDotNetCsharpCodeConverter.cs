@@ -163,6 +163,21 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return x.EndsWith("px", StringComparison.OrdinalIgnoreCase);
     }
 
+    static bool IsGlobalDeclaredStringVariable(string value)
+    {
+        if (value == none ||
+            value == auto ||
+            value == inset ||
+            value == inherit ||
+            value == transparent ||
+            value == solid)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     static IReadOnlyList<HtmlAttribute> RemoveAll(this HtmlAttributeCollection htmlAttributeCollection, Func<HtmlAttribute, bool> match)
     {
         var items = htmlAttributeCollection.Where(match).ToList();
@@ -260,7 +275,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
     static List<string> ToCSharpCode(HtmlNode htmlNode, bool smartMode, int maxAttributeCountPerLine)
     {
         // ignore smart mode for specific case beautiful code format
-        var smartModeIgnoredTags = new List<string> { "rect", "path", "circle","line" };
+        var smartModeIgnoredTags = new List<string> { "rect", "path", "circle", "line" };
         if (htmlNode.ChildNodes.Count == 0 && smartModeIgnoredTags.Any(tag => htmlNode.Name.Equals(tag, StringComparison.OrdinalIgnoreCase)))
         {
             smartMode = false;
@@ -344,7 +359,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             modifiers.AddRange(htmlNode.Attributes.RemoveAll(isDataAttribute).Select(toDataModifier).Select(ModifierCode.FromString));
         }
-        
+
         // remove svg.xmlns
         {
             if (htmlNode.Name == "svg")
@@ -688,6 +703,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         {
                             return kv.Key + " = " + kv.Value + ",";
                         }
+
                         return kv.Key + " = \"" + kv.Value + "\",";
                     }
                 }
@@ -722,7 +738,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     {
                         return [$"{propertyInfo.Name} = {attribute.Value}"];
                     }
-                    
+
                     return [$"{propertyInfo.Name} = \"{attribute.Value}\""];
                 }
 
@@ -929,16 +945,17 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             return success($"iframe.Src({value})");
         }
-        
+
         if (tagName == "svg" && name.Equals("size", StringComparison.OrdinalIgnoreCase) && double.TryParse(value, out _))
         {
             return success($"svg.Size({value})");
         }
-        
+
         if (tagName == "symbol" && name.Equals("viewBox", StringComparison.OrdinalIgnoreCase))
         {
             return success($"symbol.ViewBox(\"{value}\")");
         }
+
         if (tagName == "source" && name.Equals("src", StringComparison.OrdinalIgnoreCase))
         {
             return success($"source.Src(\"{value}\")");
@@ -1014,7 +1031,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     return success($"{tagName}.{UpperCaseFirstChar(propertyInfo.Name)}({valueAsInt32})");
                 }
             }
-            
+
             return success($"{tagName}.{UpperCaseFirstChar(propertyInfo.Name)}(\"{value}\")");
         }
 
@@ -1141,8 +1158,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 return success($"Flex({parameters[0]}, {parameters[1]}, {parameters[2]})");
             }
-            
-            if (parameters.Count == 3 &&  double.TryParse(parameters[0],out _) && double.TryParse(parameters[1],out _)  && parameters[2] == "auto")
+
+            if (parameters.Count == 3 && double.TryParse(parameters[0], out _) && double.TryParse(parameters[1], out _) && parameters[2] == "auto")
             {
                 return success($"Flex({parameters[0]}, {parameters[1]}, {parameters[2]})");
             }
@@ -1173,12 +1190,13 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 return success($"{CamelCase(name)}({value})");
             }
-            
+
             if (typeof(Mixin).GetMethod(CamelCase(name), [typeof(int)]) is not null &&
                 int.TryParse(value, out _))
             {
                 return success($"{CamelCase(name)}({value})");
             }
+
             // todo: lineHeight fixme
             if (typeof(Mixin).GetMethod(CamelCase(name), [typeof(double)]) is not null &&
                 double.TryParse(value, out _))
@@ -1223,21 +1241,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         }
     }
 
-    static bool IsGlobalDeclaredStringVariable(string value)
-    {
-        if (value == none ||
-            value == auto ||
-            value == inset ||
-            value == inherit ||
-            value == transparent ||
-            value == solid)
-        {
-            return true;
-        }
-        
-        return false;
-    }
-
     static PropertyInfo TryFindProperty(string htmlTagName, string attributeName)
     {
         var propertyName = string.Join(string.Empty, attributeName.Split(":-".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()));
@@ -1252,8 +1255,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
     sealed class ModifierCode
     {
-        public string Code { get; init; }
-        public bool Success { get; init; }
+        public string Code { get; private init; }
+        public bool Success { get; private init; }
 
         public static ModifierCode From((bool success, string modifierCode) tuple)
         {
