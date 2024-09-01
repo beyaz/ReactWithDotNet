@@ -1,17 +1,9 @@
-﻿namespace ReactWithDotNet.WebSite.Content;
+﻿using ReactWithDotNet.WebSite.Pages;
 
-public class Menu
-{
-    public string Title { get; set; }
-    public IReadOnlyList<MenuItem> Children { get; set; }
-}
-public class MenuItem
-{
-    public string Title { get; set; }
-    public string Description { get; set; }
-    public string PageName { get; set; }
-    public string SvgFileName { get; set; } = "doc.svg";
-}
+namespace ReactWithDotNet.WebSite.Content;
+
+
+
 
 public class SocialMediaLink
 {
@@ -38,9 +30,5 @@ public class RawCard
 
 public class SiteRawData
 {
-    public string SiteName { get; set; }
-    public IReadOnlyList<Menu> MenuList { get; set; }
-    public IReadOnlyList<SocialMediaLink> SocialMediaLinks { get; set; }
-    public IReadOnlyList<RawCard> Cards { get; set; }
-    public IReadOnlyList<YoutubeLink> YoutubeLinks { get; set; }
+
 }

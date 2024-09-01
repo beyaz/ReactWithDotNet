@@ -3,7 +3,6 @@ using ReactWithDotNet.WebSite.Content;
 
 namespace ReactWithDotNet.WebSite.HeaderComponents;
 
-
 class HeaderMenuBar : PureComponent
 {
     static StyleModifier BorderRadius => BorderRadius(10);
@@ -74,7 +73,7 @@ class HeaderMenuBar : PureComponent
                 SpaceX(16),
                 new nav(DisplayFlex, AlignItemsCenter, WhenMediaSizeLessThan(MD,DisplayNone))
                 {
-                    RawData.MenuList.Select(AsTooltip)
+                    MenuAccess.MenuList.Select(AsTooltip)
                 }
             },
 

@@ -28,7 +28,7 @@ class MobileMenu : Component
                 Padding(20),
                 Zindex(5),
 
-                RawData.MenuList.Select(m => new MenuView
+                MenuAccess.MenuList.Select(m => new MenuView
                 {
                     (MenuView ui) => ui.Model = m,
 
