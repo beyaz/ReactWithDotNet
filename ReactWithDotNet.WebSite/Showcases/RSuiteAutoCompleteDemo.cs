@@ -1,48 +1,56 @@
-﻿
-
-using ReactWithDotNet.ThirdPartyLibraries.ReactSuite;
+﻿using ReactWithDotNet.ThirdPartyLibraries.ReactSuite;
 
 namespace ReactWithDotNet.WebSite.Showcases;
 
-public class RSuiteAutoCompleteDemo : Component
+sealed class RSuiteAutoCompleteDemo : Component<RSuiteAutoCompleteDemo.State>
 {
-    public string SelectedValue { get; set; }
-    
     protected override Element render()
     {
+        string[] dataSource =
+        [
+            "Eugenia",
+            "Bryan",
+            "Linda",
+            "Nancy",
+            "Lloyd",
+            "Alice",
+            "Julia",
+            "Albert",
+            "Louisa",
+            "Lester",
+            "Lola",
+            "Lydia",
+            "Hal",
+            "Hannah",
+            "Harriet",
+            "Hattie",
+            "Hazel",
+            "Hilda"
+        ];
+
         return new div(SizeFull)
         {
             new AutoComplete<string>
             {
-                onChange = e => Task.FromResult(SelectedValue = e),
-
-                placeholder = "Search in names",
-                data = new[]
+                onChange = e =>
                 {
-                    "Eugenia",
-                    "Bryan",
-                    "Linda",
-                    "Nancy",
-                    "Lloyd",
-                    "Alice",
-                    "Julia",
-                    "Albert",
-                    "Louisa",
-                    "Lester",
-                    "Lola",
-                    "Lydia",
-                    "Hal",
-                    "Hannah",
-                    "Harriet",
-                    "Hattie",
-                    "Hazel",
-                    "Hilda"
+                    state = state with { SelectedValue = e };
+
+                    return Task.CompletedTask;
                 },
 
-                style = { width = "224px" }
+                placeholder = "Search in names",
+
+                data = dataSource,
+
+                style = { Width(250) }
             },
-            new div(SelectedValue)
+            new div { state.SelectedValue }
         };
     }
-}
 
+    internal record State
+    {
+        public string SelectedValue { get; init; }
+    }
+}

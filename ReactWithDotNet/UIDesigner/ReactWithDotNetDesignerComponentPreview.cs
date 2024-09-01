@@ -224,10 +224,10 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
         {
             if (exception is JsonException)
             {
-                return new div(exception.Message);
+                return new pre { exception.Message };
             }
 
-            return new div(exception.ToString());
+            return new pre { exception.ToString() };
         }
 
         return "Element not created. Select type or method from left panel";
