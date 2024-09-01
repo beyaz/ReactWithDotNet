@@ -32,7 +32,7 @@ public class ExportStyleProperties
         {
             var propertyName = getPropertyName(name);
             
-            list.Add($"{indent}{indent}public static readonly StyleAttributeNameInfo {propertyName} = new (\"{propertyName.RemoveFromStart("@")}\", \"{ArrangeWebKit(ConvertCamelCaseToSnakeCase(propertyName.RemoveFromStart("@")))}\");");
+            list.Add($"{indent}{indent}public static readonly StyleAttributeNameInfo {propertyName} = new (\"{propertyName.RemoveFromStart("@")}\", \"{ArrangeWebKit(ConvertCamelCaseToKebapCase(propertyName.RemoveFromStart("@")))}\");");
         }
         
         list.Add($"{indent}{indent}public static readonly StyleAttributeNameInfo[] AllNames = ");
@@ -129,7 +129,7 @@ public class ExportStyleProperties
 
             return styleKey;
         }
-        static string ConvertCamelCaseToSnakeCase(string input)
+        static string ConvertCamelCaseToKebapCase(string input)
         {
             if (string.IsNullOrEmpty(input))
             {
