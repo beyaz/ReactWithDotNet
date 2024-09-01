@@ -27,15 +27,6 @@
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0-4.final" />
     </ItemGroup>
 
-    <ItemGroup>
-      <None Update="Content\SiteRawData.yml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Content\tr\6.html">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-
 
     <PropertyGroup>
         <LangVersion>preview</LangVersion>

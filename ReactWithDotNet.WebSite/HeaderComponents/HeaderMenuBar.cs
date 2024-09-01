@@ -1,5 +1,4 @@
 ﻿using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
-using ReactWithDotNet.WebSite.Content;
 
 namespace ReactWithDotNet.WebSite.HeaderComponents;
 

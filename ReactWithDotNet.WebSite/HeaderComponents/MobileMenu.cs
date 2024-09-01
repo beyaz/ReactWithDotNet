@@ -1,6 +1,4 @@
-﻿using ReactWithDotNet.WebSite.Content;
-
-namespace ReactWithDotNet.WebSite.HeaderComponents;
+﻿namespace ReactWithDotNet.WebSite.HeaderComponents;
 
 class MobileMenu : Component
 {

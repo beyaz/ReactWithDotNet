@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using Microsoft.AspNetCore.Http;
-using ReactWithDotNet.WebSite.Content;
 
 namespace ReactWithDotNet.WebSite;
 
@@ -21,16 +20,9 @@ static partial class Extensions
     public static StyleModifier DisplayNoneWhenMobile => WhenMediaSizeLessThan(MD,DisplayNone);
     public static StyleModifier DisplayNoneWhenNotMobile => MD(DisplayNone);
     
-    internal static SiteRawData RawData => ReadContent<SiteRawData>("SiteRawData");
 
    
 
-    public static T ReadContent<T>(string fileName)
-    {
-        var path = Path.Combine("Content", $"{fileName}.yml");
-
-        return YamlHelper.DeserializeFromYaml<T>(File.ReadAllText(path));
-    }
 
     
     
