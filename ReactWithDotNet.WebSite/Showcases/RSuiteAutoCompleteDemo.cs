@@ -45,7 +45,7 @@ sealed class RSuiteAutoCompleteDemo : Component<RSuiteAutoCompleteDemo.State>
 
                 style = { Width(250) }
             },
-            new div { state.SelectedValue }
+            new div { $"Hello {state.SelectedValue}" }
         };
     }
 

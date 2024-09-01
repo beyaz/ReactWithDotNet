@@ -30,8 +30,8 @@ sealed class MonacoEditorDemo : Component<MonacoEditorDemo.State>
             new link { href = "https://fonts.cdnfonts.com/css/ibm-plex-mono-3", rel = "stylesheet" },
             new Editor
             {
-                width           = "640px",
-                height          = "360px",
+                width           = "300px",
+                height          = "350px",
                 defaultLanguage = "json",
 
                 valueBind                = () => state.Content,
