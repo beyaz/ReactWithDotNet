@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ReactWithDotNet.WebSite.HeaderComponents;
+﻿namespace ReactWithDotNet.WebSite.HeaderComponents;
 
 sealed class MainPageHeader : PureComponent
 {
