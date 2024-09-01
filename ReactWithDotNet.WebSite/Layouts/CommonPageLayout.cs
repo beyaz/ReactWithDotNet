@@ -8,7 +8,7 @@ sealed class CommonPageLayout: Component
         {
             new FlexRowCentered(WidthFull)
             {
-                new FlexColumn(ContainerStyle, PaddingY(48))
+                new FlexColumn(ContainerStyle)
                 {
                     children
                 }
