@@ -1,26 +1,20 @@
-﻿namespace ReactWithDotNet.WebSite.HeaderComponents;
+﻿using static ReactWithDotNet.WebSite.HeaderComponents.MobileMenu;
 
-sealed class MobileMenu : Component
+namespace ReactWithDotNet.WebSite.HeaderComponents;
+
+sealed class MobileMenu : Component<MobileMenuState>
 {
-    public bool IsOpen { get; set; }
-
-    Task Clicked(MouseEvent _)
-    {
-        IsOpen = !IsOpen;
-        
-        return Task.CompletedTask; 
-    }
     protected override Element render()
     {
         return new div
         {
-            new HamburgerButton { IsOpen = IsOpen, Click = Clicked } + MD(DisplayNone),
+            new HamburgerButton { IsOpen = state.IsOpen, Click = ToggleIsOpen } + MD(DisplayNone),
 
             new FlexColumn(PositionFixed, Top(60), LeftRight(0), DisplayNoneWhenNotMobile, BoxShadow(rgba(170, 180, 190, 0.3), 0, 4, 20))
             {
-                AnimateHeightAndOpacity(IsOpen),
+                AnimateHeightAndOpacity(state.IsOpen),
 
-                When(IsOpen, MinHeight(20)),
+                When(state.IsOpen, MinHeight(20)),
                 BackgroundForPaper,
                 Padding(20),
                 Zindex(5),
@@ -55,17 +49,17 @@ sealed class MobileMenu : Component
                    : VisibilityCollapse + Opacity0 + Height0);
     }
 
+    Task ToggleIsOpen(MouseEvent _)
+    {
+        state = state with { IsOpen = !state.IsOpen };
+
+        return Task.CompletedTask;
+    }
+
     sealed class MenuView : Component<MenuView.State>
     {
         public Menu Model { get; init; }
 
-        
-        Task Clicked(MouseEvent _)
-        {
-            state = state with { IsOpen = !state.IsOpen };
-        
-            return Task.CompletedTask; 
-        }
         protected override Element render()
         {
             return new div(Padding(10))
@@ -73,7 +67,7 @@ sealed class MobileMenu : Component
                 new FlexRow(AlignItemsCenter, PaddingBottom(10))
                 {
                     new span { Model.Title, FontSize14, FontWeight600, Color(Theme.text_secondary) },
-                    new ArrowUpDownIcon { IsArrowUp = state.IsOpen } + OnClick(Clicked)
+                    new ArrowUpDownIcon { IsArrowUp = state.IsOpen } + OnClick(ToggleIsOpen)
                 },
                 new FlexColumn(JustifyContentSpaceEvenly, BorderLeft(Solid(1, Theme.grey_100)), PaddingLeft(10))
                 {
@@ -83,9 +77,21 @@ sealed class MobileMenu : Component
             };
         }
 
+        Task ToggleIsOpen(MouseEvent _)
+        {
+            state = state with { IsOpen = !state.IsOpen };
+
+            return Task.CompletedTask;
+        }
+
         internal sealed record State
         {
             public bool IsOpen { get; init; }
         }
+    }
+
+    internal record MobileMenuState
+    {
+        public bool IsOpen { get; init; }
     }
 }
