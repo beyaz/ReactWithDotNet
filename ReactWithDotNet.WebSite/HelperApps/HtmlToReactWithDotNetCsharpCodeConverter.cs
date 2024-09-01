@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using System.Text;
 using HtmlAgilityPack;
-using YamlDotNet.Core.Tokens;
 using PropertyInfo = System.Reflection.PropertyInfo;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
@@ -284,15 +283,15 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             if (htmlNode.InnerText == "&nbsp;")
             {
-                return new() { "nbsp" };
+                return ["nbsp"];
             }
 
-            return new() { ConvertToCSharpString(htmlNode.InnerText) };
+            return [ConvertToCSharpString(htmlNode.InnerText)];
         }
 
         if (htmlNodeName == "br")
         {
-            return new() { "br" };
+            return ["br"];
         }
 
         Style style = null;
@@ -666,7 +665,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                             return [string.Join(", ", style.ToDictionary().Select(p => TryConvertToModifier_From_Mixin_Extension(p.Key, p.Value)).Where(x => x.success).Select(x => x.modifierCode))];
                         }
 
-                        return new() { $"style = {{ {string.Join(", ", style.ToDictionary().Select(kv => kv.Key + " = \"" + kv.Value + "\""))} }}" };
+                        return [$"style = {{ {string.Join(", ", style.ToDictionary().Select(kv => kv.Key + " = \"" + kv.Value + "\""))} }}"];
                     }
 
                     var returnList = new List<string>
@@ -753,10 +752,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 if (modifiers.Count == 0 && htmlNode.Attributes.Count == 0)
                 {
                     sb.Append("()");
-                    return new()
-                    {
-                        sb.ToString()
-                    };
+                    return [sb.ToString()];
                 }
 
                 if (modifiers.Count > 0)
@@ -773,10 +769,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     sb.Append(" }");
                 }
 
-                return new()
-                {
-                    sb.ToString()
-                };
+                return [sb.ToString()];
             }
 
             // multiline
@@ -871,17 +864,16 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             if (htmlNode.Attributes.Count == 0 && style is null)
             {
-                return new() { $"({htmlNodeName})" + ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText) };
+                return [$"({htmlNodeName})" + ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText)];
             }
 
-            return new()
-            {
-                // one line
+            return
+            [
                 $"new {htmlNodeName}({JoinModifiers(modifiers)})",
                 "{",
                 ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText),
                 "}"
-            };
+            ];
         }
 
         // multi line
@@ -1258,7 +1250,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return typeof(div).Assembly.GetType(nameof(ReactWithDotNet) + "." + htmlTagName, false, true);
     }
 
-    class ModifierCode
+    sealed class ModifierCode
     {
         public string Code { get; init; }
         public bool Success { get; init; }
