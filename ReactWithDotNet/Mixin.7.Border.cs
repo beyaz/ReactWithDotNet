@@ -156,6 +156,11 @@ partial class Mixin
     });
 
   
+    public static StyleModifier BoxShadow( string type, double offsetX, double offsetY, double blurRadius, double spreadRadius, string color)
+        => BoxShadow($"{type} {offsetX.AsPixel()} {offsetY.AsPixel()} {blurRadius.AsPixel()} {spreadRadius.AsPixel()} {color}");
+    
+    public static StyleModifier BoxShadow(double offsetX, double offsetY, double blurRadius, double spreadRadius, string color, string type)
+        => BoxShadow($"{offsetX.AsPixel()} {offsetY.AsPixel()} {blurRadius.AsPixel()} {spreadRadius.AsPixel()} {color} {type}");
 
     public static StyleModifier BoxShadow(double offsetX, double offsetY, double blurRadius, double spreadRadius, string color)
         => BoxShadow($"{offsetX.AsPixel()} {offsetY.AsPixel()} {blurRadius.AsPixel()} {spreadRadius.AsPixel()} {color}");

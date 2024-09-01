@@ -113,6 +113,7 @@ partial class Mixin
 
     public static readonly string inherit = "inherit";
     public static readonly string none = "none";
+    public static readonly string inset = "inset";
     public static readonly string auto = "auto";
     public static readonly string solid = "solid";
     public static readonly string transparent = "transparent";
