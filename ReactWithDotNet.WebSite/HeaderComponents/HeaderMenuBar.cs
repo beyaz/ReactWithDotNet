@@ -33,7 +33,7 @@ sealed class HeaderMenuBar : PureComponent
             classes = { { "tooltip", new() { Background(Theme.common_background), Padding(0), BorderRadius } } },
             title = new FlexColumn(BorderRadius, Border(Solid(1, Theme.grey_200)), Width(400), BoxShadow("rgba(170, 180, 190, 0.3) 0px 4px 20px"))
             {
-                m.Children.ToListOf(AsTooltipRow)
+                m.Children.ToListOf(x=>new TooltipRowView{ model = x})
             },
             children =
             {
@@ -50,33 +50,41 @@ sealed class HeaderMenuBar : PureComponent
             }
         };
     }
+    
+    
 
-    Element AsTooltipRow(MenuItem model)
+    sealed class TooltipRowView : PureComponent
     {
-        return new a(PaddingTopBottom(20), BorderRadius, PaddingLeft(20), PaddingRight(30), TextDecorationNone, CursorDefault)
+        public MenuItem model { get; init; }
+        
+        protected override Element render()
         {
-            GetPageLink(model.PageName),
-
-            LetterSpacingNormal,
-            BackgroundForPaper,
-            Hover(Background(Theme.grey_50)),
-
-            new FlexRow(AlignItemsCenter, Gap(20), BorderRadius)
+            return new a(PaddingTopBottom(20), BorderRadius, PaddingLeft(20), PaddingRight(30), TextDecorationNone, CursorDefault)
             {
-                new img { Src(Asset(model.SvgFileName)), Size(36) },
-                new FlexColumn
-                {
-                    FontFamily_IBM_Plex_Sans,
-                    LineHeight21,
-                    FontSize14,
-                    Color(Theme.text_primary),
+                GetPageLink(model.PageName),
 
-                    new div(FontWeight600) { model.Title },
-                    new div(FontWeight400) { model.Description }
+                LetterSpacingNormal,
+                BackgroundForPaper,
+                Hover(Background(Gray50)),
+
+                new FlexRow(AlignItemsCenter, Gap(20), BorderRadius)
+                {
+                    new img { Src(Asset(model.SvgFileName)), Size(36) },
+                    new FlexColumn
+                    {
+                        FontFamily_IBM_Plex_Sans,
+                        LineHeight21,
+                        FontSize14,
+                        Color(text_primary),
+
+                        new div(FontWeight600) { model.Title },
+                        new div(FontWeight400) { model.Description }
+                    }
                 }
-            }
-        };
+            };
+        }
     }
+    
 
     sealed class SocialMediaLinks : PureComponent
     {
