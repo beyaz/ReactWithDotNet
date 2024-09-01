@@ -13,10 +13,10 @@ sealed class HeaderMenuBar : PureComponent
             new FlexRow(AlignItemsCenter)
             {
                 new Logo(),
-                SpaceX(16),
+                SpaceX(24),
                 new nav(DisplayFlex, AlignItemsCenter, WhenMediaSizeLessThan(MD, DisplayNone))
                 {
-                    MenuAccess.MenuList.Select(AsTooltip)
+                    MenuAccess.MenuList.Select(x=>new TooltipView{m=x})
                 }
             },
 
@@ -26,36 +26,41 @@ sealed class HeaderMenuBar : PureComponent
         };
     }
 
-    Element AsTooltip(Menu m)
+ 
+    
+    sealed class TooltipView : PureComponent
     {
-        return new Tooltip
+        public Menu m { get; init; } = MenuAccess.MenuList.First();
+        
+        protected override Element render()
         {
-            classes = { { "tooltip", new() { Background(Theme.common_background), Padding(0), BorderRadius } } },
-            title = new FlexColumn(BorderRadius, Border(Solid(1, Theme.grey_200)), Width(400), BoxShadow("rgba(170, 180, 190, 0.3) 0px 4px 20px"))
+            return new Tooltip
             {
-                m.Children.ToListOf(x=>new TooltipRowView{ model = x})
-            },
-            children =
-            {
-                new div
+                classes = { { "tooltip", new() { Background(Theme.common_background), Padding(0), BorderRadius } } },
+                title = new FlexColumn(BorderRadius, Border(Solid(1, Theme.grey_200)), Width(400), BoxShadow("rgba(170, 180, 190, 0.3) 0px 4px 20px"))
                 {
-                    Text(m.Title),
-                    Padding(10),
-                    Hover(Background(Theme.grey_50), Border(1, solid, Gray200)),
-                    BorderRadius,
-                    FontSize14,
-                    FontWeight700,
-                    CursorDefault
+                    m.Children.ToListOf(x=>new TooltipRowView{ model = x})
+                },
+                children =
+                {
+                    new div
+                    {
+                        Text(m.Title),
+                        Padding(10),
+                        Hover(Background(Theme.grey_50), Border(1, solid, Gray200)),
+                        BorderRadius,
+                        FontSize14,
+                        FontWeight700,
+                        CursorDefault
+                    }
                 }
-            }
-        };
+            };
+        }
     }
-    
-    
 
     sealed class TooltipRowView : PureComponent
     {
-        public MenuItem model { get; init; }
+        public MenuItem model { get; init; } = MenuAccess.MenuList.First().Children.First();
         
         protected override Element render()
         {
