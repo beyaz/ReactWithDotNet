@@ -655,58 +655,52 @@ public class ExportingCommonHtmlElements
                     new ()
                     {
                         Name    = "id",
-                        Comment = "Defines a unique identifier (ID) for the marker element.",
-                        Type    = "string"
+                        Comment = "Defines a unique identifier (ID) for the marker element."
                     },
                     new ()
                     {
                         Name    = "markerHeight",
                         Comment = "Specifies the height of the marker viewport.",
-                        Type    = "length (string or number)"
+                        Type    = "UnionProp<string,double>"
                     },
                     new ()
                     {
                         Name    = "markerUnits",
-                        Comment = "Specifies the coordinate system for the marker width and height. Possible values are 'strokeWidth' or 'userSpaceOnUse'.",
-                        Type    = "string"
+                        Comment = "Specifies the coordinate system for the marker width and height. Possible values are 'strokeWidth' or 'userSpaceOnUse'."
                     },
                     new ()
                     {
                         Name    = "markerWidth",
                         Comment = "Specifies the width of the marker viewport.",
-                        Type    = "length (string or number)"
+                        Type    = "UnionProp<string,double>"
                     },
                     new ()
                     {
                         Name    = "orient",
-                        Comment = "Defines the rotation angle for the marker, in degrees. Accepts 'auto', 'auto-start-reverse', or a specific angle.",
-                        Type    = "string"
+                        Comment = "Defines the rotation angle for the marker, in degrees. Accepts 'auto', 'auto-start-reverse', or a specific angle."
                     },
                     new ()
                     {
                         Name    = "preserveAspectRatio",
-                        Comment = "Indicates how the marker should scale its dimensions.",
-                        Type    = "string"
+                        Comment = "Indicates how the marker should scale its dimensions."
                     },
                     new ()
                     {
                         Name    = "refX",
                         Comment = "Defines the x-coordinate in the marker’s coordinate system.",
-                        Type    = "length (string or number)"
+                        Type    = "UnionProp<string,double>"
                     },
                     new ()
                     {
                         Name    = "refY",
                         Comment = "Defines the y-coordinate in the marker’s coordinate system.",
-                        Type    = "length (string or number)"
+                        Type    = "UnionProp<string,double>"
                     },
                     new ()
                     {
                         Name    = "viewBox",
-                        Comment = "Specifies the position and dimension of the marker’s viewport.",
-                        Type    = "string"
+                        Comment = "Specifies the position and dimension of the marker’s viewport."
                     }
-
                 ],
                 EnableCastFromString = false
             },
