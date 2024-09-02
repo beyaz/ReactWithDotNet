@@ -22,7 +22,7 @@ class PageAboutUs : PureComponent
                 {
                     new HighlightedText
                     {
-                        Text = "Build better UIs by [c#] and [react]"
+                        Text = "Build better UI by [c#] and [react]"
                     }
                 },
                 
