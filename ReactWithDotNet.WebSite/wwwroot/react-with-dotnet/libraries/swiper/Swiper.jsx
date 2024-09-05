@@ -34,6 +34,7 @@ import 'swiper/css/effect-cube';
 import 'swiper/css/effect-flip';
 import 'swiper/css/effect-cards';
 import 'swiper/css/effect-creative';
+import 'swiper/css/grid';
 
 const ModuleMap = [
     ['Navigation', Navigation],
