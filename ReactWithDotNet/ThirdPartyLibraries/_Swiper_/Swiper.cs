@@ -173,6 +173,11 @@ public sealed class SwiperNavigationOption
 public sealed class SwiperGridOption
 {
     public double? rows { get; set; }
+    
+    /// <summary>
+    ///     Can be 'column' or 'row'. Defines how slides should fill rows, by column or by row
+    /// </summary>
+    public string fill { get; set; }
 }
 
 
