@@ -654,14 +654,18 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
     // Taken from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader
     class IconLoading : PureComponent
     {
+        public string Color { get; init; } = "#afafaf";
+        
         protected override Element render()
         {
             return new div
             {
                 new style
                 {
+                    
                     """
-                    .loader-designer-react-with-dot-net {
+                    .loader-designer-react-with-dot-net 
+                    {
                       
                       border-radius: 50%;
                       border-top: 1px solid #afafaf;
@@ -669,13 +673,16 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                       -webkit-animation: spin 1s linear infinite; /* Safari */
                       animation: spin 1s linear infinite;
                     }
-
+                    
+                    """,
+                    
+                    """
                     /* Safari */
                     @-webkit-keyframes spin {
                       0% { -webkit-transform: rotate(0deg); }
                       100% { -webkit-transform: rotate(360deg); }
                     }
-
+                    
                     @keyframes spin {
                       0% { transform: rotate(0deg); }
                       100% { transform: rotate(360deg); }
