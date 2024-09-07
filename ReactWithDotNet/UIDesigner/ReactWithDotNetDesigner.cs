@@ -292,21 +292,18 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                 new LoadingIcon() + Size(16)
             }:null,
 
-            new div
+            new div(PositionAbsolute, Top(0), state.PropertyPanelIsClosed ? MarginLeft(7) : Right(-8), Size(16), When(state.PropertyPanelIsClosed, PositionSticky))
             {
                 new IconLeft { Color = "#afafaf"} + (state.PropertyPanelIsClosed ? Rotate("180deg") : null),
+                
                 OnClick(state.PropertyPanelIsClosed ? OpenPropertyPanel : ClosePropertyPanel),
-                PositionAbsolute,
-                Top(0),
-                (state.PropertyPanelIsClosed ? MarginLeft(7) : Right(-8)),
+                
                 FontSize19,
                 FontWeight500,
                 Color("#c5d7e8"),
                 CursorDefault,
                 Hover(Color("#9090f2")),
-                When(state.PropertyPanelIsClosed, PositionSticky),
-
-                Size(16),
+                
                 When(UpdatingProgress is > 0 and <= 100, DisplayNone)
             },
 
