@@ -53,6 +53,18 @@ sealed class HotReloadListener : Component<HotReloadListener.State>
 
 public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 {
+    sealed class IconLeft : PureComponent
+    {
+        protected override Element render()
+        {
+            return new svg(ViewBox(0, 0, 50, 50), svg.Size(16))
+            {
+                new path { d = "M25 1C11.767 1 1 11.767 1 25s10.767 24 24 24 24-10.767 24-24S38.233 1 25 1zm0 46C12.869 47 3 37.131 3 25S12.869 3 25 3s22 9.869 22 22-9.869 22-22 22z" },
+                new path { d = "M29.293 10.293 14.586 25l14.707 14.707 1.414-1.414L17.414 25l13.293-13.293z" }
+            };
+        }
+    }
+    
     public static string UrlPath => "/$";
 
     public int UpdatingProgress { get; set; }
@@ -84,18 +96,12 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         state = state with { SelectedAssemblyFilePath = Assembly.GetEntryAssembly()?.Location };
 
         Client.ListenEvent("ComponentPreviewRefreshed", OnComponentPreviewRefreshed);
-        
-        Client.ListenEvent("RefreshComponentPreviewCompleted",OnRefreshComponentPreviewCompleted);
+
+        Client.ListenEvent("RefreshComponentPreviewCompleted", OnRefreshComponentPreviewCompleted);
 
         return Task.CompletedTask;
     }
 
-    Task OnRefreshComponentPreviewCompleted()
-    {
-        // refresh element tree
-        return Task.CompletedTask;
-    }
-    
     protected override Element render()
     {
         if (Preview)
@@ -305,7 +311,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
 
             When(state.PropertyPanelIsClosed, Width(15))
         };
-        
+
         var outputPanel = new FlexRow(JustifyContentFlexStart, PositionRelative)
         {
             BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
@@ -617,6 +623,12 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         return OnMediaSizeChanged();
     }
 
+    Task OnRefreshComponentPreviewCompleted()
+    {
+        // refresh element tree
+        return Task.CompletedTask;
+    }
+
     async Task OpenPropertyPanel(MouseEvent _)
     {
         state = state with { PropertyPanelIsClosed = false };
@@ -687,9 +699,4 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             };
         }
     }
-    
-    
-    
-   
-   
 }
