@@ -298,11 +298,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                 
                 OnClick(state.PropertyPanelIsClosed ? OpenPropertyPanel : ClosePropertyPanel),
                 
-                FontSize19,
-                FontWeight500,
-                Color("#c5d7e8"),
                 CursorDefault,
-                Hover(Color("#9090f2")),
                 
                 When(UpdatingProgress is > 0 and <= 100, DisplayNone)
             },
