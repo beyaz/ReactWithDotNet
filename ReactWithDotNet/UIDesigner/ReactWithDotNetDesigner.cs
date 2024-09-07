@@ -654,8 +654,6 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
     // Taken from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader
     class IconLoading : PureComponent
     {
-        public string Color { get; init; } = "#f3f3f3";
-        
         protected override Element render()
         {
             return new div
@@ -664,9 +662,9 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                 {
                     """
                     .loader-designer-react-with-dot-net {
-                      border: 1px solid #f3f3f3;
+                      
                       border-radius: 50%;
-                      border-top: 1px solid #c3beb7;
+                      border-top: 1px solid #afafaf;
                     
                       -webkit-animation: spin 1s linear infinite; /* Safari */
                       animation: spin 1s linear infinite;
