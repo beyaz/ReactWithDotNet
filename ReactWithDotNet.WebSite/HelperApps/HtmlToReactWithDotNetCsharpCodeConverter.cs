@@ -170,7 +170,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             value == inset ||
             value == inherit ||
             value == transparent ||
-            value == solid)
+            value == solid ||
+            value == dotted)
         {
             return true;
         }

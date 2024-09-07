@@ -275,7 +275,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             }
         };
 
-        var propertyPanel = new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative, Transition("width", 300, "ease-in"))
+        var propertyPanel = new div(BorderRight(1, dotted, "#d9d9d9"), Width(300), PositionRelative, Transition(Width, 300, "ease-in"))
         {
             When(UpdatingProgress is > 0 and <= 100, () => new div(PositionAbsolute, TopRight(4))
             {

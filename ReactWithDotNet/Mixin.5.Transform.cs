@@ -76,6 +76,13 @@ partial class Mixin
     /// </summary>
     public static StyleModifier Transition(string propertyName, double durationAsMilliseconds, string easingFunction)
         => Transition($"{propertyName} {durationAsMilliseconds}ms {easingFunction}");
+    
+    /// <summary>
+    ///     style.transition = {<paramref name="propertyName" />} {<paramref name="durationAsMilliseconds" />}ms {
+    ///     <paramref name="easingFunction" />}
+    /// </summary>
+    public static StyleModifier Transition(Func<string, StyleModifier> propertyName, double durationAsMilliseconds, string easingFunction)
+        => Transition(ConvertCamelCaseToKebapCase(propertyName.Method.Name), durationAsMilliseconds, easingFunction);
 
     /// <summary>
     ///     style.transition = {<paramref name="propertyName" />} {<paramref name="durationAsMilliseconds" />}ms {
