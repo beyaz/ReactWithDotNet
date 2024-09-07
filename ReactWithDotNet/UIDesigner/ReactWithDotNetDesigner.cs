@@ -273,7 +273,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         {
             new div(PositionAbsolute, Top(0), state.PropertyPanelIsClosed ? MarginLeft(7) : Right(-8), Size(16), When(state.PropertyPanelIsClosed, PositionSticky))
             {
-                UpdatingProgress is > 0 and <= 100 ? new IconLoading() + Size(16) + MarginTop(4) :
+                UpdatingProgress is > 0 and <= 100 ? new IconLoading() + Size(16) + MarginTop(3) :
                     new IconLeft { Color = "#afafaf" } + (state.PropertyPanelIsClosed ? Rotate("180deg") : null),
 
                 OnClick(state.PropertyPanelIsClosed ? OpenPropertyPanel : ClosePropertyPanel),
