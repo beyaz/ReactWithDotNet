@@ -6,26 +6,6 @@ namespace ReactWithDotNet;
 
 public static partial class Mixin
 {
-    /// <summary>
-    ///     style.backgroundColor = 'transparent'
-    /// </summary>
-    public static StyleModifier BackgroundColorTransparent =>
-        BackgroundColor("transparent");
-
-    /// <summary>
-    ///     style.background = 'transparent'
-    /// </summary>
-    public static StyleModifier BackgroundTransparent =>
-        Background("transparent");
-    
-    /// <summary>
-    ///     style.background = 'white'
-    /// </summary>
-    public static StyleModifier BackgroundWhite=>
-        Background("white");
-
-  
-
     public static StyleModifier BoxSizingBorderBox => new(style => style.boxSizing = "border-box");
 
     public static StyleModifier BoxSizingContentBox => new(style => style.boxSizing = "content-box");
@@ -366,11 +346,6 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier BackgroundClipText=>BackgroundClip("text");
 
-    public static readonly string Transparent = "transparent";
-
-    
-
-    
     
     /// <summary>
     /// The background-image property sets one or more background images for an element.

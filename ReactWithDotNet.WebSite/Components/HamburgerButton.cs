@@ -13,7 +13,7 @@ class HamburgerButton : Component
         return new button(DisplayFlexRowCentered, OnClick(Click))
         {
             Border(Solid(1,Theme.grey_300)),
-            BackgroundTransparent,
+            Background(transparent),
             BorderRadius(10),
 
             When(IsOpen,Background(Theme.grey_50)),

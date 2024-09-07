@@ -75,7 +75,7 @@ class HighlightedText : PureComponent
             style =
             {
                 PaddingLeftRight(3),
-                WebkitTextFillColor(Transparent),
+                WebkitTextFillColor(transparent),
                 Background(linear_gradientTo("right", Blue400, Blue600)),
                 BackgroundClipText,
                 WebkitBackgroundClipText

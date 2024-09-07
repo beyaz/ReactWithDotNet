@@ -101,7 +101,7 @@ sealed class PageFrequendlyAskedQuestions : PureComponent
 
         protected override Element render()
         {
-            return new FlexColumn(AlignItemsFlexStart, AlignSelfStretch, BackgroundWhite, Border(1, solid, Gray200), BorderRadius(8), Gap(16), JustifyContentFlexStart, Padding(20))
+            return new FlexColumn(AlignItemsFlexStart, AlignSelfStretch, Background(White), Border(1, solid, Gray200), BorderRadius(8), Gap(16), JustifyContentFlexStart, Padding(20))
             {
                 state.IsExpanded ? null : OnClick(ToggleCollapse),
 

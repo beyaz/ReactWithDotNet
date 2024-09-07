@@ -65,7 +65,7 @@ sealed class PageMilestones : PureComponent
     {
         protected override Element render()
         {
-            return new FlexColumn(Gap(4), Padding(32), BackgroundWhite, BorderRadius(8), Border(1, solid, Gray200), Hover(BorderColor(Gray300)))
+            return new FlexColumn(Gap(4), Padding(32), Background(White), BorderRadius(8), Border(1, solid, Gray200), Hover(BorderColor(Gray300)))
             {
                 children
             };

@@ -53,7 +53,7 @@ sealed class StyleSearchInput : Component
                     onKeyDown                = OnKeyDown,
                     style =
                     {
-                        BackgroundWhite,
+                        Background(White),
                         Border(Solid(0.1, "#bcc4e3")),
                         BorderRadius(3),
                         PaddingLeft(3),
