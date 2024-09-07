@@ -654,6 +654,8 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
     // Taken from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader
     class IconLoading : PureComponent
     {
+        public string Color { get; init; } = "#f3f3f3";
+        
         protected override Element render()
         {
             return new div
