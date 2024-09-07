@@ -114,7 +114,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                     style                    = { FontSize12, Padding(8), Border(Solid(1, "#ced4da")), Focus(OutlineNone), BorderRadius(3), Color("#495057") }
                 }
             },
-            new FlexColumn(MarginLeftRight(3), MarginTopBottom(3))
+            new FlexColumn(PaddingLeftRight(3), PaddingTopBottom(3))
             {
                 createLabel("Filter by method name"),
 
