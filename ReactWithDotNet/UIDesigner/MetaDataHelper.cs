@@ -33,13 +33,6 @@ static class MetadataHelper
         return returnMethodInfo;
     }
 
-    static MetadataNode AddChild(this MetadataNode node, MetadataNode child)
-    {
-        return node with { Children = node.Children.Add(child) };
-    }
-    
-    
-    
     public static IEnumerable<MetadataNode> GetMetadataNodes(string assemblyFilePath, string classFilter, string methodFilter)
     {
         return getNamespaceNodes(GetAllTypes(LoadAssembly(assemblyFilePath), classFilter));
@@ -64,7 +57,7 @@ static class MetadataHelper
                         NamespaceReference = namespaceName,
                         IsNamespace        = true,
                         label              = namespaceName,
-                        Children = classNodes.ToImmutableList()
+                        Children           = classNodes.ToImmutableList()
                     });
                 }
             }
@@ -76,7 +69,14 @@ static class MetadataHelper
         {
             if (classNode.Children.Count == 0)
             {
-                if (classNode.TypeReference.IsStaticClass)
+                // is generic class we have no generic arguments so we need to ignore
+                if (classNode.label.IndexOf('`') > 0)
+                {
+                    return true;
+                }
+
+                if (classNode.TypeReference.IsStaticClass ||
+                    classNode.TypeReference.IsAbstract)
                 {
                     return true;
                 }
@@ -139,9 +139,14 @@ static class MetadataHelper
         return Assembly.LoadFile(assemblyFilePath);
     }
 
+    static MetadataNode AddChild(this MetadataNode node, MetadataNode child)
+    {
+        return node with { Children = node.Children.Add(child) };
+    }
+
     static MetadataNode ConvertToMetadataNode(MethodInfo methodInfo)
     {
-        return new MetadataNode
+        return new()
         {
             IsMethod        = true,
             MethodReference = methodInfo.AsReference(),
@@ -157,7 +162,7 @@ static class MetadataHelper
         {
             if (!string.IsNullOrWhiteSpace(classFilter))
             {
-                var classFilters = classFilter.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim()).ToArray();
+                var classFilters = classFilter.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
                 foreach (var filter in classFilters)
                 {
                     if (type.FullName?.IndexOf(filter, StringComparison.OrdinalIgnoreCase) < 0)
@@ -190,12 +195,10 @@ static class MetadataHelper
         return types;
     }
 
-    
-    
     static bool IsValidForExport(MethodInfo methodInfo)
     {
-        if (methodInfo.Name == "render" || methodInfo.Name == "renderAsync" || methodInfo.Name == "InvokeRender"||
-            methodInfo.Name =="componentDidCatch")
+        if (methodInfo.Name == "render" || methodInfo.Name == "renderAsync" || methodInfo.Name == "InvokeRender" ||
+            methodInfo.Name == "componentDidCatch")
         {
             return false;
         }
@@ -224,18 +227,17 @@ static class MetadataHelper
             {
                 type = type.GetGenericArguments()[0];
             }
-            
+
             if (type.IsGenericType)
             {
                 var genericTypeDefinition = type.GetGenericTypeDefinition();
-                
-                
+
                 var genericArguments = type.GetGenericArguments();
 
                 if (genericArguments.Length == 1)
                 {
                     var genericEnumerableInterface = typeof(IEnumerable<>).MakeGenericType(genericArguments);
-                    
+
                     if (genericTypeDefinition == typeof(Task<>) ||
                         genericTypeDefinition == typeof(IEnumerable<>) ||
                         type.GetInterfaces().Contains(genericEnumerableInterface))
@@ -243,19 +245,18 @@ static class MetadataHelper
                         type = genericArguments[0];
                     }
                 }
-                
             }
-            
+
             return type == typeof(Element) || type.IsSubclassOf(typeof(Element));
         }
-        
+
         static bool isNotValidForJson(Type parameterType)
         {
             if (parameterType == typeof(object))
             {
                 return true;
             }
-            
+
             if (parameterType == typeof(Element) || parameterType.BaseType == typeof(HtmlElement) ||
                 parameterType == typeof(Element[]) || parameterType == typeof(IEnumerable<Element>))
             {
@@ -271,6 +272,7 @@ static class MetadataHelper
             {
                 return true;
             }
+
             if (typeof(PureComponent).IsAssignableFrom(parameterType.BaseType))
             {
                 return true;

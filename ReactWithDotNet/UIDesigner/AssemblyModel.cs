@@ -32,6 +32,8 @@ public sealed class TypeReference
     public string NamespaceName { get; init; }
     
     public bool IsStaticClass { get; init; }
+    
+    public bool IsAbstract { get; init; }
 
     public bool Equals(TypeReference other)
     {
@@ -134,7 +136,8 @@ static class AssemblyModelHelper
             Name          = GetName(x),
             NamespaceName = x.Namespace,
             Assembly      = x.Assembly.AsReference(),
-            IsStaticClass = x.IsStaticClass()
+            IsStaticClass = x.IsStaticClass(),
+            IsAbstract    = x.IsAbstract
         };
 
         static string GetName(Type x)
