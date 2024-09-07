@@ -62,7 +62,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             return new svg(ViewBox(0, 0, 50, 50), svg.Size(16))
             {
                 new path { fill = Color,  d = "M25 1C11.767 1 1 11.767 1 25s10.767 24 24 24 24-10.767 24-24S38.233 1 25 1zm0 46C12.869 47 3 37.131 3 25S12.869 3 25 3s22 9.869 22 22-9.869 22-22 22z" },
-                new path { fill = Color, d  = "M29.293 10.293 14.586 25l14.707 14.707 1.414-1.414L17.414 25l13.293-13.293z" }
+                new path { fill = Color,  d = "M29.293 10.293 14.586 25l14.707 14.707 1.414-1.414L17.414 25l13.293-13.293z" }
             };
         }
     }
@@ -285,19 +285,20 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
 
         var propertyPanel = new div(BorderRight(1, dotted, "#d9d9d9"), Width(300), PositionRelative, Transition(Width, 300, "ease-in"))
         {
-            When(UpdatingProgress is > 0 and <= 100, () => new div(PositionAbsolute, TopRight(4))
+            UpdatingProgress is > 0 and <= 100 ?  new FlexRowCentered(PositionAbsolute, Top(4), MarginLeft(7))
             {
                 When(state.PropertyPanelIsClosed, PositionStatic),
 
-                new LoadingIcon() + Size(12)
-            }),
+                new LoadingIcon() + Size(16)
+            }:null,
 
             new div
             {
-                state.PropertyPanelIsClosed ? "→" : "←",
+                new IconLeft { Color = "#afafaf"} + (state.PropertyPanelIsClosed ? Rotate("180deg") : null),
                 OnClick(state.PropertyPanelIsClosed ? OpenPropertyPanel : ClosePropertyPanel),
                 PositionAbsolute,
-                TopRight(0),
+                Top(0),
+                (state.PropertyPanelIsClosed ? MarginLeft(7) : Right(-8)),
                 FontSize19,
                 FontWeight500,
                 Color("#c5d7e8"),
