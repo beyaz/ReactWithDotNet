@@ -101,7 +101,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         {
             new link { href = "https://fonts.cdnfonts.com/css/ibm-plex-mono-3", rel = "stylesheet" },
 
-            new FlexColumn(MarginLeftRight(3))
+            new FlexColumn(PaddingLeftRight(3), PaddingTop(4))
             {
                 createLabel("Filter by class name"),
 
