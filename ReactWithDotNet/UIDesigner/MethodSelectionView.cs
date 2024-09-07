@@ -69,7 +69,7 @@ sealed class MethodSelectionView : Component
             content = AsTreeView(nodes);
         }
 
-        return new fieldset(MinInlineSize("unset"), HeightFull, MarginLeftRight(3), OverflowYScroll, CursorPointer, Padding(5), Border(Solid(1, "rgb(217, 217, 217)")), BorderRadius(3))
+        return new div(HeightFull, OverflowYScroll, CursorPointer, Padding(5), Border(1,solid, rgb(217, 217, 217)), BorderRadius(3))
         {
             content
         };

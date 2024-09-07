@@ -192,6 +192,7 @@ partial class Mixin
     public static string Dotted(double widthAsPx, string color)
         => BorderStyle("dotted", widthAsPx, color);
 
+    // todo: remove
     /// <summary>
     ///     Returns a string like <paramref name="widthAsPx" /><b> + px solid + </b> <paramref name="color" />"
     /// </summary>
