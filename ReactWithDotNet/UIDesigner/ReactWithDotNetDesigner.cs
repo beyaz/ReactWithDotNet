@@ -269,7 +269,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             }
         };
 
-        var propertyPanel = new div(BorderRight(1, dotted, "#d9d9d9"), Width(300), PositionRelative, Transition(Width, 300, "ease-in"))
+        var propertyPanel = new div(BorderRight(1, dotted, "#d9d9d9"), Width(300), PositionRelative, Transition(Width, 300, "ease-in"), LineHeight24)
         {
             new div(PositionAbsolute, Top(0), state.PropertyPanelIsClosed ? MarginLeft(7) : Right(-8), Size(16), When(state.PropertyPanelIsClosed, PositionSticky), CursorDefault)
             {
