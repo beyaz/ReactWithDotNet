@@ -285,22 +285,15 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
 
         var propertyPanel = new div(BorderRight(1, dotted, "#d9d9d9"), Width(300), PositionRelative, Transition(Width, 300, "ease-in"))
         {
-            UpdatingProgress is > 0 and <= 100 ?  new FlexRowCentered(PositionAbsolute, Top(4), MarginLeft(7))
-            {
-                When(state.PropertyPanelIsClosed, PositionStatic),
-
-                new LoadingIcon() + Size(16)
-            }:null,
-
             new div(PositionAbsolute, Top(0), state.PropertyPanelIsClosed ? MarginLeft(7) : Right(-8), Size(16), When(state.PropertyPanelIsClosed, PositionSticky))
             {
+                UpdatingProgress is > 0 and <= 100 ? new LoadingIcon() + Size(16) :
+                    
                 new IconLeft { Color = "#afafaf"} + (state.PropertyPanelIsClosed ? Rotate("180deg") : null),
                 
                 OnClick(state.PropertyPanelIsClosed ? OpenPropertyPanel : ClosePropertyPanel),
                 
-                CursorDefault,
-                
-                When(UpdatingProgress is > 0 and <= 100, DisplayNone)
+                CursorDefault
             },
 
             state.PropertyPanelIsClosed ? null : propertyPanelContent,
