@@ -730,15 +730,6 @@ public static partial class Mixin
     ///     style.bottom = <paramref name="pixelValue" /> + 'px'
     /// </summary>
     public static StyleModifier TopBottom(double pixelValue) => new(style => style.topBottom = pixelValue.AsPixel());
-
-
-
-    /// <summary>
-    ///     Creates a new div with given height
-    ///     <br />
-    ///     new div{ style = {height = <paramref name="valueInPx" />}}
-    /// </summary>
-    public static HtmlElement VSpace(double valueInPx) => new div(Height(valueInPx));
     
     /// <summary>
     ///     Apply given modifiers when condition is true
