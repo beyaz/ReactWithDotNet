@@ -273,7 +273,13 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         {
             new div(PositionAbsolute, Top(0), state.PropertyPanelIsClosed ? MarginLeft(7) : Right(-8), Size(16), When(state.PropertyPanelIsClosed, PositionSticky))
             {
-                UpdatingProgress is > 0 and <= 100 ? new IconLoading() + Size(16) + MarginTop(3) :
+                UpdatingProgress is > 0 and <= 100 ? new IconLoading
+                    {
+                        Color = "#afafaf", style =
+                        {
+                            Size(16), MarginTop(3)
+                        }
+                    } :
                     new IconLeft { Color = "#afafaf" } + (state.PropertyPanelIsClosed ? Rotate("180deg") : null),
 
                 OnClick(state.PropertyPanelIsClosed ? OpenPropertyPanel : ClosePropertyPanel),
@@ -655,34 +661,25 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
     class IconLoading : PureComponent
     {
         public string Color { get; init; } = "#afafaf";
-        
+
         protected override Element render()
         {
             return new div
             {
                 new style
                 {
-                    
                     """
-                    .loader-designer-react-with-dot-net 
-                    {
-                      
-                      border-radius: 50%;
-                      border-top: 1px solid #afafaf;
-                    
+                    .loader-designer-react-with-dot-net {
                       -webkit-animation: spin 1s linear infinite; /* Safari */
                       animation: spin 1s linear infinite;
                     }
-                    
-                    """,
-                    
-                    """
+
                     /* Safari */
                     @-webkit-keyframes spin {
                       0% { -webkit-transform: rotate(0deg); }
                       100% { -webkit-transform: rotate(360deg); }
                     }
-                    
+
                     @keyframes spin {
                       0% { transform: rotate(0deg); }
                       100% { transform: rotate(360deg); }
@@ -690,7 +687,15 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                     """
                 },
 
-                new div { className = "loader-designer-react-with-dot-net", style = { SizeFull } }
+                new div
+                {
+                    className = "loader-designer-react-with-dot-net", style =
+                    {
+                        SizeFull,
+                        BorderTop(1, solid, Color),
+                        BorderRadius("50%")
+                    }
+                }
             };
         }
     }
