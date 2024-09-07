@@ -69,10 +69,6 @@ sealed class MethodSelectionView : Component
             content = AsTreeView(nodes);
         }
 
-        
-        
-       
-        
         return new fieldset(MinInlineSize("unset"), HeightFull, MarginLeftRight(3), OverflowYScroll, CursorPointer, Padding(5), Border(Solid(1, "rgb(217, 217, 217)")), BorderRadius(3))
         {
             content
@@ -233,5 +229,4 @@ sealed class MethodSelectionView : Component
 
         return Task.CompletedTask;
     }
-    
 }
