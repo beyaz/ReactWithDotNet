@@ -68,10 +68,33 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
     /// </summary>
     public static bool IsInDesignMode(HttpContext httpContext)
     {
-        var referer = httpContext?.Request.Headers[HeaderNames.Referer].FirstOrDefault();
-
-        return referer?.EndsWith(UrlPath) == true ||
-               referer?.EndsWith(UrlPathOfComponentPreview) == true;
+        if (httpContext is null)
+        {
+            return false;
+        }
+        
+        const string key = nameof(ReactWithDotNetDesigner) + nameof(IsInDesignMode);
+        
+        if (httpContext.Items.TryGetValue(key, out var value))
+        {
+            return (bool)value!;
+        }
+        
+        var referer = httpContext.Request.Headers[HeaderNames.Referer].FirstOrDefault();
+        if (referer is not null)
+        {
+            var uri = new Uri(referer);
+                
+            value =  uri.AbsolutePath == UrlPath;
+        }
+        else
+        {
+            value = false;
+        }
+        
+        httpContext.Items[key] =  value;
+        
+        return (bool)value;
     }
 
     protected override Task constructor()
