@@ -130,7 +130,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                 }
             },
 
-            new FlexColumn(WidthFull, Flex(1, 1, 0), PaddingLeftRight(3))
+            new FlexColumn(WidthFull, Flex(1, 1, 0), PaddingLeftRight(3), OverflowAuto)
             {
                 new MethodSelectionView
                 {
