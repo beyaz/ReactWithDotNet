@@ -1,4 +1,7 @@
 ﻿#pragma warning disable CS1591
+using System.Text.Json.Serialization;
+using System.Text.Json;
+
 namespace ReactWithDotNet.ThirdPartyLibraries._Swiper_;
 
 public class Swiper : ThirdPartyReactComponent
@@ -209,6 +212,7 @@ public sealed class SwiperAutoplay
 }
 
 [Serializable]
+[JsonConverter(typeof(SwiperBreakpointJsonConverter))]
 public sealed record SwiperBreakpoint
 {
     public double? slidesPerView { get; init; }
@@ -228,7 +232,73 @@ public sealed record SwiperBreakpoint
     public SwiperNavigationOption navigation { get; } = new();
     
     public SwiperAutoplay autoplay { get; } = new();
+    
+    internal class SwiperBreakpointJsonConverter : JsonConverter<SwiperBreakpoint>
+    {
+        public override SwiperBreakpoint Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Write(Utf8JsonWriter writer, SwiperBreakpoint value, JsonSerializerOptions options)
+        {
+            writer.WriteStartObject();
+
+            if (value.slidesPerView.HasValue)
+            {
+                writer.WritePropertyName(nameof(slidesPerView));
+                writer.WriteNumberValue(value.slidesPerView.Value);
+            }
+            
+            if (value.spaceBetween.HasValue)
+            {
+                writer.WritePropertyName(nameof(spaceBetween));
+                writer.WriteNumberValue(value.spaceBetween.Value);
+            }
+            
+            if (value.slidesPerColumn.HasValue)
+            {
+                writer.WritePropertyName(nameof(slidesPerColumn));
+                writer.WriteNumberValue(value.slidesPerColumn.Value);
+            }
+            
+            if (value.slidesPerGroup.HasValue)
+            {
+                writer.WritePropertyName(nameof(slidesPerGroup));
+                writer.WriteNumberValue(value.slidesPerGroup.Value);
+            }
+            
+            if (value.loop.HasValue)
+            {
+                writer.WritePropertyName(nameof(loop));
+                writer.WriteBooleanValue(value.loop.Value);
+            }
+            
+            if (value.centeredSlides.HasValue)
+            {
+                writer.WritePropertyName(nameof(centeredSlides));
+                writer.WriteBooleanValue(value.centeredSlides.Value);
+            }
+            
+            if (value.grid.rows.HasValue)
+            {
+                writer.WritePropertyName(nameof(grid));
+                JsonSerializer.Serialize(writer, value.grid, options);
+            }
+            
+            if (value.pagination.clickable.HasValue)
+            {
+                writer.WritePropertyName(nameof(pagination));
+                JsonSerializer.Serialize(writer, value.pagination, options);
+            }
+            
+            writer.WriteEndObject();
+        }
+        
+    }
 }
+
+
 
 [Serializable]
 public sealed class SwiperThumbs
