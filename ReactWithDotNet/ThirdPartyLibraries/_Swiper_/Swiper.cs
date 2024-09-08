@@ -214,6 +214,27 @@ public sealed record SwiperBreakpoint
     public double? slidesPerView { get; init; }
     public double? spaceBetween { get; init; }
     public double? slidesPerColumn { get; init; }
+    
+    public double? slidesPerGroup { get; init; }
+    
+    public bool? loop { get; init; }
+    
+    public bool? centeredSlides { get; init; }
+    
+    [ReactProp]
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    public SwiperGridOption grid { get; } = new();
+    
+    [ReactProp]
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    public SwiperPagination pagination { get; } = new();
+    
+    [ReactProp]
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    public SwiperNavigationOption navigation { get; } = new();
+    
+    [ReactProp]
+    public SwiperAutoplay autoplay { get; } = new();
 }
 
 [Serializable]
