@@ -61,6 +61,8 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
 
     bool Preview => GetQuery("preview") == "true";
 
+    StyleModifier ScaleStyle => TransformOrigin("0 0") + Transform($"scale({state.Scale / (double)100})");
+
     /// <summary>
     ///     Indicates component is in design mode.
     /// </summary>
@@ -97,7 +99,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             return new ReactWithDotNetDesignerComponentPreview();
         }
 
-        var propertyPanelContent = new FlexColumn(SizeFull, FontSize15)
+        var propertyPanelContent = new FlexColumn(SizeFull, FontSize15, Gap(4))
         {
             new link { href = "https://fonts.cdnfonts.com/css/ibm-plex-mono-3", rel = "stylesheet" },
 
@@ -128,7 +130,6 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                 }
             },
 
-            SpaceY(5),
             new FlexColumn(WidthFull, Flex(1, 1, 0), PaddingLeftRight(3))
             {
                 new MethodSelectionView
@@ -140,8 +141,6 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                     AssemblyFilePath          = state.SelectedAssemblyFilePath
                 }
             },
-
-            SpaceY(10),
 
             new FlexRow(WidthFull, PaddingLeftRight(3))
             {
@@ -260,6 +259,41 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                         }
                     }
                 }
+            },
+
+            new FlexRow(WidthFull, PaddingLeftRight(3), AlignItemsCenter, Gap(5))
+            {
+                createLabel($"Scale: %{state.Scale}"),
+                new FlexRowCentered(BorderRadius(100), Padding(3), Background(Blue200), Hover(Background(Blue300)))
+                {
+                    OnClick(async _ =>
+                    {
+                        if (state.Scale <= 50)
+                        {
+                            return;
+                        }
+
+                        state = state with { Scale = state.Scale - 10 };
+
+                        await SaveState();
+                    }),
+                    new IconMinus()
+                },
+                new FlexRowCentered(BorderRadius(100), Padding(3), Background(Blue200), Hover(Background(Blue300)))
+                {
+                    OnClick(async _ =>
+                    {
+                        if (state.Scale >= 100)
+                        {
+                            return;
+                        }
+
+                        state = state with { Scale = state.Scale + 10 };
+
+                        await SaveState();
+                    }),
+                    new IconPlus()
+                }
             }
         };
 
@@ -309,7 +343,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
         {
             new HotReloadListener(),
             propertyPanel,
-            new FlexColumn(AlignItemsCenter, FlexGrow(1), Padding(7), MarginLeft(40))
+            new FlexColumn(AlignItemsCenter, FlexGrow(1), Padding(7), MarginLeft(40), ScaleStyle)
             {
                 createHorizontalRuler() + Width(state.ScreenWidth) + MarginTop(5),
                 outputPanel
