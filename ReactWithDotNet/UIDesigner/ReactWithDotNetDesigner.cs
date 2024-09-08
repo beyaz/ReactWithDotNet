@@ -147,7 +147,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             {
                 new fieldset(WidthFull)
                 {
-                    Border("1px solid #d9d9d9"),
+                    Border(1, solid, "#d9d9d9"),
                     BorderRadius(4),
 
                     new legend(MarginLeft(8), DisplayFlexRowCentered)
