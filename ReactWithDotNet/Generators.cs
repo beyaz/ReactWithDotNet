@@ -1,0 +1,6 @@
+﻿namespace ReactWithDotNet;
+
+class Generators
+{
+    
+}
