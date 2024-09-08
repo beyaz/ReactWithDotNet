@@ -158,18 +158,12 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                             new FlexRowCentered(BorderRadius(100), Padding(3), Background(Blue200), Hover(Background(Blue300)))
                             {
                                 OnClick(OnMediaSizeMinusClicked),
-                                new svg(ViewBox(0, 0, 16, 16), svg.Size(16), Color(Blue800))
-                                {
-                                    new path { fill = "currentColor", d = "M12 8.667H4A.669.669 0 0 1 3.333 8c0-.367.3-.667.667-.667h8c.367 0 .667.3.667.667 0 .367-.3.667-.667.667Z" }
-                                }
+                                new IconMinus()
                             },
                             new FlexRowCentered(BorderRadius(100), Padding(3), Background(Blue200), Hover(Background(Blue300)))
                             {
                                 OnClick(OnMediaSizePlusClicked),
-                                new svg(ViewBox(0, 0, 16, 16), svg.Size(16), Color(Blue800))
-                                {
-                                    new path { fill = "currentColor", d = "M12 8.667H8.667V12c0 .367-.3.667-.667.667A.669.669 0 0 1 7.333 12V8.667H4A.669.669 0 0 1 3.333 8c0-.367.3-.667.667-.667h3.333V4c0-.366.3-.667.667-.667.367 0 .667.3.667.667v3.333H12c.367 0 .667.3.667.667 0 .367-.3.667-.667.667Z" }
-                                }
+                                new IconPlus()
                             }
                         },
 
@@ -702,6 +696,28 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                         BorderRadius("50%")
                     }
                 }
+            };
+        }
+    }
+
+    sealed class IconMinus : PureComponent
+    {
+        protected override Element render()
+        {
+            return new svg(ViewBox(0, 0, 16, 16), svg.Size(16), Color(Blue800))
+            {
+                new path { fill = "currentColor", d = "M12 8.667H4A.669.669 0 0 1 3.333 8c0-.367.3-.667.667-.667h8c.367 0 .667.3.667.667 0 .367-.3.667-.667.667Z" }
+            };
+        }
+    }
+
+    sealed class IconPlus : PureComponent
+    {
+        protected override Element render()
+        {
+            return new svg(ViewBox(0, 0, 16, 16), svg.Size(16), Color(Blue800))
+            {
+                new path { fill = "currentColor", d = "M12 8.667H8.667V12c0 .367-.3.667-.667.667A.669.669 0 0 1 7.333 12V8.667H4A.669.669 0 0 1 3.333 8c0-.367.3-.667.667-.667h3.333V4c0-.366.3-.667.667-.667.367 0 .667.3.667.667v3.333H12c.367 0 .667.3.667.667 0 .367-.3.667-.667.667Z" }
             };
         }
     }
