@@ -1,9 +1,20 @@
-﻿using System;
+﻿global using static ReactWithDotNet.Extensions;
+
+using System;
+using System.Diagnostics;
 
 namespace ReactWithDotNet;
 
 static class Extensions
 {
+    public static void AttachToDebugger()
+    {
+        if (!Debugger.IsAttached)
+        {
+            Debugger.Launch();
+        }
+    }
+
     /// <summary>
     ///     Removes value from end of str
     /// </summary>

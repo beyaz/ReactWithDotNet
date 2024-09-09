@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
@@ -15,7 +14,9 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
     public void Execute(GeneratorExecutionContext context)
     {
         if (context.SyntaxReceiver is not SyntaxReceiver receiver)
+        {
             return;
+        }
 
         // Loop through collected classes
         foreach (var classDeclaration in receiver.CandidateClasses)
@@ -78,17 +79,14 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
 
     public void Initialize(GeneratorInitializationContext context)
     {
-        if (!Debugger.IsAttached)
-        {
-            //System.Diagnostics.Debugger.Launch();  // This will prompt to attach a debugger
-        }
+        // AttachToDebugger();
 
         // Register a syntax receiver to collect classes with the custom attribute
         context.RegisterForSyntaxNotifications(() => new SyntaxReceiver());
     }
 
     // Helper to extract namespace
-    string GetNamespace(ClassDeclarationSyntax classDeclaration)
+    static string GetNamespace(ClassDeclarationSyntax classDeclaration)
     {
         var fileScopedNamespaceName = classDeclaration.FirstAncestorOrSelf<FileScopedNamespaceDeclarationSyntax>()?.Name;
         if (fileScopedNamespaceName != null)
