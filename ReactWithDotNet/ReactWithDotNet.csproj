@@ -35,7 +35,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" />
+      <ProjectReference Include="..\ReactWithDotNet.SourceGenerator\ReactWithDotNet.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>
 
 </Project>
