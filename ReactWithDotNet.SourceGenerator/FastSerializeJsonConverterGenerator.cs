@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
+using static ReactWithDotNet.RoslynHelper;
 
 namespace ReactWithDotNet;
 
@@ -67,6 +68,8 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
                         lines.Add("}");
                         continue;
                     }
+
+                    var found = FindClassByNameAndNamespace(context.Compilation, propertyTypeName, GetNamespace(classDeclaration));
                     
                     lines.Add($"if ({propertyTypeName}HasValueChecker.HasValue(value.{propertyName}))");
                     lines.Add("{");
@@ -92,21 +95,7 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
         context.RegisterForSyntaxNotifications(() => new SyntaxReceiver());
     }
 
-    // Helper to extract namespace
-    static string GetNamespace(ClassDeclarationSyntax classDeclaration)
-    {
-        var fileScopedNamespaceName = classDeclaration.FirstAncestorOrSelf<FileScopedNamespaceDeclarationSyntax>()?.Name;
-        if (fileScopedNamespaceName != null)
-        {
-            return fileScopedNamespaceName.ToString();
-        }
-
-        var namespaceDeclaration = classDeclaration.Ancestors()
-            .OfType<NamespaceDeclarationSyntax>()
-            .FirstOrDefault();
-
-        return namespaceDeclaration?.Name.ToString() ?? "global";
-    }
+   
 
     class SyntaxReceiver : ISyntaxReceiver
     {
