@@ -54,6 +54,16 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
                         lines.Add($"  writer.WritePropertyName(\"{propertyName}\");");
                         lines.Add($"  writer.WriteNumberValue(value.{propertyName}.Value);");
                         lines.Add("}");
+                        continue;
+                    }
+                    
+                    if (propertyTypeName == "bool?")
+                    {
+                        lines.Add($"if (value.{propertyName}.HasValue)");
+                        lines.Add("{");
+                        lines.Add($"  writer.WritePropertyName(\"{propertyName}\");");
+                        lines.Add($"  writer.WriteBooleanValue(value.{propertyName}.Value);");
+                        lines.Add("}");
                     }
                 }
             }
