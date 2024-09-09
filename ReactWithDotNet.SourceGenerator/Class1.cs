@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
@@ -22,7 +21,7 @@ public class SpecificClassGenerator : ISourceGenerator
     {
         if (!System.Diagnostics.Debugger.IsAttached)
         {
-            System.Diagnostics.Debugger.Launch();  // This will prompt to attach a debugger
+            //System.Diagnostics.Debugger.Launch();  // This will prompt to attach a debugger
         }
 
         // Register a syntax receiver to collect classes with the custom attribute
@@ -42,45 +41,52 @@ public class SpecificClassGenerator : ISourceGenerator
         {
             // Get the class name
             var className = classDeclaration.Identifier.Text;
-            
-            var sb = new StringBuilder();
-            sb.AppendLine($"namespace {GetNamespace(classDeclaration)}");
-            sb.AppendLine("{");
-            sb.AppendLine($"partial class {className}");
-            sb.AppendLine("{");
-        
+
+            var lines = new List<string>
+            {
+                "using System.Text.Json.Serialization;",
+                "using System.Text.Json;",
+                $"namespace {GetNamespace(classDeclaration)};",
+                
+                $"sealed class {className}JsonConverter : JsonConverter<{className}>",
+                "{",
+                $"    public override {className} Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)",
+                "    {",
+                "        throw new NotImplementedException();",
+                "    }",
+                $"    public override void Write(Utf8JsonWriter writer, {className} value, JsonSerializerOptions options)",
+                "    {",
+                "        writer.WriteStartObject();"
+            };
 
             foreach (var member in classDeclaration.Members)
             {
-                if (member is FieldDeclarationSyntax fieldDeclaration)
+                if (member is PropertyDeclarationSyntax propertyDeclarationSyntax)
                 {
-                    foreach (var variable in fieldDeclaration.Declaration.Variables)
+
+                    var propertyTypeName = propertyDeclarationSyntax.Type.ToFullString().Trim();
+                    var propertyName = propertyDeclarationSyntax.Identifier.ValueText;
+                    
+                    if (propertyTypeName == "double?")
                     {
-                        var leadingTrivia = fieldDeclaration.GetLeadingTrivia();
-
-                        foreach (var trivia in leadingTrivia)
-                        {
-                            if (trivia.IsKind(SyntaxKind.SingleLineDocumentationCommentTrivia) ||
-                                trivia.IsKind(SyntaxKind.MultiLineCommentTrivia))
-                            {
-                                // Get the comment text
-                                var commentText = trivia.ToFullString();
-                                sb.AppendLine(commentText);
-                            }
-                        }
-                        
-                        var fieldName = variable.Identifier.Text;
-
-                        sb.AppendLine("public " + fieldDeclaration.Declaration.Type + " " + fieldName + "{get; set; }");
+                        lines.Add($"if (value.{propertyName}.HasValue)");
+                        lines.Add("{");
+                        lines.Add($"  writer.WritePropertyName(\"{propertyName}\");");
+                        lines.Add($"  writer.WriteNumberValue(value.{propertyName}.Value);");
+                        lines.Add("}");
                     }
+
+                    
                 }
             }
             
             
-            sb.AppendLine("}");
-            sb.AppendLine("}");
+            lines.Add("    writer.WriteEndObject();");
+            lines.Add("  }"); // close method
+            lines.Add("}"); // close class
 
-            context.AddSource($"{className}.generated", SourceText.From(sb.ToString(), Encoding.UTF8));
+            
+            context.AddSource($"{className}.generated", SourceText.From(string.Join(Environment.NewLine,lines), Encoding.UTF8));
         }
     }
 
@@ -118,7 +124,7 @@ class SyntaxReceiver : ISyntaxReceiver
         if (syntaxNode is ClassDeclarationSyntax classDeclaration &&
             classDeclaration.AttributeLists
                 .SelectMany(al => al.Attributes)
-                .Any(ad => ad.Name.ToString() == "AddExtraProperties" ))
+                .Any(ad => ad.Name.ToString() == "FastSerialize" ))
         {
             CandidateClasses.Add(classDeclaration);
         }

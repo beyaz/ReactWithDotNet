@@ -125,3 +125,8 @@ public sealed class DebounceTimeoutAttribute: Attribute
 /// </summary>
 [AttributeUsage(AttributeTargets.Method)]
 public sealed class SkipRenderAttribute: Attribute;
+
+
+[AttributeUsage(AttributeTargets.Class)]
+sealed class FastSerializeAttribute: Attribute;
+

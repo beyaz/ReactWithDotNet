@@ -213,6 +213,7 @@ public sealed class SwiperAutoplay
 
 [Serializable]
 [JsonConverter(typeof(SwiperBreakpointJsonConverter))]
+[FastSerialize]
 public sealed class SwiperBreakpoint
 {
     public double? slidesPerView { get; init; }
