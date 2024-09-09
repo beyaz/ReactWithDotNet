@@ -130,3 +130,6 @@ public sealed class SkipRenderAttribute: Attribute;
 [AttributeUsage(AttributeTargets.Class)]
 sealed class FastSerializeAttribute: Attribute;
 
+[AttributeUsage(AttributeTargets.Class)]
+sealed class GenerateHasValueAttribute: Attribute;
+

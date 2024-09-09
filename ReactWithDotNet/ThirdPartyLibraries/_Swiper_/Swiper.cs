@@ -166,6 +166,7 @@ public class Swiper : ThirdPartyReactComponent
     }
 }
 
+[GenerateHasValue]
 public sealed class SwiperNavigationOption
 {
     public bool? enabled { get; set; }
@@ -173,6 +174,7 @@ public sealed class SwiperNavigationOption
     public string prevEl { get; set; }
 }
 
+[GenerateHasValue]
 public sealed class SwiperGridOption
 {
     public double? rows { get; set; }
@@ -195,6 +197,7 @@ public sealed class SwiperFadeEffect
     public bool? crossFade { get; set; }
 }
 
+[GenerateHasValue]
 public sealed class SwiperPagination
 {
     public bool? clickable { get; set; }
@@ -205,6 +208,7 @@ public sealed class SwiperScrollbar
     public bool? draggable { get; set; }
 }
 
+[GenerateHasValue]
 public sealed class SwiperAutoplay
 {
     public double? delay { get; set; }

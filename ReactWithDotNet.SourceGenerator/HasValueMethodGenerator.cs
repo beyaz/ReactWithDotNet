@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis.Text;
 namespace ReactWithDotNet;
 
 [Generator]
-public class FastSerializeJsonConverterGenerator : ISourceGenerator
+public class HasValueMethodGenerator : ISourceGenerator
 {
     public void Execute(GeneratorExecutionContext context)
     {
@@ -26,19 +26,16 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
 
             var lines = new List<string>
             {
-                "using System.Text.Json.Serialization;",
-                "using System.Text.Json;",
                 $"namespace {GetNamespace(classDeclaration)};",
 
-                $"sealed class {className}JsonConverter : JsonConverter<{className}>",
+                $"static class {className}HasValueChecker",
                 "{",
-                $"    public override {className} Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)",
+                $"    public static bool HasValue({className} value)",
                 "    {",
-                "        throw new NotImplementedException();",
-                "    }",
-                $"    public override void Write(Utf8JsonWriter writer, {className} value, JsonSerializerOptions options)",
-                "    {",
-                "        writer.WriteStartObject();"
+                "        if(value == null)",
+                "        {",
+                "           return false;",
+                "        }"
             };
 
             foreach (var member in classDeclaration.Members)
@@ -48,45 +45,28 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
                     var propertyTypeName = propertyDeclarationSyntax.Type.ToFullString().Trim();
                     var propertyName = propertyDeclarationSyntax.Identifier.ValueText;
 
-                    if (propertyTypeName == "double?")
+                    if (propertyTypeName == "double?"|| propertyTypeName == "bool?")
                     {
                         lines.Add($"if (value.{propertyName}.HasValue)");
-                        lines.Add("{");
-                        lines.Add($"  writer.WritePropertyName(\"{propertyName}\");");
-                        lines.Add($"  writer.WriteNumberValue(value.{propertyName}.Value);");
-                        lines.Add("}");
+                        lines.Add("  return true;");
                         continue;
                     }
                     
-                    if (propertyTypeName == "bool?")
-                    {
-                        lines.Add($"if (value.{propertyName}.HasValue)");
-                        lines.Add("{");
-                        lines.Add($"  writer.WritePropertyName(\"{propertyName}\");");
-                        lines.Add($"  writer.WriteBooleanValue(value.{propertyName}.Value);");
-                        lines.Add("}");
-                        continue;
-                    }
                     
-                    lines.Add($"if ({propertyTypeName}HasValueChecker.HasValue(value.{propertyName}))");
-                    lines.Add("{");
-                    lines.Add($"  writer.WritePropertyName(\"{propertyName}\");");
-                    lines.Add($"  JsonSerializer.Serialize(writer, value.{propertyName}, options);");
-                    lines.Add("}");
                 }
             }
 
-            lines.Add("    writer.WriteEndObject();");
+            lines.Add("    return false;");
             lines.Add("  }"); // close method
             lines.Add("}"); // close class
 
-            context.AddSource($"{className}.generated", SourceText.From(string.Join(Environment.NewLine, lines), Encoding.UTF8));
+            context.AddSource($"{className}HasValueChecker.generated", SourceText.From(string.Join(Environment.NewLine, lines), Encoding.UTF8));
         }
     }
 
     public void Initialize(GeneratorInitializationContext context)
     {
-         AttachToDebugger();
+        // AttachToDebugger();
 
         // Register a syntax receiver to collect classes with the custom attribute
         context.RegisterForSyntaxNotifications(() => new SyntaxReceiver());
@@ -119,7 +99,7 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
             if (syntaxNode is ClassDeclarationSyntax classDeclaration &&
                 classDeclaration.AttributeLists
                     .SelectMany(al => al.Attributes)
-                    .Any(ad => ad.Name.ToString() == "FastSerialize"))
+                    .Any(ad => ad.Name.ToString() == "GenerateHasValue"))
             {
                 CandidateClasses.Add(classDeclaration);
             }
