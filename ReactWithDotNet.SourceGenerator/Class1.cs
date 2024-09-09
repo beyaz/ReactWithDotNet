@@ -15,7 +15,7 @@ namespace ReactWithDotNet;
 
 
 [Generator]
-public class SpecificClassGenerator : ISourceGenerator
+public class FastSerializeJsonConverterGenerator : ISourceGenerator
 {
     public void Initialize(GeneratorInitializationContext context)
     {
