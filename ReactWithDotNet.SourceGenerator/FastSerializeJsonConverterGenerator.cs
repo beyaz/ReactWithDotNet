@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
@@ -20,8 +17,7 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
         }
 
         Dictionary<string, IReadOnlyList<string>> cache = new();
-        
-        
+
         // Loop through collected classes
         foreach (var classDeclaration in receiver.CandidateClasses)
         {
@@ -61,7 +57,7 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
                         lines.Add("}");
                         continue;
                     }
-                    
+
                     if (propertyTypeName == "bool?")
                     {
                         lines.Add($"if (value.{propertyName}.HasValue)");
@@ -85,7 +81,7 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
                         lines.Add("{");
                         lines.Add($"  writer.WritePropertyName(\"{propertyName}\");");
                         lines.Add($"  JsonSerializer.Serialize(writer, value.{propertyName}, options);");
-                        lines.Add("}");    
+                        lines.Add("}");
                     }
                     else
                     {
@@ -95,15 +91,13 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
                         lines.Add($"  JsonSerializer.Serialize(writer, value.{propertyName}, options);");
                         lines.Add("}");
                     }
-                        
-                    
                 }
             }
 
             lines.Add("    writer.WriteEndObject();");
             lines.Add("  }"); // close method
             lines.Add("}"); // close class
-            
+
             foreach (var keyValuePair in cache)
             {
                 lines.AddRange(keyValuePair.Value);
@@ -115,23 +109,20 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
 
     public void Initialize(GeneratorInitializationContext context)
     {
-         //AttachToDebugger();
+        //AttachToDebugger();
 
         // Register a syntax receiver to collect classes with the custom attribute
         context.RegisterForSyntaxNotifications(() => new SyntaxReceiver());
     }
 
-    
-    static (IReadOnlyList<string> value, Exception exception) GetSourceTextOfHasValueChecker( ClassDeclarationSyntax classDeclaration)
+    static (IReadOnlyList<string> value, Exception exception) GetSourceTextOfHasValueChecker(ClassDeclarationSyntax classDeclaration)
     {
         // Get the class name
         var className = classDeclaration.Identifier.Text;
 
         var lines = new List<string>
         {
-            // $"namespace {GetNamespace(classDeclaration)};",
-
-            $"static partial class HasValueChecker",
+            "static partial class HasValueChecker",
             "{",
             $"    public static bool HasValue({className} value)",
             "    {",
@@ -148,14 +139,11 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
                 var propertyTypeName = propertyDeclarationSyntax.Type.ToFullString().Trim();
                 var propertyName = propertyDeclarationSyntax.Identifier.ValueText;
 
-                if (propertyTypeName == "double?"|| propertyTypeName == "bool?")
+                if (propertyTypeName == "double?" || propertyTypeName == "bool?")
                 {
                     lines.Add($"if (value.{propertyName}.HasValue)");
                     lines.Add("  return true;");
-                    continue;
                 }
-                    
-                    
             }
         }
 
@@ -165,7 +153,6 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
 
         return (lines, default);
     }
-   
 
     class SyntaxReceiver : ISyntaxReceiver
     {
