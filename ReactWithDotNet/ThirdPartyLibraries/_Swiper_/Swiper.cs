@@ -226,12 +226,16 @@ public sealed class SwiperBreakpoint
     
     public bool? centeredSlides { get; init; }
     
+    [SerializeAsNullWhenEmpty]
     public SwiperGridOption grid { get; } = new();
     
+    [SerializeAsNullWhenEmpty]
     public SwiperPagination pagination { get; } = new();
     
+    [SerializeAsNullWhenEmpty]
     public SwiperNavigationOption navigation { get; } = new();
     
+    [SerializeAsNullWhenEmpty]
     public SwiperAutoplay autoplay { get; } = new();
     
     internal class SwiperBreakpointJsonConverter : JsonConverter<SwiperBreakpoint>

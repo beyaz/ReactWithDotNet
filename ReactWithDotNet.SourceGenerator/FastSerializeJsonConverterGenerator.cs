@@ -77,12 +77,26 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
                     {
                         cache[propertyTypeName] = GetSourceTextOfHasValueChecker(found).value;
                     }
+
+                    var serializeAsNullWhenEmpty = propertyDeclarationSyntax.AttributeLists.SelectMany(al => al.Attributes).Any(ad => ad.Name.ToString() == "SerializeAsNullWhenEmpty");
+                    if (serializeAsNullWhenEmpty)
+                    {
+                        lines.Add($"if (HasValueChecker.HasValue(value.{propertyName}))");
+                        lines.Add("{");
+                        lines.Add($"  writer.WritePropertyName(\"{propertyName}\");");
+                        lines.Add($"  JsonSerializer.Serialize(writer, value.{propertyName}, options);");
+                        lines.Add("}");    
+                    }
+                    else
+                    {
+                        lines.Add($"if (value.{propertyName} != null)");
+                        lines.Add("{");
+                        lines.Add($"  writer.WritePropertyName(\"{propertyName}\");");
+                        lines.Add($"  JsonSerializer.Serialize(writer, value.{propertyName}, options);");
+                        lines.Add("}");
+                    }
+                        
                     
-                    lines.Add($"if (HasValueChecker.HasValue(value.{propertyName}))");
-                    lines.Add("{");
-                    lines.Add($"  writer.WritePropertyName(\"{propertyName}\");");
-                    lines.Add($"  JsonSerializer.Serialize(writer, value.{propertyName}, options);");
-                    lines.Add("}");
                 }
             }
 
@@ -101,7 +115,7 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
 
     public void Initialize(GeneratorInitializationContext context)
     {
-         AttachToDebugger();
+         //AttachToDebugger();
 
         // Register a syntax receiver to collect classes with the custom attribute
         context.RegisterForSyntaxNotifications(() => new SyntaxReceiver());
