@@ -363,6 +363,8 @@ static partial class JsonSerializationOptionHelper
         options.Converters.Add(JsonConverterFactoryForCommounUsage.Instance);
         
         options.Converters.Add(new JsonConverterFactoryForNullableNumbers());
+        
+        options.Converters.Add(new JsonConverterFactoryForFastSerialization());
 
         return options;
     }
