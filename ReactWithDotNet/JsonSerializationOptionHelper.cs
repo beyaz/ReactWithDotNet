@@ -364,7 +364,7 @@ static partial class JsonSerializationOptionHelper
         
         options.Converters.Add(new JsonConverterFactoryForNullableNumbers());
         
-        options.Converters.Add(new JsonConverterFactoryForFastSerialization());
+        options.Converters.Add(JsonConverterFactoryForFastSerialization.Instance);
 
         return options;
     }
