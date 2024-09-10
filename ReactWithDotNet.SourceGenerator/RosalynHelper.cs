@@ -19,7 +19,12 @@ static class RoslynHelper
             .OfType<NamespaceDeclarationSyntax>()
             .FirstOrDefault();
 
-        return namespaceDeclaration?.Name.ToString() ?? "global";
+        if (namespaceDeclaration is not null)
+        {
+            return namespaceDeclaration?.Name.ToString();
+        }
+
+        return "global";
     }
     /// <summary>
     /// Finds a class declaration by its name and namespace in the given compilation.

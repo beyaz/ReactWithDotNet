@@ -19,6 +19,9 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
             return;
         }
 
+        Dictionary<string, IReadOnlyList<string>> cache = new();
+        
+        
         // Loop through collected classes
         foreach (var classDeclaration in receiver.CandidateClasses)
         {
@@ -70,8 +73,12 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
                     }
 
                     var found = FindClassByNameAndNamespace(context.Compilation, propertyTypeName, GetNamespace(classDeclaration));
+                    if (found is not null && cache.ContainsKey(propertyTypeName) is false)
+                    {
+                        cache[propertyTypeName] = GetSourceTextOfHasValueChecker(found).value;
+                    }
                     
-                    lines.Add($"if ({propertyTypeName}HasValueChecker.HasValue(value.{propertyName}))");
+                    lines.Add($"if (HasValueChecker.HasValue(value.{propertyName}))");
                     lines.Add("{");
                     lines.Add($"  writer.WritePropertyName(\"{propertyName}\");");
                     lines.Add($"  JsonSerializer.Serialize(writer, value.{propertyName}, options);");
@@ -82,6 +89,11 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
             lines.Add("    writer.WriteEndObject();");
             lines.Add("  }"); // close method
             lines.Add("}"); // close class
+            
+            foreach (var keyValuePair in cache)
+            {
+                lines.AddRange(keyValuePair.Value);
+            }
 
             context.AddSource($"{className}.generated", SourceText.From(string.Join(Environment.NewLine, lines), Encoding.UTF8));
         }
@@ -95,6 +107,50 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
         context.RegisterForSyntaxNotifications(() => new SyntaxReceiver());
     }
 
+    
+    static (IReadOnlyList<string> value, Exception exception) GetSourceTextOfHasValueChecker( ClassDeclarationSyntax classDeclaration)
+    {
+        // Get the class name
+        var className = classDeclaration.Identifier.Text;
+
+        var lines = new List<string>
+        {
+            // $"namespace {GetNamespace(classDeclaration)};",
+
+            $"static partial class HasValueChecker",
+            "{",
+            $"    public static bool HasValue({className} value)",
+            "    {",
+            "        if(value == null)",
+            "        {",
+            "           return false;",
+            "        }"
+        };
+
+        foreach (var member in classDeclaration.Members)
+        {
+            if (member is PropertyDeclarationSyntax propertyDeclarationSyntax)
+            {
+                var propertyTypeName = propertyDeclarationSyntax.Type.ToFullString().Trim();
+                var propertyName = propertyDeclarationSyntax.Identifier.ValueText;
+
+                if (propertyTypeName == "double?"|| propertyTypeName == "bool?")
+                {
+                    lines.Add($"if (value.{propertyName}.HasValue)");
+                    lines.Add("  return true;");
+                    continue;
+                }
+                    
+                    
+            }
+        }
+
+        lines.Add("    return false;");
+        lines.Add("  }"); // close method
+        lines.Add("}"); // close class
+
+        return (lines, default);
+    }
    
 
     class SyntaxReceiver : ISyntaxReceiver
