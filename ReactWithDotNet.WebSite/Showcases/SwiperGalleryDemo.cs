@@ -25,7 +25,11 @@ sealed class SwiperGalleryDemo : PureComponent
             new Swiper(slides)
             {
                 navigation = { enabled = true },
-                modules    = ["FreeMode", "Navigation"]
+                modules    = ["FreeMode", "Navigation"],
+                breakpoints =
+                {
+                    {500,new (){ slidesPerView  = 1}}
+                }
             }
         };
     }
