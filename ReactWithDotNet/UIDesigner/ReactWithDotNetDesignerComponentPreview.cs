@@ -296,19 +296,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
             var properties = dummyValueProviderClass.GetProperties();
 
-            var matchedPropertyInfoSameNameAndType = properties.FirstOrDefault(hasMatchNameAndType);
-            if (matchedPropertyInfoSameNameAndType != null)
-            {
-                return matchedPropertyInfoSameNameAndType.GetValue(null, []);
-            }
-
-            var matchedPropertyInfoSameType = properties.FirstOrDefault(hasMatchWithPropertyType);
-            if (matchedPropertyInfoSameType != null)
-            {
-                return matchedPropertyInfoSameType.GetValue(null, []);
-            }
-            
-            return null;
+            return firstOrDefault(properties, hasMatchNameAndType, hasMatchWithPropertyType)?.GetValue(null, []);
 
             bool hasMatchNameAndType(PropertyInfo propertyInfo)
             {
@@ -331,6 +319,20 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                 }
 
                 return false;
+            }
+
+            static TSource firstOrDefault<TSource>(IReadOnlyCollection<TSource> source, params Func<TSource, bool>[] predicates) where TSource: class
+            {
+                foreach (var predicate in predicates)
+                {
+                    var result = source.FirstOrDefault(predicate);
+                    if (result != null)
+                    {
+                        return result;
+                    }
+                }
+
+                return default;
             }
         }
 
