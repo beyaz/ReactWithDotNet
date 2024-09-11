@@ -289,31 +289,33 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
         static object tryGetDummyValue(Assembly assembly, string targetLocationName, Type targetLocationType)
         {
             var dummyValueProviderClass = assembly.GetTypes().FirstOrDefault(t => t.Name == "Dummy");
-            if (dummyValueProviderClass is not null)
+            if (dummyValueProviderClass is null)
             {
-                foreach (var propertyInfo in dummyValueProviderClass.GetProperties())
-                {
-                    var hasMatch = false;
+                return null;
+            }
+            
+            foreach (var propertyInfo in dummyValueProviderClass.GetProperties())
+            {
+                var hasMatch = false;
 
-                    if (propertyInfo.PropertyType.IsValueType || propertyInfo.PropertyType == typeof(string))
+                if (propertyInfo.PropertyType.IsValueType || propertyInfo.PropertyType == typeof(string))
+                {
+                    if (propertyInfo.PropertyType == targetLocationType)
                     {
-                        if (propertyInfo.PropertyType == targetLocationType)
+                        if (propertyInfo.Name.Equals(targetLocationName, StringComparison.OrdinalIgnoreCase))
                         {
-                            if (propertyInfo.Name.Equals(targetLocationName, StringComparison.OrdinalIgnoreCase))
-                            {
-                                hasMatch = true;
-                            }
+                            hasMatch = true;
                         }
                     }
-                    else if (propertyInfo.PropertyType == targetLocationType)
-                    {
-                        hasMatch = true;
-                    }
+                }
+                else if (propertyInfo.PropertyType == targetLocationType)
+                {
+                    hasMatch = true;
+                }
 
-                    if (hasMatch)
-                    {
-                        return propertyInfo.GetValue(null, []);
-                    }
+                if (hasMatch)
+                {
+                    return propertyInfo.GetValue(null, []);
                 }
             }
 
