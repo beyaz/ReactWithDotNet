@@ -295,34 +295,43 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
             }
 
             var properties = dummyValueProviderClass.GetProperties();
-            
-            
-            foreach (var propertyInfo in properties)
+
+            var matchedPropertyInfoSameNameAndType = properties.FirstOrDefault(hasMatchNameAndType);
+            if (matchedPropertyInfoSameNameAndType != null)
             {
-                var hasMatch = false;
-
-                if (propertyInfo.PropertyType.IsValueType || propertyInfo.PropertyType == typeof(string))
-                {
-                    if (propertyInfo.PropertyType == targetLocationType)
-                    {
-                        if (propertyInfo.Name.Equals(targetLocationName, StringComparison.OrdinalIgnoreCase))
-                        {
-                            hasMatch = true;
-                        }
-                    }
-                }
-                else if (propertyInfo.PropertyType == targetLocationType)
-                {
-                    hasMatch = true;
-                }
-
-                if (hasMatch)
-                {
-                    return propertyInfo.GetValue(null, []);
-                }
+                return matchedPropertyInfoSameNameAndType.GetValue(null, []);
             }
 
+            var matchedPropertyInfoSameType = properties.FirstOrDefault(hasMatchWithPropertyType);
+            if (matchedPropertyInfoSameType != null)
+            {
+                return matchedPropertyInfoSameType.GetValue(null, []);
+            }
+            
             return null;
+
+            bool hasMatchNameAndType(PropertyInfo propertyInfo)
+            {
+                if (propertyInfo.PropertyType == targetLocationType)
+                {
+                    if (propertyInfo.Name.Equals(targetLocationName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+            
+            bool hasMatchWithPropertyType(PropertyInfo propertyInfo)
+            {
+                if (propertyInfo.PropertyType == targetLocationType)
+                {
+                    return true;
+                }
+
+                return false;
+            }
         }
 
         static void tryInitializeProperties(object instance)
