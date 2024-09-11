@@ -293,8 +293,11 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
             {
                 return null;
             }
+
+            var properties = dummyValueProviderClass.GetProperties();
             
-            foreach (var propertyInfo in dummyValueProviderClass.GetProperties())
+            
+            foreach (var propertyInfo in properties)
             {
                 var hasMatch = false;
 
