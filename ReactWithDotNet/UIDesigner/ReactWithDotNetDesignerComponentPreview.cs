@@ -132,7 +132,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                                 };
 
                                 tryInitializeProperties(component);
-                                
+
                                 return component;
                             }
 
@@ -160,7 +160,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                                 };
 
                                 tryInitializeProperties(reactPureComponent);
-                                
+
                                 return reactPureComponent;
                             }
 
@@ -310,7 +310,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                 return false;
             }
-            
+
             bool hasMatchWithPropertyType(PropertyInfo propertyInfo)
             {
                 if (propertyInfo.PropertyType == targetLocationType)
@@ -321,7 +321,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                 return false;
             }
 
-            static TSource firstOrDefault<TSource>(IReadOnlyCollection<TSource> source, params Func<TSource, bool>[] predicates) where TSource: class
+            static TSource firstOrDefault<TSource>(IReadOnlyCollection<TSource> source, params Func<TSource, bool>[] predicates) where TSource : class
             {
                 foreach (var predicate in predicates)
                 {
@@ -389,7 +389,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
         var element = await CreateElement(state, Context);
 
         // element += ComponentIndicatorStyle;
-        
+
         Client.RefreshComponentPreviewCompleted();
 
         return element;
