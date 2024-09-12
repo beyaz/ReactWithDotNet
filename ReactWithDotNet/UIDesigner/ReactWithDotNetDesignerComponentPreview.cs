@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Immutable;
 using System.Reflection;
 using System.Text.Json;
 
@@ -26,18 +27,48 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                 object calculateDummyParameter(ParameterInfo parameterInfo)
                 {
-                    var dummyValue = tryGetDummyValue(assembly, parameterInfo.Name, parameterInfo.ParameterType);
+                    var parameterName = parameterInfo.Name;
+                    var parameterType = parameterInfo.ParameterType;
+                    
+                    var dummyValue = tryGetDummyValue(assembly, parameterName, parameterType);
                     if (dummyValue is not null)
                     {
                         return dummyValue;
                     }
 
-                    if (parameterInfo.ParameterType.IsClass)
+                    if (parameterType.IsValueType)
                     {
-                        return null;
+                        return Activator.CreateInstance(parameterType);
                     }
 
-                    return Activator.CreateInstance(parameterInfo.ParameterType);
+                    // try create empty array for collection types
+                    if (parameterType.IsGenericType)
+                    {
+                        var genericTypeDefinition = parameterType.GetGenericTypeDefinition();
+                        
+                        if (genericTypeDefinition == typeof(IReadOnlyList<>)||
+                            genericTypeDefinition == typeof(IReadOnlyCollection<>)||
+                            genericTypeDefinition == typeof(IList<>)||
+                            genericTypeDefinition == typeof(IReadOnlyList<>))
+                        {
+                            var genericArguments = parameterType.GetGenericArguments();
+                            
+                            return Activator.CreateInstance(genericArguments[0].MakeArrayType(), 0);
+                        }
+                        
+                        if (genericTypeDefinition == typeof(ImmutableArray<>) ||
+                            genericTypeDefinition == typeof(ImmutableList<>))
+                        {
+                            var genericArguments = parameterType.GetGenericArguments();
+
+                            return genericTypeDefinition
+                                .MakeGenericType(genericArguments[0])
+                                .GetField("Empty", BindingFlags.Public | BindingFlags.Static)!
+                                .GetValue(null);
+                        }
+                    }
+
+                    return null;
                 }
 
                 if (state.SelectedMethod is not null)
