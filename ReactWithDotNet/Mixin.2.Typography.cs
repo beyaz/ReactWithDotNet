@@ -229,10 +229,6 @@ partial class Mixin
         return FontSize(cssUnit.ToString());
     }
 
-   
-
-    
-
     /// <summary>
     ///     style.letterSpacing = <paramref name="letterSpacingAsPixel" /> + 'px'
     /// </summary>
@@ -240,11 +236,14 @@ partial class Mixin
     {
         return new StyleModifier(style => style.letterSpacing = letterSpacingAsPixel.AsPixel());
     }
-
     
-
     public static StyleModifier LineHeight(double lineHeightPx)
     {
+        if (lineHeightPx < 5)
+        {
+           return LineHeight(lineHeightPx.ToString(CultureInfo_en_US));
+        }
+        
         return LineHeight(lineHeightPx.AsPixel());
     }
 
@@ -252,12 +251,4 @@ partial class Mixin
     {
         return LineHeight(cssUnit.ToString());
     }
-
-    
-
-   
-    
-    
-    
-    
 }
