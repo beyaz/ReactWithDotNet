@@ -11,7 +11,7 @@ class MainPageContentDescription : PureComponent
             SpaceY(16),
             new div(FontFamily_PlusJakartaSans_ExtraBold, FontSize40, LG(FontSize50), FontWeight800, WhenMediaSizeLessThan(MD, TextAlignCenter))
             {
-                LineHeight(62),
+                LineHeight(50), LG(LineHeight(60)),
                 
 
                 new HighlightedText { Text = "Write [react.js]  application in [c#]  language" }
