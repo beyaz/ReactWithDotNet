@@ -16,14 +16,9 @@ sealed class Logo : PureComponent
 
             new FlexRow
             {
-                
-                HighlightedText.CreateAttractiveText("React")+FontWeight500,
-                
-                HighlightedText.CreateAttractiveText(" with ")+FontWeight400 + FontSize(15),
-                
-                
-                HighlightedText.CreateAttractiveText("DotNet")+FontWeight500
-                
+                new GradientText{"React",FontWeight500},
+                new GradientText{" with ",FontWeight400 ,FontSize(15)},
+                new GradientText{"DotNet",FontWeight500}
             }
         };
     }

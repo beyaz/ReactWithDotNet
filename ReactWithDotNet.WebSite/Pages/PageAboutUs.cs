@@ -20,10 +20,7 @@ class PageAboutUs : PureComponent
                 
                 new FlexRowCentered(FontSize30, FontWeight600,Color(rgb(31, 38, 46)))
                 {
-                    new HighlightedText
-                    {
-                        Text = "Build better UI by [c#] and [react]"
-                    }
+                    "Build better UI by ",new GradientText{"c#"}," and ",new GradientText{"react"}
                 },
                 
                 SpaceY(30),

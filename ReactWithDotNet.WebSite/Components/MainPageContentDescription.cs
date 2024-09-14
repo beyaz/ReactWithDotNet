@@ -14,7 +14,9 @@ class MainPageContentDescription : PureComponent
                 LineHeight(50), LG(LineHeight(60)),
                 
 
-                new HighlightedText { Text = "Write [react.js]  application in [c#]  language" }
+                // new HighlightedText { Text = "Write [react.js]  application in [c#]  language" }
+                
+                "Write ", new GradientText{ "react.js"},"  application in ",new GradientText{"c#"},"  language"
             },
 
             SpaceY(20),

@@ -4,13 +4,15 @@ sealed class MainPageFooter : PureComponent
 {
     protected override Element render()
     {
-        return new footer(BorderTop(1, solid, Gray100), Height(50), WidthFull, Background("white"))
+        return new footer
         {
             DisplayFlexRowCentered,
-            new HighlightedText
-            {
-                Text = "React [\u2665] .Net"
-            }
+            WidthFull,Height(50),
+            BorderTop(1, solid, Gray100), 
+            Background(White),
+            
+
+            "React ", new GradientText { "♥", FontSize20 }, " .Net"
         };
     }
 }
