@@ -8,60 +8,60 @@
 
     },
   "dependencies": {
-    "esbuild": "^0.14.48",
+    "esbuild": "^0.23.1",
     "install": "^0.13.0",
-    "npm": "^8.15.0",
+    "npm": "^10.8.3",
 
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-transition-group": "^4.4.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-transition-group": "^4.4.5",
 
-    "@mui/material": "^5.11.7",
+    "@mui/material": "^6.1.0",
 
-    "@nextui-org/react": "^1.0.0-beta.12",
+    "@nextui-org/react": "^2.4.7",
 
-    "primeicons": "^5.0.0",
-    "primereact": "^8.2.0",
+    "primeicons": "^7.0.0",
+    "primereact": "^10.8.2",
 
-    "rsuite": "^5.70.0",
+    "rsuite": "^5.70.2",
 
     "react-xarrows": "^2.0.2",
 
-    "swiper": "^10.2.0",
+    "swiper": "^11.1.14",
 
    
 
-    "@uiw/react-codemirror": "4.21.13",
-    "@uiw/codemirror-extensions-langs": "4.21.13",
-    "@uiw/codemirror-theme-github": "4.21.13",
-    "@uiw/codemirror-extensions-basic-setup": "4.21.13",
+    "@uiw/react-codemirror": "4.23.2",
+    "@uiw/codemirror-extensions-langs": "4.23.2",
+    "@uiw/codemirror-theme-github": "4.23.2",
+    "@uiw/codemirror-extensions-basic-setup": "4.23.2",
 
-    "google-map-react": "^2.2.0",
+    "google-map-react": "^2.2.1",
 
     "react-free-scrollbar": "^0.3.4",
 
     "react-quill": "^2.0.0",
     "quill-image-resize-module-react": "^3.0.0",
 
-    "react-player": "^2.13.0",
+    "react-player": "^2.16.0",
 
-    "react-awesome-reveal": "^4.1.0",
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
+    "react-awesome-reveal": "^4.2.14",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
 
-    "framer-motion": "^10.16.0",
+    "framer-motion": "^11.5.4",
 
-    "@uiw/react-textarea-code-editor": "^2.1.7",
+    "@uiw/react-textarea-code-editor": "^3.0.2",
 
 
     "prismjs": "^1.29.0",
-    "react-simple-code-editor": "^0.13.1",
+    "react-simple-code-editor": "^0.14.1",
 
     "@monaco-editor/react": "^4.6.0",
 
     "react-split": "^2.0.14",
 
-    "@rpldy/uploady": "^1.8.1",
-    "@rpldy/upload-button": "^1.8.1"
+    "@rpldy/uploady": "^1.8.3",
+    "@rpldy/upload-button": "^1.8.3"
   }
 }
