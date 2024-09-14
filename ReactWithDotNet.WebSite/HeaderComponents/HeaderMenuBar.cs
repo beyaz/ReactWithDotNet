@@ -89,11 +89,13 @@ sealed class HeaderMenuBar : PureComponent
         {
             return new a(PaddingTopBottom(20), BorderRadius, PaddingLeft(20), PaddingRight(30), TextDecorationNone, CursorDefault)
             {
+                WidthFull,
                 GetPageLink(Model.PageName),
 
                 LetterSpacingNormal,
                 BackgroundForPaper,
-                Hover(Background(Gray50)),
+                BorderWidth(1),
+                Hover(Background(Gray50), Border(1,solid,Gray100)),
 
                 new FlexRow(AlignItemsCenter, Gap(20), BorderRadius)
                 {
