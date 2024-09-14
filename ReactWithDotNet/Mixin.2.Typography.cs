@@ -12,6 +12,7 @@ partial class Mixin
     public static StyleModifier FontSize17 => FontSize(17);
     public static StyleModifier FontSize18 => FontSize(18);
     public static StyleModifier FontSize19 => FontSize(19);
+    
     public static StyleModifier FontSize20 => FontSize(20);
     public static StyleModifier FontSize21 => FontSize(21);
     public static StyleModifier FontSize22 => FontSize(22);
@@ -22,17 +23,83 @@ partial class Mixin
     public static StyleModifier FontSize27 => FontSize(27);
     public static StyleModifier FontSize28 => FontSize(28);
     public static StyleModifier FontSize29 => FontSize(29);
+    
     public static StyleModifier FontSize30 => FontSize(30);
-    public static StyleModifier FontSize31 => FontSize(30);
-    public static StyleModifier FontSize32 => FontSize(30);
-    public static StyleModifier FontSize33 => FontSize(30);
-    public static StyleModifier FontSize34 => FontSize(30);
-    public static StyleModifier FontSize35 => FontSize(30);
-    public static StyleModifier FontSize36 => FontSize(30);
-    public static StyleModifier FontSize37 => FontSize(30);
-    public static StyleModifier FontSize38 => FontSize(30);
-    public static StyleModifier FontSize39 => FontSize(30);
-    public static StyleModifier FontSize40 => FontSize(30);
+    public static StyleModifier FontSize31 => FontSize(31);
+    public static StyleModifier FontSize32 => FontSize(32);
+    public static StyleModifier FontSize33 => FontSize(33);
+    public static StyleModifier FontSize34 => FontSize(34);
+    public static StyleModifier FontSize35 => FontSize(35);
+    public static StyleModifier FontSize36 => FontSize(36);
+    public static StyleModifier FontSize37 => FontSize(37);
+    public static StyleModifier FontSize38 => FontSize(38);
+    public static StyleModifier FontSize39 => FontSize(39);
+    
+    public static StyleModifier FontSize40 => FontSize(40);
+    public static StyleModifier FontSize41 => FontSize(41);
+    public static StyleModifier FontSize42 => FontSize(42);
+    public static StyleModifier FontSize43 => FontSize(43);
+    public static StyleModifier FontSize44 => FontSize(44);
+    public static StyleModifier FontSize45 => FontSize(45);
+    public static StyleModifier FontSize46 => FontSize(46);
+    public static StyleModifier FontSize47 => FontSize(47);
+    public static StyleModifier FontSize48 => FontSize(48);
+    public static StyleModifier FontSize49 => FontSize(49);
+    
+    public static StyleModifier FontSize50 => FontSize(50);
+    public static StyleModifier FontSize51 => FontSize(51);
+    public static StyleModifier FontSize52 => FontSize(52);
+    public static StyleModifier FontSize53 => FontSize(53);
+    public static StyleModifier FontSize54 => FontSize(54);
+    public static StyleModifier FontSize55 => FontSize(55);
+    public static StyleModifier FontSize56 => FontSize(56);
+    public static StyleModifier FontSize57 => FontSize(57);
+    public static StyleModifier FontSize58 => FontSize(58);
+    public static StyleModifier FontSize59 => FontSize(59);
+    
+    public static StyleModifier FontSize60 => FontSize(60);
+    public static StyleModifier FontSize61 => FontSize(61);
+    public static StyleModifier FontSize62 => FontSize(62);
+    public static StyleModifier FontSize63 => FontSize(63);
+    public static StyleModifier FontSize64 => FontSize(64);
+    public static StyleModifier FontSize65 => FontSize(65);
+    public static StyleModifier FontSize66 => FontSize(66);
+    public static StyleModifier FontSize67 => FontSize(67);
+    public static StyleModifier FontSize68 => FontSize(68);
+    public static StyleModifier FontSize69 => FontSize(69);
+    
+    public static StyleModifier FontSize70 => FontSize(70);
+    public static StyleModifier FontSize71 => FontSize(71);
+    public static StyleModifier FontSize72 => FontSize(72);
+    public static StyleModifier FontSize73 => FontSize(73);
+    public static StyleModifier FontSize74 => FontSize(74);
+    public static StyleModifier FontSize75 => FontSize(75);
+    public static StyleModifier FontSize76 => FontSize(76);
+    public static StyleModifier FontSize77 => FontSize(77);
+    public static StyleModifier FontSize78 => FontSize(78);
+    public static StyleModifier FontSize79 => FontSize(79);
+    
+    public static StyleModifier FontSize80 => FontSize(80);
+    public static StyleModifier FontSize81 => FontSize(81);
+    public static StyleModifier FontSize82 => FontSize(82);
+    public static StyleModifier FontSize83 => FontSize(83);
+    public static StyleModifier FontSize84 => FontSize(84);
+    public static StyleModifier FontSize85 => FontSize(85);
+    public static StyleModifier FontSize86 => FontSize(86);
+    public static StyleModifier FontSize87 => FontSize(87);
+    public static StyleModifier FontSize88 => FontSize(88);
+    public static StyleModifier FontSize89 => FontSize(89);
+    
+    public static StyleModifier FontSize90 => FontSize(90);
+    public static StyleModifier FontSize91 => FontSize(91);
+    public static StyleModifier FontSize92 => FontSize(92);
+    public static StyleModifier FontSize93 => FontSize(93);
+    public static StyleModifier FontSize94 => FontSize(94);
+    public static StyleModifier FontSize95 => FontSize(95);
+    public static StyleModifier FontSize96 => FontSize(96);
+    public static StyleModifier FontSize97 => FontSize(97);
+    public static StyleModifier FontSize98 => FontSize(98);
+    public static StyleModifier FontSize99 => FontSize(99);
 
 	public static StyleModifier FontSize5 => FontSize(5);
 	public static StyleModifier FontSize6 => FontSize(6);
