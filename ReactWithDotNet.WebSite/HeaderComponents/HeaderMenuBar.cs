@@ -81,9 +81,9 @@ sealed class HeaderMenuBar : PureComponent
         }
     }
 
-    sealed class TooltipRowView : PureComponent
+    sealed class MenuItemView : PureComponent
     {
-        public MenuItem Model { get; init; } = MenuAccess.MenuList.First().Children.First();
+        public MenuItem Model { get; init; }
 
         protected override Element render()
         {
@@ -126,7 +126,7 @@ sealed class HeaderMenuBar : PureComponent
                 classes = { { "tooltip", [Background(Theme.common_background), Padding(0), BorderRadius] } },
                 title = new FlexColumn(BorderRadius, Border(Solid(1, Theme.grey_200)), Width(400), BoxShadow(rgba(170, 180, 190, 0.3), 0, 4, 20))
                 {
-                    Model.Children.ToListOf(x => new TooltipRowView { Model = x })
+                    Model.Children.ToListOf(x => new MenuItemView { Model = x })
                 },
                 children =
                 {
