@@ -94,8 +94,8 @@ sealed class HeaderMenuBar : PureComponent
 
                 LetterSpacingNormal,
                 BackgroundForPaper,
-                BorderWidth(1),
-                Hover(Background(Gray50), Border(1,solid,Gray100)),
+                Border(1,solid,transparent),
+                Hover(Background(Gray50), BorderColor(Gray100)),
 
                 new FlexRow(AlignItemsCenter, Gap(20), BorderRadius)
                 {
@@ -123,7 +123,10 @@ sealed class HeaderMenuBar : PureComponent
         {
             return new Tooltip
             {
-                classes = { { "tooltip", [Background(Theme.common_background), Padding(0), BorderRadius] } },
+                classes =
+                {
+                    { "tooltip", [Background(Theme.common_background), Padding(0), BorderRadius] }
+                },
                 title = new FlexColumn(BorderRadius, Border(Solid(1, Theme.grey_200)), Width(400), BoxShadow(rgba(170, 180, 190, 0.3), 0, 4, 20))
                 {
                     Model.Children.ToListOf(x => new MenuItemView { Model = x })
@@ -134,7 +137,8 @@ sealed class HeaderMenuBar : PureComponent
                     {
                         Text(Model.Title),
                         Padding(10),
-                        Hover(Background(Gray50), Border(1, solid, Gray200)),
+                        Border(1,solid,transparent),
+                        Hover(Background(Gray50), BorderColor(Gray200)),
                         BorderRadius,
                         FontSize14,
                         FontWeight700,
