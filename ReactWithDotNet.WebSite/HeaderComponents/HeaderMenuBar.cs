@@ -16,7 +16,7 @@ sealed class HeaderMenuBar : PureComponent
                 SpaceX(24),
                 new nav(DisplayFlex, AlignItemsCenter, WhenMediaSizeLessThan(MD, DisplayNone))
                 {
-                    MenuAccess.MenuList.Select(x => new TooltipView { Model = x })
+                    MenuAccess.MenuList.Select(x => new MenuView { Model = x })
                 }
             },
 
@@ -115,9 +115,9 @@ sealed class HeaderMenuBar : PureComponent
         }
     }
 
-    sealed class TooltipView : PureComponent
+    sealed class MenuView : PureComponent
     {
-        public Menu Model { get; init; } = MenuAccess.MenuList.First();
+        public Menu Model { get; init; }
 
         protected override Element render()
         {
