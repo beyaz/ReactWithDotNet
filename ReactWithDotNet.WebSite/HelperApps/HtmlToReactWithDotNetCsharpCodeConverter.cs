@@ -836,6 +836,14 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         sb.ToString()
                     };
 
+                    if (htmlNode.Attributes.Count == 1)
+                    {
+                        lines.Add("{");
+                        lines.Add(ConvertToCSharpString(htmlNode.Attributes[0].Value));
+                        lines.Add("}");
+                        return lines;
+                    }
+
                     if (htmlNode.Attributes.Count > 0)
                     {
                         lines.Add("{");

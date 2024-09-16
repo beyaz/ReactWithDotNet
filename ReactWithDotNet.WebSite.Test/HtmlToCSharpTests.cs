@@ -13,7 +13,10 @@ public class HtmlToCSharpTests
                <span>xYz1</span>
                """,
                """
-               new span { "xYz1" }
+               new span
+               {
+                   "xYz1"
+               }
                """);
         
         
