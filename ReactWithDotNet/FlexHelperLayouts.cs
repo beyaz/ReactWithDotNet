@@ -24,6 +24,16 @@ public sealed class FlexRow : HtmlElement
     ///     <br />
     ///     flexDirection  = "row"
     /// </summary>
+    public FlexRow(string className) : this()
+    {
+        this.className = className;
+    }
+    
+    /// <summary>
+    ///     display = "flex"
+    ///     <br />
+    ///     flexDirection  = "row"
+    /// </summary>
     public FlexRow()
     {
         ProcessModifier(this, DisplayFlexRow);
@@ -59,6 +69,16 @@ public sealed class InlineFlexRow : HtmlElement
         ProcessModifier(this, DisplayInlineFlexRow);
     }
 
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "row"
+    /// </summary>
+    public InlineFlexRow(string className) : this()
+    {
+        this.className = className;
+    }
+    
     public override string __type__ => nameof(div);
 }
 
@@ -425,8 +445,6 @@ partial class Mixin
         style.justifyContent = "center";
         style.alignItems     = "center";
     });
-
-    internal const string StringNull = null;
 }
 
 partial class Mixin
