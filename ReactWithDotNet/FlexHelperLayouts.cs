@@ -108,6 +108,16 @@ public sealed class FlexColumn : HtmlElement
     {
         ProcessModifier(this, DisplayFlexColumn);
     }
+    
+    /// <summary>
+    ///     display = "flex"
+    ///     <br />
+    ///     flexDirection  = "column"
+    /// </summary>
+    public FlexColumn(string className) : this()
+    {
+        this.className = className;
+    }
 
     public override string __type__ => nameof(div);
 }
@@ -138,6 +148,16 @@ public sealed class InlineFlexColumn : HtmlElement
     {
         ProcessModifier(this, DisplayInlineFlexColumn);
     }
+    
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "inline-column"
+    /// </summary>
+    public InlineFlexColumn(string className) : this()
+    {
+        this.className = className;
+    }
 
     public override string __type__ => nameof(div);
 }
@@ -165,6 +185,20 @@ public sealed class FlexRowCentered : HtmlElement
     public FlexRowCentered()
     {
         ProcessModifier(this, DisplayFlexRowCentered);
+    }
+    
+    /// <summary>
+    ///     display = "flex"
+    ///     <br />
+    ///     flexDirection  = "row"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
+    /// </summary>
+    public FlexRowCentered(string className) : this()
+    {
+        this.className = className;
     }
 
     /// <summary>
@@ -218,6 +252,21 @@ public sealed class InlineFlexRowCentered : HtmlElement
     ///     <br />
     ///     alignItems     = "center"
     /// </summary>
+    public InlineFlexRowCentered(string className) : this()
+    {
+        this.className = className;
+    }
+    
+    
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "row"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
+    /// </summary>
     public InlineFlexRowCentered(params Modifier[] modifiers) : this()
     {
         this.Apply(modifiers);
@@ -249,6 +298,20 @@ public sealed class FlexColumnCentered : HtmlElement
     public FlexColumnCentered()
     {
         ProcessModifier(this, DisplayFlexColumnCentered);
+    }
+    
+    /// <summary>
+    ///     display = "flex"
+    ///     <br />
+    ///     flexDirection  = "column"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
+    /// </summary>
+    public FlexColumnCentered(string className) : this()
+    {
+        this.className = className;
     }
 
     /// <summary>
@@ -293,6 +356,20 @@ public sealed class InlineFlexColumnCentered : HtmlElement
         ProcessModifier(this, DisplayInlineFlexColumnCentered);
     }
 
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "column"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
+    /// </summary>
+    public InlineFlexColumnCentered(string className) : this()
+    {
+        this.className = className;
+    }
+    
     /// <summary>
     ///     display = "inline-flex"
     ///     <br />
