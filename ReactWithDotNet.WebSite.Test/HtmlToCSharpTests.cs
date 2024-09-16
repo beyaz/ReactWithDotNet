@@ -56,7 +56,9 @@ public class HtmlToCSharpTests
 
         static void Assert(string html, string expected)
         {
-            HtmlToCSharp(html, false, 3).Should().Be(expected);
+            var actual = HtmlToCSharp(html, false, 3);
+            
+            actual.Should().Be(expected);
         }
     }
 
