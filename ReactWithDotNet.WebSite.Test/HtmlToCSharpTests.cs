@@ -10,7 +10,7 @@ public class HtmlToCSharpTests
     public void _0()
     {
         Assert("""
-               <span>xYz1<span>
+               <span>xYz1</span>
                """,
                """
                new span { "xYz1" }
