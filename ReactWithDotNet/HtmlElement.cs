@@ -27,9 +27,9 @@ abstract partial class HtmlElement : Element
         this.Apply(modifiers);
     }
 
-    protected HtmlElement(string innerText)
+    protected HtmlElement(string className)
     {
-        text = innerText;
+        this.className = className;
     }
 
     protected HtmlElement(Style style)

@@ -8,7 +8,7 @@ public sealed class article : HtmlElement
     /// <summary>
     ///     Specifies independent, self-contained content.
     /// </summary>
-    public article(string innerText) : base(innerText) {  }
+    public article(string className) : base(className) {  }
 
     /// <summary>
     ///     Specifies independent, self-contained content.
@@ -209,6 +209,8 @@ public sealed class button : HtmlElement
     #endregion
 
 
+
+    public button(string className) : base(className) {  }
     public button() { }
 
     public button(params Modifier[] modifiers) : base(modifiers) { }
@@ -293,7 +295,7 @@ public sealed class button : HtmlElement
 public sealed class div : HtmlElement
 {
 
-    public div(string innerText) : base(innerText) {  }
+    public div(string className) : base(className) {  }
 
     public static implicit operator div(string text) => new() { text = text };
     public div() { }
@@ -316,7 +318,7 @@ public sealed class p : HtmlElement
     /// <summary>
     ///     Defines a paragraph
     /// </summary>
-    public p(string innerText) : base(innerText) {  }
+    public p(string className) : base(className) {  }
 
     /// <summary>
     ///     Defines a paragraph
@@ -364,6 +366,8 @@ public sealed class time : HtmlElement
     #endregion
 
 
+
+    public time(string className) : base(className) {  }
     public time() { }
 
     public time(params Modifier[] modifiers) : base(modifiers) { }
@@ -391,7 +395,7 @@ public sealed class dl : HtmlElement
     /// <summary>
     ///     Defines a description list.
     /// </summary>
-    public dl(string innerText) : base(innerText) {  }
+    public dl(string className) : base(className) {  }
 
     /// <summary>
     ///     Defines a description list.
@@ -429,7 +433,7 @@ public sealed class dt : HtmlElement
     /// <summary>
     ///     Defines a term/name in a description list.
     /// </summary>
-    public dt(string innerText) : base(innerText) {  }
+    public dt(string className) : base(className) {  }
 
     /// <summary>
     ///     Defines a term/name in a description list.
@@ -467,7 +471,7 @@ public sealed class dd : HtmlElement
     /// <summary>
     ///     Describe a term/name in a description list.
     /// </summary>
-    public dd(string innerText) : base(innerText) {  }
+    public dd(string className) : base(className) {  }
 
     /// <summary>
     ///     Describe a term/name in a description list.
@@ -505,7 +509,7 @@ public sealed class kbd : HtmlElement
     /// <summary>
     ///     tag is used to define keyboard input. The content inside is displayed in the browser's default monospace font.
     /// </summary>
-    public kbd(string innerText) : base(innerText) {  }
+    public kbd(string className) : base(className) {  }
 
     /// <summary>
     ///     tag is used to define keyboard input. The content inside is displayed in the browser's default monospace font.
@@ -543,7 +547,7 @@ public sealed class pre : HtmlElement
     /// <summary>
     ///     Preformatted text
     /// </summary>
-    public pre(string innerText) : base(innerText) {  }
+    public pre(string className) : base(className) {  }
 
     /// <summary>
     ///     Preformatted text
@@ -581,7 +585,7 @@ public sealed class code : HtmlElement
     /// <summary>
     ///     Define some text as computer code in a document
     /// </summary>
-    public code(string innerText) : base(innerText) {  }
+    public code(string className) : base(className) {  }
 
     /// <summary>
     ///     Define some text as computer code in a document
@@ -619,7 +623,7 @@ public sealed class ol : HtmlElement
     /// <summary>
     ///     Ordered list
     /// </summary>
-    public ol(string innerText) : base(innerText) {  }
+    public ol(string className) : base(className) {  }
 
     /// <summary>
     ///     Ordered list
@@ -657,7 +661,7 @@ public sealed class ul : HtmlElement
     /// <summary>
     ///     Unordered (bulleted) list
     /// </summary>
-    public ul(string innerText) : base(innerText) {  }
+    public ul(string className) : base(className) {  }
 
     /// <summary>
     ///     Unordered (bulleted) list
@@ -695,7 +699,7 @@ public sealed class li : HtmlElement
     /// <summary>
     ///     List item
     /// </summary>
-    public li(string innerText) : base(innerText) {  }
+    public li(string className) : base(className) {  }
 
     /// <summary>
     ///     List item
@@ -727,7 +731,7 @@ public sealed class li : HtmlElement
 public sealed class h1 : HtmlElement
 {
 
-    public h1(string innerText) : base(innerText) {  }
+    public h1(string className) : base(className) {  }
 
     public static implicit operator h1(string text) => new() { text = text };
     public h1() { }
@@ -744,7 +748,7 @@ public sealed class h1 : HtmlElement
 public sealed class h2 : HtmlElement
 {
 
-    public h2(string innerText) : base(innerText) {  }
+    public h2(string className) : base(className) {  }
 
     public static implicit operator h2(string text) => new() { text = text };
     public h2() { }
@@ -761,7 +765,7 @@ public sealed class h2 : HtmlElement
 public sealed class h3 : HtmlElement
 {
 
-    public h3(string innerText) : base(innerText) {  }
+    public h3(string className) : base(className) {  }
 
     public static implicit operator h3(string text) => new() { text = text };
     public h3() { }
@@ -778,7 +782,7 @@ public sealed class h3 : HtmlElement
 public sealed class h4 : HtmlElement
 {
 
-    public h4(string innerText) : base(innerText) {  }
+    public h4(string className) : base(className) {  }
 
     public static implicit operator h4(string text) => new() { text = text };
     public h4() { }
@@ -795,7 +799,7 @@ public sealed class h4 : HtmlElement
 public sealed class h5 : HtmlElement
 {
 
-    public h5(string innerText) : base(innerText) {  }
+    public h5(string className) : base(className) {  }
 
     public static implicit operator h5(string text) => new() { text = text };
     public h5() { }
@@ -812,7 +816,7 @@ public sealed class h5 : HtmlElement
 public sealed class h6 : HtmlElement
 {
 
-    public h6(string innerText) : base(innerText) {  }
+    public h6(string className) : base(className) {  }
 
     public static implicit operator h6(string text) => new() { text = text };
     public h6() { }
@@ -829,7 +833,7 @@ public sealed class h6 : HtmlElement
 public sealed class header : HtmlElement
 {
 
-    public header(string innerText) : base(innerText) {  }
+    public header(string className) : base(className) {  }
 
     public static implicit operator header(string text) => new() { text = text };
     public header() { }
@@ -852,7 +856,7 @@ public sealed class span : HtmlElement
     /// <summary>
     ///     Inline container used to mark up a part of a text, or a part of a document.
     /// </summary>
-    public span(string innerText) : base(innerText) {  }
+    public span(string className) : base(className) {  }
 
     /// <summary>
     ///     Inline container used to mark up a part of a text, or a part of a document.
@@ -890,7 +894,7 @@ public sealed class sup : HtmlElement
     /// <summary>
     ///     Superscript text
     /// </summary>
-    public sup(string innerText) : base(innerText) {  }
+    public sup(string className) : base(className) {  }
 
     /// <summary>
     ///     Superscript text
@@ -928,7 +932,7 @@ public sealed class sub : HtmlElement
     /// <summary>
     ///     Subscript text
     /// </summary>
-    public sub(string innerText) : base(innerText) {  }
+    public sub(string className) : base(className) {  }
 
     /// <summary>
     ///     Subscript text
@@ -966,7 +970,7 @@ public sealed class ins : HtmlElement
     /// <summary>
     ///     Inserted text
     /// </summary>
-    public ins(string innerText) : base(innerText) {  }
+    public ins(string className) : base(className) {  }
 
     /// <summary>
     ///     Inserted text
@@ -1004,7 +1008,7 @@ public sealed class del : HtmlElement
     /// <summary>
     ///     Deleted text
     /// </summary>
-    public del(string innerText) : base(innerText) {  }
+    public del(string className) : base(className) {  }
 
     /// <summary>
     ///     Deleted text
@@ -1042,7 +1046,7 @@ public sealed class small : HtmlElement
     /// <summary>
     ///     Smaller text
     /// </summary>
-    public small(string innerText) : base(innerText) {  }
+    public small(string className) : base(className) {  }
 
     /// <summary>
     ///     Smaller text
@@ -1080,7 +1084,7 @@ public sealed class mark : HtmlElement
     /// <summary>
     ///     Marked text
     /// </summary>
-    public mark(string innerText) : base(innerText) {  }
+    public mark(string className) : base(className) {  }
 
     /// <summary>
     ///     Marked text
@@ -1118,7 +1122,7 @@ public sealed class em : HtmlElement
     /// <summary>
     ///     Emphasized text
     /// </summary>
-    public em(string innerText) : base(innerText) {  }
+    public em(string className) : base(className) {  }
 
     /// <summary>
     ///     Emphasized text
@@ -1156,7 +1160,7 @@ public sealed class b : HtmlElement
     /// <summary>
     ///     Bold text
     /// </summary>
-    public b(string innerText) : base(innerText) {  }
+    public b(string className) : base(className) {  }
 
     /// <summary>
     ///     Bold text
@@ -1194,7 +1198,7 @@ public sealed class i : HtmlElement
     /// <summary>
     ///     Italic text
     /// </summary>
-    public i(string innerText) : base(innerText) {  }
+    public i(string className) : base(className) {  }
 
     /// <summary>
     ///     Italic text
@@ -1232,7 +1236,7 @@ public sealed class u : HtmlElement
     /// <summary>
     ///     Represents some text that is unarticulated and styled differently from normal text, such as misspelled words or proper names in Chinese text. The content inside is typically displayed with an underline.
     /// </summary>
-    public u(string innerText) : base(innerText) {  }
+    public u(string className) : base(className) {  }
 
     /// <summary>
     ///     Represents some text that is unarticulated and styled differently from normal text, such as misspelled words or proper names in Chinese text. The content inside is typically displayed with an underline.
@@ -1270,7 +1274,7 @@ public sealed class strong : HtmlElement
     /// <summary>
     ///     Important text
     /// </summary>
-    public strong(string innerText) : base(innerText) {  }
+    public strong(string className) : base(className) {  }
 
     /// <summary>
     ///     Important text
@@ -1304,6 +1308,11 @@ public sealed class strong : HtmlElement
 /// </summary>
 public sealed class section : HtmlElement
 {
+
+    /// <summary>
+    ///     Section in a document
+    /// </summary>
+    public section(string className) : base(className) {  }
     /// <summary>
     ///     Section in a document
     /// </summary>
@@ -1329,6 +1338,8 @@ public sealed class section : HtmlElement
 
 public sealed class aside : HtmlElement
 {
+
+    public aside(string className) : base(className) {  }
     public aside() { }
 
     public aside(params Modifier[] modifiers) : base(modifiers) { }
@@ -1342,6 +1353,8 @@ public sealed class aside : HtmlElement
 
 public sealed class fieldset : HtmlElement
 {
+
+    public fieldset(string className) : base(className) {  }
     public fieldset() { }
 
     public fieldset(params Modifier[] modifiers) : base(modifiers) { }
@@ -1355,6 +1368,8 @@ public sealed class fieldset : HtmlElement
 
 public sealed class legend : HtmlElement
 {
+
+    public legend(string className) : base(className) {  }
     public legend() { }
 
     public legend(params Modifier[] modifiers) : base(modifiers) { }
@@ -1368,6 +1383,8 @@ public sealed class legend : HtmlElement
 
 public sealed class nav : HtmlElement
 {
+
+    public nav(string className) : base(className) {  }
     public nav() { }
 
     public nav(params Modifier[] modifiers) : base(modifiers) { }
@@ -1381,6 +1398,8 @@ public sealed class nav : HtmlElement
 
 public sealed class main : HtmlElement
 {
+
+    public main(string className) : base(className) {  }
     public main() { }
 
     public main(params Modifier[] modifiers) : base(modifiers) { }
@@ -1394,6 +1413,8 @@ public sealed class main : HtmlElement
 
 public sealed class footer : HtmlElement
 {
+
+    public footer(string className) : base(className) {  }
     public footer() { }
 
     public footer(params Modifier[] modifiers) : base(modifiers) { }
@@ -1407,6 +1428,8 @@ public sealed class footer : HtmlElement
 
 public sealed class figure : HtmlElement
 {
+
+    public figure(string className) : base(className) {  }
     public figure() { }
 
     public figure(params Modifier[] modifiers) : base(modifiers) { }
@@ -1420,6 +1443,8 @@ public sealed class figure : HtmlElement
 
 public sealed class hr : HtmlElement
 {
+
+    public hr(string className) : base(className) {  }
     public hr() { }
 
     public hr(params Modifier[] modifiers) : base(modifiers) { }
@@ -1434,7 +1459,7 @@ public sealed class hr : HtmlElement
 public sealed class figcaption : HtmlElement
 {
 
-    public figcaption(string innerText) : base(innerText) {  }
+    public figcaption(string className) : base(className) {  }
 
     public static implicit operator figcaption(string text) => new() { text = text };
     public figcaption() { }
@@ -1478,6 +1503,8 @@ public sealed class table : HtmlElement
     #endregion
 
 
+
+    public table(string className) : base(className) {  }
     public table() { }
 
     public table(params Modifier[] modifiers) : base(modifiers) { }
@@ -1495,6 +1522,8 @@ public sealed class table : HtmlElement
 
 public sealed class thead : HtmlElement
 {
+
+    public thead(string className) : base(className) {  }
     public thead() { }
 
     public thead(params Modifier[] modifiers) : base(modifiers) { }
@@ -1508,6 +1537,8 @@ public sealed class thead : HtmlElement
 
 public sealed class tbody : HtmlElement
 {
+
+    public tbody(string className) : base(className) {  }
     public tbody() { }
 
     public tbody(params Modifier[] modifiers) : base(modifiers) { }
@@ -1521,6 +1552,8 @@ public sealed class tbody : HtmlElement
 
 public sealed class tfoot : HtmlElement
 {
+
+    public tfoot(string className) : base(className) {  }
     public tfoot() { }
 
     public tfoot(params Modifier[] modifiers) : base(modifiers) { }
@@ -1579,6 +1612,8 @@ public sealed class th : HtmlElement
     #endregion
 
 
+
+    public th(string className) : base(className) {  }
     public th() { }
 
     public th(params Modifier[] modifiers) : base(modifiers) { }
@@ -1632,7 +1667,7 @@ public sealed class td : HtmlElement
 
 
 
-    public td(string innerText) : base(innerText) {  }
+    public td(string className) : base(className) {  }
 
     public static implicit operator td(string text) => new() { text = text };
     public td() { }
@@ -1680,6 +1715,8 @@ public sealed class tr : HtmlElement
     #endregion
 
 
+
+    public tr(string className) : base(className) {  }
     public tr() { }
 
     public tr(params Modifier[] modifiers) : base(modifiers) { }
@@ -1739,6 +1776,8 @@ public sealed class option : HtmlElement
     #endregion
 
 
+
+    public option(string className) : base(className) {  }
     public option() { }
 
     public option(params Modifier[] modifiers) : base(modifiers) { }
@@ -1877,6 +1916,8 @@ public sealed class ellipse : HtmlElement
     #endregion
 
 
+
+    public ellipse(string className) : base(className) {  }
     public ellipse() { }
 
     public ellipse(params Modifier[] modifiers) : base(modifiers) { }
@@ -2109,6 +2150,8 @@ public sealed class line : HtmlElement
     #endregion
 
 
+
+    public line(string className) : base(className) {  }
     public line() { }
 
     public line(params Modifier[] modifiers) : base(modifiers) { }
@@ -2260,6 +2303,8 @@ public sealed class polyline : HtmlElement
     #endregion
 
 
+
+    public polyline(string className) : base(className) {  }
     public polyline() { }
 
     public polyline(params Modifier[] modifiers) : base(modifiers) { }
@@ -2403,6 +2448,8 @@ public sealed class circle : HtmlElement
     #endregion
 
 
+
+    public circle(string className) : base(className) {  }
     public circle() { }
 
     public circle(params Modifier[] modifiers) : base(modifiers) { }
@@ -2577,6 +2624,8 @@ public sealed class polygon : HtmlElement
     #endregion
 
 
+
+    public polygon(string className) : base(className) {  }
     public polygon() { }
 
     public polygon(params Modifier[] modifiers) : base(modifiers) { }
@@ -2653,6 +2702,8 @@ public sealed class use : HtmlElement
     #endregion
 
 
+
+    public use(string className) : base(className) {  }
     public use() { }
 
     public use(params Modifier[] modifiers) : base(modifiers) { }
@@ -2855,6 +2906,8 @@ public sealed class rect : HtmlElement
     #endregion
 
 
+
+    public rect(string className) : base(className) {  }
     public rect() { }
 
     public rect(params Modifier[] modifiers) : base(modifiers) { }
@@ -3098,6 +3151,8 @@ public sealed class marker : HtmlElement
     #endregion
 
 
+
+    public marker(string className) : base(className) {  }
     public marker() { }
 
     public marker(params Modifier[] modifiers) : base(modifiers) { }
@@ -3310,6 +3365,8 @@ public sealed class radialGradient : HtmlElement
     #endregion
 
 
+
+    public radialGradient(string className) : base(className) {  }
     public radialGradient() { }
 
     public radialGradient(params Modifier[] modifiers) : base(modifiers) { }
@@ -3413,6 +3470,8 @@ public sealed class clipPath : HtmlElement
     #endregion
 
 
+
+    public clipPath(string className) : base(className) {  }
     public clipPath() { }
 
     public clipPath(params Modifier[] modifiers) : base(modifiers) { }
@@ -3564,6 +3623,8 @@ public sealed class path : HtmlElement
     #endregion
 
 
+
+    public path(string className) : base(className) {  }
     public path() { }
 
     public path(params Modifier[] modifiers) : base(modifiers) { }
@@ -3655,6 +3716,8 @@ public sealed class g : HtmlElement
     #endregion
 
 
+
+    public g(string className) : base(className) {  }
     public g() { }
 
     public g(params Modifier[] modifiers) : base(modifiers) { }
@@ -3776,6 +3839,8 @@ public sealed class mask : HtmlElement
     #endregion
 
 
+
+    public mask(string className) : base(className) {  }
     public mask() { }
 
     public mask(params Modifier[] modifiers) : base(modifiers) { }
@@ -3967,6 +4032,8 @@ public sealed class meta : HtmlElement
     #endregion
 
 
+
+    public meta(string className) : base(className) {  }
     public meta() { }
 
     public meta(params Modifier[] modifiers) : base(modifiers) { }
@@ -4087,6 +4154,8 @@ public sealed class body : HtmlElement
     #endregion
 
 
+
+    public body(string className) : base(className) {  }
     public body() { }
 
     public body(params Modifier[] modifiers) : base(modifiers) { }
@@ -4240,6 +4309,8 @@ public sealed class script : HtmlElement
     #endregion
 
 
+
+    public script(string className) : base(className) {  }
     public script() { }
 
     public script(params Modifier[] modifiers) : base(modifiers) { }
@@ -4319,6 +4390,8 @@ public sealed class title : HtmlElement
     #endregion
 
 
+
+    public title(string className) : base(className) {  }
     public title() { }
 
     public title(params Modifier[] modifiers) : base(modifiers) { }
@@ -4424,6 +4497,8 @@ public sealed class head : HtmlElement
     #endregion
 
 
+
+    public head(string className) : base(className) {  }
     public head() { }
 
     public head(params Modifier[] modifiers) : base(modifiers) { }
@@ -4557,6 +4632,8 @@ public sealed class html : HtmlElement
     #endregion
 
 
+
+    public html(string className) : base(className) {  }
     public html() { }
 
     public html(params Modifier[] modifiers) : base(modifiers) { }
@@ -4674,7 +4751,7 @@ public sealed class label : HtmlElement
 
 
 
-    public label(string innerText) : base(innerText) {  }
+    public label(string className) : base(className) {  }
 
     public static implicit operator label(string text) => new() { text = text };
     public label() { }
@@ -4888,6 +4965,8 @@ public sealed class a : HtmlElement
     #endregion
 
 
+
+    public a(string className) : base(className) {  }
     public a() { }
 
     public a(params Modifier[] modifiers) : base(modifiers) { }
@@ -5175,6 +5254,8 @@ public sealed class img : HtmlElement
     #endregion
 
 
+
+    public img(string className) : base(className) {  }
     public img() { }
 
     public img(params Modifier[] modifiers) : base(modifiers) { }
@@ -5427,6 +5508,8 @@ public sealed partial class svg : HtmlElement
     #endregion
 
 
+
+    public svg(string className) : base(className) {  }
     public svg() { }
 
     public svg(params Modifier[] modifiers) : base(modifiers) { }
@@ -5553,6 +5636,8 @@ public sealed partial class symbol : HtmlElement
     #endregion
 
 
+
+    public symbol(string className) : base(className) {  }
     public symbol() { }
 
     public symbol(params Modifier[] modifiers) : base(modifiers) { }
@@ -5781,6 +5866,8 @@ public sealed partial class video : HtmlElement
     #endregion
 
 
+
+    public video(string className) : base(className) {  }
     public video() { }
 
     public video(params Modifier[] modifiers) : base(modifiers) { }
@@ -6024,6 +6111,8 @@ public sealed partial class source : HtmlElement
     #endregion
 
 
+
+    public source(string className) : base(className) {  }
     public source() { }
 
     public source(params Modifier[] modifiers) : base(modifiers) { }
@@ -6142,6 +6231,8 @@ public sealed class stop : HtmlElement
     #endregion
 
 
+
+    public stop(string className) : base(className) {  }
     public stop() { }
 
     public stop(params Modifier[] modifiers) : base(modifiers) { }
@@ -6161,6 +6252,8 @@ public sealed class stop : HtmlElement
 
 public sealed class linearGradient : HtmlElement
 {
+
+    public linearGradient(string className) : base(className) {  }
     public linearGradient() { }
 
     public linearGradient(params Modifier[] modifiers) : base(modifiers) { }
@@ -6174,6 +6267,8 @@ public sealed class linearGradient : HtmlElement
 
 public sealed class noscript : HtmlElement
 {
+
+    public noscript(string className) : base(className) {  }
     public noscript() { }
 
     public noscript(params Modifier[] modifiers) : base(modifiers) { }
@@ -6187,6 +6282,8 @@ public sealed class noscript : HtmlElement
 
 public sealed class defs : HtmlElement
 {
+
+    public defs(string className) : base(className) {  }
     public defs() { }
 
     public defs(params Modifier[] modifiers) : base(modifiers) { }
@@ -6319,6 +6416,8 @@ public sealed class form : HtmlElement
     #endregion
 
 
+
+    public form(string className) : base(className) {  }
     public form() { }
 
     public form(params Modifier[] modifiers) : base(modifiers) { }
@@ -6725,6 +6824,8 @@ public sealed class textarea : HtmlElement
     #endregion
 
 
+
+    public textarea(string className) : base(className) {  }
     public textarea() { }
 
     public textarea(params Modifier[] modifiers) : base(modifiers) { }
@@ -6995,6 +7096,8 @@ public sealed class link : HtmlElement
     #endregion
 
 
+
+    public link(string className) : base(className) {  }
     public link() { }
 
     public link(params Modifier[] modifiers) : base(modifiers) { }
@@ -7247,6 +7350,8 @@ public sealed class iframe : HtmlElement
     #endregion
 
 
+
+    public iframe(string className) : base(className) {  }
     public iframe() { }
 
     public iframe(params Modifier[] modifiers) : base(modifiers) { }
@@ -7453,6 +7558,8 @@ public sealed class select : HtmlElement
     #endregion
 
 
+
+    public select(string className) : base(className) {  }
     public select() { }
 
     public select(params Modifier[] modifiers) : base(modifiers) { }
@@ -7848,6 +7955,8 @@ public sealed class input : HtmlElement
     #endregion
 
 
+
+    public input(string className) : base(className) {  }
     public input() { }
 
     public input(params Modifier[] modifiers) : base(modifiers) { }

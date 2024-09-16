@@ -2300,15 +2300,18 @@ public class ExportingCommonHtmlElements
                 }
             }
 
-            
-           
 
-            if (item.EnableCastFromString)
+
+            if (item.Tag !="HtmlElement")
             {
                 list.Add(Empty);
                 addComment();
-                list.Add($"    public {item.Tag}(string innerText) : base(innerText) {{  }}");
+                list.Add($"    public {item.Tag}(string className) : base(className) {{  }}");    
+            }
+            
 
+            if (item.EnableCastFromString)
+            {
                 list.Add(Empty);
                 addComment();
                 list.Add($"    public static implicit operator {item.Tag}(string text) => new() {{ text = text }};");
