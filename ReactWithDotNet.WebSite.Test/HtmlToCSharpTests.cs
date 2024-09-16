@@ -9,15 +9,6 @@ public class HtmlToCSharpTests
     [TestMethod]
     public void _0()
     {
-        Assert("""
-               <span>xYz1</span>
-               """,
-               """
-               new span
-               {
-                   "xYz1"
-               }
-               """);
         
         Assert("""
                <span class='a-b c'>xYz1</span>
@@ -28,6 +19,19 @@ public class HtmlToCSharpTests
                    "xYz1"
                }
                """);
+        
+        
+        Assert("""
+               <span>xYz1</span>
+               """,
+               """
+               new span
+               {
+                   "xYz1"
+               }
+               """);
+        
+    
         
         
         Assert("""
