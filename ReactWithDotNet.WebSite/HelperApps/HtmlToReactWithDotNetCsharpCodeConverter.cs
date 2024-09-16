@@ -826,7 +826,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 if (modifiers.Count > 0)
                 {
                     sb.Append("(");
-                    sb.Append(string.Join(", ", modifiers));
+                    sb.Append(JoinModifiers(modifiers));
                     sb.Append(")");
                 }
 
