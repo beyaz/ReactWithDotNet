@@ -10,6 +10,14 @@ public class HtmlToCSharpTests
     public void _0()
     {
         Assert("""
+               <span>xYz1<span>
+               """,
+               """
+               new span { "xYz1" }
+               """);
+        
+        
+        Assert("""
                <a target='_blank' />
                """,
                """
