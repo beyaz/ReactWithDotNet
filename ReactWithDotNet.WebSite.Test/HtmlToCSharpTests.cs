@@ -19,6 +19,16 @@ public class HtmlToCSharpTests
                }
                """);
         
+        Assert("""
+               <span class='a-b c'>xYz1</span>
+               """,
+               """
+               new span("a-b c")
+               {
+                   "xYz1"
+               }
+               """);
+        
         
         Assert("""
                <a target='_blank' />
