@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet;
+﻿using static ReactWithDotNet.ModifyHelper;
+
+namespace ReactWithDotNet;
 
 /// <summary>
 ///     display = "flex"
@@ -24,8 +26,7 @@ public sealed class FlexRow : HtmlElement
     /// </summary>
     public FlexRow()
     {
-        style.display       = "flex";
-        style.flexDirection = "row";
+        ProcessModifier(this, DisplayFlexRow);
     }
 
     public override string __type__ => nameof(div);
@@ -55,8 +56,7 @@ public sealed class InlineFlexRow : HtmlElement
     /// </summary>
     public InlineFlexRow()
     {
-        style.display       = "inline-flex";
-        style.flexDirection = "row";
+        ProcessModifier(this, DisplayInlineFlexRow);
     }
 
     public override string __type__ => nameof(div);
@@ -86,8 +86,7 @@ public sealed class FlexColumn : HtmlElement
     /// </summary>
     public FlexColumn()
     {
-        style.display       = "flex";
-        style.flexDirection = "column";
+        ProcessModifier(this, DisplayFlexColumn);
     }
 
     public override string __type__ => nameof(div);
@@ -117,8 +116,7 @@ public sealed class InlineFlexColumn : HtmlElement
     /// </summary>
     public InlineFlexColumn()
     {
-        style.display       = "inline-flex";
-        style.flexDirection = "column";
+        ProcessModifier(this, DisplayInlineFlexColumn);
     }
 
     public override string __type__ => nameof(div);
@@ -146,10 +144,7 @@ public sealed class FlexRowCentered : HtmlElement
     /// </summary>
     public FlexRowCentered()
     {
-        style.display        = "flex";
-        style.flexDirection  = "row";
-        style.justifyContent = "center";
-        style.alignItems     = "center";
+        ProcessModifier(this, DisplayFlexRowCentered);
     }
 
     /// <summary>
@@ -191,10 +186,7 @@ public sealed class InlineFlexRowCentered : HtmlElement
     /// </summary>
     public InlineFlexRowCentered()
     {
-        style.display        = "inline-flex";
-        style.flexDirection  = "row";
-        style.justifyContent = "center";
-        style.alignItems     = "center";
+        ProcessModifier(this, DisplayInlineFlexRowCentered);
     }
 
     /// <summary>
@@ -236,10 +228,7 @@ public sealed class FlexColumnCentered : HtmlElement
     /// </summary>
     public FlexColumnCentered()
     {
-        style.display        = "flex";
-        style.flexDirection  = "column";
-        style.justifyContent = "center";
-        style.alignItems     = "center";
+        ProcessModifier(this, DisplayFlexColumnCentered);
     }
 
     /// <summary>
@@ -281,10 +270,7 @@ public sealed class InlineFlexColumnCentered : HtmlElement
     /// </summary>
     public InlineFlexColumnCentered()
     {
-        style.display        = "inline-flex";
-        style.flexDirection  = "column";
-        style.justifyContent = "center";
-        style.alignItems     = "center";
+        ProcessModifier(this, DisplayInlineFlexColumnCentered);
     }
 
     /// <summary>
@@ -439,6 +425,8 @@ partial class Mixin
         style.justifyContent = "center";
         style.alignItems     = "center";
     });
+
+    internal const string StringNull = null;
 }
 
 partial class Mixin
