@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
 using System.Text;
 using HtmlAgilityPack;
 using PropertyInfo = System.Reflection.PropertyInfo;
@@ -337,6 +338,34 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         if (data.htmlNode.ChildNodes.Count == 0)
         {
+            return leafElementToString(data);
+        }
+
+        data = convertAllAttributesToModifiers(data);
+
+        if (data.htmlNode.ChildNodes.Count == 1 && data.htmlNode.ChildNodes[0].Name == "#text")
+        {
+            if (data.htmlNode.Attributes.Count == 0 && data.style is null)
+            {
+                return [$"({data.htmlNodeName})" + ConvertToCSharpString(data.htmlNode.ChildNodes[0].InnerText)];
+            }
+
+            return
+            [
+                $"new {data.htmlNodeName}({JoinModifiers(data.modifiers)})",
+                "{",
+                ConvertToCSharpString(data.htmlNode.ChildNodes[0].InnerText),
+                "}"
+            ];
+        }
+
+
+        return exportMultiLine(data);
+
+        static List<string> leafElementToString(Data data)
+        {
+            Debug.Assert(data.htmlNode.ChildNodes.Count == 0);
+            
             List<string> attributeToString(HtmlAttribute attribute)
             {
                 if (attribute.Name == "style" && data.style is not null)
@@ -549,27 +578,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 }
             }
         }
-
-        data = convertAllAttributesToModifiers(data);
-
-        if (data.htmlNode.ChildNodes.Count == 1 && data.htmlNode.ChildNodes[0].Name == "#text")
-        {
-            if (data.htmlNode.Attributes.Count == 0 && data.style is null)
-            {
-                return [$"({data.htmlNodeName})" + ConvertToCSharpString(data.htmlNode.ChildNodes[0].InnerText)];
-            }
-
-            return
-            [
-                $"new {data.htmlNodeName}({JoinModifiers(data.modifiers)})",
-                "{",
-                ConvertToCSharpString(data.htmlNode.ChildNodes[0].InnerText),
-                "}"
-            ];
-        }
-
-
-        return exportMultiLine(data);
 
         static Data grabStyleAttribute(Data data)
         {
