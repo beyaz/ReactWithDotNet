@@ -278,87 +278,66 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         public HtmlNode htmlNode { get; init; }
         public bool smartMode { get; init; }
         public int maxAttributeCountPerLine { get; init; }
+        
         public HtmlAttribute classNameAttribute { get; init; }
+        
+        public string htmlNodeName { get; init; }
+
+        public Style style;
+        public List<ModifierCode> modifiers;
     }
+
     static List<string> ToCSharpCode(HtmlNode htmlNode, bool smartMode, int maxAttributeCountPerLine)
     {
-        var data = new Data
+        return ToCSharpCode(new Data
         {
             htmlNode                 = htmlNode,
             smartMode                = smartMode,
             maxAttributeCountPerLine = maxAttributeCountPerLine
-        };
-
+        });
+    }
+    static List<string> ToCSharpCode(Data data)
+    {
         data = tryRemoveClassAttribute(data);
+        data = ignoreSmartModeSpecificTags(data);
+        data = initHtmlNodeName(data);
         
-        static Data tryRemoveClassAttribute(Data data)
+        if (data.htmlNodeName == "#text")
         {
-            var htmlNode = data.htmlNode;
-            
-            var classNameAttribute = htmlNode.Attributes.FirstOrDefault(x => x.Name == "class");
-            if (classNameAttribute is null)
-            {
-                return data;
-            }
-            
-            htmlNode.Attributes.Remove(classNameAttribute);
-
-            return data with { classNameAttribute = classNameAttribute };
-        }
-        
-        
-        // ignore smart mode for specific case beautiful code format
-        var smartModeIgnoredTags = new List<string> { "rect", "path", "circle", "line" };
-        if (htmlNode.ChildNodes.Count == 0 && smartModeIgnoredTags.Any(tag => htmlNode.Name.Equals(tag, StringComparison.OrdinalIgnoreCase)))
-        {
-            smartMode = false;
-        }
-
-       
-
-        var htmlNodeName = htmlNode.OriginalName;
-        if (htmlNodeName == "clippath")
-        {
-            htmlNodeName = "clipPath";
-        }
-
-        if (htmlNodeName == "#text")
-        {
-            if (string.IsNullOrWhiteSpace(htmlNode.InnerText))
+            if (string.IsNullOrWhiteSpace(data.htmlNode.InnerText))
             {
                 return Enumerable.Empty<string>().ToList();
             }
 
-            if (htmlNode.InnerText == "&nbsp;")
+            if (data.htmlNode.InnerText == "&nbsp;")
             {
                 return ["nbsp"];
             }
 
-            return [ConvertToCSharpString(htmlNode.InnerText)];
+            return [ConvertToCSharpString(data.htmlNode.InnerText)];
         }
 
-        if (htmlNodeName == "br")
+        if (data.htmlNodeName == "br")
         {
             return ["br"];
         }
 
-        Style style = null;
 
         // grab style attribute
         {
-            var styleAttribute = htmlNode.Attributes["style"];
+            var styleAttribute = data.htmlNode.Attributes["style"];
             if (styleAttribute != null)
             {
                 if (!string.IsNullOrWhiteSpace(styleAttribute.Value))
                 {
-                    style = Style.ParseCss(styleAttribute.Value);
+                    data.style = Style.ParseCss(styleAttribute.Value);
                 }
 
-                htmlNode.Attributes.Remove("style");
+                data.htmlNode.Attributes.Remove("style");
             }
         }
 
-        var modifiers = new List<ModifierCode>();
+        data.modifiers = new List<ModifierCode>();
         
         // aria-*
         {
@@ -372,7 +351,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 return $"Aria(\"{htmlAttribute.Name.RemoveFromStart("aria-")}\", \"{htmlAttribute.Value}\")";
             }
 
-            modifiers.AddRange(htmlNode.Attributes.RemoveAll(isAriaAttribute).Select(toAriaModifier).Select(ModifierCode.FromString));
+            data.modifiers.AddRange(data.htmlNode.Attributes.RemoveAll(isAriaAttribute).Select(toAriaModifier).Select(ModifierCode.FromString));
         }
 
         // data-*
@@ -387,39 +366,39 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 return $"Data(\"{htmlAttribute.Name.RemoveFromStart("data-")}\", \"{htmlAttribute.Value}\")";
             }
 
-            modifiers.AddRange(htmlNode.Attributes.RemoveAll(isDataAttribute).Select(toDataModifier).Select(ModifierCode.FromString));
+            data.modifiers.AddRange(data.htmlNode.Attributes.RemoveAll(isDataAttribute).Select(toDataModifier).Select(ModifierCode.FromString));
         }
 
         // remove svg.xmlns
         {
-            if (htmlNode.Name == "svg")
+            if (data.htmlNode.Name == "svg")
             {
-                if (htmlNode.Attributes.Contains("xmlns") && htmlNode.Attributes["xmlns"].Value == "http://www.w3.org/2000/svg")
+                if (data.htmlNode.Attributes.Contains("xmlns") && data.htmlNode.Attributes["xmlns"].Value == "http://www.w3.org/2000/svg")
                 {
-                    htmlNode.Attributes.Remove("xmlns");
+                    data.htmlNode.Attributes.Remove("xmlns");
                 }
 
-                if (htmlNode.Attributes.Contains("width") &&
-                    htmlNode.Attributes.Contains("height") &&
-                    htmlNode.Attributes["width"].Value == htmlNode.Attributes["height"].Value)
+                if (data.htmlNode.Attributes.Contains("width") &&
+                    data.htmlNode.Attributes.Contains("height") &&
+                    data.htmlNode.Attributes["width"].Value == data.htmlNode.Attributes["height"].Value)
                 {
-                    htmlNode.Attributes.Add("size", htmlNode.Attributes["width"].Value);
+                    data.htmlNode.Attributes.Add("size", data.htmlNode.Attributes["width"].Value);
 
-                    htmlNode.Attributes.Remove("width");
-                    htmlNode.Attributes.Remove("height");
+                    data.htmlNode.Attributes.Remove("width");
+                    data.htmlNode.Attributes.Remove("height");
                 }
             }
 
-            if (htmlNode.Name == "svg" || htmlNode.Name == "path")
+            if (data.htmlNode.Name == "svg" || data.htmlNode.Name == "path")
             {
-                bool isStyleAttribute(HtmlAttribute htmlAttribute)
+                static bool isStyleAttribute(Data data, HtmlAttribute htmlAttribute)
                 {
-                    if (htmlNode.Name == "svg" && "size".Equals(htmlAttribute.Name, StringComparison.OrdinalIgnoreCase))
+                    if (data.htmlNode.Name == "svg" && "size".Equals(htmlAttribute.Name, StringComparison.OrdinalIgnoreCase))
                     {
                         return false;
                     }
 
-                    if (TryFindProperty(htmlNode.Name, htmlAttribute.Name) is null)
+                    if (TryFindProperty(data.htmlNode.Name, htmlAttribute.Name) is null)
                     {
                         if (typeof(Style).GetProperty(htmlAttribute.Name.Replace("-", ""), BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase) is not null)
                         {
@@ -430,261 +409,269 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     return false;
                 }
 
-                foreach (var htmlAttribute in htmlNode.Attributes.RemoveAll(isStyleAttribute))
+                foreach (var htmlAttribute in data.htmlNode.Attributes.RemoveAll(x=>isStyleAttribute(data,x)))
                 {
-                    style ??= new();
+                    data.style ??= new();
 
-                    style[htmlAttribute.Name] = htmlAttribute.Value;
+                    data.style[htmlAttribute.Name] = htmlAttribute.Value;
                 }
             }
         }
 
         // innerText
         {
-            if (htmlNode.ChildNodes.Count == 1 && htmlNode.ChildNodes[0].Name == "#text")
+            if (data.htmlNode.ChildNodes.Count == 1 && data.htmlNode.ChildNodes[0].Name == "#text")
             {
-                var text = htmlNode.ChildNodes[0].InnerText.Trim();
+                var text = data.htmlNode.ChildNodes[0].InnerText.Trim();
 
                 if (string.IsNullOrWhiteSpace(text) is false)
                 {
-                    if (smartMode)
+                    if (data.smartMode)
                     {
-                        modifiers.Insert(0, ConvertToCSharpString(text));
+                        data.modifiers.Insert(0, ConvertToCSharpString(text));
                     }
                     else //if (htmlNode.Attributes.Any())
                     {
-                        htmlNode.Attributes.Insert(0, "text", text);
+                        data.htmlNode.Attributes.Insert(0, "text", text);
                     }
                 }
 
-                htmlNode.ChildNodes.RemoveAt(0);
+                data.htmlNode.ChildNodes.RemoveAt(0);
             }
         }
 
         // Flex
         {
-            if (htmlNodeName == "div")
+            if (data.htmlNodeName == "div")
             {
-                if (style is not null)
+                if (data.style is not null)
                 {
                     // c o l u m n s
-                    if (style.display == "inline-flex" &&
-                        style.flexDirection == "column" &&
-                        style.justifyContent == "center" &&
-                        style.alignItems == "center")
+                    if (data.style.display == "inline-flex" &&
+                        data.style.flexDirection == "column" &&
+                        data.style.justifyContent == "center" &&
+                        data.style.alignItems == "center")
                     {
-                        htmlNodeName  = "InlineFlexColumnCentered";
-                        style.display = style.flexDirection = style.justifyContent = style.alignItems = null;
+                        data = data with { htmlNodeName = "InlineFlexColumnCentered" };
+                        
+                        data.style.display = data.style.flexDirection = data.style.justifyContent = data.style.alignItems = null;
                     }
 
-                    if (style.display == "inline-flex" &&
-                        style.flexDirection == "column")
+                    if (data.style.display == "inline-flex" &&
+                        data.style.flexDirection == "column")
                     {
-                        htmlNodeName  = "InlineFlexColumn";
-                        style.display = style.flexDirection = null;
+                        data = data with { htmlNodeName = "InlineFlexColumn" };
+                        
+                        data.style.display = data.style.flexDirection = null;
                     }
 
-                    if (style.display == "flex" &&
-                        style.flexDirection == "column" &&
-                        style.justifyContent == "center" &&
-                        style.alignItems == "center")
+                    if (data.style.display == "flex" &&
+                        data.style.flexDirection == "column" &&
+                        data.style.justifyContent == "center" &&
+                        data.style.alignItems == "center")
                     {
-                        htmlNodeName  = "FlexColumnCentered";
-                        style.display = style.flexDirection = style.justifyContent = style.alignItems = null;
+                        data = data with { htmlNodeName = "FlexColumnCentered" };
+                        
+                        data.style.display = data.style.flexDirection = data.style.justifyContent = data.style.alignItems = null;
                     }
 
-                    if (style.display == "flex" && style.flexDirection == "column")
+                    if (data.style.display == "flex" && data.style.flexDirection == "column")
                     {
-                        htmlNodeName  = "FlexColumn";
-                        style.display = style.flexDirection = null;
+                        data = data with { htmlNodeName = "FlexColumn" };
+                        
+                        data.style.display = data.style.flexDirection = null;
                     }
 
                     // r o w
-                    if (style.display == "inline-flex" &&
-                        (style.flexDirection is null || style.flexDirection == "row") &&
-                        style.justifyContent == "center" &&
-                        style.alignItems == "center")
+                    if (data.style.display == "inline-flex" &&
+                        (data.style.flexDirection is null || data.style.flexDirection == "row") &&
+                        data.style.justifyContent == "center" &&
+                        data.style.alignItems == "center")
                     {
-                        htmlNodeName  = "InlineFlexRowCentered";
-                        style.display = style.flexDirection = style.justifyContent = style.alignItems = null;
+                        data = data with { htmlNodeName = "InlineFlexRowCentered" };
+                        
+                        data.style.display = data.style.flexDirection = data.style.justifyContent = data.style.alignItems = null;
                     }
 
-                    if (style.display == "inline-flex" &&
-                        (style.flexDirection is null || style.flexDirection == "row"))
+                    if (data.style.display == "inline-flex" &&
+                        (data.style.flexDirection is null || data.style.flexDirection == "row"))
                     {
-                        htmlNodeName  = "InlineFlexRow";
-                        style.display = style.flexDirection = null;
+                        data = data with { htmlNodeName = "InlineFlexRow" };
+                        
+                        data.style.display = data.style.flexDirection = null;
                     }
 
-                    if (style.display == "flex" &&
-                        (style.flexDirection is null || style.flexDirection == "row") &&
-                        style.justifyContent == "center" &&
-                        style.alignItems == "center")
+                    if (data.style.display == "flex" &&
+                        (data.style.flexDirection is null || data.style.flexDirection == "row") &&
+                        data.style.justifyContent == "center" &&
+                        data.style.alignItems == "center")
                     {
-                        htmlNodeName  = "FlexRowCentered";
-                        style.display = style.flexDirection = style.justifyContent = style.alignItems = null;
+                        data = data with { htmlNodeName = "FlexRowCentered" };
+                        
+                        data.style.display = data.style.flexDirection = data.style.justifyContent = data.style.alignItems = null;
                     }
 
-                    if (style.display == "flex" && (style.flexDirection is null || style.flexDirection == "row"))
+                    if (data.style.display == "flex" && (data.style.flexDirection is null || data.style.flexDirection == "row"))
                     {
-                        htmlNodeName  = "FlexRow";
-                        style.display = style.flexDirection = null;
+                        data = data with { htmlNodeName = "FlexRow" };
+                        
+                        data.style.display = data.style.flexDirection = null;
                     }
                 }
             }
         }
 
-        if (style is not null)
+        if (data.style is not null)
         {
             // border
             foreach (var prefix in new[] { "borderTop", "borderRight", "borderLeft", "borderBottom" })
             {
-                var xStyle = style[$"{prefix}Style"];
-                var xWidth = style[$"{prefix}Width"];
-                var xColor = style[$"{prefix}Color"];
+                var xStyle = data.style[$"{prefix}Style"];
+                var xWidth = data.style[$"{prefix}Width"];
+                var xColor = data.style[$"{prefix}Color"];
 
-                if (style[prefix] is null)
+                if (data.style[prefix] is null)
                 {
                     if (string.IsNullOrWhiteSpace(xStyle) is false &&
                         string.IsNullOrWhiteSpace(xWidth) is false &&
                         string.IsNullOrWhiteSpace(xColor) is false)
                     {
-                        style[prefix] = $"{xWidth} {xStyle} {xColor}";
+                        data.style[prefix] = $"{xWidth} {xStyle} {xColor}";
 
-                        style[$"{prefix}Style"] = style[$"{prefix}Width"] = style[$"{prefix}Color"] = null;
+                        data.style[$"{prefix}Style"] = data.style[$"{prefix}Width"] = data.style[$"{prefix}Color"] = null;
                     }
 
                     if (string.IsNullOrWhiteSpace(xStyle) is false &&
                         string.IsNullOrWhiteSpace(xWidth) is false &&
                         string.IsNullOrWhiteSpace(xColor))
                     {
-                        style[prefix] = $"{xWidth} {xStyle}";
+                        data.style[prefix] = $"{xWidth} {xStyle}";
 
-                        style[$"{prefix}Style"] = style[$"{prefix}Width"] = style[$"{prefix}Color"] = null;
+                        data.style[$"{prefix}Style"] = data.style[$"{prefix}Width"] = data.style[$"{prefix}Color"] = null;
                     }
                 }
             }
 
             // p a d d i n g
-            if (style.paddingTop.HasValue() &&
-                style.paddingRight.HasValue() &&
-                style.paddingBottom.HasValue() &&
-                style.paddingLeft.HasValue())
+            if (data.style.paddingTop.HasValue() &&
+                data.style.paddingRight.HasValue() &&
+                data.style.paddingBottom.HasValue() &&
+                data.style.paddingLeft.HasValue())
             {
-                style.padding = $"{style.paddingTop} {style.paddingRight} {style.paddingBottom} {style.paddingLeft}";
+                data.style.padding = $"{data.style.paddingTop} {data.style.paddingRight} {data.style.paddingBottom} {data.style.paddingLeft}";
 
-                style.paddingTop = style.paddingRight = style.paddingBottom = style.paddingLeft = null;
+                data.style.paddingTop = data.style.paddingRight = data.style.paddingBottom = data.style.paddingLeft = null;
             }
 
             // m a r g i n
-            if (style.marginTop.HasValue() &&
-                style.marginRight.HasValue() &&
-                style.marginBottom.HasValue() &&
-                style.marginLeft.HasValue())
+            if (data.style.marginTop.HasValue() &&
+                data.style.marginRight.HasValue() &&
+                data.style.marginBottom.HasValue() &&
+                data.style.marginLeft.HasValue())
             {
-                style.margin = $"{style.marginTop} {style.marginRight} {style.marginBottom} {style.marginLeft}";
+                data.style.margin = $"{data.style.marginTop} {data.style.marginRight} {data.style.marginBottom} {data.style.marginLeft}";
 
-                style.marginTop = style.marginRight = style.marginBottom = style.marginLeft = null;
+                data.style.marginTop = data.style.marginRight = data.style.marginBottom = data.style.marginLeft = null;
             }
 
-            if (smartMode)
+            if (data.smartMode)
             {
                 // padding: TopBottom
-                if (style.paddingTop.EndsWithPixel() &&
-                    style.paddingBottom.EndsWithPixel() &&
-                    style.paddingTop == style.paddingBottom)
+                if (data.style.paddingTop.EndsWithPixel() &&
+                    data.style.paddingBottom.EndsWithPixel() &&
+                    data.style.paddingTop == data.style.paddingBottom)
                 {
-                    style.padding = MarkAsAlreadyCalculatedModifier($"PaddingTopBottom({style.paddingTop.RemovePixelFromEnd()})");
+                    data.style.padding = MarkAsAlreadyCalculatedModifier($"PaddingTopBottom({data.style.paddingTop.RemovePixelFromEnd()})");
 
-                    style.paddingTop = style.paddingBottom = null;
+                    data.style.paddingTop = data.style.paddingBottom = null;
                 }
 
                 // padding: LeftRight
-                if (style.paddingLeft.EndsWithPixel() &&
-                    style.paddingRight.EndsWithPixel() &&
-                    style.paddingLeft == style.paddingRight)
+                if (data.style.paddingLeft.EndsWithPixel() &&
+                    data.style.paddingRight.EndsWithPixel() &&
+                    data.style.paddingLeft == data.style.paddingRight)
                 {
-                    style.padding = MarkAsAlreadyCalculatedModifier($"PaddingLeftRight({style.paddingLeft.RemovePixelFromEnd()})");
+                    data.style.padding = MarkAsAlreadyCalculatedModifier($"PaddingLeftRight({data.style.paddingLeft.RemovePixelFromEnd()})");
 
-                    style.paddingLeft = style.paddingRight = null;
+                    data.style.paddingLeft = data.style.paddingRight = null;
                 }
 
                 // margin: TopBottom
-                if (style.marginTop.EndsWithPixel() &&
-                    style.marginBottom.EndsWithPixel() &&
-                    style.marginTop == style.marginBottom)
+                if (data.style.marginTop.EndsWithPixel() &&
+                    data.style.marginBottom.EndsWithPixel() &&
+                    data.style.marginTop == data.style.marginBottom)
                 {
-                    style.margin = MarkAsAlreadyCalculatedModifier($"MarginTopBottom({style.marginTop.RemovePixelFromEnd()})");
+                    data.style.margin = MarkAsAlreadyCalculatedModifier($"MarginTopBottom({data.style.marginTop.RemovePixelFromEnd()})");
 
-                    style.marginTop = style.marginBottom = null;
+                    data.style.marginTop = data.style.marginBottom = null;
                 }
 
                 // margin: LeftRight
-                if (style.marginLeft.EndsWithPixel() &&
-                    style.marginRight.EndsWithPixel() &&
-                    style.marginLeft == style.marginRight)
+                if (data.style.marginLeft.EndsWithPixel() &&
+                    data.style.marginRight.EndsWithPixel() &&
+                    data.style.marginLeft == data.style.marginRight)
                 {
-                    style.margin = MarkAsAlreadyCalculatedModifier($"MarginLeftRight({style.marginLeft.RemovePixelFromEnd()})");
+                    data.style.margin = MarkAsAlreadyCalculatedModifier($"MarginLeftRight({data.style.marginLeft.RemovePixelFromEnd()})");
 
-                    style.marginLeft = style.marginRight = null;
+                    data.style.marginLeft = data.style.marginRight = null;
                 }
 
                 // padding: SizeFull
-                if (style.width == "100%" && style.height == "100%")
+                if (data.style.width == "100%" && data.style.height == "100%")
                 {
-                    style.width = MarkAsAlreadyCalculatedModifier("SizeFull");
+                    data.style.width = MarkAsAlreadyCalculatedModifier("SizeFull");
 
-                    style.height = null;
+                    data.style.height = null;
                 }
 
                 // margin: WidthHeight
-                if (style.width.EndsWithPixel() &&
-                    style.height.EndsWithPixel() &&
-                    style.width == style.height)
+                if (data.style.width.EndsWithPixel() &&
+                    data.style.height.EndsWithPixel() &&
+                    data.style.width == data.style.height)
                 {
-                    style.width = MarkAsAlreadyCalculatedModifier($"Size({style.width.RemovePixelFromEnd()})");
+                    data.style.width = MarkAsAlreadyCalculatedModifier($"Size({data.style.width.RemovePixelFromEnd()})");
 
-                    style.height = null;
+                    data.style.height = null;
                 }
             }
         }
 
         // remove comments
         {
-            htmlNode.ChildNodes.RemoveAll(childNode => childNode.Name == "#comment");
+            data.htmlNode.ChildNodes.RemoveAll(childNode => childNode.Name == "#comment");
         }
 
-        if (smartMode && style is not null)
+        if (data.smartMode && data.style is not null)
         {
-            modifiers.AddRange(htmlNode.Attributes.Select(TryConvertToModifier).Select(ModifierCode.From));
+            data.modifiers.AddRange(data.htmlNode.Attributes.Select(TryConvertToModifier).Select(ModifierCode.From));
 
-            ((ICollection<HtmlAttribute>)htmlNode.Attributes).Clear();
-            modifiers.AddRange(style.ToDictionary().Select(p => TryConvertToModifier_From_Mixin_Extension(p.Key, p.Value)).Select(ModifierCode.From));
+            ((ICollection<HtmlAttribute>)data.htmlNode.Attributes).Clear();
+            data.modifiers.AddRange(data.style.ToDictionary().Select(p => TryConvertToModifier_From_Mixin_Extension(p.Key, p.Value)).Select(ModifierCode.From));
 
-            style = null;
+            data.style = null;
         }
 
         bool canBeExportInOneLine()
         {
-            if (htmlNode.Attributes.Contains("text"))
+            if (data.htmlNode.Attributes.Contains("text"))
             {
                 return false;
             }
 
-            if (style is not null)
+            if (data.style is not null)
             {
-                if (canStyleExportInOneLine(style) is false)
+                if (canStyleExportInOneLine(data.style) is false)
                 {
                     return false;
                 }
             }
 
-            if (htmlNode.ChildNodes.Count == 0 && smartMode && modifiers.Count > maxAttributeCountPerLine)
+            if (data.htmlNode.ChildNodes.Count == 0 && data.smartMode && data.modifiers.Count > data.maxAttributeCountPerLine)
             {
                 return false;
             }
 
-            if (htmlNode.Attributes.Count > maxAttributeCountPerLine)
+            if (data.htmlNode.Attributes.Count > data.maxAttributeCountPerLine)
             {
                 return false;
             }
@@ -692,20 +679,20 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return true;
         }
 
-        if (htmlNode.ChildNodes.Count == 0)
+        if (data.htmlNode.ChildNodes.Count == 0)
         {
             List<string> attributeToString(HtmlAttribute attribute)
             {
-                if (attribute.Name == "style" && style is not null)
+                if (attribute.Name == "style" && data.style is not null)
                 {
-                    if (canStyleExportInOneLine(style))
+                    if (canStyleExportInOneLine(data.style))
                     {
-                        if (smartMode)
+                        if (data.smartMode)
                         {
-                            return [string.Join(", ", style.ToDictionary().Select(p => TryConvertToModifier_From_Mixin_Extension(p.Key, p.Value)).Where(x => x.success).Select(x => x.modifierCode))];
+                            return [string.Join(", ", data.style.ToDictionary().Select(p => TryConvertToModifier_From_Mixin_Extension(p.Key, p.Value)).Where(x => x.success).Select(x => x.modifierCode))];
                         }
 
-                        return [$"style = {{ {string.Join(", ", style.ToDictionary().Select(kv => kv.Key + " = \"" + kv.Value + "\""))} }}"];
+                        return [$"style = {{ {string.Join(", ", data.style.ToDictionary().Select(kv => kv.Key + " = \"" + kv.Value + "\""))} }}"];
                     }
 
                     var returnList = new List<string>
@@ -714,7 +701,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         "{"
                     };
 
-                    returnList.AddRange(style.ToDictionary().Select(toLine));
+                    returnList.AddRange(data.style.ToDictionary().Select(toLine));
 
                     returnList[^1] = returnList[^1].RemoveFromEnd(",");
 
@@ -736,7 +723,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 var propertyInfo = TryFindProperty(attribute.GetTagName(), attribute.GetName());
                 if (propertyInfo is not null)
                 {
-                    if (smartMode)
+                    if (data.smartMode)
                     {
                         return [TryConvertToModifier(attribute).modifierCode];
                     }
@@ -775,38 +762,38 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 return [$"// {attribute.GetName()} = \"{attribute.Value}\""];
             }
 
-            if (style is not null)
+            if (data.style is not null)
             {
-                htmlNode.Attributes.Add("style", "");
+                data.htmlNode.Attributes.Add("style", "");
             }
 
             if (canBeExportInOneLine())
             {
-                if (smartMode && modifiers.Count > 0)
+                if (data.smartMode && data.modifiers.Count > 0)
                 {
-                    return [$"new {htmlNodeName} {{ {JoinModifiers(modifiers)} }}"];
+                    return [$"new {data.htmlNodeName} {{ {JoinModifiers(data.modifiers)} }}"];
                 }
 
                 var sb = new StringBuilder();
-                sb.Append($"new {htmlNodeName}");
+                sb.Append($"new {data.htmlNodeName}");
 
-                if (modifiers.Count == 0 && htmlNode.Attributes.Count == 0)
+                if (data.modifiers.Count == 0 && data.htmlNode.Attributes.Count == 0)
                 {
                     sb.Append("()");
                     return [sb.ToString()];
                 }
 
-                if (modifiers.Count > 0)
+                if (data.modifiers.Count > 0)
                 {
                     sb.Append("(");
-                    sb.Append(JoinModifiers(modifiers));
+                    sb.Append(JoinModifiers(data.modifiers));
                     sb.Append(")");
                 }
 
-                if (htmlNode.Attributes.Count > 0)
+                if (data.htmlNode.Attributes.Count > 0)
                 {
                     sb.Append(" { ");
-                    sb.Append(string.Join(", ", htmlNode.Attributes.Select(attributeToString).Fold()));
+                    sb.Append(string.Join(", ", data.htmlNode.Attributes.Select(attributeToString).Fold()));
                     sb.Append(" }");
                 }
 
@@ -815,22 +802,22 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             // multiline
             {
-                if (smartMode)
+                if (data.smartMode)
                 {
-                    if (modifiers.Count > 0 && htmlNode.Attributes.Count == 0)
+                    if (data.modifiers.Count > 0 && data.htmlNode.Attributes.Count == 0)
                     {
                         var lines = new List<string>
                         {
-                            $"new {htmlNodeName}",
+                            $"new {data.htmlNodeName}",
                             "{"
                         };
 
-                        foreach (var modifier in modifiers.Where(x => !x.Success).Select(x => x.Code))
+                        foreach (var modifier in data.modifiers.Where(x => !x.Success).Select(x => x.Code))
                         {
                             lines.Add($"// {modifier}");
                         }
 
-                        foreach (var modifier in modifiers.Where(x => x.Success).Select(x => x.Code))
+                        foreach (var modifier in data.modifiers.Where(x => x.Success).Select(x => x.Code))
                         {
                             lines.Add(modifier);
 
@@ -845,18 +832,18 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 }
 
                 var sb = new StringBuilder();
-                sb.Append($"new {htmlNodeName}");
+                sb.Append($"new {data.htmlNodeName}");
                 
                 
                 
-                if (modifiers.Count > 0)
+                if (data.modifiers.Count > 0)
                 {
                     sb.Append("(");
-                    sb.Append(JoinModifiers(modifiers));
+                    sb.Append(JoinModifiers(data.modifiers));
                     sb.Append(")");
                 }
                 
-                if (modifiers.Count == 0 && data.classNameAttribute is not null)
+                if (data.modifiers.Count == 0 && data.classNameAttribute is not null)
                 {
                     sb.Append("(");
                     sb.Append('"');
@@ -871,20 +858,20 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         sb.ToString()
                     };
 
-                    if (htmlNode.Attributes.Count == 1 && htmlNode.Attributes[0].Name=="text")
+                    if (data.htmlNode.Attributes.Count == 1 && data.htmlNode.Attributes[0].Name=="text")
                     {
                         lines.Add("{");
-                        lines.Add(ConvertToCSharpString(htmlNode.Attributes[0].Value));
+                        lines.Add(ConvertToCSharpString(data.htmlNode.Attributes[0].Value));
                         lines.Add("}");
                         return lines;
                     }
                     
 
-                    if (htmlNode.Attributes.Count > 0)
+                    if (data.htmlNode.Attributes.Count > 0)
                     {
                         lines.Add("{");
 
-                        foreach (var list in htmlNode.Attributes.Select(attributeToString))
+                        foreach (var list in data.htmlNode.Attributes.Select(attributeToString))
                         {
                             if (list.Count > 0)
                             {
@@ -907,32 +894,32 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             }
         }
 
-        foreach (var htmlAttribute in htmlNode.Attributes)
+        foreach (var htmlAttribute in data.htmlNode.Attributes)
         {
             var (success, modifierCode) = TryConvertToModifier(htmlAttribute);
             if (success)
             {
-                modifiers.Add(modifierCode);
+                data.modifiers.Add(modifierCode);
             }
         }
 
-        if (style is not null)
+        if (data.style is not null)
         {
-            modifiers.Add(styleAsCode(style));
+            data.modifiers.Add(styleAsCode(data.style));
         }
 
-        if (htmlNode.ChildNodes.Count == 1 && htmlNode.ChildNodes[0].Name == "#text")
+        if (data.htmlNode.ChildNodes.Count == 1 && data.htmlNode.ChildNodes[0].Name == "#text")
         {
-            if (htmlNode.Attributes.Count == 0 && style is null)
+            if (data.htmlNode.Attributes.Count == 0 && data.style is null)
             {
-                return [$"({htmlNodeName})" + ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText)];
+                return [$"({data.htmlNodeName})" + ConvertToCSharpString(data.htmlNode.ChildNodes[0].InnerText)];
             }
 
             return
             [
-                $"new {htmlNodeName}({JoinModifiers(modifiers)})",
+                $"new {data.htmlNodeName}({JoinModifiers(data.modifiers)})",
                 "{",
-                ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText),
+                ConvertToCSharpString(data.htmlNode.ChildNodes[0].InnerText),
                 "}"
             ];
         }
@@ -940,18 +927,18 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         // multi line
         {
             var partConstructor = "";
-            if (modifiers.Count > 0)
+            if (data.modifiers.Count > 0)
             {
-                partConstructor = $"({JoinModifiers(modifiers)})";
+                partConstructor = $"({JoinModifiers(data.modifiers)})";
             }
 
             var lines = new List<string>
             {
-                $"new {htmlNodeName}{partConstructor}",
+                $"new {data.htmlNodeName}{partConstructor}",
                 "{"
             };
 
-            foreach (var items in htmlNode.ChildNodes.Select(x => ToCSharpCode(x, smartMode, maxAttributeCountPerLine)))
+            foreach (var items in data.htmlNode.ChildNodes.Select(x => ToCSharpCode(x, data.smartMode, data.maxAttributeCountPerLine)))
             {
                 if (items.Count > 0)
                 {
@@ -969,6 +956,44 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             lines.Add("}");
 
             return lines;
+        }
+
+        static Data initHtmlNodeName(Data data)
+        {
+            var htmlNodeName = data.htmlNode.OriginalName;
+            if (htmlNodeName == "clippath")
+            {
+                htmlNodeName = "clipPath";
+            }
+
+            return data with { htmlNodeName = htmlNodeName };
+        }
+
+        static Data ignoreSmartModeSpecificTags(Data data)
+        {
+            // ignore smart mode for specific case beautiful code format
+            var smartModeIgnoredTags = new List<string> { "rect", "path", "circle", "line" };
+            if (data.htmlNode.ChildNodes.Count == 0 && smartModeIgnoredTags.Any(tag => data.htmlNode.Name.Equals(tag, StringComparison.OrdinalIgnoreCase)))
+            {
+                return data with { smartMode = false };
+            }
+
+            return data;
+        }
+
+        static Data tryRemoveClassAttribute(Data data)
+        {
+            var htmlNode = data.htmlNode;
+            
+            var classNameAttribute = htmlNode.Attributes.FirstOrDefault(x => x.Name == "class");
+            if (classNameAttribute is null)
+            {
+                return data;
+            }
+            
+            htmlNode.Attributes.Remove(classNameAttribute);
+
+            return data with { classNameAttribute = classNameAttribute };
         }
 
         static bool canStyleExportInOneLine(Style style)
