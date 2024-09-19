@@ -283,7 +283,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         
         public string htmlNodeName { get; init; }
 
-        public Style style;
+        public Style style{ get; init; }
         public List<ModifierCode> modifiers{ get; init; }
     }
 
@@ -330,7 +330,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 if (!string.IsNullOrWhiteSpace(styleAttribute.Value))
                 {
-                    data.style = Style.ParseCss(styleAttribute.Value);
+                    data = data with { style = Style.ParseCss(styleAttribute.Value) };
                 }
 
                 data.htmlNode.Attributes.Remove("style");
@@ -411,7 +411,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                 foreach (var htmlAttribute in data.htmlNode.Attributes.RemoveAll(x=>isStyleAttribute(data,x)))
                 {
-                    data.style ??= new();
+                    data = data with { style = data.style ?? new() };
 
                     data.style[htmlAttribute.Name] = htmlAttribute.Value;
                 }
@@ -648,7 +648,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             ((ICollection<HtmlAttribute>)data.htmlNode.Attributes).Clear();
             data.modifiers.AddRange(data.style.ToDictionary().Select(p => TryConvertToModifier_From_Mixin_Extension(p.Key, p.Value)).Select(ModifierCode.From));
 
-            data.style = null;
+            data = data with { style = null };
         }
 
         bool canBeExportInOneLine()
