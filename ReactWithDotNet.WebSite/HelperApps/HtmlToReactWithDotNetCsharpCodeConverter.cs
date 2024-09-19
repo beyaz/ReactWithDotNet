@@ -968,27 +968,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         static Data moveStylableAttributesToStyleForSvgAndPath(Data data)
         {
-            if (data.htmlNode.Name == "svg" || data.htmlNode.Name == "path")
+            var htmlNode = data.htmlNode;
+
+            if (htmlNode.Name == "svg" || htmlNode.Name == "path")
             {
-                static bool isStyleAttribute(Data data, HtmlAttribute htmlAttribute)
-                {
-                    if (data.htmlNode.Name == "svg" && "size".Equals(htmlAttribute.Name, StringComparison.OrdinalIgnoreCase))
-                    {
-                        return false;
-                    }
-
-                    if (TryFindProperty(data.htmlNode.Name, htmlAttribute.Name) is null)
-                    {
-                        if (typeof(Style).GetProperty(htmlAttribute.Name.Replace("-", ""), BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase) is not null)
-                        {
-                            return true;
-                        }
-                    }
-
-                    return false;
-                }
-
-                foreach (var htmlAttribute in data.htmlNode.Attributes.RemoveAll(x=>isStyleAttribute(data,x)))
+                foreach (var htmlAttribute in htmlNode.Attributes.RemoveAll(x=>isStyleAttribute(htmlNode,x)))
                 {
                     data = data with { style = data.style ?? new() };
 
@@ -997,6 +981,24 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             }
 
             return data;
+
+            static bool isStyleAttribute(HtmlNode htmlNode, HtmlAttribute htmlAttribute)
+            {
+                if (htmlNode.Name == "svg" && "size".Equals(htmlAttribute.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+
+                if (TryFindProperty(htmlNode.Name, htmlAttribute.Name) is null)
+                {
+                    if (typeof(Style).GetProperty(htmlAttribute.Name.Replace("-", ""), BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase) is not null)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
         }
 
         static Data arrangeSvgSizeAttribute(Data data)
