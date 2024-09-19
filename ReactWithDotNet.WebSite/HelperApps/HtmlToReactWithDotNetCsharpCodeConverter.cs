@@ -284,7 +284,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         public string htmlNodeName { get; init; }
 
         public Style style;
-        public List<ModifierCode> modifiers;
+        public List<ModifierCode> modifiers{ get; init; }
     }
 
     static List<string> ToCSharpCode(HtmlNode htmlNode, bool smartMode, int maxAttributeCountPerLine)
@@ -337,7 +337,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             }
         }
 
-        data.modifiers = new List<ModifierCode>();
+        data = data with { modifiers = new List<ModifierCode>() };
         
         // aria-*
         {
