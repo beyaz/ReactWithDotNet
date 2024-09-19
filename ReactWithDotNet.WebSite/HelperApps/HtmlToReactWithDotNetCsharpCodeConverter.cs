@@ -375,11 +375,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         data = tryArrangeInnerNodeText(data);
         data = arrangeFlex(data);
         data = arrangeShortwayStyle(data);
-
-        // remove comments
-        {
-            data.htmlNode.ChildNodes.RemoveAll(childNode => childNode.Name == "#comment");
-        }
+        data = removeComments(data);
 
         if (data.smartMode && data.style is not null)
         {
@@ -696,6 +692,13 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             lines.Add("}");
 
             return lines;
+        }
+
+        static Data removeComments(Data data)
+        {
+            data.htmlNode.ChildNodes.RemoveAll(childNode => childNode.Name == "#comment");
+
+            return data;
         }
 
         static Data arrangeShortwayStyle(Data data)
