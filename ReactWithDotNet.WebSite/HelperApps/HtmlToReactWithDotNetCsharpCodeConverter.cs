@@ -338,37 +338,9 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         }
 
         data = data with { modifiers = new List<ModifierCode>() };
-        
-        // aria-*
-        {
-            static bool isAriaAttribute(HtmlAttribute htmlAttribute)
-            {
-                return htmlAttribute.Name.StartsWith("aria-", StringComparison.OrdinalIgnoreCase);
-            }
 
-            static string toAriaModifier(HtmlAttribute htmlAttribute)
-            {
-                return $"Aria(\"{htmlAttribute.Name.RemoveFromStart("aria-")}\", \"{htmlAttribute.Value}\")";
-            }
-
-            data.modifiers.AddRange(data.htmlNode.Attributes.RemoveAll(isAriaAttribute).Select(toAriaModifier).Select(ModifierCode.FromString));
-        }
-
-        // data-*
-        {
-            static bool isDataAttribute(HtmlAttribute htmlAttribute)
-            {
-                return htmlAttribute.Name.StartsWith("data-", StringComparison.OrdinalIgnoreCase);
-            }
-
-            static string toDataModifier(HtmlAttribute htmlAttribute)
-            {
-                return $"Data(\"{htmlAttribute.Name.RemoveFromStart("data-")}\", \"{htmlAttribute.Value}\")";
-            }
-
-            data.modifiers.AddRange(data.htmlNode.Attributes.RemoveAll(isDataAttribute).Select(toDataModifier).Select(ModifierCode.FromString));
-        }
-
+        data = moveAriaAttributesToModifiers(data);
+        data = moveDataAttributesToModifiers(data);
         data = arrangeSvgSizeAttribute(data);
         data = moveStylableAttributesToStyleForSvgAndPath(data);
         
@@ -613,7 +585,40 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
 
         return exportMultiLine(data);
-        
+
+        static Data moveAriaAttributesToModifiers(Data data)
+        {
+            static bool isAriaAttribute(HtmlAttribute htmlAttribute)
+            {
+                return htmlAttribute.Name.StartsWith("aria-", StringComparison.OrdinalIgnoreCase);
+            }
+
+            static string toAriaModifier(HtmlAttribute htmlAttribute)
+            {
+                return $"Aria(\"{htmlAttribute.Name.RemoveFromStart("aria-")}\", \"{htmlAttribute.Value}\")";
+            }
+
+            data.modifiers.AddRange(data.htmlNode.Attributes.RemoveAll(isAriaAttribute).Select(toAriaModifier).Select(ModifierCode.FromString));
+
+            return data;
+        }
+
+        static Data moveDataAttributesToModifiers(Data data)
+        {
+            static bool isDataAttribute(HtmlAttribute htmlAttribute)
+            {
+                return htmlAttribute.Name.StartsWith("data-", StringComparison.OrdinalIgnoreCase);
+            }
+
+            static string toDataModifier(HtmlAttribute htmlAttribute)
+            {
+                return $"Data(\"{htmlAttribute.Name.RemoveFromStart("data-")}\", \"{htmlAttribute.Value}\")";
+            }
+
+            data.modifiers.AddRange(data.htmlNode.Attributes.RemoveAll(isDataAttribute).Select(toDataModifier).Select(ModifierCode.FromString));
+            
+            return data;
+        }
 
         static List<string> exportMultiLine(Data data)
         {
