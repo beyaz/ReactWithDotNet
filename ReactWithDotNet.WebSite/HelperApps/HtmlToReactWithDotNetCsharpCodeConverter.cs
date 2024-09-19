@@ -371,225 +371,10 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         data = arrangeSvgSizeAttribute(data);
         data = moveStylableAttributesToStyleForSvgAndPath(data);
-
-
-        // innerText
-        {
-            if (data.htmlNode.ChildNodes.Count == 1 && data.htmlNode.ChildNodes[0].Name == "#text")
-            {
-                var text = data.htmlNode.ChildNodes[0].InnerText.Trim();
-
-                if (string.IsNullOrWhiteSpace(text) is false)
-                {
-                    if (data.smartMode)
-                    {
-                        data.modifiers.Insert(0, ConvertToCSharpString(text));
-                    }
-                    else //if (htmlNode.Attributes.Any())
-                    {
-                        data.htmlNode.Attributes.Insert(0, "text", text);
-                    }
-                }
-
-                data.htmlNode.ChildNodes.RemoveAt(0);
-            }
-        }
-
-        // Flex
-        {
-            if (data.htmlNodeName == "div")
-            {
-                if (data.style is not null)
-                {
-                    // c o l u m n s
-                    if (data.style.display == "inline-flex" &&
-                        data.style.flexDirection == "column" &&
-                        data.style.justifyContent == "center" &&
-                        data.style.alignItems == "center")
-                    {
-                        data = data with { htmlNodeName = "InlineFlexColumnCentered" };
-                        
-                        data.style.display = data.style.flexDirection = data.style.justifyContent = data.style.alignItems = null;
-                    }
-
-                    if (data.style.display == "inline-flex" &&
-                        data.style.flexDirection == "column")
-                    {
-                        data = data with { htmlNodeName = "InlineFlexColumn" };
-                        
-                        data.style.display = data.style.flexDirection = null;
-                    }
-
-                    if (data.style.display == "flex" &&
-                        data.style.flexDirection == "column" &&
-                        data.style.justifyContent == "center" &&
-                        data.style.alignItems == "center")
-                    {
-                        data = data with { htmlNodeName = "FlexColumnCentered" };
-                        
-                        data.style.display = data.style.flexDirection = data.style.justifyContent = data.style.alignItems = null;
-                    }
-
-                    if (data.style.display == "flex" && data.style.flexDirection == "column")
-                    {
-                        data = data with { htmlNodeName = "FlexColumn" };
-                        
-                        data.style.display = data.style.flexDirection = null;
-                    }
-
-                    // r o w
-                    if (data.style.display == "inline-flex" &&
-                        (data.style.flexDirection is null || data.style.flexDirection == "row") &&
-                        data.style.justifyContent == "center" &&
-                        data.style.alignItems == "center")
-                    {
-                        data = data with { htmlNodeName = "InlineFlexRowCentered" };
-                        
-                        data.style.display = data.style.flexDirection = data.style.justifyContent = data.style.alignItems = null;
-                    }
-
-                    if (data.style.display == "inline-flex" &&
-                        (data.style.flexDirection is null || data.style.flexDirection == "row"))
-                    {
-                        data = data with { htmlNodeName = "InlineFlexRow" };
-                        
-                        data.style.display = data.style.flexDirection = null;
-                    }
-
-                    if (data.style.display == "flex" &&
-                        (data.style.flexDirection is null || data.style.flexDirection == "row") &&
-                        data.style.justifyContent == "center" &&
-                        data.style.alignItems == "center")
-                    {
-                        data = data with { htmlNodeName = "FlexRowCentered" };
-                        
-                        data.style.display = data.style.flexDirection = data.style.justifyContent = data.style.alignItems = null;
-                    }
-
-                    if (data.style.display == "flex" && (data.style.flexDirection is null || data.style.flexDirection == "row"))
-                    {
-                        data = data with { htmlNodeName = "FlexRow" };
-                        
-                        data.style.display = data.style.flexDirection = null;
-                    }
-                }
-            }
-        }
-
-        if (data.style is not null)
-        {
-            // border
-            foreach (var prefix in new[] { "borderTop", "borderRight", "borderLeft", "borderBottom" })
-            {
-                var xStyle = data.style[$"{prefix}Style"];
-                var xWidth = data.style[$"{prefix}Width"];
-                var xColor = data.style[$"{prefix}Color"];
-
-                if (data.style[prefix] is null)
-                {
-                    if (string.IsNullOrWhiteSpace(xStyle) is false &&
-                        string.IsNullOrWhiteSpace(xWidth) is false &&
-                        string.IsNullOrWhiteSpace(xColor) is false)
-                    {
-                        data.style[prefix] = $"{xWidth} {xStyle} {xColor}";
-
-                        data.style[$"{prefix}Style"] = data.style[$"{prefix}Width"] = data.style[$"{prefix}Color"] = null;
-                    }
-
-                    if (string.IsNullOrWhiteSpace(xStyle) is false &&
-                        string.IsNullOrWhiteSpace(xWidth) is false &&
-                        string.IsNullOrWhiteSpace(xColor))
-                    {
-                        data.style[prefix] = $"{xWidth} {xStyle}";
-
-                        data.style[$"{prefix}Style"] = data.style[$"{prefix}Width"] = data.style[$"{prefix}Color"] = null;
-                    }
-                }
-            }
-
-            // p a d d i n g
-            if (data.style.paddingTop.HasValue() &&
-                data.style.paddingRight.HasValue() &&
-                data.style.paddingBottom.HasValue() &&
-                data.style.paddingLeft.HasValue())
-            {
-                data.style.padding = $"{data.style.paddingTop} {data.style.paddingRight} {data.style.paddingBottom} {data.style.paddingLeft}";
-
-                data.style.paddingTop = data.style.paddingRight = data.style.paddingBottom = data.style.paddingLeft = null;
-            }
-
-            // m a r g i n
-            if (data.style.marginTop.HasValue() &&
-                data.style.marginRight.HasValue() &&
-                data.style.marginBottom.HasValue() &&
-                data.style.marginLeft.HasValue())
-            {
-                data.style.margin = $"{data.style.marginTop} {data.style.marginRight} {data.style.marginBottom} {data.style.marginLeft}";
-
-                data.style.marginTop = data.style.marginRight = data.style.marginBottom = data.style.marginLeft = null;
-            }
-
-            if (data.smartMode)
-            {
-                // padding: TopBottom
-                if (data.style.paddingTop.EndsWithPixel() &&
-                    data.style.paddingBottom.EndsWithPixel() &&
-                    data.style.paddingTop == data.style.paddingBottom)
-                {
-                    data.style.padding = MarkAsAlreadyCalculatedModifier($"PaddingTopBottom({data.style.paddingTop.RemovePixelFromEnd()})");
-
-                    data.style.paddingTop = data.style.paddingBottom = null;
-                }
-
-                // padding: LeftRight
-                if (data.style.paddingLeft.EndsWithPixel() &&
-                    data.style.paddingRight.EndsWithPixel() &&
-                    data.style.paddingLeft == data.style.paddingRight)
-                {
-                    data.style.padding = MarkAsAlreadyCalculatedModifier($"PaddingLeftRight({data.style.paddingLeft.RemovePixelFromEnd()})");
-
-                    data.style.paddingLeft = data.style.paddingRight = null;
-                }
-
-                // margin: TopBottom
-                if (data.style.marginTop.EndsWithPixel() &&
-                    data.style.marginBottom.EndsWithPixel() &&
-                    data.style.marginTop == data.style.marginBottom)
-                {
-                    data.style.margin = MarkAsAlreadyCalculatedModifier($"MarginTopBottom({data.style.marginTop.RemovePixelFromEnd()})");
-
-                    data.style.marginTop = data.style.marginBottom = null;
-                }
-
-                // margin: LeftRight
-                if (data.style.marginLeft.EndsWithPixel() &&
-                    data.style.marginRight.EndsWithPixel() &&
-                    data.style.marginLeft == data.style.marginRight)
-                {
-                    data.style.margin = MarkAsAlreadyCalculatedModifier($"MarginLeftRight({data.style.marginLeft.RemovePixelFromEnd()})");
-
-                    data.style.marginLeft = data.style.marginRight = null;
-                }
-
-                // padding: SizeFull
-                if (data.style.width == "100%" && data.style.height == "100%")
-                {
-                    data.style.width = MarkAsAlreadyCalculatedModifier("SizeFull");
-
-                    data.style.height = null;
-                }
-
-                // margin: WidthHeight
-                if (data.style.width.EndsWithPixel() &&
-                    data.style.height.EndsWithPixel() &&
-                    data.style.width == data.style.height)
-                {
-                    data.style.width = MarkAsAlreadyCalculatedModifier($"Size({data.style.width.RemovePixelFromEnd()})");
-
-                    data.style.height = null;
-                }
-            }
-        }
+        
+        data = tryArrangeInnerNodeText(data);
+        data = arrangeFlex(data);
+        data = arrangeShortwayStyle(data);
 
         // remove comments
         {
@@ -911,6 +696,234 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             lines.Add("}");
 
             return lines;
+        }
+
+        static Data arrangeShortwayStyle(Data data)
+        {
+
+         
+            if (data.style is not null)
+            {
+                // border
+                foreach (var prefix in new[] { "borderTop", "borderRight", "borderLeft", "borderBottom" })
+                {
+                    var xStyle = data.style[$"{prefix}Style"];
+                    var xWidth = data.style[$"{prefix}Width"];
+                    var xColor = data.style[$"{prefix}Color"];
+
+                    if (data.style[prefix] is null)
+                    {
+                        if (string.IsNullOrWhiteSpace(xStyle) is false &&
+                            string.IsNullOrWhiteSpace(xWidth) is false &&
+                            string.IsNullOrWhiteSpace(xColor) is false)
+                        {
+                            data.style[prefix] = $"{xWidth} {xStyle} {xColor}";
+
+                            data.style[$"{prefix}Style"] = data.style[$"{prefix}Width"] = data.style[$"{prefix}Color"] = null;
+                        }
+
+                        if (string.IsNullOrWhiteSpace(xStyle) is false &&
+                            string.IsNullOrWhiteSpace(xWidth) is false &&
+                            string.IsNullOrWhiteSpace(xColor))
+                        {
+                            data.style[prefix] = $"{xWidth} {xStyle}";
+
+                            data.style[$"{prefix}Style"] = data.style[$"{prefix}Width"] = data.style[$"{prefix}Color"] = null;
+                        }
+                    }
+                }
+
+                // p a d d i n g
+                if (data.style.paddingTop.HasValue() &&
+                    data.style.paddingRight.HasValue() &&
+                    data.style.paddingBottom.HasValue() &&
+                    data.style.paddingLeft.HasValue())
+                {
+                    data.style.padding = $"{data.style.paddingTop} {data.style.paddingRight} {data.style.paddingBottom} {data.style.paddingLeft}";
+
+                    data.style.paddingTop = data.style.paddingRight = data.style.paddingBottom = data.style.paddingLeft = null;
+                }
+
+                // m a r g i n
+                if (data.style.marginTop.HasValue() &&
+                    data.style.marginRight.HasValue() &&
+                    data.style.marginBottom.HasValue() &&
+                    data.style.marginLeft.HasValue())
+                {
+                    data.style.margin = $"{data.style.marginTop} {data.style.marginRight} {data.style.marginBottom} {data.style.marginLeft}";
+
+                    data.style.marginTop = data.style.marginRight = data.style.marginBottom = data.style.marginLeft = null;
+                }
+
+                if (data.smartMode)
+                {
+                    // padding: TopBottom
+                    if (data.style.paddingTop.EndsWithPixel() &&
+                        data.style.paddingBottom.EndsWithPixel() &&
+                        data.style.paddingTop == data.style.paddingBottom)
+                    {
+                        data.style.padding = MarkAsAlreadyCalculatedModifier($"PaddingTopBottom({data.style.paddingTop.RemovePixelFromEnd()})");
+
+                        data.style.paddingTop = data.style.paddingBottom = null;
+                    }
+
+                    // padding: LeftRight
+                    if (data.style.paddingLeft.EndsWithPixel() &&
+                        data.style.paddingRight.EndsWithPixel() &&
+                        data.style.paddingLeft == data.style.paddingRight)
+                    {
+                        data.style.padding = MarkAsAlreadyCalculatedModifier($"PaddingLeftRight({data.style.paddingLeft.RemovePixelFromEnd()})");
+
+                        data.style.paddingLeft = data.style.paddingRight = null;
+                    }
+
+                    // margin: TopBottom
+                    if (data.style.marginTop.EndsWithPixel() &&
+                        data.style.marginBottom.EndsWithPixel() &&
+                        data.style.marginTop == data.style.marginBottom)
+                    {
+                        data.style.margin = MarkAsAlreadyCalculatedModifier($"MarginTopBottom({data.style.marginTop.RemovePixelFromEnd()})");
+
+                        data.style.marginTop = data.style.marginBottom = null;
+                    }
+
+                    // margin: LeftRight
+                    if (data.style.marginLeft.EndsWithPixel() &&
+                        data.style.marginRight.EndsWithPixel() &&
+                        data.style.marginLeft == data.style.marginRight)
+                    {
+                        data.style.margin = MarkAsAlreadyCalculatedModifier($"MarginLeftRight({data.style.marginLeft.RemovePixelFromEnd()})");
+
+                        data.style.marginLeft = data.style.marginRight = null;
+                    }
+
+                    // padding: SizeFull
+                    if (data.style.width == "100%" && data.style.height == "100%")
+                    {
+                        data.style.width = MarkAsAlreadyCalculatedModifier("SizeFull");
+
+                        data.style.height = null;
+                    }
+
+                    // margin: WidthHeight
+                    if (data.style.width.EndsWithPixel() &&
+                        data.style.height.EndsWithPixel() &&
+                        data.style.width == data.style.height)
+                    {
+                        data.style.width = MarkAsAlreadyCalculatedModifier($"Size({data.style.width.RemovePixelFromEnd()})");
+
+                        data.style.height = null;
+                    }
+                }
+            }
+            return data;
+        }
+
+        static Data arrangeFlex(Data data)
+        {
+            if (data.htmlNodeName == "div")
+            {
+                if (data.style is not null)
+                {
+                    // c o l u m n s
+                    if (data.style.display == "inline-flex" &&
+                        data.style.flexDirection == "column" &&
+                        data.style.justifyContent == "center" &&
+                        data.style.alignItems == "center")
+                    {
+                        data = data with { htmlNodeName = "InlineFlexColumnCentered" };
+                        
+                        data.style.display = data.style.flexDirection = data.style.justifyContent = data.style.alignItems = null;
+                    }
+
+                    if (data.style.display == "inline-flex" &&
+                        data.style.flexDirection == "column")
+                    {
+                        data = data with { htmlNodeName = "InlineFlexColumn" };
+                        
+                        data.style.display = data.style.flexDirection = null;
+                    }
+
+                    if (data.style.display == "flex" &&
+                        data.style.flexDirection == "column" &&
+                        data.style.justifyContent == "center" &&
+                        data.style.alignItems == "center")
+                    {
+                        data = data with { htmlNodeName = "FlexColumnCentered" };
+                        
+                        data.style.display = data.style.flexDirection = data.style.justifyContent = data.style.alignItems = null;
+                    }
+
+                    if (data.style.display == "flex" && data.style.flexDirection == "column")
+                    {
+                        data = data with { htmlNodeName = "FlexColumn" };
+                        
+                        data.style.display = data.style.flexDirection = null;
+                    }
+
+                    // r o w
+                    if (data.style.display == "inline-flex" &&
+                        (data.style.flexDirection is null || data.style.flexDirection == "row") &&
+                        data.style.justifyContent == "center" &&
+                        data.style.alignItems == "center")
+                    {
+                        data = data with { htmlNodeName = "InlineFlexRowCentered" };
+                        
+                        data.style.display = data.style.flexDirection = data.style.justifyContent = data.style.alignItems = null;
+                    }
+
+                    if (data.style.display == "inline-flex" &&
+                        (data.style.flexDirection is null || data.style.flexDirection == "row"))
+                    {
+                        data = data with { htmlNodeName = "InlineFlexRow" };
+                        
+                        data.style.display = data.style.flexDirection = null;
+                    }
+
+                    if (data.style.display == "flex" &&
+                        (data.style.flexDirection is null || data.style.flexDirection == "row") &&
+                        data.style.justifyContent == "center" &&
+                        data.style.alignItems == "center")
+                    {
+                        data = data with { htmlNodeName = "FlexRowCentered" };
+                        
+                        data.style.display = data.style.flexDirection = data.style.justifyContent = data.style.alignItems = null;
+                    }
+
+                    if (data.style.display == "flex" && (data.style.flexDirection is null || data.style.flexDirection == "row"))
+                    {
+                        data = data with { htmlNodeName = "FlexRow" };
+                        
+                        data.style.display = data.style.flexDirection = null;
+                    }
+                }
+            }
+
+            return data;
+        }
+
+        static Data tryArrangeInnerNodeText(Data data)
+        {
+            if (data.htmlNode.ChildNodes.Count == 1 && data.htmlNode.ChildNodes[0].Name == "#text")
+            {
+                var text = data.htmlNode.ChildNodes[0].InnerText.Trim();
+
+                if (string.IsNullOrWhiteSpace(text) is false)
+                {
+                    if (data.smartMode)
+                    {
+                        data.modifiers.Insert(0, ConvertToCSharpString(text));
+                    }
+                    else //if (htmlNode.Attributes.Any())
+                    {
+                        data.htmlNode.Attributes.Insert(0, "text", text);
+                    }
+                }
+
+                data.htmlNode.ChildNodes.RemoveAt(0);
+            }
+
+            return data;
         }
 
         static Data moveStylableAttributesToStyleForSvgAndPath(Data data)
