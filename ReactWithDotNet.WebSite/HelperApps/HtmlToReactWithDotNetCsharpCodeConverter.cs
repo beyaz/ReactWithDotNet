@@ -369,54 +369,9 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             data.modifiers.AddRange(data.htmlNode.Attributes.RemoveAll(isDataAttribute).Select(toDataModifier).Select(ModifierCode.FromString));
         }
 
-        // remove svg.xmlns
-        {
-            if (data.htmlNode.Name == "svg")
-            {
-                if (data.htmlNode.Attributes.Contains("xmlns") && data.htmlNode.Attributes["xmlns"].Value == "http://www.w3.org/2000/svg")
-                {
-                    data.htmlNode.Attributes.Remove("xmlns");
-                }
+        data = arrangeSvgSizeAttribute(data);
+        data = moveStylableAttributesToStyleForSvgAndPath(data);
 
-                if (data.htmlNode.Attributes.Contains("width") &&
-                    data.htmlNode.Attributes.Contains("height") &&
-                    data.htmlNode.Attributes["width"].Value == data.htmlNode.Attributes["height"].Value)
-                {
-                    data.htmlNode.Attributes.Add("size", data.htmlNode.Attributes["width"].Value);
-
-                    data.htmlNode.Attributes.Remove("width");
-                    data.htmlNode.Attributes.Remove("height");
-                }
-            }
-
-            if (data.htmlNode.Name == "svg" || data.htmlNode.Name == "path")
-            {
-                static bool isStyleAttribute(Data data, HtmlAttribute htmlAttribute)
-                {
-                    if (data.htmlNode.Name == "svg" && "size".Equals(htmlAttribute.Name, StringComparison.OrdinalIgnoreCase))
-                    {
-                        return false;
-                    }
-
-                    if (TryFindProperty(data.htmlNode.Name, htmlAttribute.Name) is null)
-                    {
-                        if (typeof(Style).GetProperty(htmlAttribute.Name.Replace("-", ""), BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase) is not null)
-                        {
-                            return true;
-                        }
-                    }
-
-                    return false;
-                }
-
-                foreach (var htmlAttribute in data.htmlNode.Attributes.RemoveAll(x=>isStyleAttribute(data,x)))
-                {
-                    data = data with { style = data.style ?? new() };
-
-                    data.style[htmlAttribute.Name] = htmlAttribute.Value;
-                }
-            }
-        }
 
         // innerText
         {
@@ -956,6 +911,62 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             lines.Add("}");
 
             return lines;
+        }
+
+        static Data moveStylableAttributesToStyleForSvgAndPath(Data data)
+        {
+            if (data.htmlNode.Name == "svg" || data.htmlNode.Name == "path")
+            {
+                static bool isStyleAttribute(Data data, HtmlAttribute htmlAttribute)
+                {
+                    if (data.htmlNode.Name == "svg" && "size".Equals(htmlAttribute.Name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return false;
+                    }
+
+                    if (TryFindProperty(data.htmlNode.Name, htmlAttribute.Name) is null)
+                    {
+                        if (typeof(Style).GetProperty(htmlAttribute.Name.Replace("-", ""), BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase) is not null)
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+
+                foreach (var htmlAttribute in data.htmlNode.Attributes.RemoveAll(x=>isStyleAttribute(data,x)))
+                {
+                    data = data with { style = data.style ?? new() };
+
+                    data.style[htmlAttribute.Name] = htmlAttribute.Value;
+                }
+            }
+
+            return data;
+        }
+
+        static Data arrangeSvgSizeAttribute(Data data)
+        {
+            if (data.htmlNode.Name == "svg")
+            {
+                if (data.htmlNode.Attributes.Contains("xmlns") && data.htmlNode.Attributes["xmlns"].Value == "http://www.w3.org/2000/svg")
+                {
+                    data.htmlNode.Attributes.Remove("xmlns");
+                }
+
+                if (data.htmlNode.Attributes.Contains("width") &&
+                    data.htmlNode.Attributes.Contains("height") &&
+                    data.htmlNode.Attributes["width"].Value == data.htmlNode.Attributes["height"].Value)
+                {
+                    data.htmlNode.Attributes.Add("size", data.htmlNode.Attributes["width"].Value);
+
+                    data.htmlNode.Attributes.Remove("width");
+                    data.htmlNode.Attributes.Remove("height");
+                }
+            }
+
+            return data;
         }
 
         static Data initHtmlNodeName(Data data)
