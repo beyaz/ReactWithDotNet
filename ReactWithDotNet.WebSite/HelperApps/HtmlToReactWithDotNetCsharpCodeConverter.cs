@@ -275,6 +275,12 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
     static List<string> ToCSharpCode(HtmlNode htmlNode, bool smartMode, int maxAttributeCountPerLine)
     {
+        var classNameAttribute = htmlNode.Attributes.FirstOrDefault(x => x.Name == "class");
+        if (classNameAttribute is not null)
+        {
+            htmlNode.Attributes.Remove(classNameAttribute);
+        }
+        
         // ignore smart mode for specific case beautiful code format
         var smartModeIgnoredTags = new List<string> { "rect", "path", "circle", "line" };
         if (htmlNode.ChildNodes.Count == 0 && smartModeIgnoredTags.Any(tag => htmlNode.Name.Equals(tag, StringComparison.OrdinalIgnoreCase)))
@@ -822,11 +828,22 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                 var sb = new StringBuilder();
                 sb.Append($"new {htmlNodeName}");
-
+                
+                
+                
                 if (modifiers.Count > 0)
                 {
                     sb.Append("(");
                     sb.Append(JoinModifiers(modifiers));
+                    sb.Append(")");
+                }
+                
+                if (modifiers.Count == 0 && classNameAttribute is not null)
+                {
+                    sb.Append("(");
+                    sb.Append('"');
+                    sb.Append(classNameAttribute.Value);
+                    sb.Append('"');
                     sb.Append(")");
                 }
 
@@ -836,13 +853,14 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         sb.ToString()
                     };
 
-                    if (htmlNode.Attributes.Count == 1)
+                    if (htmlNode.Attributes.Count == 1 && htmlNode.Attributes[0].Name=="text")
                     {
                         lines.Add("{");
                         lines.Add(ConvertToCSharpString(htmlNode.Attributes[0].Value));
                         lines.Add("}");
                         return lines;
                     }
+                    
 
                     if (htmlNode.Attributes.Count > 0)
                     {
