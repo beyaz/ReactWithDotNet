@@ -664,11 +664,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return true;
         }
 
-        static bool canStyleExportInOneLine(Style style)
-        {
-            return style.ToDictionary().Count <= 3;
-        }
-
         if (htmlNode.ChildNodes.Count == 0)
         {
             List<string> attributeToString(HtmlAttribute attribute)
@@ -946,6 +941,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             lines.Add("}");
 
             return lines;
+        }
+
+        static bool canStyleExportInOneLine(Style style)
+        {
+            return style.ToDictionary().Count <= 3;
         }
 
         static string styleAsCode(Style style)
