@@ -332,11 +332,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             }
         }
 
-        string styleAsCode()
-        {
-            return $"new Style {{ {string.Join(", ", style.ToDictionary().Select(kv => kv.Key + " = \"" + kv.Value + "\""))} }}";
-        }
-
         // aria-*
         {
             static bool isAriaAttribute(HtmlAttribute htmlAttribute)
@@ -900,7 +895,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         if (style is not null)
         {
-            modifiers.Add(styleAsCode());
+            modifiers.Add(styleAsCode(style));
         }
 
         if (htmlNode.ChildNodes.Count == 1 && htmlNode.ChildNodes[0].Name == "#text")
@@ -951,6 +946,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             lines.Add("}");
 
             return lines;
+        }
+
+        static string styleAsCode(Style style)
+        {
+            return $"new Style {{ {string.Join(", ", style.ToDictionary().Select(kv => kv.Key + " = \"" + kv.Value + "\""))} }}";
         }
 
         static string JoinModifiers(IReadOnlyList<ModifierCode> modifiers)
