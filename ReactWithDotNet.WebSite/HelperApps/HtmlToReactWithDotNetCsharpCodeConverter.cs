@@ -593,19 +593,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             }
         }
 
-        foreach (var htmlAttribute in data.htmlNode.Attributes)
-        {
-            var (success, modifierCode) = TryConvertToModifier(htmlAttribute);
-            if (success)
-            {
-                data.modifiers.Add(modifierCode);
-            }
-        }
-
-        if (data.style is not null)
-        {
-            data.modifiers.Add(styleAsCode(data.style));
-        }
+        data = convertAllAttributesToModifiers(data);
 
         if (data.htmlNode.ChildNodes.Count == 1 && data.htmlNode.ChildNodes[0].Name == "#text")
         {
@@ -623,7 +611,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             ];
         }
 
-        // multi line
+
+        return exportMultiLine(data);
+        
+
+        static List<string> exportMultiLine(Data data)
         {
             var partConstructor = "";
             if (data.modifiers.Count > 0)
@@ -655,6 +647,28 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             lines.Add("}");
 
             return lines;
+        }
+        
+
+        static Data convertAllAttributesToModifiers(Data data)
+        {
+        
+        
+            foreach (var htmlAttribute in data.htmlNode.Attributes)
+            {
+                var (success, modifierCode) = TryConvertToModifier(htmlAttribute);
+                if (success)
+                {
+                    data.modifiers.Add(modifierCode);
+                }
+            }
+
+            if (data.style is not null)
+            {
+                data.modifiers.Add(styleAsCode(data.style));
+            }
+
+            return data;
         }
 
         static bool canBeExportInOneLine(Data data)
