@@ -376,44 +376,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         data = arrangeFlex(data);
         data = arrangeShortwayStyle(data);
         data = removeComments(data);
-
-        if (data.smartMode && data.style is not null)
-        {
-            data.modifiers.AddRange(data.htmlNode.Attributes.Select(TryConvertToModifier).Select(ModifierCode.From));
-
-            ((ICollection<HtmlAttribute>)data.htmlNode.Attributes).Clear();
-            data.modifiers.AddRange(data.style.ToDictionary().Select(p => TryConvertToModifier_From_Mixin_Extension(p.Key, p.Value)).Select(ModifierCode.From));
-
-            data = data with { style = null };
-        }
-
-        bool canBeExportInOneLine()
-        {
-            if (data.htmlNode.Attributes.Contains("text"))
-            {
-                return false;
-            }
-
-            if (data.style is not null)
-            {
-                if (canStyleExportInOneLine(data.style) is false)
-                {
-                    return false;
-                }
-            }
-
-            if (data.htmlNode.ChildNodes.Count == 0 && data.smartMode && data.modifiers.Count > data.maxAttributeCountPerLine)
-            {
-                return false;
-            }
-
-            if (data.htmlNode.Attributes.Count > data.maxAttributeCountPerLine)
-            {
-                return false;
-            }
-
-            return true;
-        }
+        data = whenSmartModeMoveAllStyleToModifiers(data);
 
         if (data.htmlNode.ChildNodes.Count == 0)
         {
@@ -490,7 +453,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     return [$"{propertyInfo.Name} = \"{attribute.Value}\""];
                 }
 
-                if (canBeExportInOneLine())
+                if (canBeExportInOneLine(data))
                 {
                     return [$"/* {attribute.GetName()} = \"{attribute.Value}\"*/"];
                 }
@@ -503,7 +466,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 data.htmlNode.Attributes.Add("style", "");
             }
 
-            if (canBeExportInOneLine())
+            if (canBeExportInOneLine(data))
             {
                 if (data.smartMode && data.modifiers.Count > 0)
                 {
@@ -692,6 +655,52 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             lines.Add("}");
 
             return lines;
+        }
+
+        static bool canBeExportInOneLine(Data data)
+        {
+            if (data.htmlNode.Attributes.Contains("text"))
+            {
+                return false;
+            }
+
+            if (data.style is not null)
+            {
+                if (canStyleExportInOneLine(data.style) is false)
+                {
+                    return false;
+                }
+            }
+
+            if (data.htmlNode.ChildNodes.Count == 0 && data.smartMode && data.modifiers.Count > data.maxAttributeCountPerLine)
+            {
+                return false;
+            }
+
+            if (data.htmlNode.Attributes.Count > data.maxAttributeCountPerLine)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        static Data whenSmartModeMoveAllStyleToModifiers(Data data)
+        {
+
+         
+        
+            if (data.smartMode && data.style is not null)
+            {
+                data.modifiers.AddRange(data.htmlNode.Attributes.Select(TryConvertToModifier).Select(ModifierCode.From));
+
+                ((ICollection<HtmlAttribute>)data.htmlNode.Attributes).Clear();
+                data.modifiers.AddRange(data.style.ToDictionary().Select(p => TryConvertToModifier_From_Mixin_Extension(p.Key, p.Value)).Select(ModifierCode.From));
+
+                data = data with { style = null };
+            }
+        
+            return data;
         }
 
         static Data removeComments(Data data)
