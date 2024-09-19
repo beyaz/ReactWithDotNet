@@ -322,28 +322,13 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return ["br"];
         }
 
+        data = data with { modifiers = new() };
 
-        // grab style attribute
-        {
-            var styleAttribute = data.htmlNode.Attributes["style"];
-            if (styleAttribute != null)
-            {
-                if (!string.IsNullOrWhiteSpace(styleAttribute.Value))
-                {
-                    data = data with { style = Style.ParseCss(styleAttribute.Value) };
-                }
-
-                data.htmlNode.Attributes.Remove("style");
-            }
-        }
-
-        data = data with { modifiers = new List<ModifierCode>() };
-
+        data = grabStyleAttribute(data);
         data = moveAriaAttributesToModifiers(data);
         data = moveDataAttributesToModifiers(data);
         data = arrangeSvgSizeAttribute(data);
         data = moveStylableAttributesToStyleForSvgAndPath(data);
-        
         data = tryArrangeInnerNodeText(data);
         data = arrangeFlex(data);
         data = arrangeShortwayStyle(data);
@@ -585,6 +570,22 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
 
         return exportMultiLine(data);
+
+        static Data grabStyleAttribute(Data data)
+        {
+            var styleAttribute = data.htmlNode.Attributes["style"];
+            if (styleAttribute != null)
+            {
+                if (!string.IsNullOrWhiteSpace(styleAttribute.Value))
+                {
+                    data = data with { style = Style.ParseCss(styleAttribute.Value) };
+                }
+
+                data.htmlNode.Attributes.Remove("style");
+            }
+
+            return data;
+        }
 
         static Data moveAriaAttributesToModifiers(Data data)
         {
