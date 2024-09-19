@@ -274,20 +274,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return sb.ToString().Trim();
     }
 
-    record Data
-    {
-        public HtmlNode htmlNode { get; init; }
-        public bool smartMode { get; init; }
-        public int maxAttributeCountPerLine { get; init; }
-        
-        public HtmlAttribute classNameAttribute { get; init; }
-        
-        public string htmlNodeName { get; init; }
-
-        public Style style{ get; init; }
-        public List<ModifierCode> modifiers{ get; init; }
-    }
-
     static List<string> ToCSharpCode(HtmlNode htmlNode, bool smartMode, int maxAttributeCountPerLine)
     {
         return ToCSharpCode(new Data
@@ -297,12 +283,13 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             maxAttributeCountPerLine = maxAttributeCountPerLine
         });
     }
+
     static List<string> ToCSharpCode(Data data)
     {
         data = tryRemoveClassAttribute(data);
         data = ignoreSmartModeSpecificTags(data);
         data = initHtmlNodeName(data);
-        
+
         if (data.htmlNodeName == "#text")
         {
             if (string.IsNullOrWhiteSpace(data.htmlNode.InnerText))
@@ -359,13 +346,12 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             ];
         }
 
-
         return exportMultiLine(data);
 
         static List<string> leafElementToString(Data data)
         {
             Debug.Assert(data.htmlNode.ChildNodes.Count == 0);
-            
+
             List<string> attributeToString(HtmlAttribute attribute)
             {
                 if (attribute.Name == "style" && data.style is not null)
@@ -518,16 +504,14 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                 var sb = new StringBuilder();
                 sb.Append($"new {data.htmlNodeName}");
-                
-                
-                
+
                 if (data.modifiers.Count > 0)
                 {
                     sb.Append("(");
                     sb.Append(JoinModifiers(data.modifiers));
                     sb.Append(")");
                 }
-                
+
                 if (data.modifiers.Count == 0 && data.classNameAttribute is not null)
                 {
                     sb.Append("(");
@@ -543,14 +527,13 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         sb.ToString()
                     };
 
-                    if (data.htmlNode.Attributes.Count == 1 && data.htmlNode.Attributes[0].Name=="text")
+                    if (data.htmlNode.Attributes.Count == 1 && data.htmlNode.Attributes[0].Name == "text")
                     {
                         lines.Add("{");
                         lines.Add(ConvertToCSharpString(data.htmlNode.Attributes[0].Value));
                         lines.Add("}");
                         return lines;
                     }
-                    
 
                     if (data.htmlNode.Attributes.Count > 0)
                     {
@@ -625,7 +608,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             }
 
             data.modifiers.AddRange(data.htmlNode.Attributes.RemoveAll(isDataAttribute).Select(toDataModifier).Select(ModifierCode.FromString));
-            
+
             return data;
         }
 
@@ -662,12 +645,9 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             return lines;
         }
-        
 
         static Data convertAllAttributesToModifiers(Data data)
         {
-        
-        
             foreach (var htmlAttribute in data.htmlNode.Attributes)
             {
                 var (success, modifierCode) = TryConvertToModifier(htmlAttribute);
@@ -715,9 +695,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         static Data whenSmartModeMoveAllStyleToModifiers(Data data)
         {
-
-         
-        
             if (data.smartMode && data.style is not null)
             {
                 data.modifiers.AddRange(data.htmlNode.Attributes.Select(TryConvertToModifier).Select(ModifierCode.From));
@@ -727,7 +704,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                 data = data with { style = null };
             }
-        
+
             return data;
         }
 
@@ -740,8 +717,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         static Data arrangeShortwayStyle(Data data)
         {
-
-         
             if (data.style is not null)
             {
                 // border
@@ -856,87 +831,94 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     }
                 }
             }
+
             return data;
         }
 
         static Data arrangeFlex(Data data)
         {
-            if (data.htmlNodeName == "div")
+            if (data.htmlNodeName != "div")
             {
-                if (data.style is not null)
-                {
-                    // c o l u m n s
-                    if (data.style.display == "inline-flex" &&
-                        data.style.flexDirection == "column" &&
-                        data.style.justifyContent == "center" &&
-                        data.style.alignItems == "center")
-                    {
-                        data = data with { htmlNodeName = "InlineFlexColumnCentered" };
-                        
-                        data.style.display = data.style.flexDirection = data.style.justifyContent = data.style.alignItems = null;
-                    }
+                return data;
+            }
 
-                    if (data.style.display == "inline-flex" &&
-                        data.style.flexDirection == "column")
-                    {
-                        data = data with { htmlNodeName = "InlineFlexColumn" };
-                        
-                        data.style.display = data.style.flexDirection = null;
-                    }
+            var style = data.style;
 
-                    if (data.style.display == "flex" &&
-                        data.style.flexDirection == "column" &&
-                        data.style.justifyContent == "center" &&
-                        data.style.alignItems == "center")
-                    {
-                        data = data with { htmlNodeName = "FlexColumnCentered" };
-                        
-                        data.style.display = data.style.flexDirection = data.style.justifyContent = data.style.alignItems = null;
-                    }
+            if (style is null)
+            {
+                return data;
+            }
 
-                    if (data.style.display == "flex" && data.style.flexDirection == "column")
-                    {
-                        data = data with { htmlNodeName = "FlexColumn" };
-                        
-                        data.style.display = data.style.flexDirection = null;
-                    }
+            // c o l u m n s
+            if (style.display == "inline-flex" &&
+                style.flexDirection == "column" &&
+                style.justifyContent == "center" &&
+                style.alignItems == "center")
+            {
+                data = data with { htmlNodeName = "InlineFlexColumnCentered" };
 
-                    // r o w
-                    if (data.style.display == "inline-flex" &&
-                        (data.style.flexDirection is null || data.style.flexDirection == "row") &&
-                        data.style.justifyContent == "center" &&
-                        data.style.alignItems == "center")
-                    {
-                        data = data with { htmlNodeName = "InlineFlexRowCentered" };
-                        
-                        data.style.display = data.style.flexDirection = data.style.justifyContent = data.style.alignItems = null;
-                    }
+                style.display = style.flexDirection = style.justifyContent = style.alignItems = null;
+            }
 
-                    if (data.style.display == "inline-flex" &&
-                        (data.style.flexDirection is null || data.style.flexDirection == "row"))
-                    {
-                        data = data with { htmlNodeName = "InlineFlexRow" };
-                        
-                        data.style.display = data.style.flexDirection = null;
-                    }
+            if (style.display == "inline-flex" &&
+                style.flexDirection == "column")
+            {
+                data = data with { htmlNodeName = "InlineFlexColumn" };
 
-                    if (data.style.display == "flex" &&
-                        (data.style.flexDirection is null || data.style.flexDirection == "row") &&
-                        data.style.justifyContent == "center" &&
-                        data.style.alignItems == "center")
-                    {
-                        data = data with { htmlNodeName = "FlexRowCentered" };
-                        
-                        data.style.display = data.style.flexDirection = data.style.justifyContent = data.style.alignItems = null;
-                    }
+                style.display = style.flexDirection = null;
+            }
 
-                    if (data.style.display == "flex" && (data.style.flexDirection is null || data.style.flexDirection == "row"))
-                    {
-                        data = data with { htmlNodeName = "FlexRow" };
-                        
-                        data.style.display = data.style.flexDirection = null;
-                    }
-                }
+            if (style.display == "flex" &&
+                style.flexDirection == "column" &&
+                style.justifyContent == "center" &&
+                style.alignItems == "center")
+            {
+                data = data with { htmlNodeName = "FlexColumnCentered" };
+
+                style.display = style.flexDirection = style.justifyContent = style.alignItems = null;
+            }
+
+            if (style.display == "flex" && style.flexDirection == "column")
+            {
+                data = data with { htmlNodeName = "FlexColumn" };
+
+                style.display = style.flexDirection = null;
+            }
+
+            // r o w
+            if (style.display == "inline-flex" &&
+                (style.flexDirection is null || style.flexDirection == "row") &&
+                style.justifyContent == "center" &&
+                style.alignItems == "center")
+            {
+                data = data with { htmlNodeName = "InlineFlexRowCentered" };
+
+                style.display = style.flexDirection = style.justifyContent = style.alignItems = null;
+            }
+
+            if (style.display == "inline-flex" &&
+                (style.flexDirection is null || style.flexDirection == "row"))
+            {
+                data = data with { htmlNodeName = "InlineFlexRow" };
+
+                style.display = style.flexDirection = null;
+            }
+
+            if (style.display == "flex" &&
+                (style.flexDirection is null || style.flexDirection == "row") &&
+                style.justifyContent == "center" &&
+                style.alignItems == "center")
+            {
+                data = data with { htmlNodeName = "FlexRowCentered" };
+
+                style.display = style.flexDirection = style.justifyContent = style.alignItems = null;
+            }
+
+            if (style.display == "flex" && (style.flexDirection is null || style.flexDirection == "row"))
+            {
+                data = data with { htmlNodeName = "FlexRow" };
+
+                style.display = style.flexDirection = null;
             }
 
             return data;
@@ -972,7 +954,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             if (htmlNode.Name == "svg" || htmlNode.Name == "path")
             {
-                foreach (var htmlAttribute in htmlNode.Attributes.RemoveAll(x=>isStyleAttribute(htmlNode,x)))
+                foreach (var htmlAttribute in htmlNode.Attributes.RemoveAll(x => isStyleAttribute(htmlNode, x)))
                 {
                     data = data with { style = data.style ?? new() };
 
@@ -1050,13 +1032,13 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         static Data tryRemoveClassAttribute(Data data)
         {
             var htmlNode = data.htmlNode;
-            
+
             var classNameAttribute = htmlNode.Attributes.FirstOrDefault(x => x.Name == "class");
             if (classNameAttribute is null)
             {
                 return data;
             }
-            
+
             htmlNode.Attributes.Remove(classNameAttribute);
 
             return data with { classNameAttribute = classNameAttribute };
@@ -1428,6 +1410,20 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             return FromString(code);
         }
+    }
+
+    record Data
+    {
+        public HtmlNode htmlNode { get; init; }
+        public bool smartMode { get; init; }
+        public int maxAttributeCountPerLine { get; init; }
+
+        public HtmlAttribute classNameAttribute { get; init; }
+
+        public string htmlNodeName { get; init; }
+
+        public Style style { get; init; }
+        public List<ModifierCode> modifiers { get; init; }
     }
 
     #region already calculated modifier
