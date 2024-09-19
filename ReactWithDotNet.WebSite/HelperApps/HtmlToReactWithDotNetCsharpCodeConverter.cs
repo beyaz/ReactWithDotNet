@@ -273,13 +273,39 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return sb.ToString().Trim();
     }
 
+    record Data
+    {
+        public HtmlNode htmlNode { get; init; }
+        public bool smartMode { get; init; }
+        public int maxAttributeCountPerLine { get; init; }
+        public HtmlAttribute classNameAttribute { get; init; }
+    }
     static List<string> ToCSharpCode(HtmlNode htmlNode, bool smartMode, int maxAttributeCountPerLine)
     {
-        var classNameAttribute = htmlNode.Attributes.FirstOrDefault(x => x.Name == "class");
-        if (classNameAttribute is not null)
+        var data = new Data
         {
+            htmlNode                 = htmlNode,
+            smartMode                = smartMode,
+            maxAttributeCountPerLine = maxAttributeCountPerLine
+        };
+
+        data = tryRemoveClassAttribute(data);
+        
+        static Data tryRemoveClassAttribute(Data data)
+        {
+            var htmlNode = data.htmlNode;
+            
+            var classNameAttribute = htmlNode.Attributes.FirstOrDefault(x => x.Name == "class");
+            if (classNameAttribute is null)
+            {
+                return data;
+            }
+            
             htmlNode.Attributes.Remove(classNameAttribute);
+
+            return data with { classNameAttribute = classNameAttribute };
         }
+        
         
         // ignore smart mode for specific case beautiful code format
         var smartModeIgnoredTags = new List<string> { "rect", "path", "circle", "line" };
@@ -288,7 +314,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             smartMode = false;
         }
 
-        var modifiers = new List<ModifierCode>();
+       
 
         var htmlNodeName = htmlNode.OriginalName;
         if (htmlNodeName == "clippath")
@@ -332,6 +358,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             }
         }
 
+        var modifiers = new List<ModifierCode>();
+        
         // aria-*
         {
             static bool isAriaAttribute(HtmlAttribute htmlAttribute)
@@ -828,11 +856,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     sb.Append(")");
                 }
                 
-                if (modifiers.Count == 0 && classNameAttribute is not null)
+                if (modifiers.Count == 0 && data.classNameAttribute is not null)
                 {
                     sb.Append("(");
                     sb.Append('"');
-                    sb.Append(classNameAttribute.Value);
+                    sb.Append(data.classNameAttribute.Value);
                     sb.Append('"');
                     sb.Append(")");
                 }
