@@ -101,7 +101,7 @@ public sealed record FailInfo
     public string Message { get; init; }
 }
 
-public record Result
+public sealed record Result
 {
     public bool Success { get; init; }
     public bool Fail { get; init; }
@@ -113,9 +113,13 @@ public record Result
     }
 }
 
-public record Result<TValue> : Result
+public sealed record Result<TValue> 
 {
     public TValue Value { get; init; }
+    
+    public bool Success { get; init; }
+    public bool Fail { get; init; }
+    public FailInfo FailInfo { get; init; }
     
     public static implicit operator Result<TValue>(TValue value)
     {
