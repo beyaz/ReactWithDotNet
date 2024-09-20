@@ -106,8 +106,6 @@ public class Result
     public bool Success { get; init; }
     public bool Fail { get; init; }
     public FailInfo FailInfo { get; init; }
-    
-    public string FailMessage => FailInfo.Message;
 }
 
 public class Result<TValue> : Result
