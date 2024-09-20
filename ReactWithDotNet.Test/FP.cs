@@ -96,19 +96,24 @@ static class FP
     }
 }
 
-public sealed class FailInfo
+public sealed record FailInfo
 {
     public string Message { get; init; }
 }
 
-public class Result
+public record Result
 {
     public bool Success { get; init; }
     public bool Fail { get; init; }
     public FailInfo FailInfo { get; init; }
+    
+    public static implicit operator Result(FailInfo failInfo)
+    {
+        return new() { Fail = true, FailInfo= failInfo};
+    }
 }
 
-public class Result<TValue> : Result
+public record Result<TValue> : Result
 {
     public TValue Value { get; init; }
     
