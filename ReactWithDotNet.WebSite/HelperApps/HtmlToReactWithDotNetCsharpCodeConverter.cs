@@ -323,12 +323,14 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         data = removeComments(data);
         data = whenSmartModeMoveAllStyleToModifiers(data);
 
+        data = convertAllAttributesToModifiers(data);
+        
         if (data.htmlNode.ChildNodes.Count == 0)
         {
             return leafElementToString(data);
         }
 
-        data = convertAllAttributesToModifiers(data);
+        
 
         if (data.htmlNode.ChildNodes.Count == 1 && data.htmlNode.ChildNodes[0].Name == "#text")
         {
@@ -356,6 +358,20 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 var sb = new StringBuilder();
                 sb.Append($"new {data.htmlNodeName}");
 
+                var classNameModifierCode = data.modifiers.FirstOrDefault(x => x.Success && x.PartName == "ClassName");
+                if (classNameModifierCode is not null)
+                {
+                    data.modifiers.Remove(classNameModifierCode);
+                    
+                    data.modifiers.Insert(0, classNameModifierCode.PartParameterWithoutParanthesis);
+                }
+                
+                var textModifierCode = data.modifiers.FirstOrDefault(x => x.Success && x.PartName == "Text");
+                if (textModifierCode is not null)
+                {
+                    data.modifiers.Remove(textModifierCode);
+                }
+                
                 if (data.modifiers.Count > 0)
                 {
                     sb.Append("(");
@@ -363,32 +379,21 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     sb.Append(")");
                 }
 
-                sb.AppendLine();
-                
-                
-                sb.Append("    ");
-                sb.Append('"');
-                sb.Append("");
-                sb.Append('"');
-                
-                
-                
-                
-                if (data.modifiers.Count > 0)
+                var returnList = new List<string> { sb.ToString() };
+
+                if (textModifierCode is not null)
                 {
-                    sb.Append("(");
-                    sb.Append(JoinModifiers(data.modifiers));
-                    sb.Append(")");
+                    returnList.Add("{");
+                    
+                    returnList.Add(textModifierCode.PartParameterWithoutParanthesis.RemoveFromStart("\"").RemoveFromEnd("\""));
+                    
+                    returnList.Add("}");
                 }
 
-                if (data.modifiers.Count == 0 && data.classNameAttribute is not null)
-                {
-                    sb.Append("(");
-                    sb.Append('"');
-                    sb.Append(data.classNameAttribute.Value);
-                    sb.Append('"');
-                    sb.Append(")");
-                }
+                return returnList;
+
+
+
             }
 
             List<string> attributeToString(HtmlAttribute attribute)
@@ -1450,6 +1455,38 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             return Success ? Code : "fail";
         }
+
+        public string PartName
+        {
+            get
+            {
+                var leftParanthesisIndex = Code.IndexOf('(', StringComparison.OrdinalIgnoreCase);
+                if (leftParanthesisIndex <= 0)
+                {
+                    return Code;
+                }
+                
+                return Code[..leftParanthesisIndex];
+            }
+        }
+        
+        public string PartParameterWithoutParanthesis
+        {
+            get
+            {
+                var leftParanthesisIndex = Code.IndexOf('(', StringComparison.OrdinalIgnoreCase);
+                if (leftParanthesisIndex > 0)
+                {
+                    var rightParanthesisIndex = Code.LastIndexOf(')');
+                    if (rightParanthesisIndex > 0)
+                    {
+                        return Code.Substring(leftParanthesisIndex+1, rightParanthesisIndex - leftParanthesisIndex-1);
+                    }
+                }
+
+                return null;
+            }
+        }
     }
 
     record Data
@@ -1484,31 +1521,4 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
     }
 
     #endregion
-    
-    
-    
-    sealed record FailInfo
-    {
-        public string Message { get; init; }
-    }
-
-    
-    sealed record Result<TValue> 
-    {
-        public TValue Value { get; init; }
-    
-        public bool Success { get; init; }
-        public bool Fail { get; init; }
-        public FailInfo FailInfo { get; init; }
-    
-        public static implicit operator Result<TValue>(TValue value)
-        {
-            return new() { Value = value, Success = true };
-        }
-    
-        public static implicit operator Result<TValue>(FailInfo failInfo)
-        {
-            return new() { Fail = true, FailInfo= failInfo};
-        }
-    }
 }

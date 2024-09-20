@@ -17,9 +17,9 @@ public class HtmlToCSharpTests
                {
                    "xYz1"
                }
-               """,true);
+               """);
 
-        /*
+
         Assert("""
                <span class='a-b c'>xYz1</span>
                """,
@@ -30,7 +30,7 @@ public class HtmlToCSharpTests
                }
                """);
 
-
+        /*
         Assert("""
                <span>xYz1</span>
                """,
@@ -40,10 +40,10 @@ public class HtmlToCSharpTests
                    "xYz1"
                }
                """);
-        
-    
-        
-        
+
+
+
+
         Assert("""
                <a target='_blank' />
                """,
@@ -89,7 +89,7 @@ public class HtmlToCSharpTests
                """);
         return;
         */
-        static void Assert(string html, string expected, bool smartMode=false)
+        static void Assert(string html, string expected, bool smartMode=true)
         {
             var actual = HtmlToCSharp(html, smartMode, 3);
             
