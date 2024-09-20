@@ -30,7 +30,7 @@ public class HtmlToCSharpTests
                }
                """);
 
-        /*
+        
         Assert("""
                <span>xYz1</span>
                """,
@@ -41,30 +41,33 @@ public class HtmlToCSharpTests
                }
                """);
 
-
+        
 
 
         Assert("""
                <a target='_blank' />
                """,
                """
-               new a { target = "_blank" }
+               new a(TargetBlank)
                """);
 
+        
         Assert("""
                <a target='_blank' style = "color:rgb(28, 32, 37);border-radius:12px;"/>
                """,
                """
-               new a { target = "_blank", style = { color = "rgb(28, 32, 37)", borderRadius = "12px" } }
+               new a(TargetBlank, Color(rgb(28, 32, 37)), BorderRadius(12))
                """);
 
+        
         Assert("""
                <a target='_blank'  aria-hidden="true"   data-testid="AcUnitIcon"  style = "color:rgb(28, 32, 37);border-radius:12px;"/>
                """,
                """
-               new a(Aria("hidden", "true"), Data("testid", "AcUnitIcon")) { target = "_blank", style = { color = "rgb(28, 32, 37)", borderRadius = "12px" } }
+               new a(TargetBlank, Aria("hidden", "true"), Data("testid", "AcUnitIcon"), Color(rgb(28, 32, 37)), BorderRadius(12))
                """);
 
+        
         Assert("""
                <a target='_blank'  aria-hidden="true"   data-testid="AcUnitIcon"  style = "color:rgb(28, 32, 37);border-radius:12px;">
                xyz
@@ -79,6 +82,7 @@ public class HtmlToCSharpTests
                }
                """);
 
+        /*
         Assert("""
                <div aria-hidden="true"   data-testid="AcUnitIcon"  style = "display: flex; flexDirection: row; color: blue;">
 

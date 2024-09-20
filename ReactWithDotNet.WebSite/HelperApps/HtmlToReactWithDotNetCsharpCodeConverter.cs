@@ -313,8 +313,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         data = data with { modifiers = [] };
 
         data = grabStyleAttribute(data);
-        data = moveAriaAttributesToModifiers(data);
-        data = moveDataAttributesToModifiers(data);
+        // data = moveAriaAttributesToModifiers(data);
+        // data = moveDataAttributesToModifiers(data);
         data = arrangeSvgSizeAttribute(data);
         data = moveStylableAttributesToStyleForSvgAndPath(data);
         data = tryArrangeInnerNodeText(data);
@@ -1227,6 +1227,42 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         var success = (string modifierCode) => (true, modifierCode);
 
         value ??= string.Empty;
+        
+        // data- or aria-
+        {
+            if (isAriaAttribute(name))
+            {
+                return success(toAriaModifier(name, value));
+            }
+
+            if (isDataAttribute(name))
+            {
+                return success(toDataModifier(name, value));
+            }
+
+
+            static bool isDataAttribute(string name)
+            {
+                return name.StartsWith("data-", StringComparison.OrdinalIgnoreCase);
+            }
+
+            static string toDataModifier(string name, string value)
+            {
+                return $"Data(\"{name.RemoveFromStart("data-")}\", \"{value}\")";
+            }
+
+            static bool isAriaAttribute(string name)
+            {
+                return name.StartsWith("aria-", StringComparison.OrdinalIgnoreCase);
+            }
+
+            static string toAriaModifier(string name, string value)
+            {
+                return $"Aria(\"{name.RemoveFromStart("aria-")}\", \"{value}\")";
+            }
+        }
+
+        
 
         if (name == "target" && value == "_blank")
         {
