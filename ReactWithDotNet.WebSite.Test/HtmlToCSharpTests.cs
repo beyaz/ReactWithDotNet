@@ -9,7 +9,17 @@ public class HtmlToCSharpTests
     [TestMethod]
     public void _0()
     {
+        Assert("""
+               <span class='a-b c' style = "color:rgb(28, 32, 37);border-radius:12px;">xYz1</span>
+               """,
+               """
+               new span("a-b c", Color(rgb(28, 32, 37)), BorderRadius(12))
+               {
+                   "xYz1"
+               }
+               """,true);
 
+        /*
         Assert("""
                <span class='a-b c'>xYz1</span>
                """,
@@ -78,10 +88,10 @@ public class HtmlToCSharpTests
                new FlexRow(Aria("hidden", "true"), Data("testid", "AcUnitIcon")) { style = { color = "blue" } }
                """);
         return;
-
-        static void Assert(string html, string expected)
+        */
+        static void Assert(string html, string expected, bool smartMode=false)
         {
-            var actual = HtmlToCSharp(html, false, 3);
+            var actual = HtmlToCSharp(html, smartMode, 3);
             
             actual.Should().Be(expected);
         }

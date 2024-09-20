@@ -438,7 +438,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 data.htmlNode.Attributes.Add("style", "");
             }
 
-            if (canBeExportInOneLine(data))
+            // if (canBeExportInOneLine(data))
+            if(false)
             {
                 if (data.smartMode && data.modifiers.Count > 0)
                 {
@@ -690,6 +691,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 return false;
             }
 
+            
+            
             return true;
         }
 
@@ -932,14 +935,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                 if (string.IsNullOrWhiteSpace(text) is false)
                 {
-                    if (data.smartMode)
-                    {
-                        data.modifiers.Insert(0, ConvertToCSharpString(text));
-                    }
-                    else //if (htmlNode.Attributes.Any())
-                    {
-                        data.htmlNode.Attributes.Insert(0, "text", text);
-                    }
+                    data.modifiers.Insert(0, $"Text(\"{ConvertToCSharpString(text)}\")");
                 }
 
                 data.htmlNode.ChildNodes.RemoveAt(0);
@@ -1409,6 +1405,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         public static implicit operator ModifierCode(string code)
         {
             return FromString(code);
+        }
+
+        public override string ToString()
+        {
+            return Success ? Code : "fail";
         }
     }
 
