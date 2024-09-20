@@ -1484,4 +1484,31 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
     }
 
     #endregion
+    
+    
+    
+    sealed record FailInfo
+    {
+        public string Message { get; init; }
+    }
+
+    
+    sealed record Result<TValue> 
+    {
+        public TValue Value { get; init; }
+    
+        public bool Success { get; init; }
+        public bool Fail { get; init; }
+        public FailInfo FailInfo { get; init; }
+    
+        public static implicit operator Result<TValue>(TValue value)
+        {
+            return new() { Value = value, Success = true };
+        }
+    
+        public static implicit operator Result<TValue>(FailInfo failInfo)
+        {
+            return new() { Fail = true, FailInfo= failInfo};
+        }
+    }
 }
