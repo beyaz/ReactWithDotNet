@@ -310,7 +310,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return ["br"];
         }
 
-        data = data with { modifiers = new() };
+        data = data with { modifiers = [] };
 
         data = grabStyleAttribute(data);
         data = moveAriaAttributesToModifiers(data);
