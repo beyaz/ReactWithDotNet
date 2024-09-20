@@ -74,25 +74,23 @@ public class HtmlToCSharpTests
                </a>
                """,
                """
-               new a(Aria("hidden", "true"), Data("testid", "AcUnitIcon"))
+               new a(TargetBlank, Aria("hidden", "true"), Data("testid", "AcUnitIcon"), Color(rgb(28, 32, 37)), BorderRadius(12))
                {
-                   text = "xyz",
-                   target = "_blank",
-                   style = { color = "rgb(28, 32, 37)", borderRadius = "12px" }
+                   "xyz"
                }
                """);
 
-        /*
+        
         Assert("""
                <div aria-hidden="true"   data-testid="AcUnitIcon"  style = "display: flex; flexDirection: row; color: blue;">
 
                </div>
                """,
                """
-               new FlexRow(Aria("hidden", "true"), Data("testid", "AcUnitIcon")) { style = { color = "blue" } }
+               new FlexRow(Aria("hidden", "true"), Data("testid", "AcUnitIcon"), Color("blue"))
                """);
         return;
-        */
+        
         static void Assert(string html, string expected, bool smartMode=true)
         {
             var actual = HtmlToCSharp(html, smartMode, 3);
