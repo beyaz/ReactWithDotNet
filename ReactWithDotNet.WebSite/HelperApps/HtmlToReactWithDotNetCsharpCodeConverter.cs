@@ -294,7 +294,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             if (string.IsNullOrWhiteSpace(data.htmlNode.InnerText))
             {
-                return Enumerable.Empty<string>().ToList();
+                return [];
             }
 
             if (data.htmlNode.InnerText == "&nbsp;")
