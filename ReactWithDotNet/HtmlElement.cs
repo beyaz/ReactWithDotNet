@@ -31,6 +31,14 @@ abstract partial class HtmlElement : Element
     {
         this.className = className;
     }
+    
+    protected HtmlElement(string className, params Modifier[] modifiers)
+    {
+        this.className = className;
+        this.Apply(modifiers);
+    }
+    
+    // modifiers
 
     protected HtmlElement(Style style)
     {

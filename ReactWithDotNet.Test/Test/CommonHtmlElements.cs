@@ -2306,7 +2306,11 @@ public class ExportingCommonHtmlElements
             {
                 list.Add(Empty);
                 addComment();
-                list.Add($"    public {item.Tag}(string className) : base(className) {{  }}");    
+                list.Add($"    public {item.Tag}(string className) : base(className) {{  }}");
+                
+                list.Add(Empty);
+                addComment();
+                list.Add($"    public {item.Tag}(string className, params Modifier[] modifiers) : base(className, modifiers) {{  }}");    
             }
             
 
