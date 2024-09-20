@@ -286,7 +286,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
     static List<string> ToCSharpCode(Data data)
     {
-        data = tryRemoveClassAttribute(data);
+        // data = tryRemoveClassAttribute(data);
         data = ignoreSmartModeSpecificTags(data);
         data = initHtmlNodeName(data);
 
@@ -351,6 +351,45 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         static List<string> leafElementToString(Data data)
         {
             Debug.Assert(data.htmlNode.ChildNodes.Count == 0);
+
+            {
+                var sb = new StringBuilder();
+                sb.Append($"new {data.htmlNodeName}");
+
+                if (data.modifiers.Count > 0)
+                {
+                    sb.Append("(");
+                    sb.Append(JoinModifiers(data.modifiers));
+                    sb.Append(")");
+                }
+
+                sb.AppendLine();
+                
+                
+                sb.Append("    ");
+                sb.Append('"');
+                sb.Append("");
+                sb.Append('"');
+                
+                
+                
+                
+                if (data.modifiers.Count > 0)
+                {
+                    sb.Append("(");
+                    sb.Append(JoinModifiers(data.modifiers));
+                    sb.Append(")");
+                }
+
+                if (data.modifiers.Count == 0 && data.classNameAttribute is not null)
+                {
+                    sb.Append("(");
+                    sb.Append('"');
+                    sb.Append(data.classNameAttribute.Value);
+                    sb.Append('"');
+                    sb.Append(")");
+                }
+            }
 
             List<string> attributeToString(HtmlAttribute attribute)
             {

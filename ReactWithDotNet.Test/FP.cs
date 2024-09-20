@@ -12,9 +12,9 @@ static class FP
         return b();
     }
     
-    public static (bool success, T value) Or<T>(this Response<T> a, Func<(bool success, T value)> b)
+    public static (bool success, T value) Or<T>(this Result<T> a, Func<(bool success, T value)> b)
     {
-        if (a.IsSuccess)
+        if (a.Success)
         {
             return (true, a.Value);
         }
@@ -22,14 +22,14 @@ static class FP
         return b();
     }
     
-    public static Response<TTarget> To<TSource,TTarget>(this Response<TSource> sourceResponse, Func<TSource, TTarget> nextFunc)
+    public static Result<TTarget> To<TSource,TTarget>(this Result<TSource> sourceResult, Func<TSource, TTarget> nextFunc)
     {
-        if (sourceResponse.IsSuccess)
+        if (sourceResult.Success)
         {
-            return nextFunc(sourceResponse.Value);
+            return nextFunc(sourceResult.Value);
         }
 
-        return sourceResponse.FailInfo;
+        return sourceResult.FailInfo;
     }
 
     public static FailInfo Fail(string failMessage)
@@ -39,24 +39,24 @@ static class FP
 
     public static FailInfo None => Fail("None");
 
-    public static Response<IReadOnlyList<TTarget>> Select<TSource, TTarget>(this Response<IReadOnlyList<IReadOnlyList<TSource>>> response, Func<IReadOnlyList<TSource>, Response<TTarget>> convertFunc)
+    public static Result<IReadOnlyList<TTarget>> Select<TSource, TTarget>(this Result<IReadOnlyList<IReadOnlyList<TSource>>> result, Func<IReadOnlyList<TSource>, Result<TTarget>> convertFunc)
     {
-        if (response.IsFail)
+        if (result.Fail)
         {
-            return response.FailInfo;
+            return result.FailInfo;
         }
 
-        if (response.Value == null)
+        if (result.Value == null)
         {
             return null;
         }
 
         var returnList = new List<TTarget>();
         
-        foreach (var item in response.Value)
+        foreach (var item in result.Value)
         {
             var convertResponse = convertFunc(item);
-            if (convertResponse.IsFail)
+            if (convertResponse.Fail)
             {
                 return convertResponse.FailInfo;
             }
@@ -67,24 +67,24 @@ static class FP
         return returnList;
     }
     
-    public static Response<IReadOnlyList<TTarget>> Select<TSource, TTarget>(this Response<IReadOnlyList<TSource>> response, Func<TSource, Response<TTarget>> convertFunc)
+    public static Result<IReadOnlyList<TTarget>> Select<TSource, TTarget>(this Result<IReadOnlyList<TSource>> result, Func<TSource, Result<TTarget>> convertFunc)
     {
-        if (response.IsFail)
+        if (result.Fail)
         {
-            return response.FailInfo;
+            return result.FailInfo;
         }
 
-        if (response.Value == null)
+        if (result.Value == null)
         {
             return null;
         }
 
         var returnList = new List<TTarget>();
         
-        foreach (var item in response.Value)
+        foreach (var item in result.Value)
         {
             var convertResponse = convertFunc(item);
-            if (convertResponse.IsFail)
+            if (convertResponse.Fail)
             {
                 return convertResponse.FailInfo;
             }
@@ -100,27 +100,27 @@ public sealed class FailInfo
 {
     public string Message { get; init; }
 }
-public class Response
+
+public class Result
 {
-    public bool IsSuccess { get; init; }
-    public bool IsFail { get; init; }
+    public bool Success { get; init; }
+    public bool Fail { get; init; }
     public FailInfo FailInfo { get; init; }
     
     public string FailMessage => FailInfo.Message;
-    
 }
 
-public class Response<TValue> : Response
+public class Result<TValue> : Result
 {
     public TValue Value { get; init; }
     
-    public static implicit operator Response<TValue>(TValue value)
+    public static implicit operator Result<TValue>(TValue value)
     {
-        return new Response<TValue> { Value = value, IsSuccess = true };
+        return new() { Value = value, Success = true };
     }
     
-    public static implicit operator Response<TValue>(FailInfo failInfo)
+    public static implicit operator Result<TValue>(FailInfo failInfo)
     {
-        return new Response<TValue> { IsFail = true, FailInfo= failInfo};
+        return new() { Fail = true, FailInfo= failInfo};
     }
 }

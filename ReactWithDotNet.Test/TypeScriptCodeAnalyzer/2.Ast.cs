@@ -39,7 +39,7 @@ class TsMemberInfo
 
 static class Ast
 {
-    public static Response<IReadOnlyList<IReadOnlyList<Token>>> ParseToMemberTokens(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
+    public static Result<IReadOnlyList<IReadOnlyList<Token>>> ParseToMemberTokens(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
     {
         var returnValue = new List<IReadOnlyList<Token>>();
 
@@ -104,7 +104,7 @@ static class Ast
             if (isFound)
             {
                 var response = ParseToMemberTokens(tokens, i+1, indexOfPair-1);
-                if (response.IsSuccess)
+                if (response.Success)
                 {
                     return (true, response.Select(Exporter.ParseMemberTokens).Value, indexOfPair + 1);
                 }
@@ -500,7 +500,7 @@ static class Ast
         return (hasRead, readValues, i);
     }
 
-    public static Response<(IReadOnlyList<TsMethodParameterInfo> parameters, int newIndex)> TryReadFunctionParameters(IReadOnlyList<Token> tokens, int startIndex)
+    public static Result<(IReadOnlyList<TsMethodParameterInfo> parameters, int newIndex)> TryReadFunctionParameters(IReadOnlyList<Token> tokens, int startIndex)
     {
 
         var parameters = new List<TsMethodParameterInfo>();

@@ -31,7 +31,7 @@ static class Exporter
         return default;
     }
 
-    static Response<string> ResolveDotNetTypeName(IReadOnlyList<Token> tokens,int startIndex, int endIndex)
+    static Result<string> ResolveDotNetTypeName(IReadOnlyList<Token> tokens,int startIndex, int endIndex)
     {
         
         if (endIndex - startIndex == 0)
@@ -135,14 +135,14 @@ static class Exporter
         return ResolveDotNetTypeName(tokens,0, tokens.Count-1).Or(() => TryMatchDotNetOneParameterAction(memberInfo)).Or(()=>default);
     }
 
-    static Response<IReadOnlyList<(string dotNetType, string parameterName)>> ResolveDotNetTypeNames(IReadOnlyList<TsMethodParameterInfo> parameters)
+    static Result<IReadOnlyList<(string dotNetType, string parameterName)>> ResolveDotNetTypeNames(IReadOnlyList<TsMethodParameterInfo> parameters)
     {
         var items = new List < (string dotNetType, string parameterName)>();
 
         foreach (var parameter in parameters)
         {
             var response = ResolveDotNetTypeName(parameter.TypeReference.Tokens, parameter.TypeReference.StartIndex, parameter.TypeReference.EndIndex);
-            if (response.IsFail)
+            if (response.Fail)
             {
                 return response.FailInfo;
             }
@@ -165,10 +165,10 @@ static class Exporter
         if (isVoidFunction())
         {
             var functionParameters = Ast.TryReadFunctionParameters(memberInfo.RemainingPart, 1).To(x=>x.parameters);
-            if (functionParameters.IsSuccess)
+            if (functionParameters.Success)
             {
                 var prm = ResolveDotNetTypeNames(functionParameters.Value);
-                if (prm.IsSuccess)
+                if (prm.Success)
                 {
                     lines.Add("[ReactProp]");
                     
@@ -257,7 +257,7 @@ static class Exporter
         }
     }
 
-    public static Response<TsMemberInfo> ParseMemberTokens(IReadOnlyList<Token> tokens)
+    public static Result<TsMemberInfo> ParseMemberTokens(IReadOnlyList<Token> tokens)
     {
         tokens = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
 

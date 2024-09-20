@@ -182,7 +182,7 @@ public class TsParserTests
 
         memberTokens.Count.Should().Be(5);
 
-        memberTokens.All(x => Exporter.ParseMemberTokens(x).IsSuccess).Should().BeTrue();
+        memberTokens.All(x => Exporter.ParseMemberTokens(x).Success).Should().BeTrue();
 
     }
 }
