@@ -102,7 +102,16 @@ public class HtmlToCSharpTests
     [TestMethod]
     public void _1()
     {
-
+        Assert("""
+               <path style="fill:#010002;" d="abc"/>
+               """,
+               """
+               new path(Fill("#010002"))
+               {
+                   d = "abc"
+               }
+               """
+               );
 
 
         Assert("""

@@ -8,6 +8,8 @@ namespace ReactWithDotNet.WebSite.HelperApps;
 
 static class HtmlToReactWithDotNetCsharpCodeConverter
 {
+    static List<string> ignoredTags = new List<string> { "rect", "path", "circle", "line" };
+    
     static readonly IReadOnlyDictionary<string, string> AttributeRealNameMap = new Dictionary<string, string>
     {
         { "class", "className" },
@@ -321,9 +323,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         data = arrangeFlex(data);
         data = arrangeShortwayStyle(data);
         data = removeComments(data);
-        data = whenSmartModeMoveAllStyleToModifiers(data);
+      
 
         data = convertAllAttributesToModifiers(data);
+        
+        data = whenSmartModeMoveAllStyleToModifiers(data);
         
         if (data.htmlNode.ChildNodes.Count == 0)
         {
@@ -379,18 +383,40 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     sb.Append(")");
                 }
 
-                var returnList = new List<string> { sb.ToString() };
+                var lines = new List<string> { sb.ToString() };
 
                 if (textModifierCode is not null)
                 {
-                    returnList.Add("{");
+                    lines.Add("{");
                     
-                    returnList.Add(textModifierCode.PartParameterWithoutParanthesis.RemoveFromStart("\"").RemoveFromEnd("\""));
+                    lines.Add(textModifierCode.PartParameterWithoutParanthesis.RemoveFromStart("\"").RemoveFromEnd("\""));
                     
-                    returnList.Add("}");
+                    lines.Add("}");
+                }
+                
+                if (data.htmlNode.Attributes.Any())
+                {
+                    lines.Add("{");
+
+                    foreach (var list in data.htmlNode.Attributes.Select(attributeToString))
+                    {
+                        if (list.Count > 0)
+                        {
+                            lines.AddRange(list);
+                        }
+                        else
+                        {
+                            lines.Add(list[0]);
+                        }
+
+                        lines[^1] += ",";
+                    }
+
+                    lines[^1] = lines[^1].RemoveFromEnd(",");
+                    lines.Add("}");
                 }
 
-                return returnList;
+                return lines;
 
 
 
@@ -691,21 +717,31 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return lines;
         }
 
+        
+        
         static Data convertAllAttributesToModifiers(Data data)
         {
-            foreach (var htmlAttribute in data.htmlNode.Attributes)
+            if (!ignoredTags.Contains(data.htmlNode.Name))
             {
-                var (success, modifierCode) = TryConvertToModifier(htmlAttribute);
-                if (success)
+                var attributes = new List<HtmlAttribute>(data.htmlNode.Attributes);
+                
+                foreach (var htmlAttribute in attributes)
                 {
-                    data.modifiers.Add(modifierCode);
-                }
+                    var (success, modifierCode) = TryConvertToModifier(htmlAttribute);
+                    if (success)
+                    {
+                        data.modifiers.Add(modifierCode);
+                        
+                        data.htmlNode.Attributes.Remove(htmlAttribute);
+                    }
+                }    
             }
+            
 
-            if (data.style is not null)
-            {
-                data.modifiers.Add(styleAsCode(data.style));
-            }
+            //if (data.style is not null)
+            //{
+            //    data.modifiers.Add(styleAsCode(data.style));
+            //}
 
             return data;
         }
@@ -742,11 +778,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         static Data whenSmartModeMoveAllStyleToModifiers(Data data)
         {
-            if (data.smartMode && data.style is not null)
+            if (data.style is not null)
             {
-                data.modifiers.AddRange(data.htmlNode.Attributes.Select(TryConvertToModifier).Select(ModifierCode.From));
+                // data.modifiers.AddRange(data.htmlNode.Attributes.Select(TryConvertToModifier).Select(ModifierCode.From));
 
-                ((ICollection<HtmlAttribute>)data.htmlNode.Attributes).Clear();
+                //((ICollection<HtmlAttribute>)data.htmlNode.Attributes).Clear();
                 data.modifiers.AddRange(data.style.ToDictionary().Select(p => TryConvertToModifier_From_Mixin_Extension(p.Key, p.Value)).Select(ModifierCode.From));
 
                 data = data with { style = null };
@@ -1114,9 +1150,9 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return success($"iframe.Src({value})");
         }
 
-        if (tagName == "svg" && name.Equals("size", StringComparison.OrdinalIgnoreCase) && double.TryParse(value, out _))
+        if (tagName == "svg" && name.Equals("size", StringComparison.OrdinalIgnoreCase) && double.TryParse(value.RemovePixelFromEnd(), out _))
         {
-            return success($"svg.Size({value})");
+            return success($"svg.Size({value.RemovePixelFromEnd()})");
         }
 
         if (tagName == "symbol" && name.Equals("viewBox", StringComparison.OrdinalIgnoreCase))
