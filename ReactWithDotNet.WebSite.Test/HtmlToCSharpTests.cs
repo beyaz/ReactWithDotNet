@@ -149,7 +149,9 @@ public class HtmlToCSharpTests
                """
                new InlineFlexColumn(Width(246.7), JustifyContentFlexStart, AlignItemsFlexStart)
                {
-                   "aB c",
+                   @"
+                   aB c
+                   ",
                    new div(Width(96.7), Padding(1, 2, 3, 4))
                    {
                        "xY z"
