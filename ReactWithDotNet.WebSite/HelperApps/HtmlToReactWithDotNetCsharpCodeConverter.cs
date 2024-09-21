@@ -8,8 +8,6 @@ namespace ReactWithDotNet.WebSite.HelperApps;
 
 static class HtmlToReactWithDotNetCsharpCodeConverter
 {
-    static readonly List<string> ignoredTags = new List<string> { "rect", "path", "circle", "line" };
-    
     static readonly IReadOnlyDictionary<string, string> AttributeRealNameMap = new Dictionary<string, string>
     {
         { "class", "className" },
@@ -21,6 +19,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         { "tabindex", "tabIndex" },
         { "preserveaspectratio", "preserveAspectRatio" }
     };
+
+    static readonly List<string> ignoredTags = new() { "rect", "path", "circle", "line" };
 
     public static string HtmlToCSharp(string htmlRootNode, bool smartMode, int maxAttributeCountPerLine)
     {
@@ -102,8 +102,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return value?.EndsWith("px", StringComparison.OrdinalIgnoreCase) == true;
     }
 
-   
-
     static string GetName(this HtmlAttribute htmlAttribute)
     {
         var name = htmlAttribute.Name;
@@ -142,8 +140,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
     {
         return !string.IsNullOrWhiteSpace(value);
     }
-
-    
 
     static bool IsEndsWithPixel(string x)
     {
@@ -304,18 +300,13 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         data = arrangeFlex(data);
         data = arrangeShortwayStyle(data);
         data = removeComments(data);
-      
-
         data = convertAllAttributesToModifiers(data);
-        
         data = whenSmartModeMoveAllStyleToModifiers(data);
-        
+
         if (data.htmlNode.ChildNodes.Count == 0)
         {
             return leafElementToString(data);
         }
-
-        
 
         if (data.htmlNode.ChildNodes.Count == 1 && data.htmlNode.ChildNodes[0].Name == "#text")
         {
@@ -346,16 +337,16 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             if (classNameModifierCode is not null)
             {
                 data.modifiers.Remove(classNameModifierCode);
-                    
+
                 data.modifiers.Insert(0, classNameModifierCode.PartParameterWithoutParanthesis);
             }
-                
+
             var textModifierCode = data.modifiers.FirstOrDefault(x => x.Success && x.PartName == "Text");
             if (textModifierCode is not null)
             {
                 data.modifiers.Remove(textModifierCode);
             }
-                
+
             if (data.modifiers.Count > 0)
             {
                 sb.Append("(");
@@ -368,12 +359,12 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             if (textModifierCode is not null)
             {
                 lines.Add("{");
-                    
+
                 lines.Add(textModifierCode.PartParameterWithoutParanthesis.RemoveFromStart("\"").RemoveFromEnd("\""));
-                    
+
                 lines.Add("}");
             }
-                
+
             if (data.htmlNode.Attributes.Any())
             {
                 lines.Add("{");
@@ -468,7 +459,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         return [$"{propertyInfo.Name} = {attribute.Value}"];
                     }
 
-                    return [$"{propertyInfo.Name} = {(attribute.Value?.Contains(Environment.NewLine) is true ?"@":null)}\"{attribute.Value}\""];
+                    return [$"{propertyInfo.Name} = {(attribute.Value?.Contains(Environment.NewLine) is true ? "@" : null)}\"{attribute.Value}\""];
                 }
 
                 if (canBeExportInOneLine(data))
@@ -495,10 +486,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             return data;
         }
-
-       
-
-        
 
         static List<string> exportMultiLine(Data data)
         {
@@ -534,26 +521,23 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return lines;
         }
 
-        
-        
         static Data convertAllAttributesToModifiers(Data data)
         {
             if (!ignoredTags.Contains(data.htmlNode.Name))
             {
                 var attributes = new List<HtmlAttribute>(data.htmlNode.Attributes);
-                
+
                 foreach (var htmlAttribute in attributes)
                 {
                     var (success, modifierCode) = TryConvertToModifier(htmlAttribute);
                     if (success)
                     {
                         data.modifiers.Add(modifierCode);
-                        
+
                         data.htmlNode.Attributes.Remove(htmlAttribute);
                     }
-                }    
+                }
             }
-            
 
             return data;
         }
@@ -583,8 +567,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 return false;
             }
 
-            
-            
             return true;
         }
 
@@ -592,9 +574,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             if (data.style is not null)
             {
-                // data.modifiers.AddRange(data.htmlNode.Attributes.Select(TryConvertToModifier).Select(ModifierCode.From));
-
-                //((ICollection<HtmlAttribute>)data.htmlNode.Attributes).Clear();
                 data.modifiers.AddRange(data.style.ToDictionary().Select(p => TryConvertToModifier_From_Mixin_Extension(p.Key, p.Value)).Select(ModifierCode.From));
 
                 data = data with { style = null };
@@ -917,12 +896,10 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return data;
         }
 
-
         static bool canStyleExportInOneLine(Style style)
         {
             return style.ToDictionary().Count <= 3;
         }
-
 
         static string JoinModifiers(IReadOnlyList<ModifierCode> modifiers)
         {
@@ -1057,7 +1034,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         var success = (string modifierCode) => (true, modifierCode);
 
         value ??= string.Empty;
-        
+
         // data- or aria-
         {
             if (isAriaAttribute(name))
@@ -1069,7 +1046,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 return success(toDataModifier(name, value));
             }
-
 
             static bool isDataAttribute(string name)
             {
@@ -1091,8 +1067,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 return $"Aria(\"{name.RemoveFromStart("aria-")}\", \"{value}\")";
             }
         }
-
-        
 
         if (name == "target" && value == "_blank")
         {
@@ -1231,7 +1205,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 return success($"{CamelCase(name)}({value})");
             }
 
-            
             if (typeof(Mixin).GetMethod(CamelCase(name), [typeof(double)]) is not null &&
                 double.TryParse(value, out _))
             {
@@ -1290,16 +1263,44 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
     sealed class ModifierCode
     {
         public string Code { get; private init; }
+
+        public string PartName
+        {
+            get
+            {
+                var leftParanthesisIndex = Code.IndexOf('(', StringComparison.OrdinalIgnoreCase);
+                if (leftParanthesisIndex <= 0)
+                {
+                    return Code;
+                }
+
+                return Code[..leftParanthesisIndex];
+            }
+        }
+
+        public string PartParameterWithoutParanthesis
+        {
+            get
+            {
+                var leftParanthesisIndex = Code.IndexOf('(', StringComparison.OrdinalIgnoreCase);
+                if (leftParanthesisIndex > 0)
+                {
+                    var rightParanthesisIndex = Code.LastIndexOf(')');
+                    if (rightParanthesisIndex > 0)
+                    {
+                        return Code.Substring(leftParanthesisIndex + 1, rightParanthesisIndex - leftParanthesisIndex - 1);
+                    }
+                }
+
+                return null;
+            }
+        }
+
         public bool Success { get; private init; }
 
         public static ModifierCode From((bool success, string modifierCode) tuple)
         {
             return new() { Code = tuple.modifierCode, Success = tuple.success };
-        }
-
-        static ModifierCode FromString(string code)
-        {
-            return new() { Code = code, Success = true };
         }
 
         public static bool IsFail(ModifierCode item)
@@ -1322,36 +1323,9 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return Success ? Code : "fail";
         }
 
-        public string PartName
+        static ModifierCode FromString(string code)
         {
-            get
-            {
-                var leftParanthesisIndex = Code.IndexOf('(', StringComparison.OrdinalIgnoreCase);
-                if (leftParanthesisIndex <= 0)
-                {
-                    return Code;
-                }
-                
-                return Code[..leftParanthesisIndex];
-            }
-        }
-        
-        public string PartParameterWithoutParanthesis
-        {
-            get
-            {
-                var leftParanthesisIndex = Code.IndexOf('(', StringComparison.OrdinalIgnoreCase);
-                if (leftParanthesisIndex > 0)
-                {
-                    var rightParanthesisIndex = Code.LastIndexOf(')');
-                    if (rightParanthesisIndex > 0)
-                    {
-                        return Code.Substring(leftParanthesisIndex+1, rightParanthesisIndex - leftParanthesisIndex-1);
-                    }
-                }
-
-                return null;
-            }
+            return new() { Code = code, Success = true };
         }
     }
 
@@ -1360,7 +1334,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         public HtmlNode htmlNode { get; init; }
         public bool smartMode { get; init; }
         public int maxAttributeCountPerLine { get; init; }
-
 
         public string htmlNodeName { get; init; }
 
