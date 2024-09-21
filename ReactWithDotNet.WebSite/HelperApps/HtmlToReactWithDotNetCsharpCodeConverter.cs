@@ -260,7 +260,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
     {
         return ToCSharpCode(new Data
         {
-            htmlNode                 = htmlNode
+            htmlNode = htmlNode
         });
     }
 
