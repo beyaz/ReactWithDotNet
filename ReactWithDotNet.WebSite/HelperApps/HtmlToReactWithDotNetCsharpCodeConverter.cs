@@ -584,116 +584,118 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         static Data arrangeShortwayStyle(Data data)
         {
-            if (data.style is not null)
+            if (data.style is null)
             {
-                // border
-                foreach (var prefix in new[] { "borderTop", "borderRight", "borderLeft", "borderBottom" })
+                return data;
+            }
+            
+            // border
+            foreach (var prefix in new[] { "borderTop", "borderRight", "borderLeft", "borderBottom" })
+            {
+                var xStyle = data.style[$"{prefix}Style"];
+                var xWidth = data.style[$"{prefix}Width"];
+                var xColor = data.style[$"{prefix}Color"];
+
+                if (data.style[prefix] is null)
                 {
-                    var xStyle = data.style[$"{prefix}Style"];
-                    var xWidth = data.style[$"{prefix}Width"];
-                    var xColor = data.style[$"{prefix}Color"];
-
-                    if (data.style[prefix] is null)
+                    if (string.IsNullOrWhiteSpace(xStyle) is false &&
+                        string.IsNullOrWhiteSpace(xWidth) is false &&
+                        string.IsNullOrWhiteSpace(xColor) is false)
                     {
-                        if (string.IsNullOrWhiteSpace(xStyle) is false &&
-                            string.IsNullOrWhiteSpace(xWidth) is false &&
-                            string.IsNullOrWhiteSpace(xColor) is false)
-                        {
-                            data.style[prefix] = $"{xWidth} {xStyle} {xColor}";
+                        data.style[prefix] = $"{xWidth} {xStyle} {xColor}";
 
-                            data.style[$"{prefix}Style"] = data.style[$"{prefix}Width"] = data.style[$"{prefix}Color"] = null;
-                        }
+                        data.style[$"{prefix}Style"] = data.style[$"{prefix}Width"] = data.style[$"{prefix}Color"] = null;
+                    }
 
-                        if (string.IsNullOrWhiteSpace(xStyle) is false &&
-                            string.IsNullOrWhiteSpace(xWidth) is false &&
-                            string.IsNullOrWhiteSpace(xColor))
-                        {
-                            data.style[prefix] = $"{xWidth} {xStyle}";
+                    if (string.IsNullOrWhiteSpace(xStyle) is false &&
+                        string.IsNullOrWhiteSpace(xWidth) is false &&
+                        string.IsNullOrWhiteSpace(xColor))
+                    {
+                        data.style[prefix] = $"{xWidth} {xStyle}";
 
-                            data.style[$"{prefix}Style"] = data.style[$"{prefix}Width"] = data.style[$"{prefix}Color"] = null;
-                        }
+                        data.style[$"{prefix}Style"] = data.style[$"{prefix}Width"] = data.style[$"{prefix}Color"] = null;
                     }
                 }
+            }
 
-                // p a d d i n g
-                if (data.style.paddingTop.HasValue() &&
-                    data.style.paddingRight.HasValue() &&
-                    data.style.paddingBottom.HasValue() &&
-                    data.style.paddingLeft.HasValue())
-                {
-                    data.style.padding = $"{data.style.paddingTop} {data.style.paddingRight} {data.style.paddingBottom} {data.style.paddingLeft}";
+            // p a d d i n g
+            if (data.style.paddingTop.HasValue() &&
+                data.style.paddingRight.HasValue() &&
+                data.style.paddingBottom.HasValue() &&
+                data.style.paddingLeft.HasValue())
+            {
+                data.style.padding = $"{data.style.paddingTop} {data.style.paddingRight} {data.style.paddingBottom} {data.style.paddingLeft}";
 
-                    data.style.paddingTop = data.style.paddingRight = data.style.paddingBottom = data.style.paddingLeft = null;
-                }
+                data.style.paddingTop = data.style.paddingRight = data.style.paddingBottom = data.style.paddingLeft = null;
+            }
 
-                // m a r g i n
-                if (data.style.marginTop.HasValue() &&
-                    data.style.marginRight.HasValue() &&
-                    data.style.marginBottom.HasValue() &&
-                    data.style.marginLeft.HasValue())
-                {
-                    data.style.margin = $"{data.style.marginTop} {data.style.marginRight} {data.style.marginBottom} {data.style.marginLeft}";
+            // m a r g i n
+            if (data.style.marginTop.HasValue() &&
+                data.style.marginRight.HasValue() &&
+                data.style.marginBottom.HasValue() &&
+                data.style.marginLeft.HasValue())
+            {
+                data.style.margin = $"{data.style.marginTop} {data.style.marginRight} {data.style.marginBottom} {data.style.marginLeft}";
 
-                    data.style.marginTop = data.style.marginRight = data.style.marginBottom = data.style.marginLeft = null;
-                }
+                data.style.marginTop = data.style.marginRight = data.style.marginBottom = data.style.marginLeft = null;
+            }
 
-                // padding: TopBottom
-                if (data.style.paddingTop.EndsWithPixel() &&
-                    data.style.paddingBottom.EndsWithPixel() &&
-                    data.style.paddingTop == data.style.paddingBottom)
-                {
-                    data.style.padding = MarkAsAlreadyCalculatedModifier($"PaddingTopBottom({data.style.paddingTop.RemovePixelFromEnd()})");
+            // padding: TopBottom
+            if (data.style.paddingTop.EndsWithPixel() &&
+                data.style.paddingBottom.EndsWithPixel() &&
+                data.style.paddingTop == data.style.paddingBottom)
+            {
+                data.style.padding = MarkAsAlreadyCalculatedModifier($"PaddingTopBottom({data.style.paddingTop.RemovePixelFromEnd()})");
 
-                    data.style.paddingTop = data.style.paddingBottom = null;
-                }
+                data.style.paddingTop = data.style.paddingBottom = null;
+            }
 
-                // padding: LeftRight
-                if (data.style.paddingLeft.EndsWithPixel() &&
-                    data.style.paddingRight.EndsWithPixel() &&
-                    data.style.paddingLeft == data.style.paddingRight)
-                {
-                    data.style.padding = MarkAsAlreadyCalculatedModifier($"PaddingLeftRight({data.style.paddingLeft.RemovePixelFromEnd()})");
+            // padding: LeftRight
+            if (data.style.paddingLeft.EndsWithPixel() &&
+                data.style.paddingRight.EndsWithPixel() &&
+                data.style.paddingLeft == data.style.paddingRight)
+            {
+                data.style.padding = MarkAsAlreadyCalculatedModifier($"PaddingLeftRight({data.style.paddingLeft.RemovePixelFromEnd()})");
 
-                    data.style.paddingLeft = data.style.paddingRight = null;
-                }
+                data.style.paddingLeft = data.style.paddingRight = null;
+            }
 
-                // margin: TopBottom
-                if (data.style.marginTop.EndsWithPixel() &&
-                    data.style.marginBottom.EndsWithPixel() &&
-                    data.style.marginTop == data.style.marginBottom)
-                {
-                    data.style.margin = MarkAsAlreadyCalculatedModifier($"MarginTopBottom({data.style.marginTop.RemovePixelFromEnd()})");
+            // margin: TopBottom
+            if (data.style.marginTop.EndsWithPixel() &&
+                data.style.marginBottom.EndsWithPixel() &&
+                data.style.marginTop == data.style.marginBottom)
+            {
+                data.style.margin = MarkAsAlreadyCalculatedModifier($"MarginTopBottom({data.style.marginTop.RemovePixelFromEnd()})");
 
-                    data.style.marginTop = data.style.marginBottom = null;
-                }
+                data.style.marginTop = data.style.marginBottom = null;
+            }
 
-                // margin: LeftRight
-                if (data.style.marginLeft.EndsWithPixel() &&
-                    data.style.marginRight.EndsWithPixel() &&
-                    data.style.marginLeft == data.style.marginRight)
-                {
-                    data.style.margin = MarkAsAlreadyCalculatedModifier($"MarginLeftRight({data.style.marginLeft.RemovePixelFromEnd()})");
+            // margin: LeftRight
+            if (data.style.marginLeft.EndsWithPixel() &&
+                data.style.marginRight.EndsWithPixel() &&
+                data.style.marginLeft == data.style.marginRight)
+            {
+                data.style.margin = MarkAsAlreadyCalculatedModifier($"MarginLeftRight({data.style.marginLeft.RemovePixelFromEnd()})");
 
-                    data.style.marginLeft = data.style.marginRight = null;
-                }
+                data.style.marginLeft = data.style.marginRight = null;
+            }
 
-                // padding: SizeFull
-                if (data.style.width == "100%" && data.style.height == "100%")
-                {
-                    data.style.width = MarkAsAlreadyCalculatedModifier("SizeFull");
+            // padding: SizeFull
+            if (data.style.width == "100%" && data.style.height == "100%")
+            {
+                data.style.width = MarkAsAlreadyCalculatedModifier("SizeFull");
 
-                    data.style.height = null;
-                }
+                data.style.height = null;
+            }
 
-                // margin: WidthHeight
-                if (data.style.width.EndsWithPixel() &&
-                    data.style.height.EndsWithPixel() &&
-                    data.style.width == data.style.height)
-                {
-                    data.style.width = MarkAsAlreadyCalculatedModifier($"Size({data.style.width.RemovePixelFromEnd()})");
+            // margin: WidthHeight
+            if (data.style.width.EndsWithPixel() &&
+                data.style.height.EndsWithPixel() &&
+                data.style.width == data.style.height)
+            {
+                data.style.width = MarkAsAlreadyCalculatedModifier($"Size({data.style.width.RemovePixelFromEnd()})");
 
-                    data.style.height = null;
-                }
+                data.style.height = null;
             }
 
             return data;
