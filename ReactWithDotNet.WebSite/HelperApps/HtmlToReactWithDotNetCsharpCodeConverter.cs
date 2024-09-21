@@ -554,7 +554,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 }
             }
 
-            if (data.htmlNode.ChildNodes.Count == 0 && data.smartMode && data.modifiers.Count > data.maxAttributeCountPerLine)
+            if (data.htmlNode.ChildNodes.Count == 0 && data.modifiers.Count > data.maxAttributeCountPerLine)
             {
                 return false;
             }
