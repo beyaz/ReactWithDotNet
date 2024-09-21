@@ -492,7 +492,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         return [$"{propertyInfo.Name} = {attribute.Value}"];
                     }
 
-                    return [$"{propertyInfo.Name} = \"{attribute.Value}\""];
+                    return [$"{propertyInfo.Name} = {(attribute.Value?.Contains(Environment.NewLine) is true ?"@":null)}\"{attribute.Value}\""];
                 }
 
                 if (canBeExportInOneLine(data))
