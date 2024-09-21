@@ -306,7 +306,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
     {
         try
         {
-            var renderBody = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText, state.SmartMode, state.MaxAttributeCountPerLine ?? 4);
+            var renderBody = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText, state.MaxAttributeCountPerLine ?? 4);
 
             var sb = new StringBuilder();
             sb.AppendLine("using ReactWithDotNet;");
