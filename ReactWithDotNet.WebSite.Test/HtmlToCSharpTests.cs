@@ -91,9 +91,9 @@ public class HtmlToCSharpTests
                """);
         return;
         
-        static void Assert(string html, string expected, bool smartMode=true)
+        static void Assert(string html, string expected)
         {
-            var actual = HtmlToCSharp(html, smartMode, 3);
+            var actual = HtmlToCSharp(html);
             
             actual.Should().Be(expected);
         }

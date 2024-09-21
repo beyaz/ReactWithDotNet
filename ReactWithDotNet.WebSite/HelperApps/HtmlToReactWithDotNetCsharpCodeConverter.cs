@@ -22,7 +22,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
     static readonly List<string> ignoredTags = ["rect", "path", "circle", "line"];
 
-    public static string HtmlToCSharp(string htmlRootNode, int maxAttributeCountPerLine)
+    public static string HtmlToCSharp(string htmlRootNode)
     {
         if (string.IsNullOrWhiteSpace(htmlRootNode))
         {
@@ -33,7 +33,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         document.LoadHtml(htmlRootNode.Trim());
 
-        return ToCSharpCode(ToCSharpCode(document.DocumentNode.FirstChild, maxAttributeCountPerLine));
+        return ToCSharpCode(ToCSharpCode(document.DocumentNode.FirstChild));
     }
 
     static string CamelCase(string str)
@@ -256,12 +256,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return sb.ToString().Trim();
     }
 
-    static List<string> ToCSharpCode(HtmlNode htmlNode, int maxAttributeCountPerLine)
+    static List<string> ToCSharpCode(HtmlNode htmlNode)
     {
         return ToCSharpCode(new Data
         {
-            htmlNode                 = htmlNode,
-            maxAttributeCountPerLine = maxAttributeCountPerLine
+            htmlNode                 = htmlNode
         });
     }
 
@@ -495,7 +494,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 "{"
             };
 
-            foreach (var items in data.htmlNode.ChildNodes.Select(x => ToCSharpCode(x, data.maxAttributeCountPerLine)))
+            foreach (var items in data.htmlNode.ChildNodes.Select(ToCSharpCode))
             {
                 if (items.Count > 0)
                 {
@@ -551,12 +550,12 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 }
             }
 
-            if (data.htmlNode.ChildNodes.Count == 0 && data.modifiers.Count > data.maxAttributeCountPerLine)
+            if (data.htmlNode.ChildNodes.Count == 0 && data.modifiers.Count > 0)
             {
                 return false;
             }
 
-            if (data.htmlNode.Attributes.Count > data.maxAttributeCountPerLine)
+            if (data.htmlNode.Attributes.Count > 0)
             {
                 return false;
             }
@@ -1311,7 +1310,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
     record Data
     {
         public HtmlNode htmlNode { get; init; }
-        public int maxAttributeCountPerLine { get; init; }
 
         public string htmlNodeName { get; init; }
 
