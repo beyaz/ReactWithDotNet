@@ -20,9 +20,9 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         { "preserveaspectratio", "preserveAspectRatio" }
     };
 
-    static readonly List<string> ignoredTags = new() { "rect", "path", "circle", "line" };
+    static readonly List<string> ignoredTags = ["rect", "path", "circle", "line"];
 
-    public static string HtmlToCSharp(string htmlRootNode, bool smartMode, int maxAttributeCountPerLine)
+    public static string HtmlToCSharp(string htmlRootNode, int maxAttributeCountPerLine)
     {
         if (string.IsNullOrWhiteSpace(htmlRootNode))
         {
@@ -33,7 +33,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         document.LoadHtml(htmlRootNode.Trim());
 
-        return ToCSharpCode(ToCSharpCode(document.DocumentNode.FirstChild, smartMode, maxAttributeCountPerLine));
+        return ToCSharpCode(ToCSharpCode(document.DocumentNode.FirstChild, maxAttributeCountPerLine));
     }
 
     static string CamelCase(string str)
@@ -256,19 +256,17 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return sb.ToString().Trim();
     }
 
-    static List<string> ToCSharpCode(HtmlNode htmlNode, bool smartMode, int maxAttributeCountPerLine)
+    static List<string> ToCSharpCode(HtmlNode htmlNode, int maxAttributeCountPerLine)
     {
         return ToCSharpCode(new Data
         {
             htmlNode                 = htmlNode,
-            smartMode                = smartMode,
             maxAttributeCountPerLine = maxAttributeCountPerLine
         });
     }
 
     static List<string> ToCSharpCode(Data data)
     {
-        data = ignoreSmartModeSpecificTags(data);
         data = initHtmlNodeName(data);
 
         if (data.htmlNodeName == "#text")
@@ -301,9 +299,9 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         data = arrangeShortwayStyle(data);
         data = removeComments(data);
         data = convertAllAttributesToModifiers(data);
-        data = whenSmartModeMoveAllStyleToModifiers(data);
+        data = moveStyleToModifiers(data);
         data = moveClassNameModifierToFirst(data);
-        
+
         if (data.htmlNode.ChildNodes.Count == 0)
         {
             return leafElementToString(data);
@@ -336,17 +334,16 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                 data.modifiers.Insert(0, classNameModifierCode.PartParameterWithoutParanthesis);
             }
-            
+
             return data;
         }
+
         static List<string> leafElementToString(Data data)
         {
             Debug.Assert(data.htmlNode.ChildNodes.Count == 0);
 
             var sb = new StringBuilder();
             sb.Append($"new {data.htmlNodeName}");
-
-            
 
             var textModifierCode = data.modifiers.FirstOrDefault(x => x.Success && x.PartName == "Text");
             if (textModifierCode is not null)
@@ -498,7 +495,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 "{"
             };
 
-            foreach (var items in data.htmlNode.ChildNodes.Select(x => ToCSharpCode(x, data.smartMode, data.maxAttributeCountPerLine)))
+            foreach (var items in data.htmlNode.ChildNodes.Select(x => ToCSharpCode(x, data.maxAttributeCountPerLine)))
             {
                 if (items.Count > 0)
                 {
@@ -567,7 +564,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return true;
         }
 
-        static Data whenSmartModeMoveAllStyleToModifiers(Data data)
+        static Data moveStyleToModifiers(Data data)
         {
             if (data.style is not null)
             {
@@ -693,11 +690,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 if (data.style.width.EndsWithPixel() &&
                     data.style.height.EndsWithPixel() &&
                     data.style.width == data.style.height)
-                    {
-                        data.style.width = MarkAsAlreadyCalculatedModifier($"Size({data.style.width.RemovePixelFromEnd()})");
+                {
+                    data.style.width = MarkAsAlreadyCalculatedModifier($"Size({data.style.width.RemovePixelFromEnd()})");
 
-                        data.style.height = null;
-                    }
+                    data.style.height = null;
+                }
             }
 
             return data;
@@ -876,18 +873,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             }
 
             return data with { htmlNodeName = htmlNodeName };
-        }
-
-        static Data ignoreSmartModeSpecificTags(Data data)
-        {
-            // ignore smart mode for specific case beautiful code format
-            var smartModeIgnoredTags = new List<string> { "rect", "path", "circle", "line" };
-            if (data.htmlNode.ChildNodes.Count == 0 && smartModeIgnoredTags.Any(tag => data.htmlNode.Name.Equals(tag, StringComparison.OrdinalIgnoreCase)))
-            {
-                return data with { smartMode = false };
-            }
-
-            return data;
         }
 
         static bool canStyleExportInOneLine(Style style)
@@ -1326,7 +1311,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
     record Data
     {
         public HtmlNode htmlNode { get; init; }
-        public bool smartMode { get; init; }
         public int maxAttributeCountPerLine { get; init; }
 
         public string htmlNodeName { get; init; }
