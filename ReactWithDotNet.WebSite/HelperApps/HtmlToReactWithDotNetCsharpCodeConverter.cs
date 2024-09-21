@@ -302,7 +302,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         data = removeComments(data);
         data = convertAllAttributesToModifiers(data);
         data = whenSmartModeMoveAllStyleToModifiers(data);
-
+        data = moveClassNameModifierToFirst(data);
+        
         if (data.htmlNode.ChildNodes.Count == 0)
         {
             return leafElementToString(data);
@@ -326,13 +327,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         return exportMultiLine(data);
 
-        static List<string> leafElementToString(Data data)
+        static Data moveClassNameModifierToFirst(Data data)
         {
-            Debug.Assert(data.htmlNode.ChildNodes.Count == 0);
-
-            var sb = new StringBuilder();
-            sb.Append($"new {data.htmlNodeName}");
-
             var classNameModifierCode = data.modifiers.FirstOrDefault(x => x.Success && x.PartName == "ClassName");
             if (classNameModifierCode is not null)
             {
@@ -340,6 +336,17 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                 data.modifiers.Insert(0, classNameModifierCode.PartParameterWithoutParanthesis);
             }
+            
+            return data;
+        }
+        static List<string> leafElementToString(Data data)
+        {
+            Debug.Assert(data.htmlNode.ChildNodes.Count == 0);
+
+            var sb = new StringBuilder();
+            sb.Append($"new {data.htmlNodeName}");
+
+            
 
             var textModifierCode = data.modifiers.FirstOrDefault(x => x.Success && x.PartName == "Text");
             if (textModifierCode is not null)

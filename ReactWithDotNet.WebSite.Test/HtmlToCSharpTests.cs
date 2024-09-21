@@ -148,20 +148,20 @@ public class HtmlToCSharpTests
         
         
         Assert("""
-               <div style="width: 246.7px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
+               <div style="width: 246.7px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex" class="c5 c6">
                    aB c
-                   <div style="width: 96.7px; padding-top: 1px; padding-bottom: 3px; padding-left: 4px; padding-right: 2px;">
+                   <div style="width: 96.7px; padding-top: 1px; padding-bottom: 3px; padding-left: 4px; padding-right: 2px;" class="c1 c2">
                        xY z
                    </div>
                </div>
                """,
                """
-               new InlineFlexColumn(Width(246.7), JustifyContentFlexStart, AlignItemsFlexStart)
+               new InlineFlexColumn("c5 c6", Width(246.7), JustifyContentFlexStart, AlignItemsFlexStart)
                {
                    @"
                    aB c
                    ",
-                   new div(Width(96.7), Padding(1, 2, 3, 4))
+                   new div("c1 c2", Width(96.7), Padding(1, 2, 3, 4))
                    {
                        "xY z"
                    }
