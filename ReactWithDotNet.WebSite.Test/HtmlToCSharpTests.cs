@@ -136,6 +136,28 @@ public class HtmlToCSharpTests
                    "aB c"
                }
                """);
+        
+        
+        Assert("""
+               <div style="width: 246.7px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
+                   aB c
+                   <div style="width: 96.7px; padding-top: 1px; padding-bottom: 3px; padding-left: 4px; padding-right: 2px;">
+                       xY z
+                   </div>
+               </div>
+               """,
+               """
+               new InlineFlexColumn(Width(246.7), JustifyContentFlexStart, AlignItemsFlexStart)
+               {
+                   "aB c",
+                   new div(Width(96.7), Padding(1, 2, 3, 4))
+                   {
+                       "xY z"
+                   }
+               }
+               """);
+        
+        
         return;
 
         static void Assert(string html, string expected)
