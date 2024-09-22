@@ -173,7 +173,7 @@ public class HtmlToCSharpTests
 
         static void Assert(string html, string expected)
         {
-            var current = HtmlToCSharp(html, true, 3);
+            var current = HtmlToCSharp(html);
 
             current.Should().Be(expected);
         }
