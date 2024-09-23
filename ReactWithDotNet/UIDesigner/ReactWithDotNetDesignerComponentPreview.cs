@@ -29,7 +29,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                 {
                     var parameterName = parameterInfo.Name;
                     var parameterType = parameterInfo.ParameterType;
-                    
+
                     var dummyValue = tryGetDummyValue(assembly, parameterName, parameterType);
                     if (dummyValue is not null)
                     {
@@ -45,17 +45,17 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                     if (parameterType.IsGenericType)
                     {
                         var genericTypeDefinition = parameterType.GetGenericTypeDefinition();
-                        
-                        if (genericTypeDefinition == typeof(IReadOnlyList<>)||
-                            genericTypeDefinition == typeof(IReadOnlyCollection<>)||
-                            genericTypeDefinition == typeof(IList<>)||
+
+                        if (genericTypeDefinition == typeof(IReadOnlyList<>) ||
+                            genericTypeDefinition == typeof(IReadOnlyCollection<>) ||
+                            genericTypeDefinition == typeof(IList<>) ||
                             genericTypeDefinition == typeof(IReadOnlyList<>))
                         {
                             var genericArguments = parameterType.GetGenericArguments();
-                            
+
                             return Activator.CreateInstance(genericArguments[0].MakeArrayType(), 0);
                         }
-                        
+
                         if (genericTypeDefinition == typeof(ImmutableArray<>) ||
                             genericTypeDefinition == typeof(ImmutableList<>))
                         {
@@ -423,10 +423,6 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
         Client.RefreshComponentPreviewCompleted();
 
-        
-
-        
-        
         var hoverEffect = new Fragment
         {
             new style
@@ -472,7 +468,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                 """
             }
         };
-        
+
         return new Fragment
         {
             hoverEffect,
