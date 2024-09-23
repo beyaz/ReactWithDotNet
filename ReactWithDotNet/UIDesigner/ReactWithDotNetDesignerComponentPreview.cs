@@ -430,8 +430,8 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                 """
                 .react-with-dotnet-designer-hover-effect
                 {
-                    transition: box-shadow 0.3s ease;
-                    box-shadow: 0px 0px 8px 4px #bfdbfe;
+                    transition: outline 0.3s ease;
+                    outline: 2px dashed #bfdbfe;
                 }
                 """
             },
@@ -442,7 +442,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                 {
                     const style = window.getComputedStyle(targetElement);
                 
-                    return style.boxShadow === 'none';
+                    return style.outlineStyle === 'none';
                 }
                 function applyHoverEffect(targetElement)
                 {
