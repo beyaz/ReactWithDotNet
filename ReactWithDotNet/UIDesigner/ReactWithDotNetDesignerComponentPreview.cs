@@ -423,6 +423,60 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
         Client.RefreshComponentPreviewCompleted();
 
-        return element;
+        
+
+        
+        
+        var hoverEffect = new Fragment
+        {
+            new style
+            {
+                """
+                .react-with-dotnet-designer-hover-effect
+                {
+                    transition: box-shadow 0.3s ease;
+                    box-shadow: 0px 0px 8px 4px #bfdbfe;
+                }
+                """
+            },
+            new script
+            {
+                """
+                function canApplyHoverEffect(targetElement)
+                {
+                    const style = window.getComputedStyle(targetElement);
+                
+                    return style.boxShadow === 'none';
+                }
+                function applyHoverEffect(targetElement)
+                {
+                    targetElement.classList.add('react-with-dotnet-designer-hover-effect');
+                }
+                function removeHoverEffect(targetElement)
+                {
+                    targetElement.classList.remove('react-with-dotnet-designer-hover-effect');
+                }
+
+                document.addEventListener('mouseover', (e) => 
+                {
+                    if (canApplyHoverEffect(e.target))
+                    {
+                        applyHoverEffect(e.target);
+                    }
+                });
+
+                document.addEventListener('mouseout', (e) => 
+                {
+                    removeHoverEffect(e.target);
+                });
+                """
+            }
+        };
+        
+        return new Fragment
+        {
+            hoverEffect,
+            element
+        };
     }
 }
