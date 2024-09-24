@@ -362,8 +362,16 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             BoxShadow(0, 4, 12, 0, rgba(0, 0, 0, 0.1))
         };
 
-        return new FlexRow(Width100vw, Height100vh, Background(rgb(249, 249, 249)), FontFamily("system-ui"))
+        return new FlexRow(Width100vw, Height100vh, FontFamily("system-ui"))
         {
+            new style
+            {
+                """
+                body {
+                  background: rgb(249, 249, 249);
+                }
+                """
+            },
             new HotReloadListener(),
             propertyPanel,
             new FlexColumn(AlignItemsCenter, FlexGrow(1), Padding(7), MarginLeft(40), ScaleStyle)
