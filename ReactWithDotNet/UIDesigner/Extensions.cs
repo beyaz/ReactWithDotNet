@@ -4,8 +4,6 @@ namespace ReactWithDotNet.UIDesigner;
 
 static class Extensions
 {
-    public static StyleModifier PrimaryBackground => Background("rgb(249, 249, 249");
-
     public static string GetSvgUrl(string svgFileName)
     {
         var resourceFilePathInAssembly = $"ReactWithDotNet.UIDesigner.Resources.{svgFileName}.svg";
