@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Web;
 using HtmlAgilityPack;
 using PropertyInfo = System.Reflection.PropertyInfo;
 
@@ -28,6 +30,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             return null;
         }
+
+        htmlRootNode = AgilityPackageOverride.Encode(htmlRootNode);
 
         var document = new HtmlDocument();
 
@@ -215,6 +219,50 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return data;
     }
 
+    class AgilityPackageOverride
+    {
+        public static string Encode(string styleText)
+        {
+            var index = 0;
+            while (true)
+            {
+                var (hasChange, newIndex, styleTextNewValue) = EncodeUrl(styleText,index);
+                if (hasChange is false)
+                {
+                    return styleText;
+                }
+
+                index = newIndex;
+
+                styleText = styleTextNewValue;
+            }
+        }
+    
+        static (bool hasChange, int newIndex, string styleTextNewValue) EncodeUrl(string styleText, int startIndex)
+        {
+            var beginIndex = styleText.IndexOf("url(", startIndex, StringComparison.OrdinalIgnoreCase);
+            if (beginIndex  > 0)
+            {
+                var endIndex = styleText.IndexOf(")", beginIndex, StringComparison.OrdinalIgnoreCase);
+                if (endIndex > 0)
+                {
+                    var value = styleText.Substring(beginIndex, endIndex - beginIndex + 1);
+
+                    var partBegin = styleText.Substring(0, beginIndex);
+                    var partEnd = styleText.Substring(endIndex+1, styleText.Length - endIndex -1);
+            
+                    return (hasChange: true, newIndex: endIndex+1, styleTextNewValue: partBegin + EncodeValue(value) + partEnd);
+                }
+            }
+
+            return default;
+        }
+        
+        public static string EncodeValue(string value) => UrlEncoder.Default.Encode(value);
+        public static string DecodeValue(string value) => HttpUtility.UrlDecode(value);
+
+    }
+   
     static string RemovePixelFromEnd(this string value)
     {
         return value?.RemoveFromEnd("px");
@@ -472,6 +520,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 if (!string.IsNullOrWhiteSpace(styleAttribute.Value))
                 {
                     data = data with { style = Style.ParseCss(styleAttribute.Value) };
+
+                    if (data.style.backgroundImage.HasValue())
+                    {
+                        data.style.backgroundImage = AgilityPackageOverride.DecodeValue(data.style.backgroundImage);
+                    }
                 }
 
                 data.htmlNode.Attributes.Remove("style");
