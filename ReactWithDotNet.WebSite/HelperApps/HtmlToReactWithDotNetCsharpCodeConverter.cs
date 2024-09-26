@@ -258,7 +258,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return default;
         }
         
-        public static string EncodeValue(string value) => UrlEncoder.Default.Encode(value);
+        static string EncodeValue(string value) => UrlEncoder.Default.Encode(value);
         public static string DecodeValue(string value) => HttpUtility.UrlDecode(value);
 
     }
