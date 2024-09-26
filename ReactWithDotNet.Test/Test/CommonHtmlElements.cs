@@ -317,7 +317,7 @@ public class ExportingCommonHtmlElements
                     new ()
                     {
                         Name = "selected",
-                        Type = "bool?"
+                        Type = "UnionProp<string, bool?>"
                     },
                     new ()
                     {

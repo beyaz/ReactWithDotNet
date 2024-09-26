@@ -1907,12 +1907,12 @@ public sealed class tr : HtmlElement
 public sealed class option : HtmlElement
 {
     #region string selected
-    PropertyValueNode<bool?> _selected;
+    PropertyValueNode<UnionProp<string, bool?>> _selected;
     static readonly PropertyValueDefinition _selected_ = new()
     {
         name = nameof(selected)
     };
-    public bool? selected
+    public UnionProp<string, bool?> selected
     {
         get => _selected?.value;
         set => SetValue(_selected_, ref _selected, value);
@@ -1961,7 +1961,7 @@ public sealed class option : HtmlElement
     public option(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<option> modifyAction) => CreateHtmlElementModifier(modifyAction);
-    public static HtmlElementModifier Selected(bool? value) => Modify(x => x.selected = value);
+    public static HtmlElementModifier Selected(UnionProp<string, bool?> value) => Modify(x => x.selected = value);
 
     public static HtmlElementModifier Disabled(string value) => Modify(x => x.disabled = value);
 
