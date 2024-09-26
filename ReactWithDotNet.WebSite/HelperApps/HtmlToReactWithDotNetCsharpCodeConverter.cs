@@ -306,6 +306,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
     static List<string> ToCSharpCode(HtmlNode htmlNode)
     {
+        if (htmlNode.HasAttributes)
+        {
+            htmlNode.Attributes.Remove("onclick");
+        }
+
         return ToCSharpCode(new Data
         {
             htmlNode = htmlNode
