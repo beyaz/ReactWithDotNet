@@ -39,24 +39,28 @@ sealed class RenderPreview : Component<RenderPreview.Model>
         return Task.CompletedTask;
     }
 
+    Func<StyleModifier[], StyleModifier> Break { get; } = SM;
+    
+    
     protected override Element render()
     {
-        var width = Width(100 * percent) + SM(Width(50 * percent));
+        
+        var width = Width(1,1) + Break([Width(1,2)]);
+        var height = Height(1,2) + Break([Height(1,1)]);
 
-        var csharpEditor = new CSharpCodeEditor
+        return new FlexColumn(SizeFull, BoxShadow(0,2,5,0,rgba(0, 0, 0,  .34)), BorderRadius(3), CursorDefault, MinSize(200))
         {
-            valueBind                = () => state.RenderPartOfCSharpCode,
-            valueBindDebounceHandler = RenderPartOfCSharpCode_OnEditFinished
-        };
-
-        return new FlexRow(SizeFull, BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), BorderRadius(3), CursorDefault, JustifyContentSpaceBetween, FlexWrap)
-        {
-            new FlexRowCentered(width, BorderRight(Solid(1, rgb(235, 236, 240))))
+            Break([DisplayFlexRow]),
+            new FlexRowCentered(width, height, BorderRight(Solid(1, rgb(235, 236, 240))))
             {
-                csharpEditor
+                new CSharpCodeEditor
+                {
+                    valueBind                = () => state.RenderPartOfCSharpCode,
+                    valueBindDebounceHandler = RenderPartOfCSharpCode_OnEditFinished
+                }
             },
 
-            new FlexRowCentered(width, Background(rgb(246, 247, 249)), MinSize(200))
+            new FlexRowCentered(width, height, Background(rgb(246, 247, 249)))
             {
                 new iframe
                 {
