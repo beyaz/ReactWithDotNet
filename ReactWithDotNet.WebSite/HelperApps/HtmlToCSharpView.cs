@@ -8,13 +8,13 @@ using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
 
-class HtmlToCSharpViewModel
+record HtmlToCSharpViewModel
 {
-    public string CSharpCode { get; set; }
-    public int EditCount { get; set; }
-    public string HtmlText { get; set; }
-    public string StatusMessage { get; set; }
-    public string Utid { get; set; }
+    public string RenderPartOfCSharpCode { get; init; }
+    public int EditCount { get; init; }
+    public string HtmlText { get; init; }
+    public string StatusMessage { get; init; }
+    public string Utid { get; init; }
 }
 
 class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
@@ -97,8 +97,8 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
         var csharpEditor = new Editor
         {
-            valueBind                = () => state.CSharpCode,
-            valueBindDebounceHandler = CSharpCode_OnEditFinished,
+            valueBind                = () => state.RenderPartOfCSharpCode,
+            valueBindDebounceHandler = RenderPartOfCSharpCode_OnEditFinished,
             valueBindDebounceTimeout = 500,
             defaultLanguage          = "csharp",
             options =
@@ -301,25 +301,16 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         {
             var renderBody = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText);
 
-            state.CSharpCode = GetFullCSharpCodeByRenderPartOfCode(renderBody);
+            state = state with { RenderPartOfCSharpCode = GetFullCSharpCodeByRenderPartOfCode(renderBody) };
 
-            Utid_To_GeneratedCode_Cache[state.Utid] = state.CSharpCode;
+            Utid_To_GeneratedCode_Cache[state.Utid] = state.RenderPartOfCSharpCode;
 
             RefreshComponentPreview(Client);
         }
         catch (Exception exception)
         {
-            state.StatusMessage = "Error occured: " + exception.Message;
+            state = state with { StatusMessage = "Error occured: " + exception.Message };
         }
-    }
-
-    Task CSharpCode_OnEditFinished()
-    {
-        Utid_To_GeneratedCode_Cache[state.Utid] = state.CSharpCode;
-
-        RefreshComponentPreview(Client);
-
-        return Task.CompletedTask;
     }
 
     string GetQuery(string name)
@@ -349,15 +340,15 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
     void OnHtmlValueChanged(string htmlText)
     {
-        state.EditCount++;
+        state = state with { EditCount = state.EditCount + 1 };
 
-        state.StatusMessage = null;
+        state = state with { StatusMessage = null };
 
-        state.HtmlText = htmlText;
+        state = state with { HtmlText = htmlText };
 
         if (string.IsNullOrWhiteSpace(htmlText))
         {
-            state.CSharpCode = null;
+            state = state with { RenderPartOfCSharpCode = null };
 
             Utid_To_GeneratedCode_Cache[state.Utid] = null;
 
@@ -365,6 +356,15 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         }
 
         CalculateOutput();
+    }
+
+    Task RenderPartOfCSharpCode_OnEditFinished()
+    {
+        Utid_To_GeneratedCode_Cache[state.Utid] = state.RenderPartOfCSharpCode;
+
+        RefreshComponentPreview(Client);
+
+        return Task.CompletedTask;
     }
 
     class GroupBox : PureComponent
