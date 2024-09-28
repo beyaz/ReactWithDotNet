@@ -109,7 +109,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                 minimap             = new { enabled = false },
                 lineNumbers         = "off",
                 unicodeHighlight    = new { showExcludeOptions = false },
-                readOnly            = true
+                readOnly            = false
             }
         };
 
@@ -232,7 +232,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
             if (sourceCodeHasError)
             {
-                return sourceCodeError;
+                return new pre(Color(Red300)) { sourceCodeError };
             }
 
             DynamicCode.TryClear(assemblyLoadContext);
@@ -315,6 +315,10 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
     Task CSharpCode_OnEditFinished()
     {
+        Utid_To_GeneratedCode_Cache[state.Utid] = state.CSharpCode;
+
+        RefreshComponentPreview(Client);
+        
         return Task.CompletedTask;
     }
 
