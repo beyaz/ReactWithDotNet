@@ -30,7 +30,8 @@ static class DynamicCode
         }
     }
 
-    public static (bool isTypeFound, Type type, AssemblyLoadContext assemblyLoadContext, bool sourceCodeHasError, string sourceCodeError) LoadAndFindType(IReadOnlyList<string> sourceCodes, string fullTypeName)
+    public static (bool isTypeFound, Type type, AssemblyLoadContext assemblyLoadContext, bool sourceCodeHasError, string sourceCodeError)
+        LoadAndFindType(IReadOnlyList<string> sourceCodes, string fullTypeName)
     {
         var (isCompiledSuccessfully, bytesOfAssembly, compileError) = Compile(sourceCodes);
         if (!isCompiledSuccessfully)
