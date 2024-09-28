@@ -3,7 +3,7 @@ using System.Runtime.Loader;
 using System.Threading;
 using Microsoft.Extensions.Hosting;
 
-namespace ReactWithDotNet.WebSite.HelperApps;
+namespace ReactWithDotNet.WebSite;
 
 record ScriptItem
 {
