@@ -19,9 +19,15 @@ sealed class PageTechnicalDetail : PureComponent
             {
                 "ReactWithDotNet is working on the .net core. Creates ReactNode hierarchy in c# language then serialize to client.",
                 br,
-                "Our client engine recalculates ReactNodes from incoming c# generated nodes",
+                "Our client engine recalculates React nodes from incoming c# generated nodes",
                 br,
                 "If any react event occurs then serialize only sub react nodes values to server"
+            },
+            
+            SpaceY(50),
+            new img(WidthFull)
+            {
+                Src(Asset("TechnicalDetail1.drawio.png"))
             }
         };
     }
