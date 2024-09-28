@@ -1,10 +1,10 @@
-﻿using System.Text;
-using System.Web;
+﻿using System.Web;
 using Microsoft.Net.Http.Headers;
 using ReactWithDotNet.ThirdPartyLibraries._react_split_;
 using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
+using static ReactWithDotNet.WebSite.Components.RenderPreview;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
 
@@ -201,100 +201,16 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             statusMessageEditor
         };
     }
+    
+    
+   
+
+    
+
+
+
     static ScriptManager Scripts=>ScriptManager.Instance;
     
-    static Element CreatePreview(string guid)
-    {
-        if (guid is null)
-        {
-            return "guid is null";
-        }
-
-        var cacheItem = Scripts[guid];
-        if (string.IsNullOrWhiteSpace(cacheItem?.RenderPartOfCSharpCode))
-        {
-            return new pre
-            {
-                "Empty CSharp Code"
-            };
-        }
-
-        var assemblyName = guid;
-
-        var fullCSharpCode = GetFullCSharpCodeByRenderPartOfCode(cacheItem.RenderPartOfCSharpCode);
-
-        var (isTypeFound, type, assemblyLoadContext, sourceCodeHasError, sourceCodeError) = DynamicCode.LoadAndFindType(assemblyName, [fullCSharpCode], "Preview.SampleComponent");
-        if (sourceCodeHasError)
-        {
-            return new pre(Color(Red300)) { sourceCodeError };
-        }
-
-        if (!isTypeFound)
-        {
-            assemblyLoadContext?.Unload();
-
-            return new pre
-            {
-                "Unexpected error. class not found."
-            };
-        }
-
-        Scripts[assemblyName] = cacheItem with
-        {
-            AssemblyLoadContext = assemblyLoadContext,
-            Type = type
-        };
-
-        var instance = type.Assembly.CreateInstance("Preview.SampleComponent");
-
-        return (ReactWithDotNet.Component)instance;
-    }
-
-    static string GetFullCSharpCodeByRenderPartOfCode(string renderPartOfCSharpCode)
-    {
-        var sb = new StringBuilder();
-        sb.AppendLine("using ReactWithDotNet;");
-        sb.AppendLine("using static ReactWithDotNet.Mixin;");
-        sb.AppendLine();
-        sb.AppendLine("namespace Preview;");
-        sb.AppendLine();
-        sb.AppendLine("class SampleComponent: Component");
-        sb.AppendLine("{");
-
-        sb.AppendLine("  protected override Element render()");
-        sb.AppendLine("  {");
-        sb.AppendLine("    return ");
-
-        sb.AppendLine("      // s t a r t ");
-        foreach (var line in renderPartOfCSharpCode.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries))
-        {
-            sb.AppendLine("      " + line);
-        }
-
-        sb.AppendLine("      // e n d");
-
-        sb.AppendLine("    ;");
-
-        sb.AppendLine("  }");
-
-        sb.AppendLine("  protected override Element componentDidCatch(Exception exceptionOccurredInRender)");
-        sb.AppendLine("  {");
-        sb.AppendLine("    return new pre(Color(Red300))");
-        sb.AppendLine("    {");
-        sb.AppendLine("      exceptionOccurredInRender.ToString()");
-        sb.AppendLine("    };");
-        sb.AppendLine("  }");
-
-        sb.AppendLine("}");
-
-        return sb.ToString();
-    }
-
-    static string GetRefreshPreviewEventName(string guid)
-    {
-        return "RefreshComponentPreview" + guid;
-    }
-
     void CalculateOutput()
     {
         try
