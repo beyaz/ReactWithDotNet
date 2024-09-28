@@ -214,27 +214,33 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
         if (Guid_To_GeneratedCode_Cache.TryGetValue(guid, out var renderPartOfCSharpCode))
         {
-            return CreatePreviewByRenderPartOfCSharpCode(renderPartOfCSharpCode);
+            return CreatePreviewByRenderPartOfCSharpCode(guid, renderPartOfCSharpCode);
         }
 
         return "guid not found";
     }
 
-    static Element CreatePreviewByRenderPartOfCSharpCode(string renderPartOfCSharpCode)
+    static Element CreatePreviewByRenderPartOfCSharpCode(string assemblyName, string renderPartOfCSharpCode)
     {
         if (string.IsNullOrWhiteSpace(renderPartOfCSharpCode))
         {
-            return "Empty CSharp Code";
+            return new pre
+            {
+                "Empty CSharp Code"
+            };
         }
 
         if (string.IsNullOrWhiteSpace(renderPartOfCSharpCode))
         {
-            return "Empty CSharp Code";
+            return new pre
+            {
+                "Empty CSharp Code"
+            };
         }
 
         var fullCSharpCode = GetFullCSharpCodeByRenderPartOfCode(renderPartOfCSharpCode);
 
-        var (isTypeFound, type, assemblyLoadContext, sourceCodeHasError, sourceCodeError) = DynamicCode.LoadAndFindType([fullCSharpCode], "Preview.SampleComponent");
+        var (isTypeFound, type, assemblyLoadContext, sourceCodeHasError, sourceCodeError) = DynamicCode.LoadAndFindType(assemblyName, [fullCSharpCode], "Preview.SampleComponent");
         if (sourceCodeHasError)
         {
             return new pre(Color(Red300)) { sourceCodeError };
@@ -247,7 +253,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             return (ReactWithDotNet.Component)instance;
         }
 
-        DynamicCode.TryClear(assemblyLoadContext);
+        assemblyLoadContext?.Unload();
 
         return new pre
         {

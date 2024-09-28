@@ -9,11 +9,11 @@ namespace ReactWithDotNet.WebSite.HelperApps;
 
 static class DynamicCode
 {
-    public static (bool isCompiledSuccessfully, byte[] bytesOfAssembly, string compileError) Compile(IReadOnlyList<string> sourceCodes)
+    public static (bool isCompiledSuccessfully, byte[] bytesOfAssembly, string compileError) Compile(string assemblyName, IReadOnlyList<string> sourceCodes)
     {
         using (var peStream = new MemoryStream())
         {
-            var result = GenerateCode(sourceCodes).Emit(peStream);
+            var result = GenerateCode(assemblyName, sourceCodes).Emit(peStream);
 
             if (!result.Success)
             {
@@ -31,9 +31,9 @@ static class DynamicCode
     }
 
     public static (bool isTypeFound, Type type, AssemblyLoadContext assemblyLoadContext, bool sourceCodeHasError, string sourceCodeError)
-        LoadAndFindType(IReadOnlyList<string> sourceCodes, string fullTypeName)
+        LoadAndFindType(string assemblyName, IReadOnlyList<string> sourceCodes, string fullTypeName)
     {
-        var (isCompiledSuccessfully, bytesOfAssembly, compileError) = Compile(sourceCodes);
+        var (isCompiledSuccessfully, bytesOfAssembly, compileError) = Compile(assemblyName, sourceCodes);
         if (!isCompiledSuccessfully)
         {
             return (isTypeFound: default, type: default, assemblyLoadContext: default, sourceCodeHasError: true, sourceCodeError: compileError);
@@ -48,7 +48,7 @@ static class DynamicCode
             var type = assembly.GetType(fullTypeName);
             if (type == null)
             {
-                TryClear(assemblyLoadContext);
+                assemblyLoadContext.Unload();
 
                 return default;
             }
@@ -57,12 +57,7 @@ static class DynamicCode
         }
     }
 
-    public static bool TryClear(AssemblyLoadContext assemblyLoadContext)
-    {
-        return TryClear(new WeakReference(assemblyLoadContext));
-    }
-
-    static CSharpCompilation GenerateCode(IReadOnlyList<string> sourceCodes)
+    static CSharpCompilation GenerateCode(string assemblyName, IReadOnlyList<string> sourceCodes)
     {
         var options = CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.Preview);
 
@@ -86,24 +81,13 @@ static class DynamicCode
                                     global using static ReactWithDotNet.Mixin;
                                     global using System.Threading.Tasks;
                                     """;
-        
-        return CSharpCompilation.Create("Hello.dll",
-                                        sourceCodes.Select(sourceCode => SyntaxFactory.ParseSyntaxTree(SourceText.From(globalUsings+sourceCode), options)).ToArray(),
+
+        return CSharpCompilation.Create(assemblyName,
+                                        sourceCodes.Select(sourceCode => SyntaxFactory.ParseSyntaxTree(SourceText.From(globalUsings + sourceCode), options)).ToArray(),
                                         references,
-                                        new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
-                                                                     optimizationLevel: OptimizationLevel.Release,
-                                                                     assemblyIdentityComparer: DesktopAssemblyIdentityComparer.Default));
-    }
-
-    static bool TryClear(WeakReference weakReference)
-    {
-        for (var i = 0; i < 8 && weakReference.IsAlive; i++)
-        {
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-        }
-
-        return weakReference.IsAlive == false;
+                                        new(OutputKind.DynamicallyLinkedLibrary,
+                                            optimizationLevel: OptimizationLevel.Release,
+                                            assemblyIdentityComparer: DesktopAssemblyIdentityComparer.Default));
     }
 
     class SimpleUnloadableAssemblyLoadContext : AssemblyLoadContext
