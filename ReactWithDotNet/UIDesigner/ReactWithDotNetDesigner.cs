@@ -458,7 +458,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
 
         static Element createLabel(string text)
         {
-            return new small(Text(text), Color("rgb(73 86 193)"), FontWeight600, UserSelect(none));
+            return new small(Text(text), Color(rgb(73, 86, 193)), FontWeight600, UserSelect(none), WhiteSpaceNoWrap);
         }
 
         Element createHorizontalRuler()

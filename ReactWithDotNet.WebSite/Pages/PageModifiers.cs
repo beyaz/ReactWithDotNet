@@ -10,7 +10,7 @@ sealed class PageModifiers : PureComponent
         return new BlogPageLayout
         {
             new h1 { "Modifiers" },
-
+            SpaceY(8),
             new FlexColumn
             {
                 new p
@@ -18,13 +18,15 @@ sealed class PageModifiers : PureComponent
                     "Clasical way to create element"
                 },
 
-                new div(Height(300))
+                SpaceY(8),
+                
+                new div(Height(360))
                 {
                     new RenderPreview
                     {
                         RenderPartOfCSharpCode =
                             """
-
+                            
                             new button
                             {
                                text = "button",
@@ -48,49 +50,130 @@ sealed class PageModifiers : PureComponent
                                }
                             }
 
-
                             """
                     }
                 }
             },
 
+            SpaceY(50),
+            
             new FlexColumn
             {
                 new p
                 {
                     "We suggest better alternatives"
                 },
-
-                new div(Height(250))
+                SpaceY(8),
+                new div(Height(200))
                 {
                     new RenderPreview
                     {
                         RenderPartOfCSharpCode =
                             """
-                            new div
+                            
+                            new button
                             {
-                               new div
-                               {
-                                  style = 
-                                  {
-                                     DisplayBlock,
-                                     TextAlignCenter,
-                                     Color("Red"),
-                                     FontSize15
-                                  }
-                               }
+                               "button",
+                               DisplayFlexRowCentered,
+                               Padding(8, 12),
+                               Border(1, solid, Blue),
+                               BorderRadius(3),
+                               FontSize15,
+                               Background(White),
+                               Hover(Background(WhiteSmoke))
                             }
-
+                            
+                            """
+                    }
+                },
+                SpaceY(50),
+                new p
+                {
+                    "Also you can move any modifiers to constructor"
+                },
+                SpaceY(8),
+                new div(Height(170))
+                {
+                    new RenderPreview
+                    {
+                        RenderPartOfCSharpCode =
+                            """
+                            
+                            new button(DisplayFlexRowCentered, Padding(8, 12))
+                            {
+                               "button",
+                               Border(1, solid, Blue),
+                               BorderRadius(3),
+                               FontSize15,
+                               Background(White),
+                               Hover(Background(WhiteSmoke))
+                            }
+                            
                             """
                     }
                 }
-            }
+                
+            },
+            SpaceY(80),
+            new p
+            {
+                "Custom modifier can be declared as below and can be use anywhere.",
+            },
+            SpaceY(8),
+            new div(Height(300))
+            {
+                new CSharpCodePanel
+                {
+                    Code = """
+                           
+                           static class SharedStyles
+                           {
+                               public static Style SectionStyle =>
+                               [
+                                   Background(White),
+                                   BorderRadius(8),
+                                   Padding(6)
+                               ];
+                           }
+                           
+                           static Element CreateUserSection(string userName)
+                           {
+                               return new div(SharedStyles.SectionStyle)
+                               {
+                                   userName
+                               };
+                           }
+                           
+                           """
+                }
+            },
+            
+            SpaceY(50)
         };
     }
 }
 
 class PageDocuments : PureComponent
 {
+
+    static class SharedStyles
+    {
+        public static Style SectionStyle =>
+        [
+            Background(White),
+            BorderRadius(8),
+            Padding(6)
+        ];
+    }
+
+    static Element CreateUserSection(string userName)
+    {
+        return new div(SharedStyles.SectionStyle)
+        {
+            userName
+        };
+    }
+    
     protected override Element render()
     {
         return new FlexRow(Gap(150), WidthFull, JustifyContentSpaceAround)

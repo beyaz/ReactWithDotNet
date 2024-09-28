@@ -252,15 +252,6 @@ public static partial class Mixin
 
     
     
-    /// <summary>
-    ///     width: 100%
-    /// </summary>
-    public static StyleModifier WidthMax => Width("100%");
-    
-    /// <summary>
-    ///     height: 100%
-    /// </summary>
-    public static StyleModifier HeightMax => Height("100%");
     
     /// <summary>
     ///     width: fit-content

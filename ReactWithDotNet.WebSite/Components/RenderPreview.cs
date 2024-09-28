@@ -8,6 +8,8 @@ sealed class RenderPreview : Component<RenderPreview.Model>
 
     static ScriptManager Scripts => ScriptManager.Instance;
 
+    Func<StyleModifier[], StyleModifier> Break { get; } = SM;
+
     protected override Task constructor()
     {
         state = new()
@@ -39,16 +41,12 @@ sealed class RenderPreview : Component<RenderPreview.Model>
         return Task.CompletedTask;
     }
 
-    Func<StyleModifier[], StyleModifier> Break { get; } = SM;
-    
-    
     protected override Element render()
     {
-        
-        var width = Width(1,1) + Break([Width(1,2)]);
-        var height = Height(1,2) + Break([Height(1,1)]);
+        var width = Width(1, 1) + Break([Width(1, 2)]);
+        var height = Height(1, 2) + Break([Height(1, 1)]);
 
-        return new FlexColumn(SizeFull, BoxShadow(0,2,5,0,rgba(0, 0, 0,  .34)), BorderRadius(3), CursorDefault, MinSize(200))
+        return new FlexColumn(SizeFull, BoxShadow(0, 2, 5, 0, rgba(0, 0, 0, .34)), BorderRadius(3), CursorDefault, MinSize(200))
         {
             Break([DisplayFlexRow]),
             new FlexRowCentered(width, height, BorderRight(Solid(1, rgb(235, 236, 240))))
