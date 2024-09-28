@@ -315,13 +315,13 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
     string GetQuery(string name)
     {
-        var value = KeyForHttpContext[Context].Request.Query[name].FirstOrDefault();
+        var value = Context.HttpContext.Request.Query[name].FirstOrDefault();
         if (value != null)
         {
             return value;
         }
 
-        var referer = KeyForHttpContext[Context].Request.Headers["Referer"];
+        var referer = Context.HttpContext.Request.Headers["Referer"];
         if (string.IsNullOrWhiteSpace(referer))
         {
             return null;

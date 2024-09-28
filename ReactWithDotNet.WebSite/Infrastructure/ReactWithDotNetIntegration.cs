@@ -104,8 +104,6 @@ public static class ReactWithDotNetIntegration
     {
         context.Set(ThemeKey, new());
 
-        KeyForHttpContext[context] = httpContext;
-
         return Task.CompletedTask;
     }
 

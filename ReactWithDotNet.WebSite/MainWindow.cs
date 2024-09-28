@@ -18,7 +18,7 @@ sealed class MainWindow : PureComponent
 
         Element createContent()
         {
-            var pageName = KeyForHttpContext[Context].Request.Query[QueryKey.Page];
+            var pageName = Context.HttpContext.Request.Query[QueryKey.Page];
 
             var typeOfPage = Type.GetType($"ReactWithDotNet.WebSite.Pages.{pageName}") ?? typeof(PageMain);
 

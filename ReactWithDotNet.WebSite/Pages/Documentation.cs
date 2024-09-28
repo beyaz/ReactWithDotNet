@@ -16,7 +16,7 @@ class PageDocumentation : PureComponent
 
             new main(DisplayFlexRow)
             {
-                LeftMenu(KeyForHttpContext[Context].Request.GetDisplayUrl()),
+                LeftMenu(Context.HttpContext.Request.GetDisplayUrl()),
                 SampleDocumentContent()
             },
             
