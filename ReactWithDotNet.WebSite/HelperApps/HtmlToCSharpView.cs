@@ -1,9 +1,7 @@
-﻿using System.Web;
-using Microsoft.Net.Http.Headers;
-using ReactWithDotNet.ThirdPartyLibraries._react_split_;
+﻿using ReactWithDotNet.ThirdPartyLibraries._react_split_;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
-using static ReactWithDotNet.WebSite.Components.RenderPreview;
+using static ReactWithDotNet.WebSite.Components.LivePreview;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
 
@@ -19,10 +17,6 @@ record HtmlToCSharpViewModel
 class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 {
     static ScriptManager Scripts => ScriptManager.Instance;
-    
-    string GuidParameter => GetQuery(LiveEditorQueryParameterNames.Guid);
-
-    bool Preview => GetQuery(LiveEditorQueryParameterNames.Preview) == "true";
 
     public Task Refresh()
     {
@@ -31,12 +25,6 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
     protected override Task constructor()
     {
-        if (Preview)
-        {
-            Client.ListenEvent(GetRefreshPreviewEventName(GuidParameter), Refresh);
-            return Task.CompletedTask;
-        }
-
         state = new()
         {
             HtmlText = @"
@@ -60,23 +48,16 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 </div>
 ",
 
-            Guid = GuidParameter ?? Guid.NewGuid().ToString("N")
+            Guid = Guid.NewGuid().ToString("N")
         };
 
         CalculateOutput();
-
-        Client.HistoryReplaceState(null, null, Page.LiveEditor.Url + $"?{LiveEditorQueryParameterNames.Guid}={state.Guid}");
 
         return Task.CompletedTask;
     }
 
     protected override Element render()
     {
-        if (Preview)
-        {
-            return CreatePreview(GuidParameter);
-        }
-
         var htmlEditor = new CSharpCodeEditor
         {
             valueBind                = () => state.HtmlText,
@@ -159,8 +140,8 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                             {
                                 new iframe
                                 {
-                                    id    = "g",
-                                    src   = Page.LiveEditor.Url + $"?{LiveEditorQueryParameterNames.Guid}={state.Guid}&preview=true",
+                                    id    = state.Guid,
+                                    src   = Page.LivePreviewUrl(state.Guid),
                                     style = { BorderNone, SizeFull },
                                     title = "Live Editor Preview"
                                 }
@@ -202,25 +183,6 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         }
     }
 
-    string GetQuery(string name)
-    {
-        var value = Context.HttpContext.Request.Query[name].FirstOrDefault();
-        if (value != null)
-        {
-            return value;
-        }
-
-        var referer = Context.HttpContext.Request.Headers[HeaderNames.Referer];
-        if (string.IsNullOrWhiteSpace(referer))
-        {
-            return null;
-        }
-
-        var nameValueCollection = HttpUtility.ParseQueryString(new Uri(referer).Query);
-
-        return nameValueCollection[name];
-    }
-
     Task HtmlText_OnEditFinished()
     {
         OnHtmlValueChanged(state.HtmlText);
@@ -229,15 +191,19 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
     void OnHtmlValueChanged(string htmlText)
     {
-        state = state with { EditCount = state.EditCount + 1 };
-
-        state = state with { StatusMessage = null };
-
-        state = state with { HtmlText = htmlText };
+        state = state with
+        {
+            EditCount = state.EditCount + 1,
+            StatusMessage = null,
+            HtmlText = htmlText
+        };
 
         if (string.IsNullOrWhiteSpace(htmlText))
         {
-            state = state with { RenderPartOfCSharpCode = null };
+            state = state with
+            {
+                RenderPartOfCSharpCode = null
+            };
 
             Scripts[state.Guid] = null;
 
