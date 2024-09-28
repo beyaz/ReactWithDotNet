@@ -24,20 +24,8 @@ sealed class ScriptManager
         get => Map[key];
         set => Update(key, value);
     }
-
-    class CleanerBackgroundService: BackgroundService
-    {
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            while (true)
-            {
-                await Task.Delay(10, stoppingToken);
-                    
-                Instance.RemoveOlderItems(TimeSpan.FromMinutes(10));
-            }
-            // ReSharper disable once FunctionNeverReturns
-        }
-    }
+    
+    
     // ReSharper disable once UnusedMember.Local
     public void RemoveOlderItems(TimeSpan duration)
     {
@@ -78,5 +66,20 @@ sealed class ScriptManager
         }
 
         Map.TryAdd(key, newCacheItem);
+    }
+}
+
+
+class ScriptCleanerBackgroundService: BackgroundService
+{
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        while (true)
+        {
+            await Task.Delay(10, stoppingToken);
+                    
+            ScriptManager.Instance.RemoveOlderItems(TimeSpan.FromMinutes(10));
+        }
+        // ReSharper disable once FunctionNeverReturns
     }
 }
