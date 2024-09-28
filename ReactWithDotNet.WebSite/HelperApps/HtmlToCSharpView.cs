@@ -1,7 +1,6 @@
 ﻿using System.Web;
 using Microsoft.Net.Http.Headers;
 using ReactWithDotNet.ThirdPartyLibraries._react_split_;
-using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 using static ReactWithDotNet.WebSite.Components.RenderPreview;
@@ -19,6 +18,8 @@ record HtmlToCSharpViewModel
 
 class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 {
+    static ScriptManager Scripts => ScriptManager.Instance;
+    
     string GuidParameter => GetQuery(LiveEditorQueryParameterNames.Guid);
 
     bool Preview => GetQuery(LiveEditorQueryParameterNames.Preview) == "true";
@@ -68,7 +69,6 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
         return Task.CompletedTask;
     }
-    
 
     protected override Element render()
     {
@@ -83,22 +83,10 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             valueBindDebounceHandler = HtmlText_OnEditFinished
         };
 
-        var csharpEditor = new Editor
+        var csharpEditor = new CSharpCodeEditor
         {
             valueBind                = () => state.RenderPartOfCSharpCode,
-            valueBindDebounceHandler = RenderPartOfCSharpCode_OnEditFinished,
-            valueBindDebounceTimeout = 500,
-            defaultLanguage          = "csharp",
-            options =
-            {
-                renderLineHighlight = "none",
-                fontFamily          = "consolas, 'IBM Plex Mono Medium', 'Courier New', monospace",
-                fontSize            = 11,
-                minimap             = new { enabled = false },
-                lineNumbers         = "off",
-                unicodeHighlight    = new { showExcludeOptions = false },
-                readOnly            = false
-            }
+            valueBindDebounceHandler = RenderPartOfCSharpCode_OnEditFinished
         };
 
         var statusMessageEditor = new Message
@@ -191,16 +179,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             statusMessageEditor
         };
     }
-    
-    
-   
 
-    
-
-
-
-    static ScriptManager Scripts=>ScriptManager.Instance;
-    
     void CalculateOutput()
     {
         try
@@ -215,7 +194,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                 RenderPartOfCSharpCode = state.RenderPartOfCSharpCode
             };
 
-            RefreshComponentPreview(Client,state.Guid);
+            RefreshComponentPreview(Client, state.Guid);
         }
         catch (Exception exception)
         {
@@ -268,8 +247,6 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         CalculateOutput();
     }
 
-    
-
     Task RenderPartOfCSharpCode_OnEditFinished()
     {
         Scripts[state.Guid] = new()
@@ -277,14 +254,10 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             RenderPartOfCSharpCode = state.RenderPartOfCSharpCode
         };
 
-        RefreshComponentPreview(Client,state.Guid);
+        RefreshComponentPreview(Client, state.Guid);
 
         return Task.CompletedTask;
     }
-
-   
-
-
 
     class GroupBox : PureComponent
     {
@@ -341,7 +314,4 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             };
         }
     }
-
-    
 }
-
