@@ -4,7 +4,6 @@ using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
 using ReactWithDotNet.UIDesigner;
-using static ReactWithDotNet.UIDesigner.Extensions;
 
 [assembly: MetadataUpdateHandler(typeof(HotReloadListener))]
 
@@ -564,7 +563,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
             return value;
         }
 
-        var referer = httpContext.Request.Headers["Referer"];
+        var referer = httpContext.Request.Headers[HeaderNames.Referer];
         if (string.IsNullOrWhiteSpace(referer))
         {
             return null;

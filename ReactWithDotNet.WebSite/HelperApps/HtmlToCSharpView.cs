@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Text;
 using System.Web;
+using Microsoft.Net.Http.Headers;
 using ReactWithDotNet.ThirdPartyLibraries._react_split_;
 using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
@@ -311,7 +312,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             return value;
         }
 
-        var referer = Context.HttpContext.Request.Headers["Referer"];
+        var referer = Context.HttpContext.Request.Headers[HeaderNames.Referer];
         if (string.IsNullOrWhiteSpace(referer))
         {
             return null;
