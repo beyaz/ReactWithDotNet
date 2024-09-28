@@ -14,16 +14,16 @@ record HtmlToCSharpViewModel
     public int EditCount { get; init; }
     public string HtmlText { get; init; }
     public string StatusMessage { get; init; }
-    public string Utid { get; init; }
+    public string Guid { get; init; }
 }
 
 class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 {
-    static readonly ConcurrentDictionary<string, string> Utid_To_GeneratedCode_Cache = [];
+    static readonly ConcurrentDictionary<string, string> Guid_To_GeneratedCode_Cache = [];
 
-    bool Preview => GetQuery("preview") == "true";
+    string GuidParameter => GetQuery(QueryParameterName.Guid);
 
-    string UtidParameter => GetQuery("utid");
+    bool Preview => GetQuery(QueryParameterName.Preview) == "true";
 
     public Task Refresh()
     {
@@ -34,7 +34,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
     {
         if (Preview)
         {
-            Client.ListenEvent("RefreshComponentPreview", Refresh);
+            Client.ListenEvent(GetRefreshPreviewEventName(GuidParameter), Refresh);
             return Task.CompletedTask;
         }
 
@@ -61,12 +61,12 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 </div>
 ",
 
-            Utid = UtidParameter ?? Guid.NewGuid().ToString("N")
+            Guid = GuidParameter ?? Guid.NewGuid().ToString("N")
         };
 
         CalculateOutput();
 
-        Client.HistoryReplaceState(null, null, Page.LiveEditor.Url + $"?utid={state.Utid}");
+        Client.HistoryReplaceState(null, null, Page.LiveEditor.Url + $"?{QueryParameterName.Guid}={state.Guid}");
 
         return Task.CompletedTask;
     }
@@ -75,7 +75,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
     {
         if (Preview)
         {
-            return CreatePreview(UtidParameter);
+            return CreatePreview(GuidParameter);
         }
 
         var htmlEditor = new Editor
@@ -184,7 +184,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                                 new iframe
                                 {
                                     id    = "g",
-                                    src   = Page.LiveEditor.Url + $"?utid={state.Utid}&preview=true",
+                                    src   = Page.LiveEditor.Url + $"?{QueryParameterName.Guid}={state.Guid}&preview=true",
                                     style = { BorderNone, WidthFull, HeightFull },
                                     title = "Live Editor Preview"
                                 }
@@ -204,14 +204,14 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         };
     }
 
-    static Element CreatePreview(string utid)
+    static Element CreatePreview(string guid)
     {
-        if (utid is null)
+        if (guid is null)
         {
-            return "Utid is null";
+            return "guid is null";
         }
 
-        if (Utid_To_GeneratedCode_Cache.TryGetValue(utid, out var renderPartOfCSharpCode))
+        if (Guid_To_GeneratedCode_Cache.TryGetValue(guid, out var renderPartOfCSharpCode))
         {
             if (string.IsNullOrWhiteSpace(renderPartOfCSharpCode))
             {
@@ -236,7 +236,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             DynamicCode.TryClear(assemblyLoadContext);
         }
 
-        return "Utid not found";
+        return "guid not found";
     }
 
     static string GetFullCSharpCodeByRenderPartOfCode(string renderPartOfCSharpCode)
@@ -279,22 +279,9 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         return sb.ToString();
     }
 
-    static void RefreshComponentPreview(Client client)
+    static string GetRefreshPreviewEventName(string guid)
     {
-        const string jsCode =
-            """
-            var frame = window.frames[0];
-            if(frame)
-            {
-              var reactWithDotNet = frame.ReactWithDotNet;
-              if(reactWithDotNet)
-              {
-                reactWithDotNet.DispatchEvent('RefreshComponentPreview', []);
-              }
-            }
-            """;
-
-        client.RunJavascript(jsCode);
+        return "RefreshComponentPreview" + guid;
     }
 
     void CalculateOutput()
@@ -306,7 +293,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                 RenderPartOfCSharpCode = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText)
             };
 
-            Utid_To_GeneratedCode_Cache[state.Utid] = state.RenderPartOfCSharpCode;
+            Guid_To_GeneratedCode_Cache[state.Guid] = state.RenderPartOfCSharpCode;
 
             RefreshComponentPreview(Client);
         }
@@ -353,7 +340,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         {
             state = state with { RenderPartOfCSharpCode = null };
 
-            Utid_To_GeneratedCode_Cache[state.Utid] = null;
+            Guid_To_GeneratedCode_Cache[state.Guid] = null;
 
             return;
         }
@@ -361,13 +348,41 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         CalculateOutput();
     }
 
+    void RefreshComponentPreview(Client client)
+    {
+        var jsCode =
+            $"""
+             var eventName = '{GetRefreshPreviewEventName(state.Guid)}';
+             """
+            +
+            """
+            var frame = window.frames[0];
+            if(frame)
+            {
+              var reactWithDotNet = frame.ReactWithDotNet;
+              if(reactWithDotNet)
+              {
+                reactWithDotNet.DispatchEvent(eventName, []);
+              }
+            }
+            """;
+
+        client.RunJavascript(jsCode);
+    }
+
     Task RenderPartOfCSharpCode_OnEditFinished()
     {
-        Utid_To_GeneratedCode_Cache[state.Utid] = state.RenderPartOfCSharpCode;
+        Guid_To_GeneratedCode_Cache[state.Guid] = state.RenderPartOfCSharpCode;
 
         RefreshComponentPreview(Client);
 
         return Task.CompletedTask;
+    }
+
+    static class QueryParameterName
+    {
+        public const string Guid = "guid";
+        public const string Preview = "preview";
     }
 
     class GroupBox : PureComponent
