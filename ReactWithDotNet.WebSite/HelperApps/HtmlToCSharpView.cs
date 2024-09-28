@@ -434,7 +434,10 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             {
                 if (shouldRemove(Map[key]))
                 {
-                    Map.TryRemove(key, out _);
+                    if (Map.TryRemove(key, out var cacheItem))
+                    {
+                        cacheItem.AssemblyLoadContext?.Unload();
+                    }
                 }
             }
         }
