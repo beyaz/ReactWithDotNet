@@ -1,8 +1,12 @@
 ﻿using System.Text;
-using ReactWithDotNet.WebSite.HelperApps;
-using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
 
 namespace ReactWithDotNet.WebSite.Components;
+
+static class LiveEditorQueryParameterNames
+{
+    public const string Guid = "guid";
+    public const string Preview = "preview";
+}
 
 sealed class RenderPreview : Component<RenderPreview.Model>
 {
@@ -23,9 +27,9 @@ sealed class RenderPreview : Component<RenderPreview.Model>
             {
                 RenderPartOfCSharpCode =
                 """
-                new div( Border(2, solid, Red), Size(200))
+                new div(Size(100), Border(2, solid, Blue))
                 {
-
+                    "Hello world"
                 }
                 """
 
@@ -85,22 +89,10 @@ sealed class RenderPreview : Component<RenderPreview.Model>
         
         var width = Width(100 * percent) + SM(Width(50 * percent));
         
-        var csharpEditor = new Editor
+        var csharpEditor = new CSharpCodeEditor
         {
             valueBind                = () => state.RenderPartOfCSharpCode,
-            valueBindDebounceHandler = RenderPartOfCSharpCode_OnEditFinished,
-            valueBindDebounceTimeout = 500,
-            defaultLanguage          = "csharp",
-            options =
-            {
-                renderLineHighlight = "none",
-                fontFamily          = "consolas, 'IBM Plex Mono Medium', 'Courier New', monospace",
-                fontSize            = 11,
-                minimap             = new { enabled = false },
-                lineNumbers         = "off",
-                unicodeHighlight    = new { showExcludeOptions = false },
-                readOnly            = false
-            }
+            valueBindDebounceHandler = RenderPartOfCSharpCode_OnEditFinished
         };
         
         
@@ -113,12 +105,11 @@ sealed class RenderPreview : Component<RenderPreview.Model>
             
             new FlexRowCentered(width, Background(rgb(246, 247, 249)), MinSize(200))
             {
+                
                 new iframe
                 {
-                    id    = "g",
-                    src   = Page.LiveEditor.Url + $"?{HtmlToCSharpView.QueryParameterName.Guid}={state.Guid}&preview=true",
-                    style = { BorderNone, WidthFull, HeightFull },
-                    title = "Live Editor Preview"
+                    src   = Page.LiveEditor.Url + $"?{LiveEditorQueryParameterNames.Guid}={state.Guid}&preview=true",
+                    style = { BorderNone, SizeFull, Padding(8) }
                 }
             }
         };

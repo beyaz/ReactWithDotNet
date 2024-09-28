@@ -19,9 +19,9 @@ record HtmlToCSharpViewModel
 
 class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 {
-    string GuidParameter => GetQuery(QueryParameterName.Guid);
+    string GuidParameter => GetQuery(LiveEditorQueryParameterNames.Guid);
 
-    bool Preview => GetQuery(QueryParameterName.Preview) == "true";
+    bool Preview => GetQuery(LiveEditorQueryParameterNames.Preview) == "true";
 
     public Task Refresh()
     {
@@ -64,10 +64,11 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
         CalculateOutput();
 
-        Client.HistoryReplaceState(null, null, Page.LiveEditor.Url + $"?{QueryParameterName.Guid}={state.Guid}");
+        Client.HistoryReplaceState(null, null, Page.LiveEditor.Url + $"?{LiveEditorQueryParameterNames.Guid}={state.Guid}");
 
         return Task.CompletedTask;
     }
+    
 
     protected override Element render()
     {
@@ -76,21 +77,10 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             return CreatePreview(GuidParameter);
         }
 
-        var htmlEditor = new Editor
+        var htmlEditor = new CSharpCodeEditor
         {
             valueBind                = () => state.HtmlText,
-            valueBindDebounceHandler = HtmlText_OnEditFinished,
-            valueBindDebounceTimeout = 500,
-            defaultLanguage          = "html",
-            options =
-            {
-                renderLineHighlight = "none",
-                fontFamily          = "consolas, 'IBM Plex Mono Medium', 'Courier New', monospace",
-                fontSize            = 11,
-                minimap             = new { enabled = false },
-                lineNumbers         = "off",
-                unicodeHighlight    = new { showExcludeOptions = false }
-            }
+            valueBindDebounceHandler = HtmlText_OnEditFinished
         };
 
         var csharpEditor = new Editor
@@ -182,8 +172,8 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                                 new iframe
                                 {
                                     id    = "g",
-                                    src   = Page.LiveEditor.Url + $"?{QueryParameterName.Guid}={state.Guid}&preview=true",
-                                    style = { BorderNone, WidthFull, HeightFull },
+                                    src   = Page.LiveEditor.Url + $"?{LiveEditorQueryParameterNames.Guid}={state.Guid}&preview=true",
+                                    style = { BorderNone, SizeFull },
                                     title = "Live Editor Preview"
                                 }
                             }
@@ -292,11 +282,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         return Task.CompletedTask;
     }
 
-    public static class QueryParameterName
-    {
-        public const string Guid = "guid";
-        public const string Preview = "preview";
-    }
+   
 
 
 
