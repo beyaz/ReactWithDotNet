@@ -23,7 +23,7 @@ record HtmlToCSharpViewModel
 
 class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 {
-    static readonly CacheManager Cache = new();
+    public static readonly CacheManager Cache = new();
 
     string GuidParameter => GetQuery(QueryParameterName.Guid);
 
@@ -407,71 +407,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         public const string Preview = "preview";
     }
 
-    class CacheManager
-    {
-        readonly ConcurrentDictionary<string, CacheItem> Map = [];
 
-        public CacheItem this[string key]
-        {
-            get => Map[key];
-            set => Update(key, value);
-        }
-
-        class AA: BackgroundService
-        {
-            protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-            {
-                while (true)
-                {
-                    await Task.Delay(10, stoppingToken);
-                    
-                    HtmlToCSharpView.Cache.RemoveOlderItems(TimeSpan.FromMinutes(10));
-                }
-                // ReSharper disable once FunctionNeverReturns
-            }
-        }
-        // ReSharper disable once UnusedMember.Local
-        public void RemoveOlderItems(TimeSpan duration)
-        {
-            foreach (var key in Map.Keys)
-            {
-                tryRemove(key);
-            }
-
-            return;
-
-            bool shouldRemove(CacheItem cacheItem)
-            {
-                return cacheItem.CreationTime - DateTime.Now > duration;
-            }
-
-            void tryRemove(string key)
-            {
-                if (shouldRemove(Map[key]))
-                {
-                    if (Map.TryRemove(key, out var cacheItem))
-                    {
-                        cacheItem.AssemblyLoadContext?.Unload();
-                    }
-                }
-            }
-        }
-
-        void Update(string key, CacheItem newCacheItem)
-        {
-            if (Map.TryRemove(key, out var cacheItem))
-            {
-                cacheItem.AssemblyLoadContext?.Unload();
-            }
-
-            if (cacheItem is null)
-            {
-                return;
-            }
-
-            Map.TryAdd(key, newCacheItem);
-        }
-    }
 
     class GroupBox : PureComponent
     {
@@ -529,11 +465,79 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         }
     }
 
-    record CacheItem
+    
+}
+
+record CacheItem
+{
+    public string RenderPartOfCSharpCode { get; init; }
+    public AssemblyLoadContext AssemblyLoadContext { get; init; }
+    public Type Type { get; init; }
+    public DateTime CreationTime { get; } = DateTime.Now;
+}
+
+class CacheManager
+{
+    readonly ConcurrentDictionary<string, CacheItem> Map = [];
+
+    public CacheItem this[string key]
     {
-        public string RenderPartOfCSharpCode { get; init; }
-        public AssemblyLoadContext AssemblyLoadContext { get; init; }
-        public Type Type { get; init; }
-        public DateTime CreationTime { get; } = DateTime.Now;
+        get => Map[key];
+        set => Update(key, value);
+    }
+
+    class AA: BackgroundService
+    {
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            while (true)
+            {
+                await Task.Delay(10, stoppingToken);
+                    
+                HtmlToCSharpView.Cache.RemoveOlderItems(TimeSpan.FromMinutes(10));
+            }
+            // ReSharper disable once FunctionNeverReturns
+        }
+    }
+    // ReSharper disable once UnusedMember.Local
+    public void RemoveOlderItems(TimeSpan duration)
+    {
+        foreach (var key in Map.Keys)
+        {
+            tryRemove(key);
+        }
+
+        return;
+
+        bool shouldRemove(CacheItem cacheItem)
+        {
+            return cacheItem.CreationTime - DateTime.Now > duration;
+        }
+
+        void tryRemove(string key)
+        {
+            if (shouldRemove(Map[key]))
+            {
+                if (Map.TryRemove(key, out var cacheItem))
+                {
+                    cacheItem.AssemblyLoadContext?.Unload();
+                }
+            }
+        }
+    }
+
+    void Update(string key, CacheItem newCacheItem)
+    {
+        if (Map.TryRemove(key, out var cacheItem))
+        {
+            cacheItem.AssemblyLoadContext?.Unload();
+        }
+
+        if (cacheItem is null)
+        {
+            return;
+        }
+
+        Map.TryAdd(key, newCacheItem);
     }
 }
