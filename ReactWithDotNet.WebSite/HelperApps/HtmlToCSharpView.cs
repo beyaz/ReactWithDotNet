@@ -211,14 +211,16 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             return "Utid is null";
         }
 
-        if (Utid_To_GeneratedCode_Cache.TryGetValue(utid, out var csharpCode))
+        if (Utid_To_GeneratedCode_Cache.TryGetValue(utid, out var renderPartOfCSharpCode))
         {
-            if (string.IsNullOrWhiteSpace(csharpCode))
+            if (string.IsNullOrWhiteSpace(renderPartOfCSharpCode))
             {
                 return "Empty CSharp Code";
             }
 
-            var (isTypeFound, type, assemblyLoadContext, sourceCodeHasError, sourceCodeError) = DynamicCode.LoadAndFindType(new[] { csharpCode }, "Preview.SampleComponent");
+            var fullCSharpCode = GetFullCSharpCodeByRenderPartOfCode(renderPartOfCSharpCode);
+
+            var (isTypeFound, type, assemblyLoadContext, sourceCodeHasError, sourceCodeError) = DynamicCode.LoadAndFindType([fullCSharpCode], "Preview.SampleComponent");
             if (isTypeFound)
             {
                 var instance = type.Assembly.CreateInstance("Preview.SampleComponent");
@@ -299,9 +301,10 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
     {
         try
         {
-            var renderBody = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText);
-
-            state = state with { RenderPartOfCSharpCode = GetFullCSharpCodeByRenderPartOfCode(renderBody) };
+            state = state with
+            {
+                RenderPartOfCSharpCode = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText)
+            };
 
             Utid_To_GeneratedCode_Cache[state.Utid] = state.RenderPartOfCSharpCode;
 
