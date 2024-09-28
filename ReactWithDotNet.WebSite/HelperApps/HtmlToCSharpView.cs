@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Runtime.Loader;
 using System.Text;
 using System.Web;
 using Microsoft.Net.Http.Headers;
@@ -20,7 +21,7 @@ record HtmlToCSharpViewModel
 
 class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 {
-    static readonly ConcurrentDictionary<string, string> Guid_To_GeneratedCode_Cache = [];
+    static readonly CacheManager Cache = new();
 
     string GuidParameter => GetQuery(QueryParameterName.Guid);
 
@@ -212,17 +213,8 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             return "guid is null";
         }
 
-        if (Guid_To_GeneratedCode_Cache.TryGetValue(guid, out var renderPartOfCSharpCode))
-        {
-            return CreatePreviewByRenderPartOfCSharpCode(guid, renderPartOfCSharpCode);
-        }
-
-        return "guid not found";
-    }
-
-    static Element CreatePreviewByRenderPartOfCSharpCode(string assemblyName, string renderPartOfCSharpCode)
-    {
-        if (string.IsNullOrWhiteSpace(renderPartOfCSharpCode))
+        var cacheItem = Cache[guid];
+        if (string.IsNullOrWhiteSpace(cacheItem?.RenderPartOfCSharpCode))
         {
             return new pre
             {
@@ -230,15 +222,9 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             };
         }
 
-        if (string.IsNullOrWhiteSpace(renderPartOfCSharpCode))
-        {
-            return new pre
-            {
-                "Empty CSharp Code"
-            };
-        }
+        var assemblyName = guid;
 
-        var fullCSharpCode = GetFullCSharpCodeByRenderPartOfCode(renderPartOfCSharpCode);
+        var fullCSharpCode = GetFullCSharpCodeByRenderPartOfCode(cacheItem.RenderPartOfCSharpCode);
 
         var (isTypeFound, type, assemblyLoadContext, sourceCodeHasError, sourceCodeError) = DynamicCode.LoadAndFindType(assemblyName, [fullCSharpCode], "Preview.SampleComponent");
         if (sourceCodeHasError)
@@ -246,19 +232,25 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             return new pre(Color(Red300)) { sourceCodeError };
         }
 
-        if (isTypeFound)
+        if (!isTypeFound)
         {
-            var instance = type.Assembly.CreateInstance("Preview.SampleComponent");
+            assemblyLoadContext?.Unload();
 
-            return (ReactWithDotNet.Component)instance;
+            return new pre
+            {
+                "Unexpected error. class not found."
+            };
         }
 
-        assemblyLoadContext?.Unload();
-
-        return new pre
+        Cache[assemblyName] = cacheItem with
         {
-            "Unexpected error. class not found."
+            AssemblyLoadContext = assemblyLoadContext,
+            Type = type
         };
+
+        var instance = type.Assembly.CreateInstance("Preview.SampleComponent");
+
+        return (ReactWithDotNet.Component)instance;
     }
 
     static string GetFullCSharpCodeByRenderPartOfCode(string renderPartOfCSharpCode)
@@ -315,7 +307,10 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                 RenderPartOfCSharpCode = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText)
             };
 
-            Guid_To_GeneratedCode_Cache[state.Guid] = state.RenderPartOfCSharpCode;
+            Cache[state.Guid] = new()
+            {
+                RenderPartOfCSharpCode = state.RenderPartOfCSharpCode
+            };
 
             RefreshComponentPreview(Client);
         }
@@ -362,7 +357,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         {
             state = state with { RenderPartOfCSharpCode = null };
 
-            Guid_To_GeneratedCode_Cache[state.Guid] = null;
+            Cache[state.Guid] = null;
 
             return;
         }
@@ -394,7 +389,10 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
     Task RenderPartOfCSharpCode_OnEditFinished()
     {
-        Guid_To_GeneratedCode_Cache[state.Guid] = state.RenderPartOfCSharpCode;
+        Cache[state.Guid] = new()
+        {
+            RenderPartOfCSharpCode = state.RenderPartOfCSharpCode
+        };
 
         RefreshComponentPreview(Client);
 
@@ -405,6 +403,56 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
     {
         public const string Guid = "guid";
         public const string Preview = "preview";
+    }
+
+    class CacheManager
+    {
+        readonly ConcurrentDictionary<string, CacheItem> Map = [];
+
+        public CacheItem this[string key]
+        {
+            get => Map[key];
+            set => Update(key, value);
+        }
+
+        // ReSharper disable once UnusedMember.Local
+        public void RemoveOlderItems(TimeSpan duration)
+        {
+            foreach (var key in Map.Keys)
+            {
+                tryRemove(key);
+            }
+
+            return;
+
+            bool shouldRemove(CacheItem cacheItem)
+            {
+                return cacheItem.CreationTime - DateTime.Now > duration;
+            }
+
+            void tryRemove(string key)
+            {
+                if (shouldRemove(Map[key]))
+                {
+                    Map.TryRemove(key, out _);
+                }
+            }
+        }
+
+        void Update(string key, CacheItem newCacheItem)
+        {
+            if (Map.TryRemove(key, out var cacheItem))
+            {
+                cacheItem.AssemblyLoadContext?.Unload();
+            }
+
+            if (cacheItem is null)
+            {
+                return;
+            }
+
+            Map.TryAdd(key, newCacheItem);
+        }
     }
 
     class GroupBox : PureComponent
@@ -461,5 +509,13 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                 }
             };
         }
+    }
+
+    record CacheItem
+    {
+        public string RenderPartOfCSharpCode { get; init; }
+        public AssemblyLoadContext AssemblyLoadContext { get; init; }
+        public Type Type { get; init; }
+        public DateTime CreationTime { get; } = DateTime.Now;
     }
 }
