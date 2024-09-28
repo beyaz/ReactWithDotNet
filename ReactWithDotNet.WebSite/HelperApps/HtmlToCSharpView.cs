@@ -23,8 +23,6 @@ record HtmlToCSharpViewModel
 
 class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 {
-    public static readonly CacheManager Cache = new();
-
     string GuidParameter => GetQuery(QueryParameterName.Guid);
 
     bool Preview => GetQuery(QueryParameterName.Preview) == "true";
@@ -207,7 +205,8 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             statusMessageEditor
         };
     }
-
+    static ScriptManager Cache=>ScriptManager.Instance;
+    
     static Element CreatePreview(string guid)
     {
         if (guid is null)
@@ -476,9 +475,13 @@ record CacheItem
     public DateTime CreationTime { get; } = DateTime.Now;
 }
 
-class CacheManager
+
+
+sealed class ScriptManager
 {
     readonly ConcurrentDictionary<string, CacheItem> Map = [];
+
+    public static ScriptManager Instance { get; set; } = new();
 
     public CacheItem this[string key]
     {
@@ -486,7 +489,7 @@ class CacheManager
         set => Update(key, value);
     }
 
-    class AA: BackgroundService
+    class CleanerBackgroundService: BackgroundService
     {
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -494,7 +497,7 @@ class CacheManager
             {
                 await Task.Delay(10, stoppingToken);
                     
-                HtmlToCSharpView.Cache.RemoveOlderItems(TimeSpan.FromMinutes(10));
+                Instance.RemoveOlderItems(TimeSpan.FromMinutes(10));
             }
             // ReSharper disable once FunctionNeverReturns
         }
