@@ -225,7 +225,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                 RenderPartOfCSharpCode = state.RenderPartOfCSharpCode
             };
 
-            RefreshComponentPreview(Client);
+            RefreshComponentPreview(Client,state.Guid);
         }
         catch (Exception exception)
         {
@@ -278,27 +278,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         CalculateOutput();
     }
 
-    void RefreshComponentPreview(Client client)
-    {
-        var jsCode =
-            $"""
-             var eventName = '{GetRefreshPreviewEventName(state.Guid)}';
-             """
-            +
-            """
-            var frame = window.frames[0];
-            if(frame)
-            {
-              var reactWithDotNet = frame.ReactWithDotNet;
-              if(reactWithDotNet)
-              {
-                reactWithDotNet.DispatchEvent(eventName, []);
-              }
-            }
-            """;
-
-        client.RunJavascript(jsCode);
-    }
+    
 
     Task RenderPartOfCSharpCode_OnEditFinished()
     {
@@ -307,12 +287,12 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             RenderPartOfCSharpCode = state.RenderPartOfCSharpCode
         };
 
-        RefreshComponentPreview(Client);
+        RefreshComponentPreview(Client,state.Guid);
 
         return Task.CompletedTask;
     }
 
-    static class QueryParameterName
+    public static class QueryParameterName
     {
         public const string Guid = "guid";
         public const string Preview = "preview";

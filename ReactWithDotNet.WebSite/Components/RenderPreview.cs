@@ -1,4 +1,6 @@
 ﻿using System.Text;
+using ReactWithDotNet.WebSite.HelperApps;
+using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
 
 namespace ReactWithDotNet.WebSite.Components;
 
@@ -15,6 +17,26 @@ sealed class RenderPreview : Component<RenderPreview.Model>
             Guid = Guid.NewGuid().ToString("N")
         };
         
+        if (DesignMode && state.RenderPartOfCSharpCode is null)
+        {
+            state = state with
+            {
+                RenderPartOfCSharpCode =
+                """
+                new div( Border(2, solid, Red), Size(200))
+                {
+
+                }
+                """
+
+            };
+        }
+
+        Scripts[state.Guid] = new()
+        {
+            RenderPartOfCSharpCode = state.RenderPartOfCSharpCode,
+        };
+        
         return Task.CompletedTask;
     }
 
@@ -23,23 +45,81 @@ sealed class RenderPreview : Component<RenderPreview.Model>
         return "RefreshComponentPreview" + guid;
     }
     
+    
+    Task RenderPartOfCSharpCode_OnEditFinished()
+    {
+        Scripts[state.Guid] = new()
+        {
+            RenderPartOfCSharpCode = state.RenderPartOfCSharpCode
+        };
+
+        RefreshComponentPreview(Client,state.Guid);
+
+        return Task.CompletedTask;
+    }
+    
+    public static void RefreshComponentPreview(Client client, string guid)
+    {
+        var jsCode =
+            $"""
+             var eventName = '{GetRefreshPreviewEventName(guid)}';
+             """
+            +
+            """
+            var frame = window.frames[0];
+            if(frame)
+            {
+              var reactWithDotNet = frame.ReactWithDotNet;
+              if(reactWithDotNet)
+              {
+                reactWithDotNet.DispatchEvent(eventName, []);
+              }
+            }
+            """;
+
+        client.RunJavascript(jsCode);
+    }
+    
     protected override Element render()
     {
-        var width = Width(100 * percent) + MD(Width(50 * percent));
+        
+        var width = Width(100 * percent) + SM(Width(50 * percent));
+        
+        var csharpEditor = new Editor
+        {
+            valueBind                = () => state.RenderPartOfCSharpCode,
+            valueBindDebounceHandler = RenderPartOfCSharpCode_OnEditFinished,
+            valueBindDebounceTimeout = 500,
+            defaultLanguage          = "csharp",
+            options =
+            {
+                renderLineHighlight = "none",
+                fontFamily          = "consolas, 'IBM Plex Mono Medium', 'Courier New', monospace",
+                fontSize            = 11,
+                minimap             = new { enabled = false },
+                lineNumbers         = "off",
+                unicodeHighlight    = new { showExcludeOptions = false },
+                readOnly            = false
+            }
+        };
+        
         
         return new FlexRow(SizeFull, BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), BorderRadius(3), CursorDefault, JustifyContentSpaceBetween, FlexWrap)
         {
             new FlexRowCentered(width, BorderRight(Solid(1, rgb(235, 236, 240))))
             {
-                new CSharpCodePanel
-                {
-                    Code = state.RenderPartOfCSharpCode
-                }
+                csharpEditor
             },
             
             new FlexRowCentered(width, Background(rgb(246, 247, 249)), MinSize(200))
             {
-                CreatePreview(state.Guid)
+                new iframe
+                {
+                    id    = "g",
+                    src   = Page.LiveEditor.Url + $"?{HtmlToCSharpView.QueryParameterName.Guid}={state.Guid}&preview=true",
+                    style = { BorderNone, WidthFull, HeightFull },
+                    title = "Live Editor Preview"
+                }
             }
         };
     }

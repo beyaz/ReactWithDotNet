@@ -21,7 +21,7 @@ sealed class ScriptManager
 
     public ScriptItem this[string key]
     {
-        get => Map[key];
+        get => Map.GetValueOrDefault(key);
         set => Update(key, value);
     }
 
@@ -54,12 +54,12 @@ sealed class ScriptManager
 
     void Update(string key, ScriptItem newScriptItem)
     {
-        if (Map.TryRemove(key, out var cacheItem))
+        if (Map.TryRemove(key, out var existingValue))
         {
-            cacheItem.AssemblyLoadContext?.Unload();
+            existingValue.AssemblyLoadContext?.Unload();
         }
 
-        if (cacheItem is null)
+        if (newScriptItem is null)
         {
             return;
         }
