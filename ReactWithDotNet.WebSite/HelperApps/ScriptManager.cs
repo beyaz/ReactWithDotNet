@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
 
-record CacheItem
+record ScriptItem
 {
     public string RenderPartOfCSharpCode { get; init; }
     public AssemblyLoadContext AssemblyLoadContext { get; init; }
@@ -15,17 +15,16 @@ record CacheItem
 
 sealed class ScriptManager
 {
-    readonly ConcurrentDictionary<string, CacheItem> Map = [];
+    readonly ConcurrentDictionary<string, ScriptItem> Map = [];
 
     public static ScriptManager Instance { get; set; } = new();
 
-    public CacheItem this[string key]
+    public ScriptItem this[string key]
     {
         get => Map[key];
         set => Update(key, value);
     }
-    
-    
+
     // ReSharper disable once UnusedMember.Local
     public void RemoveOlderItems(TimeSpan duration)
     {
@@ -36,7 +35,7 @@ sealed class ScriptManager
 
         return;
 
-        bool shouldRemove(CacheItem cacheItem)
+        bool shouldRemove(ScriptItem cacheItem)
         {
             return cacheItem.CreationTime - DateTime.Now > duration;
         }
@@ -53,7 +52,7 @@ sealed class ScriptManager
         }
     }
 
-    void Update(string key, CacheItem newCacheItem)
+    void Update(string key, ScriptItem newScriptItem)
     {
         if (Map.TryRemove(key, out var cacheItem))
         {
@@ -65,19 +64,18 @@ sealed class ScriptManager
             return;
         }
 
-        Map.TryAdd(key, newCacheItem);
+        Map.TryAdd(key, newScriptItem);
     }
 }
 
-
-class ScriptCleanerBackgroundService: BackgroundService
+class ScriptCleanerBackgroundService : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         while (true)
         {
             await Task.Delay(10, stoppingToken);
-                    
+
             ScriptManager.Instance.RemoveOlderItems(TimeSpan.FromMinutes(10));
         }
         // ReSharper disable once FunctionNeverReturns
