@@ -156,23 +156,6 @@ sealed class PageModifiers : PureComponent
 class PageDocuments : PureComponent
 {
 
-    static class SharedStyles
-    {
-        public static Style SectionStyle =>
-        [
-            Background(White),
-            BorderRadius(8),
-            Padding(6)
-        ];
-    }
-
-    static Element CreateUserSection(string userName)
-    {
-        return new div(SharedStyles.SectionStyle)
-        {
-            userName
-        };
-    }
     
     protected override Element render()
     {

@@ -1,0 +1,78 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.8 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.8">
+  <diagram name="Page-1" id="Bcc2UwYoAsyh1knTW7F2">
+    <mxGraphModel dx="941" dy="554" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="S2MpVkDxbqgM6Gu-nWCI-7" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="70" y="380" width="565" height="370" as="geometry" />
+        </mxCell>
+        <mxCell id="S2MpVkDxbqgM6Gu-nWCI-11" value="React.js" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="305" y="660" width="270" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="S2MpVkDxbqgM6Gu-nWCI-12" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="315" y="440" width="300" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="S2MpVkDxbqgM6Gu-nWCI-13" value="MUI" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="335" y="450" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="S2MpVkDxbqgM6Gu-nWCI-14" value="Ant Design" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="465" y="450" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Gbq_XriI7DPWgv2T5gA0-1" value="React Libraries" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="405" y="520" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Gbq_XriI7DPWgv2T5gA0-2" value="ionicframework" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="335" y="560" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Gbq_XriI7DPWgv2T5gA0-3" value="Chakra UI" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="465" y="560" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Gbq_XriI7DPWgv2T5gA0-5" value="&lt;b&gt;ReactWithDotNet Client Engine&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;div&gt;(rebuilds react elements tree)&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="95" y="440" width="110" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="Gbq_XriI7DPWgv2T5gA0-11" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" target="Gbq_XriI7DPWgv2T5gA0-5" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="220" y="230" as="sourcePoint" />
+            <mxPoint x="120" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gbq_XriI7DPWgv2T5gA0-12" value="UI nodes in json" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="Gbq_XriI7DPWgv2T5gA0-11" vertex="1" connectable="0">
+          <mxGeometry x="-0.1855" y="-4" relative="1" as="geometry">
+            <mxPoint x="-4" y="16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gbq_XriI7DPWgv2T5gA0-19" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="Gbq_XriI7DPWgv2T5gA0-5" target="S2MpVkDxbqgM6Gu-nWCI-11" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="185" y="730" as="sourcePoint" />
+            <mxPoint x="235" y="680" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="185" y="640" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gbq_XriI7DPWgv2T5gA0-21" value="" style="endArrow=classic;html=1;rounded=0;exitX=1.005;exitY=0.45;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="Gbq_XriI7DPWgv2T5gA0-5" target="S2MpVkDxbqgM6Gu-nWCI-12" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="275" y="490" as="sourcePoint" />
+            <mxPoint x="325" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gbq_XriI7DPWgv2T5gA0-23" value="" style="endArrow=none;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="30" y="310" as="sourcePoint" />
+            <mxPoint x="790" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gbq_XriI7DPWgv2T5gA0-24" value="Server" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=19;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="710" y="90" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Gbq_XriI7DPWgv2T5gA0-25" value=".Net Core Web App" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="30" width="560" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="Gbq_XriI7DPWgv2T5gA0-28" value="Client" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=19;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="720" y="450" width="60" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
