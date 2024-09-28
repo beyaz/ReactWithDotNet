@@ -214,30 +214,45 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
         if (Guid_To_GeneratedCode_Cache.TryGetValue(guid, out var renderPartOfCSharpCode))
         {
-            if (string.IsNullOrWhiteSpace(renderPartOfCSharpCode))
-            {
-                return "Empty CSharp Code";
-            }
-
-            var fullCSharpCode = GetFullCSharpCodeByRenderPartOfCode(renderPartOfCSharpCode);
-
-            var (isTypeFound, type, assemblyLoadContext, sourceCodeHasError, sourceCodeError) = DynamicCode.LoadAndFindType([fullCSharpCode], "Preview.SampleComponent");
-            if (isTypeFound)
-            {
-                var instance = type.Assembly.CreateInstance("Preview.SampleComponent");
-
-                return (ReactWithDotNet.Component)instance;
-            }
-
-            if (sourceCodeHasError)
-            {
-                return new pre(Color(Red300)) { sourceCodeError };
-            }
-
-            DynamicCode.TryClear(assemblyLoadContext);
+            return CreatePreviewByRenderPartOfCSharpCode(renderPartOfCSharpCode);
         }
 
         return "guid not found";
+    }
+
+    static Element CreatePreviewByRenderPartOfCSharpCode(string renderPartOfCSharpCode)
+    {
+        if (string.IsNullOrWhiteSpace(renderPartOfCSharpCode))
+        {
+            return "Empty CSharp Code";
+        }
+
+        if (string.IsNullOrWhiteSpace(renderPartOfCSharpCode))
+        {
+            return "Empty CSharp Code";
+        }
+
+        var fullCSharpCode = GetFullCSharpCodeByRenderPartOfCode(renderPartOfCSharpCode);
+
+        var (isTypeFound, type, assemblyLoadContext, sourceCodeHasError, sourceCodeError) = DynamicCode.LoadAndFindType([fullCSharpCode], "Preview.SampleComponent");
+        if (sourceCodeHasError)
+        {
+            return new pre(Color(Red300)) { sourceCodeError };
+        }
+
+        if (isTypeFound)
+        {
+            var instance = type.Assembly.CreateInstance("Preview.SampleComponent");
+
+            return (ReactWithDotNet.Component)instance;
+        }
+
+        DynamicCode.TryClear(assemblyLoadContext);
+
+        return new pre
+        {
+            "Unexpected error. class not found."
+        };
     }
 
     static string GetFullCSharpCodeByRenderPartOfCode(string renderPartOfCSharpCode)
