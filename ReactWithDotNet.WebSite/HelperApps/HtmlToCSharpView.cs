@@ -1,5 +1,4 @@
-﻿using System.Runtime.Loader;
-using System.Text;
+﻿using System.Text;
 using System.Web;
 using Microsoft.Net.Http.Headers;
 using ReactWithDotNet.ThirdPartyLibraries._react_split_;
@@ -202,7 +201,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             statusMessageEditor
         };
     }
-    static ScriptManager Cache=>ScriptManager.Instance;
+    static ScriptManager Scripts=>ScriptManager.Instance;
     
     static Element CreatePreview(string guid)
     {
@@ -211,7 +210,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             return "guid is null";
         }
 
-        var cacheItem = Cache[guid];
+        var cacheItem = Scripts[guid];
         if (string.IsNullOrWhiteSpace(cacheItem?.RenderPartOfCSharpCode))
         {
             return new pre
@@ -240,7 +239,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             };
         }
 
-        Cache[assemblyName] = cacheItem with
+        Scripts[assemblyName] = cacheItem with
         {
             AssemblyLoadContext = assemblyLoadContext,
             Type = type
@@ -305,7 +304,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                 RenderPartOfCSharpCode = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText)
             };
 
-            Cache[state.Guid] = new()
+            Scripts[state.Guid] = new()
             {
                 RenderPartOfCSharpCode = state.RenderPartOfCSharpCode
             };
@@ -355,7 +354,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         {
             state = state with { RenderPartOfCSharpCode = null };
 
-            Cache[state.Guid] = null;
+            Scripts[state.Guid] = null;
 
             return;
         }
@@ -387,7 +386,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
     Task RenderPartOfCSharpCode_OnEditFinished()
     {
-        Cache[state.Guid] = new()
+        Scripts[state.Guid] = new()
         {
             RenderPartOfCSharpCode = state.RenderPartOfCSharpCode
         };
