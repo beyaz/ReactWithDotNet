@@ -1,7 +1,9 @@
 ﻿using System.Collections.Concurrent;
 using System.Runtime.Loader;
 using System.Text;
+using System.Threading;
 using System.Web;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
 using ReactWithDotNet.ThirdPartyLibraries._react_split_;
 using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
@@ -415,6 +417,19 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             set => Update(key, value);
         }
 
+        class AA: BackgroundService
+        {
+            protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+            {
+                while (true)
+                {
+                    await Task.Delay(10, stoppingToken);
+                    
+                    HtmlToCSharpView.Cache.RemoveOlderItems(TimeSpan.FromMinutes(10));
+                }
+                // ReSharper disable once FunctionNeverReturns
+            }
+        }
         // ReSharper disable once UnusedMember.Local
         public void RemoveOlderItems(TimeSpan duration)
         {
