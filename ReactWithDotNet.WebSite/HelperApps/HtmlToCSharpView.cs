@@ -61,7 +61,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 </div>
 ",
 
-            Utid                     = UtidParameter ?? Guid.NewGuid().ToString("N")
+            Utid = UtidParameter ?? Guid.NewGuid().ToString("N")
         };
 
         CalculateOutput();
@@ -119,10 +119,6 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             text     = state.StatusMessage,
             style    = { position = "fixed", zIndex = "5", bottom = "25px", right = "25px", display = state.StatusMessage is null ? "none" : "" }
         };
-
-        
-
-        
 
         return new FlexColumn
         {
@@ -241,6 +237,46 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         return "Utid not found";
     }
 
+    static string GetFullCSharpCodeByRenderPartOfCode(string renderPartOfCSharpCode)
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine("using ReactWithDotNet;");
+        sb.AppendLine("using static ReactWithDotNet.Mixin;");
+        sb.AppendLine();
+        sb.AppendLine("namespace Preview;");
+        sb.AppendLine();
+        sb.AppendLine("class SampleComponent: Component");
+        sb.AppendLine("{");
+
+        sb.AppendLine("  protected override Element render()");
+        sb.AppendLine("  {");
+        sb.AppendLine("    return ");
+
+        sb.AppendLine("      // s t a r t ");
+        foreach (var line in renderPartOfCSharpCode.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries))
+        {
+            sb.AppendLine("      " + line);
+        }
+
+        sb.AppendLine("      // e n d");
+
+        sb.AppendLine("    ;");
+
+        sb.AppendLine("  }");
+
+        sb.AppendLine("  protected override Element componentDidCatch(Exception exceptionOccurredInRender)");
+        sb.AppendLine("  {");
+        sb.AppendLine("    return new pre(Color(Red300))");
+        sb.AppendLine("    {");
+        sb.AppendLine("      exceptionOccurredInRender.ToString()");
+        sb.AppendLine("    };");
+        sb.AppendLine("  }");
+
+        sb.AppendLine("}");
+
+        return sb.ToString();
+    }
+
     static void RefreshComponentPreview(Client client)
     {
         const string jsCode =
@@ -265,43 +301,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         {
             var renderBody = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText);
 
-            var sb = new StringBuilder();
-            sb.AppendLine("using ReactWithDotNet;");
-            sb.AppendLine("using static ReactWithDotNet.Mixin;");
-            sb.AppendLine();
-            sb.AppendLine("namespace Preview;");
-            sb.AppendLine();
-            sb.AppendLine("class SampleComponent: Component");
-            sb.AppendLine("{");
-
-            sb.AppendLine("  protected override Element render()");
-            sb.AppendLine("  {");
-            sb.AppendLine("    return ");
-
-            sb.AppendLine("      // s t a r t ");
-            foreach (var line in renderBody.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries))
-            {
-                sb.AppendLine("      " + line);
-            }
-
-            sb.AppendLine("      // e n d");
-
-            sb.AppendLine("    ;");
-
-            sb.AppendLine("  }");
-
-            sb.AppendLine("  protected override Element componentDidCatch(Exception exceptionOccurredInRender)");
-            sb.AppendLine("  {");
-            sb.AppendLine("    return new pre(Color(Red300))");
-            sb.AppendLine("    {");
-            sb.AppendLine("      exceptionOccurredInRender.ToString()");
-            sb.AppendLine("    };");
-            sb.AppendLine("  }");
-            
-            
-            sb.AppendLine("}");
-
-            state.CSharpCode = sb.ToString();
+            state.CSharpCode = GetFullCSharpCodeByRenderPartOfCode(renderBody);
 
             Utid_To_GeneratedCode_Cache[state.Utid] = state.CSharpCode;
 
@@ -318,7 +318,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         Utid_To_GeneratedCode_Cache[state.Utid] = state.CSharpCode;
 
         RefreshComponentPreview(Client);
-        
+
         return Task.CompletedTask;
     }
 
@@ -396,12 +396,12 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             {
                 new style
                 {
-                    new CssClass("gutter",
+                    new("gutter",
                     [
                         BackgroundRepeatNoRepeat,
                         BackgroundPosition("50%")
                     ]),
-                    new CssClass("gutter.gutter-horizontal",
+                    new("gutter.gutter-horizontal",
                     [
                         BackgroundImage("url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==')"),
                         Cursor("col-resize")
