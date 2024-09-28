@@ -1,41 +1,30 @@
 ﻿
 namespace ReactWithDotNet.WebSite.Pages;
 
-class PageModifiers : PureComponent
+using h1 = BlogH1;
+using p = BlogP;
+
+sealed class PageModifiers : PureComponent
 {
     protected override Element render()
     {
-        return new article(SizeFull, DisplayFlexColumn)
+        return new BlogPageLayout
         { 
-            new h2{"Modifiers"},
+            new h1{"Modifiers"},
             
-            new table(Height(600))
+            new FlexColumn
             {
-                new tr
+                new p
                 {
-                    new td
-                    {
-                        new p
-                        {
-                            "Clasical way to create element"
-                        }
-                    },
-                    new td
-                    {
-                        new p
-                        {
-                            "We suggest better alternatives"
-                        }
-                    }
+                    "Clasical way to create element"
                 },
                 
-                new tr
+                new div(Height(250), Width(350))
                 {
-                    new td
+                    
+                    new CSharpCodePanel
                     {
-                        new CSharpCodePanel
-                        {
-                            Code = @"
+                    Code = @"
 new div
 {
    new div
@@ -51,13 +40,22 @@ new div
 }
 
 "
-                        } 
-                    },
-                    new td
+                } 
+                }
+            },
+            
+            new FlexColumn
+            {
+                new p
+                {
+                    "We suggest better alternatives"
+                },
+                
+                new div(Height(250))
+                {
+                    new CSharpCodePanel
                     {
-                        new CSharpCodePanel
-                        {
-                            Code = @"
+                        Code = @"
 new div
 {
    new div
@@ -73,36 +71,10 @@ new div
 }
 
 "
-                        }
                     }
                 }
-            },
-          
-           
-           
-           
-           
-
-           
-
-           new p
-           {
-               "You can prefer locate styles in constructor for clear dom tree"
-           },
-
-           new CSharpCodePanel
-           {
-               Code = @"
-new div
-{
-   new div(DisplayBlock, TextAlignCenter, Color('red'), FontSize15)
-   {
-      
-   }
-}
-
-"
-           }+Size(300,400)
+                
+            }
         };
     }
 }
