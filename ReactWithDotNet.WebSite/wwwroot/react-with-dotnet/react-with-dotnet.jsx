@@ -212,21 +212,6 @@ function HasId(htmlElement)
     return htmlElement.id !== "";
 }
 
-function GoUpwardFindFirst(htmlElement, findFunc)
-{
-    while (htmlElement)
-    {
-        if (findFunc(htmlElement))
-        {
-            return htmlElement;
-        }
-
-        htmlElement = htmlElement.parentElement;
-    }
-
-    return null;
-}
-
 function OnDocumentReady(callback)
 {
     const stateCheck = setInterval(function ()
@@ -476,16 +461,6 @@ function ShouldBeNumber(value)
     }
 
     throw CreateNewDeveloperError("value should be number.");
-}
-
-function NVL(a, b)
-{
-    if (a == null)
-    {
-        return b;
-    }
-
-    return a;
 }
 
 function Clone(obj)
@@ -1390,15 +1365,7 @@ function IsSerializablePrimitiveJsValue(value)
 
 function ConvertToSyntheticMouseEvent(e)
 {
-    let firstNotEmptyId = NVL(GoUpwardFindFirst(e.target, HasId), e.target).id;
-    if (firstNotEmptyId === '')
-    {
-        firstNotEmptyId = null;
-    }
-
     return {
-        FirstNotEmptyId: firstNotEmptyId,
-
         altKey:    e.altKey,
         bubbles:   e.bubbles,
         clientX:   e.clientX,

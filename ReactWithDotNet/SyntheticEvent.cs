@@ -80,12 +80,7 @@ public sealed class MouseEvent : UIEvent
     public int clientX { get; init; }
     public int clientY { get; init; }
     public bool ctrlKey { get; init; }
-
-    /// <summary>
-    ///     this is the id of first element id which is 'has id value'
-    /// </summary>
-    public string FirstNotEmptyId { get; set; } // todo: remove
-
+    
     public bool metaKey { get; init; }
 
     public double movementX { get; init; }

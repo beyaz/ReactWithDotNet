@@ -34,14 +34,39 @@ sealed class PageTechnicalDetail : PureComponent
             SpaceY(50),
             new p
             {
-                "Lets see what is incoming from server"
+                "Lets see what is incoming from server to client"
             },
             
             SpaceY(20),
             new img(WidthFull, ObjectFitContain)
             {
-                Src(Asset("TechnicalDetail.IO.drawio.png"))
-            }
+                Src(Asset("TechnicalDetail.I.drawio.png"))
+            },
+            
+            SpaceY(50),
+            new p
+            {
+                "Lets see what is outgoing from client to server"
+            },
+            
+            SpaceY(20),
+            new img(WidthFull, ObjectFitContain)
+            {
+                Src(Asset("TechnicalDetail.O.drawio.png"))
+            },
+            SpaceY(20),
+            new p
+            {
+                "As you can see at images, main idea is server driven UI, just like react server components.",
+                br,
+                "Main differences server is not nodejs, language is not typescript or js.",
+                br,
+                "Server is .NetCore server and language is c# language.",
+                br,
+                "As a result; power of two technology is combined. " +
+                "We have many benefits of c# language and serverside approach and react components flexibility."
+            },
+            SpaceY(50)
         };
     }
 }
