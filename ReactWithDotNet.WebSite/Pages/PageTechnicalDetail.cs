@@ -29,6 +29,18 @@ sealed class PageTechnicalDetail : PureComponent
             new img(WidthFull, ObjectFitContain)
             {
                 Src(Asset("TechnicalDetail1.drawio.png"))
+            },
+            
+            SpaceY(50),
+            new p
+            {
+                "Lets see what is incoming from server"
+            },
+            
+            SpaceY(20),
+            new img(WidthFull, ObjectFitContain)
+            {
+                Src(Asset("TechnicalDetail.IO.drawio.png"))
             }
         };
     }
