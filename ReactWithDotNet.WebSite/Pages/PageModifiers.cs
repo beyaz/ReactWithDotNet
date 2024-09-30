@@ -46,6 +46,7 @@ sealed class PageModifiers : PureComponent
                                   hover = 
                                   {
                                       background = "WhiteSmoke",
+                                      borderColor = "Red"
                                   }
                                }
                             }
@@ -80,7 +81,7 @@ sealed class PageModifiers : PureComponent
                                BorderRadius(3),
                                FontSize15,
                                Background(White),
-                               Hover(Background(WhiteSmoke))
+                               Hover(Background(WhiteSmoke), BorderColor(Red))
                             }
                             
                             """
@@ -106,7 +107,7 @@ sealed class PageModifiers : PureComponent
                                BorderRadius(3),
                                FontSize15,
                                Background(White),
-                               Hover(Background(WhiteSmoke))
+                               Hover(Background(WhiteSmoke), BorderColor(Red))
                             }
                             
                             """
@@ -144,6 +145,27 @@ sealed class PageModifiers : PureComponent
                                };
                            }
                            
+                           """
+                }
+            },
+            
+            SpaceY(80),
+            new p
+            {
+                "Tailwind like library class names be can use like ",
+            },
+            SpaceY(8),
+            new div(Height(100))
+            {
+                new CSharpCodePanel
+                {
+                    Code = """
+
+                           new div("w-full text-gray-600", FontSize15)
+                           {
+                               "Any text"
+                           }
+
                            """
                 }
             },
