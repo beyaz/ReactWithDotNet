@@ -10,6 +10,7 @@ sealed class PageTechnicalDetail : PureComponent
         return new BlogPageLayout
         {
             new h1{"Technical Details"},
+            SpaceY(16),
             new p
             {
                 "How is it working? How to connect React and c# language?"
@@ -25,7 +26,7 @@ sealed class PageTechnicalDetail : PureComponent
             },
             
             SpaceY(50),
-            new img(WidthFull)
+            new img(WidthFull, ObjectFitContain)
             {
                 Src(Asset("TechnicalDetail1.drawio.png"))
             }
