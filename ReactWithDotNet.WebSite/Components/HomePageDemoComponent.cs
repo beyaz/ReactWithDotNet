@@ -1,62 +1,48 @@
-﻿using System.Threading.Tasks;
-
-namespace ReactWithDotNet.WebSite.Components;
+﻿namespace ReactWithDotNet.WebSite.Components;
 
 class HomePageDemoComponentState
 {
-    public bool ShowMessage { get; set; }
+    public string Message { get; set; }
 }
+
 class HomePageDemoComponent : Component<HomePageDemoComponentState>
 {
     protected override Task constructor()
     {
-        state = new HomePageDemoComponentState();
+        state = new();
 
-        return Task.CompletedTask;
-    }
-
-    Task OnButtonClicked(MouseEvent e)
-    {
-        state.ShowMessage = true;
-        
         return Task.CompletedTask;
     }
 
     protected override Element render()
     {
-        return new div
+        return new div(DisplayFlexColumn)
         {
-            style =
+            new button(Size(200, 50), DisplayFlexRowCentered)
             {
-                display       = "flex",
-                flexDirection = "column"
-            },
-            
-            children =
-            {
-                new button
+                text    = "Show Message",
+                onClick = OnButtonClicked,
+                style =
                 {
-                    text    = "Show Message",
-                    onClick = OnButtonClicked,
-                    style =
-                    {
-                        display         = "inline-block",
-                        fontWeight      = "400",
-                        border          = "1px solid transparent",
-                        textAlign       = "center",
-                        padding         = ".375rem .75rem",
-                        fontSize        = "1rem",
-                        lineHeight      = "1.5",
-                        borderRadius    = ".25rem",
-                        color           = "#fff",
-                        width           = "200px",
-                        backgroundColor = "#007bff",
-                        hover           = {color = "#f1ba72"}
-                    }
-                },
-                
-                state.ShowMessage ? "Hello world." : null
+                    Background(Blue500),
+                    Border(1, solid, Gray100),
+                    Color(White),
+                    FontSize14,
+                    Hover(Color(WhiteSmoke), FontSize16, Background(Blue600))
+                }
+            },
+
+            new span(Color(Gray600))
+            {
+                state.Message
             }
         };
+    }
+
+    Task OnButtonClicked(MouseEvent e)
+    {
+        state.Message = "Hello world";
+
+        return Task.CompletedTask;
     }
 }
