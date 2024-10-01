@@ -21,9 +21,11 @@ class Playground : Component<PlaygroundState>
 
     public Type TypeOfTargetComponent { get; init; }
 
+    public double? Height { get; init; }
+    
     protected override Task constructor()
     {
-        state = new PlaygroundState
+        state = new()
         {
             Files                 = Files ?? new List<(string fileName, string fileContent)>(),
             SelectedFileName      = SelectedFileName,
@@ -43,7 +45,7 @@ class Playground : Component<PlaygroundState>
 
         var width = Width(100 * percent) + MD(Width(50 * percent));
         
-        return new FlexColumn(SizeFull, BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), BorderRadius(3), CursorDefault)
+        return new FlexColumn(SizeFull, Height is null ? null:Height(Height), BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), BorderRadius(3), CursorDefault)
         {
             Part_AppBar,
 
