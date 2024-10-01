@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.WebSite.Components;
 
-class MainPageContentSample : PureComponent
+class MainPageContentSample : Component
 {
     protected override Element render()
     {
