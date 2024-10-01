@@ -15,11 +15,11 @@ class PlaygroundState
 
 class Playground : Component<PlaygroundState>
 {
-    public IReadOnlyList<(string fileName, string fileContent)> Files { get; set; }
+    public IReadOnlyList<(string fileName, string fileContent)> Files { get; init; }
 
-    public string SelectedFileName { get; set; }
+    public string SelectedFileName { get; init; }
 
-    public Type TypeOfTargetComponent { get; set; }
+    public Type TypeOfTargetComponent { get; init; }
 
     protected override Task constructor()
     {
