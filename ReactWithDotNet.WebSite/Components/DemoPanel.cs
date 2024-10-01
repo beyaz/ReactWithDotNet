@@ -23,7 +23,7 @@ sealed class DemoPanel : Component<DemoPanel.State>
 
     protected override Element render()
     {
-        return new FlexColumn(WidthFull, Padding(8), Gap(8), BorderRadius(4), BoxShadow(0, 2, 5, 0, rgba(0, 0, 0, 0.34)), MD(DisplayFlexRow, Gap(8)))
+        return new FlexColumn(WidthFull, Padding(8), Gap(8), BorderRadius(4), BoxShadow(0, 2, 5, 0, rgba(0, 0, 0, 0.34)))
         {
             new FlexRowCentered(BackgroundColor(Gray200), Padding(40), WidthFull, BorderRadius(8), PositionRelative, MinWidth(250))
             {
@@ -34,7 +34,7 @@ sealed class DemoPanel : Component<DemoPanel.State>
                     ShowHideButton
                 }
             },
-            state.IsSourceCodeVisible is false ? null : new FlexRow(WidthFull, OverflowAuto, MinHeight(300), MarginTop(-8))
+            state.IsSourceCodeVisible is false ? null : new FlexRow(WidthFull, OverflowAuto, Height(300), MarginTop(-8))
             {
                 new SourceCodeView { CSharpCode = CSharpCode }
             }
