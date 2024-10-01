@@ -2,15 +2,15 @@
 
 namespace ReactWithDotNet.WebSite.Components;
 
-class PlaygroundState
+record PlaygroundState
 {
-    public IReadOnlyList<(string fileName, string fileContent)> Files { get; set; }
+    public IReadOnlyList<(string fileName, string fileContent)> Files { get; init; }
 
-    public bool ResetMode { get; set; }
+    public bool ResetMode { get; init; }
 
-    public string SelectedFileName { get; set; }
+    public string SelectedFileName { get; init; }
 
-    public Type TypeOfTargetComponent { get; set; }
+    public Type TypeOfTargetComponent { get; init; }
 }
 
 class Playground : Component<PlaygroundState>
@@ -32,7 +32,7 @@ class Playground : Component<PlaygroundState>
 
         if (SelectedFileName is null && Files?.Count > 0)
         {
-            state.SelectedFileName = Files[0].fileName;
+            state = state with { SelectedFileName = Files[0].fileName };
         }
 
         return base.constructor();
@@ -67,7 +67,7 @@ class Playground : Component<PlaygroundState>
 
     Task FinishResetOperation()
     {
-        state.ResetMode = false;
+        state = state with { ResetMode = false };
 
         return Task.CompletedTask;
     }
@@ -83,7 +83,7 @@ class Playground : Component<PlaygroundState>
 
     Task OnResetClicked(MouseEvent e)
     {
-        state.ResetMode = true;
+        state = state with { ResetMode = true };
 
         Client.GotoMethod(20, FinishResetOperation);
 
@@ -92,7 +92,7 @@ class Playground : Component<PlaygroundState>
 
     Task OnSourceFileClicked(MouseEvent e)
     {
-        state.SelectedFileName = e.target.id;
+        state = state with { SelectedFileName = e.target.id };
 
         return Task.CompletedTask;
     }
