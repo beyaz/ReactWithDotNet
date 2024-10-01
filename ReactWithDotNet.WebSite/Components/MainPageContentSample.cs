@@ -6,20 +6,12 @@ class MainPageContentSample : PureComponent
 {
     protected override Element render()
     {
-        string[] files = [];
-        try
-        {
-            files = Directory.GetFiles(nameof(_1_HelloWorld));
-        }
-        catch (Exception)
-        {
-            // ignored
-        }
+        string[] files = [Path.Combine(nameof(Components), nameof(HomePageDemoComponent) + ".cs")];
 
         return new Playground
         {
             Files                 = files.Select(fi => (Path.GetFileName(fi), File.ReadAllText(fi))).ToList(),
-            TypeOfTargetComponent = typeof(_1_HelloWorld.HomePageDemoComponent)
+            TypeOfTargetComponent = typeof(HomePageDemoComponent)
         };
     }
 }
