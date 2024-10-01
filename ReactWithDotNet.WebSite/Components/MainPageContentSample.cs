@@ -10,8 +10,9 @@ class MainPageContentSample : PureComponent
 
         return new Playground
         {
-            Files                 = files.Select(fi => (Path.GetFileName(fi), File.ReadAllText(fi))).ToList(),
-            TypeOfTargetComponent = typeof(HomePageDemoComponent)
+            TypeOfTargetComponent = typeof(HomePageDemoComponent),
+
+            Files = files.Select(fi => (Path.GetFileName(fi), File.ReadAllText(fi))).ToList()
         };
     }
 }
