@@ -6,10 +6,10 @@ namespace ReactWithDotNet;
 
 sealed class ClientStateInfo
 {
-    public int? ComponentUniqueIdentifier { get; set; }
-    public IReadOnlyDictionary<string, object> DotNetProperties { get; set; }
-    public string FullTypeNameOfComponent { get; set; }
-    public string StateAsJson { get; set; }
+    public int? ComponentUniqueIdentifier { get; init; }
+    public IReadOnlyDictionary<string, object> DotNetProperties { get; init; }
+    public string FullTypeNameOfComponent { get; init; }
+    public string StateAsJson { get; init; }
     public Dictionary<string, Dictionary<string, string>> RootNodeStyle { get; init; }
 }
 
