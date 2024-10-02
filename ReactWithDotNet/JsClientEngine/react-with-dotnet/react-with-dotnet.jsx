@@ -531,9 +531,11 @@ const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
 
     const map = {};
 
+    const stateInRootNode = rootFiberNode.stateNode.state;
+
     map[rootNodeKey] =
     {
-        StateAsJson: JSON.stringify(rootFiberNode.stateNode.state[DotNetState])
+        StateAsJson: JSON.stringify(stateInRootNode[DotNetState])
     };
 
     const rootScope = {map: map, breadcrumb: rootNodeKey};
@@ -545,7 +547,7 @@ const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
         child = child.sibling;
     }
 
-    map[rootNodeKey][DotNetProperties] = Object.assign({}, NotNull(rootFiberNode.stateNode.state[DotNetProperties]));
+    map[rootNodeKey][DotNetProperties] = Object.assign({}, NotNull(stateInRootNode[DotNetProperties]));
 
     // calculate $LogicalChildrenCount
     {
