@@ -12,7 +12,7 @@ class PageMain : Component
 
                 SpaceY(15),
 
-                new MainPageContentSample { Height(300) }
+                new MainPageContentSample {  }
             }
         };
     }

@@ -10,11 +10,9 @@ class MainPageContentSample : Component
 
         return new Playground
         {
-            Height = 300,
-            
             TypeOfTargetComponent = typeof(HomePageDemoComponent),
 
             Files = files.Select(fi => (Path.GetFileName(fi), File.ReadAllText(fi))).ToList()
-        };
+        } + Height(300);
     }
 }
