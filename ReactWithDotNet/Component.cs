@@ -27,7 +27,7 @@ public abstract class ReactComponentBase : Element, IReactComponent
     internal List<Modifier> Modifiers;
 
     [JsonIgnore]
-    public Style style
+    internal Style style
     {
         get
         {
