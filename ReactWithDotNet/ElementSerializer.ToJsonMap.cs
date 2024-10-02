@@ -429,6 +429,81 @@ partial class ElementSerializer
                     {
                         node.DotNetComponentRootElement.key = "0";
 
+                        // if is rootNode then try to import RootStyleNode
+                        if (node.Parent is null && stateTree.ChildStates is not null)
+                        {
+                            if (stateTree.ChildStates.TryGetValue(node.location, out var rootNodeStateInfo))
+                            {
+                                var rootNodeForStyle = rootNodeStateInfo.RootNodeStyle;
+                                if (rootNodeForStyle is not null)
+                                {
+                                    {
+                                        if (rootNodeForStyle.TryGetValue("default", out var styleMap))
+                                        {
+                                            var styleModifier = new StyleModifier(style => style.Import(styleMap));
+
+                                            ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, styleModifier);
+                                        }
+                                    }
+
+                                    {
+                                        if (rootNodeForStyle.TryGetValue(nameof(Style.active), out var styleMap))
+                                        {
+                                            var styleModifier = new StyleModifier(style => style.active.Import(styleMap));
+
+                                            ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, styleModifier);
+                                        }
+                                    }
+
+                                    {
+                                        if (rootNodeForStyle.TryGetValue(nameof(Style.after), out var styleMap))
+                                        {
+                                            var styleModifier = new StyleModifier(style => style.after.Import(styleMap));
+
+                                            ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, styleModifier);
+                                        }
+                                    }
+
+                                    {
+                                        if (rootNodeForStyle.TryGetValue(nameof(Style.before), out var styleMap))
+                                        {
+                                            var styleModifier = new StyleModifier(style => style.before.Import(styleMap));
+
+                                            ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, styleModifier);
+                                        }
+                                    }
+
+                                    {
+                                        if (rootNodeForStyle.TryGetValue(nameof(Style.focus), out var styleMap))
+                                        {
+                                            var styleModifier = new StyleModifier(style => style.focus.Import(styleMap));
+
+                                            ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, styleModifier);
+                                        }
+                                    }
+
+                                    {
+                                        if (rootNodeForStyle.TryGetValue(nameof(Style.focusVisible), out var styleMap))
+                                        {
+                                            var styleModifier = new StyleModifier(style => style.focusVisible.Import(styleMap));
+
+                                            ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, styleModifier);
+                                        }
+                                    }
+
+                                    {
+                                        if (rootNodeForStyle.TryGetValue(nameof(Style.hover), out var styleMap))
+                                        {
+                                            var styleModifier = new StyleModifier(style => style.hover.Import(styleMap));
+
+                                            ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, styleModifier);
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+
                         if (reactStatefulComponent.StyleForRootElement is not null)
                         {
                             ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, new StyleModifier(style => style.Import(reactStatefulComponent.StyleForRootElement)));

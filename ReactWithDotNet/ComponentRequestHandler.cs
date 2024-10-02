@@ -10,6 +10,7 @@ sealed class ClientStateInfo
     public IReadOnlyDictionary<string, object> DotNetProperties { get; set; }
     public string FullTypeNameOfComponent { get; set; }
     public string StateAsJson { get; set; }
+    public Dictionary<string, Dictionary<string, string>> RootNodeStyle { get; init; }
 }
 
 sealed class ComponentRequest

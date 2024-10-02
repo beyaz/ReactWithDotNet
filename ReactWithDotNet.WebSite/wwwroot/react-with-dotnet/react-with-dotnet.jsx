@@ -531,9 +531,11 @@ const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
 
     const map = {};
 
+    const stateInRootNode = rootFiberNode.stateNode.state;
+
     map[rootNodeKey] =
     {
-        StateAsJson: JSON.stringify(rootFiberNode.stateNode.state[DotNetState])
+        StateAsJson: JSON.stringify(stateInRootNode[DotNetState])
     };
 
     const rootScope = {map: map, breadcrumb: rootNodeKey};
@@ -545,7 +547,7 @@ const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
         child = child.sibling;
     }
 
-    map[rootNodeKey][DotNetProperties] = Object.assign({}, NotNull(rootFiberNode.stateNode.state[DotNetProperties]));
+    map[rootNodeKey][DotNetProperties] = Object.assign({}, NotNull(stateInRootNode[DotNetProperties]));
 
     // calculate $LogicalChildrenCount
     {
@@ -556,8 +558,84 @@ const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
         }
     }
 
+    map[rootNodeKey].RootNodeStyle = CalculateRootNodeStyle(stateInRootNode[RootNode]);
+
     return { stateTree: map, rootNodeKey: rootNodeKey };
 };
+
+function CalculateRootNodeStyle(rootNodeJson)
+{
+    if (rootNodeJson == null)
+    {
+        return null;
+    }
+
+    let map = null;
+
+    const rootNodeStyle = rootNodeJson.style;
+
+    const className = rootNodeJson.className;
+
+    if (rootNodeStyle)
+    {
+        map = map || {};
+
+        map["default"] = rootNodeStyle;
+    }
+
+    if (className)
+    {
+        const names = className.split(' ');
+        for (let i = 0; i < names.length; i++)
+        {
+            const name = names[i];
+
+            if (name.indexOf("_rwd_") === 0)
+            {
+                const pseudos = ["active", "after", "before", "focus","focusVisible", "hover"];
+
+                for (var j = 0; j < pseudos.length; j++)
+                {
+                    const pseudo = pseudos[j];
+
+                    const cssSelectorName = '.' + name + ':' + pseudo;
+
+                    for (var k = 0; k < DynamicStyles.length; k++)
+                    {
+                        const dynamicStyleInfo = DynamicStyles[k];
+
+                        if (dynamicStyleInfo.cssSelector === cssSelectorName)
+                        {
+                            var obj = {};
+
+                            const items = dynamicStyleInfo.cssBody.replaceAll(' !important;', ';').split(';')
+
+                            for (var l = 0; l < items.length; l++)
+                            {
+                                const item = items[l];
+
+                                const arr = item.split(':');
+
+                                if (arr.length === 2)
+                                {
+                                    obj[arr[0]] = arr[1];
+                                }
+                            }
+
+                            map = map || {};
+
+                            map[pseudo] = obj;
+                        }
+                    }
+                }
+
+
+            }
+        }
+    }
+
+    return map;
+}
 
 const GetNextSequence = (() =>
 {
