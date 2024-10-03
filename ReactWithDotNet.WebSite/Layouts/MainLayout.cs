@@ -32,7 +32,7 @@ class MainLayout : PureComponent, IPageLayout
          
         var fonts = root + "/assets/fonts/";
 
-        LastWriteTimeOfIndexJsFile ??= new FileInfo($"/{root}/dist.{CompilerMode}/index.js").LastWriteTime.Ticks.ToString();
+        LastWriteTimeOfIndexJsFile ??= new FileInfo($"/{root}/dist/{CompilerMode}/index.js").LastWriteTime.Ticks.ToString();
         
         return new html
         {
@@ -86,7 +86,7 @@ class MainLayout : PureComponent, IPageLayout
                 {
                     rel         = "stylesheet",
                     type        = "text/css",
-                    href        = $"{root}/dist.{CompilerMode}/index.css",
+                    href        = $"{root}/dist/{CompilerMode}/index.css",
                     crossOrigin = "anonymous"
                 },
                 
@@ -96,7 +96,7 @@ class MainLayout : PureComponent, IPageLayout
                     type="module",
                     text = $@"
 
-import {{ReactWithDotNet}} from './{root}/dist.{CompilerMode}/index.js?v={LastWriteTimeOfIndexJsFile}';
+import {{ReactWithDotNet}} from './{root}/dist/{CompilerMode}/index.js?v={LastWriteTimeOfIndexJsFile}';
 
 ReactWithDotNet.StrictMode = false;
 

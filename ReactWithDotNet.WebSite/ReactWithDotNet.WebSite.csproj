@@ -85,6 +85,9 @@
 		</Exec>
 		<Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
 		<Message Importance="high" Text="Runinning npm command: 'npm run dev , build'" />
+
+		<RemoveDir Directories="$(AppRoot)dist/" />
+		
 		<Exec WorkingDirectory="$(AppRoot)" Command="npm run dev" />
 		<Exec WorkingDirectory="$(AppRoot)" Command="npm run build" />
 	</Target>
