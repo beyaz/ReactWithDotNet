@@ -431,7 +431,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                 .react-with-dotnet-designer-hover-effect
                 {
                     transition: outline 0.3s ease;
-                    outline: 2px dashed #bfdbfe;
+                    outline: 1px dashed #bfdbfe;
                     background-image: repeating-linear-gradient(45deg, #fde047 0, #fde047 1px, transparent 0, transparent 50%);
                     background-size: 5px 5px;
                 }
