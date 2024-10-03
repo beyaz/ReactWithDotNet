@@ -25,18 +25,7 @@ public abstract class ReactComponentBase : Element, IReactComponent
     internal List<Style> classNameList;
 
     internal List<Modifier> Modifiers;
-
-    [JsonIgnore]
-    internal Style style
-    {
-        get
-        {
-            StyleForRootElement ??= new Style();
-
-            return StyleForRootElement;
-        }
-    }
-
+    
     internal abstract bool IsStateNull { get; }
 
     [JsonIgnore]
@@ -57,7 +46,8 @@ public abstract class ReactComponentBase : Element, IReactComponent
 
     public static ReactComponentBase operator +(ReactComponentBase component, Style style)
     {
-        component.style.Import(style);
+        component.StyleForRootElement ??= new();
+        component.StyleForRootElement.Import(style);
 
         return component;
     }
@@ -65,7 +55,7 @@ public abstract class ReactComponentBase : Element, IReactComponent
     [SuppressMessage("ReSharper", "ParameterHidesMember")]
     public void Add(Style style)
     {
-        this.style.Import(style);
+        (StyleForRootElement ??= new ()).Import(style);
     }
 
     internal object Clone()
