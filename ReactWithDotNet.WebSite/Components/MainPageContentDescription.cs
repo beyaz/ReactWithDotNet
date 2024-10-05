@@ -25,7 +25,14 @@ class MainPageContentDescription : PureComponent
                 LineHeight30,
                 Color(Gray700),
                 FontWeight400,
-                Text("ReactWithDotNet is a new way to build web applications. Build component tree in server side on .Net Core (c#) then sends component tree to react client side. When any component has any action then React client communicates serverside only required parts of application. Does not hold any state at .Net Core server side. Thousend of users can be handle at sime time. In summary, combines power of c#, .net and react.js")
+                """
+                ReactWithDotNet is a new way to build web applications. 
+                Build component tree in server side on .Net Core (c#) then sends component tree to react client side. 
+                When any component has any action then React client communicates serverside only required parts of application. 
+                Does not hold any state at .Net Core server side. 
+                Thousend of users can be handle at same time. 
+                In summary, combines power of c#, .net and react.js
+                """
             },
             SpaceY(40),
 
