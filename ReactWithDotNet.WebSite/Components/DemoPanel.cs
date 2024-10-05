@@ -1,20 +1,20 @@
-﻿using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
+﻿using System.IO;
+using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
+using ReactWithDotNet.WebSite.Pages;
 
 namespace ReactWithDotNet.WebSite.Components;
 
 sealed class DemoPanel : Component<DemoPanel.State>
 {
-    public required string CSharpCode { get; init; }
-
-    public required string FullNameOfElement { get; init; }
+    public required DemoInfo DemoInfo { get; init; }
 
     protected override Task OverrideStateFromPropsBeforeRender()
     {
-        if (FullNameOfElement != state.FullNameOfElement)
+        if (DemoInfo.TargetType != state.DemoInfo?.TargetType)
         {
             state = new()
             {
-                FullNameOfElement = FullNameOfElement
+                DemoInfo = DemoInfo
             };
         }
         
@@ -25,7 +25,7 @@ sealed class DemoPanel : Component<DemoPanel.State>
     {
         return new FlexColumn(WidthFull, Padding(8), Gap(8), BorderRadius(4), BoxShadow(0, 2, 5, 0, rgba(0, 0, 0, 0.34)))
         {
-            new FlexRowCentered(BackgroundColor(Gray200), Padding(40), WidthFull, BorderRadius(8), PositionRelative, MinWidth(250))
+            new FlexRowCentered(Height(DemoInfo.Height),BackgroundColor(Gray200), Padding(40), WidthFull, BorderRadius(8), PositionRelative, MinWidth(250))
             {
                 creatElement,
 
@@ -36,7 +36,7 @@ sealed class DemoPanel : Component<DemoPanel.State>
             },
             state.IsSourceCodeVisible is false ? null : new FlexRow(WidthFull, OverflowAuto, Height(300), MarginTop(-8))
             {
-                new SourceCodeView { CSharpCode = CSharpCode }
+                new SourceCodeView { CSharpCode = File.ReadAllText("Showcases\\" + DemoInfo.TargetType.FullName?.Split('.').Last() + ".cs") }
             }
         };
 
@@ -44,7 +44,7 @@ sealed class DemoPanel : Component<DemoPanel.State>
         {
             return new iframe
             {
-                src = Page.DemoPreviewUrl(FullNameOfElement),
+                src = Page.DemoPreviewUrl(DemoInfo.TargetType.FullName),
                 style = { BorderNone, SizeFull  }
             };
         }
@@ -95,6 +95,6 @@ sealed class DemoPanel : Component<DemoPanel.State>
     {
         public bool IsSourceCodeVisible { get; init; }
         
-        public string FullNameOfElement { get; init; }
+        public DemoInfo DemoInfo { get; init; }
     }
 }

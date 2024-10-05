@@ -1,20 +1,61 @@
-﻿using System.IO;
-using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
+﻿using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 using ReactWithDotNet.WebSite.Showcases;
 
 namespace ReactWithDotNet.WebSite.Pages;
 
+record DemoInfo
+{
+    public Type TargetType { get; init; }
+    public double Height { get; init; }
+    public string Label { get; init; }
+}
+
 sealed class PageShowcase : Component<PageShowcase.State>
 {
-    static readonly IReadOnlyList<Type> TypeListOfShowcaseElement =
+    static IReadOnlyList<DemoInfo> DemoList =>
     [
-        typeof(MuiCardDemo),
-        typeof(MuiTextFieldDemo),
-        typeof(PrimeReactTabViewDemo),
-        typeof(RSuiteAutoCompleteDemo),
-        typeof(SwiperGalleryDemo),
-        typeof(ReactPlayerDemo),
-        typeof(MonacoEditorDemo)
+        new()
+        {
+            TargetType = typeof(MuiCardDemo),
+            Height     = 400,
+            Label      = "Mui Card"
+        },
+        new()
+        {
+            TargetType = typeof(MuiTextFieldDemo),
+            Height     = 150,
+            Label      = "Mui Text Field"
+        },
+        new()
+        {
+            TargetType = typeof(PrimeReactTabViewDemo),
+            Height     = 300,
+            Label      = "PrimeReact Tab"
+        },
+        new()
+        {
+            TargetType = typeof(RSuiteAutoCompleteDemo),
+            Height     = 200,
+            Label      = "RSuite AutoComplete"
+        },
+        new()
+        {
+            TargetType = typeof(SwiperGalleryDemo),
+            Height     = 500,
+            Label      = "Swiper Galery"
+        },
+        new()
+        {
+            TargetType = typeof(ReactPlayerDemo),
+            Height     = 500,
+            Label      = "React Player"
+        },
+        new()
+        {
+            TargetType = typeof(MonacoEditorDemo),
+            Height     = 500,
+            Label      = "Monaco Editor"
+        }
     ];
 
     protected override Element render()
@@ -41,8 +82,7 @@ sealed class PageShowcase : Component<PageShowcase.State>
                     {
                         new DemoPanel
                         {
-                            FullNameOfElement = state.FullTypeNameOfSelectedSample,
-                            CSharpCode        = File.ReadAllText("Showcases\\" + state.FullTypeNameOfSelectedSample.Split('.').Last() + ".cs")
+                            DemoInfo = DemoList[state.SelectedIndex]
                         }
                     }
                 }
@@ -52,11 +92,11 @@ sealed class PageShowcase : Component<PageShowcase.State>
 
     Element LeftMenu()
     {
-        var menuItems = TypeListOfShowcaseElement;
+        var menuItems = DemoList;
 
         if (string.IsNullOrWhiteSpace(state.SearchValue) is false)
         {
-            menuItems = menuItems.Where(t => t.Name.Contains(state.SearchValue, StringComparison.OrdinalIgnoreCase)).ToList();
+            menuItems = menuItems.Where(t => t.Label.Contains(state.SearchValue, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
         return new FlexColumn(Padding(8))
@@ -81,14 +121,14 @@ sealed class PageShowcase : Component<PageShowcase.State>
             }
         };
 
-        Element asMenuItem(Type t)
+        Element asMenuItem(DemoInfo demoInfo, int index)
         {
-            var isSelected = state.FullTypeNameOfSelectedSample == t.FullName;
+            var isSelected = state.SelectedIndex == index;
 
             return new FlexRowCentered
             {
-                Id(t.FullName),
-                Text(t.Name),
+                Id(index),
+                Text(demoInfo.Label),
                 BorderRadius(6),
                 PaddingTopBottom(5),
                 PaddingLeftRight(15),
@@ -98,7 +138,7 @@ sealed class PageShowcase : Component<PageShowcase.State>
                 When(!isSelected, Hover(Background(Gray50))),
                 OnClick(e =>
                 {
-                    state = state with { FullTypeNameOfSelectedSample = e.target.id };
+                    state = state with { SelectedIndex = int.Parse(e.target.id) };
 
                     return Task.CompletedTask;
                 })
@@ -113,7 +153,7 @@ sealed class PageShowcase : Component<PageShowcase.State>
 
     internal record State
     {
-        public string FullTypeNameOfSelectedSample { get; init; } = TypeListOfShowcaseElement[0].FullName;
+        public int SelectedIndex { get; init; }
 
         public string SearchValue { get; init; }
     }
