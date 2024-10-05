@@ -1,5 +1,4 @@
-﻿using ReactWithDotNet.WebSite.HeaderComponents;
-using ReactWithDotNet.WebSite.Pages;
+﻿using ReactWithDotNet.WebSite.Pages;
 
 namespace ReactWithDotNet.WebSite;
 
@@ -7,13 +6,11 @@ sealed class MainWindow : PureComponent
 {
     protected override Element render()
     {
-        return new div(SizeFull)
+        return new PageLayout
         {
-            new MainPageHeader(),
 
-            createContent,
+            createContent
 
-            new MainPageFooter()
         };
 
         Element createContent()

@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet.WebSite;
+﻿using ReactWithDotNet.WebSite.HeaderComponents;
+
+namespace ReactWithDotNet.WebSite;
 
 sealed class BlogPageLayout : PureComponent
 {
@@ -10,6 +12,21 @@ sealed class BlogPageLayout : PureComponent
             {
                 children
             }
+        };
+    }
+}
+
+sealed class PageLayout : PureComponent
+{
+    protected override Element render()
+    {
+        return new div(SizeFull)
+        {
+            new MainPageHeader(),
+
+            children,
+
+            new MainPageFooter()
         };
     }
 }
