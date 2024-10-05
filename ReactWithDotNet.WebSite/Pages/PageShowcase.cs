@@ -12,6 +12,16 @@ record DemoInfo
 
 sealed class PageShowcase : Component<PageShowcase.State>
 {
+    protected override Task constructor()
+    {
+        state = new()
+        {
+            SelectedTypeFullName = DemoList[0].TargetType.FullName
+        };
+        
+        return Task.CompletedTask;
+    }
+
     static IReadOnlyList<DemoInfo> DemoList =>
     [
         new()
@@ -82,7 +92,7 @@ sealed class PageShowcase : Component<PageShowcase.State>
                     {
                         new DemoPanel
                         {
-                            DemoInfo = DemoList[state.SelectedIndex]
+                            DemoInfo = DemoList.First(x=>x.TargetType.FullName == state.SelectedTypeFullName)
                         }
                     }
                 }
@@ -123,11 +133,11 @@ sealed class PageShowcase : Component<PageShowcase.State>
 
         Element asMenuItem(DemoInfo demoInfo, int index)
         {
-            var isSelected = state.SelectedIndex == index;
+            var isSelected = state.SelectedTypeFullName == demoInfo.TargetType.FullName;
 
             return new FlexRowCentered
             {
-                Id(index),
+                Id(demoInfo.TargetType.FullName),
                 Text(demoInfo.Label),
                 BorderRadius(6),
                 PaddingTopBottom(5),
@@ -138,7 +148,7 @@ sealed class PageShowcase : Component<PageShowcase.State>
                 When(!isSelected, Hover(Background(Gray50))),
                 OnClick(e =>
                 {
-                    state = state with { SelectedIndex = int.Parse(e.target.id) };
+                    state = state with { SelectedTypeFullName  = e.target.id };
 
                     return Task.CompletedTask;
                 })
@@ -153,7 +163,7 @@ sealed class PageShowcase : Component<PageShowcase.State>
 
     internal record State
     {
-        public int SelectedIndex { get; init; }
+        public string SelectedTypeFullName { get; init; }
 
         public string SearchValue { get; init; }
     }
