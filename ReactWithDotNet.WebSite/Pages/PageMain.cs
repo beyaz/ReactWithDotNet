@@ -68,7 +68,7 @@ class PageMain : PureComponent
 
             protected override Element render()
             {
-                return new a(Href(Href))
+                return new a(Href(Href), DisplayFlexRowCentered, SizeFitContent)
                 {
                     Text ?? "Button",
                     
@@ -79,8 +79,8 @@ class PageMain : PureComponent
                         BoxShadow(0,0,20,"#eee"),
                         BorderRadius(10),
                         Color(White),
-                        TextAlignCenter,
-                        Transition("0.5s"),
+                        TextDecorationNone,
+                        Transition("all 0.5s"),
                         BackgroundSize("200% auto"),
                         Hover([
                             BackgroundPosition("right center")
