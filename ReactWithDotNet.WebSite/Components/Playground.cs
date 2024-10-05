@@ -163,18 +163,19 @@ class Playground : Component<PlaygroundState>
         {
             return new Tooltip
             {
-                arrow = true,
-                title = "Restart app",
-
-                children =
+                x =>
                 {
-                    new FlexRowCentered(OnClickPreview(() => IsRunning = true), OnClick(Clicked), Hover(Border(Solid(0.1, Theme.grey_100)), BorderRadius(5)))
-                    {
-                        IsRunning ? new IconLoading() : new IconReset(),
+                    x.arrow = true;
+                    x.title = "Restart app";
+                },
+                
 
-                        SpaceX(5),
-                        new span { "Reset", FontSize12 }
-                    }
+                new FlexRowCentered(OnClickPreview(() => IsRunning = true), OnClick(Clicked), Hover(Border(Solid(0.1, Theme.grey_100)), BorderRadius(5)))
+                {
+                    IsRunning ? new IconLoading() : new IconReset(),
+
+                    SpaceX(5),
+                    new span { "Reset", FontSize12 }
                 }
             };
         }
