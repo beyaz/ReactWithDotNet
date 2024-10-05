@@ -1,27 +1,11 @@
-﻿using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
+﻿using System.IO;
+using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 using ReactWithDotNet.WebSite.Showcases;
 
 namespace ReactWithDotNet.WebSite.Pages;
 
-record DemoInfo
-{
-    public Type TargetType { get; init; }
-    public double Height { get; init; }
-    public string Label { get; init; }
-}
-
 sealed class PageShowcase : Component<PageShowcase.State>
 {
-    protected override Task constructor()
-    {
-        state = new()
-        {
-            SelectedTypeFullName = DemoList[0].TargetType.FullName
-        };
-        
-        return Task.CompletedTask;
-    }
-
     static IReadOnlyList<DemoInfo> DemoList =>
     [
         new()
@@ -68,6 +52,16 @@ sealed class PageShowcase : Component<PageShowcase.State>
         }
     ];
 
+    protected override Task constructor()
+    {
+        state = new()
+        {
+            SelectedTypeFullName = DemoList[0].TargetType.FullName
+        };
+
+        return Task.CompletedTask;
+    }
+
     protected override Element render()
     {
         var boxShadowOfWindow = BoxShadow(0, 2, 10, 2, rgba(0, 0, 0, 0.1));
@@ -92,7 +86,7 @@ sealed class PageShowcase : Component<PageShowcase.State>
                     {
                         new DemoPanel
                         {
-                            DemoInfo = DemoList.First(x=>x.TargetType.FullName == state.SelectedTypeFullName)
+                            DemoInfo = DemoList.First(x => x.TargetType.FullName == state.SelectedTypeFullName)
                         }
                     }
                 }
@@ -113,7 +107,7 @@ sealed class PageShowcase : Component<PageShowcase.State>
         {
             new FlexRow
             {
-                new IconFilter { Size = 32 },
+                new IconFilter { Size = 24 },
                 SpaceX(8),
                 new TextField
                 {
@@ -148,7 +142,7 @@ sealed class PageShowcase : Component<PageShowcase.State>
                 When(!isSelected, Hover(Background(Gray50))),
                 OnClick(e =>
                 {
-                    state = state with { SelectedTypeFullName  = e.target.id };
+                    state = state with { SelectedTypeFullName = e.target.id };
 
                     return Task.CompletedTask;
                 })
@@ -161,10 +155,112 @@ sealed class PageShowcase : Component<PageShowcase.State>
         return Task.CompletedTask;
     }
 
+    class DemoPanel : Component<DemoPanelState>
+    {
+        public required DemoInfo DemoInfo { get; init; }
+
+        protected override Task OverrideStateFromPropsBeforeRender()
+        {
+            if (DemoInfo.TargetType != state.DemoInfo?.TargetType)
+            {
+                state = new()
+                {
+                    DemoInfo = DemoInfo
+                };
+            }
+
+            return Task.CompletedTask;
+        }
+
+        protected override Element render()
+        {
+            return new FlexColumn(WidthFull, Padding(8), Gap(8), BorderRadius(4), BoxShadow(0, 2, 5, 0, rgba(0, 0, 0, 0.34)))
+            {
+                new FlexRowCentered(Height(DemoInfo.Height), BackgroundColor(Gray200), Padding(40), WidthFull, BorderRadius(8), PositionRelative, MinWidth(250))
+                {
+                    creatElement,
+
+                    new FlexRow(PositionAbsolute, RightBottom(1))
+                    {
+                        ShowHideButton
+                    }
+                },
+                state.IsSourceCodeVisible is false ? null : new FlexRow(WidthFull, OverflowAuto, Height(300), MarginTop(-8))
+                {
+                    new SourceCodeView { CSharpCode = File.ReadAllText("Showcases\\" + DemoInfo.TargetType.FullName?.Split('.').Last() + ".cs") }
+                }
+            };
+
+            Element creatElement()
+            {
+                return new iframe
+                {
+                    src   = Page.DemoPreviewUrl(DemoInfo.TargetType.FullName),
+                    style = { BorderNone, SizeFull, DisplayFlexRowCentered }
+                };
+            }
+
+            Element ShowHideButton()
+            {
+                return new FormControlLabel
+                {
+                    label = (span)(state.IsSourceCodeVisible ? "Hide Source Code" : "Show Source Code") + FontSize12,
+                    control = new Switch
+                    {
+                        size     = "small",
+                        value    = (!state.IsSourceCodeVisible).ToString(),
+                        @checked = state.IsSourceCodeVisible,
+                        onChange = _ =>
+                        {
+                            state = state with { IsSourceCodeVisible = !state.IsSourceCodeVisible };
+
+                            return Task.CompletedTask;
+                        }
+                    }
+                };
+            }
+        }
+
+        sealed class SourceCodeView : PureComponent
+        {
+            public string CSharpCode { get; init; }
+
+            protected override Element render()
+            {
+                return new fieldset(Border(1, solid, Gray200), SizeFull, OverflowScroll)
+                {
+                    new legend(DisplayFlexColumnCentered, MarginLeft(8), MarginBottom(-8))
+                    {
+                        new img { Src(Asset("csharp.svg")), Size(20), PaddingX(4), Zindex2, Height(16) }
+                    },
+
+                    new FlexRowCentered(SizeFull, Padding(0, 4, 4, 4))
+                    {
+                        new CSharpCodePanel { Code = CSharpCode }
+                    }
+                };
+            }
+        }
+    }
+
     internal record State
     {
         public string SelectedTypeFullName { get; init; }
 
         public string SearchValue { get; init; }
+    }
+
+    record DemoPanelState
+    {
+        public bool IsSourceCodeVisible { get; init; }
+
+        public DemoInfo DemoInfo { get; init; }
+    }
+
+    record DemoInfo
+    {
+        public Type TargetType { get; init; }
+        public double Height { get; init; }
+        public string Label { get; init; }
     }
 }

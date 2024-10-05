@@ -25,36 +25,42 @@ sealed class MonacoEditorDemo : Component<MonacoEditorDemo.State>
 
     protected override Element render()
     {
-        return new FlexColumn
+        return new FlexRowCentered
         {
-            new link { href = "https://fonts.cdnfonts.com/css/ibm-plex-mono-3", rel = "stylesheet" },
-            new Editor
+            new FlexColumn(SizeFull, AlignItemsCenter)
             {
-                width           = "300px",
-                height          = "350px",
-                defaultLanguage = "json",
-
-                valueBind                = () => state.Content,
-                valueBindDebounceTimeout = 500,
-                valueBindDebounceHandler = OnKeypressFinished,
-
-                options =
+                new link { href = "https://fonts.cdnfonts.com/css/ibm-plex-mono-3", rel = "stylesheet" },
+                new FlexRowCentered(Height(250), Width(70, 100))
                 {
-                    renderLineHighlight = none,
-                    fontFamily          = "'IBM Plex Mono Medium', 'Courier New', monospace",
-                    minimap = new
+                    new Editor
                     {
-                        enabled = false
-                    },
-                    unicodeHighlight = new
-                    {
-                        showExcludeOptions = false
+                         width           = "100%",
+                         height          = "100%",
+                        defaultLanguage = "json",
+
+                        valueBind                = () => state.Content,
+                        valueBindDebounceTimeout = 500,
+                        valueBindDebounceHandler = OnKeypressFinished,
+                       
+                        options =
+                        {
+                            renderLineHighlight = none,
+                            fontFamily          = "'IBM Plex Mono Medium', 'Courier New', monospace",
+                            minimap = new
+                            {
+                                enabled = false
+                            },
+                            unicodeHighlight = new
+                            {
+                                showExcludeOptions = false
+                            }
+                        }
                     }
+                },
+                new FlexRow
+                {
+                    (b)"Letter Count: ", state.LetterCount
                 }
-            },
-            new FlexRow
-            {
-                (b)"Letter Count: ", state.LetterCount
             }
         };
     }
