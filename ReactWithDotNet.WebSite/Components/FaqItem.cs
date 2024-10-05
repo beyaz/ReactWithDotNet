@@ -1,6 +1,5 @@
 ﻿namespace ReactWithDotNet.WebSite.Components;
 
-
 class FaqItemState
 {
     public bool IsOpen { get; set; }
