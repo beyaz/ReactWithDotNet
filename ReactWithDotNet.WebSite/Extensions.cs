@@ -78,24 +78,6 @@ static partial class Extensions
     };
 
 
-    public static Style PrimaryButtonStyle => new()
-    {
-        backgroundImage = "linear-gradient(to right, #DA22FF 0%, #9733EE  51%, #DA22FF  100%)",
-        padding         = "15px 45px",
-        textAlign       = "center",
-        transition      = "0.5s",
-        backgroundSize  = "200% auto",
-        color           = "white",
-        boxShadow       = "0 0 20px #eee",
-        borderRadius    = "10px",
-
-        textDecoration = "none",
-
-        hover =
-        {
-            backgroundPosition = "right center",
-
-        }
-    };
+    
 
 }

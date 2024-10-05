@@ -68,6 +68,25 @@ class PageMain : PureComponent
 
             protected override Element render()
             {
+                Style PrimaryButtonStyle = new()
+                {
+                    backgroundImage = "linear-gradient(to right, #DA22FF 0%, #9733EE  51%, #DA22FF  100%)",
+                    padding         = "15px 45px",
+                    textAlign       = "center",
+                    transition      = "0.5s",
+                    backgroundSize  = "200% auto",
+                    color           = "white",
+                    boxShadow       = "0 0 20px #eee",
+                    borderRadius    = "10px",
+
+                    textDecoration = "none",
+
+                    hover =
+                    {
+                        backgroundPosition = "right center"
+                    }
+                };
+
                 return new a(Href(Href), PrimaryButtonStyle)
                 {
                     Text ?? "Button"
@@ -87,7 +106,6 @@ class PageMain : PureComponent
                 TypeOfTargetComponent = typeof(HomePageDemoComponent),
 
                 Files = files.Select(fi => (Path.GetFileName(fi), File.ReadAllText(fi))).ToList()
-                
             } + Height(300);
         }
     }
