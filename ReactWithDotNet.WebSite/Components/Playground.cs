@@ -49,7 +49,7 @@ class Playground : Component<PlaygroundState>
 
             new FlexRow(SizeFull, JustifyContentSpaceBetween, FlexWrap)
             {
-                new FlexRowCentered(width, BorderRight(Solid(1, rgb(235, 236, 240))))
+                new FlexRowCentered(width, Height(300), BorderRight(Solid(1, rgb(235, 236, 240))))
                 {
                     new CSharpCodePanel
                     {
@@ -57,7 +57,7 @@ class Playground : Component<PlaygroundState>
                     }
                 },
 
-                new FlexRowCentered(width, Background(rgb(246, 247, 249)), MinSize(200))
+                new FlexRowCentered(width,Height(300) ,Background(rgb(246, 247, 249)), MinSize(200))
                 {
                     Part_Preview
                 }
@@ -142,6 +142,14 @@ class Playground : Component<PlaygroundState>
             };
         }
 
+        if (state.TypeOfTargetComponent is null)
+        {
+            return new pre
+            {
+                "Target type not specified yet"
+            };
+        }
+        
         return (Element)Activator.CreateInstance(state.TypeOfTargetComponent);
     }
 
