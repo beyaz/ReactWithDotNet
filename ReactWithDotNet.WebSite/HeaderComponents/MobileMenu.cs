@@ -26,7 +26,7 @@ sealed class MobileMenu : Component<MobileMenuState>
                     {
                         m.Children.Select(x => new a
                         {
-                            GetPageLink(x.PageName),
+                            Href(x.PageLink),
                             TextDecorationNone,
                             Color(Theme.text_secondary),
                             Padding(10),

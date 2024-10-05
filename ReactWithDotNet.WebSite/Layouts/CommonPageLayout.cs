@@ -1,16 +1,19 @@
 ﻿namespace ReactWithDotNet.WebSite;
 
-sealed class CommonPageLayout: Component
+sealed class CommonPageLayout : Component
 {
     protected override Element render()
     {
-        return new main(PaddingY(48))
+        return new PageLayout
         {
-            new FlexRowCentered(WidthFull)
+            new main(PaddingY(48))
             {
-                new FlexColumn(ContainerStyle)
+                new FlexRowCentered(WidthFull)
                 {
-                    children
+                    new FlexColumn(ContainerStyle)
+                    {
+                        children
+                    }
                 }
             }
         };

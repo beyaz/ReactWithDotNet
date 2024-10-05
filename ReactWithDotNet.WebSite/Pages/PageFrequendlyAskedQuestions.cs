@@ -9,7 +9,7 @@ sealed class PageFrequendlyAskedQuestions : PureComponent
 {
     protected override Element render()
     {
-        return new BlogPageLayout2
+        return new BlogPageLayout
         {
             new section(DisplayFlexRowCentered)
             {

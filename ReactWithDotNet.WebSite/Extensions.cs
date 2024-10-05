@@ -8,9 +8,6 @@ static partial class Extensions
     
     public static readonly ReactContextKey<LightTheme> ThemeKey = new(nameof(ThemeKey));
 
-    public static Modifier GetPageLink(string pageName) => Href($"/?p={pageName}");
-
-
 
     public static StyleModifier BorderRadiusForPaper => BorderRadius(4);
 

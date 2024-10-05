@@ -90,7 +90,7 @@ sealed class HeaderMenuBar : PureComponent
             return new a(PaddingTopBottom(20), BorderRadius, PaddingLeft(20), PaddingRight(30), TextDecorationNone, CursorDefault)
             {
                 WidthFull,
-                GetPageLink(Model.PageName),
+                Href(Model.PageLink),
 
                 LetterSpacingNormal,
                 BackgroundForPaper,

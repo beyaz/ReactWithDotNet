@@ -15,6 +15,11 @@ static class Page
     public static readonly PageRouteInfo LiveEditor = new("/LiveEditor", typeof(HtmlToCSharpView));
     public static readonly PageRouteInfo LivePreview = new($"/{nameof(LivePreview)}", typeof(LivePreview));
     public static readonly PageRouteInfo DemoPreview = new($"/{nameof(DemoPreview)}", typeof(DemoPreview));
+    public static readonly PageRouteInfo PageMilestones = new($"/{nameof(PageMilestones)}", typeof(PageMilestones));
+    public static readonly PageRouteInfo PageShowcase = new($"/{nameof(Pages.PageShowcase)}", typeof(PageShowcase));
+    public static readonly PageRouteInfo PageModifiers = new($"/{nameof(Pages.PageModifiers)}", typeof(PageModifiers));
+    public static readonly PageRouteInfo PageTechnicalDetail = new($"/{nameof(Pages.PageTechnicalDetail)}", typeof(PageTechnicalDetail));
+    
     
 
     public static string LivePreviewUrl(string guid)
@@ -31,4 +36,6 @@ static class Page
     {
         return DocDetail.Url + part;
     }
+
+    
 }

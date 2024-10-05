@@ -11,7 +11,7 @@ public class MenuItem
 {
     public string Title { get; set; }
     public string Description { get; set; }
-    public string PageName { get; set; }
+    public string PageLink { get; set; }
     public string SvgFileName { get; set; } = "doc.svg";
 }
 
@@ -31,13 +31,13 @@ static class MenuAccess
                     new()
                     {
                         Title       = "PageTechnicalDetail",
-                        PageName    = nameof(PageTechnicalDetail),
+                        PageLink    = Page.PageTechnicalDetail.Url,
                         Description = "Teknink details of ReactWithDotnet"
                     },
                     new()
                     {
                         Title       = "Modifiers",
-                        PageName    = nameof(PageModifiers),
+                        PageLink    = Page.PageModifiers.Url,
                         Description = "What is modifier"
                     }
                 ]
