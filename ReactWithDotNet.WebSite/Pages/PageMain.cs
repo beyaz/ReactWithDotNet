@@ -70,7 +70,7 @@ class PageMain : PureComponent
             {
                 return new a(Href(Href), PrimaryButtonStyle)
                 {
-                    text = Text
+                    Text ?? "Button"
                 };
             }
         }
