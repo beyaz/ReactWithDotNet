@@ -10,7 +10,7 @@ static class Page
     public static readonly PageRouteInfo CSharpPropertyMapper = new("/CSharpPropertyMapper", typeof(CSharpPropertyMapperView));
     public static readonly PageRouteInfo Doc = new("/doc", typeof(PageDocumentation));
     public static readonly PageRouteInfo DocDetail = new("/doc/", typeof(PageDocumentation));
-    public static readonly PageRouteInfo Home = new("/", typeof(MainWindow));
+    public static readonly PageRouteInfo Home = new("/", typeof(PageMain));
     public static readonly PageRouteInfo ImportFigmaCss = new("/importFigmaCss", typeof(FigmaCss2ReactInlineStyleConverterView));
     public static readonly PageRouteInfo LiveEditor = new("/LiveEditor", typeof(HtmlToCSharpView));
     public static readonly PageRouteInfo LivePreview = new($"/{nameof(LivePreview)}", typeof(LivePreview));

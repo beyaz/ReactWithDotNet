@@ -153,34 +153,6 @@ class Playground : Component<PlaygroundState>
         return (Element)Activator.CreateInstance(state.TypeOfTargetComponent);
     }
 
-    class ExecuteButton : Component
-    {
-        public MouseEventHandler Clicked;
-        public bool IsRunning { get; set; }
-
-        protected override Element render()
-        {
-            return new Tooltip
-            {
-                arrow = true,
-                title = "Run",
-
-                children =
-                {
-                    new FlexRowCentered(OnClickPreview(() => IsRunning = true), OnClick(Clicked))
-                    {
-                        IsRunning
-                            ? new LoadingIcon { Color = Theme.Blue700 } + Size(20, 20)
-                            : new svg(svg.ViewBox(0, 0, 28, 28), svg.Fill(Theme.Blue400), Size(28, 28), Hover(Fill(Theme.Blue700)))
-                            {
-                                new path { d = "M5.853 18.647h8.735L9.45 31l16.697-17.647h-8.735L22.55 1 5.853 18.647z" }
-                            }
-                    }
-                }
-            };
-        }
-    }
-
     class ResetButton : Component
     {
         const double size = 24;
