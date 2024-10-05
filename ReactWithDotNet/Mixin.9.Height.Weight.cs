@@ -196,7 +196,26 @@ partial class Mixin
     /// </summary>
     public static StyleModifier SizeFull => Size("100%","100%");
     
+    /// <summary>
+    ///     width: fit-content
+    ///     <br />
+    ///     height: fit-content
+    /// </summary>
+    public static StyleModifier SizeFitContent => Size("fit-content","fit-content");
     
+    /// <summary>
+    ///     width: max-content
+    ///     <br />
+    ///     height: max-content
+    /// </summary>
+    public static StyleModifier SizeMaxContent => Size("max-content","max-content");
+    
+    /// <summary>
+    ///     width: min-content
+    ///     <br />
+    ///     height: min-content
+    /// </summary>
+    public static StyleModifier SizeMinContent => Size("min-content","min-content");
     
     
     /// <summary>
