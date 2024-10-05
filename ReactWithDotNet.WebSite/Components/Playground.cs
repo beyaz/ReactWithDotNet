@@ -152,12 +152,16 @@ class Playground : Component<PlaygroundState>
         return (Element)Activator.CreateInstance(state.TypeOfTargetComponent);
     }
 
-    class ResetButton : Component
+    class ResetButtonState
+    {
+        public bool IsRunning { get; set; }
+    }
+    class ResetButton : Component<ResetButtonState>
     {
         const double size = 24;
 
         public MouseEventHandler Clicked;
-        public bool IsRunning { get; set; }
+        
 
         protected override Element render()
         {
@@ -170,9 +174,9 @@ class Playground : Component<PlaygroundState>
                 },
                 
 
-                new FlexRowCentered(OnClickPreview(() => IsRunning = true), OnClick(Clicked), Hover(Border(Solid(0.1, Theme.grey_100)), BorderRadius(5)))
+                new FlexRowCentered(OnClickPreview(() => state.IsRunning = true), OnClick(Clicked), Hover(Border(Solid(0.1, Theme.grey_100)), BorderRadius(5)))
                 {
-                    IsRunning ? new IconLoading() : new IconReset(),
+                    state.IsRunning ? new IconLoading() : new IconReset(),
 
                     SpaceX(5),
                     new span { "Reset", FontSize12 }
