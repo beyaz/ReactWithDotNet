@@ -42,16 +42,11 @@ sealed class DemoPanel : Component<DemoPanel.State>
 
         Element creatElement()
         {
-            if (FullNameOfElement is not null)
+            return new iframe
             {
-                var elementType = Type.GetType(FullNameOfElement);
-                if (elementType is not null)
-                {
-                    return (Element)Activator.CreateInstance(elementType);
-                }
-            }
-
-            return "Element is empty";
+                src = Page.DemoPreviewUrl(FullNameOfElement),
+                style = { BorderNone, SizeFull  }
+            };
         }
 
         Element ShowHideButton()

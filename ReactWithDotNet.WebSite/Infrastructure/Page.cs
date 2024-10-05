@@ -14,10 +14,17 @@ static class Page
     public static readonly PageRouteInfo ImportFigmaCss = new("/importFigmaCss", typeof(FigmaCss2ReactInlineStyleConverterView));
     public static readonly PageRouteInfo LiveEditor = new("/LiveEditor", typeof(HtmlToCSharpView));
     public static readonly PageRouteInfo LivePreview = new($"/{nameof(LivePreview)}", typeof(LivePreview));
+    public static readonly PageRouteInfo DemoPreview = new($"/{nameof(DemoPreview)}", typeof(DemoPreview));
+    
 
     public static string LivePreviewUrl(string guid)
     {
         return Page.LivePreview.Url + $"?{ReactWithDotNet.WebSite.Components.LivePreview.QueryParameterNameOfGuid}={guid}";
+    }
+    
+    public static string DemoPreviewUrl(string fullTypeName)
+    {
+        return Page.DemoPreview.Url + $"?{ReactWithDotNet.WebSite.Pages.DemoPreview.QueryParameterNameOfFullTypeName}={fullTypeName}";
     }
     
     public static string DocDetailUrl(string part)
