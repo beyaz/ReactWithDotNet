@@ -30,3 +30,24 @@ sealed class PageLayout : PureComponent
         };
     }
 }
+
+sealed class BlogPageLayout2 : PureComponent
+{
+    protected override Element render()
+    {
+        return new div(SizeFull)
+        {
+            new MainPageHeader(),
+
+            new main(PaddingY(48), Background("#f9f9fa"), DisplayFlexRow, JustifyContentCenter)
+            {
+                new FlexColumn(MaxWidth(820), SizeFull, PaddingX(24))
+                {
+                    children
+                }
+            },
+
+            new MainPageFooter()
+        };
+    }
+}
