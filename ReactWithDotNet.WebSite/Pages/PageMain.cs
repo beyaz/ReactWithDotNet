@@ -68,28 +68,24 @@ class PageMain : PureComponent
 
             protected override Element render()
             {
-                Style PrimaryButtonStyle = new()
+                return new a(Href(Href))
                 {
-                    backgroundImage = "linear-gradient(to right, #DA22FF 0%, #9733EE  51%, #DA22FF  100%)",
-                    padding         = "15px 45px",
-                    textAlign       = "center",
-                    transition      = "0.5s",
-                    backgroundSize  = "200% auto",
-                    color           = "white",
-                    boxShadow       = "0 0 20px #eee",
-                    borderRadius    = "10px",
-
-                    textDecoration = "none",
-
-                    hover =
+                    Text ?? "Button",
+                    
+                    new []
                     {
-                        backgroundPosition = "right center"
+                        Padding(15,45),
+                        BackgroundImage("linear-gradient(to right, #DA22FF 0%, #9733EE  51%, #DA22FF  100%)"),
+                        BoxShadow(0,0,20,"#eee"),
+                        BorderRadius(10),
+                        Color(White),
+                        TextAlignCenter,
+                        Transition("0.5s"),
+                        BackgroundSize("200% auto"),
+                        Hover([
+                            BackgroundPosition("right center")
+                        ])
                     }
-                };
-
-                return new a(Href(Href), PrimaryButtonStyle)
-                {
-                    Text ?? "Button"
                 };
             }
         }
