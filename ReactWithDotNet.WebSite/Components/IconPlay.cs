@@ -3,7 +3,7 @@
 sealed class IconPlay : PureComponent
 {
     public int Size { get; init; }
-    
+
     protected override Element render()
     {
         return new FlexRowCentered(Size(Size))
@@ -23,14 +23,14 @@ sealed class PlayButton : Component
 {
     protected override Element render()
     {
-        var elementCollection = this.children;
-        
+        var elementCollection = children;
+
         if (DesignMode && elementCollection.Count == 0)
         {
             elementCollection.Add("Play tutorial (2 min)");
         }
 
-        Style style = new Style
+        var style = new[]
         {
             Background(Green500),
             FontSize17,
@@ -41,12 +41,13 @@ sealed class PlayButton : Component
             Color(White),
             Gap(4),
             UserSelect(none),
-            Hover(Background(Green600))
+            Hover(Background(Green600), Color(WhiteSmoke)),
         };
-        
-        return new FlexRowCentered(Padding(10, 10), style)
+
+        return new FlexRowCentered(Padding(10, 15), style)
         {
-            new IconPlay{Size = 30},
+            new IconPlay { Size = 30 },
+
             elementCollection
         };
     }

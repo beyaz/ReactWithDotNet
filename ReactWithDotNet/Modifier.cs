@@ -18,7 +18,19 @@ namespace ReactWithDotNet;
 ///     <see cref="StyleModifier"/> <br/>
 ///     <see cref="ElementModifier"/>
 /// </summary>
-public abstract class Modifier;
+public abstract class Modifier
+{
+    public static implicit operator Modifier(StyleModifier[] styleModifiers)
+    {
+        return new StyleModifier(style =>
+        {
+            foreach (var styleModifier in styleModifiers)
+            {
+                styleModifier.ModifyStyle(style);
+            }
+        });
+    }
+}
 
 public sealed class StyleModifier : Modifier
 {
