@@ -15,15 +15,15 @@ sealed class LivePreview : Component
     public static void RefreshComponentPreview(Client client, string guid)
     {
         var jsCode =
-            $"""
-             var eventName = '{GetRefreshPreviewEventName(guid)}';
-             """
-            +
+            $"var eventName = '{GetRefreshPreviewEventName(guid)}';"
+            + Environment.NewLine +
+            $"var frame = document.getElementById('{guid}');"
+            + Environment.NewLine +
             """
-            var frame = window.frames[0];
+
             if(frame)
             {
-              var reactWithDotNet = frame.ReactWithDotNet;
+              var reactWithDotNet = frame.contentWindow.ReactWithDotNet;
               if(reactWithDotNet)
               {
                 reactWithDotNet.DispatchEvent(eventName, []);
