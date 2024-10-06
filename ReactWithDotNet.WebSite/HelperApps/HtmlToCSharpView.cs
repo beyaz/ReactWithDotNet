@@ -47,11 +47,11 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
               </div>
 
               """;
-        
+
         state = new()
         {
-            HtmlText  = htmlText,
-            Guid = Guid.NewGuid().ToString("N")
+            HtmlText = htmlText,
+            Guid     = Guid.NewGuid().ToString("N")
         };
 
         CalculateOutput();
@@ -96,15 +96,13 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                         "Usage Info"
                     },
                     ": Paste any html input panel then c# code will be genered automatically.",
-                    
+
                     SpaceX(4),
                     new PlayButton
                     {
                         Label    = "Play tutorial (2 min)",
-                        VideoUrl = Dummy.VideoUrl,
+                        VideoUrl = Dummy.VideoUrl
                     }
-
-                    
                 }
             },
             new FlexRow(SizeFull)
