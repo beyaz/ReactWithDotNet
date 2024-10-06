@@ -1,6 +1,4 @@
-﻿using ReactWithDotNet.WebSite.Pages;
-
-namespace ReactWithDotNet.WebSite.HeaderComponents;
+﻿namespace ReactWithDotNet.WebSite.HeaderComponents;
 
 public class Menu
 {
@@ -39,6 +37,12 @@ static class MenuAccess
                         Title       = "Modifiers",
                         PageLink    = Page.PageModifiers.Url,
                         Description = "What is modifier"
+                    },
+                    new()
+                    {
+                        Title       = "Import Html",
+                        PageLink    = Page.LiveEditor.Url,
+                        Description = "Import any html / Live Editor"
                     }
                 ]
             }
