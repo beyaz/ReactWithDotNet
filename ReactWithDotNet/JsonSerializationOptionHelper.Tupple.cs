@@ -474,6 +474,11 @@ partial class JsonSerializationOptionHelper
     {
         public override bool CanConvert(Type typeToConvert)
         {
+            if (typeToConvert.FullName == "System.IValueTupleInternal")
+            {
+                return false;
+            }
+            
             var iTuple = typeToConvert.GetInterface("System.Runtime.CompilerServices.ITuple");
             return iTuple != null;
         }
