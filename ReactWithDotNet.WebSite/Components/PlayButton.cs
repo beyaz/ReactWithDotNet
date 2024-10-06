@@ -1,18 +1,34 @@
-﻿namespace ReactWithDotNet.WebSite.Components;
+﻿using ReactWithDotNet.ThirdPartyLibraries.React_Player;
 
-sealed class PlayButton : Component
+namespace ReactWithDotNet.WebSite.Components;
+
+sealed class PlayButton : Component<PlayButton.State>
 {
+    public string Label { get; init; } = "Play tutorial (2 min)";
+
+    public string VideoUrl { get; init; }
+    
+    public (double W, double H) VideoSize { get; init; } = (640, 360);
+
     protected override Element render()
     {
-        var elementCollection = children;
-
-        if (DesignMode && elementCollection.Count == 0)
+        if (state.IsPlayerOpen)
         {
-            elementCollection.Add("Play tutorial (2 min)");
+            return new VideoPlayer
+            {
+                Size  = VideoSize,
+                VideoUrl = VideoUrl,
+                Closed = () =>
+                {
+                    state = state with { IsPlayerOpen = false };
+
+                    return Task.CompletedTask;
+                }
+            };
         }
 
-        var style = new[]
-        {
+        Style style =
+        [
             Background(Green500),
             FontSize17,
             FontWeight500,
@@ -20,13 +36,100 @@ sealed class PlayButton : Component
             Gap(4),
             UserSelect(none),
             Hover(Background(Green600), Color(WhiteSmoke))
-        };
+        ];
 
         return new FlexRowCentered(Padding(10, 15), SizeFitContent, BorderRadius(3), style)
         {
             new IconPlay { Size = 30 },
 
-            elementCollection
+            Label,
+
+            OnClick(_ =>
+            {
+                state = state with { IsPlayerOpen = true };
+
+                return Task.CompletedTask;
+            })
         };
+    }
+
+    class Backdrop : PureComponent
+    {
+        protected override Element render()
+        {
+            return new FlexRowCentered(PositionFixed, Inset0, Background("#0003"), Zindex5, Transition(Opacity, 0.3, "ease"))
+            {
+                children
+            };
+        }
+    }
+
+    class VideoPlayer : Component<VideoPlayer.VideoPlayerState>
+    {
+        [CustomEvent]
+        public Func<Task> Closed { get; init; }
+
+        public (double W, double H) Size { get; init; } = (640, 360);
+
+        public required string VideoUrl { get; init; }
+
+        protected override Element render()
+        {
+            if (state.IsClosed)
+            {
+                return null;
+            }
+
+            var w = Size.W;
+            var h = Size.H;
+
+            List<StyleModifier> style = [];
+
+            for (var i = 300; i < 700; i += 50)
+            {
+                style.Add(WhenMediaSizeGreaterThan(i, Width(i - 50)));
+                style.Add(WhenMediaSizeGreaterThan(i, Height(h * i / w)));
+            }
+
+            return new Backdrop
+            {
+                OnClick(_ =>
+                {
+                    state.IsClosed = true;
+
+                    DispatchEvent(Closed, []);
+
+                    return Task.CompletedTask;
+                }),
+
+                new FlexRowCentered(WidthFitContent, HeightAuto, Padding(16), Background(White), BorderRadius(8))
+                {
+                    new div(style)
+                    {
+                        new ReactPlayer
+                        {
+                            url   = VideoUrl,
+                            style = { BorderRadius(5) },
+
+                            width       = "100%",
+                            height      = "100%",
+                            volume      = 0,
+                            controls    = true,
+                            playsinline = true
+                        }
+                    }
+                }
+            };
+        }
+
+        internal class VideoPlayerState
+        {
+            public bool IsClosed { get; set; }
+        }
+    }
+
+    internal record State
+    {
+        public bool IsPlayerOpen { get; init; }
     }
 }
