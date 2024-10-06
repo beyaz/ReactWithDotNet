@@ -114,16 +114,16 @@ class Playground : Component<PlaygroundState>
                     OnClick(OnSourceFileClicked), Id(fileInfo.fileName),
 
                     fileInfo.fileName == state.SelectedFileName
-                        ? new[]
-                        {
+                        ?
+                        [
                             Color(Theme.Gray700),
                             BorderBottom(Solid(1, Theme.Gray950))
-                        }
-                        : new[]
-                        {
+                        ]
+                        :
+                        [
                             FontSize("0.9rem"),
                             Hover(Color(Theme.Gray700))
-                        }
+                        ]
                 })
             },
 

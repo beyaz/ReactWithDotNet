@@ -69,7 +69,7 @@ class PageMain : PureComponent
                 {
                     Text ?? "Button",
                     
-                    new []
+                    new Style
                     {
                         Padding(15,45),
                         BackgroundImage("linear-gradient(to right, #DA22FF 0%, #9733EE  51%, #DA22FF  100%)"),
