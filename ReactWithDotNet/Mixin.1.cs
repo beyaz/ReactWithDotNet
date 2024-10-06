@@ -272,6 +272,10 @@ public static partial class Mixin
 
     public static void Apply(this Element element, params Modifier[] modifiers)
     {
+        Apply(element, (IEnumerable<Modifier>)modifiers);
+    }
+    public static void Apply(this Element element, IEnumerable<Modifier> modifiers)
+    {
         if (modifiers is null)
         {
             return;

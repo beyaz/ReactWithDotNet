@@ -17,12 +17,12 @@ abstract partial class HtmlElement : Element
     {
     }
 
-    protected HtmlElement(StyleModifier[] styleModifiers)
+    protected HtmlElement(IReadOnlyList<StyleModifier> styleModifiers)
     {
         this.Apply(styleModifiers);
     }
 
-    protected HtmlElement(params Modifier[] modifiers)
+    protected HtmlElement(IReadOnlyList<Modifier> modifiers)
     {
         this.Apply(modifiers);
     }
