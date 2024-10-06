@@ -5875,7 +5875,7 @@ public sealed class symbol : HtmlElement
 
 }
 
-public sealed partial class video : HtmlElement
+public sealed class video : HtmlElement
 {
     #region string src
     PropertyValueNode<string> _src;
@@ -6156,7 +6156,7 @@ public sealed partial class video : HtmlElement
 
 }
 
-public sealed partial class source : HtmlElement
+public sealed class source : HtmlElement
 {
     #region string src
     PropertyValueNode<string> _src;
@@ -7532,23 +7532,6 @@ public sealed class iframe : HtmlElement
     #endregion
 
 
-    #region string title
-    PropertyValueNode<string> _title;
-    static readonly PropertyValueDefinition _title_ = new()
-    {
-        name = nameof(title)
-    };
-    /// <summary>
-    ///     Provides advisory information about the content of the iframe
-    /// </summary>
-    public string title
-    {
-        get => _title?.value;
-        set => SetValue(_title_, ref _title, value);
-    }
-    #endregion
-
-
     #region string hidden
     PropertyValueNode<string> _hidden;
     static readonly PropertyValueDefinition _hidden_ = new()
@@ -7655,13 +7638,6 @@ public sealed class iframe : HtmlElement
     ///     Adds a Content Security Policy for the iframe's content
     /// </summary>
     public static HtmlElementModifier Csp(string value) => Modify(x => x.csp = value);
-
-    /// <summary>
-    ///     title = <paramref name="value"/>
-    /// <br/>
-    ///     Provides advisory information about the content of the iframe
-    /// </summary>
-    public static HtmlElementModifier Title(string value) => Modify(x => x.title = value);
 
     /// <summary>
     ///     hidden = <paramref name="value"/>

@@ -1353,7 +1353,6 @@ public class ExportingCommonHtmlElements
             new()
             {
                 Tag                  = "video",
-                CreateClassAsPartial = true,
                 Attributes =
                 [
                     new()
@@ -1417,7 +1416,6 @@ public class ExportingCommonHtmlElements
              new()
             {
                 Tag                  = "source",
-                CreateClassAsPartial = true,
                 Attributes =
                 [
                     new()
@@ -1807,11 +1805,6 @@ public class ExportingCommonHtmlElements
                     {
                         Name    = "csp",
                         Comment = "Adds a Content Security Policy for the iframe's content"
-                    },
-                    new ()
-                    {
-                        Name    = "title",
-                        Comment = "Provides advisory information about the content of the iframe"
                     },
                     new ()
                     {
