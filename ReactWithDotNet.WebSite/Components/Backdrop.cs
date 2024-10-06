@@ -30,6 +30,7 @@ class VideoPlayer : Component<VideoPlayer.State>
     protected override Element render()
     {
         var url = Video;
+        
         if (DesignMode)
         {
             url = "https://uploads.codesandbox.io/uploads/user/fb7bd72f-ef17-4810-9e14-ca854fb0f56e/9GBo-mountain-video.mp4";
@@ -46,11 +47,11 @@ class VideoPlayer : Component<VideoPlayer.State>
         var style = new[]
         {
             
-            WhenMediaSizeGreaterThan(300, Width((w/300*200))),
-            WhenMediaSizeGreaterThan(400, Width(((w/400)*200))),
+            WhenMediaSizeGreaterThan(300, Width(300)),
+            WhenMediaSizeGreaterThan(400, Width(400)),
             
-            WhenMediaSizeGreaterThan(300, Height((h/300*100))),
-            WhenMediaSizeGreaterThan(400, Height((h/400*100))),
+            WhenMediaSizeGreaterThan(300, Height((h*300/w))),
+            WhenMediaSizeGreaterThan(400, Height((h*400/w))),
         };
         
         return new Backdrop
