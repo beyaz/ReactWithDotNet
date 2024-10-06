@@ -29,16 +29,13 @@ sealed class PlayButton : Component<PlayButton.State>
 
         Style style =
         [
-            Background(Green500),
-            FontSize17,
-            FontWeight500,
-            Color(White),
+            Color(Gray500),
             Gap(4),
             UserSelect(none),
-            Hover(Background(Green600), Color(WhiteSmoke))
+            Hover(Color(Gray600))
         ];
 
-        return new FlexRowCentered(Padding(10, 15), SizeFitContent, BorderRadius(3), style)
+        return new FlexRowCentered(Padding(3, 10), SizeFitContent, BorderRadius(3), style)
         {
             new IconPlay { Size = 30 },
 

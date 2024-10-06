@@ -86,8 +86,14 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             new FlexRow(FontSize23, Padding(10), WidthFull, JustifyContentSpaceBetween)
             {
                 "Html to ReactWithDotNet",
-                new FlexRow
+                new FlexRow(AlignItemsCenter)
                 {
+                    new PlayButton
+                    {
+                        Label = "Play tutorial (2 min)",
+                        VideoUrl = Dummy.VideoUrl,
+                    },
+                    SpaceX(8),
                     new b(FontWeight500)
                     {
                         "Usage Info"
