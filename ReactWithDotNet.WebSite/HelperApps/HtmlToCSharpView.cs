@@ -86,21 +86,22 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             new FlexRow(FontSize23, Padding(10), WidthFull, JustifyContentSpaceBetween)
             {
                 "Html to ReactWithDotNet",
-                new FlexRow(AlignItemsCenter)
+                new FlexRow(AlignItemsCenter, FontSize12)
                 {
-                    new PlayButton
-                    {
-                        Label = "Play tutorial (2 min)",
-                        VideoUrl = Dummy.VideoUrl,
-                    },
-                    SpaceX(8),
                     new b(FontWeight500)
                     {
                         "Usage Info"
                     },
                     ": Paste any html input panel then c# code will be genered automatically.",
+                    
+                    SpaceX(4),
+                    new PlayButton
+                    {
+                        Label    = "Play tutorial (2 min)",
+                        VideoUrl = Dummy.VideoUrl,
+                    }
 
-                    FontSize12
+                    
                 }
             },
             new FlexRow(SizeFull)

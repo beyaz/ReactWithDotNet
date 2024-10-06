@@ -32,12 +32,12 @@ sealed class PlayButton : Component<PlayButton.State>
             Color(Gray500),
             Gap(4),
             UserSelect(none),
-            Hover(Color(Gray600))
+            Hover(Color(Gray700))
         ];
 
         return new FlexRowCentered(Padding(3, 10), SizeFitContent, BorderRadius(3), style)
         {
-            new IconPlay { Size = 30 },
+            new IconPlay { Size = 25 },
 
             Label,
 
