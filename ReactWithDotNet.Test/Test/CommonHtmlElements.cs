@@ -654,11 +654,6 @@ public class ExportingCommonHtmlElements
                 [
                     new ()
                     {
-                        Name    = "id",
-                        Comment = "Defines a unique identifier (ID) for the marker element."
-                    },
-                    new ()
-                    {
                         Name    = "markerHeight",
                         Comment = "Specifies the height of the marker viewport.",
                         Type    = "UnionProp<string,double>"
