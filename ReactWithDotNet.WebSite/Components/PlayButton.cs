@@ -6,9 +6,9 @@ sealed class PlayButton : Component<PlayButton.State>
 {
     public string Label { get; init; } = "Play tutorial (2 min)";
 
-    public string VideoUrl { get; init; }
-    
     public (double W, double H) VideoSize { get; init; } = (640, 360);
+
+    public string VideoUrl { get; init; }
 
     protected override Element render()
     {
@@ -16,7 +16,7 @@ sealed class PlayButton : Component<PlayButton.State>
         {
             return new VideoPlayer
             {
-                Size  = VideoSize,
+                Size     = VideoSize,
                 VideoUrl = VideoUrl,
                 Closed = () =>
                 {
