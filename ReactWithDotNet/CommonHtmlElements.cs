@@ -39,6 +39,11 @@ public sealed class article : HtmlElement
     /// </summary>
     public article(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    /// <summary>
+    ///     Specifies independent, self-contained content.
+    /// </summary>
+    public article(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<article> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -226,6 +231,8 @@ public sealed class button : HtmlElement
 
     public button(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public button(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<button> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
     ///     type = <paramref name="value"/>
@@ -315,6 +322,8 @@ public sealed class div : HtmlElement
 
     public div(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public div(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<div> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -358,6 +367,11 @@ public sealed class p : HtmlElement
     /// </summary>
     public p(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    /// <summary>
+    ///     Defines a paragraph
+    /// </summary>
+    public p(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<p> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -391,6 +405,8 @@ public sealed class time : HtmlElement
     public time(Style style) : base(style) { }
 
     public time(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public time(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<time> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
@@ -442,6 +458,11 @@ public sealed class dl : HtmlElement
     /// </summary>
     public dl(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    /// <summary>
+    ///     Defines a description list.
+    /// </summary>
+    public dl(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<dl> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -484,6 +505,11 @@ public sealed class dt : HtmlElement
     ///     Defines a term/name in a description list.
     /// </summary>
     public dt(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    /// <summary>
+    ///     Defines a term/name in a description list.
+    /// </summary>
+    public dt(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<dt> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -528,6 +554,11 @@ public sealed class dd : HtmlElement
     /// </summary>
     public dd(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    /// <summary>
+    ///     Describe a term/name in a description list.
+    /// </summary>
+    public dd(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<dd> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -570,6 +601,11 @@ public sealed class kbd : HtmlElement
     ///     tag is used to define keyboard input. The content inside is displayed in the browser's default monospace font.
     /// </summary>
     public kbd(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    /// <summary>
+    ///     tag is used to define keyboard input. The content inside is displayed in the browser's default monospace font.
+    /// </summary>
+    public kbd(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<kbd> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -614,6 +650,11 @@ public sealed class pre : HtmlElement
     /// </summary>
     public pre(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    /// <summary>
+    ///     Preformatted text
+    /// </summary>
+    public pre(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<pre> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -656,6 +697,11 @@ public sealed class code : HtmlElement
     ///     Define some text as computer code in a document
     /// </summary>
     public code(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    /// <summary>
+    ///     Define some text as computer code in a document
+    /// </summary>
+    public code(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<code> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -700,6 +746,11 @@ public sealed class ol : HtmlElement
     /// </summary>
     public ol(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    /// <summary>
+    ///     Ordered list
+    /// </summary>
+    public ol(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<ol> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -742,6 +793,11 @@ public sealed class ul : HtmlElement
     ///     Unordered (bulleted) list
     /// </summary>
     public ul(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    /// <summary>
+    ///     Unordered (bulleted) list
+    /// </summary>
+    public ul(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<ul> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -786,6 +842,11 @@ public sealed class li : HtmlElement
     /// </summary>
     public li(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    /// <summary>
+    ///     List item
+    /// </summary>
+    public li(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<li> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -804,6 +865,8 @@ public sealed class h1 : HtmlElement
     public h1(Style style) : base(style) { }
 
     public h1(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public h1(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<h1> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -824,6 +887,8 @@ public sealed class h2 : HtmlElement
 
     public h2(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public h2(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<h2> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -842,6 +907,8 @@ public sealed class h3 : HtmlElement
     public h3(Style style) : base(style) { }
 
     public h3(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public h3(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<h3> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -862,6 +929,8 @@ public sealed class h4 : HtmlElement
 
     public h4(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public h4(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<h4> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -880,6 +949,8 @@ public sealed class h5 : HtmlElement
     public h5(Style style) : base(style) { }
 
     public h5(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public h5(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<h5> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -900,6 +971,8 @@ public sealed class h6 : HtmlElement
 
     public h6(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public h6(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<h6> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -918,6 +991,8 @@ public sealed class header : HtmlElement
     public header(Style style) : base(style) { }
 
     public header(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public header(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<header> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -962,6 +1037,11 @@ public sealed class span : HtmlElement
     /// </summary>
     public span(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    /// <summary>
+    ///     Inline container used to mark up a part of a text, or a part of a document.
+    /// </summary>
+    public span(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<span> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -1004,6 +1084,11 @@ public sealed class sup : HtmlElement
     ///     Superscript text
     /// </summary>
     public sup(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    /// <summary>
+    ///     Superscript text
+    /// </summary>
+    public sup(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<sup> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -1048,6 +1133,11 @@ public sealed class sub : HtmlElement
     /// </summary>
     public sub(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    /// <summary>
+    ///     Subscript text
+    /// </summary>
+    public sub(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<sub> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -1090,6 +1180,11 @@ public sealed class ins : HtmlElement
     ///     Inserted text
     /// </summary>
     public ins(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    /// <summary>
+    ///     Inserted text
+    /// </summary>
+    public ins(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<ins> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -1134,6 +1229,11 @@ public sealed class del : HtmlElement
     /// </summary>
     public del(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    /// <summary>
+    ///     Deleted text
+    /// </summary>
+    public del(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<del> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -1176,6 +1276,11 @@ public sealed class small : HtmlElement
     ///     Smaller text
     /// </summary>
     public small(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    /// <summary>
+    ///     Smaller text
+    /// </summary>
+    public small(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<small> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -1220,6 +1325,11 @@ public sealed class mark : HtmlElement
     /// </summary>
     public mark(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    /// <summary>
+    ///     Marked text
+    /// </summary>
+    public mark(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<mark> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -1262,6 +1372,11 @@ public sealed class em : HtmlElement
     ///     Emphasized text
     /// </summary>
     public em(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    /// <summary>
+    ///     Emphasized text
+    /// </summary>
+    public em(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<em> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -1306,6 +1421,11 @@ public sealed class b : HtmlElement
     /// </summary>
     public b(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    /// <summary>
+    ///     Bold text
+    /// </summary>
+    public b(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<b> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -1348,6 +1468,11 @@ public sealed class i : HtmlElement
     ///     Italic text
     /// </summary>
     public i(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    /// <summary>
+    ///     Italic text
+    /// </summary>
+    public i(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<i> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -1392,6 +1517,11 @@ public sealed class u : HtmlElement
     /// </summary>
     public u(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    /// <summary>
+    ///     Represents some text that is unarticulated and styled differently from normal text, such as misspelled words or proper names in Chinese text. The content inside is typically displayed with an underline.
+    /// </summary>
+    public u(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<u> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -1435,6 +1565,11 @@ public sealed class strong : HtmlElement
     /// </summary>
     public strong(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    /// <summary>
+    ///     Important text
+    /// </summary>
+    public strong(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<strong> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -1473,6 +1608,11 @@ public sealed class section : HtmlElement
     /// </summary>
     public section(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    /// <summary>
+    ///     Section in a document
+    /// </summary>
+    public section(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<section> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -1489,6 +1629,8 @@ public sealed class aside : HtmlElement
     public aside(Style style) : base(style) { }
 
     public aside(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public aside(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<aside> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -1507,6 +1649,8 @@ public sealed class fieldset : HtmlElement
 
     public fieldset(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public fieldset(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<fieldset> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -1523,6 +1667,8 @@ public sealed class legend : HtmlElement
     public legend(Style style) : base(style) { }
 
     public legend(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public legend(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<legend> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -1541,6 +1687,8 @@ public sealed class nav : HtmlElement
 
     public nav(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public nav(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<nav> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -1557,6 +1705,8 @@ public sealed class main : HtmlElement
     public main(Style style) : base(style) { }
 
     public main(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public main(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<main> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -1575,6 +1725,8 @@ public sealed class footer : HtmlElement
 
     public footer(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public footer(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<footer> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -1592,6 +1744,8 @@ public sealed class figure : HtmlElement
 
     public figure(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public figure(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<figure> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -1608,6 +1762,8 @@ public sealed class hr : HtmlElement
     public hr(Style style) : base(style) { }
 
     public hr(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public hr(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<hr> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -1627,6 +1783,8 @@ public sealed class figcaption : HtmlElement
     public figcaption(Style style) : base(style) { }
 
     public figcaption(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public figcaption(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<figcaption> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -1673,6 +1831,8 @@ public sealed class table : HtmlElement
 
     public table(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public table(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<table> modifyAction) => CreateHtmlElementModifier(modifyAction);
     public static HtmlElementModifier CellSpacing(double? value) => Modify(x => x.cellSpacing = value);
 
@@ -1694,6 +1854,8 @@ public sealed class thead : HtmlElement
 
     public thead(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public thead(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<thead> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -1711,6 +1873,8 @@ public sealed class tbody : HtmlElement
 
     public tbody(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public tbody(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<tbody> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -1727,6 +1891,8 @@ public sealed class tfoot : HtmlElement
     public tfoot(Style style) : base(style) { }
 
     public tfoot(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public tfoot(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<tfoot> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -1790,6 +1956,8 @@ public sealed class th : HtmlElement
 
     public th(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public th(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<th> modifyAction) => CreateHtmlElementModifier(modifyAction);
     public static HtmlElementModifier ColSpan(int? value) => Modify(x => x.colSpan = value);
 
@@ -1848,6 +2016,8 @@ public sealed class td : HtmlElement
 
     public td(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public td(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<td> modifyAction) => CreateHtmlElementModifier(modifyAction);
     public static HtmlElementModifier ColSpan(int? value) => Modify(x => x.colSpan = value);
 
@@ -1896,6 +2066,8 @@ public sealed class tr : HtmlElement
     public tr(Style style) : base(style) { }
 
     public tr(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public tr(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<tr> modifyAction) => CreateHtmlElementModifier(modifyAction);
     public static HtmlElementModifier ColSpan(int? value) => Modify(x => x.colSpan = value);
@@ -1959,6 +2131,8 @@ public sealed class option : HtmlElement
     public option(Style style) : base(style) { }
 
     public option(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public option(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<option> modifyAction) => CreateHtmlElementModifier(modifyAction);
     public static HtmlElementModifier Selected(UnionProp<string, bool?> value) => Modify(x => x.selected = value);
@@ -2101,6 +2275,8 @@ public sealed class ellipse : HtmlElement
     public ellipse(Style style) : base(style) { }
 
     public ellipse(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public ellipse(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<ellipse> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
@@ -2338,6 +2514,8 @@ public sealed class line : HtmlElement
 
     public line(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public line(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<line> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
     ///     x1 = <paramref name="value"/>
@@ -2493,6 +2671,8 @@ public sealed class polyline : HtmlElement
 
     public polyline(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public polyline(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<polyline> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
     ///     points = <paramref name="value"/>
@@ -2639,6 +2819,8 @@ public sealed class circle : HtmlElement
     public circle(Style style) : base(style) { }
 
     public circle(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public circle(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<circle> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
@@ -2818,6 +3000,8 @@ public sealed class polygon : HtmlElement
 
     public polygon(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public polygon(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<polygon> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
     ///     points = <paramref name="value"/>
@@ -2897,6 +3081,8 @@ public sealed class use : HtmlElement
     public use(Style style) : base(style) { }
 
     public use(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public use(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<use> modifyAction) => CreateHtmlElementModifier(modifyAction);
     public static HtmlElementModifier XlinkHref(string value) => Modify(x => x.xlinkHref = value);
@@ -3103,6 +3289,8 @@ public sealed class rect : HtmlElement
     public rect(Style style) : base(style) { }
 
     public rect(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public rect(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<rect> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
@@ -3334,6 +3522,8 @@ public sealed class marker : HtmlElement
 
     public marker(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public marker(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<marker> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
     ///     markerHeight = <paramref name="value"/>
@@ -3543,6 +3733,8 @@ public sealed class radialGradient : HtmlElement
 
     public radialGradient(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public radialGradient(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<radialGradient> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
     ///     cx = <paramref name="value"/>
@@ -3649,6 +3841,8 @@ public sealed class clipPath : HtmlElement
     public clipPath(Style style) : base(style) { }
 
     public clipPath(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public clipPath(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<clipPath> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
@@ -3805,6 +3999,8 @@ public sealed class path : HtmlElement
 
     public path(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public path(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<path> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
     ///     d = <paramref name="value"/>
@@ -3899,6 +4095,8 @@ public sealed class g : HtmlElement
     public g(Style style) : base(style) { }
 
     public g(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public g(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<g> modifyAction) => CreateHtmlElementModifier(modifyAction);
     public static HtmlElementModifier Opacity(string value) => Modify(x => x.opacity = value);
@@ -4024,6 +4222,8 @@ public sealed class mask : HtmlElement
     public mask(Style style) : base(style) { }
 
     public mask(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public mask(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<mask> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
@@ -4220,6 +4420,8 @@ public sealed class meta : HtmlElement
 
     public meta(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public meta(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<meta> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
     ///     charset = <paramref name="value"/>
@@ -4343,6 +4545,8 @@ public sealed class body : HtmlElement
     public body(Style style) : base(style) { }
 
     public body(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public body(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<body> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
@@ -4501,6 +4705,8 @@ public sealed class script : HtmlElement
 
     public script(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public script(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<script> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
     ///     async = <paramref name="value"/>
@@ -4583,6 +4789,8 @@ public sealed class title : HtmlElement
     public title(Style style) : base(style) { }
 
     public title(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public title(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<title> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
@@ -4692,6 +4900,8 @@ public sealed class head : HtmlElement
     public head(Style style) : base(style) { }
 
     public head(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public head(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<head> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
@@ -4830,6 +5040,8 @@ public sealed class html : HtmlElement
 
     public html(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public html(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<html> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
     ///     hidden = <paramref name="value"/>
@@ -4951,6 +5163,8 @@ public sealed class label : HtmlElement
     public label(Style style) : base(style) { }
 
     public label(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public label(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<label> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
@@ -5166,6 +5380,8 @@ public sealed class a : HtmlElement
     public a(Style style) : base(style) { }
 
     public a(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public a(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<a> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
@@ -5458,6 +5674,8 @@ public sealed class img : HtmlElement
 
     public img(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public img(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<img> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
     ///     src = <paramref name="value"/>
@@ -5714,6 +5932,8 @@ public sealed partial class svg : HtmlElement
 
     public svg(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public svg(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<svg> modifyAction) => CreateHtmlElementModifier(modifyAction);
     public static HtmlElementModifier Focusable(string value) => Modify(x => x.focusable = value);
 
@@ -5843,6 +6063,8 @@ public sealed class symbol : HtmlElement
     public symbol(Style style) : base(style) { }
 
     public symbol(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public symbol(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<symbol> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
@@ -6075,6 +6297,8 @@ public sealed class video : HtmlElement
     public video(Style style) : base(style) { }
 
     public video(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public video(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<video> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
@@ -6323,6 +6547,8 @@ public sealed class source : HtmlElement
 
     public source(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public source(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<source> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
     ///     src = <paramref name="value"/>
@@ -6445,6 +6671,8 @@ public sealed class stop : HtmlElement
 
     public stop(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public stop(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<stop> modifyAction) => CreateHtmlElementModifier(modifyAction);
     public static HtmlElementModifier Offset(string value) => Modify(x => x.offset = value);
 
@@ -6468,6 +6696,8 @@ public sealed class linearGradient : HtmlElement
 
     public linearGradient(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public linearGradient(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<linearGradient> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -6485,6 +6715,8 @@ public sealed class noscript : HtmlElement
 
     public noscript(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public noscript(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<noscript> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
@@ -6501,6 +6733,8 @@ public sealed class defs : HtmlElement
     public defs(Style style) : base(style) { }
 
     public defs(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public defs(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<defs> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -6637,6 +6871,8 @@ public sealed class form : HtmlElement
     public form(Style style) : base(style) { }
 
     public form(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public form(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<form> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
@@ -7048,6 +7284,8 @@ public sealed class textarea : HtmlElement
 
     public textarea(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public textarea(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<textarea> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
     ///     name = <paramref name="value"/>
@@ -7322,6 +7560,8 @@ public sealed class link : HtmlElement
 
     public link(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public link(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<link> modifyAction) => CreateHtmlElementModifier(modifyAction);
     public static HtmlElementModifier Href(string value) => Modify(x => x.href = value);
 
@@ -7561,6 +7801,8 @@ public sealed class iframe : HtmlElement
 
     public iframe(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
+    public iframe(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
     public static HtmlElementModifier Modify(Action<iframe> modifyAction) => CreateHtmlElementModifier(modifyAction);
     /// <summary>
     ///     src = <paramref name="value"/>
@@ -7763,6 +8005,8 @@ public sealed class select : HtmlElement
     public select(Style style) : base(style) { }
 
     public select(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public select(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<select> modifyAction) => CreateHtmlElementModifier(modifyAction);
     public static HtmlElementModifier Value(string value) => Modify(x => x.value = value);
@@ -8162,6 +8406,8 @@ public sealed class input : HtmlElement
     public input(Style style) : base(style) { }
 
     public input(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public input(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<input> modifyAction) => CreateHtmlElementModifier(modifyAction);
     public static HtmlElementModifier Required(string value) => Modify(x => x.required = value);
