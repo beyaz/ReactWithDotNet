@@ -25,29 +25,32 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
     protected override Task constructor()
     {
+        const string htmlText
+            = """
+              <div style="border-radius:6px;box-shadow:rgba(0, 0, 0, 0.03) 0px 4px 10px 0px, rgba(0, 0, 0, 0.06) 0px 0px 2px 0px, rgba(0, 0, 0, 0.12) 0px 2px 6px 0px;padding:24px;background-color:rgb(255, 255, 255);box-sizing:border-box;">
+                  <div style="margin-bottom:32px;font-size:20px;font-weight:500;color:rgb(33, 33, 33);box-sizing:border-box;">Latest News</div>
+                  <ul style="list-style:outside none none;margin:0px;padding:0px;box-sizing:border-box;">
+                      <li style="border-bottom-width:1px;border-bottom-style:solid;padding-bottom:16px;border-color:rgb(223, 231, 239);box-sizing:border-box;">
+                          <div style="margin-bottom:8px;font-weight:500;color:rgb(33, 33, 33);box-sizing:border-box;">Aenean euismod elementum</div>
+                          <div style="max-width: 30rem;line-height:24px;color:rgb(117, 117, 117);box-sizing:border-box;">Vitae turpis massa sed elementum tempus egestas sed sed risus. In metus vulputate eu scelerisque felis imperdiet proin.</div>
+                      </li>
+                      <li style="border-bottom-width:1px;border-bottom-style:solid;padding-top:16px;padding-bottom:16px;border-color:rgb(223, 231, 239);box-sizing:border-box;">
+                          <div style="margin-bottom:8px;font-weight:500;color:rgb(33, 33, 33);box-sizing:border-box;">In iaculis nunc sed augue lacus</div>
+                          <div style="max-width: 30rem;line-height:24px;color:rgb(117, 117, 117);box-sizing:border-box;">Viverra vitae congue. Nisi scelerisque eu ultrices vitae auctor eu augue ut lectus. Elementum eu facilisis sed odio morbi.</div>
+                      </li>
+                      <li style="border-bottom-width:1px;border-bottom-style:solid;padding-top:16px;padding-bottom:16px;border-color:rgb(223, 231, 239);box-sizing:border-box;">
+                          <div style="margin-bottom:8px;font-weight:500;color:rgb(33, 33, 33);box-sizing:border-box;">Proin sagittis nisl rhoncus</div>
+                          <div style="max-width: 30rem;line-height:24px;color:rgb(117, 117, 117);box-sizing:border-box;">In pellentesque massa placerat duis ultricies lacus. Ac feugiat sed lectus vestibulum mattis ullamcorper.</div>
+                      </li>
+                  </ul>
+                  <div style="padding-top:16px;justify-content:space-between;display:flex;box-sizing:border-box;"><button aria-label="Clear All" style="width: 50% !important;margin-right:8px;margin:0px 8px 0px 0px;display:flex;cursor:pointer;user-select:none;align-items:center;vertical-align:bottom;text-align:center;overflow:hidden;position:relative;box-sizing:border-box;background-color:rgba(0, 0, 0, 0);color:rgb(100, 116, 139);border:1px solid rgb(100, 116, 139);background:rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box;padding:12px 20px;font-size:16px;transition:background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;border-radius:6px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';font-weight:400;"><span style="flex: 1 1 auto;box-sizing:border-box;font-weight:700;transition-duration:0.2s;">Clear All</span><span role="presentation" style="height: 215.75px; width: 215.75px;width: 215.75px;display:block;position:absolute;background:rgba(255, 255, 255, 0.5) none repeat scroll 0% 0% / auto padding-box border-box;border-radius:100%;transform:matrix(0, 0, 0, 0, 0, 0);box-sizing:border-box;"></span></button><button aria-label="New Entry" style="width: 50% !important;margin-left:8px;margin:0px 0px 0px 8px;display:flex;cursor:pointer;user-select:none;align-items:center;vertical-align:bottom;text-align:center;overflow:hidden;position:relative;box-sizing:border-box;background-color:rgba(0, 0, 0, 0);color:rgb(99, 102, 241);border:1px solid rgb(99, 102, 241);background:rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box;padding:12px 20px;font-size:16px;transition:background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;border-radius:6px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';font-weight:400;"><span style="flex: 1 1 auto;box-sizing:border-box;font-weight:700;transition-duration:0.2s;">New Entry</span><span role="presentation" style="height: 215.75px; width: 215.75px;width: 215.75px;display:block;position:absolute;background:rgba(255, 255, 255, 0.5) none repeat scroll 0% 0% / auto padding-box border-box;border-radius:100%;transform:matrix(0, 0, 0, 0, 0, 0);box-sizing:border-box;"></span></button></div>
+              </div>
+
+              """;
+        
         state = new()
         {
-            HtmlText = @"
-<div style='width: 100%; height: 100%; border-left: 0.50px #DBDBDB solid; border-top: 0.50px #DBDBDB solid; border-right: 0.50px #DBDBDB solid; border-bottom: 0.50px #DBDBDB solid; justify-content: flex-start; align-items: flex-start; gap: 10px; display: inline-flex'>
-    <div style='flex: 1 1 0; height: 433px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 15px; display: inline-flex'>
-        <img style='width: 405px; height: 186px; background: linear-gradient(0deg, #C4C4C4 0%, #C4C4C4 100%)' src='https://cdn.gezbegen.com/wp-content/uploads/2016/03/maldivler.jpg' />
-        <div style='align-self: stretch; height: 180px; padding-left: 16px; padding-right: 16px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: flex'>
-            <div style='align-self: stretch; height: 36px; justify-content: space-between; align-items: center; gap: 32px; display: inline-flex'>
-                <div style='padding-left: 10px; padding-right: 10px; padding-top: 4px; padding-bottom: 4px; background: #F6F6F6; justify-content: flex-start; align-items: flex-start; gap: 10px; display: flex'>
-                    <div style='color: #4A4A49; font-size: 14px; font-family: Open Sans; font-weight: 600; line-height: 24px; word-wrap: break-word'>Geziler</div>
-                </div>
-                <div style='padding: 10px; justify-content: flex-start; align-items: flex-start; gap: 10px; display: flex'>
-                    <div style='color: #79797B; font-size: 12px; font-family: Open Sans; font-weight: 600; line-height: 16px; word-wrap: break-word'>5 dk okuma</div>
-                </div>
-            </div>
-            <div style='align-self: stretch; color: #4A4A49; font-size: 16px; font-family: SF Pro Text; font-weight: 600; line-height: 24px; word-wrap: break-word'>Massa aenean tortor nunc egestas. At amet, risus facilisi sed.</div>
-            <div style='align-self: stretch; height: 84px; color: #4A4A49; font-size: 14px; font-family: Open Sans; font-weight: 400; line-height: 20px; word-wrap: break-word'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tempus tristique id leo scelerisque dui a, ultricies. Massa aenean tortor nunc egestas. At amet, risus.</div>
-            <div style='align-self: stretch; color: #79797B; font-size: 12px; font-family: Open Sans; font-weight: 700; text-transform: uppercase; line-height: 16px; word-wrap: break-word'>Bugün</div>
-        </div>
-    </div>
-</div>
-",
-
+            HtmlText  = htmlText,
             Guid = Guid.NewGuid().ToString("N")
         };
 
