@@ -44,15 +44,13 @@ class VideoPlayer : Component<VideoPlayer.State>
         var w = W;
         var h = H;
 
-        var style = new[]
+        List<StyleModifier> style = [];
+
+        for (var i = 300; i < 700; i+=50)
         {
-            
-            WhenMediaSizeGreaterThan(300, Width(300)),
-            WhenMediaSizeGreaterThan(400, Width(400)),
-            
-            WhenMediaSizeGreaterThan(300, Height((h*300/w))),
-            WhenMediaSizeGreaterThan(400, Height((h*400/w))),
-        };
+            style.Add(WhenMediaSizeGreaterThan(i, Width(i-50)));
+            style.Add(WhenMediaSizeGreaterThan(i, Height((h*i/w))));
+        }
         
         return new Backdrop
         {

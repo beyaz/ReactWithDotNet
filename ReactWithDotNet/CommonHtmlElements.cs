@@ -313,7 +313,7 @@ public sealed class div : HtmlElement
 
     public div(Style style) : base(style) { }
 
-    public div(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+    public div(IEnumerable<StyleModifier> styleModifiers) : base(styleModifiers.ToArray()) { }
 
     public static HtmlElementModifier Modify(Action<div> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
