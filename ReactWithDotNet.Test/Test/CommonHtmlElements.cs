@@ -2328,6 +2328,10 @@ public class ExportingCommonHtmlElements
                 list.Add(Empty);
                 addComment();
                 list.Add($"    public {item.Tag}(List<StyleModifier> styleModifiers) : base(styleModifiers) {{ }}");
+                
+                list.Add(Empty);
+                addComment();
+                list.Add($"    public {item.Tag}(List<Modifier> modifiers) : base(modifiers) {{ }}");
             }
 
            
