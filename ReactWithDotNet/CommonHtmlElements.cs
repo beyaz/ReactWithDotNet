@@ -313,7 +313,7 @@ public sealed class div : HtmlElement
 
     public div(Style style) : base(style) { }
 
-    public div(IEnumerable<StyleModifier> styleModifiers) : base(styleModifiers.ToArray()) { }
+    public div(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<div> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
@@ -3186,23 +3186,6 @@ public sealed class rect : HtmlElement
 
 public sealed class marker : HtmlElement
 {
-    #region string id
-    PropertyValueNode<string> _id;
-    static readonly PropertyValueDefinition _id_ = new()
-    {
-        name = nameof(id)
-    };
-    /// <summary>
-    ///     Defines a unique identifier (ID) for the marker element.
-    /// </summary>
-    public string id
-    {
-        get => _id?.value;
-        set => SetValue(_id_, ref _id, value);
-    }
-    #endregion
-
-
     #region string markerHeight
     PropertyValueNode<UnionProp<string,double>> _markerHeight;
     static readonly PropertyValueDefinition _markerHeight_ = new()
@@ -3352,13 +3335,6 @@ public sealed class marker : HtmlElement
     public marker(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<marker> modifyAction) => CreateHtmlElementModifier(modifyAction);
-    /// <summary>
-    ///     id = <paramref name="value"/>
-    /// <br/>
-    ///     Defines a unique identifier (ID) for the marker element.
-    /// </summary>
-    public static HtmlElementModifier Id(string value) => Modify(x => x.id = value);
-
     /// <summary>
     ///     markerHeight = <paramref name="value"/>
     /// <br/>
@@ -5786,7 +5762,7 @@ public sealed partial class svg : HtmlElement
 
 }
 
-public sealed partial class symbol : HtmlElement
+public sealed class symbol : HtmlElement
 {
     #region string viewBox
     PropertyValueNode<string> _viewBox;
@@ -5829,7 +5805,7 @@ public sealed partial class symbol : HtmlElement
         name = nameof(externalResourcesRequired)
     };
     /// <summary>
-    ///     Specifies whether the rendering of the <symbol> element is dependent on external resources.
+    ///     Specifies whether the rendering of the 'symbol' element is dependent on external resources.
     /// </summary>
     public string externalResourcesRequired
     {
@@ -5886,7 +5862,7 @@ public sealed partial class symbol : HtmlElement
     /// <summary>
     ///     externalResourcesRequired = <paramref name="value"/>
     /// <br/>
-    ///     Specifies whether the rendering of the <symbol> element is dependent on external resources.
+    ///     Specifies whether the rendering of the 'symbol' element is dependent on external resources.
     /// </summary>
     public static HtmlElementModifier ExternalResourcesRequired(string value) => Modify(x => x.externalResourcesRequired = value);
 

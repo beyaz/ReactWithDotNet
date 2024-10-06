@@ -1308,7 +1308,6 @@ public class ExportingCommonHtmlElements
             new()
             {
                 Tag                  = "symbol",
-                CreateClassAsPartial = true,
                 Attributes =
                 [
                     new ()
@@ -1324,7 +1323,7 @@ public class ExportingCommonHtmlElements
                     new ()
                     {
                         Name    = "externalResourcesRequired",
-                        Comment = "Specifies whether the rendering of the <symbol> element is dependent on external resources."
+                        Comment = "Specifies whether the rendering of the 'symbol' element is dependent on external resources."
                     },
                     new ()
                     {
