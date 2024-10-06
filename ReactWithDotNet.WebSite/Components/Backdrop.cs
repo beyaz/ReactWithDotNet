@@ -13,13 +13,19 @@ sealed class Backdrop : PureComponent
     }
 }
 
-class VideoPlayer : Component
+class VideoPlayer : Component<VideoPlayer.State>
 {
+    
+    internal class State
+    {
+        public bool IsClosed { get; set; }
+    }
+    
     public required string Video { get; init; }
 
-    public double W { get; init; }
-    
-    public double H { get; init; }
+    public double W { get; init; } = 640;
+
+    public double H { get; init; } = 360;
     
     protected override Element render()
     {
@@ -28,14 +34,38 @@ class VideoPlayer : Component
         {
             url = "https://uploads.codesandbox.io/uploads/user/fb7bd72f-ef17-4810-9e14-ca854fb0f56e/9GBo-mountain-video.mp4";
         }
-        
+
+        if (state.IsClosed)
+        {
+            return null;
+        }
+
+        var w = W;
+        var h = H;
+
+        var style = new[]
+        {
+            
+            WhenMediaSizeGreaterThan(300, Width((w/300*200))),
+            WhenMediaSizeGreaterThan(400, Width(((w/400)*200))),
+            
+            WhenMediaSizeGreaterThan(300, Height((h/300*100))),
+            WhenMediaSizeGreaterThan(400, Height((h/400*100))),
+        };
         
         return new Backdrop
         {
+            OnClick(_ =>
+            {
+                state.IsClosed = true;
+
+                return Task.CompletedTask;
+            }),
+
+          
             new FlexRowCentered(WidthFitContent, HeightAuto, Padding(16), Background(White), BorderRadius(8))
             {
-                
-                new div(Size(640, 360))
+                new div(style)
                 {
                     new ReactPlayer
                     {
