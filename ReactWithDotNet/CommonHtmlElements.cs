@@ -9082,3 +9082,74 @@ public  partial class HtmlElement
 
 }
 
+public sealed class canvas : HtmlElement
+{
+    #region string width
+    PropertyValueNode<UnionProp<string,double>> _width;
+    static readonly PropertyValueDefinition _width_ = new()
+    {
+        name = nameof(width)
+    };
+    /// <summary>
+    ///     Defines the width of the canvas in pixels
+    /// </summary>
+    public UnionProp<string,double> width
+    {
+        get => _width?.value;
+        set => SetValue(_width_, ref _width, value);
+    }
+    #endregion
+
+
+    #region string height
+    PropertyValueNode<UnionProp<string,double>> _height;
+    static readonly PropertyValueDefinition _height_ = new()
+    {
+        name = nameof(height)
+    };
+    /// <summary>
+    ///     Defines the height of the canvas in pixels
+    /// </summary>
+    public UnionProp<string,double> height
+    {
+        get => _height?.value;
+        set => SetValue(_height_, ref _height, value);
+    }
+    #endregion
+
+
+
+    public canvas(string className) : base(className) {  }
+
+    public canvas(string className, params Modifier[] modifiers) : base(className, modifiers) {  }
+
+    public static implicit operator canvas(string text) => new() { text = text };
+    public canvas() { }
+
+    public canvas(params Modifier[] modifiers) : base(modifiers) { }
+
+    public canvas(Style style) : base(style) { }
+
+    public canvas(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public canvas(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
+    public canvas(List<Modifier> modifiers) : base(modifiers) { }
+
+    public static HtmlElementModifier Modify(Action<canvas> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     width = <paramref name="value"/>
+    /// <br/>
+    ///     Defines the width of the canvas in pixels
+    /// </summary>
+    public static HtmlElementModifier Width(UnionProp<string,double> value) => Modify(x => x.width = value);
+
+    /// <summary>
+    ///     height = <paramref name="value"/>
+    /// <br/>
+    ///     Defines the height of the canvas in pixels
+    /// </summary>
+    public static HtmlElementModifier Height(UnionProp<string,double> value) => Modify(x => x.height = value);
+
+}
+

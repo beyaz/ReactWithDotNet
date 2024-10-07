@@ -2150,6 +2150,29 @@ public class ExportingCommonHtmlElements
                 ],
                 EnableCastFromString = false
             },
+            
+               new()
+            {
+                Tag = "canvas",
+                
+                Attributes = [
+                    
+                    new () 
+                    { 
+                        Name    = "width", 
+                        Comment = "Defines the width of the canvas in pixels", 
+                        Type    = "UnionProp<string,double>"
+                    },
+                    new () 
+                    { 
+                        Name    = "height", 
+                        Comment = "Defines the height of the canvas in pixels", 
+                        Type    = "UnionProp<string,double>"
+                    },
+                    
+
+                ]
+            },
         };
 
         var list = new List<string>
