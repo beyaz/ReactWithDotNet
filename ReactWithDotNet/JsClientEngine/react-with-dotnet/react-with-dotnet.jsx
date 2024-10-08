@@ -2342,6 +2342,31 @@ RegisterCoreFunction("CalculateSyntheticFocusEventArguments", (argumentsAsArray)
 
 });
 
+
+function CalculateRemoteMethodArgument(arg)
+{
+    return arg;
+}
+
+function CalculateRemoteMethodArguments(args)
+{
+    if (args == null)
+    {
+        return null;
+    }
+
+    const newArgs = [];
+
+    for (var i = 0; i < args.length; i++)
+    {
+        newArgs.push(CalculateRemoteMethodArgument(args[i]));
+    }
+
+    return newArgs;
+}
+
+RegisterCoreFunction('CalculateRemoteMethodArguments', CalculateRemoteMethodArguments);
+
 function SetCookie(cookieName_StringNotNull, cookieValue_StringNotNull, expireDays_NumberNotNull)
 {
     const exdate = new Date();

@@ -48,4 +48,23 @@ public sealed class Uploader : ElementBase
 {
     [ReactProp]
     public string action  { get; set; }
+
+    /// <summary>
+    ///    callback function after successful upload
+    /// </summary>
+    [ReactProp]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateRemoteMethodArguments")]
+    public onSuccessHandler onSuccess { get; set; }
+
+    public delegate Task onSuccessHandler(object response, FileType fileType, object evnt, object request);
+}
+
+public sealed class FileType
+{
+    public object blobFile { get; set; }
+    public string name { get; set; }
+    public string fileKey { get; set; }
+    public string status { get; set; }
+    public int? progress { get; set; }
+    public string url { get; set; }
 }
