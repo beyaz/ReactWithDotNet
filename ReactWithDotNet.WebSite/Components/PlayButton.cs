@@ -84,8 +84,8 @@ sealed class PlayButton : Component<PlayButton.State>
 
             for (var i = 300; i < 700; i += 50)
             {
-                style.Add(WhenMediaSizeGreaterThan(i, Width(i - 50)));
-                style.Add(WhenMediaSizeGreaterThan(i, Height(h * i / w)));
+                style.Add(WhenMediaWidthGreaterThan(i, Width(i - 50)));
+                style.Add(WhenMediaWidthGreaterThan(i, Height(h * i / w)));
             }
 
             return new Backdrop

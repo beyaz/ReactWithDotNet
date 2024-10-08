@@ -14,7 +14,7 @@ sealed class HeaderMenuBar : PureComponent
             {
                 new Logo(),
                 SpaceX(24),
-                new nav(DisplayFlex, AlignItemsCenter, WhenMediaSizeLessThan(MD, DisplayNone))
+                new nav(DisplayFlex, AlignItemsCenter, WhenMediaWidthLessThan(MD, DisplayNone))
                 {
                     MenuAccess.MenuList.Select(x => new MenuView { Model = x })
                 }
@@ -52,7 +52,7 @@ sealed class HeaderMenuBar : PureComponent
                 }
             };
 
-            return new FlexRow(Gap(15), AlignItemsCenter, MarginRight(50), WhenMediaSizeLessThan(MD, DisplayNone))
+            return new FlexRow(Gap(15), AlignItemsCenter, MarginRight(50), WhenMediaWidthLessThan(MD, DisplayNone))
             {
                 socialMediaLinks.Select(x => new a(Href(x.Link))
                 {

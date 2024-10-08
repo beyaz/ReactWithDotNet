@@ -47,7 +47,7 @@ partial class Mixin
     /// <summary>
     ///     min-width: <paramref name="widthAsPixel" /> + 'px'
     /// </summary>
-    public static StyleModifier WhenMediaSizeGreaterThan(int widthAsPixel, params StyleModifier[] styleModifiers)
+    public static StyleModifier WhenMediaWidthGreaterThan(int widthAsPixel, params StyleModifier[] styleModifiers)
     {
         return MediaQuery($"(min-width: {widthAsPixel}px)", styleModifiers);
     }
@@ -55,18 +55,18 @@ partial class Mixin
     /// <summary>
     ///     Sample Usage:
     ///     <code>
-    ///      WhenMediaSizeGreaterThan(SM, BorderRadius(8))
+    ///      WhenMediaWidthGreaterThan(SM, BorderRadius(8))
     ///     </code>
     /// </summary>
-    public static StyleModifier WhenMediaSizeGreaterThan(Func<StyleModifier[], StyleModifier> breakpoint, params StyleModifier[] styleModifiers)
+    public static StyleModifier WhenMediaWidthGreaterThan(Func<StyleModifier[], StyleModifier> breakpoint, params StyleModifier[] styleModifiers)
     {
-        return WhenMediaSizeGreaterThan(ConvertToNumber(breakpoint), styleModifiers);
+        return WhenMediaWidthGreaterThan(ConvertToNumber(breakpoint), styleModifiers);
     }
 
     /// <summary>
     ///     max-width: <paramref name="widthAsPixel" /> + 'px'
     /// </summary>
-    public static StyleModifier WhenMediaSizeLessThan(int widthAsPixel, params StyleModifier[] styleModifiers)
+    public static StyleModifier WhenMediaWidthLessThan(int widthAsPixel, params StyleModifier[] styleModifiers)
     {
         return MediaQuery($"(max-width: {widthAsPixel}px)", styleModifiers);
     }
@@ -74,12 +74,12 @@ partial class Mixin
     /// <summary>
     ///     Sample Usage:
     ///     <code>
-    ///      WhenMediaSizeLessThan(SM, BorderRadius(8))
+    ///      WhenMediaWidthLessThan(SM, BorderRadius(8))
     ///     </code>
     /// </summary>
-    public static StyleModifier WhenMediaSizeLessThan(Func<StyleModifier[], StyleModifier> breakpoint, params StyleModifier[] styleModifiers)
+    public static StyleModifier WhenMediaWidthLessThan(Func<StyleModifier[], StyleModifier> breakpoint, params StyleModifier[] styleModifiers)
     {
-        return WhenMediaSizeLessThan(ConvertToNumber(breakpoint), styleModifiers);
+        return WhenMediaWidthLessThan(ConvertToNumber(breakpoint), styleModifiers);
     }
 
     /// <summary>
