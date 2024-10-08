@@ -39,7 +39,7 @@ partial class Mixin
     /// <summary>
     ///     (min-width: <paramref name="minWidthAsPixel" /> + 'px') and (max-width: <paramref name="maxWidthAsPixel" /> + 'px')
     /// </summary>
-    public static StyleModifier WhenMediaSizeBetween(int minWidthAsPixel, int maxWidthAsPixel, params StyleModifier[] styleModifiers)
+    public static StyleModifier WhenMediaWidthBetween(int minWidthAsPixel, int maxWidthAsPixel, params StyleModifier[] styleModifiers)
     {
         return MediaQuery($"(min-width: {minWidthAsPixel}px) and (max-width: {maxWidthAsPixel}px)", styleModifiers);
     }
