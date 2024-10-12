@@ -101,7 +101,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                     new PlayButton
                     {
                         Label    = "Play tutorial (2 min)",
-                        VideoUrl = Dummy.VideoUrl
+                        VideoUrl = Asset("HtmlToCSharpView.mp4")
                     }
                 }
             },

@@ -10,18 +10,13 @@ class PageDocumentation : PureComponent
     
     protected override Element render()
     {
-        return new div(WidthFull,HeightFull)
+        return new PageLayout
         {
-            new MainPageHeader(),
-
             new main(DisplayFlexRow)
             {
                 LeftMenu(Context.HttpContext.Request.GetDisplayUrl()),
                 SampleDocumentContent()
-            },
-            
-            new MainPageFooter()
-            
+            }
         };
     }
     
@@ -120,7 +115,6 @@ class PageDocumentation : PureComponent
                     "Quis vel iste dicta"
                 },
 
-                new PageModifiers { Size(700) },
                 new p(LineHeight28, MarginBottom(1.5 * rem))
                 {
                     "Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
