@@ -26,13 +26,15 @@ class MainLayout : PureComponent, IPageLayout
     
     public string ContainerDomElementId => "app";
 
+    string IndexJsFilePath => $"/{Context.wwwroot}/dist/{CompilerMode}/index.js";
+    
     protected override Element render()
     {
         var root = Context.wwwroot;
          
         var fonts = root + "/assets/fonts/";
 
-        LastWriteTimeOfIndexJsFile ??= new FileInfo($"/{root}/dist/{CompilerMode}/index.js").LastWriteTime.Ticks.ToString();
+        LastWriteTimeOfIndexJsFile ??= new FileInfo(IndexJsFilePath).LastWriteTime.Ticks.ToString();
         
         return new html
         {
@@ -48,7 +50,7 @@ class MainLayout : PureComponent, IPageLayout
             FontWeight400,
             FontSize(1 * rem),
             LineHeight(1.5*CssUnit.em),
-            //Background($"url({Asset("background.svg")})"), // TODO: check usage remove
+            Background($"url({Asset("background.svg")})"), // TODO: check usage remove
 
 
             new head
@@ -96,7 +98,7 @@ class MainLayout : PureComponent, IPageLayout
                     type="module",
                     text = $@"
 
-import {{ReactWithDotNet}} from './{root}/dist/{CompilerMode}/index.js?v={LastWriteTimeOfIndexJsFile}';
+import {{ReactWithDotNet}} from '{IndexJsFilePath}?v={LastWriteTimeOfIndexJsFile}';
 
 ReactWithDotNet.StrictMode = false;
 
