@@ -11,7 +11,6 @@ sealed class MainPageFooter : PureComponent
             BorderTop(1, solid, Gray100), 
             Background(White),
             
-
             "React ", new GradientText { "♥", FontSize20 }, " .Net"
         };
     }
