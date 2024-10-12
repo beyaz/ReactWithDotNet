@@ -67,15 +67,17 @@ static partial class Extensions
         return instance;
     }
 
-    public static Style ContainerStyle => new()
-    {
+    public const int ContainerMaxWidth = 1200;
+    
+    public static Style ContainerStyle =>
+    [
         WidthFull,
-        MaxWidth(1200),
+        MaxWidth(ContainerMaxWidth),
         DisplayFlexRow,
         JustifyContentCenter,
 
         PaddingLeftRight(24)
-    };
+    ];
 
 
     

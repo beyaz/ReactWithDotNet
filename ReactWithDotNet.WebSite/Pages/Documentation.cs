@@ -15,18 +15,21 @@ class PageDocumentation : PureComponent
             new main(DisplayFlexRow)
             {
                 LeftMenu(Context.HttpContext.Request.GetDisplayUrl()),
-                SampleDocumentContent()
+                new FlexRow(PaddingX(150), Background(White))
+                {
+                    SampleDocumentContent()
+                }
             }
         };
     }
-    
-    
-    
+
+
+    const int LeftMenuWidth = 286;
     
     
       public static Element LeftMenu(string url)
     {
-        return new FlexRow(JustifyContentCenter, AlignItemsFlexStart, Background("#f8fafc"), Width(286))
+        return new FlexRow(JustifyContentCenter, AlignItemsFlexStart, Background("#f8fafc"), Width(LeftMenuWidth))
         {
             LeftMenuContent(url)
         };
@@ -102,7 +105,7 @@ class PageDocumentation : PureComponent
 
     public static Element SampleDocumentContent()
     {
-        return new FlexRow(JustifyContentCenter, Background("white"), WidthFull)
+        return new FlexRow(JustifyContentCenter, WidthFull)
         {
             new article(PaddingTopBottom(4 * rem))
             {
