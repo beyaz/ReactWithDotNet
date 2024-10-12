@@ -1,6 +1,5 @@
 ﻿
 using Microsoft.AspNetCore.Http.Extensions;
-using ReactWithDotNet.WebSite.HeaderComponents;
 
 namespace ReactWithDotNet.WebSite.Pages;
 
@@ -15,7 +14,7 @@ class PageDocumentation : PureComponent
             new main(DisplayFlexRow)
             {
                 LeftMenu(Context.HttpContext.Request.GetDisplayUrl()),
-                new FlexRow(PaddingX(150), Background(White))
+                new FlexRow(PaddingX("5%"), Background(White))
                 {
                     SampleDocumentContent()
                 }

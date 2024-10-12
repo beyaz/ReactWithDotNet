@@ -884,6 +884,10 @@ public static partial class Mixin
     
     public static StyleModifier PaddingX(double leftRightPixel)=>PaddingLeftRight(leftRightPixel);
     public static StyleModifier PaddingY(double topBottomPixel)=>PaddingTopBottom(topBottomPixel);
+    
+    public static StyleModifier PaddingX(string leftRight)=>PaddingLeftRight(leftRight);
+    public static StyleModifier PaddingY(string topBottom)=>PaddingTopBottom(topBottom);
+    
     #endregion
 
     #region VerticalAlign
