@@ -2,37 +2,29 @@
 
 namespace ReactWithDotNet.WebSite.Pages;
 
-class PageDocumentation : PureComponent
+class PageDocumentation : Component<PageDocumentation.State>
 {
-    public static Element LeftMenu(string url)
+    internal record State
     {
-        var isCollapsed = false;
-        
-        return FC(_ =>
+        public bool? LeftMenuIsCollapsed { get; init; }
+    }
+    Element LeftMenu(string url)
+    {
+        return new FlexRow(JustifyContentCenter, AlignItemsFlexStart, Background("#f8fafc"), PositionRelative)
         {
-            return new FlexRow(JustifyContentCenter, AlignItemsFlexStart, Background("#f8fafc"), PositionRelative)
+            Transition(Width,300,"ease-in"),
+                
+            state.LeftMenuIsCollapsed is true ? Width(16) : Width(286),
+                
+            new IconLeft
             {
-                Transition(Width,300,"ease-in"),
-                
-                isCollapsed ? Width(16) : Width(286),
-                
-                new IconLeft
-                {
-                    style = { PositionAbsolute, Right(-10), Top(25), When(isCollapsed, Rotate("180deg")) } 
+                style = { PositionAbsolute, Right(-10), Top(25), When(state.LeftMenuIsCollapsed is true, Rotate("180deg")) } 
                     
-                } + OnClick(OnClickHandler) + MD(DisplayNone),
+            } + OnClick(ToggleCollapse) + MD(DisplayNone),
                 
-                isCollapsed ? null :
+            state.LeftMenuIsCollapsed is true ? null :
                 LeftMenuContent(url)
-            };
-
-            Task OnClickHandler(MouseEvent e)
-            {
-                isCollapsed = !isCollapsed;
-                
-                return Task.CompletedTask;
-            }
-        });
+        };
 
         static Element LeftMenuContent(string url)
         {
@@ -103,6 +95,17 @@ class PageDocumentation : PureComponent
         }
     }
 
+    Task ToggleCollapse(MouseEvent e)
+    {
+        if (state.LeftMenuIsCollapsed is null)
+        {
+            state = state with { LeftMenuIsCollapsed = false };
+        }
+        state = state with { LeftMenuIsCollapsed = !state.LeftMenuIsCollapsed };
+                
+        return Task.CompletedTask;
+    }
+    
     public static Element SampleDocumentContent()
     {
         return new FlexRow(JustifyContentCenter, WidthFull)
@@ -211,16 +214,17 @@ class PageDocumentation : PureComponent
             {
                 LeftMenu(Context.HttpContext.Request.GetDisplayUrl()),
 
+                
                 new FlexRow(PaddingX(5 * percent), Background(White), Flex(1.5))
                 {
                     SampleDocumentContent()
-                }
+                }+ When(state.LeftMenuIsCollapsed is false , Height100vh, OverflowHidden)
             }
         };
     }
 
  
-
+   
     
     sealed class IconLeft : PureComponent
     {
