@@ -6,10 +6,33 @@ class PageDocumentation : PureComponent
 {
     public static Element LeftMenu(string url)
     {
-        return new LeftMenuContainer
+        var isCollapsed = false;
+        
+        return FC(_ =>
         {
-            LeftMenuContent(url)
-        };
+            return new FlexRow(JustifyContentCenter, AlignItemsFlexStart, Background("#f8fafc"), PositionRelative)
+            {
+                Transition(Width,300,"ease-in"),
+                
+                isCollapsed ? Width(16) : Width(286),
+                
+                new IconLeft
+                {
+                    style = { PositionAbsolute, Right(-10), Top(25), When(isCollapsed, Rotate("180deg")) } 
+                    
+                } + OnClick(OnClickHandler) + MD(DisplayNone),
+                
+                isCollapsed ? null :
+                LeftMenuContent(url)
+            };
+
+            Task OnClickHandler(MouseEvent e)
+            {
+                isCollapsed = !isCollapsed;
+                
+                return Task.CompletedTask;
+            }
+        });
 
         static Element LeftMenuContent(string url)
         {
@@ -196,15 +219,19 @@ class PageDocumentation : PureComponent
         };
     }
 
-    class LeftMenuContainer : PureComponent
+ 
+
+    
+    sealed class IconLeft : PureComponent
     {
-        static int LeftMenuWidth => 286;
+        public string Color { get; init; } = "#c5d7e8";
 
         protected override Element render()
         {
-            return new FlexRow(JustifyContentCenter, AlignItemsFlexStart, Background("#f8fafc"), Width(LeftMenuWidth))
+            return new svg(ViewBox(0, 0, 50, 50), svg.Size(20))
             {
-                children
+                new path { fill = Color, d = "M25 1C11.767 1 1 11.767 1 25s10.767 24 24 24 24-10.767 24-24S38.233 1 25 1zm0 46C12.869 47 3 37.131 3 25S12.869 3 25 3s22 9.869 22 22-9.869 22-22 22z" },
+                new path { fill = Color, d = "M29.293 10.293 14.586 25l14.707 14.707 1.414-1.414L17.414 25l13.293-13.293z" }
             };
         }
     }
