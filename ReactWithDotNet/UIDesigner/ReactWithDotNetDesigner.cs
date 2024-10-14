@@ -338,7 +338,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                         Color = "#afafaf",
                         style =
                         {
-                            state.PropertyPanelIsClosed ? Rotate("180deg") : null
+                            When(state.PropertyPanelIsClosed, Rotate("180deg"))
                         }
                     }
             },
