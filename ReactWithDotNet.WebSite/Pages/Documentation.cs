@@ -15,7 +15,7 @@ class PageDocumentation : PureComponent
             {
                 LeftMenu(Context.HttpContext.Request.GetDisplayUrl()),
                 
-                new FlexRow(PaddingX("5%"), Background(White), Flex(1.5))
+                new FlexRow(PaddingX(5*percent), Background(White), Flex(1.5))
                 {
                     SampleDocumentContent()
                 }
