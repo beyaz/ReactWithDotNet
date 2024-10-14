@@ -24,12 +24,24 @@ class PageDocumentation : PureComponent
     }
 
 
-    static int LeftMenuWidth => 286;
-    
+ 
+
+    class LeftMenuContainer : PureComponent
+    {
+        static int LeftMenuWidth => 286;
+        
+        protected override Element render()
+        {
+            return new FlexRow(JustifyContentCenter, AlignItemsFlexStart, Background("#f8fafc"), Width(LeftMenuWidth))
+            {
+                children
+            };
+        }
+    }
     
       public static Element LeftMenu(string url)
     {
-        return new FlexRow(JustifyContentCenter, AlignItemsFlexStart, Background("#f8fafc"), Width(LeftMenuWidth))
+        return new LeftMenuContainer
         {
             LeftMenuContent(url)
         };
