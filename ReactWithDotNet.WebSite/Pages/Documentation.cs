@@ -1,45 +1,10 @@
-﻿
-using Microsoft.AspNetCore.Http.Extensions;
+﻿using Microsoft.AspNetCore.Http.Extensions;
 
 namespace ReactWithDotNet.WebSite.Pages;
 
 class PageDocumentation : PureComponent
 {
-    
-    
-    protected override Element render()
-    {
-        return new PageLayout
-        {
-            new main(DisplayFlexRow)
-            {
-                LeftMenu(Context.HttpContext.Request.GetDisplayUrl()),
-                
-                new FlexRow(PaddingX(5*percent), Background(White), Flex(1.5))
-                {
-                    SampleDocumentContent()
-                }
-            }
-        };
-    }
-
-
- 
-
-    class LeftMenuContainer : PureComponent
-    {
-        static int LeftMenuWidth => 286;
-        
-        protected override Element render()
-        {
-            return new FlexRow(JustifyContentCenter, AlignItemsFlexStart, Background("#f8fafc"), Width(LeftMenuWidth))
-            {
-                children
-            };
-        }
-    }
-    
-      public static Element LeftMenu(string url)
+    public static Element LeftMenu(string url)
     {
         return new LeftMenuContainer
         {
@@ -214,6 +179,33 @@ class PageDocumentation : PureComponent
             }
         };
     }
+
+    protected override Element render()
+    {
+        return new PageLayout
+        {
+            new main(DisplayFlexRow)
+            {
+                LeftMenu(Context.HttpContext.Request.GetDisplayUrl()),
+
+                new FlexRow(PaddingX(5 * percent), Background(White), Flex(1.5))
+                {
+                    SampleDocumentContent()
+                }
+            }
+        };
+    }
+
+    class LeftMenuContainer : PureComponent
+    {
+        static int LeftMenuWidth => 286;
+
+        protected override Element render()
+        {
+            return new FlexRow(JustifyContentCenter, AlignItemsFlexStart, Background("#f8fafc"), Width(LeftMenuWidth))
+            {
+                children
+            };
+        }
+    }
 }
-
-
