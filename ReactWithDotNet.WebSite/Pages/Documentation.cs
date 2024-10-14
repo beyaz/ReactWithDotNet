@@ -24,7 +24,7 @@ class PageDocumentation : PureComponent
     }
 
 
-    static int LeftMenuWidth = 286;
+    static int LeftMenuWidth => 286;
     
     
       public static Element LeftMenu(string url)
