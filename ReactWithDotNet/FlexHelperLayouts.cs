@@ -538,6 +538,11 @@ partial class Mixin
             style.flexBasis  = flexBasis.ToString();
         });
     }
+
+    /// <summary>
+    ///     style.flex = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Flex(double value) => Flex(value.ToString(CultureInfo_en_US));
     
     public static StyleModifier Flex(int flexGrow, int flexShrink, string flexBasis)
     {

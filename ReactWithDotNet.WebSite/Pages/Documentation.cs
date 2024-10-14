@@ -14,7 +14,8 @@ class PageDocumentation : PureComponent
             new main(DisplayFlexRow)
             {
                 LeftMenu(Context.HttpContext.Request.GetDisplayUrl()),
-                new FlexRow(PaddingX("5%"), Background(White))
+                
+                new FlexRow(PaddingX("5%"), Background(White), Flex(1.5))
                 {
                     SampleDocumentContent()
                 }
@@ -23,7 +24,7 @@ class PageDocumentation : PureComponent
     }
 
 
-    const int LeftMenuWidth = 286;
+    static int LeftMenuWidth = 286;
     
     
       public static Element LeftMenu(string url)
