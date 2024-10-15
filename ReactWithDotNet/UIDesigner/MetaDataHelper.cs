@@ -81,7 +81,7 @@ static class MetadataHelper
                     return true;
                 }
             }
-
+            
             return false;
         }
 
@@ -197,7 +197,14 @@ static class MetadataHelper
 
     static bool IsValidForExport(MethodInfo methodInfo)
     {
-        if (methodInfo.Name == "render" || methodInfo.Name == "renderAsync" || methodInfo.Name == "InvokeRender" ||
+        if (methodInfo.IsAbstract)
+        {
+            return false;
+        }
+        
+        if (methodInfo.Name == "render" || 
+            methodInfo.Name == "renderAsync" || 
+            methodInfo.Name == "InvokeRender" ||
             methodInfo.Name == "componentDidCatch")
         {
             return false;
@@ -212,7 +219,7 @@ static class MetadataHelper
         {
             return false;
         }
-
+        
         // is function component
         if (IsElement(methodInfo.ReturnType))
         {
