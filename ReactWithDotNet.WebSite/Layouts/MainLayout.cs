@@ -102,6 +102,8 @@ import {{ReactWithDotNet}} from '{IndexJsFilePath}?v={LastWriteTimeOfIndexJsFile
 
 ReactWithDotNet.StrictMode = false;
 
+ReactWithDotNet.RequestHandlerPath = '{RequestHandlerPath}';
+
 ReactWithDotNet.RenderComponentIn({{
   idOfContainerHtmlElement: '{ContainerDomElementId}',
   renderInfo: {RenderInfo.ToJsonString()}

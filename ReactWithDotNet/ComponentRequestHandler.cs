@@ -465,7 +465,7 @@ static class ComponentRequestHandler
 
                 requestPath = request.Path;
 
-                if (requestPath == "/" + "HandleReactWithDotNetRequest")
+                if (requestPath ==  RequestHandlerPath)
                 {
                     var headers = request.Headers;
 
@@ -500,4 +500,9 @@ static class ComponentRequestHandler
 sealed class StateTree
 {
     public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; init; }
+}
+
+partial class Mixin
+{
+    public static string RequestHandlerPath;
 }

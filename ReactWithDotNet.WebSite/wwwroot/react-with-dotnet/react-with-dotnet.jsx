@@ -2029,7 +2029,7 @@ function SendRequest(request, onSuccess, onFail)
     request.ClientHeight = document.documentElement.clientHeight;
     request.QueryString = window.location.search;
 
-    const url = ReactWithDotNet.RequestHandlerUrl;
+    const url = ReactWithDotNet.RequestHandlerPath;
 
     let options =
     {
@@ -2863,7 +2863,7 @@ function IsDesktop()
 const ReactWithDotNet =
 {
     StrictMode: false,
-    RequestHandlerUrl: '/HandleReactWithDotNetRequest',
+    RequestHandlerPath: 'DeveloperError: missing RequestHandlerPath',
     OnDocumentReady: OnDocumentReady,
     StartAction: StartAction,
     DispatchEvent: DispatchEvent,

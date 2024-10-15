@@ -18,12 +18,13 @@ public static class ReactWithDotNetIntegration
             .Where(x => x is not null)
             .ToDictionary(x => x.Url, x => x, StringComparer.OrdinalIgnoreCase);
 
+        RequestHandlerPath = "/"+nameof(HandleReactWithDotNetRequest);
        
         app.Use(async (httpContext, next) =>
         {   
             var path = httpContext.Request.Path.Value ?? string.Empty;
 
-            if (path == $"/{nameof(HandleReactWithDotNetRequest)}")
+            if (path == RequestHandlerPath)
             {
                 await HandleReactWithDotNetRequest(httpContext);
                 return;
