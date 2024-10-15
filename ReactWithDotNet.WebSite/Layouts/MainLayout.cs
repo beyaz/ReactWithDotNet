@@ -96,20 +96,22 @@ class MainLayout : PureComponent, IPageLayout
                 new script
                 {
                     type="module",
-                    text = $@"
+                    
+                    text =
+                        $$"""
+                          import {ReactWithDotNet} from '{{IndexJsFilePath}}?v={{LastWriteTimeOfIndexJsFile}}';
 
-import {{ReactWithDotNet}} from '{IndexJsFilePath}?v={LastWriteTimeOfIndexJsFile}';
+                          ReactWithDotNet.StrictMode = false;
 
-ReactWithDotNet.StrictMode = false;
+                          ReactWithDotNet.RequestHandlerPath = '{{RequestHandlerPath}}';
 
-ReactWithDotNet.RequestHandlerPath = '{RequestHandlerPath}';
-
-ReactWithDotNet.RenderComponentIn({{
-  idOfContainerHtmlElement: '{ContainerDomElementId}',
-  renderInfo: {RenderInfo.ToJsonString()}
-}});
-
-"
+                          ReactWithDotNet.RenderComponentIn({
+                            idOfContainerHtmlElement: '{{ContainerDomElementId}}',
+                            renderInfo: {{RenderInfo.ToJsonString()}}
+                          });
+                          """
+                    
+                  
     
     
                     
