@@ -29,7 +29,7 @@ public sealed class ReactContext
 
     public required HttpContext HttpContext { get; init; }
 
-    public string RequestPath { get; init; }
+    public (string Path, IQueryCollection Query) Request { get; init; }
 
     public string wwwroot { get; init; }
 
@@ -37,6 +37,7 @@ public sealed class ReactContext
     internal double? ClientHeight { get; init; }
 
     internal double? ClientWidth { get; init; }
+    
 
     public bool Contains<TValue>(ReactContextKey<TValue> key)
     {

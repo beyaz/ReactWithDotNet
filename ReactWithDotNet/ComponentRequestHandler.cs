@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
+using System.Web;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
 
 namespace ReactWithDotNet;
@@ -91,7 +93,11 @@ static class ComponentRequestHandler
                     ClientHeight      = request.ClientHeight,
                     HttpContext       = input.HttpContext,
                     wwwroot           = GetwwwrootFolder(input.HttpContext),
-                    RequestPath       = GetRequestPath(input.HttpContext)
+                    
+                    Request = (
+                        Path: GetRequestPath(input.HttpContext),
+                        Query: GetRequestQuery(input.HttpContext)
+                    )
                 };
                 
                 context.Set(typeof(HttpContext).FullName, input.HttpContext);
@@ -508,6 +514,25 @@ static class ComponentRequestHandler
             }
 
             return request.Path;
+        }
+        
+        static IQueryCollection GetRequestQuery(HttpContext httpContext)
+        {
+            var request = httpContext.Request;
+
+            if (request.Path == RequestHandlerPath)
+            {
+                if (request.Headers.TryGetValue(HeaderNames.Referer, out var referer) && referer[0] is not null)
+                {
+                    var nameValueCollection = HttpUtility.ParseQueryString(new Uri(referer[0]).Query);
+
+                    var dictionary = nameValueCollection.AllKeys.ToDictionary(x => x, x => new StringValues(nameValueCollection.GetValues(x)));
+
+                    return new QueryCollection(dictionary);
+                }
+            }
+
+            return request.Query;
         }
     }
 
