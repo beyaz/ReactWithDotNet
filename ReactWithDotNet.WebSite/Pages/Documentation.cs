@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.Extensions;
-
-namespace ReactWithDotNet.WebSite.Pages;
+﻿namespace ReactWithDotNet.WebSite.Pages;
 
 class PageDocumentation : Component<PageDocumentation.State>
 {
@@ -212,7 +210,7 @@ class PageDocumentation : Component<PageDocumentation.State>
         {
             new main(DisplayFlexRow)
             {
-                LeftMenu(Context.HttpContext.Request.GetDisplayUrl()),
+                LeftMenu(Context.Request.Path),
 
                 
                 new FlexRow(PaddingX(5 * percent), Background(White), Flex(1.5))
