@@ -10,7 +10,12 @@ abstract class PageDocumentation : Component<PageDocumentation.State>
         {
             new main(DisplayFlexRow)
             {
-                LeftMenu(Context.Request.Path),
+                new LeftMenuView
+                {
+                    RequestPath         = Context.Request.Path,
+                    LeftMenuIsCollapsed = state.LeftMenuIsCollapsed,
+                    ToggleCollapse      = ToggleCollapse
+                },
 
                 new FlexRow(PaddingX(5 * percent), Background(White), Flex(1.5))
                 {
@@ -20,22 +25,58 @@ abstract class PageDocumentation : Component<PageDocumentation.State>
         };
     }
 
-    Element LeftMenu(string url)
+    Task ToggleCollapse(MouseEvent e)
     {
-        return new FlexRow(JustifyContentCenter, AlignItemsFlexStart, Background("#f8fafc"), PositionRelative)
+        if (state.LeftMenuIsCollapsed is null)
         {
-            Transition(Width, 300, "ease-in"),
+            state = state with { LeftMenuIsCollapsed = false };
+        }
 
-            state.LeftMenuIsCollapsed is true ? Width(16) : Width(286),
+        state = state with { LeftMenuIsCollapsed = !state.LeftMenuIsCollapsed };
 
-            new IconLeft
+        return Task.CompletedTask;
+    }
+
+    sealed class IconLeft : PureComponent
+    {
+        // ReSharper disable once MemberCanBePrivate.Local
+        public string Color { get; } = "#c5d7e8";
+
+        protected override Element render()
+        {
+            return new svg(ViewBox(0, 0, 50, 50), svg.Size(20))
             {
-                style = { PositionAbsolute, Right(-10), Top(25), When(state.LeftMenuIsCollapsed is true, Rotate("180deg")) }
-            } + OnClick(ToggleCollapse) + MD(DisplayNone),
+                new path { fill = Color, d = "M25 1C11.767 1 1 11.767 1 25s10.767 24 24 24 24-10.767 24-24S38.233 1 25 1zm0 46C12.869 47 3 37.131 3 25S12.869 3 25 3s22 9.869 22 22-9.869 22-22 22z" },
+                new path { fill = Color, d = "M29.293 10.293 14.586 25l14.707 14.707 1.414-1.414L17.414 25l13.293-13.293z" }
+            };
+        }
+    }
 
-            state.LeftMenuIsCollapsed is true ? null :
-                LeftMenuContent(url)
-        };
+    class LeftMenuView : PureComponent
+    {
+        public bool? LeftMenuIsCollapsed { get; init; }
+
+        public string RequestPath { get; init; }
+
+        public MouseEventHandler ToggleCollapse { get; init; }
+
+        protected override Element render()
+        {
+            return new FlexRow(JustifyContentCenter, AlignItemsFlexStart, Background("#f8fafc"), PositionRelative)
+            {
+                Transition(Width, 300, "ease-in"),
+
+                LeftMenuIsCollapsed is true ? Width(16) : Width(286),
+
+                new IconLeft
+                {
+                    style = { PositionAbsolute, Right(-10), Top(25), When(LeftMenuIsCollapsed is true, Rotate("180deg")) }
+                } + OnClick(ToggleCollapse) + MD(DisplayNone),
+
+                LeftMenuIsCollapsed is true ? null :
+                    LeftMenuContent(RequestPath)
+            };
+        }
 
         static Element LeftMenuContent(string url)
         {
@@ -103,33 +144,6 @@ abstract class PageDocumentation : Component<PageDocumentation.State>
             {
                 return url?.EndsWith(uuu) == true;
             }
-        }
-    }
-
-    Task ToggleCollapse(MouseEvent e)
-    {
-        if (state.LeftMenuIsCollapsed is null)
-        {
-            state = state with { LeftMenuIsCollapsed = false };
-        }
-
-        state = state with { LeftMenuIsCollapsed = !state.LeftMenuIsCollapsed };
-
-        return Task.CompletedTask;
-    }
-
-    sealed class IconLeft : PureComponent
-    {
-        // ReSharper disable once MemberCanBePrivate.Local
-        public string Color { get; } = "#c5d7e8";
-
-        protected override Element render()
-        {
-            return new svg(ViewBox(0, 0, 50, 50), svg.Size(20))
-            {
-                new path { fill = Color, d = "M25 1C11.767 1 1 11.767 1 25s10.767 24 24 24 24-10.767 24-24S38.233 1 25 1zm0 46C12.869 47 3 37.131 3 25S12.869 3 25 3s22 9.869 22 22-9.869 22-22 22z" },
-                new path { fill = Color, d = "M29.293 10.293 14.586 25l14.707 14.707 1.414-1.414L17.414 25l13.293-13.293z" }
-            };
         }
     }
 
