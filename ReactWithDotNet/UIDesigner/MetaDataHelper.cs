@@ -259,6 +259,10 @@ static class MetadataHelper
 
         static bool isNotValidForJson(Type parameterType)
         {
+            if (parameterType.IsAnonymousType())
+            {
+                return true;
+            }
             if (parameterType == typeof(object))
             {
                 return true;
