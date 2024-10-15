@@ -35,12 +35,6 @@ public static class ReactWithDotNetIntegration
                 await WriteHtmlResponse(httpContext, typeof(MainLayout), routeInfo.page);
                 return;
             }
-
-            if (path.StartsWith(Page.DocDetail.Url))
-            {
-                await WriteHtmlResponse(httpContext, typeof(MainLayout), Page.DocDetail.page);
-                return;
-            }
             
             if (path == "/UploadFile")
             {

@@ -7,8 +7,7 @@ sealed record PageRouteInfo(string Url, Type page);
 
 static class Page
 {
-    public static readonly PageRouteInfo Doc = new("/doc", typeof(PageDocumentation));
-    public static readonly PageRouteInfo DocDetail = new("/doc/", typeof(PageDocumentation));
+ 
     public static readonly PageRouteInfo Home = new("/", typeof(PageMain));
     public static readonly PageRouteInfo LiveEditor = new("/LiveEditor", typeof(HtmlToCSharpView));
     public static readonly PageRouteInfo LivePreview = new($"/{nameof(LivePreview)}", typeof(LivePreview));
@@ -18,6 +17,9 @@ static class Page
     public static readonly PageRouteInfo PageModifiers = new($"/{nameof(Pages.PageModifiers)}", typeof(PageModifiers));
     public static readonly PageRouteInfo PageTechnicalDetail = new($"/{nameof(Pages.PageTechnicalDetail)}", typeof(PageTechnicalDetail));
     
+    
+    public static readonly PageRouteInfo DocStart = new("/doc/start", typeof(PageDocumentation_Start));
+    public static readonly PageRouteInfo DocServerDrivenUI = new("/doc/server_driven_ui", typeof(PageDocumentation_ServerDrivenUI));
     
 
     public static string LivePreviewUrl(string guid)
@@ -30,10 +32,7 @@ static class Page
         return Page.DemoPreview.Url + $"?{ReactWithDotNet.WebSite.Pages.DemoPreview.QueryParameterNameOfFullTypeName}={fullTypeName}";
     }
     
-    public static string DocDetailUrl(string part)
-    {
-        return DocDetail.Url + part;
-    }
+
 
     
 }
