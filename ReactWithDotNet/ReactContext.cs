@@ -21,21 +21,22 @@ public sealed class ReactContextKey<TValue>
 
 public sealed class ReactContext
 {
-    public required HttpContext HttpContext{ get; init; }
-    
-    public string wwwroot { get; init; }
-    
-    internal double? ClientWidth { get; init; }
-    internal double? ClientHeight { get; init; }
-    
     readonly Dictionary<string, object> map = new();
 
     internal ReactContext()
     {
     }
 
+    public required HttpContext HttpContext { get; init; }
+
+    public string RequestPath { get; init; }
+
+    public string wwwroot { get; init; }
+
     internal IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; init; }
-    
+    internal double? ClientHeight { get; init; }
+
+    internal double? ClientWidth { get; init; }
 
     public bool Contains<TValue>(ReactContextKey<TValue> key)
     {

@@ -90,7 +90,8 @@ static class ComponentRequestHandler
                     ClientWidth       = request.ClientWidth,
                     ClientHeight      = request.ClientHeight,
                     HttpContext       = input.HttpContext,
-                    wwwroot           = GetwwwrootFolder(input.HttpContext)
+                    wwwroot           = GetwwwrootFolder(input.HttpContext),
+                    RequestPath       = GetRequestPath(input.HttpContext)
                 };
                 
                 context.Set(typeof(HttpContext).FullName, input.HttpContext);
@@ -492,6 +493,21 @@ static class ComponentRequestHandler
             }
 
             return string.Join(string.Empty, Enumerable.Range(0, deep).Select(_ => "../")) + "wwwroot";
+        }
+        
+        static string GetRequestPath(HttpContext httpContext)
+        {
+            var request = httpContext.Request;
+
+            if (request.Path == RequestHandlerPath)
+            {
+                if (request.Headers.TryGetValue(HeaderNames.Referer, out var referer) && referer[0] is not null)
+                {
+                    return new Uri(referer[0]).LocalPath;
+                }
+            }
+
+            return request.Path;
         }
     }
 
