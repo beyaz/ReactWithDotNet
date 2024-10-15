@@ -1,12 +1,15 @@
-﻿
-using System.IO;
+﻿using System.IO;
 
 namespace ReactWithDotNet.WebSite;
 
-
 class MainLayout : PureComponent, IPageLayout
 {
-    
+    static string LastWriteTimeOfIndexJsFile;
+
+    public string ContainerDomElementId => "app";
+
+    public ComponentRenderInfo RenderInfo { get; set; }
+
     static string CompilerMode
     {
         get
@@ -18,24 +21,17 @@ class MainLayout : PureComponent, IPageLayout
 #endif
         }
     }
-    
-    
-    public ComponentRenderInfo RenderInfo { get; set; }
-    
-    static string LastWriteTimeOfIndexJsFile;
-    
-    public string ContainerDomElementId => "app";
 
     string IndexJsFilePath => $"/{Context.wwwroot}/dist/{CompilerMode}/index.js";
-    
+
     protected override Element render()
     {
         var root = Context.wwwroot;
-         
+
         var fonts = root + "/assets/fonts/";
 
         LastWriteTimeOfIndexJsFile ??= new FileInfo(IndexJsFilePath).LastWriteTime.Ticks.ToString();
-        
+
         return new html
         {
             Lang("tr"),
@@ -49,16 +45,15 @@ class MainLayout : PureComponent, IPageLayout
             MozOsxFontSmoothingGrayScale,
             FontWeight400,
             FontSize(1 * rem),
-            LineHeight(1.5*CssUnit.em),
+            LineHeight(1.5 * CssUnit.em),
             // Background(url(Asset("background.svg"))), // TODO: check usage remove
-
 
             new head
             {
-                new meta{charset = "utf-8"},
-                new meta{name    = "viewport", content = "width=device-width, initial-scale=1"},
-                new title{ "React with DotNet" },
-                
+                new meta { charset = "utf-8" },
+                new meta { name    = "viewport", content = "width=device-width, initial-scale=1" },
+                new title { "React with DotNet" },
+
                 new style
                 {
                     """
@@ -68,22 +63,21 @@ class MainLayout : PureComponent, IPageLayout
                         padding: 0;
                         box-sizing: border-box;
                     }
-                    
+
                     """
                 },
-                
+
                 arrangeFonts(),
 
-                new link { href = "https://fonts.googleapis.com/icon?family=Material+Icons", rel = "stylesheet" },
+                new link { href = "https://fonts.googleapis.com/icon?family=Material+Icons", rel = "stylesheet" }
             },
-            new body(Margin(0),Height100vh)
+            new body(Margin(0), Height100vh)
             {
                 new div(Id(ContainerDomElementId), SizeFull),
 
                 // After page first rendered in client then connect with react system in background.
                 // So user first iteraction time will be minimize.
-                
-               
+
                 new link
                 {
                     rel         = "stylesheet",
@@ -91,12 +85,11 @@ class MainLayout : PureComponent, IPageLayout
                     href        = $"{root}/dist/{CompilerMode}/index.css",
                     crossOrigin = "anonymous"
                 },
-                
 
                 new script
                 {
-                    type="module",
-                    
+                    type = "module",
+
                     text =
                         $$"""
                           import {ReactWithDotNet} from '{{IndexJsFilePath}}?v={{LastWriteTimeOfIndexJsFile}}';
@@ -110,43 +103,31 @@ class MainLayout : PureComponent, IPageLayout
                             renderInfo: {{RenderInfo.ToJsonString()}}
                           });
                           """
-                    
-                  
-    
-    
-                    
                 }
-
-
             }
         };
 
         IEnumerable<Element> arrangeFonts()
         {
-            
             return new Element[]
             {
-                new link{href   = "https://fonts.gstatic.com", rel = "preconnect", crossOrigin = "anonymous"},
-                
-                new link{href   = "https://fonts.googleapis.com", rel = "preconnect"},
-                
+                new link { href = "https://fonts.gstatic.com", rel = "preconnect", crossOrigin = "anonymous" },
+
+                new link { href = "https://fonts.googleapis.com", rel = "preconnect" },
+
                 new link { href = "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap", rel = "stylesheet" },
 
                 // prevent font flash
                 // optimized for english characters (40kb -> 6kb)
                 new link
                 {
-                    rel         = "preload", 
+                    rel         = "preload",
                     href        = $"{fonts}PlusJakartaSans-ExtraBold-subset.woff2",
-                    type        ="font/woff2",
+                    type        = "font/woff2",
                     crossOrigin = "anonymous",
                     @as         = "font"
                 },
-                
 
-                
-
-                
                 new style
                 {
                     @$"""
@@ -214,6 +195,6 @@ html{{  }}
 
 partial class Extensions
 {
+    public static StyleModifier FontFamily_IBM_Plex_Sans => FontFamily("'IBM Plex Sans'");
     public static StyleModifier FontFamily_PlusJakartaSans_ExtraBold => FontFamily("PlusJakartaSans-ExtraBold");
-    public static StyleModifier FontFamily_IBM_Plex_Sans=> FontFamily("'IBM Plex Sans'");
 }
