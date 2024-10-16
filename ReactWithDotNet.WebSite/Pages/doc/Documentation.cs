@@ -2,6 +2,16 @@
 
 abstract class PageDocumentation : Component<PageDocumentation.State>
 {
+    protected override Task componentDidMount()
+    {
+        if (!Client.WidthHasMatch(MD))
+        {
+            state = state with { LeftMenuIsCollapsed = true };
+        }
+
+        return Task.CompletedTask;
+    }
+
     protected abstract Element CreateContent();
 
     protected override Element render()
