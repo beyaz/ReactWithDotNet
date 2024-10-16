@@ -12,51 +12,28 @@ sealed class PageDocumentation_Start : PageDocumentation
             {
                 new h1(FontSize32, FontWeight400, LineHeight32, MarginBottom(1.2 * rem))
                 {
-                    "Ana Başlık"
+                    "Quick Start"
                 },
                 new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1 * rem))
                 {
-                    "Quis vel iste dicta"
+                    "c# & react"
                 },
 
                 new p(LineHeight28, MarginBottom(1.5 * rem))
                 {
-                    "Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
+                    "If you know reactjs and c# language, you already familier to ReactWithDotNet ecosystem.",
+                    "Build react component tree and event handlers in c# language at .net core server afterthat component tree will render in browser."
                 },
 
                 new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1 * rem))
                 {
-                    "Quis vel iste dicta 2"
+                    "Lets look at component decleration in react"
                 },
                 new p(LineHeight28, MarginBottom(1.5 * rem))
                 {
-                    "2 Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
+                    new CSharpCodeEditor()
                 },
-                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1 * rem))
-                {
-                    "Quis vel iste dicta"
-                },
-                new p(LineHeight28, MarginBottom(1.5 * rem))
-                {
-                    "Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
-                },
-
-                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1 * rem))
-                {
-                    "Quis vel iste dicta 2"
-                },
-                new p(LineHeight28, MarginBottom(1.5 * rem))
-                {
-                    "2 Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
-                },
-                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1 * rem))
-                {
-                    "Quis vel iste dicta"
-                },
-                new p(LineHeight28, MarginBottom(1.5 * rem))
-                {
-                    "Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
-                },
+               
 
             }
         };
