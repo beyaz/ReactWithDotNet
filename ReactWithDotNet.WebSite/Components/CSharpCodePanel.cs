@@ -2,13 +2,25 @@
 
 namespace ReactWithDotNet.WebSite.Components;
 
-sealed class CSharpCodePanel : PureComponent
+sealed class CodeViewer : PureComponent
 {
     public required string Code { get; init; }
 
+    public bool LanguageIsTypeScript { get; init; }
+    
+    public bool LanguageIsCSharp { get; init; }
+
     protected override Element render()
     {
+
+        var language = "csharp";
+        if (LanguageIsTypeScript)
+        {
+            language = "typescript";
+        }
+        
         var code = Code;
+        
         if (DesignMode && code is null)
         {
             code = """"
@@ -43,7 +55,7 @@ sealed class CSharpCodePanel : PureComponent
         }
         return new Editor
         {
-            defaultLanguage = "csharp",
+            defaultLanguage = language,
             value = code,
             options =
             {
@@ -58,3 +70,14 @@ sealed class CSharpCodePanel : PureComponent
         };
     }
 }
+
+sealed class CSharpCodePanel : PureComponent
+{
+    public required string Code { get; init; }
+
+    protected override Element render()
+    {
+        return new CodeViewer { Code = Code, LanguageIsCSharp = true };
+    }
+}
+

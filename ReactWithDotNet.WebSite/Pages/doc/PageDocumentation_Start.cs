@@ -31,7 +31,33 @@ sealed class PageDocumentation_Start : PageDocumentation
                 },
                 new p(LineHeight28, MarginBottom(1.5 * rem))
                 {
-                    new CSharpCodeEditor()
+                    new div(Height(300))
+                    {
+                        new CodeViewer
+                        {
+                            LanguageIsTypeScript = true,
+                            Code = """
+                                   class Test extends React.Component 
+                                   {
+                                       constructor(props) 
+                                       {
+                                           super(props);
+                                           this.state = {  };
+                                       }
+
+                                       componentDidMount() 
+                                       {
+                                         
+                                       }
+
+                                       render ()
+                                       {
+                                           this.setState({ hello: "Geek!" });
+                                       }
+                                   }
+                                   """
+                        }
+                    }
                 },
                
 
