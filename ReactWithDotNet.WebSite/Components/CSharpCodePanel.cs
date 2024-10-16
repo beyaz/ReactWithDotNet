@@ -81,3 +81,24 @@ sealed class CSharpCodePanel : PureComponent
     }
 }
 
+sealed class CodeViewerForTypeScript : PureComponent
+{
+    public CodeViewerForTypeScript(params Modifier[] modifiers )
+    {
+        Add(modifiers);
+    }
+    
+    protected override Element render()
+    {
+        var htmlTextNode = children.FirstOrDefault() as HtmlTextNode;
+
+        return new div
+        {
+            new CodeViewer
+            {
+                Code = htmlTextNode?.text, LanguageIsTypeScript = true
+            }
+        };
+    }
+}
+
