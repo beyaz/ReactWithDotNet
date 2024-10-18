@@ -669,24 +669,48 @@ public static partial class Mixin
     ///     Creates new div element wihth given height
     /// </summary>
     public static Element SpaceY(double heightInPx) => new div { style = { height = heightInPx.AsPixel() } };
-    
+
     /// <summary>
     ///     Creates new div element wihth given height
     /// </summary>
-    public static Element SpaceY(double heightInPx, Func<StyleModifier[], StyleModifier> breakpoint, double heightInPxOnBreakpointMatched) => new div
+    public static Element SpaceY(double heightInPx, params (Func<StyleModifier[], StyleModifier> breakpoint, double heightInPxOnBreakpointMatched)[] breakpoints)
     {
-        Height(heightInPx),
-        breakpoint([Height(heightInPxOnBreakpointMatched)])
-    };
-    
+        var newDiv = new div
+        {
+            Height(heightInPx)
+        };
+
+        if (breakpoints is not null)
+        {
+            foreach (var (breakpoint, heightInPxOnBreakpointMatched) in breakpoints)
+            {
+                breakpoint?.Invoke([Height(heightInPxOnBreakpointMatched)]);
+            }
+        }
+
+        return newDiv;
+    }
+
     /// <summary>
     ///     Creates new div element wihth given width
     /// </summary>
-    public static Element SpaceX(double widthInPx,Func<StyleModifier[], StyleModifier> breakpoint, double widthtInPxOnBreakpointMatched) => new div
+    public static Element SpaceX(double widthInPx, params (Func<StyleModifier[], StyleModifier> breakpoint, double widthtInPxOnBreakpointMatched)[] breakpoints) 
     {
-        Width(widthInPx),
-        breakpoint([Width(widthtInPxOnBreakpointMatched)])
-    };
+        var newDiv = new div
+        {
+            Width(widthInPx)
+        };
+
+        if (breakpoints is not null)
+        {
+            foreach (var (breakpoint, widthtInPxOnBreakpointMatched) in breakpoints)
+            {
+                breakpoint?.Invoke([Width(widthtInPxOnBreakpointMatched)]);
+            }
+        }
+
+        return newDiv;
+    }
 
     public static HtmlElementModifier Text(string innerText) 
         => CreateHtmlElementModifier<HtmlElement>(element => element.text = innerText);
