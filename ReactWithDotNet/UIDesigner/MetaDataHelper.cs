@@ -81,7 +81,7 @@ static class MetadataHelper
                     return true;
                 }
             }
-            
+
             return false;
         }
 
@@ -201,9 +201,9 @@ static class MetadataHelper
         {
             return false;
         }
-        
-        if (methodInfo.Name == "render" || 
-            methodInfo.Name == "renderAsync" || 
+
+        if (methodInfo.Name == "render" ||
+            methodInfo.Name == "renderAsync" ||
             methodInfo.Name == "InvokeRender" ||
             methodInfo.Name == "componentDidCatch")
         {
@@ -219,7 +219,7 @@ static class MetadataHelper
         {
             return false;
         }
-        
+
         // is function component
         if (IsElement(methodInfo.ReturnType))
         {
@@ -263,6 +263,7 @@ static class MetadataHelper
             {
                 return true;
             }
+
             if (parameterType == typeof(object))
             {
                 return true;
