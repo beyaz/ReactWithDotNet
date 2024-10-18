@@ -11,6 +11,8 @@ static class MetadataHelper
 
         VisitTypes(assembly, visitType);
 
+        return returnMethodInfo;
+
         void visitType(Type type)
         {
             if (returnMethodInfo == null)
@@ -29,8 +31,6 @@ static class MetadataHelper
                 }
             }
         }
-
-        return returnMethodInfo;
     }
 
     public static IEnumerable<MetadataNode> GetMetadataNodes(string assemblyFilePath, string classFilter, string methodFilter)
@@ -62,7 +62,7 @@ static class MetadataHelper
                 }
             }
 
-            return items.Take(2).ToList();
+            return items.Take(3).ToList();
         }
 
         static bool ignoreClass(MetadataNode classNode)
@@ -158,23 +158,6 @@ static class MetadataHelper
     {
         var types = new List<Type>();
 
-        void visit(Type type)
-        {
-            if (!string.IsNullOrWhiteSpace(classFilter))
-            {
-                var classFilters = classFilter.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
-                foreach (var filter in classFilters)
-                {
-                    if (type.FullName?.IndexOf(filter, StringComparison.OrdinalIgnoreCase) < 0)
-                    {
-                        return;
-                    }
-                }
-            }
-
-            types.Add(type);
-        }
-
         VisitTypes(assembly, visit);
 
         if (types.Count == 0 && !string.IsNullOrWhiteSpace(classFilter))
@@ -193,6 +176,23 @@ static class MetadataHelper
         }
 
         return types;
+
+        void visit(Type type)
+        {
+            if (!string.IsNullOrWhiteSpace(classFilter))
+            {
+                var classFilters = classFilter.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
+                foreach (var filter in classFilters)
+                {
+                    if (type.FullName?.IndexOf(filter, StringComparison.OrdinalIgnoreCase) < 0)
+                    {
+                        return;
+                    }
+                }
+            }
+
+            types.Add(type);
+        }
     }
 
     static bool IsValidForExport(MethodInfo methodInfo)
