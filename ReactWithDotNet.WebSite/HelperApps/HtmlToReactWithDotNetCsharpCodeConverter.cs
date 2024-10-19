@@ -403,8 +403,13 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 data.modifiers.Remove(textModifierCode);
             }
 
+            var isBodyWritten = false;
+            var isConstructorWritten = false;
+            
             if (data.modifiers.Count > 0)
             {
+                isConstructorWritten = true;
+                
                 sb.Append("(");
                 sb.Append(JoinModifiers(data.modifiers));
                 sb.Append(")");
@@ -414,6 +419,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             if (textModifierCode is not null)
             {
+                isBodyWritten  = true;
+                
                 lines.Add("{");
 
                 lines.Add(textModifierCode.PartParameterWithoutParanthesis.RemoveFromStart("\"").RemoveFromEnd("\""));
@@ -423,6 +430,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             if (data.htmlNode.Attributes.Any())
             {
+                isBodyWritten  = true;
+                
                 lines.Add("{");
 
                 foreach (var list in data.htmlNode.Attributes.Select(attributeToString))
@@ -443,6 +452,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 lines.Add("}");
             }
 
+            if (isConstructorWritten is false && isBodyWritten is false)
+            {
+                lines[^1] += "()";
+            }
+            
             return lines;
 
             List<string> attributeToString(HtmlAttribute attribute)

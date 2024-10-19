@@ -10,6 +10,13 @@ public class HtmlToCSharpTests
     public void _0()
     {
         Assert("""
+               <div></div>
+               """,
+               """
+               new div()
+               """);
+        
+        Assert("""
                <span class='a-b c' style = "color:rgb(28, 32, 37);border-radius:12px;">xYz1</span>
                """,
                """
