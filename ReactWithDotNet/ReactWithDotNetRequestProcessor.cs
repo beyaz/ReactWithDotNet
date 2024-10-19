@@ -324,8 +324,8 @@ sealed class CalculateComponentRenderInfoInput
 
 public delegate Task BeforeSerializeElementToClient(ReactContext reactContext, Element element, Element parent);
 
-public delegate Task OnReactContextCreated(HttpContext httpContext, ReactContext reactContext);
-public delegate Task OnReactContextDisposed(HttpContext httpContext, ReactContext reactContext);
+public delegate Task OnReactContextCreated(ReactContext reactContext);
+public delegate Task OnReactContextDisposed(ReactContext reactContext);
 
 public sealed class ComponentRenderInfo
 {

@@ -102,7 +102,7 @@ static class ComponentRequestHandler
                 
                 context.Set(typeof(HttpContext).FullName, input.HttpContext);
 
-                var task = input.OnReactContextCreated?.Invoke(input.HttpContext, context);
+                var task = input.OnReactContextCreated?.Invoke(context);
                 if (task is not null)
                 {
                     await task;
@@ -128,7 +128,7 @@ static class ComponentRequestHandler
             }
             finally
             {
-                var task = input.OnReactContextDisposed?.Invoke(input.HttpContext, context);
+                var task = input.OnReactContextDisposed?.Invoke(context);
                 if (task is not null)
                 {
                     await task;

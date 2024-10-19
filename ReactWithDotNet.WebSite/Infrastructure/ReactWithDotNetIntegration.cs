@@ -95,7 +95,7 @@ public static class ReactWithDotNetIntegration
         return Results.Ok(new { FilePath = filePath });
     }
 
-    static Task OnReactContextCreated(HttpContext httpContext, ReactContext context)
+    static Task OnReactContextCreated(ReactContext context)
     {
         context.Set(ThemeKey, new());
 
