@@ -15,7 +15,7 @@ public sealed class ReactContextKey<TValue>
 
     public ReactContextKey(string key, Func<ReactContext, TValue> accessFunc)
     {
-        Key = key;
+        Key        = key;
         AccessFunc = accessFunc;
     }
 
@@ -44,7 +44,6 @@ public sealed class ReactContext
     internal double? ClientHeight { get; init; }
 
     internal double? ClientWidth { get; init; }
-    
 
     public bool Contains<TValue>(ReactContextKey<TValue> key)
     {
@@ -67,11 +66,11 @@ public sealed class ReactContext
         {
             return (TValue)value;
         }
-        
+
         if (key.AccessFunc is not null)
         {
             var newValue = key.AccessFunc(this);
-            
+
             map[key.Key] = newValue;
 
             return newValue;
