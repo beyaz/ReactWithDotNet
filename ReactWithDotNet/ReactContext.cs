@@ -7,9 +7,17 @@ public sealed class ReactContextKey<TValue>
 {
     public readonly string Key;
 
-    public ReactContextKey(string key)
+    internal Func<ReactContext, TValue> AccessFunc;
+
+    public ReactContextKey(string key) // todo: fixme
     {
         Key = key;
+    }
+
+    public ReactContextKey(string key, Func<ReactContext, TValue> accessFunc)
+    {
+        Key = key;
+        AccessFunc = accessFunc;
     }
 
     public TValue this[ReactContext reactContext]
@@ -59,6 +67,15 @@ public sealed class ReactContext
         if (map.TryGetValue(key.Key, out var value))
         {
             return (TValue)value;
+        }
+        
+        if (key.AccessFunc is not null)
+        {
+            var newValue = key.AccessFunc(this);
+            
+            map[key.Key] = newValue;
+
+            return newValue;
         }
 
         return default;

@@ -97,8 +97,6 @@ public static class ReactWithDotNetIntegration
 
     static Task OnReactContextCreated(ReactContext context)
     {
-        context.Set(ThemeKey, new());
-
         return Task.CompletedTask;
     }
 

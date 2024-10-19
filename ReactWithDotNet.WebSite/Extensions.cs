@@ -6,7 +6,7 @@ static partial class Extensions
 {
     public static string text_primary => "#1A2027";
     
-    public static readonly ReactContextKey<LightTheme> ThemeKey = new(nameof(ThemeKey));
+    public static readonly ReactContextKey<LightTheme> ThemeKey = new(nameof(ThemeKey), _=>new());
 
 
     public static StyleModifier BorderRadiusForPaper => BorderRadius(4);
