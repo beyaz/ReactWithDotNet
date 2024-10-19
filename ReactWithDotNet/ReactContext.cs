@@ -2,14 +2,13 @@
 
 namespace ReactWithDotNet;
 
-// ReSharper disable once UnusedTypeParameter
 public sealed class ReactContextKey<TValue>
 {
     public readonly string Key;
 
     internal Func<ReactContext, TValue> AccessFunc;
 
-    public ReactContextKey(string key) // todo: fixme
+    public ReactContextKey(string key)
     {
         Key = key;
     }
