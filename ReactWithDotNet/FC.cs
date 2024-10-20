@@ -360,6 +360,8 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
             return;
         }
         
+        // delegateMethodTargetInstanceType.Calculated().
+        
         foreach (var fieldInfo in delegateMethodTargetInstanceType.GetFields())
         {
             if (char.IsUpper(fieldInfo.Name[0]))
