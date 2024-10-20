@@ -4,102 +4,22 @@ using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
-public interface IFunctionalComponent: IReactComponent
+public interface IFunctionalComponent : IReactComponent
 {
     public Func<Task> ComponentDidMount { set; }
 
     public Func<Task> Constructor { set; }
-    
+
     public bool DesignMode { get; }
 }
 
 partial class Mixin
 {
-    internal static bool IsFunctionalComponent(this Type type)
-    {
-        return type == typeof(IFunctionalComponent);
-    }
-    
-    public static Element FC(Func<IFunctionalComponent, Element> func, [CallerMemberName] string callerMemberName = null)
-    {
-        if (func == null)
-        {
-            return null;
-        }
-
-        if (func.Target is not null)
-        {
-            var targeType = func.Target.GetType();
-
-            if (targeType.IsCompilerGenerated())
-            {
-                return new FunctionalComponent
-                {
-                    renderFuncWithScope = func,
-                    
-                    RenderMethodNameWithToken = func.Method.GetAccessKey(),
-                    
-                    CompilerGeneratedType = targeType,
-                    
-                    Name = $"{targeType.DeclaringType?.Name}.{callerMemberName}"
-                    
-                };
-            }
-        }
-
-        throw InvalidUsageOfFunctionalComponent(func);
-    }
-
-    static Exception InvalidUsageOfFunctionalComponent(Delegate @delegate)
-    {
-        var target = @delegate.Target;
-        if (target is null)
-        {
-            return DeveloperException($"Invalid usage of Functional component.{@delegate.Method} target cannot be null.");
-        }
-        
-        return DeveloperException($"Invalid usage of Functional component. {target.GetType().FullName}  should be compiler generated type.");
-    }
-    
-    public static Element FC(Func<IFunctionalComponent, Task<Element>> func, [CallerMemberName] string callerMemberName = null)
-    {
-        if (func == null)
-        {
-            return null;
-        }
-
-        if (func.Target is not null)
-        {
-            var targeType = func.Target.GetType();
-
-            if (targeType.IsCompilerGenerated())
-            {
-                return new FunctionalComponent
-                {
-                    IsRenderAsync = true,
-                    
-                    IsAsyncFC = true,
-                            
-                    asyncRenderFunc = func,
-                    
-                    RenderMethodNameWithToken = func.Method.GetAccessKey(),
-                    
-                    CompilerGeneratedType = targeType,
-                    
-                    Name = $"{targeType.DeclaringType?.Name}.{callerMemberName}"
-                };
-            }
-        }
-        
-        throw InvalidUsageOfFunctionalComponent(func);
-    }
-    
-    
     /// <summary>
-    ///    Dispatch given <paramref name="handlerFunc"/>
-    ///    <br/>
-    ///    Sample usage:
-    /// <code> 
+    ///     Dispatch given <paramref name="handlerFunc" />
+    ///     <br />
+    ///     Sample usage:
+    ///     <code> 
     ///    static FC Counter(int Count, Func&lt;int, Task&gt; OnValueChange)
     ///    {
     ///        var count = Count;
@@ -140,12 +60,12 @@ partial class Mixin
 
         functionalComponent.Client.DispatchDotNetCustomEvent(senderInfo);
     }
-  
+
     /// <summary>
-    ///    Dispatch given <paramref name="handlerFunc"/>
-    ///    <br/>
-    ///    Sample usage:
-    /// <code> 
+    ///     Dispatch given <paramref name="handlerFunc" />
+    ///     <br />
+    ///     Sample usage:
+    ///     <code> 
     ///    static FC Counter(int Count, Func&lt;int, Task&gt; OnValueChange)
     ///    {
     ///        var count = Count;
@@ -186,20 +106,93 @@ partial class Mixin
 
         functionalComponent.Client.DispatchDotNetCustomEvent(senderInfo, parameters);
     }
-}
 
+    public static Element FC(Func<IFunctionalComponent, Element> func, [CallerMemberName] string callerMemberName = null)
+    {
+        if (func == null)
+        {
+            return null;
+        }
+
+        if (func.Target is not null)
+        {
+            var targeType = func.Target.GetType();
+
+            if (targeType.IsCompilerGenerated())
+            {
+                return new FunctionalComponent
+                {
+                    renderFuncWithScope = func,
+
+                    RenderMethodNameWithToken = func.Method.GetAccessKey(),
+
+                    CompilerGeneratedType = targeType,
+
+                    Name = $"{targeType.DeclaringType?.Name}.{callerMemberName}"
+                };
+            }
+        }
+
+        throw InvalidUsageOfFunctionalComponent(func);
+    }
+
+    public static Element FC(Func<IFunctionalComponent, Task<Element>> func, [CallerMemberName] string callerMemberName = null)
+    {
+        if (func == null)
+        {
+            return null;
+        }
+
+        if (func.Target is not null)
+        {
+            var targeType = func.Target.GetType();
+
+            if (targeType.IsCompilerGenerated())
+            {
+                return new FunctionalComponent
+                {
+                    IsRenderAsync = true,
+
+                    IsAsyncFC = true,
+
+                    asyncRenderFunc = func,
+
+                    RenderMethodNameWithToken = func.Method.GetAccessKey(),
+
+                    CompilerGeneratedType = targeType,
+
+                    Name = $"{targeType.DeclaringType?.Name}.{callerMemberName}"
+                };
+            }
+        }
+
+        throw InvalidUsageOfFunctionalComponent(func);
+    }
+
+    internal static bool IsFunctionalComponent(this Type type)
+    {
+        return type == typeof(IFunctionalComponent);
+    }
+
+    static Exception InvalidUsageOfFunctionalComponent(Delegate @delegate)
+    {
+        var target = @delegate.Target;
+        if (target is null)
+        {
+            return DeveloperException($"Invalid usage of Functional component.{@delegate.Method} target cannot be null.");
+        }
+
+        return DeveloperException($"Invalid usage of Functional component. {target.GetType().FullName}  should be compiler generated type.");
+    }
+}
 
 sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFunctionalComponent
 {
-    [JsonIgnore]
-    public new bool DesignMode => base.DesignMode;
-    
     internal object _target;
-    
+
+    internal Func<IFunctionalComponent, Task<Element>> asyncRenderFunc;
 
     internal Func<Task<Func<IFunctionalComponent, Element>>> renderFuncAsyncWithScope;
-    
-    internal Func<IFunctionalComponent, Task<Element>> asyncRenderFunc;
 
     internal Func<IFunctionalComponent, Element> renderFuncWithScope;
 
@@ -209,13 +202,16 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
 
     public Func<Task> Constructor { internal get; set; }
 
+    [JsonIgnore]
+    public new bool DesignMode => base.DesignMode;
+
+    public bool IsAsyncFC { get; init; }
+
     public bool IsRenderAsync { get; init; }
 
-    public string RenderMethodNameWithToken { get; init; }
-    
-    public bool IsAsyncFC { get; init; }
-    
     public required string Name { get; init; }
+
+    public string RenderMethodNameWithToken { get; init; }
 
     public void InitializeTarget()
     {
@@ -238,7 +234,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
         {
             target = asyncRenderFunc.Target;
         }
-        
+
         if (target is null)
         {
             throw DeveloperException("Invalid usage of useState. target not calculated.");
@@ -252,7 +248,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
         state = new()
         {
             IsAsyncFC = IsAsyncFC,
-            
+
             IsRenderAsync = IsRenderAsync,
 
             CompilerGeneratedType = CompilerGeneratedType,
@@ -263,22 +259,6 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
         return Task.CompletedTask;
     }
 
-    static void TryUpdateProps(object targetInMethod, object target)
-    {
-        if (targetInMethod is not null)
-        {
-            foreach (var fieldInfo in targetInMethod.GetType().GetFields())
-            {
-                if (char.IsUpper(fieldInfo.Name[0]))
-                {
-                    var propValue = fieldInfo.GetValue(targetInMethod);
-                        
-                    fieldInfo.SetValue(target, propValue);
-                }
-            }
-        }
-    }
-    
     protected override Element render()
     {
         if (state.IsRenderAsync)
@@ -295,7 +275,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
         {
             InitializeTarget();
 
-            TryUpdateProps(renderFuncWithScope?.Target,_target);
+            TryUpdateProps(renderFuncWithScope?.Target, _target);
         }
 
         MethodInfo methodInfo = null;
@@ -330,24 +310,19 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
                 }
             }
         }
-        
-        
-        
+
         if (renderFuncAsyncWithScope is not null && state.Scope is null)
         {
             var fc = await renderFuncAsyncWithScope();
 
             return fc?.Invoke(this);
         }
-        
-        
-        
 
         if (_target is null && state.Scope is not null)
         {
             InitializeTarget();
 
-            TryUpdateProps(renderFuncAsyncWithScope?.Target,_target);
+            TryUpdateProps(renderFuncAsyncWithScope?.Target, _target);
         }
 
         MethodInfo methodInfo = null;
@@ -370,9 +345,27 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
         throw DeveloperException("Invalid usage of useState.");
     }
 
+    static void TryUpdateProps(object targetInMethod, object target)
+    {
+        if (targetInMethod is not null)
+        {
+            foreach (var fieldInfo in targetInMethod.GetType().GetFields())
+            {
+                if (char.IsUpper(fieldInfo.Name[0]))
+                {
+                    var propValue = fieldInfo.GetValue(targetInMethod);
+
+                    fieldInfo.SetValue(target, propValue);
+                }
+            }
+        }
+    }
+
     internal class State
     {
         public Type CompilerGeneratedType { get; init; }
+
+        public bool IsAsyncFC { get; set; }
 
         public bool IsRenderAsync { get; init; }
 
@@ -382,14 +375,10 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
         ///     Scope means value of auto generated fields of CompilerGeneratedType instance.
         /// </summary>
         public IReadOnlyDictionary<string, object> Scope { get; set; }
-        
-        public bool IsAsyncFC { get; set; }
     }
 }
 
-
 /* TEST SCENARIO
- 
 
 
 
@@ -397,15 +386,16 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
 
 
 
-     
-     
-   
-     
-     
+
+
+
+
+
+
    namespace ReactWithDotNet.WebSite;
 
-   
-   
+
+
    public class MainWindow : PureComponent
    {
        protected override Element render()
@@ -413,9 +403,9 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
            return new div(WidthFull, HeightFull)
            {
                new ErrorViewTest(),
-               
+
                // new ParentChildEventTest(),
-               
+
                //CountComponentAsync(7),
                //CountComponentAsyncTask(8),
 
@@ -430,14 +420,14 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
                //new TriggerParentTest()
            };
        }
-       
+
        class ErrorViewTest : Component<ErrorViewTest.State>
        {
            internal class State
            {
                public int Count { get; set; }
            }
-       
+
            protected override Element render()
            {
                return new FlexColumn(Size(300), Border(1, solid, "red"))
@@ -453,7 +443,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
                return FC(_ =>
                {
                    var isOdd = Number % 2 == 1;
-               
+
                    return new FlexColumn
                    {
                        new div
@@ -467,7 +457,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
            Task OnClickHandler(MouseEvent e)
            {
                state.Count++;
-           
+
                return Task.CompletedTask;
            }
        }
@@ -1033,7 +1023,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
            {
                public int Count { get; set; }
            }
-           
+
            protected override Element render()
            {
                return new div
@@ -1047,7 +1037,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
            Task OnValueChangeRootComponent(int newValue)
            {
                state.Count = newValue;
-               
+
                return Task.CompletedTask;
            }
 
@@ -1075,7 +1065,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
                    }
                });
            }
-           
+
            static Element Counter_B(int Count, Func<int, Task> OnValueChangeB)
            {
                var count = Count;
@@ -1086,7 +1076,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
                    {
                        "Counter_B: " + count + "/" + Count,
                        OnClick(OnClickHandler),
-                       
+
                        Counter_C(Count,OnValueChangeB)
                    };
 
@@ -1101,7 +1091,7 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
                    }
                });
            }
-           
+
            static Element Counter_C(int Count, Func<int, Task> OnValueChangeC)
            {
                var count = Count;
@@ -1128,13 +1118,13 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
        }
 
    }
-   
-   
-     
-     
-     
-     
-   
+
+
+
+
+
+
+
 
 
 
