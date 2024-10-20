@@ -684,7 +684,7 @@ public static partial class Mixin
         {
             foreach (var (breakpoint, heightInPxOnBreakpointMatched) in breakpoints)
             {
-                breakpoint?.Invoke([Height(heightInPxOnBreakpointMatched)]);
+                newDiv.Add(breakpoint?.Invoke([Height(heightInPxOnBreakpointMatched)]));
             }
         }
 
@@ -705,7 +705,7 @@ public static partial class Mixin
         {
             foreach (var (breakpoint, widthtInPxOnBreakpointMatched) in breakpoints)
             {
-                breakpoint?.Invoke([Width(widthtInPxOnBreakpointMatched)]);
+                newDiv.Add(breakpoint?.Invoke([Width(widthtInPxOnBreakpointMatched)]));
             }
         }
 
