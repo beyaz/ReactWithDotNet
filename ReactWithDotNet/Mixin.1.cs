@@ -663,21 +663,21 @@ public static partial class Mixin
     /// <summary>
     ///     Creates new div element wihth given width
     /// </summary>
-    public static Element SpaceX(double widthInPx) => new div { style = { width = widthInPx.AsPixel() } };
+    public static Element SpaceX(CssUnit width) => new div { style = { Width(width) } };
     
     /// <summary>
     ///     Creates new div element wihth given height
     /// </summary>
-    public static Element SpaceY(double heightInPx) => new div { style = { height = heightInPx.AsPixel() } };
+    public static Element SpaceY(CssUnit height) => new div { style = { Height(height) } };
 
     /// <summary>
     ///     Creates new div element wihth given height
     /// </summary>
-    public static Element SpaceY(double heightInPx, params (Func<StyleModifier[], StyleModifier> breakpoint, double heightInPxOnBreakpointMatched)[] breakpoints)
+    public static Element SpaceY(CssUnit height, params (Func<StyleModifier[], StyleModifier> breakpoint, CssUnit heightOnBreakpointMatched)[] breakpoints)
     {
         var newDiv = new div
         {
-            Height(heightInPx)
+            Height(height)
         };
 
         if (breakpoints is not null)
@@ -694,11 +694,11 @@ public static partial class Mixin
     /// <summary>
     ///     Creates new div element wihth given width
     /// </summary>
-    public static Element SpaceX(double widthInPx, params (Func<StyleModifier[], StyleModifier> breakpoint, double widthtInPxOnBreakpointMatched)[] breakpoints) 
+    public static Element SpaceX(CssUnit width, params (Func<StyleModifier[], StyleModifier> breakpoint, CssUnit widthtOnBreakpointMatched)[] breakpoints) 
     {
         var newDiv = new div
         {
-            Width(widthInPx)
+            Width(width)
         };
 
         if (breakpoints is not null)
