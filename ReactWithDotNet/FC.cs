@@ -353,15 +353,15 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
         }
 
         var delegateMethodTargetInstanceType = delegateMethodTargetInstance.GetType();
-        
+
         if (delegateMethodTargetInstanceType != target.GetType())
         {
             // TODO: check on hierarchical component tree.
             return;
         }
-        
-        // delegateMethodTargetInstanceType.Calculated().
-        
+
+        // todo: cache to calculated for props
+
         foreach (var fieldInfo in delegateMethodTargetInstanceType.GetFields())
         {
             if (char.IsUpper(fieldInfo.Name[0]))
