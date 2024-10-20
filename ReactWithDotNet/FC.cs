@@ -345,23 +345,28 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
         throw DeveloperException("Invalid usage of useState.");
     }
 
-    static void TryUpdateProps(object targetInMethod, object target)
+    static void TryUpdateProps(object delegateMethodTargetInstance, object target)
     {
-        return;
-        
-        // TODO: check on hierarchical component tree.
-        
-        // ReSharper disable once HeuristicUnreachableCode
-        if (targetInMethod is not null)
+        if (delegateMethodTargetInstance is null)
         {
-            foreach (var fieldInfo in targetInMethod.GetType().GetFields())
-            {
-                if (char.IsUpper(fieldInfo.Name[0]))
-                {
-                    var propValue = fieldInfo.GetValue(targetInMethod);
+            return;
+        }
 
-                    fieldInfo.SetValue(target, propValue);
-                }
+        var delegateMethodTargetInstanceType = delegateMethodTargetInstance.GetType();
+        
+        if (delegateMethodTargetInstanceType != target.GetType())
+        {
+            // TODO: check on hierarchical component tree.
+            return;
+        }
+        
+        foreach (var fieldInfo in delegateMethodTargetInstanceType.GetFields())
+        {
+            if (char.IsUpper(fieldInfo.Name[0]))
+            {
+                var propValue = fieldInfo.GetValue(delegateMethodTargetInstance);
+
+                fieldInfo.SetValue(target, propValue);
             }
         }
     }
