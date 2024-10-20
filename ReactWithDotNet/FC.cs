@@ -347,6 +347,11 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
 
     static void TryUpdateProps(object targetInMethod, object target)
     {
+        return;
+        
+        // TODO: check on hierarchical component tree.
+        
+        // ReSharper disable once HeuristicUnreachableCode
         if (targetInMethod is not null)
         {
             foreach (var fieldInfo in targetInMethod.GetType().GetFields())
