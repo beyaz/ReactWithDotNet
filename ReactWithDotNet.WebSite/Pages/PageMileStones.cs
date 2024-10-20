@@ -78,7 +78,7 @@ sealed class PageMilestones : PureComponent
 
         protected override Element render()
         {
-            return new div(SizeFull, BorderRadius(4), Border(1, solid, Blue300), Size(200, 25), WhenMediaWidthGreaterThan(450, Width(300)))
+            return new div(SizeFull, BorderRadius(4), Border(1, solid, Blue300), Size(200, 25), WhenMediaMinWidth(450, Width(300)))
             {
                 new FlexRowCentered(Width(Value, 100), Background(linear_gradient(90, Blue100, Blue300)), HeightFull, FontSize11, BorderRadius(4)),
 

@@ -11,7 +11,7 @@ static partial class Extensions
 
     public static StyleModifier BorderRadiusForPaper => BorderRadius(4);
 
-    public static StyleModifier DisplayNoneWhenMobile => WhenMediaWidthLessThan(MD,DisplayNone);
+    public static StyleModifier DisplayNoneWhenMobile => WhenMediaMaxWidth(MD,DisplayNone);
     public static StyleModifier DisplayNoneWhenNotMobile => MD(DisplayNone);
     
 

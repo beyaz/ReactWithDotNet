@@ -47,7 +47,7 @@ partial class Mixin
     /// <summary>
     ///     min-width: <paramref name="widthAsPixel" /> + 'px'
     /// </summary>
-    public static StyleModifier WhenMediaWidthGreaterThan(int widthAsPixel, params StyleModifier[] styleModifiers)
+    public static StyleModifier WhenMediaMinWidth(int widthAsPixel, params StyleModifier[] styleModifiers)
     {
         return MediaQuery($"(min-width: {widthAsPixel}px)", styleModifiers);
     }
@@ -55,18 +55,18 @@ partial class Mixin
     /// <summary>
     ///     Sample Usage:
     ///     <code>
-    ///      WhenMediaWidthGreaterThan(SM, BorderRadius(8))
+    ///      WhenMediaMinWidth(SM, BorderRadius(8))
     ///     </code>
     /// </summary>
-    public static StyleModifier WhenMediaWidthGreaterThan(Func<StyleModifier[], StyleModifier> breakpoint, params StyleModifier[] styleModifiers)
+    public static StyleModifier WhenMediaMinWidth(Func<StyleModifier[], StyleModifier> breakpoint, params StyleModifier[] styleModifiers)
     {
-        return WhenMediaWidthGreaterThan(ConvertToNumber(breakpoint), styleModifiers);
+        return WhenMediaMinWidth(ConvertToNumber(breakpoint), styleModifiers);
     }
 
     /// <summary>
     ///     max-width: <paramref name="widthAsPixel" /> + 'px'
     /// </summary>
-    public static StyleModifier WhenMediaWidthLessThan(int widthAsPixel, params StyleModifier[] styleModifiers)
+    public static StyleModifier WhenMediaMaxWidth(int widthAsPixel, params StyleModifier[] styleModifiers)
     {
         return MediaQuery($"(max-width: {widthAsPixel}px)", styleModifiers);
     }
@@ -74,12 +74,12 @@ partial class Mixin
     /// <summary>
     ///     Sample Usage:
     ///     <code>
-    ///      WhenMediaWidthLessThan(SM, BorderRadius(8))
+    ///      WhenMediaMaxWidth(SM, BorderRadius(8))
     ///     </code>
     /// </summary>
-    public static StyleModifier WhenMediaWidthLessThan(Func<StyleModifier[], StyleModifier> breakpoint, params StyleModifier[] styleModifiers)
+    public static StyleModifier WhenMediaMaxWidth(Func<StyleModifier[], StyleModifier> breakpoint, params StyleModifier[] styleModifiers)
     {
-        return WhenMediaWidthLessThan(ConvertToNumber(breakpoint), styleModifiers);
+        return WhenMediaMaxWidth(ConvertToNumber(breakpoint), styleModifiers);
     }
 
     /// <summary>
