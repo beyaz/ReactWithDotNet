@@ -1,121 +1,47 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-    <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
-	    <NoWarn>CS8981</NoWarn>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <Compile Remove="wwwroot\dist\**" />
-      <Content Remove="wwwroot\dist\**" />
-      <EmbeddedResource Remove="wwwroot\dist\**" />
-      <None Remove="wwwroot\dist\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Content Include="SvgFiles\twitter_30_30.svg" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\ReactWithDotNet\ReactWithDotNet.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="HtmlAgilityPack" Version="1.11.66" />
-        <PackageReference Include="YamlDotNet" Version="16.1.3" />
-		<PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="4.11.0" />
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" />
-    </ItemGroup>
-
-
-    <PropertyGroup>
-        <LangVersion>preview</LangVersion>
-    </PropertyGroup>
-
-
-	<!-- npm -->
-	
 	<PropertyGroup>
-		<AppRoot>wwwroot\</AppRoot>		
+		<LangVersion>preview</LangVersion>
+		<TargetFramework>net8.0</TargetFramework>
+		<NoWarn>CS8981</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<FilesInDistFolder Include="wwwroot\dist\$(Configuration)\*.*" />
+		<ProjectReference Include="..\ReactWithDotNet\ReactWithDotNet.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Components\HomePageDemoComponent.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Showcases\MonacoEditorDemo.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Showcases\MuiCardDemo.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Showcases\MuiTextFieldDemo.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Showcases\PrimeReactTabViewDemo.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Showcases\ReactPlayerDemo.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Showcases\RSuiteAutoCompleteDemo.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Showcases\SwiperGalleryDemo.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
+		<PackageReference Include="HtmlAgilityPack" Version="1.11.66" />
+		<PackageReference Include="YamlDotNet" Version="16.1.3" />
+		<PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="4.11.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" />
 	</ItemGroup>
-	
-	<Target Name="_EnsureNodeEnvironment_" BeforeTargets="rebuild;build" Condition=" !Exists('$(AppRoot)node_modules') ">
-		<Exec Command="node --version" ContinueOnError="true">
-			<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
-		</Exec>
-		<Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
-		<Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
-		<Exec WorkingDirectory="$(AppRoot)" Command="npm install" />
-	</Target>
-	
-	<Target Name="_NpmRun_" BeforeTargets="rebuild">
-		<Exec Command="node --version" ContinueOnError="true">
-			<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
-		</Exec>
-		<Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
-		<Message Importance="high" Text="Runinning npm command: 'npm run dev , build'" />
 
-		<RemoveDir Directories="$(AppRoot)dist/" />
-		
-		<Exec WorkingDirectory="$(AppRoot)" Command="npm run dev" />
-		<Exec WorkingDirectory="$(AppRoot)" Command="npm run build" />
-	</Target>
-
-	<Target Name="_BeforePublish_" AfterTargets="ComputeFilesToPublish">
-		<RemoveDir Directories="$(AppRoot)dist/" />
-		<Exec WorkingDirectory="$(AppRoot)" Command="npm install" />
-		<Exec WorkingDirectory="$(AppRoot)" Command="npm run build" />
-	</Target>
-
-	<Target Name="_AfterPublish_" AfterTargets="Publish">
-		<Copy SourceFiles="@(FilesInDistFolder)" DestinationFolder="$(PublishDir)/wwwroot/dist/$(Configuration)/" SkipUnchangedFiles="false" />
-		<Delete Files="$(PublishDir)/ReactWithDotNet.pdb" />
-		<Delete Files="$(PublishDir)/ReactWithDotNet.xml" />
-		<Delete Files="$(PublishDir)/$(MSBuildProjectName).pdb" />
-		<Delete Files="$(PublishDir)/$(MSBuildProjectName).xml" />
-
-		<Delete Files="$(PublishDir)/wwwroot/index.jsx" />
-		<Delete Files="$(PublishDir)/wwwroot/index-dev.jsx" />
-		<Delete Files="$(PublishDir)/wwwroot/package.json" />
-		<Delete Files="$(PublishDir)/wwwroot/package-lock.json" />
-
-		<RemoveDir Directories="$(PublishDir)\wwwroot\react-with-dotnet" />
-
-		
-		
-	</Target>
-
-	
+	<ItemGroup>
+		<Compile Update="Components\HomePageDemoComponent.cs">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Compile>
+		<Compile Update="Showcases\MonacoEditorDemo.cs">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Compile>
+		<Compile Update="Showcases\MuiCardDemo.cs">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Compile>
+		<Compile Update="Showcases\MuiTextFieldDemo.cs">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Compile>
+		<Compile Update="Showcases\PrimeReactTabViewDemo.cs">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Compile>
+		<Compile Update="Showcases\ReactPlayerDemo.cs">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Compile>
+		<Compile Update="Showcases\RSuiteAutoCompleteDemo.cs">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Compile>
+		<Compile Update="Showcases\SwiperGalleryDemo.cs">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Compile>
+	</ItemGroup>
 
 </Project>
