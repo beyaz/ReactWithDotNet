@@ -38,4 +38,18 @@
       <ProjectReference Include="..\ReactWithDotNet.SourceGenerator\ReactWithDotNet.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>
 
+
+	<PropertyGroup>
+		<PackageId>ReactWithDotNet</PackageId>
+		<Version>1.0.0</Version>
+		<Authors>ReactWithDotNet</Authors>
+		<Company>ReactWithDotNet</Company>
+		<Description>Write react app in c# language on .net core server</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://reactwithdotnet.com</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/beyaz/ReactWithDotNet</RepositoryUrl>
+		<PackageTags>react;reactjs;ReactWithDotNet</PackageTags>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+	
 </Project>
