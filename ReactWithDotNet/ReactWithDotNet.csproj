@@ -51,5 +51,9 @@
 		<PackageTags>react;reactjs;ReactWithDotNet</PackageTags>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
-	
+
+	<ItemGroup>
+		<Content Include="JsClientEngine\ReactWithDotNet-1.0.0\**\*" Pack="true" PackagePath="ReactWithDotNet-1.0.0" />
+	</ItemGroup>
+
 </Project>
