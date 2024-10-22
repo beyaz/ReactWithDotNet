@@ -1,1 +1,0 @@
-export { Rotate as default } from 'react-awesome-reveal';

@@ -1,1 +1,0 @@
-export { InputMask as default } from 'primereact/inputmask';

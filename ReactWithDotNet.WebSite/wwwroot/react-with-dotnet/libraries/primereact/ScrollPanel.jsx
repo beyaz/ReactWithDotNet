@@ -1,1 +1,0 @@
-export { ScrollPanel as default } from 'primereact/scrollpanel';

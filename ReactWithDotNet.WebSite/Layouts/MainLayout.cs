@@ -22,7 +22,8 @@ class MainLayout : PureComponent, IPageLayout
         }
     }
 
-    string IndexJsFilePath => $"/{Context.wwwroot}/dist/{CompilerMode}/index.js";
+    string IndexJsFilePath => $"/{Context.wwwroot}/ReactWithDotNet-1.0.0/{CompilerMode}/index.js";
+    string IndexCssFilePath => $"/{Context.wwwroot}/ReactWithDotNet-1.0.0/{CompilerMode}/index.css";
 
     protected override Element render()
     {
@@ -82,7 +83,7 @@ class MainLayout : PureComponent, IPageLayout
                 {
                     rel         = "stylesheet",
                     type        = "text/css",
-                    href        = $"{root}/dist/{CompilerMode}/index.css",
+                    href        = $"{IndexCssFilePath}?v={LastWriteTimeOfIndexJsFile}",
                     crossOrigin = "anonymous"
                 },
 

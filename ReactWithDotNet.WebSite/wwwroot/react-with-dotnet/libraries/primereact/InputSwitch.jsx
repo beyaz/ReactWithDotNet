@@ -1,1 +1,0 @@
-export { InputSwitch as default } from 'primereact/inputswitch';
