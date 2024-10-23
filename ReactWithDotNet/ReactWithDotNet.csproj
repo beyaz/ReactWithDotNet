@@ -56,4 +56,10 @@
 		<Content Include="JsClientEngine\ReactWithDotNet-1.0.0\**\*" Pack="true" PackagePath="ReactWithDotNet-1.0.0" />
 	</ItemGroup>
 
+
+
+	<Target Name="UpdateLocalNuget" AfterTargets="Build">
+		<Exec Command="dotnet pack $(ProjectPath) -o C:\NugetPackages" />
+	</Target>
+
 </Project>
