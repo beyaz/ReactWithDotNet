@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.WebSite;
 
-class MainLayout : PureComponent, IPageLayout
+sealed class MainLayout : PureComponent, IPageLayout
 {
     static string LastWriteTimeOfIndexJsFile;
 
@@ -22,8 +22,9 @@ class MainLayout : PureComponent, IPageLayout
         }
     }
 
-    string IndexJsFilePath => $"/{Context.wwwroot}/ReactWithDotNet/{CompilerMode}/index.js";
     string IndexCssFilePath => $"/{Context.wwwroot}/ReactWithDotNet/{CompilerMode}/index.css";
+
+    string IndexJsFilePath => $"/{Context.wwwroot}/ReactWithDotNet/{CompilerMode}/index.js";
 
     protected override Element render()
     {
