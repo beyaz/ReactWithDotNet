@@ -1,0 +1,51 @@
+<Project>
+
+	<Target Name="copy_ReactWithDotNet_compiled_client_files_to_web_root_for_debug" AfterTargets="Build">
+
+		<PropertyGroup>
+
+			<ReactWithDotNetSourceFolderForDebug>$(MSBuildThisFileDirectory)CompiledClientFiles\debug</ReactWithDotNetSourceFolderForDebug>
+
+			<ReactWithDotNetDestinationFolderForDebug>$(ProjectDir)wwwroot\ReactWithDotNet\debug</ReactWithDotNetDestinationFolderForDebug>
+
+		</PropertyGroup>
+
+		<ItemGroup>
+
+			<ReactWithDotNetFilesToCopyForDebug Include="$(ReactWithDotNetSourceFolderForDebug)\**" />
+
+			<FilesToCopy Include="$(ReactWithDotNetSourceFolderForDebug)\**" />
+
+		</ItemGroup>
+
+		<Message Text="ReactWithDotNet: copies folder from $(ReactWithDotNetSourceFolderForDebug) to $(ReactWithDotNetDestinationFolderForDebug)" Importance="high" />
+
+		<Copy SourceFiles="@(ReactWithDotNetFilesToCopyForDebug)" DestinationFolder="$(ReactWithDotNetDestinationFolderForDebug)" />
+
+	</Target>
+
+	<Target Name="copy_ReactWithDotNet_compiled_client_files_to_web_root_for_release" AfterTargets="Build">
+
+		<PropertyGroup>
+
+			<ReactWithDotNetSourceFolderForRelease>$(MSBuildThisFileDirectory)CompiledClientFiles\release</ReactWithDotNetSourceFolderForRelease>
+
+			<ReactWithDotNetDestinationFolderForRelease>$(ProjectDir)wwwroot\ReactWithDotNet\release</ReactWithDotNetDestinationFolderForRelease>
+
+		</PropertyGroup>
+
+		<ItemGroup>
+
+			<ReactWithDotNetFilesToCopyForRelease Include="$(ReactWithDotNetSourceFolderForRelease)\**" />
+
+			<FilesToCopy Include="$(ReactWithDotNetSourceFolderForRelease)\**" />
+
+		</ItemGroup>
+
+		<Message Text="ReactWithDotNet: copies folder from $(ReactWithDotNetSourceFolderForRelease) to $(ReactWithDotNetDestinationFolderForRelease)" Importance="high" />
+
+		<Copy SourceFiles="@(ReactWithDotNetFilesToCopyForRelease)" DestinationFolder="$(ReactWithDotNetDestinationFolderForRelease)" />
+
+	</Target>
+
+</Project>

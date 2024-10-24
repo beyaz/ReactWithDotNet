@@ -42,13 +42,6 @@
 	</ItemGroup>
 
 
-	<Target Name="CopyLocalNugetFolderToWwwRoot" AfterTargets="Build">
-
-		<ItemGroup>
-			<FilesToCopy Include="C:\NugetPackages\ReactWithDotNet_a\ReactWithDotNet\$(Configuration)\*" />
-		</ItemGroup>
-		
-		<Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(ProjectDir)wwwroot\lib\$(Configuration)"/>
-	</Target>
+	
 	
 </Project>

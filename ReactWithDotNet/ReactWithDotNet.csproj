@@ -53,7 +53,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Content Include="JsClientEngine\ReactWithDotNet-1.0.0\**\*" Pack="true" PackagePath="ReactWithDotNet-1.0.0" />
+		<Content Include="JsClientEngine\CompiledClientFiles\**\*" Pack="true" PackagePath="build\CompiledClientFiles" />
+		<None Include="build\ReactWithDotNet.targets" Pack="true" PackagePath="build\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="build\" />
 	</ItemGroup>
 
 
