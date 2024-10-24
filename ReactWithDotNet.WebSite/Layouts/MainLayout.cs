@@ -28,11 +28,11 @@ sealed class MainLayout : PureComponent, IPageLayout
 
     protected override Element render()
     {
+        LastWriteTimeOfIndexJsFile ??= new FileInfo(IndexJsFilePath).LastWriteTime.Ticks.ToString();
+
         var root = Context.wwwroot;
 
         var fonts = root + "/assets/fonts/";
-
-        LastWriteTimeOfIndexJsFile ??= new FileInfo(IndexJsFilePath).LastWriteTime.Ticks.ToString();
 
         return new html
         {
