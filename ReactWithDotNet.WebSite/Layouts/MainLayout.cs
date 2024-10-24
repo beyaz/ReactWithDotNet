@@ -22,8 +22,8 @@ class MainLayout : PureComponent, IPageLayout
         }
     }
 
-    string IndexJsFilePath => $"/{Context.wwwroot}/ReactWithDotNet-1.0.0/{CompilerMode}/index.js";
-    string IndexCssFilePath => $"/{Context.wwwroot}/ReactWithDotNet-1.0.0/{CompilerMode}/index.css";
+    string IndexJsFilePath => $"/{Context.wwwroot}/ReactWithDotNet/{CompilerMode}/index.js";
+    string IndexCssFilePath => $"/{Context.wwwroot}/ReactWithDotNet/{CompilerMode}/index.css";
 
     protected override Element render()
     {
