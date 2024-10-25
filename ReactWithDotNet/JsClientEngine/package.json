@@ -25,6 +25,8 @@
         "primeicons": "^7.0.0",
         "primereact": "^10.8.2",
 
+        "react-awesome-reveal": "^4.2.14",
+
         "rsuite": "^5.70.2",
 
         "react-xarrows": "^2.0.2",

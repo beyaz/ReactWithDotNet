@@ -1,0 +1,1 @@
+export { Hinge as default } from 'react-awesome-reveal';
