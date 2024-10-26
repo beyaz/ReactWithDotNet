@@ -20,6 +20,8 @@
 
 		<Message Text="ReactWithDotNet: copies folder from $(ReactWithDotNetSourceFolderForDebug) to $(ReactWithDotNetDestinationFolderForDebug)" Importance="high" />
 
+		<Delete Files="$(ReactWithDotNetDestinationFolderForDebug)\*.*" />
+		
 		<Copy SourceFiles="@(ReactWithDotNetFilesToCopyForDebug)" DestinationFolder="$(ReactWithDotNetDestinationFolderForDebug)" />
 
 	</Target>
@@ -44,6 +46,8 @@
 
 		<Message Text="ReactWithDotNet: copies folder from $(ReactWithDotNetSourceFolderForRelease) to $(ReactWithDotNetDestinationFolderForRelease)" Importance="high" />
 
+		<Delete Files="$(ReactWithDotNetDestinationFolderForRelease)\*.*" />
+		
 		<Copy SourceFiles="@(ReactWithDotNetFilesToCopyForRelease)" DestinationFolder="$(ReactWithDotNetDestinationFolderForRelease)" />
 
 	</Target>
