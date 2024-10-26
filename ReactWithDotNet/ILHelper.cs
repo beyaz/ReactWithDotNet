@@ -1,36 +1,13 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Diagnostics;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using static ReactWithDotNet.JsonMap;
 
 namespace ReactWithDotNet;
 
 public static class ILHelper
 {
-    record MethodDefinitionInfo
-    {
-        public IReadOnlyList<int> OpCodes { get; init; }
-        
-        public Dictionary<int,object> Operands { get; init; }
-        
-        public IReadOnlyList<ExceptionHandlerInfo> ExceptionHandlers { get; init; }
-        
-        public string FullName { get; init; }
-    }
-
-    record ExceptionHandlerInfo
-    {
-        public int HandlerStart{ get; init; }
-        
-        public int HandlerEnd{ get; init; }
-        
-        public string CatchType { get; init; }
-    }
-    
-
-    static string Deneme(string p0)
+    public static string Deneme(string p0)
     {
         if (p0 == "a")
         {
@@ -40,9 +17,8 @@ public static class ILHelper
             }
             catch (Exception exception)
             {
-
                 return "t";
-            } 
+            }
         }
 
         object x = p0;
@@ -50,9 +26,39 @@ public static class ILHelper
         {
             x.ToString();
         }
+
         return "b";
     }
-    
+
+    internal static object GetMethodBody()
+    {
+        var assemblyDefinition = AssemblyDefinition.ReadAssembly(typeof(ILHelper).Assembly.Location);
+
+        foreach (var moduleDefinition in assemblyDefinition.Modules)
+        {
+            var typeDefinition = moduleDefinition.GetType("ReactWithDotNet", "ILHelper");
+            foreach (var methodDefinition in typeDefinition.Methods)
+            {
+                if (methodDefinition.Name is "Deneme")
+                {
+                    var body = methodDefinition.Body;
+
+                    return JsonSerializer.Serialize(body, new JsonSerializerOptions
+                    {
+                        Converters =
+                        {
+                            new MethodBodyConverter(),
+                            new TypeReferenceConverter(), new MethodReferenceConverter(),
+                            new ParameterDefinitionConverter()
+                        }
+                    });
+                }
+            }
+        }
+
+        return null;
+    }
+
     sealed class MethodBodyConverter : JsonConverter<MethodBody>
     {
         public override MethodBody Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -63,9 +69,9 @@ public static class ILHelper
         public override void Write(Utf8JsonWriter writer, MethodBody body, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            
+
             var opCodes = new List<int>();
-            var operands = new Dictionary<int,object>();
+            var operands = new Dictionary<int, object>();
 
             var instructions = body.Instructions;
 
@@ -74,9 +80,9 @@ public static class ILHelper
                 var instruction = instructions[i];
 
                 var code = instruction.OpCode.Code;
-                        
+
                 var operand = instruction.Operand;
-                        
+
                 opCodes.Add((int)code);
 
                 if (code == Code.Ldstr)
@@ -84,55 +90,103 @@ public static class ILHelper
                     operands.Add(i, (string)instruction.Operand);
                     continue;
                 }
-                
+
                 if (operand is Instruction operandAsInstruction)
                 {
                     operands.Add(i, instructions.IndexOf(operandAsInstruction));
                     continue;
                 }
-                
+
                 if (operand is MethodReference methodReference)
                 {
-                    operands.Add(i, new []{methodReference.DeclaringType.Scope.Name ,methodReference.DeclaringType.FullName, methodReference.ToString()});
+                    operands.Add(i, methodReference);
                     continue;
                 }
-                
+
                 if (operand is TypeReference typeReference)
                 {
                     operands.Add(i, typeReference);
                     continue;
                 }
-                
+
                 if (operand is Instruction[] operandAsInstructionList)
                 {
-                    operands.Add(i, operandAsInstructionList.Select(x=>instructions.IndexOf(x)).ToArray());
-                    continue;
+                    operands.Add(i, operandAsInstructionList.Select(instructions.IndexOf));
                 }
             }
-            
+
             writer.WritePropertyName(nameof(body.Instructions));
-            
+
             JsonSerializer.Serialize(writer, opCodes, options);
-            
+
             writer.WritePropertyName("Operands");
-            
+
             JsonSerializer.Serialize(writer, operands, options);
-          
+
             writer.WritePropertyName(nameof(body.ExceptionHandlers));
-            
+
             JsonSerializer.Serialize(writer, body.ExceptionHandlers.Select(handler => new
             {
                 HandlerStart = instructions.IndexOf(handler.HandlerStart),
-                HandlerEnd   = instructions.IndexOf(handler.HandlerEnd),
-                
+                HandlerEnd   = instructions.IndexOf(handler.HandlerEnd)
             }), options);
-            
 
             writer.WriteEndObject();
         }
     }
-    
-    sealed class TypeReferenceConverter: JsonConverter<TypeReference>
+
+    sealed class MethodReferenceConverter : JsonConverter<MethodReference>
+    {
+        public override MethodReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Write(Utf8JsonWriter writer, MethodReference methodReference, JsonSerializerOptions options)
+        {
+            writer.WriteStartObject();
+
+            writer.WritePropertyName(nameof(MethodReference.Name));
+
+            JsonSerializer.Serialize(writer, methodReference.Name, options);
+
+            writer.WritePropertyName(nameof(MethodReference.ReturnType));
+
+            JsonSerializer.Serialize(writer, methodReference.ReturnType, options);
+
+            writer.WritePropertyName(nameof(MethodReference.ReturnType));
+
+            JsonSerializer.Serialize(writer, methodReference.Parameters, options);
+
+            writer.WriteEndObject();
+        }
+    }
+
+    sealed class ParameterDefinitionConverter : JsonConverter<ParameterDefinition>
+    {
+        public override ParameterDefinition Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Write(Utf8JsonWriter writer, ParameterDefinition parameterDefinition, JsonSerializerOptions options)
+        {
+            writer.WriteStartObject();
+
+            writer.WritePropertyName(nameof(ParameterDefinition.Index));
+            JsonSerializer.Serialize(writer, parameterDefinition.Index, options);
+
+            writer.WritePropertyName(nameof(ParameterDefinition.Name));
+            JsonSerializer.Serialize(writer, parameterDefinition.Name, options);
+
+            writer.WritePropertyName(nameof(ParameterDefinition.ParameterType));
+            JsonSerializer.Serialize(writer, parameterDefinition.ParameterType, options);
+
+            writer.WriteEndObject();
+        }
+    }
+
+    sealed class TypeReferenceConverter : JsonConverter<TypeReference>
     {
         public override TypeReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
@@ -142,46 +196,16 @@ public static class ILHelper
         public override void Write(Utf8JsonWriter writer, TypeReference typeReference, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            
+
             writer.WritePropertyName(nameof(TypeReference.Name));
-            
+
             JsonSerializer.Serialize(writer, typeReference.Name, options);
-            
+
             writer.WritePropertyName(nameof(TypeReference.Namespace));
-            
+
             JsonSerializer.Serialize(writer, typeReference.Namespace, options);
-            
+
             writer.WriteEndObject();
         }
-    }
-    
-    internal static object GetMethodBody()
-    {
-        var assemblyDefinition = Mono.Cecil.AssemblyDefinition.ReadAssembly(typeof(ILHelper).Assembly.Location);
-
-        
-            
-        foreach (var moduleDefinition in assemblyDefinition.Modules)
-        {
-            var typeDefinition = moduleDefinition.GetType("ReactWithDotNet","ILHelper");
-            foreach (var methodDefinition in typeDefinition.Methods)
-            {
-                if (methodDefinition.Name is "Deneme")
-                {
-                    var body = methodDefinition.Body;
-                    
-
-                    return JsonSerializer.Serialize(body, new JsonSerializerOptions
-                    {
-                        Converters = { new MethodBodyConverter(), new TypeReferenceConverter() }
-                    });
-                    
-
-                   
-                }
-            }
-        }
-
-        return null;
     }
 }
