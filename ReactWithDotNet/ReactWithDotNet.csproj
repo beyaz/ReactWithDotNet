@@ -10,6 +10,10 @@
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
     </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Mono.Cecil" Version="0.11.6" />
+	</ItemGroup>
+	
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <WarningLevel>3</WarningLevel>
     </PropertyGroup>
@@ -60,8 +64,6 @@
 	<ItemGroup>
 	  <Folder Include="build\" />
 	</ItemGroup>
-
-
 
 	<Target Name="UpdateLocalNuget" AfterTargets="Build">
 		<Exec Command="dotnet pack $(ProjectPath) -o C:\NugetPackages" />
