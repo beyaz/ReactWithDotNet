@@ -15,30 +15,41 @@ public static class ILHelper
             new MethodBodyConverter(),
             new TypeReferenceConverter(),
             new MethodReferenceConverter(),
-            new ParameterDefinitionConverter()
+            new ParameterDefinitionConverter(),
+            new GenericInstanceMethodConverter(),
+            
         }
     };
 
+    public static string Deneme2<A,B,C>(string p0, int[] arr = null, int[,,] arr2 = null)
+    {
+        return "gg";
+    }
+    
     public static string Deneme(string p0)
     {
-        if (p0 == "a")
-        {
-            try
-            {
-                return "a";
-            }
-            catch (Exception)
-            {
-                return "t";
-            }
-        }
+        return Deneme2<string, int, int>("g");
+        
+        //if (p0 == "a")
+        //{
+        //    try
+        //    {
+        //        return "a";
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return "t";
+        //    }
+        //}
 
-        object x = p0;
-        if (x is string)
-        {
-        }
 
-        return "b";
+        //object x = p0;
+        //if (x is string)
+        //{
+        //    Deneme2<string, int, int>("g");
+        //}
+
+        //return "b";
     }
 
     internal static object denemeeee()
@@ -134,16 +145,15 @@ public static class ILHelper
     {
         writer.WriteStartObject();
 
-        writer.WritePropertyName(nameof(MethodReference.Name));
+       
 
+        writer.WritePropertyName(nameof(MethodReference.ReturnType));
+        JsonSerializer.Serialize(writer, methodReference.ReturnType, options);
+        
+        writer.WritePropertyName(nameof(MethodReference.Name));
         JsonSerializer.Serialize(writer, methodReference.Name, options);
 
-        writer.WritePropertyName(nameof(MethodReference.ReturnType));
-
-        JsonSerializer.Serialize(writer, methodReference.ReturnType, options);
-
-        writer.WritePropertyName(nameof(MethodReference.ReturnType));
-
+        writer.WritePropertyName(nameof(MethodReference.Parameters));
         JsonSerializer.Serialize(writer, methodReference.Parameters, options);
 
         writer.WriteEndObject();
@@ -167,19 +177,72 @@ public static class ILHelper
 
     static void Serialize(Utf8JsonWriter writer, TypeReference typeReference, JsonSerializerOptions options)
     {
+        
+        
         writer.WriteStartObject();
 
+        
+        
         writer.WritePropertyName(nameof(TypeReference.Name));
-
         JsonSerializer.Serialize(writer, typeReference.Name, options);
 
         writer.WritePropertyName(nameof(TypeReference.Namespace));
-
         JsonSerializer.Serialize(writer, typeReference.Namespace, options);
 
         writer.WriteEndObject();
+        
+        
     }
+    
+    static void Serialize(Utf8JsonWriter writer, ArrayType arrayType, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
 
+        writer.WritePropertyName(nameof(TypeReference.IsArray));
+        writer.WriteBooleanValue(true);
+        
+        writer.WritePropertyName(nameof(ArrayType.Dimensions));
+        JsonSerializer.Serialize(writer, arrayType.Dimensions, options);
+
+        writer.WritePropertyName(nameof(ArrayType.Rank));
+        JsonSerializer.Serialize(writer, arrayType.Rank, options);
+        
+
+        writer.WritePropertyName(nameof(ArrayType.ElementType));
+        JsonSerializer.Serialize(writer, arrayType.ElementType, options);
+
+        
+        writer.WriteEndObject();
+    }
+    
+    
+    static void Serialize(Utf8JsonWriter writer, GenericInstanceMethod genericInstanceMethod, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+
+        writer.WritePropertyName(nameof(GenericInstanceMethod.GenericArguments));
+        JsonSerializer.Serialize(writer, genericInstanceMethod.GenericArguments, options);
+
+        writer.WritePropertyName(nameof(GenericInstanceMethod.ElementMethod));
+        JsonSerializer.Serialize(writer, genericInstanceMethod.ElementMethod, options);
+
+        writer.WriteEndObject();
+    }
+    
+    
+    
+    sealed class GenericInstanceMethodConverter : JsonConverter<GenericInstanceMethod>
+    {
+        public override GenericInstanceMethod Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Write(Utf8JsonWriter writer, GenericInstanceMethod value, JsonSerializerOptions options)
+        {
+            Serialize(writer, value, options);
+        }
+    }
     sealed class MethodBodyConverter : JsonConverter<MethodBody>
     {
         public override MethodBody Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -187,9 +250,9 @@ public static class ILHelper
             throw new NotImplementedException();
         }
 
-        public override void Write(Utf8JsonWriter writer, MethodBody body, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, MethodBody value, JsonSerializerOptions options)
         {
-            Serialize(writer, body, options);
+            Serialize(writer, value, options);
         }
     }
 
@@ -200,9 +263,9 @@ public static class ILHelper
             throw new NotImplementedException();
         }
 
-        public override void Write(Utf8JsonWriter writer, MethodReference methodReference, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, MethodReference value, JsonSerializerOptions options)
         {
-            Serialize(writer, methodReference, options);
+            Serialize(writer, value, options);
         }
     }
 
@@ -213,9 +276,9 @@ public static class ILHelper
             throw new NotImplementedException();
         }
 
-        public override void Write(Utf8JsonWriter writer, ParameterDefinition parameterDefinition, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, ParameterDefinition value, JsonSerializerOptions options)
         {
-            Serialize(writer, parameterDefinition, options);
+            Serialize(writer, value, options);
         }
     }
 
@@ -226,9 +289,15 @@ public static class ILHelper
             throw new NotImplementedException();
         }
 
-        public override void Write(Utf8JsonWriter writer, TypeReference typeReference, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, TypeReference value, JsonSerializerOptions options)
         {
-            Serialize(writer, typeReference, options);
+            if (value is ArrayType arrayType)
+            {
+                Serialize(writer, arrayType, options);
+                return;
+            }
+            
+            Serialize(writer, value, options);
         }
     }
 }
