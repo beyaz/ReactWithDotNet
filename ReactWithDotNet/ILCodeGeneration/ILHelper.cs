@@ -40,20 +40,17 @@ public static class ILHelper
         return "b";
     }
 
-    internal static object denemeeee()
+    internal static string denemeeee()
     {
         var assemblyDefinition = AssemblyDefinition.ReadAssembly(typeof(ILHelper).Assembly.Location);
 
         foreach (var moduleDefinition in assemblyDefinition.Modules)
         {
             var typeDefinition = moduleDefinition.GetType("ReactWithDotNet.ILCodeGeneration", "ILHelper");
-            foreach (var methodDefinition in typeDefinition.Methods)
-            {
-                if (methodDefinition.Name is "Deneme")
-                {
-                    return JsonSerializer.Serialize(methodDefinition.AsModel(), new JsonSerializerOptions{ WriteIndented = true});
-                }
-            }
+            
+            return JsonSerializer.Serialize(typeDefinition.AsModel(), new JsonSerializerOptions{ WriteIndented = true});
+            
+          
         }
 
         return null;

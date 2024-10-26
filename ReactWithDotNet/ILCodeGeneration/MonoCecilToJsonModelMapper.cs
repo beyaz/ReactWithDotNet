@@ -193,7 +193,7 @@ static class MonoCecilToJsonModelMapper
             {
                 HandlerStart = body.Instructions.IndexOf(handler.HandlerStart),
                 HandlerEnd   = body.Instructions.IndexOf(handler.HandlerEnd),
-                CatchType    = handler.CatchType.AsModel(),
+                CatchType    = handler.CatchType?.AsModel(),
                 HandlerType = handler.HandlerType switch
                 {
                     Mono.Cecil.Cil.ExceptionHandlerType.Catch   => ExceptionHandlerType.Catch,
