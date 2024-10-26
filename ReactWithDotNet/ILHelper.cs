@@ -156,11 +156,11 @@ public static class ILHelper
         writer.WritePropertyName(nameof(ParameterDefinition.Index));
         JsonSerializer.Serialize(writer, parameterDefinition.Index, options);
 
-        writer.WritePropertyName(nameof(ParameterDefinition.Name));
-        JsonSerializer.Serialize(writer, parameterDefinition.Name, options);
-
         writer.WritePropertyName(nameof(ParameterDefinition.ParameterType));
         JsonSerializer.Serialize(writer, parameterDefinition.ParameterType, options);
+
+        writer.WritePropertyName(nameof(ParameterDefinition.Name));
+        JsonSerializer.Serialize(writer, parameterDefinition.Name, options);
 
         writer.WriteEndObject();
     }
