@@ -20,8 +20,8 @@ static class MonoCecilToJsonModelMapper
 
     public static TypeDefinitionModel AsModel(this TypeDefinition value)
     {
-        
-        
+
+
         return new TypeDefinitionModel
         {
             Name      = value.Name,
@@ -34,13 +34,22 @@ static class MonoCecilToJsonModelMapper
             Fields           = value.Fields.ToListOf(AsModel),
             Properties       = value.Properties.ToListOf(AsModel),
             NestedTypes      = value.NestedTypes.ToListOf(AsModel),
-            Events           = value.Events.ToListOf(AsModel)
-
-
+            Events           = value.Events.ToListOf(AsModel),
+            Interfaces       = value.Interfaces.ToListOf(AsModel)
 
         };
     }
 
+    
+    static InterfaceImplementationModel AsModel(this InterfaceImplementation value)
+    {
+        return new()
+        {
+            InterfaceType    = value.InterfaceType.AsModel(),
+            CustomAttributes = value.CustomAttributes.ToListOf(AsModel)
+        };
+    }
+    
     static FieldReferenceModel AsModel(this FieldReference value)
     {
         return new()

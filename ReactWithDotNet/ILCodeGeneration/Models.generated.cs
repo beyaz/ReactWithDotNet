@@ -85,6 +85,14 @@ public record EventDefinitionModel : EventReferenceModel
     public required MethodDefinitionModel RemoveMethod { get; init; }
 }
 
+public sealed record InterfaceImplementationModel
+{
+    public required TypeReferenceModel InterfaceType { get; init; }
+    
+    public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
+}
+
+
 public sealed record MethodBodyModel
 {
     public required IReadOnlyList<int> Instructions { get; init; }
@@ -150,6 +158,8 @@ public sealed record TypeDefinitionModel : TypeReferenceModel
     public required IReadOnlyList<TypeDefinitionModel> NestedTypes { get; init; }
     
     public required IReadOnlyList<EventDefinitionModel> Events { get; init; }
+    
+    public required IReadOnlyList<InterfaceImplementationModel> Interfaces { get; init; }
 }
 
 public sealed record MetadataScopeModel
