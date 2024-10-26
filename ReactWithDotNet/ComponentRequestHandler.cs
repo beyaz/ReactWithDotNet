@@ -523,6 +523,11 @@ static class ComponentRequestHandler
 
         static IQueryCollection GetRequestQuery(HttpContext httpContext)
         {
+            if (httpContext is null)
+            {
+                return new QueryCollection();
+            }
+            
             var request = httpContext.Request;
 
             if (request.Path == RequestHandlerPath)
