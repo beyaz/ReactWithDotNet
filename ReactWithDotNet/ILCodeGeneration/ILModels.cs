@@ -1,6 +1,6 @@
 ﻿namespace ReactWithDotNet.ILCodeGeneration;
 
-public sealed record TypeReferenceModel
+public record TypeReferenceModel
 {
     // @formatter:off
 
@@ -8,6 +8,8 @@ public sealed record TypeReferenceModel
 
     public required string Namespace { get; init; }
     
+    public required MetadataScopeModel Scope { get; init; }
+
     // @formatter:on
 }
 
@@ -24,6 +26,13 @@ public sealed record ParameterDefinitionModel
     // @formatter:on
 }
 
+public enum ExceptionHandlerType {
+    Catch = 0,
+    Filter = 1,
+    Finally = 2,
+    Fault = 4,
+}
+
 public sealed record ExceptionHandler
 {
     // @formatter:off
@@ -32,6 +41,10 @@ public sealed record ExceptionHandler
     
     public required int HandlerStart { get; init; }
     
+    public required TypeReferenceModel CatchType { get; init; }
+
+    public required ExceptionHandlerType  HandlerType { get; init; }
+
     // @formatter:on
 }
 
@@ -48,7 +61,7 @@ public sealed record MethodBodyModel
     // @formatter:on
 }
 
-public sealed record MethodReferenceModel
+public record MethodReferenceModel
 {
     // @formatter:off
     
@@ -61,7 +74,67 @@ public sealed record MethodReferenceModel
     // @formatter:on
 }
 
-public sealed record ArrayTypeModel
+public sealed record CustomAttributeArgumentModel
+{
+    // @formatter:off
+    
+    public required TypeReferenceModel Type { get; init; }
+    
+    public required object Value { get; init; }
+    
+    // @formatter:on
+}
+
+public sealed record CustomAttributeNamedArgumentModel
+{
+    // @formatter:off
+    
+    public required string Name { get; init; }
+    
+    public required CustomAttributeArgumentModel Argument { get; init; }
+    
+    // @formatter:on
+}
+
+
+public sealed record CustomAttributeModel
+{
+    // @formatter:off
+    
+    public required IReadOnlyList<CustomAttributeNamedArgumentModel> Fields { get; init; }
+    
+    public required IReadOnlyList<CustomAttributeNamedArgumentModel> Properties { get; init; }
+    
+    public required IReadOnlyList<CustomAttributeArgumentModel> ConstructorArguments { get; init; }
+    
+     public required MethodReferenceModel Constructor { get; init; }
+    
+    // @formatter:on
+}
+
+
+public sealed record MethodDefinitionModel : MethodReferenceModel
+{
+    // @formatter:off
+    
+    public required MethodBodyModel Body { get; init; }
+    
+    public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
+    
+    // @formatter:on
+}
+
+
+public sealed record MetadataScopeModel
+{
+    // @formatter:off
+
+    public required string Name { get; init; }
+    
+    // @formatter:on
+}
+
+public sealed record ArrayTypeModel : TypeReferenceModel
 {
     // @formatter:off
     
@@ -72,7 +145,7 @@ public sealed record ArrayTypeModel
     // @formatter:on
 }
 
-public sealed record GenericInstanceMethodModel
+public sealed record GenericInstanceMethodModel : MethodReferenceModel
 {
     // @formatter:off
     

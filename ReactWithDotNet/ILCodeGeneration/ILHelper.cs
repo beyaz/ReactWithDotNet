@@ -5,35 +5,39 @@ namespace ReactWithDotNet.ILCodeGeneration;
 
 public static class ILHelper
 {
-    public static string Deneme2<A,B,C>(string p0, int[] arr = null, int[,,] arr2 = null)
+    public static string Deneme2<A,B,C>(DenemeClass h, string p0, int[] arr = null, int[,,] arr2 = null)
     {
         return "gg";
     }
-    
+
+    public class DenemeClass
+    {
+        
+    }
     public static string Deneme(string p0)
     {
-        return Deneme2<string, int, int>("g");
         
-        //if (p0 == "a")
-        //{
-        //    try
-        //    {
-        //        return "a";
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return "t";
-        //    }
-        //}
+
+        if (p0 == "a")
+        {
+            try
+            {
+                return "a";
+            }
+            catch (Exception)
+            {
+                return "t";
+            }
+        }
 
 
-        //object x = p0;
-        //if (x is string)
-        //{
-        //    Deneme2<string, int, int>("g");
-        //}
+        object x = p0;
+        if (x is string)
+        {
+            Deneme2<string, int, int>(default,"g");
+        }
 
-        //return "b";
+        return "b";
     }
 
     internal static object denemeeee()
@@ -42,14 +46,12 @@ public static class ILHelper
 
         foreach (var moduleDefinition in assemblyDefinition.Modules)
         {
-            var typeDefinition = moduleDefinition.GetType("ReactWithDotNet", "ILHelper");
+            var typeDefinition = moduleDefinition.GetType("ReactWithDotNet.ILCodeGeneration", "ILHelper");
             foreach (var methodDefinition in typeDefinition.Methods)
             {
                 if (methodDefinition.Name is "Deneme")
                 {
-                    var body = methodDefinition.Body.Map();
-
-                    return JsonSerializer.Serialize(body);
+                    return JsonSerializer.Serialize(methodDefinition.Map(), new JsonSerializerOptions{ WriteIndented = true});
                 }
             }
         }

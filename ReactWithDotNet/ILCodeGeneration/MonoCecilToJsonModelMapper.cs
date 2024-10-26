@@ -5,23 +5,33 @@ namespace ReactWithDotNet.ILCodeGeneration;
 
 static class MonoCecilToJsonModelMapper
 {
-    public static MethodBodyModel Map(this MethodBody body)
+    public static MethodDefinitionModel Map(this MethodDefinition value)
     {
+        return new()
+        {
+            Body             = value.Body?.Map(),
+            Name             = value.Name,
+            Parameters       = value.Parameters.ToListOf(Map),
+            ReturnType       = value.ReturnType.Map(),
+            CustomAttributes = value.CustomAttributes.ToListOf(Map)
+        };
+    }
 
-        var opCodes = new List<int>();
+    static MethodBodyModel Map(this MethodBody body)
+    {
+        var instructions = new List<int>();
+
         var operands = new Dictionary<int, object>();
 
-        var instructions = body.Instructions;
-
-        for (var i = 0; i < instructions.Count; i++)
+        for (var i = 0; i < body.Instructions.Count; i++)
         {
-            var instruction = instructions[i];
+            var instruction = body.Instructions[i];
 
             var code = instruction.OpCode.Code;
 
             var operand = instruction.Operand;
 
-            opCodes.Add((int)code);
+            instructions.Add((int)code);
 
             if (code == Code.Ldstr)
             {
@@ -31,59 +41,98 @@ static class MonoCecilToJsonModelMapper
 
             if (operand is Instruction operandAsInstruction)
             {
-                operands.Add(i, instructions.IndexOf(operandAsInstruction));
+                operands.Add(i, body.Instructions.IndexOf(operandAsInstruction));
                 continue;
             }
 
             if (operand is MethodReference methodReference)
             {
-                operands.Add(i, methodReference);
+                operands.Add(i, methodReference.Map());
                 continue;
             }
 
             if (operand is TypeReference typeReference)
             {
-                operands.Add(i, typeReference);
+                operands.Add(i, typeReference.Map());
                 continue;
             }
 
             if (operand is Instruction[] operandAsInstructionList)
             {
-                operands.Add(i, operandAsInstructionList.Select(instructions.IndexOf));
+                operands.Add(i, operandAsInstructionList.Select(body.Instructions.IndexOf));
             }
         }
 
-
-
-
-
-
-
         return new()
         {
-            Instructions = opCodes,
+            Instructions = instructions,
             Operands     = operands,
             ExceptionHandlers = body.ExceptionHandlers.ToListOf(handler => new ExceptionHandler
             {
-                HandlerStart = instructions.IndexOf(handler.HandlerStart),
-                HandlerEnd   = instructions.IndexOf(handler.HandlerEnd)
+                HandlerStart = body.Instructions.IndexOf(handler.HandlerStart),
+                HandlerEnd   = body.Instructions.IndexOf(handler.HandlerEnd),
+                CatchType    = handler.CatchType.Map(),
+                HandlerType = handler.HandlerType switch
+                {
+                    Mono.Cecil.Cil.ExceptionHandlerType.Catch   => ExceptionHandlerType.Catch,
+                    Mono.Cecil.Cil.ExceptionHandlerType.Filter  => ExceptionHandlerType.Filter,
+                    Mono.Cecil.Cil.ExceptionHandlerType.Finally => ExceptionHandlerType.Finally,
+                    Mono.Cecil.Cil.ExceptionHandlerType.Fault   => ExceptionHandlerType.Fault,
+                    _                                           => throw new ArgumentOutOfRangeException()
+                }
             })
         };
     }
-    static IReadOnlyList<B> ToListOf<A, B>(this IEnumerable<A> enumerable, Func<A, B> convertFunc)
-    {
-        return enumerable?.Select(convertFunc).ToList();
-    }
 
-    
-    
     static MethodReferenceModel Map(this MethodReference methodReference)
     {
-        return new MethodReferenceModel
+        if (methodReference is GenericInstanceMethod genericInstanceMethod)
+        {
+            return new GenericInstanceMethodModel
+            {
+                ElementMethod    = genericInstanceMethod.ElementMethod.Map(),
+                GenericArguments = genericInstanceMethod.GenericArguments.Select(Map).ToList(),
+
+                Parameters = default,
+                Name       = default,
+                ReturnType = default
+            };
+        }
+
+        return new()
         {
             ReturnType = methodReference.ReturnType.Map(),
             Name       = methodReference.Name,
             Parameters = methodReference.Parameters.ToListOf(Map)
+        };
+    }
+
+    static CustomAttributeArgumentModel Map(this CustomAttributeArgument value)
+    {
+        return new()
+        {
+            Type  = value.Type.Map(),
+            Value = value.Value
+        };
+    }
+
+    static CustomAttributeNamedArgumentModel Map(this CustomAttributeNamedArgument value)
+    {
+        return new()
+        {
+            Name     = value.Name,
+            Argument = value.Argument.Map()
+        };
+    }
+
+    static CustomAttributeModel Map(this CustomAttribute value)
+    {
+        return new()
+        {
+            Constructor          = value.Constructor?.Map(),
+            ConstructorArguments = value.ConstructorArguments.ToListOf(Map),
+            Fields               = value.Fields.ToListOf(Map),
+            Properties           = value.Properties.ToListOf(Map)
         };
     }
 
@@ -96,45 +145,40 @@ static class MonoCecilToJsonModelMapper
             Name          = parameterDefinition.Name
         };
     }
-    
-    
-    
-    
 
-    
-    
     static TypeReferenceModel Map(this TypeReference typeReference)
     {
-        
+        if (typeReference is ArrayType arrayType)
+        {
+            return new ArrayTypeModel
+            {
+                Rank        = arrayType.Rank,
+                ElementType = arrayType.ElementType.Map(),
+
+                Name      = default,
+                Namespace = default,
+                Scope     = default
+            };
+        }
+
         return new()
         {
-            Name      =typeReference.Name,
+            Name      = typeReference.Name,
             Namespace = typeReference.Namespace,
-            
-            
-        };
-    }
-    
-
-    static ArrayTypeModel Map(this ArrayType arrayType)
-    {
-        return new()
-        {
-            ElementType = Map(arrayType.ElementType),
-            Rank        = arrayType.Rank
+            Scope     = typeReference.Scope.Map()
         };
     }
 
-    
-    
-    
-    static GenericInstanceMethodModel Map(GenericInstanceMethod genericInstanceMethod)
+    static MetadataScopeModel Map(this IMetadataScope metadataScope)
     {
         return new()
         {
-            ElementMethod    = genericInstanceMethod.ElementMethod.Map(),
-            GenericArguments = genericInstanceMethod.GenericArguments.Select(Map).ToList()
+            Name = metadataScope.Name
         };
     }
-    
+
+    static IReadOnlyList<B> ToListOf<A, B>(this IEnumerable<A> enumerable, Func<A, B> convertFunc)
+    {
+        return enumerable?.Select(convertFunc).ToList();
+    }
 }
