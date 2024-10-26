@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Linq;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -7,20 +8,6 @@ namespace ReactWithDotNet;
 
 public static class ILHelper
 {
-    static readonly JsonSerializerOptions JsonSerializerOptions = new()
-    {
-        WriteIndented = true,
-        Converters =
-        {
-            new MethodBodyConverter(),
-            new TypeReferenceConverter(),
-            new MethodReferenceConverter(),
-            new ParameterDefinitionConverter(),
-            new GenericInstanceMethodConverter(),
-            
-        }
-    };
-
     public static string Deneme2<A,B,C>(string p0, int[] arr = null, int[,,] arr2 = null)
     {
         return "gg";
@@ -63,9 +50,9 @@ public static class ILHelper
             {
                 if (methodDefinition.Name is "Deneme")
                 {
-                    var body = methodDefinition.Body;
+                    var body = methodDefinition.Body.Map();
 
-                    return JsonSerializer.Serialize(body, JsonSerializerOptions);
+                    return JsonSerializer.Serialize(body);
                 }
             }
         }
@@ -73,9 +60,24 @@ public static class ILHelper
         return null;
     }
 
-    static void Serialize(Utf8JsonWriter writer, MethodBody body, JsonSerializerOptions options)
+   
+
+    static IReadOnlyList<B> ToListOf<A, B>(this IEnumerable<A> enumerable, Func<A, B> convertFunc)
     {
-        writer.WriteStartObject();
+        return enumerable?.Select(convertFunc).ToList();
+    }
+    
+   
+    
+    
+   
+
+}
+
+static class MonoCecilToJsonModelMapper
+{
+     static MethodBodyModel Map(this MethodBody body)
+    {
 
         var opCodes = new List<int>();
         var operands = new Dictionary<int, object>();
@@ -122,182 +124,84 @@ public static class ILHelper
             }
         }
 
-        writer.WritePropertyName(nameof(body.Instructions));
 
-        JsonSerializer.Serialize(writer, opCodes, options);
 
-        writer.WritePropertyName("Operands");
 
-        JsonSerializer.Serialize(writer, operands, options);
 
-        writer.WritePropertyName(nameof(body.ExceptionHandlers));
 
-        JsonSerializer.Serialize(writer, body.ExceptionHandlers.Select(handler => new
+
+        return new()
         {
-            HandlerStart = instructions.IndexOf(handler.HandlerStart),
-            HandlerEnd   = instructions.IndexOf(handler.HandlerEnd)
-        }), options);
-
-        writer.WriteEndObject();
-    }
-
-    static void Serialize(Utf8JsonWriter writer, MethodReference methodReference, JsonSerializerOptions options)
-    {
-        writer.WriteStartObject();
-
-       
-
-        writer.WritePropertyName(nameof(MethodReference.ReturnType));
-        JsonSerializer.Serialize(writer, methodReference.ReturnType, options);
-        
-        writer.WritePropertyName(nameof(MethodReference.Name));
-        JsonSerializer.Serialize(writer, methodReference.Name, options);
-
-        writer.WritePropertyName(nameof(MethodReference.Parameters));
-        JsonSerializer.Serialize(writer, methodReference.Parameters, options);
-
-        writer.WriteEndObject();
-    }
-
-    static void Serialize(Utf8JsonWriter writer, ParameterDefinition parameterDefinition, JsonSerializerOptions options)
-    {
-        writer.WriteStartObject();
-
-        writer.WritePropertyName(nameof(ParameterDefinition.Index));
-        JsonSerializer.Serialize(writer, parameterDefinition.Index, options);
-
-        writer.WritePropertyName(nameof(ParameterDefinition.ParameterType));
-        JsonSerializer.Serialize(writer, parameterDefinition.ParameterType, options);
-
-        writer.WritePropertyName(nameof(ParameterDefinition.Name));
-        JsonSerializer.Serialize(writer, parameterDefinition.Name, options);
-
-        writer.WriteEndObject();
-    }
-
-    static void Serialize(Utf8JsonWriter writer, TypeReference typeReference, JsonSerializerOptions options)
-    {
-        
-        
-        writer.WriteStartObject();
-
-        
-        
-        writer.WritePropertyName(nameof(TypeReference.Name));
-        JsonSerializer.Serialize(writer, typeReference.Name, options);
-
-        writer.WritePropertyName(nameof(TypeReference.Namespace));
-        JsonSerializer.Serialize(writer, typeReference.Namespace, options);
-
-        writer.WriteEndObject();
-        
-        
-    }
-    
-    static void Serialize(Utf8JsonWriter writer, ArrayType arrayType, JsonSerializerOptions options)
-    {
-        writer.WriteStartObject();
-
-        writer.WritePropertyName(nameof(TypeReference.IsArray));
-        writer.WriteBooleanValue(true);
-        
-        writer.WritePropertyName(nameof(ArrayType.Dimensions));
-        JsonSerializer.Serialize(writer, arrayType.Dimensions, options);
-
-        writer.WritePropertyName(nameof(ArrayType.Rank));
-        JsonSerializer.Serialize(writer, arrayType.Rank, options);
-        
-
-        writer.WritePropertyName(nameof(ArrayType.ElementType));
-        JsonSerializer.Serialize(writer, arrayType.ElementType, options);
-
-        
-        writer.WriteEndObject();
-    }
-    
-    
-    static void Serialize(Utf8JsonWriter writer, GenericInstanceMethod genericInstanceMethod, JsonSerializerOptions options)
-    {
-        writer.WriteStartObject();
-
-        writer.WritePropertyName(nameof(GenericInstanceMethod.GenericArguments));
-        JsonSerializer.Serialize(writer, genericInstanceMethod.GenericArguments, options);
-
-        writer.WritePropertyName(nameof(GenericInstanceMethod.ElementMethod));
-        JsonSerializer.Serialize(writer, genericInstanceMethod.ElementMethod, options);
-
-        writer.WriteEndObject();
-    }
-    
-    
-    
-    sealed class GenericInstanceMethodConverter : JsonConverter<GenericInstanceMethod>
-    {
-        public override GenericInstanceMethod Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Write(Utf8JsonWriter writer, GenericInstanceMethod value, JsonSerializerOptions options)
-        {
-            Serialize(writer, value, options);
-        }
-    }
-    sealed class MethodBodyConverter : JsonConverter<MethodBody>
-    {
-        public override MethodBody Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Write(Utf8JsonWriter writer, MethodBody value, JsonSerializerOptions options)
-        {
-            Serialize(writer, value, options);
-        }
-    }
-
-    sealed class MethodReferenceConverter : JsonConverter<MethodReference>
-    {
-        public override MethodReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Write(Utf8JsonWriter writer, MethodReference value, JsonSerializerOptions options)
-        {
-            Serialize(writer, value, options);
-        }
-    }
-
-    sealed class ParameterDefinitionConverter : JsonConverter<ParameterDefinition>
-    {
-        public override ParameterDefinition Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Write(Utf8JsonWriter writer, ParameterDefinition value, JsonSerializerOptions options)
-        {
-            Serialize(writer, value, options);
-        }
-    }
-
-    sealed class TypeReferenceConverter : JsonConverter<TypeReference>
-    {
-        public override TypeReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Write(Utf8JsonWriter writer, TypeReference value, JsonSerializerOptions options)
-        {
-            if (value is ArrayType arrayType)
+            Instructions = opCodes,
+            Operands     = operands,
+            ExceptionHandlers = body.ExceptionHandlers.ToListOf(handler => new ExceptionHandler
             {
-                Serialize(writer, arrayType, options);
-                return;
-            }
-            
-            Serialize(writer, value, options);
-        }
+                HandlerStart = instructions.IndexOf(handler.HandlerStart),
+                HandlerEnd   = instructions.IndexOf(handler.HandlerEnd)
+            })
+        };
     }
+
+
+    
+    
+    static MethodReferenceModel Map(this MethodReference methodReference)
+    {
+        return new MethodReferenceModel
+        {
+            ReturnType = methodReference.ReturnType.Map(),
+            Name       = methodReference.Name,
+            Parameters = methodReference.Parameters.ToListOf(Map)
+        };
+    }
+
+    static ParameterDefinitionModel Map(this ParameterDefinition parameterDefinition)
+    {
+        return new()
+        {
+            Index         = parameterDefinition.Index,
+            ParameterType = parameterDefinition.ParameterType,
+            Name          = parameterDefinition.Name
+        };
+    }
+    
+    
+    
+    
+
+    
+    
+    static TypeReferenceModel Map(this TypeReference typeReference)
+    {
+        return new()
+        {
+            Name=typeReference.Name,
+            Namespace = typeReference.Namespace,
+            
+            
+        };
+    }
+    
+
+    static ArrayTypeModel Map(this ArrayType arrayType)
+    {
+        return new()
+        {
+            ElementType = Map(arrayType.ElementType),
+            Rank        = arrayType.Rank
+        };
+    }
+
+    
+    
+    
+    static GenericInstanceMethodModel Map(GenericInstanceMethod genericInstanceMethod)
+    {
+        return new()
+        {
+            ElementMethod    = genericInstanceMethod.ElementMethod.Map(),
+            GenericArguments = genericInstanceMethod.GenericArguments.Select(Map).ToList()
+        };
+    }
+    
 }
