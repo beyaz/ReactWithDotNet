@@ -8,7 +8,7 @@ public class ILHelperTests
     [TestMethod]
     public void GenerateIL()
     {
-        var response = ILHelper.GetMethodBody();
+        var response = ILHelper.denemeeee();
         
         
     }
