@@ -33,7 +33,8 @@ static class MonoCecilToJsonModelMapper
             Methods          = value.Methods.ToListOf(AsModel),
             Fields           = value.Fields.ToListOf(AsModel),
             Properties       = value.Properties.ToListOf(AsModel),
-            NestedTypes      = value.NestedTypes.ToListOf(AsModel)
+            NestedTypes      = value.NestedTypes.ToListOf(AsModel),
+            Events           = value.Events.ToListOf(AsModel)
 
 
 
@@ -72,6 +73,20 @@ static class MonoCecilToJsonModelMapper
             FullName      = value.FullName,
             EventType     = value.EventType.AsModel(),
             DeclaringType = value.DeclaringType?.AsModel()
+        };
+    }
+    
+    static EventDefinitionModel AsModel(this EventDefinition value)
+    {
+        return new()
+        {
+            Name          = value.Name,
+            FullName      = value.FullName,
+            EventType     = value.EventType.AsModel(),
+            DeclaringType = value.DeclaringType?.AsModel(),
+            
+            AddMethod    = value.AddMethod.AsModel(),
+            RemoveMethod = value.RemoveMethod.AsModel()
         };
     }
     
@@ -147,6 +162,12 @@ static class MonoCecilToJsonModelMapper
             if (operand is FieldReference fieldReference)
             {
                 operands.Add(i, fieldReference.AsModel());
+                continue;
+            }
+            
+            if (operand is EventReference eventReference)
+            {
+                operands.Add(i, eventReference.AsModel());
                 continue;
             }
             

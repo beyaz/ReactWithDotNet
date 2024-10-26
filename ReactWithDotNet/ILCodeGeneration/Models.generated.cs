@@ -78,6 +78,13 @@ public record EventReferenceModel : MemberReferenceModel
     public required TypeReferenceModel EventType { get; init; }
 }
 
+public record EventDefinitionModel : EventReferenceModel
+{
+    public required MethodDefinitionModel AddMethod { get; init; }
+    
+    public required MethodDefinitionModel RemoveMethod { get; init; }
+}
+
 public sealed record MethodBodyModel
 {
     public required IReadOnlyList<int> Instructions { get; init; }
@@ -141,6 +148,8 @@ public sealed record TypeDefinitionModel : TypeReferenceModel
     public required IReadOnlyList<PropertyDefinitionModel> Properties { get; init; }
     
     public required IReadOnlyList<TypeDefinitionModel> NestedTypes { get; init; }
+    
+    public required IReadOnlyList<EventDefinitionModel> Events { get; init; }
 }
 
 public sealed record MetadataScopeModel
