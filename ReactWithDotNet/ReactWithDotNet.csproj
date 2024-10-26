@@ -65,7 +65,7 @@
 	  <Folder Include="build\" />
 	</ItemGroup>
 
-	<Target Name="UpdateLocalNuget" AfterTargets="Build">
+	<Target Name="UpdateLocalNuget" AfterTargets="Build" Condition="$(Configuration) == 'Release'">
 		<Exec Command="dotnet pack $(ProjectPath) -o C:\NugetPackages" />
 	</Target>
 
