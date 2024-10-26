@@ -17,6 +17,93 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
+
+    public static TypeDefinitionModel AsModel(this TypeDefinition value)
+    {
+        
+        
+        return new TypeDefinitionModel
+        {
+            Name      = value.Name,
+            Namespace = value.Namespace,
+            Scope     = value.Scope.AsModel(),
+
+            CustomAttributes = value.CustomAttributes.ToListOf(AsModel),
+            BaseType         = value.BaseType.AsModel(),
+            Methods          = value.Methods.ToListOf(AsModel),
+            Fields           = value.Fields.ToListOf(AsModel),
+            Properties       = value.Properties.ToListOf(AsModel),
+            NestedTypes      = value.NestedTypes.ToListOf(AsModel)
+
+
+
+        };
+    }
+
+    static FieldReferenceModel AsModel(this FieldReference value)
+    {
+        return new()
+        {
+            Name   = value.Name,
+            FullName = value.FullName,
+            FieldType = value.FieldType.AsModel(),
+            DeclaringType = value.DeclaringType?.AsModel()
+        };
+    }
+    
+    static FieldDefinitionModel AsModel(this FieldDefinition value)
+    {
+        return new()
+        {
+            Name             = value.Name,
+            FullName         = value.FullName,
+            FieldType        = value.FieldType.AsModel(),
+            DeclaringType    = value.DeclaringType?.AsModel(),
+            CustomAttributes = value.CustomAttributes.ToListOf(AsModel)
+        };
+    }
+    
+    
+    static EventReferenceModel AsModel(this EventReference value)
+    {
+        return new()
+        {
+            Name          = value.Name,
+            FullName      = value.FullName,
+            EventType     = value.EventType.AsModel(),
+            DeclaringType = value.DeclaringType?.AsModel()
+        };
+    }
+    
+    
+    static PropertyReferenceModel AsModel(this PropertyReference value)
+    {
+        return new()
+        {
+            Name          = value.Name,
+            FullName      = value.FullName,
+            PropertyType  = value.PropertyType.AsModel(),
+            DeclaringType = value.DeclaringType?.AsModel(),
+            Parameters    =value.Parameters.ToListOf(AsModel)
+        };
+    }
+    
+    static PropertyDefinitionModel AsModel(this PropertyDefinition value)
+    {
+        return new()
+        {
+            Name          = value.Name,
+            FullName      = value.FullName,
+            PropertyType  = value.PropertyType.AsModel(),
+            DeclaringType = value.DeclaringType?.AsModel(),
+            Parameters    =value.Parameters.ToListOf(AsModel),
+            
+            GetMethod        = value.GetMethod.AsModel(),
+            SetMethod        = value.SetMethod.AsModel(),
+            CustomAttributes = value.CustomAttributes.ToListOf(AsModel)
+        };
+    }
+
     static MethodBodyModel AsModel(this MethodBody body)
     {
         var instructions = new List<int>();
@@ -54,6 +141,18 @@ static class MonoCecilToJsonModelMapper
             if (operand is TypeReference typeReference)
             {
                 operands.Add(i, typeReference.AsModel());
+                continue;
+            }
+            
+            if (operand is FieldReference fieldReference)
+            {
+                operands.Add(i, fieldReference.AsModel());
+                continue;
+            }
+            
+            if (operand is PropertyReference propertyReference)
+            {
+                operands.Add(i, propertyReference.AsModel());
                 continue;
             }
 
@@ -146,9 +245,9 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
-    static TypeReferenceModel AsModel(this TypeReference typeReference)
+    static TypeReferenceModel AsModel(this TypeReference value)
     {
-        if (typeReference is ArrayType arrayType)
+        if (value is ArrayType arrayType)
         {
             return new ArrayTypeModel
             {
@@ -163,9 +262,9 @@ static class MonoCecilToJsonModelMapper
 
         return new()
         {
-            Name      = typeReference.Name,
-            Namespace = typeReference.Namespace,
-            Scope     = typeReference.Scope.AsModel()
+            Name      = value.Name,
+            Namespace = value.Namespace,
+            Scope     = value.Scope.AsModel()
         };
     }
 

@@ -48,6 +48,72 @@ public sealed record ExceptionHandler
     // @formatter:on
 }
 
+
+public record MemberReferenceModel
+{
+    // @formatter:off
+    
+    public required string Name { get; init; }
+    
+    public required TypeReferenceModel DeclaringType { get; init; }
+    
+    public required string FullName { get; init; }
+
+    // @formatter:on
+}
+
+public record FieldReferenceModel : MemberReferenceModel
+{
+    // @formatter:off
+    
+    public required TypeReferenceModel FieldType { get; init; }
+
+    // @formatter:on
+}
+
+public record FieldDefinitionModel : FieldReferenceModel
+{
+    // @formatter:off
+    
+    public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
+
+    // @formatter:on
+}
+
+public record PropertyReferenceModel : MemberReferenceModel
+{
+    // @formatter:off
+    
+    public required TypeReferenceModel PropertyType { get; init; }
+    
+    public required IReadOnlyList<ParameterDefinitionModel> Parameters { get; init; }
+
+    // @formatter:on
+}
+
+public record PropertyDefinitionModel : PropertyReferenceModel
+{
+    // @formatter:off
+    
+    public required MethodDefinitionModel GetMethod { get; init; }
+    
+    public required MethodDefinitionModel SetMethod { get; init; }
+    
+    public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
+
+    // @formatter:on
+}
+
+public record EventReferenceModel : MemberReferenceModel
+{
+    // @formatter:off
+    
+    public required TypeReferenceModel EventType { get; init; }
+
+    // @formatter:on
+}
+
+
 public sealed record MethodBodyModel
 {
     // @formatter:off
@@ -124,6 +190,24 @@ public sealed record MethodDefinitionModel : MethodReferenceModel
     // @formatter:on
 }
 
+public sealed record TypeDefinitionModel : TypeReferenceModel
+{
+    // @formatter:off
+    
+    public required TypeReferenceModel BaseType { get; init; }
+    
+    public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
+    
+    public required IReadOnlyList<MethodDefinitionModel> Methods { get; init; }
+    
+    public required IReadOnlyList<FieldDefinitionModel> Fields { get; init; }
+    
+    public required IReadOnlyList<PropertyDefinitionModel> Properties { get; init; }
+    
+    public required IReadOnlyList<TypeDefinitionModel> NestedTypes { get; init; }
+
+    // @formatter:on
+}
 
 public sealed record MetadataScopeModel
 {
