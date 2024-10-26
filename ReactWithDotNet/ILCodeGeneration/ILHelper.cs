@@ -51,7 +51,7 @@ public static class ILHelper
             {
                 if (methodDefinition.Name is "Deneme")
                 {
-                    return JsonSerializer.Serialize(methodDefinition.Map(), new JsonSerializerOptions{ WriteIndented = true});
+                    return JsonSerializer.Serialize(methodDefinition.AsModel(), new JsonSerializerOptions{ WriteIndented = true});
                 }
             }
         }

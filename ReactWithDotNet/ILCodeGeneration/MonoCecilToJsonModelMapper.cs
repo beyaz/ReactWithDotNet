@@ -5,19 +5,19 @@ namespace ReactWithDotNet.ILCodeGeneration;
 
 static class MonoCecilToJsonModelMapper
 {
-    public static MethodDefinitionModel Map(this MethodDefinition value)
+    public static MethodDefinitionModel AsModel(this MethodDefinition value)
     {
         return new()
         {
-            Body             = value.Body?.Map(),
+            Body             = value.Body?.AsModel(),
             Name             = value.Name,
-            Parameters       = value.Parameters.ToListOf(Map),
-            ReturnType       = value.ReturnType.Map(),
-            CustomAttributes = value.CustomAttributes.ToListOf(Map)
+            Parameters       = value.Parameters.ToListOf(AsModel),
+            ReturnType       = value.ReturnType.AsModel(),
+            CustomAttributes = value.CustomAttributes.ToListOf(AsModel)
         };
     }
 
-    static MethodBodyModel Map(this MethodBody body)
+    static MethodBodyModel AsModel(this MethodBody body)
     {
         var instructions = new List<int>();
 
@@ -47,13 +47,13 @@ static class MonoCecilToJsonModelMapper
 
             if (operand is MethodReference methodReference)
             {
-                operands.Add(i, methodReference.Map());
+                operands.Add(i, methodReference.AsModel());
                 continue;
             }
 
             if (operand is TypeReference typeReference)
             {
-                operands.Add(i, typeReference.Map());
+                operands.Add(i, typeReference.AsModel());
                 continue;
             }
 
@@ -71,7 +71,7 @@ static class MonoCecilToJsonModelMapper
             {
                 HandlerStart = body.Instructions.IndexOf(handler.HandlerStart),
                 HandlerEnd   = body.Instructions.IndexOf(handler.HandlerEnd),
-                CatchType    = handler.CatchType.Map(),
+                CatchType    = handler.CatchType.AsModel(),
                 HandlerType = handler.HandlerType switch
                 {
                     Mono.Cecil.Cil.ExceptionHandlerType.Catch   => ExceptionHandlerType.Catch,
@@ -84,14 +84,14 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
-    static MethodReferenceModel Map(this MethodReference methodReference)
+    static MethodReferenceModel AsModel(this MethodReference methodReference)
     {
         if (methodReference is GenericInstanceMethod genericInstanceMethod)
         {
             return new GenericInstanceMethodModel
             {
-                ElementMethod    = genericInstanceMethod.ElementMethod.Map(),
-                GenericArguments = genericInstanceMethod.GenericArguments.Select(Map).ToList(),
+                ElementMethod    = genericInstanceMethod.ElementMethod.AsModel(),
+                GenericArguments = genericInstanceMethod.GenericArguments.Select(AsModel).ToList(),
 
                 Parameters = default,
                 Name       = default,
@@ -101,59 +101,59 @@ static class MonoCecilToJsonModelMapper
 
         return new()
         {
-            ReturnType = methodReference.ReturnType.Map(),
+            ReturnType = methodReference.ReturnType.AsModel(),
             Name       = methodReference.Name,
-            Parameters = methodReference.Parameters.ToListOf(Map)
+            Parameters = methodReference.Parameters.ToListOf(AsModel)
         };
     }
 
-    static CustomAttributeArgumentModel Map(this CustomAttributeArgument value)
+    static CustomAttributeArgumentModel AsModel(this CustomAttributeArgument value)
     {
         return new()
         {
-            Type  = value.Type.Map(),
+            Type  = value.Type.AsModel(),
             Value = value.Value
         };
     }
 
-    static CustomAttributeNamedArgumentModel Map(this CustomAttributeNamedArgument value)
+    static CustomAttributeNamedArgumentModel AsModel(this CustomAttributeNamedArgument value)
     {
         return new()
         {
             Name     = value.Name,
-            Argument = value.Argument.Map()
+            Argument = value.Argument.AsModel()
         };
     }
 
-    static CustomAttributeModel Map(this CustomAttribute value)
+    static CustomAttributeModel AsModel(this CustomAttribute value)
     {
         return new()
         {
-            Constructor          = value.Constructor?.Map(),
-            ConstructorArguments = value.ConstructorArguments.ToListOf(Map),
-            Fields               = value.Fields.ToListOf(Map),
-            Properties           = value.Properties.ToListOf(Map)
+            Constructor          = value.Constructor?.AsModel(),
+            ConstructorArguments = value.ConstructorArguments.ToListOf(AsModel),
+            Fields               = value.Fields.ToListOf(AsModel),
+            Properties           = value.Properties.ToListOf(AsModel)
         };
     }
 
-    static ParameterDefinitionModel Map(this ParameterDefinition parameterDefinition)
+    static ParameterDefinitionModel AsModel(this ParameterDefinition parameterDefinition)
     {
         return new()
         {
             Index         = parameterDefinition.Index,
-            ParameterType = parameterDefinition.ParameterType.Map(),
+            ParameterType = parameterDefinition.ParameterType.AsModel(),
             Name          = parameterDefinition.Name
         };
     }
 
-    static TypeReferenceModel Map(this TypeReference typeReference)
+    static TypeReferenceModel AsModel(this TypeReference typeReference)
     {
         if (typeReference is ArrayType arrayType)
         {
             return new ArrayTypeModel
             {
                 Rank        = arrayType.Rank,
-                ElementType = arrayType.ElementType.Map(),
+                ElementType = arrayType.ElementType.AsModel(),
 
                 Name      = default,
                 Namespace = default,
@@ -165,11 +165,11 @@ static class MonoCecilToJsonModelMapper
         {
             Name      = typeReference.Name,
             Namespace = typeReference.Namespace,
-            Scope     = typeReference.Scope.Map()
+            Scope     = typeReference.Scope.AsModel()
         };
     }
 
-    static MetadataScopeModel Map(this IMetadataScope metadataScope)
+    static MetadataScopeModel AsModel(this IMetadataScope metadataScope)
     {
         return new()
         {
