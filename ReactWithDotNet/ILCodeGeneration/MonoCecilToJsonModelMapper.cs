@@ -17,12 +17,9 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
-
     public static TypeDefinitionModel AsModel(this TypeDefinition value)
     {
-
-
-        return new TypeDefinitionModel
+        return new()
         {
             Name      = value.Name,
             Namespace = value.Namespace,
@@ -36,11 +33,9 @@ static class MonoCecilToJsonModelMapper
             NestedTypes      = value.NestedTypes.ToListOf(AsModel),
             Events           = value.Events.ToListOf(AsModel),
             Interfaces       = value.Interfaces.ToListOf(AsModel)
-
         };
     }
 
-    
     static InterfaceImplementationModel AsModel(this InterfaceImplementation value)
     {
         return new()
@@ -49,18 +44,18 @@ static class MonoCecilToJsonModelMapper
             CustomAttributes = value.CustomAttributes.ToListOf(AsModel)
         };
     }
-    
+
     static FieldReferenceModel AsModel(this FieldReference value)
     {
         return new()
         {
-            Name   = value.Name,
-            FullName = value.FullName,
-            FieldType = value.FieldType.AsModel(),
+            Name          = value.Name,
+            FullName      = value.FullName,
+            FieldType     = value.FieldType.AsModel(),
             DeclaringType = value.DeclaringType?.AsModel()
         };
     }
-    
+
     static FieldDefinitionModel AsModel(this FieldDefinition value)
     {
         return new()
@@ -72,8 +67,7 @@ static class MonoCecilToJsonModelMapper
             CustomAttributes = value.CustomAttributes.ToListOf(AsModel)
         };
     }
-    
-    
+
     static EventReferenceModel AsModel(this EventReference value)
     {
         return new()
@@ -84,7 +78,7 @@ static class MonoCecilToJsonModelMapper
             DeclaringType = value.DeclaringType?.AsModel()
         };
     }
-    
+
     static EventDefinitionModel AsModel(this EventDefinition value)
     {
         return new()
@@ -93,13 +87,12 @@ static class MonoCecilToJsonModelMapper
             FullName      = value.FullName,
             EventType     = value.EventType.AsModel(),
             DeclaringType = value.DeclaringType?.AsModel(),
-            
+
             AddMethod    = value.AddMethod.AsModel(),
             RemoveMethod = value.RemoveMethod.AsModel()
         };
     }
-    
-    
+
     static PropertyReferenceModel AsModel(this PropertyReference value)
     {
         return new()
@@ -108,10 +101,10 @@ static class MonoCecilToJsonModelMapper
             FullName      = value.FullName,
             PropertyType  = value.PropertyType.AsModel(),
             DeclaringType = value.DeclaringType?.AsModel(),
-            Parameters    =value.Parameters.ToListOf(AsModel)
+            Parameters    = value.Parameters.ToListOf(AsModel)
         };
     }
-    
+
     static PropertyDefinitionModel AsModel(this PropertyDefinition value)
     {
         return new()
@@ -120,8 +113,8 @@ static class MonoCecilToJsonModelMapper
             FullName      = value.FullName,
             PropertyType  = value.PropertyType.AsModel(),
             DeclaringType = value.DeclaringType?.AsModel(),
-            Parameters    =value.Parameters.ToListOf(AsModel),
-            
+            Parameters    = value.Parameters.ToListOf(AsModel),
+
             GetMethod        = value.GetMethod.AsModel(),
             SetMethod        = value.SetMethod.AsModel(),
             CustomAttributes = value.CustomAttributes.ToListOf(AsModel)
@@ -167,19 +160,19 @@ static class MonoCecilToJsonModelMapper
                 operands.Add(i, typeReference.AsModel());
                 continue;
             }
-            
+
             if (operand is FieldReference fieldReference)
             {
                 operands.Add(i, fieldReference.AsModel());
                 continue;
             }
-            
+
             if (operand is EventReference eventReference)
             {
                 operands.Add(i, eventReference.AsModel());
                 continue;
             }
-            
+
             if (operand is PropertyReference propertyReference)
             {
                 operands.Add(i, propertyReference.AsModel());
