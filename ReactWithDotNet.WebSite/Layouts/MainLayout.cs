@@ -56,6 +56,14 @@ sealed class MainLayout : PureComponent, IPageLayout
                 new meta { name    = "viewport", content = "width=device-width, initial-scale=1" },
                 new title { "React with DotNet" },
 
+                new link
+                {
+                    rel         = "stylesheet",
+                    type        = "text/css",
+                    href        = $"{IndexCssFilePath}?v={LastWriteTimeOfIndexJsFile}",
+                    crossOrigin = "anonymous"
+                },
+                
                 new style
                 {
                     """
@@ -80,13 +88,7 @@ sealed class MainLayout : PureComponent, IPageLayout
                 // After page first rendered in client then connect with react system in background.
                 // So user first iteraction time will be minimize.
 
-                new link
-                {
-                    rel         = "stylesheet",
-                    type        = "text/css",
-                    href        = $"{IndexCssFilePath}?v={LastWriteTimeOfIndexJsFile}",
-                    crossOrigin = "anonymous"
-                },
+                
 
                 new script
                 {

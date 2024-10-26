@@ -45,27 +45,26 @@ sealed class ComponentRequest
 
 class ComponentResponse
 {
+    internal ReactContext ReactContext;
     public int CallFunctionId { get; set; }
+
+    public IReadOnlyList<Client.ClientTask> ClientTaskList { get; init; }
 
     public object DynamicStyles { get; set; }
 
     public object ElementAsJson { get; init; }
-    
-    public object NewState { get; init; }
-    
-    public JsonMap NewDotNetProperties { get; init; }
-    
-    public IReadOnlyList<Client.ClientTask> ClientTaskList{ get; init; }
-    
+
     public string ErrorMessage { get; init; }
 
     public int LastUsedComponentUniqueIdentifier { get; set; }
 
-    public IReadOnlyCollection<string> Trace { get; set; }
+    public JsonMap NewDotNetProperties { get; init; }
 
-    internal ReactContext ReactContext;
-    
+    public object NewState { get; init; }
+
     public bool? SkipRender { get; init; }
+
+    public IReadOnlyCollection<string> Trace { get; set; }
 }
 
 static class ComponentRequestHandler
@@ -93,13 +92,13 @@ static class ComponentRequestHandler
                     ClientHeight      = request.ClientHeight,
                     HttpContext       = input.HttpContext,
                     wwwroot           = GetwwwrootFolder(input.HttpContext),
-                    
+
                     Request = (
                         Path: GetRequestPath(input.HttpContext),
                         Query: GetRequestQuery(input.HttpContext)
                     )
                 };
-                
+
                 context.Set(typeof(HttpContext).FullName, input.HttpContext);
 
                 var task = input.OnReactContextCreated?.Invoke(context);
@@ -135,30 +134,30 @@ static class ComponentRequestHandler
                 }
             }
 
-            return new ComponentResponse { ErrorMessage = $"Not implemented method. {request.MethodName}" };
+            return new() { ErrorMessage = $"Not implemented method. {request.MethodName}" };
         }
         catch (Exception exception)
         {
-            return new ComponentResponse { ErrorMessage = exception.ToString() };
+            return new() { ErrorMessage = exception.ToString() };
         }
 
         async Task<ComponentResponse> fetchComponent()
         {
             if (string.IsNullOrWhiteSpace(request.FullName))
             {
-                return new ComponentResponse { ErrorMessage = "request.FullName is empty." };
+                return new() { ErrorMessage = "request.FullName is empty." };
             }
 
             var type = findType(request.FullName);
             if (type == null)
             {
-                return new ComponentResponse { ErrorMessage = $"Type not found. {request.FullName}" };
+                return new() { ErrorMessage = $"Type not found. {request.FullName}" };
             }
 
             var instance = (Element)(input.Instance ?? ReflectionHelper.CreateNewInstance(type));
             if (instance == null)
             {
-                return new ComponentResponse { ErrorMessage = $"Type instance not created. {request.FullName}" };
+                return new() { ErrorMessage = $"Type instance not created. {request.FullName}" };
             }
 
             if (instance is ReactComponentBase reactComponentBase)
@@ -182,12 +181,12 @@ static class ComponentRequestHandler
             // maybe developer forget init state
             if (instance is Component<EmptyState> { IsStateNull: true } reactComponent)
             {
-                reactComponent.InitState(new EmptyState());
+                reactComponent.InitState(new());
             }
 
             var stateTree = new StateTree
             {
-                ChildStates    = request.CapturedStateTree
+                ChildStates = request.CapturedStateTree
             };
 
             var serializerContext = new ElementSerializerContext
@@ -204,7 +203,7 @@ static class ComponentRequestHandler
 
             tracer.Trace($"Total time in ReactWithDotnet is {tracer.ElapsedMilliseconds} milliseconds.");
 
-            return new ComponentResponse
+            return new()
             {
                 CallFunctionId                    = request.CallFunctionId,
                 ElementAsJson                     = map,
@@ -220,13 +219,13 @@ static class ComponentRequestHandler
             var type = findType(request.FullName);
             if (type == null)
             {
-                return new ComponentResponse { ErrorMessage = $"Type not found.{request.FullName}" };
+                return new() { ErrorMessage = $"Type not found.{request.FullName}" };
             }
 
             var instance = (ReactComponentBase)ReflectionHelper.CreateNewInstance(type);
             if (instance == null)
             {
-                return new ComponentResponse { ErrorMessage = $"Instance not created.{request.FullName}" };
+                return new() { ErrorMessage = $"Instance not created.{request.FullName}" };
             }
 
             instance.ComponentUniqueIdentifier = request.ComponentUniqueIdentifier;
@@ -236,18 +235,18 @@ static class ComponentRequestHandler
                 var errorMessage = setState(type, instance, request.CapturedStateTree[request.CapturedStateTreeRootNodeKey].StateAsJson);
                 if (errorMessage != null)
                 {
-                    return new ComponentResponse { ErrorMessage = errorMessage };
+                    return new() { ErrorMessage = errorMessage };
                 }
 
                 instance.Context = context;
             }
-            
+
             // transfer properties
             {
                 var errorMessage = ElementSerializer.TransferPropertiesToDotNetComponent(instance, type, request.CapturedStateTree[request.CapturedStateTreeRootNodeKey].DotNetProperties);
                 if (errorMessage is not null)
                 {
-                    return new ComponentResponse { ErrorMessage = errorMessage };
+                    return new() { ErrorMessage = errorMessage };
                 }
             }
 
@@ -257,7 +256,7 @@ static class ComponentRequestHandler
                 if (!MethodAccess.TryResolveMethodInfo(request.EventHandlerMethodName, ref methodInfo))
                 {
                     methodInfo = type.FindMethod(request.EventHandlerMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                    
+
                     if (methodInfo == null)
                     {
                         return new() { ErrorMessage = $"Method not found.{type.FullName}::{request.EventHandlerMethodName}" };
@@ -278,7 +277,7 @@ static class ComponentRequestHandler
                     var parameters = createMethodArguments(methodInfo, request.EventArgumentsAsJsonArray);
                     if (parameters.hasError)
                     {
-                        return new ComponentResponse { ErrorMessage = parameters.errorMessage };
+                        return new() { ErrorMessage = parameters.errorMessage };
                     }
 
                     object response;
@@ -286,8 +285,8 @@ static class ComponentRequestHandler
                     {
                         functionalComponent.InitializeTarget();
 
-                        var targetInstance = functionalComponent._target;                        
-                        
+                        var targetInstance = functionalComponent._target;
+
                         // todo: think more and more comment here
                         if (methodInfo.DeclaringType != null && methodInfo.DeclaringType != targetInstance.GetType())
                         {
@@ -299,7 +298,7 @@ static class ComponentRequestHandler
                                     fieldInfo.SetValue(newTarget, functionalComponent);
                                     continue;
                                 }
-                                
+
                                 if (fieldInfo.FieldType == targetInstance.GetType())
                                 {
                                     fieldInfo.SetValue(newTarget, targetInstance);
@@ -311,14 +310,14 @@ static class ComponentRequestHandler
 
                             targetInstance = newTarget;
                         }
-                        
+
                         response = methodInfo.Invoke(targetInstance, parameters.value);
                     }
                     else
                     {
                         response = methodInfo.Invoke(instance, parameters.value);
                     }
-                    
+
                     if (response is Task task)
                     {
                         await task;
@@ -347,7 +346,7 @@ static class ComponentRequestHandler
                 {
                     functionalComponent.CalculateScopeFromTarget(null);
                 }
-                
+
                 var newState = typeInfo.StateProperty.GetValueFunc(instance);
 
                 var dotNetProperties = new JsonMap();
@@ -364,20 +363,20 @@ static class ComponentRequestHandler
                         dotNetProperties.Add(item.PropertyInfo.Name, propertyValue);
                     }
                 }
-                
+
                 return new()
                 {
-                    SkipRender = true,
+                    SkipRender          = true,
                     NewState            = newState,
                     NewDotNetProperties = dotNetProperties,
-                    ClientTaskList =instance._client is not null && instance._client.TaskList.Count > 0 ? instance._client.TaskList: null,
+                    ClientTaskList      = instance._client is not null && instance._client.TaskList.Count > 0 ? instance._client.TaskList : null,
                     Trace               = tracer.Messages
                 };
             }
-            
+
             var stateTree = new StateTree
             {
-                ChildStates    = request.CapturedStateTree
+                ChildStates = request.CapturedStateTree
             };
 
             var serializerContext = new ElementSerializerContext
@@ -393,14 +392,14 @@ static class ComponentRequestHandler
 
             tracer.Trace($"Total time in ReactWithDotnet is {tracer.ElapsedMilliseconds} milliseconds.");
 
-            return new ComponentResponse
+            return new()
             {
                 CallFunctionId                    = request.CallFunctionId,
                 ElementAsJson                     = map,
                 Trace                             = tracer.Messages,
                 DynamicStyles                     = serializerContext.DynamicStyles.CalculateCssClassList(),
                 LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue - 1,
-                ReactContext = context
+                ReactContext                      = context
             };
         }
 
@@ -459,20 +458,21 @@ static class ComponentRequestHandler
 
             return (default, default, eventArguments);
         }
-        
+
         static string GetwwwrootFolder(HttpContext httpContext)
         {
             if (httpContext == null)
             {
                 return null;
             }
+
             string requestPath;
             {
                 var request = httpContext.Request;
 
                 requestPath = request.Path;
 
-                if (requestPath ==  RequestHandlerPath)
+                if (requestPath == RequestHandlerPath)
                 {
                     var headers = request.Headers;
 
@@ -491,7 +491,7 @@ static class ComponentRequestHandler
                     }
                 }
             }
-        
+
             var deep = (requestPath + "").Split('/', StringSplitOptions.RemoveEmptyEntries).Length;
             if (deep > 1)
             {
@@ -500,9 +500,19 @@ static class ComponentRequestHandler
 
             return string.Join(string.Empty, Enumerable.Range(0, deep).Select(_ => "../")) + "wwwroot";
         }
-        
+
         static string GetRequestPath(HttpContext httpContext)
         {
+            if (httpContext is null)
+            {
+                throw new ArgumentNullException(nameof(httpContext));
+            }
+
+            if (httpContext.Request is null)
+            {
+                throw new ArgumentNullException(nameof(httpContext.Request));
+            }
+
             var request = httpContext.Request;
 
             if (request.Path == RequestHandlerPath)
@@ -515,7 +525,7 @@ static class ComponentRequestHandler
 
             return request.Path;
         }
-        
+
         static IQueryCollection GetRequestQuery(HttpContext httpContext)
         {
             var request = httpContext.Request;
@@ -535,7 +545,6 @@ static class ComponentRequestHandler
             return request.Query;
         }
     }
-
 }
 
 sealed class StateTree
