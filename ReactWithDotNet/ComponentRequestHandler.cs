@@ -505,12 +505,7 @@ static class ComponentRequestHandler
         {
             if (httpContext is null)
             {
-                throw new ArgumentNullException(nameof(httpContext));
-            }
-
-            if (httpContext.Request is null)
-            {
-                throw new ArgumentNullException(nameof(httpContext.Request));
+                return null;
             }
 
             var request = httpContext.Request;
