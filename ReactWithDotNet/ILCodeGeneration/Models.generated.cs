@@ -8,7 +8,7 @@ public record TypeReferenceModel
 
     public required string Namespace { get; init; }
     
-    public required MetadataScopeModel Scope { get; init; }
+    public required int Scope { get; init; }
 }
 
 public sealed record ParameterDefinitionModel
@@ -176,6 +176,7 @@ sealed class MetadataTable
     public readonly List<FieldReferenceModel> Fields = [];
     public readonly List<PropertyReferenceModel> Properties = [];
     public readonly List<EventReferenceModel> Events = [];
+    public readonly List<MetadataScopeModel> MetadataScopes = [];
 }
 
 public sealed record ArrayTypeModel : TypeReferenceModel
