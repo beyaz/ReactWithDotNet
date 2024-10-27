@@ -10,3 +10,11 @@ static class Dummy
 
     public static string VideoUrl => "https://uploads.codesandbox.io/uploads/user/fb7bd72f-ef17-4810-9e14-ca854fb0f56e/9GBo-mountain-video.mp4";
 }
+
+class Deneme45
+{
+    public static string Abc5()
+    {
+        return "abc-123";
+    }
+}

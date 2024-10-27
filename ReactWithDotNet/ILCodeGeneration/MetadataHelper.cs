@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http;
 using Mono.Cecil;
 using AssemblyDefinition = Mono.Cecil.AssemblyDefinition;
@@ -32,10 +33,29 @@ static partial class Mixin
 
 static class MetadataHelper
 {
+    class PolymorphicJsonConverter<TBase> : JsonConverter<TBase>
+    {
+        public override TBase Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException(); 
+        }
+
+        public override void Write(Utf8JsonWriter writer, TBase value, JsonSerializerOptions options)
+        {
+            var type = value.GetType();
+            JsonSerializer.Serialize(writer, value, type, options);
+        }
+    }
+    
     static readonly JsonSerializerOptions JsonSerializerOptions = new()
     {
         WriteIndented = true,
-        IncludeFields = true
+        IncludeFields = true,
+        PropertyNamingPolicy =null,
+        Converters =
+        {
+            new PolymorphicJsonConverter<MemberReferenceModel>()
+        }
     };
 
     public static async Task GetMetadata(HttpContext httpContext, Func<string, bool> isTypeForbiddenToSendClient = null)

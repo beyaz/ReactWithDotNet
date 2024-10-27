@@ -3,21 +3,7 @@ using Mono.Cecil.Cil;
 
 namespace ReactWithDotNet;
 
-class Deneme45
-{
-    public static string Abc()
-    {
-        return "abc-123";
-    }
-}
 
-class Deneme46
-{
-    public static string Abc()
-    {
-        return "abc-67";
-    }
-}
 
 static class MonoCecilToJsonModelMapper
 {
@@ -32,7 +18,7 @@ static class MonoCecilToJsonModelMapper
     {
         var model = AsModel(value, metadataTable);
 
-        var index = metadataTable.Types.FindIndex(x => IsSame(x, model));
+        var index = metadataTable.Types.FindIndex(x => IsSame((TypeReferenceModel)x, model));
         if (index >= 0)
         {
             metadataTable.Types[index] = model;
@@ -67,11 +53,13 @@ static class MonoCecilToJsonModelMapper
 
     static TypeDefinitionModel AsModel(this TypeDefinition value, MetadataTable metadataTable)
     {
-        return new()
+        return new ()
         {
+            IsDefinition = value.IsDefinition,
             Name      = value.Name,
             Namespace = value.Namespace,
             Scope     = value.Scope.IndexAt(metadataTable),
+            DeclaringType = value.DeclaringType?.IndexAt(metadataTable),
 
             CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel, metadataTable),
             BaseType         = value.BaseType.IndexAt(metadataTable),
@@ -343,15 +331,17 @@ static class MonoCecilToJsonModelMapper
 
                 Name      = default,
                 Namespace = default,
-                Scope     = default
+                Scope     = default,
+                DeclaringType = value.DeclaringType.IndexAt(metadataTable)
             };
         }
 
         return new()
         {
-            Name      = value.Name,
-            Namespace = value.Namespace,
-            Scope     = value.Scope.IndexAt(metadataTable)
+            Name          = value.Name,
+            Namespace     = value.Namespace,
+            Scope         = value.Scope.IndexAt(metadataTable),
+            DeclaringType = value.DeclaringType?.IndexAt(metadataTable)
         };
     }
 
@@ -404,7 +394,7 @@ static class MonoCecilToJsonModelMapper
 
     static int IndexAt(this TypeReference value, MetadataTable metadataTable)
     {
-        var index = metadataTable.Types.FindIndex(x => IsSame(x, value));
+        var index = metadataTable.Types.FindIndex(x => IsSame((TypeReferenceModel)x, value));
         if (index >= 0)
         {
             return index;

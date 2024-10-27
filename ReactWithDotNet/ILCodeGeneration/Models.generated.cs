@@ -1,9 +1,7 @@
 ﻿namespace ReactWithDotNet;
 
-record TypeReferenceModel
+record TypeReferenceModel : MemberReferenceModel
 {
-    public required string Name { get; init; }
-
     public required string Namespace { get; init; }
     
     public required int Scope { get; init; }
@@ -168,7 +166,7 @@ sealed record MetadataScopeModel
 sealed class MetadataTable
 {
     public readonly List<MetadataScopeModel> MetadataScopes = [];
-    public readonly List<TypeReferenceModel> Types = [];
+    public readonly List<MemberReferenceModel> Types = [];
     public readonly List<FieldReferenceModel> Fields = [];
     public readonly List<MethodReferenceModel> Methods = [];
     public readonly List<PropertyReferenceModel> Properties = [];
