@@ -19,16 +19,16 @@ function Interpret(thread)
 
     let v0, v1, v2;
 
-    {
-        // create new StackFrame
-        thread.CallStack.push({
-            EvaluationStack: [],
-            LocalVariables: [],
-            MethodArguments: evaluationStack,
-            Method: operands[thread.Line],
-            Line: 0
-        });
-    }
+    //{
+    //    // create new StackFrame
+    //    thread.CallStack.push({
+    //        EvaluationStack: [],
+    //        LocalVariables: [],
+    //        MethodArguments: evaluationStack,
+    //        Method: operands[thread.Line],
+    //        Line: 0
+    //    });
+    //}
 
     switch (instructions[thread.Line])
     {
