@@ -51,8 +51,12 @@ public static class ILHelper
         foreach (var moduleDefinition in assemblyDefinition.Modules)
         {
             var typeDefinition = moduleDefinition.GetType("ReactWithDotNet.ILCodeGeneration", "ILHelper");
+
+            var metadataTable = new MetadataTable();
             
-            return JsonSerializer.Serialize(typeDefinition.AsModel(), new JsonSerializerOptions{ WriteIndented = true});
+            var typeModel = typeDefinition.AsModel(metadataTable);
+
+            return JsonSerializer.Serialize(new {metadataTable, value=typeModel }, new JsonSerializerOptions{ WriteIndented = true});
             
           
         }

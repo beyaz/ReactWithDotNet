@@ -3,6 +3,8 @@ using Mono.Cecil.Cil;
 
 namespace ReactWithDotNet.ILCodeGeneration;
 
+
+
 static class MonoCecilToJsonModelMapper
 {
     static readonly string[] NotExportableAttributes =
@@ -12,7 +14,7 @@ static class MonoCecilToJsonModelMapper
         "System.Runtime.CompilerServices.ExtensionAttribute"
     ];
 
-    public static TypeDefinitionModel AsModel(this TypeDefinition value)
+    public static TypeDefinitionModel AsModel(this TypeDefinition value, MetadataTable metadataTable)
     {
         return new()
         {
@@ -25,7 +27,7 @@ static class MonoCecilToJsonModelMapper
             Methods          = value.Methods.ToListOf(AsModel),
             Fields           = value.Fields.ToListOf(AsModel),
             Properties       = value.Properties.ToListOf(AsModel),
-            NestedTypes      = value.NestedTypes.ToListOf(AsModel),
+            NestedTypes      = value.NestedTypes.ToListOf(AsModel, metadataTable),
             Events           = value.Events.ToListOf(AsModel),
             Interfaces       = value.Interfaces.ToListOf(AsModel)
         };
@@ -319,5 +321,10 @@ static class MonoCecilToJsonModelMapper
     static IReadOnlyList<B> ToListOf<A, B>(this IEnumerable<A> enumerable, Func<A, B> convertFunc)
     {
         return enumerable?.Select(convertFunc).ToList();
+    }
+    
+    static IReadOnlyList<C> ToListOf<A, B, C>(this IEnumerable<A> enumerable, Func<A, B, C> convertFunc, B b)
+    {
+        return enumerable?.Select(a=>convertFunc(a,b)).ToList();
     }
 }

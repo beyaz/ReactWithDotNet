@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet.ILCodeGeneration;
+﻿using Mono.Cecil;
+
+namespace ReactWithDotNet.ILCodeGeneration;
 
 public record TypeReferenceModel
 {
@@ -165,6 +167,15 @@ public sealed record TypeDefinitionModel : TypeReferenceModel
 public sealed record MetadataScopeModel
 {
     public required string Name { get; init; }
+}
+
+sealed class MetadataTable
+{
+    public readonly List<TypeDefinitionModel> Types = [];
+    public readonly List<MethodReference> Methods = [];
+    public readonly List<FieldReference> Fields = [];
+    public readonly List<PropertyReference> Properties = [];
+    public readonly List<EventReference> Events = [];
 }
 
 public sealed record ArrayTypeModel : TypeReferenceModel
