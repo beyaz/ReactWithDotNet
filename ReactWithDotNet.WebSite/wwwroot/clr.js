@@ -884,6 +884,45 @@ function Interpret(thread)
 }
 
 
+setTimeout(function() {
+
+    const url = ReactWithDotNet.MetadataRequestHandlerPath;
+
+    var request =
+    [
+        {
+            AssemblyName: "ReactWithDotNet.dll",
+            NamespaceName: "ReactWithDotNet",
+            TypeName: "Deneme45"
+        }
+    ];
+    
+    let options =
+    {
+        method: "POST",
+        headers:
+        {
+            'Accept': "application/json",
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(request)
+    };
+
+
+    function onSuccess(json) 
+    {
+        
+    }
+    function onFail(error) 
+    {
+        console.log(error);
+    }
+    
+    window.fetch(url, options).then(response => response.json()).then(json => onSuccess(json)).catch(onFail);
+    
+    
+}, 500);
+
 
 
 

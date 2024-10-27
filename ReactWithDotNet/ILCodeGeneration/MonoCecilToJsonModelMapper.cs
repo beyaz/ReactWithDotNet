@@ -3,6 +3,13 @@ using Mono.Cecil.Cil;
 
 namespace ReactWithDotNet;
 
+class Deneme45
+{
+    public static string Abc()
+    {
+        return "abc-123";
+    }
+}
 static class MonoCecilToJsonModelMapper
 {
     static readonly string[] NotExportableAttributes =

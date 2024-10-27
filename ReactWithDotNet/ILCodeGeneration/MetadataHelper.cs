@@ -9,8 +9,15 @@ sealed record MetadataRequest
 {
     public string AssemblyName { get; init; }
     public string MethodName { get; init; }
-    public string NamesapceName { get; init; }
+    public string NamespaceName { get; init; }
     public string TypeName { get; init; }
+}
+
+sealed record MetadataResponse
+{
+    public string ErrorMessage { get; init; }
+    public MetadataTable Metadata { get; init; }
+    public bool Success { get; init; }
 }
 
 static partial class Mixin
@@ -31,38 +38,18 @@ static class MetadataHelper
         IncludeFields = true
     };
 
-    public static Task GetMetadata(HttpContext httpContext, Func<string, bool> isTypeForbiddenToSendClient = null)
+    public static async Task GetMetadata(HttpContext httpContext, Func<string, bool> isTypeForbiddenToSendClient = null)
     {
-        // Sample: "(ReactWithDotNet.dll-ReactWithDotNet.ILCodeGeneration-Deneme17-*)"
+        var requests = await JsonSerializer.DeserializeAsync<MetadataRequest[]>(httpContext.Request.Body);
 
-        var requests = ParseQuery(httpContext.Request.Query["query"].FirstOrDefault());
-
-        return httpContext.Response.WriteAsJsonAsync(GetMetadata(requests, isTypeForbiddenToSendClient), JsonSerializerOptions);
-
-        static IEnumerable<MetadataRequest> ParseQuery(string query)
-        {
-            return query.Split("()".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(parseOne);
-
-            static MetadataRequest parseOne(string text)
-            {
-                var arr = text.Split("-");
-
-                return new()
-                {
-                    AssemblyName  = arr[0],
-                    NamesapceName = arr[1],
-                    TypeName      = arr[2],
-                    MethodName    = arr[3]
-                };
-            }
-        }
+        await httpContext.Response.WriteAsJsonAsync(GetMetadata(requests, isTypeForbiddenToSendClient), JsonSerializerOptions);
     }
 
     static TypeDefinition FindType(this AssemblyDefinition assemblyDefinition, MetadataRequest request)
     {
         foreach (var moduleDefinition in assemblyDefinition.Modules)
         {
-            var typeDefinition = moduleDefinition.GetType(request.NamesapceName, request.TypeName);
+            var typeDefinition = moduleDefinition.GetType(request.NamespaceName, request.TypeName);
             if (typeDefinition != null)
             {
                 return typeDefinition;
@@ -72,7 +59,7 @@ static class MetadataHelper
         return null;
     }
 
-    static (MetadataTable value, bool success, string errorMessage) GetMetadata(IEnumerable<MetadataRequest> requests, Func<string, bool> isTypeForbiddenToSendClient = null)
+    static MetadataResponse GetMetadata(IEnumerable<MetadataRequest> requests, Func<string, bool> isTypeForbiddenToSendClient = null)
     {
         var metadataTable = new MetadataTable();
 
@@ -81,18 +68,27 @@ static class MetadataHelper
             var assemblyFilePath = Path.Combine(Path.GetDirectoryName(typeof(Mixin).Assembly.Location) ?? string.Empty, request.AssemblyName);
             if (!File.Exists(assemblyFilePath))
             {
-                return (default, default, $"FileNotFound. @file: {assemblyFilePath}");
+                return new()
+                {
+                    ErrorMessage = $"FileNotFound. @file: {assemblyFilePath}"
+                };
             }
 
             var typeDefinition = AssemblyDefinition.ReadAssembly(assemblyFilePath).FindType(request);
             if (typeDefinition is null)
             {
-                return (default, default, $"TypeNotFound. @file: {assemblyFilePath}");
+                return new()
+                {
+                    ErrorMessage = $"TypeNotFound. @file: {assemblyFilePath}"
+                };
             }
 
             if (isTypeForbiddenToSendClient?.Invoke(typeDefinition.FullName) is true)
             {
-                return (default, default, $"TypeIsForbiddenToSerializeClient. @type: {typeDefinition.FullName}");
+                return new()
+                {
+                    ErrorMessage = $"TypeIsForbiddenToSerializeClient. @type: {typeDefinition.FullName}"
+                };
             }
 
             if (request.MethodName is null || request.MethodName == "*")
@@ -107,6 +103,10 @@ static class MetadataHelper
             }
         }
 
-        return (metadataTable, true, default);
+        return new()
+        {
+            Success  = true,
+            Metadata = metadataTable
+        };
     }
 }
