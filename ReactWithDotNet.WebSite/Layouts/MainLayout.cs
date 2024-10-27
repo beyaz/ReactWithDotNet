@@ -109,6 +109,12 @@ sealed class MainLayout : PureComponent, IPageLayout
                           });
                           """
                 }
+            },
+            
+            new script
+            {
+                type = "text/javascript",
+                src = $"{Context.wwwroot}/clr.js"
             }
         };
 
