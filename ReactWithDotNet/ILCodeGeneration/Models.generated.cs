@@ -43,8 +43,6 @@ record MemberReferenceModel
     public required string Name { get; init; }
     
     public required int? DeclaringType { get; init; }
-    
-    public required string FullName { get; init; }
 }
 
 record FieldReferenceModel : MemberReferenceModel
