@@ -12,7 +12,44 @@ static class MonoCecilToJsonModelMapper
         "System.Runtime.CompilerServices.ExtensionAttribute"
     ];
 
-    public static TypeDefinitionModel AsModel(this TypeDefinition value, MetadataTable metadataTable)
+    public static void Import(this MetadataTable metadataTable, TypeDefinition value)
+    {
+        var model = AsModel(value, metadataTable);
+
+        var index = metadataTable.Types.FindIndex(x => IsSame(x, model));
+        if (index >= 0)
+        {
+            metadataTable.Types[index] = model;
+            return;
+        }
+
+        metadataTable.Types.Add(model);
+    }
+
+    public static void Import(this MetadataTable metadataTable, MethodDefinition value)
+    {
+        var model = AsModel(value, metadataTable);
+
+        var index = metadataTable.Methods.FindIndex(x => IsSame(x, model));
+        if (index >= 0)
+        {
+            metadataTable.Methods[index] = model;
+            return;
+        }
+
+        metadataTable.Methods.Add(model);
+    }
+
+    static int AddAndGetIndex<T>(this List<T> list, T newItem)
+    {
+        var index = list.Count;
+
+        list.Add(newItem);
+
+        return index;
+    }
+
+    static TypeDefinitionModel AsModel(this TypeDefinition value, MetadataTable metadataTable)
     {
         return new()
         {
@@ -29,15 +66,6 @@ static class MonoCecilToJsonModelMapper
             Events           = value.Events.ToListOf(AsModel, metadataTable),
             Interfaces       = value.Interfaces.ToListOf(AsModel, metadataTable)
         };
-    }
-
-    static int AddAndGetIndex<T>(this List<T> list, T newItem)
-    {
-        var index = list.Count;
-
-        list.Add(newItem);
-
-        return index;
     }
 
     static MethodDefinitionModel AsModel(this MethodDefinition value, MetadataTable metadataTable)
@@ -389,6 +417,16 @@ static class MonoCecilToJsonModelMapper
     static bool IsSame(TypeReferenceModel model, TypeReference value)
     {
         return value.Name == model.Name && value.Namespace == model.Namespace;
+    }
+
+    static bool IsSame(TypeReferenceModel a, TypeReferenceModel b)
+    {
+        return a.Name == b.Name && a.Namespace == b.Namespace;
+    }
+
+    static bool IsSame(MethodReferenceModel a, MethodReferenceModel b)
+    {
+        return a.Name == b.Name;
     }
 
     static bool IsSame(MethodReferenceModel model, MethodReference value, MetadataTable metadataTable)

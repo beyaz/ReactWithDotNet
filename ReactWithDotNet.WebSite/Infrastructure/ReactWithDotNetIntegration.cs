@@ -41,6 +41,7 @@ public static class ReactWithDotNetIntegration
                 await UploadFileAndWriteResponse(httpContext);
                 return;
             }
+            
 #if DEBUG
             if (path == ReactWithDotNetDesigner.UrlPath)
             {
@@ -48,6 +49,12 @@ public static class ReactWithDotNetIntegration
                 return;
             }
 #endif
+            
+            if (path == "/GetMetadata")
+            {
+                await ILCodeGeneration.ILHelper.GetMetadata(httpContext);
+                return;
+            }
 
             await next();
         });

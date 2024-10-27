@@ -10,8 +10,8 @@ public class ILHelperTests
     [TestMethod]
     public void GenerateIL()
     {
-        var response = ILHelper.denemeeee();
+        var response = ILHelper.GetMetadata("ReactWithDotNet.dll","ReactWithDotNet.ILCodeGeneration", "Deneme17","*");
         
-        File.WriteAllText("c:\\a.json", response);
+        
     }
 }

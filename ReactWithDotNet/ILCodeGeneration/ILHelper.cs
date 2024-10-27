@@ -1,5 +1,7 @@
 ﻿using System.Text.Json;
+using Microsoft.AspNetCore.Http;
 using Mono.Cecil;
+using AssemblyDefinition = Mono.Cecil.AssemblyDefinition;
 
 namespace ReactWithDotNet.ILCodeGeneration;
 
@@ -8,74 +10,93 @@ class Deneme17
     public readonly string abc = "abc";
 }
 
+sealed record MetadataRequest
+{
+    public string AssemblyName { get; init; }
+    public string MethodName { get; init; }
+    public string NamesapceName { get; init; }
+    public string TypeName { get; init; }
+}
+
 public static class ILHelper
 {
-    public static string Deneme2<A,B,C>(DenemeClass h, string p0, int[] arr = null, int[,,] arr2 = null)
+    static readonly JsonSerializerOptions JsonSerializerOptions = new()
     {
-        return string.Empty;
-    }
+        WriteIndented = true,
+        IncludeFields = true
+    };
 
-    public class DenemeClass
+    public static Task GetMetadata(HttpContext httpContext)
     {
-        public string hhhhh { get; set; }
-    }
-    public static string Deneme(string p0)
-    {
-        
+        // Sample: "(ReactWithDotNet.dll-ReactWithDotNet.ILCodeGeneration-Deneme17-*)"
 
-        if (p0 == "a")
+        var requests = ParseQuery(httpContext.Request.Query["query"].FirstOrDefault());
+
+        return httpContext.Response.WriteAsJsonAsync(GetMetadata(requests), JsonSerializerOptions);
+
+        static IEnumerable<MetadataRequest> ParseQuery(string query)
         {
-            try
+            return query.Split("()".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(parseOne);
+
+            static MetadataRequest parseOne(string text)
             {
-                return "a";
-            }
-            catch (Exception)
-            {
-                return "t";
+                var arr = text.Split("-");
+
+                return new()
+                {
+                    AssemblyName  = arr[0],
+                    NamesapceName = arr[1],
+                    TypeName      = arr[2],
+                    MethodName    = arr[3]
+                };
             }
         }
-
-
-        object x = p0;
-        if (x is string)
-        {
-            Deneme2<string, int, int>(default,"g");
-        }
-
-        return "b";
     }
 
-    internal static string denemeeee()
+    static TypeDefinition FindType(this AssemblyDefinition assemblyDefinition, MetadataRequest request)
     {
-        var assemblyDefinition = AssemblyDefinition.ReadAssembly(typeof(ILHelper).Assembly.Location);
-
         foreach (var moduleDefinition in assemblyDefinition.Modules)
         {
-            var typeDefinition = moduleDefinition.GetType("ReactWithDotNet.ILCodeGeneration", "Deneme17");
-
-            var metadataTable = new MetadataTable();
-            
-            var typeModel = typeDefinition.AsModel(metadataTable);
-
-            return JsonSerializer.Serialize(new {metadataTable, value=typeModel }, new JsonSerializerOptions
+            var typeDefinition = moduleDefinition.GetType(request.NamesapceName, request.TypeName);
+            if (typeDefinition != null)
             {
-                WriteIndented = true,
-                IncludeFields = true
-            });
-            
-          
+                return typeDefinition;
+            }
         }
 
         return null;
     }
 
-   
+    static (MetadataTable value, bool success, string errorMessage) GetMetadata(IEnumerable<MetadataRequest> requests)
+    {
+        var metadataTable = new MetadataTable();
 
-   
-    
-   
-    
-    
-   
+        foreach (var request in requests)
+        {
+            var assemblyFilePath = Path.Combine(Path.GetDirectoryName(typeof(ILHelper).Assembly.Location) ?? string.Empty, request.AssemblyName);
+            if (!File.Exists(assemblyFilePath))
+            {
+                return (default, default, $"FileNotFound. @file: {assemblyFilePath}");
+            }
 
+            var typeDefinition = AssemblyDefinition.ReadAssembly(assemblyFilePath).FindType(request);
+            if (typeDefinition is null)
+            {
+                return (default, default, $"TypeNotFound. @file: {assemblyFilePath}");
+            }
+
+            if (request.MethodName is null || request.MethodName == "*")
+            {
+                metadataTable.Import(typeDefinition);
+                continue;
+            }
+
+            foreach (var methodDefinition in typeDefinition.Methods.Where(m => m.Name.Contains(request.MethodName, StringComparison.OrdinalIgnoreCase)))
+            {
+                metadataTable.Import(methodDefinition);
+            }
+        }
+
+        return (metadataTable, true, default);
+    }
 }
