@@ -414,9 +414,17 @@ function Interpret(thread)
         case 94: // And
             thread.Line++;
             break;
+
         case 95: // Or
+
+            v1 = evaluationStack.pop();
+            v0 = evaluationStack.pop();
+
+            evaluationStack.push(v0|v1);
+
             thread.Line++;
             break;
+
         case 96: // Xor
             thread.Line++;
             break;
