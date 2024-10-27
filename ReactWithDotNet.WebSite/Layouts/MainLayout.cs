@@ -101,6 +101,7 @@ sealed class MainLayout : PureComponent, IPageLayout
                           ReactWithDotNet.StrictMode = false;
 
                           ReactWithDotNet.RequestHandlerPath = '{{RequestHandlerPath}}';
+                          ReactWithDotNet.MetadataRequestHandlerPath = '{{MetadataRequestHandlerPath}}';
 
                           ReactWithDotNet.RenderComponentIn({
                             idOfContainerHtmlElement: '{{ContainerDomElementId}}',

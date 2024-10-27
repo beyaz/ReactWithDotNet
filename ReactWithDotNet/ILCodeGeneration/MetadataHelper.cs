@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using Microsoft.AspNetCore.Http;
-
+using Mono.Cecil;
 using AssemblyDefinition = Mono.Cecil.AssemblyDefinition;
 
 namespace ReactWithDotNet;
@@ -16,8 +16,11 @@ sealed record MetadataRequest
 static partial class Mixin
 {
     public static string MetadataRequestHandlerPath;
-    
-    public static Task GetMetadata(HttpContext httpContext) => MetadataHelper.GetMetadata(httpContext);
+
+    public static Task GetMetadata(HttpContext httpContext)
+    {
+        return MetadataHelper.GetMetadata(httpContext);
+    }
 }
 
 static class MetadataHelper
@@ -28,13 +31,13 @@ static class MetadataHelper
         IncludeFields = true
     };
 
-    public static Task GetMetadata(HttpContext httpContext)
+    public static Task GetMetadata(HttpContext httpContext, Func<string, bool> isTypeForbiddenToSendClient = null)
     {
         // Sample: "(ReactWithDotNet.dll-ReactWithDotNet.ILCodeGeneration-Deneme17-*)"
 
         var requests = ParseQuery(httpContext.Request.Query["query"].FirstOrDefault());
 
-        return httpContext.Response.WriteAsJsonAsync(GetMetadata(requests), JsonSerializerOptions);
+        return httpContext.Response.WriteAsJsonAsync(GetMetadata(requests, isTypeForbiddenToSendClient), JsonSerializerOptions);
 
         static IEnumerable<MetadataRequest> ParseQuery(string query)
         {
@@ -55,7 +58,7 @@ static class MetadataHelper
         }
     }
 
-    static Mono.Cecil.TypeDefinition FindType(this AssemblyDefinition assemblyDefinition, MetadataRequest request)
+    static TypeDefinition FindType(this AssemblyDefinition assemblyDefinition, MetadataRequest request)
     {
         foreach (var moduleDefinition in assemblyDefinition.Modules)
         {
@@ -69,7 +72,7 @@ static class MetadataHelper
         return null;
     }
 
-    static (MetadataTable value, bool success, string errorMessage) GetMetadata(IEnumerable<MetadataRequest> requests)
+    static (MetadataTable value, bool success, string errorMessage) GetMetadata(IEnumerable<MetadataRequest> requests, Func<string, bool> isTypeForbiddenToSendClient = null)
     {
         var metadataTable = new MetadataTable();
 
@@ -85,6 +88,11 @@ static class MetadataHelper
             if (typeDefinition is null)
             {
                 return (default, default, $"TypeNotFound. @file: {assemblyFilePath}");
+            }
+
+            if (isTypeForbiddenToSendClient?.Invoke(typeDefinition.FullName) is true)
+            {
+                return (default, default, $"TypeIsForbiddenToSerializeClient. @type: {typeDefinition.FullName}");
             }
 
             if (request.MethodName is null || request.MethodName == "*")
