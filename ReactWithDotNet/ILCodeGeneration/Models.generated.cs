@@ -196,7 +196,7 @@ public sealed record GenericInstanceMethodModel : MethodReferenceModel
 sealed class StackFrame
 {
     public MethodDefinitionModel Method;
-    public Array EvaluatinStack;
+    public Array EvaluationStack;
     public Array LocalVariables;
     public Array MethodArguments;
 }

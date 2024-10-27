@@ -11,7 +11,7 @@ function Interpret(thread)
 
     const operands = thread.Method.Body.Operands;
 
-    const evaluatinStack = thread.Method.Body.EvaluatinStack;
+    const evaluationStack = thread.Method.Body.EvaluationStack;
 
     const methodArguments = thread.Method.Body.MethodArguments;    
 
@@ -30,182 +30,182 @@ function Interpret(thread)
             break;
 
         case 2: // Ldarg_0: Load argument 0 onto the stack
-            evaluatinStack.push(methodArguments[0]);
+            evaluationStack.push(methodArguments[0]);
             thread.Line++;
             break;
 
         case 3: // Ldarg_1: Load argument 1 onto the stack
-            evaluatinStack.push(methodArguments[1]);
+            evaluationStack.push(methodArguments[1]);
             thread.Line++;
             break;
 
         case 4: // Ldarg_2: Load argument 2 onto the stack
-            evaluatinStack.push(methodArguments[2]);
+            evaluationStack.push(methodArguments[2]);
             thread.Line++;
             break;
 
         case 5: // Ldarg_3: Load argument 3 onto the stack
-            evaluatinStack.push(methodArguments[3]);
+            evaluationStack.push(methodArguments[3]);
             thread.Line++;
             break;
 
         case 6: // Ldloc_0: Load local variable 0 onto the stack
-            evaluatinStack.push(localVariables[0]);
+            evaluationStack.push(localVariables[0]);
             thread.Line++;
             break;
 
         case 7: // Ldloc_1: Load local variable 1 onto the stack
-            evaluatinStack.push(localVariables[1]);
+            evaluationStack.push(localVariables[1]);
             thread.Line++;
             break;
 
         case 8: // Ldloc_2: Load local variable 2 onto the stack
-            evaluatinStack.push(localVariables[2]);
+            evaluationStack.push(localVariables[2]);
             thread.Line++;
             break;
 
         case 9: // Ldloc_3: Load local variable 3 onto the stack
-            evaluatinStack.push(localVariables[3]);
+            evaluationStack.push(localVariables[3]);
             thread.Line++;
             break;
 
         case 10: // Stloc_0: Store value from the stack in local variable 0
-            localVariables[0] = evaluatinStack.pop();
+            localVariables[0] = evaluationStack.pop();
             thread.Line++;
             break;
 
         case 11: // Stloc_1: Store value from the stack in local variable 1
-            localVariables[1] = evaluatinStack.pop();
+            localVariables[1] = evaluationStack.pop();
             thread.Line++;
             break;
 
         case 12: // Stloc_2: Store value from the stack in local variable 2
-            localVariables[2] = evaluatinStack.pop();
+            localVariables[2] = evaluationStack.pop();
             thread.Line++;
             break;
 
         case 13: // Stloc_3: Store value from the stack in local variable 3
-            localVariables[3] = evaluatinStack.pop();
+            localVariables[3] = evaluationStack.pop();
             thread.Line++;
             break;
 
         case 14: // Ldarg_S: Load argument at a specified index (short form)
-            evaluatinStack.push(methodArguments[operands[thread.Line]]);
+            evaluationStack.push(methodArguments[operands[thread.Line]]);
             thread.Line++;
             break;
 
         case 15: // Ldarga_S: Load address of argument at a specified index (short form)
-            evaluatinStack.push({ Array: methodArguments, Index: operands[thread.Line] } );
+            evaluationStack.push({ Array: methodArguments, Index: operands[thread.Line] } );
             thread.Line++;
             break;
 
         case 16: // Starg_S: Store value from the stack into argument at specified index
-            methodArguments[operands[thread.Line]] = evaluatinStack.pop();
+            methodArguments[operands[thread.Line]] = evaluationStack.pop();
             thread.Line++;
             break;
 
         case 17: // Ldloc_S: Load local variable at a specified index (short form)
-            evaluatinStack.push(localVariables[operands[thread.Line]]);
+            evaluationStack.push(localVariables[operands[thread.Line]]);
             thread.Line++;
             break;
 
         case 18: // Ldloca_S: Load address of local variable at a specified index (short)
-            evaluatinStack.push({ Array: localVariables, Index: operands[thread.Line] });
+            evaluationStack.push({ Array: localVariables, Index: operands[thread.Line] });
             thread.Line++;
             break;
 
         case 19: // Stloc_S: Store value from the stack into local variable at specified index
-            localVariables[operands[thread.Line]] = evaluatinStack.pop();
+            localVariables[operands[thread.Line]] = evaluationStack.pop();
             thread.Line++;
             break;
 
         case 20: // Ldnull: Push a null reference onto the stack
-            evaluatinStack.push(null);
+            evaluationStack.push(null);
             thread.Line++;
             break;
 
         case 21: // Ldc_I4_M1: Load integer constant -1 onto the stack
-            evaluatinStack.push(-1);
+            evaluationStack.push(-1);
             thread.Line++;
             break;
 
         case 22: // Ldc_I4_0: Load integer constant 0 onto the stack
-            evaluatinStack.push(0);
+            evaluationStack.push(0);
             thread.Line++;
             break;
 
         case 23: // Ldc_I4_1: Load integer constant 1 onto the stack
-            evaluatinStack.push(1);
+            evaluationStack.push(1);
             thread.Line++;
             break;
 
         case 24: // Ldc_I4_2: Load integer constant 2 onto the stack
-            evaluatinStack.push(2);
+            evaluationStack.push(2);
             thread.Line++;
             break;
 
         case 25: // Ldc_I4_3: Load integer constant 3 onto the stack
-            evaluatinStack.push(3);
+            evaluationStack.push(3);
             thread.Line++;
             break;
 
         case 26: // Ldc_I4_4: Load integer constant 4 onto the stack
-            evaluatinStack.push(4);
+            evaluationStack.push(4);
             thread.Line++;
             break;
 
         case 27: // Ldc_I4_5: Load integer constant 5 onto the stack
-            evaluatinStack.push(5);
+            evaluationStack.push(5);
             thread.Line++;
             break;
 
         case 28: // Ldc_I4_6: Load integer constant 6 onto the stack
-            evaluatinStack.push(6);
+            evaluationStack.push(6);
             thread.Line++;
             break;
 
         case 29: // Ldc_I4_7: Load integer constant 7 onto the stack
-            evaluatinStack.push(7);
+            evaluationStack.push(7);
             thread.Line++;
             break;
 
         case 30: // Ldc_I4_8: Load integer constant 8 onto the stack
-            evaluatinStack.push(8);
+            evaluationStack.push(8);
             thread.Line++;
             break;
 
         case 31: // Ldc_I4_S: Load 4-byte integer constant onto the stack
-            evaluatinStack.push(operands[thread.Line]);
+            evaluationStack.push(operands[thread.Line]);
             thread.Line++;
             break;
 
         case 32: // Ldc_I4: Load 8-byte integer constant onto the stack
-            evaluatinStack.push(operands[thread.Line]);
+            evaluationStack.push(operands[thread.Line]);
             thread.Line++;
             break;
 
         case 33: // Ldc_I8: Load 4-byte floating-point constant onto the stack
-            evaluatinStack.push(operands[thread.Line]);
+            evaluationStack.push(operands[thread.Line]);
             thread.Line++;
             break;
 
         case 34: // Ldc_R4: Load 8-byte floating-point constant onto the stack
-            evaluatinStack.push(operands[thread.Line]);
+            evaluationStack.push(operands[thread.Line]);
             thread.Line++;
             break;
 
         case 35: // Ldc_R8: Load 8-byte floating-point constant onto the stack
-            evaluatinStack.push(operands[thread.Line]);
+            evaluationStack.push(operands[thread.Line]);
             thread.Line++;
             break;
 
         case 36: // Dup: Duplicate the value on top of the stack
-            evaluatinStack.push(evaluatinStack[evaluatinStack.length - 1]);
+            evaluationStack.push(evaluationStack[evaluationStack.length - 1]);
             thread.Line++;
             break;
 
         case 37: // Pop: Remove the value from the top of the stack
-            evaluatinStack.pop();
+            evaluationStack.pop();
             thread.Line++;
             break;
 
@@ -226,7 +226,7 @@ function Interpret(thread)
             break;
 
         case 43: // Brfalse_S
-            if (evaluatinStack[evaluatinStack.length])
+            if (evaluationStack[evaluationStack.length])
             {
                 thread.Line++;
             }
@@ -234,11 +234,11 @@ function Interpret(thread)
             {
                 thread.Line = operands[thread.Line];
             }
-            evaluatinStack.pop();          
+            evaluationStack.pop();          
             break;
 
         case 44: // Brtrue_S
-            if (evaluatinStack[evaluatinStack.length - 1])
+            if (evaluationStack[evaluationStack.length - 1])
             {
                 thread.Line = operands[thread.Line];
             }
@@ -246,7 +246,7 @@ function Interpret(thread)
             {
                 thread.Line++;
             }
-            evaluatinStack.pop(); 
+            evaluationStack.pop(); 
             break;
         case 45: // Beq_S
             thread.Line++;
@@ -257,8 +257,8 @@ function Interpret(thread)
 
         case 47: // Bgt_S
 
-            v1 = evaluatinStack.pop();
-            v0 = evaluatinStack.pop();
+            v1 = evaluationStack.pop();
+            v0 = evaluationStack.pop();
 
             if (typeof v0 === 'number')
             {
