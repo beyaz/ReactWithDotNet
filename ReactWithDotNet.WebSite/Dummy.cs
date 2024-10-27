@@ -15,6 +15,11 @@ class Deneme45
 {
     public static string Abc5()
     {
+        return static_method_1();
+    }
+    
+    public static string static_method_1()
+    {
         return "abc-123";
     }
 }

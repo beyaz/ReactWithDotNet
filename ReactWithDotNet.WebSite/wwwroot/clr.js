@@ -25,31 +25,18 @@ function Interpret(thread)
 {
     const callStack = thread.CallStack[thread.CallStack.length - 1];
 
-    const method = callStack.Method;
+    var instructions = callStack.Method.Body.Instructions;
 
-    const instructions = method.Body.Instructions;
+    var operands = callStack.Method.Body.Operands;
 
-    const operands = method.Body.Operands;
+    var evaluationStack = callStack.EvaluationStack;
 
-    const evaluationStack = callStack.EvaluationStack;
+    var methodArguments = callStack.MethodArguments;    
 
-    const methodArguments = callStack.MethodArguments;    
-
-    const localVariables = callStack.LocalVariables;
+    var localVariables = callStack.LocalVariables;
 
     let v0, v1, v2;
-
-    //{
-    //    // create new StackFrame
-    //    thread.CallStack.push({
-    //        EvaluationStack: [],
-    //        LocalVariables: [],
-    //        MethodArguments: evaluationStack,
-    //        Method: operands[thread.Line],
-    //        Line: 0
-    //    });
-    //}
-
+       
     while(true)
     {
         switch (instructions[thread.Line])
@@ -246,6 +233,30 @@ function Interpret(thread)
                 thread.Line++;
                 break;
             case 39: // Call
+
+                if (typeof operands[thread.Line] === 'number')
+                {
+                    operands[thread.Line] = thread.CallStack[thread.CallStack.length - 1].Method.Metadata.Methods[operands[thread.Line]];
+                }
+
+                // create new StackFrame
+                thread.CallStack.push({
+                    EvaluationStack: [],
+                    LocalVariables: [],
+                    MethodArguments: evaluationStack,
+                    Method: operands[thread.Line],
+                    Line: 0
+                });
+
+                var instructions = callStack.Method.Body.Instructions;
+
+                var operands = callStack.Method.Body.Operands;
+
+                var evaluationStack = callStack.EvaluationStack;
+
+                var methodArguments = callStack.MethodArguments;    
+
+                var localVariables = callStack.LocalVariables;
 
                 thread.Line++;
                 break;
