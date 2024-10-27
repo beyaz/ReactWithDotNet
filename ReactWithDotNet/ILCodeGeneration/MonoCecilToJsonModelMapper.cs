@@ -5,37 +5,13 @@ namespace ReactWithDotNet.ILCodeGeneration;
 
 static class MonoCecilToJsonModelMapper
 {
-    public static MethodDefinitionModel AsModel(this MethodDefinition value)
-    {
-        return new()
-        {
-            Body             = value.Body?.AsModel(),
-            Name             = value.Name,
-            Parameters       = value.Parameters.ToListOf(AsModel),
-            ReturnType       = value.ReturnType.AsModel(),
-            CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel)
-        };
-        
-        
-    }
-
     static readonly string[] NotExportableAttributes =
     [
         "System.Runtime.CompilerServices.AsyncStateMachineAttribute",
         "System.Diagnostics.DebuggerStepThroughAttribute",
         "System.Runtime.CompilerServices.ExtensionAttribute"
     ];
-    
-    static bool IsExportableAttribute(CustomAttribute value)
-    {
-        if (NotExportableAttributes.Contains(value.AttributeType.FullName))
-        {
-            return false;
-        }
 
-        return true;
-    }
-    
     public static TypeDefinitionModel AsModel(this TypeDefinition value)
     {
         return new()
@@ -53,7 +29,18 @@ static class MonoCecilToJsonModelMapper
             Events           = value.Events.ToListOf(AsModel),
             Interfaces       = value.Interfaces.ToListOf(AsModel)
         };
-        
+    }
+
+    static MethodDefinitionModel AsModel(this MethodDefinition value)
+    {
+        return new()
+        {
+            Body             = value.Body?.AsModel(),
+            Name             = value.Name,
+            Parameters       = value.Parameters.ToListOf(AsModel),
+            ReturnType       = value.ReturnType.AsModel(),
+            CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel)
+        };
     }
 
     static InterfaceImplementationModel AsModel(this InterfaceImplementation value)
@@ -267,8 +254,6 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
-   
-    
     static CustomAttributeModel AsModel(this CustomAttribute value)
     {
         return new()
@@ -319,6 +304,16 @@ static class MonoCecilToJsonModelMapper
         {
             Name = metadataScope.Name
         };
+    }
+
+    static bool IsExportableAttribute(CustomAttribute value)
+    {
+        if (NotExportableAttributes.Contains(value.AttributeType.FullName))
+        {
+            return false;
+        }
+
+        return true;
     }
 
     static IReadOnlyList<B> ToListOf<A, B>(this IEnumerable<A> enumerable, Func<A, B> convertFunc)
