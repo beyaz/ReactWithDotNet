@@ -179,13 +179,13 @@ static class MonoCecilToJsonModelMapper
 
             if (operand is FieldReference fieldReference)
             {
-                operands.Add(i, fieldReference.AsModel(metadataTable));
+                operands.Add(i, fieldReference.IndexAt(metadataTable));
                 continue;
             }
 
             if (operand is EventReference eventReference)
             {
-                operands.Add(i, eventReference.AsModel(metadataTable));
+                operands.Add(i, eventReference.IndexAt(metadataTable));
                 continue;
             }
 
@@ -314,12 +314,33 @@ static class MonoCecilToJsonModelMapper
         {
             return index;
         }
-        
+
         return metadataTable.MetadataScopes.AddAndGetIndex(new()
         {
             Name = value.Name
         });
-        
+    }
+
+    static int IndexAt(this EventReference value, MetadataTable metadataTable)
+    {
+        var index = metadataTable.Events.FindIndex(x => IsSame(x, value, metadataTable));
+        if (index >= 0)
+        {
+            return index;
+        }
+
+        return metadataTable.Events.AddAndGetIndex(AsModel(value, metadataTable));
+    }
+
+    static int IndexAt(this FieldReference value, MetadataTable metadataTable)
+    {
+        var index = metadataTable.Fields.FindIndex(x => IsSame(x, value, metadataTable));
+        if (index >= 0)
+        {
+            return index;
+        }
+
+        return metadataTable.Fields.AddAndGetIndex(AsModel(value, metadataTable));
     }
 
     static int IndexAt(this PropertyReference value, MetadataTable metadataTable)
@@ -331,17 +352,6 @@ static class MonoCecilToJsonModelMapper
         }
 
         return metadataTable.Properties.AddAndGetIndex(AsModel(value, metadataTable));
-    }
-
-    static int IndexAt(TypeDefinition value, MetadataTable metadataTable)
-    {
-        var index = metadataTable.Types.FindIndex(x => IsSame(x, value));
-        if (index >= 0)
-        {
-            return index;
-        }
-
-        return metadataTable.Types.AddAndGetIndex(AsModel(value, metadataTable));
     }
 
     static int IndexAt(this TypeReference value, MetadataTable metadataTable)
@@ -387,6 +397,16 @@ static class MonoCecilToJsonModelMapper
     }
 
     static bool IsSame(PropertyReferenceModel model, PropertyReference value, MetadataTable metadataTable)
+    {
+        return value.Name == model.Name && value.DeclaringType.IndexAt(metadataTable) == model.DeclaringType;
+    }
+
+    static bool IsSame(FieldReferenceModel model, FieldReference value, MetadataTable metadataTable)
+    {
+        return value.Name == model.Name && value.DeclaringType.IndexAt(metadataTable) == model.DeclaringType;
+    }
+
+    static bool IsSame(EventReferenceModel model, EventReference value, MetadataTable metadataTable)
     {
         return value.Name == model.Name && value.DeclaringType.IndexAt(metadataTable) == model.DeclaringType;
     }
