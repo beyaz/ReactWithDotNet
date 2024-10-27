@@ -102,10 +102,8 @@ sealed record MethodBodyModel
     public required IReadOnlyList<ExceptionHandler> ExceptionHandlers { get; init; }
 }
 
-record MethodReferenceModel
+record MethodReferenceModel : MemberReferenceModel
 {
-    public required string Name { get; init; }
-    
     public required int ReturnType { get; init; }
     
     public required IReadOnlyList<ParameterDefinitionModel> Parameters { get; init; }
@@ -169,12 +167,12 @@ sealed record MetadataScopeModel
 
 sealed class MetadataTable
 {
+    public readonly List<MetadataScopeModel> MetadataScopes = [];
     public readonly List<TypeReferenceModel> Types = [];
-    public readonly List<MethodReferenceModel> Methods = [];
     public readonly List<FieldReferenceModel> Fields = [];
+    public readonly List<MethodReferenceModel> Methods = [];
     public readonly List<PropertyReferenceModel> Properties = [];
     public readonly List<EventReferenceModel> Events = [];
-    public readonly List<MetadataScopeModel> MetadataScopes = [];
 }
 
 sealed record ArrayTypeModel : TypeReferenceModel

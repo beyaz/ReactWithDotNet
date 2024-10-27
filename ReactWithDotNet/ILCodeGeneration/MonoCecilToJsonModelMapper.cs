@@ -10,6 +10,15 @@ class Deneme45
         return "abc-123";
     }
 }
+
+class Deneme46
+{
+    public static string Abc()
+    {
+        return "abc-67";
+    }
+}
+
 static class MonoCecilToJsonModelMapper
 {
     static readonly string[] NotExportableAttributes =
@@ -79,8 +88,10 @@ static class MonoCecilToJsonModelMapper
     {
         return new()
         {
-            Body             = value.Body?.AsModel(metadataTable),
-            Name             = value.Name,
+            Name = value.Name,
+            DeclaringType = value.DeclaringType.IndexAt(metadataTable),
+            Body = value.Body?.AsModel(metadataTable),
+            
             Parameters       = value.Parameters.ToListOf(AsModel, metadataTable),
             ReturnType       = value.ReturnType.IndexAt(metadataTable),
             CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel, metadataTable)
@@ -268,7 +279,9 @@ static class MonoCecilToJsonModelMapper
 
                 Parameters = default,
                 Name       = default,
-                ReturnType = default
+                DeclaringType = default,
+                ReturnType = default,
+                FullName = default,
             };
         }
 

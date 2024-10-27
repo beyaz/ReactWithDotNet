@@ -1,8 +1,32 @@
 
-const CLR = {
+var GlobalMetadata =
+{
+    MetadataScopes: [],
+    Types: [],
+    Fields: [],
+    Methods: [],
+    Properties: [],
+    Events: []
+};
+
+function MergeMetadataTable(source, destination) 
+{
+    var i,j;
+    
+    for (i = 0; i < source.MetadataScopes.length; i++)
+    {
+        for (j = 0; j < destination.MetadataScopes.length; j++)
+        {
+            // IsDefinition
+        }
+    }
+}
+
+const CLR =
+{
 
 };
-window.CLR = CLR;
+
 
 
 function Interpret(thread)
@@ -884,18 +908,9 @@ function Interpret(thread)
 }
 
 
-setTimeout(function() {
-
-    const url = ReactWithDotNet.MetadataRequestHandlerPath;
-
-    var request =
-    [
-        {
-            AssemblyName: "ReactWithDotNet.dll",
-            NamespaceName: "ReactWithDotNet",
-            TypeName: "Deneme45"
-        }
-    ];
+function GetMetadata(request, onSuccess, onFail)
+{
+    const url = "/GetMetadata";
     
     let options =
     {
@@ -907,23 +922,48 @@ setTimeout(function() {
         },
         body: JSON.stringify(request)
     };
+    
+    window.fetch(url, options).then(response => response.json()).then(json => onSuccess(json)).catch(onFail ?? console.log);
+}
 
+
+setTimeout(function () 
+{
+    
 
     function onSuccess(json) 
     {
-        
-    }
-    function onFail(error) 
-    {
-        console.log(error);
+
     }
     
-    window.fetch(url, options).then(response => response.json()).then(json => onSuccess(json)).catch(onFail);
+    var request =
+    [
+        {
+            AssemblyName: "ReactWithDotNet.dll",
+            NamespaceName: "ReactWithDotNet",
+            TypeName: "Deneme45"
+        }
+    ];
+
+    GetMetadata(request, onSuccess);    
+
+    request =
+    [
+        {
+            AssemblyName: "ReactWithDotNet.dll",
+            NamespaceName: "ReactWithDotNet",
+            TypeName: "Deneme46"
+        }
+    ];
+
+    GetMetadata(request, onSuccess);
     
     
-}, 500);
+    
+}, 3000);
 
 
+window.CLR = CLR;
 
 
 
