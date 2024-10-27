@@ -32,6 +32,31 @@ static class MonoCecilToJsonModelMapper
             Interfaces       = value.Interfaces.ToListOf(AsModel)
         };
     }
+    
+    static int IndexAt(TypeDefinition value, MetadataTable metadataTable)
+    {
+        var index = metadataTable.Types.FindIndex(x=>IsSame(x,value));
+        if (index >= 0)
+        {
+            return index;
+        }
+        
+        return metadataTable.Types.AddAndGetIndex(AsModel(value, metadataTable));
+    }
+
+    static int AddAndGetIndex<T>(this List<T> list, T newItem)
+    {
+        var index = list.Count;
+        
+        list.Add(newItem);
+
+        return index;
+    }
+    
+    static bool IsSame(TypeDefinitionModel model, TypeDefinition value)
+    {
+        return value.Name == model.Name && value.Namespace == model.Namespace;
+    }
 
     static MethodDefinitionModel AsModel(this MethodDefinition value)
     {
