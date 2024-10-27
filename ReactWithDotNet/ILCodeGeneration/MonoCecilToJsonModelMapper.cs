@@ -23,7 +23,7 @@ static class MonoCecilToJsonModelMapper
             Scope     = value.Scope.AsModel(metadataTable),
 
             CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel,metadataTable),
-            BaseType         = value.BaseType.AsModel(metadataTable),
+            BaseType         = value.BaseType.IndexAt(metadataTable),
             Methods          = value.Methods.ToListOf(AsModel,metadataTable),
             Fields           = value.Fields.ToListOf(AsModel,metadataTable),
             Properties       = value.Properties.ToListOf(AsModel,metadataTable),
@@ -76,7 +76,7 @@ static class MonoCecilToJsonModelMapper
             Body             = value.Body?.AsModel(metadataTable),
             Name             = value.Name,
             Parameters       = value.Parameters.ToListOf(AsModel,metadataTable),
-            ReturnType       = value.ReturnType.AsModel(metadataTable),
+            ReturnType       = value.ReturnType.IndexAt(metadataTable),
             CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel,metadataTable)
         };
     }
@@ -85,7 +85,7 @@ static class MonoCecilToJsonModelMapper
     {
         return new()
         {
-            InterfaceType    = value.InterfaceType.AsModel(metadataTable),
+            InterfaceType    = value.InterfaceType.IndexAt(metadataTable),
             CustomAttributes = value.CustomAttributes.ToListOf(AsModel,metadataTable)
         };
     }
@@ -96,7 +96,7 @@ static class MonoCecilToJsonModelMapper
         {
             Name          = value.Name,
             FullName      = value.FullName,
-            FieldType     = value.FieldType.AsModel(metadataTable),
+            FieldType     = value.FieldType.IndexAt(metadataTable),
             DeclaringType = value.DeclaringType?.IndexAt(metadataTable)
         };
     }
@@ -107,7 +107,7 @@ static class MonoCecilToJsonModelMapper
         {
             Name             = value.Name,
             FullName         = value.FullName,
-            FieldType        = value.FieldType.AsModel(metadataTable),
+            FieldType        = value.FieldType.IndexAt(metadataTable),
             DeclaringType    = value.DeclaringType?.IndexAt(metadataTable),
             CustomAttributes = value.CustomAttributes.ToListOf(AsModel,metadataTable)
         };
@@ -238,7 +238,7 @@ static class MonoCecilToJsonModelMapper
             {
                 HandlerStart = body.Instructions.IndexOf(handler.HandlerStart),
                 HandlerEnd   = body.Instructions.IndexOf(handler.HandlerEnd),
-                CatchType    = handler.CatchType?.AsModel(metadataTable),
+                CatchType    = handler.CatchType?.IndexAt(metadataTable),
                 HandlerType = handler.HandlerType switch
                 {
                     Mono.Cecil.Cil.ExceptionHandlerType.Catch   => ExceptionHandlerType.Catch,
@@ -258,7 +258,7 @@ static class MonoCecilToJsonModelMapper
             return new GenericInstanceMethodModel
             {
                 ElementMethod    = genericInstanceMethod.ElementMethod.AsModel(metadataTable),
-                GenericArguments = genericInstanceMethod.GenericArguments.ToListOf(AsModel,metadataTable),
+                GenericArguments = genericInstanceMethod.GenericArguments.ToListOf(x=>x.IndexAt(metadataTable)),
 
                 Parameters = default,
                 Name       = default,
@@ -268,7 +268,7 @@ static class MonoCecilToJsonModelMapper
 
         return new()
         {
-            ReturnType = methodReference.ReturnType.AsModel(metadataTable),
+            ReturnType = methodReference.ReturnType.IndexAt(metadataTable),
             Name       = methodReference.Name,
             Parameters = methodReference.Parameters.ToListOf(AsModel,metadataTable)
         };
@@ -278,7 +278,7 @@ static class MonoCecilToJsonModelMapper
     {
         return new()
         {
-            Type  = value.Type.AsModel(metadataTable),
+            Type  = value.Type.IndexAt(metadataTable),
             Value = value.Value
         };
     }
@@ -308,7 +308,7 @@ static class MonoCecilToJsonModelMapper
         return new()
         {
             Index         = parameterDefinition.Index,
-            ParameterType = parameterDefinition.ParameterType.AsModel(metadataTable),
+            ParameterType = parameterDefinition.ParameterType.IndexAt(metadataTable),
             Name          = parameterDefinition.Name
         };
     }
@@ -320,7 +320,7 @@ static class MonoCecilToJsonModelMapper
             return new ArrayTypeModel
             {
                 Rank        = arrayType.Rank,
-                ElementType = arrayType.ElementType.AsModel(metadataTable),
+                ElementType = arrayType.ElementType.IndexAt(metadataTable),
 
                 Name      = default,
                 Namespace = default,

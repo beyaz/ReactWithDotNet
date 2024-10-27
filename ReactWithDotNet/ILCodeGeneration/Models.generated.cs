@@ -17,7 +17,7 @@ public sealed record ParameterDefinitionModel
 
     public required string Name { get; init; }
 
-    public required TypeReferenceModel ParameterType { get; init; }
+    public required int ParameterType { get; init; }
 }
 
 public enum ExceptionHandlerType 
@@ -34,7 +34,7 @@ public sealed record ExceptionHandler
     
     public required int HandlerStart { get; init; }
     
-    public required TypeReferenceModel CatchType { get; init; }
+    public required int? CatchType { get; init; }
 
     public required ExceptionHandlerType  HandlerType { get; init; }
 }
@@ -51,7 +51,7 @@ public record MemberReferenceModel
 
 public record FieldReferenceModel : MemberReferenceModel
 {
-    public required TypeReferenceModel FieldType { get; init; }
+    public required int FieldType { get; init; }
 }
 
 public record FieldDefinitionModel : FieldReferenceModel
@@ -89,7 +89,7 @@ public record EventDefinitionModel : EventReferenceModel
 
 public sealed record InterfaceImplementationModel
 {
-    public required TypeReferenceModel InterfaceType { get; init; }
+    public required int InterfaceType { get; init; }
     
     public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
 }
@@ -108,14 +108,14 @@ public record MethodReferenceModel
 {
     public required string Name { get; init; }
     
-    public required TypeReferenceModel ReturnType { get; init; }
+    public required int ReturnType { get; init; }
     
     public required IReadOnlyList<ParameterDefinitionModel> Parameters { get; init; }
 }
 
 public sealed record CustomAttributeArgumentModel
 {
-    public required TypeReferenceModel Type { get; init; }
+    public required int Type { get; init; }
     
     public required object Value { get; init; }
 }
@@ -147,7 +147,7 @@ public sealed record MethodDefinitionModel : MethodReferenceModel
 
 public sealed record TypeDefinitionModel : TypeReferenceModel
 {
-    public required TypeReferenceModel BaseType { get; init; }
+    public required int BaseType { get; init; }
     
     public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
     
@@ -182,12 +182,12 @@ public sealed record ArrayTypeModel : TypeReferenceModel
 {
     public required int Rank { get; init; }
     
-    public required TypeReferenceModel ElementType { get; init; }
+    public required int ElementType { get; init; }
 }
 
 public sealed record GenericInstanceMethodModel : MethodReferenceModel
 {
     public required MethodReferenceModel ElementMethod { get; init; }
     
-    public required IReadOnlyList<TypeReferenceModel> GenericArguments { get; init; }
+    public required IReadOnlyList<int> GenericArguments { get; init; }
 }
