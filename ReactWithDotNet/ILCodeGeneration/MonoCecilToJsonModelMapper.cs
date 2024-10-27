@@ -13,8 +13,18 @@ static class MonoCecilToJsonModelMapper
             Name             = value.Name,
             Parameters       = value.Parameters.ToListOf(AsModel),
             ReturnType       = value.ReturnType.AsModel(),
-            CustomAttributes = value.CustomAttributes.ToListOf(AsModel)
+            CustomAttributes = value.CustomAttributes.Where(cantIgnore).ToListOf(AsModel)
         };
+        
+        static bool cantIgnore(CustomAttribute value)
+        {
+            if (value.AttributeType.FullName== "System.Runtime.CompilerServices.ExtensionAttribute")
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 
     public static TypeDefinitionModel AsModel(this TypeDefinition value)
@@ -247,6 +257,8 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
+   
+    
     static CustomAttributeModel AsModel(this CustomAttribute value)
     {
         return new()
