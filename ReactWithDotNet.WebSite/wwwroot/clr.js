@@ -9,15 +9,13 @@ var GlobalMetadata =
     Events: []
 };
 
-function MergeMetadataTable(source, destination) 
+function SelfBindMetadataTable(metadataTable) 
 {
-    var i,j;
-    
-    for (i = 0; i < source.MetadataScopes.length; i++)
+    for (var i = 0; i < metadataTable.Methods.length; i++)
     {
-        for (j = 0; j < destination.MetadataScopes.length; j++)
+        if (metadataTable.Methods[i].IsDefinition === true) 
         {
-            // IsDefinition
+            metadataTable.Methods[i].MetadataTable = metadataTable;
         }
     }
 }
@@ -926,14 +924,42 @@ function GetMetadata(request, onSuccess, onFail)
     window.fetch(url, options).then(response => response.json()).then(json => onSuccess(json)).catch(onFail ?? console.log);
 }
 
+function CallManagedCode(managedMethodLocation, instance, args, callback) 
+{
+    const thread =
+    {
+        CallStack: [],
+        Line: 0
+    };
+
+    const stackFrame =
+    {
+        Method: null,
+        EvaluationStack:[],
+        LocalVariables:[],
+        MethodArguments: args
+    };
+
+    thread.CallStack.push(stackFrame);
+
+    Interpret(thread);
+
+    if (callback) 
+    {
+        if (thread.EvaluationStack.length > 0) 
+        {
+            callback(thread.EvaluationStack.pop());
+        }   
+    }
+}
 
 setTimeout(function () 
 {
-    
-
-    function onSuccess(json) 
+    function onSuccess(metadataTable)
     {
-
+        SelfBindMetadataTable(metadataTable);
+        
+        
     }
     
     var request =

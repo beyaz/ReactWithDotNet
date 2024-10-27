@@ -88,6 +88,8 @@ static class MonoCecilToJsonModelMapper
     {
         return new()
         {
+            IsDefinition = true,
+            
             Name = value.Name,
             DeclaringType = value.DeclaringType.IndexAt(metadataTable),
             Body = value.Body?.AsModel(metadataTable),
@@ -124,7 +126,8 @@ static class MonoCecilToJsonModelMapper
             Name             = value.Name,
             FieldType        = value.FieldType.IndexAt(metadataTable),
             DeclaringType    = value.DeclaringType?.IndexAt(metadataTable),
-            CustomAttributes = value.CustomAttributes.ToListOf(AsModel, metadataTable)
+            CustomAttributes = value.CustomAttributes.ToListOf(AsModel, metadataTable),
+            IsDefinition = true
         };
     }
 
@@ -142,6 +145,7 @@ static class MonoCecilToJsonModelMapper
     {
         return new()
         {
+            IsDefinition  = true,
             Name          = value.Name,
             EventType     = value.EventType.IndexAt(metadataTable),
             DeclaringType = value.DeclaringType?.IndexAt(metadataTable),
@@ -166,6 +170,8 @@ static class MonoCecilToJsonModelMapper
     {
         return new()
         {
+            IsDefinition = true,
+            
             Name          = value.Name,
             PropertyType  = value.PropertyType.IndexAt(metadataTable),
             DeclaringType = value.DeclaringType?.IndexAt(metadataTable),
