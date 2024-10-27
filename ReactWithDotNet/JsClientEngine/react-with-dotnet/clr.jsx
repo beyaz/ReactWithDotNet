@@ -19,6 +19,17 @@ function Interpret(thread)
 
     let v0, v1, v2;
 
+    {
+        // create new StackFrame
+        thread.CallStack.push({
+            EvaluationStack: [],
+            LocalVariables: [],
+            MethodArguments: evaluationStack,
+            Method: operands[thread.Line],
+            Line: 0
+        });
+    }
+
     switch (instructions[thread.Line])
     {
         case 0: // Nop: No operation
@@ -213,6 +224,7 @@ function Interpret(thread)
             thread.Line++;
             break;
         case 39: // Call
+
             thread.Line++;
             break;
         case 40: // Calli
@@ -426,13 +438,24 @@ function Interpret(thread)
             break;
 
         case 96: // Xor
+            v1 = evaluationStack.pop();
+            v0 = evaluationStack.pop();
+
+            evaluationStack.push(v0 ^ v1);
+
             thread.Line++;
             break;
         case 97: // Shl
             thread.Line++;
             break;
         case 98: // Shr
-            thread.Line++;
+            v1 = evaluationStack.pop();
+            v0 = evaluationStack.pop();
+
+            if (typeof v0 === 'number')
+            {
+                evaluationStack.push(v0 >> v1);
+            }
             break;
         case 99: // Shr_Un
             thread.Line++;
