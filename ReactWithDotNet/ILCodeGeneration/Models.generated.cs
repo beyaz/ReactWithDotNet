@@ -44,7 +44,7 @@ public record MemberReferenceModel
 {
     public required string Name { get; init; }
     
-    public required TypeReferenceModel DeclaringType { get; init; }
+    public required int? DeclaringType { get; init; }
     
     public required string FullName { get; init; }
 }
@@ -61,7 +61,7 @@ public record FieldDefinitionModel : FieldReferenceModel
 
 public record PropertyReferenceModel : MemberReferenceModel
 {
-    public required TypeReferenceModel PropertyType { get; init; }
+    public required int PropertyType { get; init; }
     
     public required IReadOnlyList<ParameterDefinitionModel> Parameters { get; init; }
 }
@@ -77,7 +77,7 @@ public record PropertyDefinitionModel : PropertyReferenceModel
 
 public record EventReferenceModel : MemberReferenceModel
 {
-    public required TypeReferenceModel EventType { get; init; }
+    public required int EventType { get; init; }
 }
 
 public record EventDefinitionModel : EventReferenceModel
@@ -171,7 +171,7 @@ public sealed record MetadataScopeModel
 
 sealed class MetadataTable
 {
-    public readonly List<TypeDefinitionModel> Types = [];
+    public readonly List<TypeReferenceModel> Types = [];
     public readonly List<MethodReference> Methods = [];
     public readonly List<FieldReference> Fields = [];
     public readonly List<PropertyReference> Properties = [];
