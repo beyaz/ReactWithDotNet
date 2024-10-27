@@ -198,9 +198,17 @@ sealed class StackFrame
     public MethodDefinitionModel Method;
     public Array EvaluatinStack;
     public Array LocalVariables;
+    public Array MethodArguments;
+}
+
+sealed class Address
+{
+    public Array Array;
+    public int Index;
 }
 
 sealed class ThreadModel
 {
     public Array CallStack;
+    public int Line;
 }

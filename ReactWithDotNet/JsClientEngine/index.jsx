@@ -2,6 +2,7 @@
 
 // import core library
 import ReactWithDotNet from "./react-with-dotnet/react-with-dotnet";
+import "./react-with-dotnet/clr";
 
 // you can comment these imports according to your project dependency
 import "./react-with-dotnet/libraries/mui-core/all";
@@ -20,5 +21,7 @@ import "./react-with-dotnet/libraries/MonacoEditorReact/all";
 import "./react-with-dotnet/libraries/react-quill/all";
 import "./react-with-dotnet/libraries/react-split/all";
 import "./react-with-dotnet/libraries/_uploady_/all";
+
+
 
 export { ReactWithDotNet };
