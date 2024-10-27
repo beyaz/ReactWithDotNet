@@ -56,7 +56,11 @@ public static class ILHelper
             
             var typeModel = typeDefinition.AsModel(metadataTable);
 
-            return JsonSerializer.Serialize(new {metadataTable, value=typeModel }, new JsonSerializerOptions{ WriteIndented = true});
+            return JsonSerializer.Serialize(new {metadataTable, value=typeModel }, new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                IncludeFields = true
+            });
             
           
         }
