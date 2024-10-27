@@ -1,14 +1,9 @@
 ﻿using System.Text.Json;
 using Microsoft.AspNetCore.Http;
-using Mono.Cecil;
+
 using AssemblyDefinition = Mono.Cecil.AssemblyDefinition;
 
-namespace ReactWithDotNet.ILCodeGeneration;
-
-class Deneme17
-{
-    public readonly string abc = "abc";
-}
+namespace ReactWithDotNet;
 
 sealed record MetadataRequest
 {
@@ -18,7 +13,14 @@ sealed record MetadataRequest
     public string TypeName { get; init; }
 }
 
-public static class ILHelper
+static partial class Mixin
+{
+    public static string MetadataRequestHandlerPath;
+    
+    public static Task GetMetadata(HttpContext httpContext) => MetadataHelper.GetMetadata(httpContext);
+}
+
+static class MetadataHelper
 {
     static readonly JsonSerializerOptions JsonSerializerOptions = new()
     {
@@ -53,7 +55,7 @@ public static class ILHelper
         }
     }
 
-    static TypeDefinition FindType(this AssemblyDefinition assemblyDefinition, MetadataRequest request)
+    static Mono.Cecil.TypeDefinition FindType(this AssemblyDefinition assemblyDefinition, MetadataRequest request)
     {
         foreach (var moduleDefinition in assemblyDefinition.Modules)
         {
@@ -73,7 +75,7 @@ public static class ILHelper
 
         foreach (var request in requests)
         {
-            var assemblyFilePath = Path.Combine(Path.GetDirectoryName(typeof(ILHelper).Assembly.Location) ?? string.Empty, request.AssemblyName);
+            var assemblyFilePath = Path.Combine(Path.GetDirectoryName(typeof(Mixin).Assembly.Location) ?? string.Empty, request.AssemblyName);
             if (!File.Exists(assemblyFilePath))
             {
                 return (default, default, $"FileNotFound. @file: {assemblyFilePath}");

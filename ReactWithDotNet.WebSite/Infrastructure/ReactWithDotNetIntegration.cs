@@ -18,10 +18,12 @@ public static class ReactWithDotNetIntegration
             .Where(x => x is not null)
             .ToDictionary(x => x.Url, x => x, StringComparer.OrdinalIgnoreCase);
 
-        RequestHandlerPath = "/"+nameof(HandleReactWithDotNetRequest);
-       
+        RequestHandlerPath = "/" + nameof(HandleReactWithDotNetRequest);
+
+        MetadataRequestHandlerPath = "/" + nameof(GetMetadata);
+
         app.Use(async (httpContext, next) =>
-        {   
+        {
             var path = httpContext.Request.Path.Value ?? string.Empty;
 
             if (path == RequestHandlerPath)
@@ -35,13 +37,13 @@ public static class ReactWithDotNetIntegration
                 await WriteHtmlResponse(httpContext, typeof(MainLayout), routeInfo.page);
                 return;
             }
-            
+
             if (path == "/UploadFile")
             {
                 await UploadFileAndWriteResponse(httpContext);
                 return;
             }
-            
+
 #if DEBUG
             if (path == ReactWithDotNetDesigner.UrlPath)
             {
@@ -49,10 +51,10 @@ public static class ReactWithDotNetIntegration
                 return;
             }
 #endif
-            
-            if (path == "/GetMetadata")
+
+            if (path == MetadataRequestHandlerPath)
             {
-                await ILCodeGeneration.ILHelper.GetMetadata(httpContext);
+                await GetMetadata(httpContext);
                 return;
             }
 
@@ -71,12 +73,11 @@ public static class ReactWithDotNetIntegration
         });
     }
 
-    static async Task UploadFileAndWriteResponse(HttpContext httpContext)
+    static Task OnReactContextCreated(ReactContext context)
     {
-        var uploadResult = await UploadFile(httpContext);
-
-        await uploadResult.ExecuteAsync(httpContext);
+        return Task.CompletedTask;
     }
+
     static async Task<IResult> UploadFile(HttpContext httpContext)
     {
         var request = httpContext.Request;
@@ -102,9 +103,11 @@ public static class ReactWithDotNetIntegration
         return Results.Ok(new { FilePath = filePath });
     }
 
-    static Task OnReactContextCreated(ReactContext context)
+    static async Task UploadFileAndWriteResponse(HttpContext httpContext)
     {
-        return Task.CompletedTask;
+        var uploadResult = await UploadFile(httpContext);
+
+        await uploadResult.ExecuteAsync(httpContext);
     }
 
     static Task WriteHtmlResponse(HttpContext httpContext, Type layoutType, Type mainContentType)

@@ -1,7 +1,7 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace ReactWithDotNet.ILCodeGeneration;
+namespace ReactWithDotNet;
 
 static class MonoCecilToJsonModelMapper
 {

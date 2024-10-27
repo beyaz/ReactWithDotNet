@@ -1,8 +1,6 @@
-﻿using Mono.Cecil;
+﻿namespace ReactWithDotNet;
 
-namespace ReactWithDotNet.ILCodeGeneration;
-
-public record TypeReferenceModel
+record TypeReferenceModel
 {
     public required string Name { get; init; }
 
@@ -11,7 +9,7 @@ public record TypeReferenceModel
     public required int Scope { get; init; }
 }
 
-public sealed record ParameterDefinitionModel
+sealed record ParameterDefinitionModel
 {
     public required int Index { get; init; }
 
@@ -20,7 +18,7 @@ public sealed record ParameterDefinitionModel
     public required int ParameterType { get; init; }
 }
 
-public enum ExceptionHandlerType 
+enum ExceptionHandlerType 
 {
     Catch = 0,
     Filter = 1,
@@ -28,7 +26,7 @@ public enum ExceptionHandlerType
     Fault = 4,
 }
 
-public sealed record ExceptionHandler
+sealed record ExceptionHandler
 {
     public required int HandlerEnd { get; init; }
     
@@ -40,7 +38,7 @@ public sealed record ExceptionHandler
 }
 
 
-public record MemberReferenceModel
+record MemberReferenceModel
 {
     public required string Name { get; init; }
     
@@ -49,24 +47,24 @@ public record MemberReferenceModel
     public required string FullName { get; init; }
 }
 
-public record FieldReferenceModel : MemberReferenceModel
+record FieldReferenceModel : MemberReferenceModel
 {
     public required int FieldType { get; init; }
 }
 
-public record FieldDefinitionModel : FieldReferenceModel
+record FieldDefinitionModel : FieldReferenceModel
 {
     public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
 }
 
-public record PropertyReferenceModel : MemberReferenceModel
+record PropertyReferenceModel : MemberReferenceModel
 {
     public required int PropertyType { get; init; }
     
     public required IReadOnlyList<ParameterDefinitionModel> Parameters { get; init; }
 }
 
-public record PropertyDefinitionModel : PropertyReferenceModel
+record PropertyDefinitionModel : PropertyReferenceModel
 {
     public required int? GetMethod { get; init; }
     
@@ -75,19 +73,19 @@ public record PropertyDefinitionModel : PropertyReferenceModel
     public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
 }
 
-public record EventReferenceModel : MemberReferenceModel
+record EventReferenceModel : MemberReferenceModel
 {
     public required int EventType { get; init; }
 }
 
-public record EventDefinitionModel : EventReferenceModel
+record EventDefinitionModel : EventReferenceModel
 {
     public required MethodDefinitionModel AddMethod { get; init; }
     
     public required MethodDefinitionModel RemoveMethod { get; init; }
 }
 
-public sealed record InterfaceImplementationModel
+sealed record InterfaceImplementationModel
 {
     public required int InterfaceType { get; init; }
     
@@ -95,7 +93,7 @@ public sealed record InterfaceImplementationModel
 }
 
 
-public sealed record MethodBodyModel
+sealed record MethodBodyModel
 {
     public required IReadOnlyList<int> Instructions { get; init; }
 
@@ -104,7 +102,7 @@ public sealed record MethodBodyModel
     public required IReadOnlyList<ExceptionHandler> ExceptionHandlers { get; init; }
 }
 
-public record MethodReferenceModel
+record MethodReferenceModel
 {
     public required string Name { get; init; }
     
@@ -113,21 +111,21 @@ public record MethodReferenceModel
     public required IReadOnlyList<ParameterDefinitionModel> Parameters { get; init; }
 }
 
-public sealed record CustomAttributeArgumentModel
+sealed record CustomAttributeArgumentModel
 {
     public required int Type { get; init; }
     
     public required object Value { get; init; }
 }
 
-public sealed record CustomAttributeNamedArgumentModel
+sealed record CustomAttributeNamedArgumentModel
 {
     public required string Name { get; init; }
     
     public required CustomAttributeArgumentModel Argument { get; init; }
 }
 
-public sealed record CustomAttributeModel
+sealed record CustomAttributeModel
 {
     public required IReadOnlyList<CustomAttributeNamedArgumentModel> Fields { get; init; }
     
@@ -138,14 +136,14 @@ public sealed record CustomAttributeModel
     public required int? Constructor { get; init; }
 }
 
-public sealed record MethodDefinitionModel : MethodReferenceModel
+sealed record MethodDefinitionModel : MethodReferenceModel
 {
     public required MethodBodyModel Body { get; init; }
     
     public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
 }
 
-public sealed record TypeDefinitionModel : TypeReferenceModel
+sealed record TypeDefinitionModel : TypeReferenceModel
 {
     public required int BaseType { get; init; }
     
@@ -164,7 +162,7 @@ public sealed record TypeDefinitionModel : TypeReferenceModel
     public required IReadOnlyList<InterfaceImplementationModel> Interfaces { get; init; }
 }
 
-public sealed record MetadataScopeModel
+sealed record MetadataScopeModel
 {
     public required string Name { get; init; }
 }
@@ -179,14 +177,14 @@ sealed class MetadataTable
     public readonly List<MetadataScopeModel> MetadataScopes = [];
 }
 
-public sealed record ArrayTypeModel : TypeReferenceModel
+sealed record ArrayTypeModel : TypeReferenceModel
 {
     public required int Rank { get; init; }
     
     public required int ElementType { get; init; }
 }
 
-public sealed record GenericInstanceMethodModel : MethodReferenceModel
+sealed record GenericInstanceMethodModel : MethodReferenceModel
 {
     public required int ElementMethod { get; init; }
     
