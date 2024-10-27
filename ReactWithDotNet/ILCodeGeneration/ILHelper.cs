@@ -3,10 +3,11 @@ using Mono.Cecil;
 
 namespace ReactWithDotNet.ILCodeGeneration;
 
-class Deneme1
+class Deneme17
 {
-    
+    public readonly string abc = "abc";
 }
+
 public static class ILHelper
 {
     public static string Deneme2<A,B,C>(DenemeClass h, string p0, int[] arr = null, int[,,] arr2 = null)
@@ -16,7 +17,7 @@ public static class ILHelper
 
     public class DenemeClass
     {
-        
+        public string hhhhh { get; set; }
     }
     public static string Deneme(string p0)
     {
@@ -50,7 +51,7 @@ public static class ILHelper
 
         foreach (var moduleDefinition in assemblyDefinition.Modules)
         {
-            var typeDefinition = moduleDefinition.GetType("ReactWithDotNet.ILCodeGeneration", "ILHelper");
+            var typeDefinition = moduleDefinition.GetType("ReactWithDotNet.ILCodeGeneration", "Deneme17");
 
             var metadataTable = new MetadataTable();
             
