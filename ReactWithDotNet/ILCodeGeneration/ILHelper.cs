@@ -46,7 +46,7 @@ public static class ILHelper
 
         foreach (var moduleDefinition in assemblyDefinition.Modules)
         {
-            var typeDefinition = moduleDefinition.GetType("ReactWithDotNet.ILCodeGeneration", "ILHelper");
+            var typeDefinition = moduleDefinition.GetType("ReactWithDotNet", "Mixin");
             
             return JsonSerializer.Serialize(typeDefinition.AsModel(), new JsonSerializerOptions{ WriteIndented = true});
             

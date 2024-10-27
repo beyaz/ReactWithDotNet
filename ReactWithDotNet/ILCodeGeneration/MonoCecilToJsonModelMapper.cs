@@ -13,20 +13,29 @@ static class MonoCecilToJsonModelMapper
             Name             = value.Name,
             Parameters       = value.Parameters.ToListOf(AsModel),
             ReturnType       = value.ReturnType.AsModel(),
-            CustomAttributes = value.CustomAttributes.Where(cantIgnore).ToListOf(AsModel)
+            CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel)
         };
         
-        static bool cantIgnore(CustomAttribute value)
-        {
-            if (value.AttributeType.FullName== "System.Runtime.CompilerServices.ExtensionAttribute")
-            {
-                return false;
-            }
-
-            return true;
-        }
+        
     }
 
+    static readonly string[] NotExportableAttributes =
+    [
+        "System.Runtime.CompilerServices.AsyncStateMachineAttribute",
+        "System.Diagnostics.DebuggerStepThroughAttribute",
+        "System.Runtime.CompilerServices.ExtensionAttribute"
+    ];
+    
+    static bool IsExportableAttribute(CustomAttribute value)
+    {
+        if (NotExportableAttributes.Contains(value.AttributeType.FullName))
+        {
+            return false;
+        }
+
+        return true;
+    }
+    
     public static TypeDefinitionModel AsModel(this TypeDefinition value)
     {
         return new()
@@ -35,7 +44,7 @@ static class MonoCecilToJsonModelMapper
             Namespace = value.Namespace,
             Scope     = value.Scope.AsModel(),
 
-            CustomAttributes = value.CustomAttributes.ToListOf(AsModel),
+            CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel),
             BaseType         = value.BaseType.AsModel(),
             Methods          = value.Methods.ToListOf(AsModel),
             Fields           = value.Fields.ToListOf(AsModel),
@@ -44,6 +53,7 @@ static class MonoCecilToJsonModelMapper
             Events           = value.Events.ToListOf(AsModel),
             Interfaces       = value.Interfaces.ToListOf(AsModel)
         };
+        
     }
 
     static InterfaceImplementationModel AsModel(this InterfaceImplementation value)

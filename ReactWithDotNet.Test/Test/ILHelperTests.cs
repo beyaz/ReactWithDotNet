@@ -1,3 +1,4 @@
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReactWithDotNet.ILCodeGeneration;
 
@@ -11,6 +12,6 @@ public class ILHelperTests
     {
         var response = ILHelper.denemeeee();
         
-        
+        File.WriteAllText("c:\\a.json", response);
     }
 }
