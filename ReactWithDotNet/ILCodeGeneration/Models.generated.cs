@@ -68,9 +68,9 @@ public record PropertyReferenceModel : MemberReferenceModel
 
 public record PropertyDefinitionModel : PropertyReferenceModel
 {
-    public required MethodDefinitionModel GetMethod { get; init; }
+    public required int? GetMethod { get; init; }
     
-    public required MethodDefinitionModel SetMethod { get; init; }
+    public required int? SetMethod { get; init; }
     
     public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
 }
@@ -135,7 +135,7 @@ public sealed record CustomAttributeModel
     
     public required IReadOnlyList<CustomAttributeArgumentModel> ConstructorArguments { get; init; }
     
-    public required MethodReferenceModel Constructor { get; init; }
+    public required int? Constructor { get; init; }
 }
 
 public sealed record MethodDefinitionModel : MethodReferenceModel
@@ -172,10 +172,10 @@ public sealed record MetadataScopeModel
 sealed class MetadataTable
 {
     public readonly List<TypeReferenceModel> Types = [];
-    public readonly List<MethodReference> Methods = [];
-    public readonly List<FieldReference> Fields = [];
-    public readonly List<PropertyReference> Properties = [];
-    public readonly List<EventReference> Events = [];
+    public readonly List<MethodReferenceModel> Methods = [];
+    public readonly List<FieldReferenceModel> Fields = [];
+    public readonly List<PropertyReferenceModel> Properties = [];
+    public readonly List<EventReferenceModel> Events = [];
 }
 
 public sealed record ArrayTypeModel : TypeReferenceModel
@@ -187,7 +187,7 @@ public sealed record ArrayTypeModel : TypeReferenceModel
 
 public sealed record GenericInstanceMethodModel : MethodReferenceModel
 {
-    public required MethodReferenceModel ElementMethod { get; init; }
+    public required int ElementMethod { get; init; }
     
     public required IReadOnlyList<int> GenericArguments { get; init; }
 }

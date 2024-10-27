@@ -3,8 +3,6 @@ using Mono.Cecil.Cil;
 
 namespace ReactWithDotNet.ILCodeGeneration;
 
-
-
 static class MonoCecilToJsonModelMapper
 {
     static readonly string[] NotExportableAttributes =
@@ -22,51 +20,24 @@ static class MonoCecilToJsonModelMapper
             Namespace = value.Namespace,
             Scope     = value.Scope.AsModel(metadataTable),
 
-            CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel,metadataTable),
+            CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel, metadataTable),
             BaseType         = value.BaseType.IndexAt(metadataTable),
-            Methods          = value.Methods.ToListOf(AsModel,metadataTable),
-            Fields           = value.Fields.ToListOf(AsModel,metadataTable),
-            Properties       = value.Properties.ToListOf(AsModel,metadataTable),
+            Methods          = value.Methods.ToListOf(AsModel, metadataTable),
+            Fields           = value.Fields.ToListOf(AsModel, metadataTable),
+            Properties       = value.Properties.ToListOf(AsModel, metadataTable),
             NestedTypes      = value.NestedTypes.ToListOf(AsModel, metadataTable),
-            Events           = value.Events.ToListOf(AsModel,metadataTable),
-            Interfaces       = value.Interfaces.ToListOf(AsModel,metadataTable)
+            Events           = value.Events.ToListOf(AsModel, metadataTable),
+            Interfaces       = value.Interfaces.ToListOf(AsModel, metadataTable)
         };
-    }
-    
-    static int IndexAt(TypeDefinition value, MetadataTable metadataTable)
-    {
-        var index = metadataTable.Types.FindIndex(x=>IsSame(x,value));
-        if (index >= 0)
-        {
-            return index;
-        }
-        
-        return metadataTable.Types.AddAndGetIndex(AsModel(value, metadataTable));
-    }
-    
-    static int IndexAt(this TypeReference value, MetadataTable metadataTable)
-    {
-        var index = metadataTable.Types.FindIndex(x=>IsSame(x,value));
-        if (index >= 0)
-        {
-            return index;
-        }
-        
-        return metadataTable.Types.AddAndGetIndex(AsModel(value, metadataTable));
     }
 
     static int AddAndGetIndex<T>(this List<T> list, T newItem)
     {
         var index = list.Count;
-        
+
         list.Add(newItem);
 
         return index;
-    }
-    
-    static bool IsSame(TypeReferenceModel model, TypeReference value)
-    {
-        return value.Name == model.Name && value.Namespace == model.Namespace;
     }
 
     static MethodDefinitionModel AsModel(this MethodDefinition value, MetadataTable metadataTable)
@@ -75,22 +46,22 @@ static class MonoCecilToJsonModelMapper
         {
             Body             = value.Body?.AsModel(metadataTable),
             Name             = value.Name,
-            Parameters       = value.Parameters.ToListOf(AsModel,metadataTable),
+            Parameters       = value.Parameters.ToListOf(AsModel, metadataTable),
             ReturnType       = value.ReturnType.IndexAt(metadataTable),
-            CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel,metadataTable)
+            CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel, metadataTable)
         };
     }
 
-    static InterfaceImplementationModel AsModel(this InterfaceImplementation value,MetadataTable metadataTable)
+    static InterfaceImplementationModel AsModel(this InterfaceImplementation value, MetadataTable metadataTable)
     {
         return new()
         {
             InterfaceType    = value.InterfaceType.IndexAt(metadataTable),
-            CustomAttributes = value.CustomAttributes.ToListOf(AsModel,metadataTable)
+            CustomAttributes = value.CustomAttributes.ToListOf(AsModel, metadataTable)
         };
     }
 
-    static FieldReferenceModel AsModel(this FieldReference value,MetadataTable metadataTable)
+    static FieldReferenceModel AsModel(this FieldReference value, MetadataTable metadataTable)
     {
         return new()
         {
@@ -101,7 +72,7 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
-    static FieldDefinitionModel AsModel(this FieldDefinition value,MetadataTable metadataTable)
+    static FieldDefinitionModel AsModel(this FieldDefinition value, MetadataTable metadataTable)
     {
         return new()
         {
@@ -109,11 +80,11 @@ static class MonoCecilToJsonModelMapper
             FullName         = value.FullName,
             FieldType        = value.FieldType.IndexAt(metadataTable),
             DeclaringType    = value.DeclaringType?.IndexAt(metadataTable),
-            CustomAttributes = value.CustomAttributes.ToListOf(AsModel,metadataTable)
+            CustomAttributes = value.CustomAttributes.ToListOf(AsModel, metadataTable)
         };
     }
 
-    static EventReferenceModel AsModel(this EventReference value,MetadataTable metadataTable)
+    static EventReferenceModel AsModel(this EventReference value, MetadataTable metadataTable)
     {
         return new()
         {
@@ -124,7 +95,7 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
-    static EventDefinitionModel AsModel(this EventDefinition value,MetadataTable metadataTable)
+    static EventDefinitionModel AsModel(this EventDefinition value, MetadataTable metadataTable)
     {
         return new()
         {
@@ -138,7 +109,7 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
-    static PropertyReferenceModel AsModel(this PropertyReference value,MetadataTable metadataTable)
+    static PropertyReferenceModel AsModel(this PropertyReference value, MetadataTable metadataTable)
     {
         return new()
         {
@@ -146,27 +117,27 @@ static class MonoCecilToJsonModelMapper
             FullName      = value.FullName,
             PropertyType  = value.PropertyType.IndexAt(metadataTable),
             DeclaringType = value.DeclaringType?.IndexAt(metadataTable),
-            Parameters    = value.Parameters.ToListOf(AsModel,metadataTable)
+            Parameters    = value.Parameters.ToListOf(AsModel, metadataTable)
         };
     }
 
-    static PropertyDefinitionModel AsModel(this PropertyDefinition value,MetadataTable metadataTable)
+    static PropertyDefinitionModel AsModel(this PropertyDefinition value, MetadataTable metadataTable)
     {
         return new()
         {
             Name          = value.Name,
             FullName      = value.FullName,
-            PropertyType  = value.PropertyType.IndexAt( metadataTable),
+            PropertyType  = value.PropertyType.IndexAt(metadataTable),
             DeclaringType = value.DeclaringType?.IndexAt(metadataTable),
-            Parameters    = value.Parameters.ToListOf(AsModel,metadataTable),
+            Parameters    = value.Parameters.ToListOf(AsModel, metadataTable),
 
-            GetMethod        = value.GetMethod.AsModel(metadataTable),
-            SetMethod        = value.SetMethod.AsModel(metadataTable),
-            CustomAttributes = value.CustomAttributes.ToListOf(AsModel,metadataTable)
+            GetMethod        = value.GetMethod?.IndexAt(metadataTable),
+            SetMethod        = value.SetMethod?.IndexAt(metadataTable),
+            CustomAttributes = value.CustomAttributes.ToListOf(AsModel, metadataTable)
         };
     }
 
-    static MethodBodyModel AsModel(this MethodBody body,MetadataTable metadataTable)
+    static MethodBodyModel AsModel(this MethodBody body, MetadataTable metadataTable)
     {
         var instructions = new List<int>();
 
@@ -251,14 +222,14 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
-    static MethodReferenceModel AsModel(this MethodReference methodReference,MetadataTable metadataTable)
+    static MethodReferenceModel AsModel(this MethodReference methodReference, MetadataTable metadataTable)
     {
         if (methodReference is GenericInstanceMethod genericInstanceMethod)
         {
             return new GenericInstanceMethodModel
             {
-                ElementMethod    = genericInstanceMethod.ElementMethod.AsModel(metadataTable),
-                GenericArguments = genericInstanceMethod.GenericArguments.ToListOf(x=>x.IndexAt(metadataTable)),
+                ElementMethod    = genericInstanceMethod.ElementMethod.IndexAt(metadataTable),
+                GenericArguments = genericInstanceMethod.GenericArguments.ToListOf(x => x.IndexAt(metadataTable)),
 
                 Parameters = default,
                 Name       = default,
@@ -270,11 +241,11 @@ static class MonoCecilToJsonModelMapper
         {
             ReturnType = methodReference.ReturnType.IndexAt(metadataTable),
             Name       = methodReference.Name,
-            Parameters = methodReference.Parameters.ToListOf(AsModel,metadataTable)
+            Parameters = methodReference.Parameters.ToListOf(AsModel, metadataTable)
         };
     }
 
-    static CustomAttributeArgumentModel AsModel(this CustomAttributeArgument value,MetadataTable metadataTable)
+    static CustomAttributeArgumentModel AsModel(this CustomAttributeArgument value, MetadataTable metadataTable)
     {
         return new()
         {
@@ -283,7 +254,7 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
-    static CustomAttributeNamedArgumentModel AsModel(this CustomAttributeNamedArgument value,MetadataTable metadataTable)
+    static CustomAttributeNamedArgumentModel AsModel(this CustomAttributeNamedArgument value, MetadataTable metadataTable)
     {
         return new()
         {
@@ -292,18 +263,18 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
-    static CustomAttributeModel AsModel(this CustomAttribute value,MetadataTable metadataTable)
+    static CustomAttributeModel AsModel(this CustomAttribute value, MetadataTable metadataTable)
     {
         return new()
         {
-            Constructor          = value.Constructor?.AsModel(metadataTable),
-            ConstructorArguments = value.ConstructorArguments.ToListOf(AsModel,metadataTable),
-            Fields               = value.Fields.ToListOf(AsModel,metadataTable),
-            Properties           = value.Properties.ToListOf(AsModel,metadataTable)
+            Constructor          = value.Constructor?.IndexAt(metadataTable),
+            ConstructorArguments = value.ConstructorArguments.ToListOf(AsModel, metadataTable),
+            Fields               = value.Fields.ToListOf(AsModel, metadataTable),
+            Properties           = value.Properties.ToListOf(AsModel, metadataTable)
         };
     }
 
-    static ParameterDefinitionModel AsModel(this ParameterDefinition parameterDefinition,MetadataTable metadataTable)
+    static ParameterDefinitionModel AsModel(this ParameterDefinition parameterDefinition, MetadataTable metadataTable)
     {
         return new()
         {
@@ -313,7 +284,7 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
-    static TypeReferenceModel AsModel(this TypeReference value,MetadataTable metadataTable)
+    static TypeReferenceModel AsModel(this TypeReference value, MetadataTable metadataTable)
     {
         if (value is ArrayType arrayType)
         {
@@ -336,7 +307,7 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
-    static MetadataScopeModel AsModel(this IMetadataScope metadataScope,MetadataTable metadataTable)
+    static MetadataScopeModel AsModel(this IMetadataScope metadataScope, MetadataTable metadataTable)
     {
         return new()
         {
@@ -344,6 +315,51 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
+    
+    static int IndexAt(PropertyReference value, MetadataTable metadataTable)
+    {
+        var index = metadataTable.Properties.FindIndex(x => IsSame(x, value, metadataTable));
+        if (index >= 0)
+        {
+            return index;
+        }
+
+        return metadataTable.Properties.AddAndGetIndex(AsModel(value, metadataTable));
+    }
+    
+    static int IndexAt(TypeDefinition value, MetadataTable metadataTable)
+    {
+        var index = metadataTable.Types.FindIndex(x => IsSame(x, value));
+        if (index >= 0)
+        {
+            return index;
+        }
+
+        return metadataTable.Types.AddAndGetIndex(AsModel(value, metadataTable));
+    }
+
+    static int IndexAt(this TypeReference value, MetadataTable metadataTable)
+    {
+        var index = metadataTable.Types.FindIndex(x => IsSame(x, value));
+        if (index >= 0)
+        {
+            return index;
+        }
+
+        return metadataTable.Types.AddAndGetIndex(AsModel(value, metadataTable));
+    }
+    
+    static int IndexAt(this MethodReference value, MetadataTable metadataTable)
+    {
+        var index = metadataTable.Methods.FindIndex(x => IsSame(x, value, metadataTable));
+        if (index >= 0)
+        {
+            return index;
+        }
+
+        return metadataTable.Methods.AddAndGetIndex(AsModel(value, metadataTable));
+    }
+    
     static bool IsExportableAttribute(CustomAttribute value)
     {
         if (NotExportableAttributes.Contains(value.AttributeType.FullName))
@@ -354,13 +370,27 @@ static class MonoCecilToJsonModelMapper
         return true;
     }
 
+    static bool IsSame(TypeReferenceModel model, TypeReference value)
+    {
+        return value.Name == model.Name && value.Namespace == model.Namespace;
+    }
+    
+    static bool IsSame(MethodReferenceModel model, MethodReference value,MetadataTable metadataTable)
+    {
+        return value.Name == model.Name && value.ReturnType.IndexAt(metadataTable) == model.ReturnType;
+    }
+    static bool IsSame(PropertyReferenceModel model, PropertyReference value,MetadataTable metadataTable)
+    {
+        return value.Name == model.Name && value.DeclaringType.IndexAt(metadataTable) == model.DeclaringType;
+    }
+    
     static IReadOnlyList<B> ToListOf<A, B>(this IEnumerable<A> enumerable, Func<A, B> convertFunc)
     {
         return enumerable?.Select(convertFunc).ToList();
     }
-    
+
     static IReadOnlyList<C> ToListOf<A, B, C>(this IEnumerable<A> enumerable, Func<A, B, C> convertFunc, B b)
     {
-        return enumerable?.Select(a=>convertFunc(a,b)).ToList();
+        return enumerable?.Select(a => convertFunc(a, b)).ToList();
     }
 }
