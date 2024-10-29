@@ -193,6 +193,7 @@ sealed class StackFrame
     public Array EvaluationStack;
     public Array LocalVariables;
     public Array MethodArguments;
+    public int Line;
 }
 
 sealed class Address
