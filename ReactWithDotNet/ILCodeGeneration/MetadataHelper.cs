@@ -58,9 +58,21 @@ static class MetadataHelper
         }
     };
 
+    static void Add(this List<MetadataRequest> requests, Type type)
+    {
+        requests.Add(new MetadataRequest
+        {
+            AssemblyName  = Path.GetFileName(type.Assembly.Location),
+            NamespaceName = type.Namespace,
+            TypeName      = type.Name
+        });
+    }
     public static async Task GetMetadata(HttpContext httpContext, Func<string, bool> isTypeForbiddenToSendClient = null)
     {
-        var requests = await JsonSerializer.DeserializeAsync<MetadataRequest[]>(httpContext.Request.Body);
+        var requests = await JsonSerializer.DeserializeAsync<List<MetadataRequest>>(httpContext.Request.Body);
+
+        requests.Add(typeof(_System_.Object));
+        requests.Add(typeof(_System_.String));
 
         await httpContext.Response.WriteAsJsonAsync(GetMetadata(requests, isTypeForbiddenToSendClient), JsonSerializerOptions);
     }
@@ -78,7 +90,26 @@ static class MetadataHelper
 
         return null;
     }
+    
+    public static TypeDefinition FindType(this AssemblyDefinition assemblyDefinition, Type type)
+    {
+        foreach (var moduleDefinition in assemblyDefinition.Modules)
+        {
+            var typeDefinition = moduleDefinition.GetType(type.Namespace, type.Name);
+            if (typeDefinition != null)
+            {
+                return typeDefinition;
+            }
+        }
 
+        return null;
+    }
+
+    
+    internal static  AssemblyDefinition AssemblyDefinitionOfCore => AssemblyDefinition.ReadAssembly(typeof(Mixin).Assembly.Location);
+    
+    
+    
     static MetadataResponse GetMetadata(IEnumerable<MetadataRequest> requests, Func<string, bool> isTypeForbiddenToSendClient = null)
     {
         var metadataTable = new MetadataTable();

@@ -28,6 +28,19 @@ function SelfBindMetadataTable(metadataTable)
     }
 }
 
+var NativeJs =
+{
+    Sum: function(thread)
+    {
+        const stackFrame = thread.CallStack[thread.CallStack.length - 1];
+        const evaluationStack = stackFrame.EvaluationStack;
+
+        const b = evaluationStack.pop();
+        const a = evaluationStack.pop();
+
+        evaluationStack.push(b + b);
+    }
+}
 
 function Interpret(thread)
 {
@@ -252,6 +265,23 @@ function Interpret(thread)
                 if (typeof methodDefinitionOrMaybeNumber === 'number')
                 {
                     methodDefinition = operands[currentStackFrame.Line] = currentStackFrame.Method.MetadataTable.Methods[operands[currentStackFrame.Line]];
+                }
+
+                if (typeof methodDefinition.DeclaringType === 'number')
+                {
+                    if (currentStackFrame.Method.MetadataTable.Types[methodDefinition.DeclaringType].Name === "NativeJs")
+                    {
+                        var fn = NativeJs[methodDefinition.Name];
+                        if (fn === undefined)
+                        {
+                            throw 'NativeJs has no function like:' + methodDefinition.Name;
+                        }
+
+                        fn(thread);
+
+                        currentStackFrame.Line++;
+                        break;
+                    }
                 }
 
                 instructions = methodDefinition.Body.Instructions;

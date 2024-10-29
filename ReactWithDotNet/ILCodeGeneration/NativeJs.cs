@@ -1,4 +1,5 @@
-﻿using static ReactWithDotNet.NativeJs;
+﻿using System.Runtime.CompilerServices;
+using static ReactWithDotNet.NativeJs;
 
 namespace ReactWithDotNet;
 
@@ -25,12 +26,23 @@ sealed class ThreadModel
     public int Line;
 }
 
-static class NativeJs
+public static class NativeJs
 {
+
+    public static extern T As<T>(object value);
+    
     public static extern object CreateNewPlainObject();
-    public static extern TValue Get<TInstance, TValue>(TInstance instance, string key);
+    public static extern object Get<TInstance>(TInstance instance, string key);
     public static extern void Set<TInstance, TValue>(TInstance instance, string key, TValue value);
+
+    public static extern string Sum(string a, string b);
 }
+
+
+
+
+
+
 
 static class InterpreterBridge
 {
@@ -47,10 +59,10 @@ static class InterpreterBridge
 
 sealed class JsObject
 {
-    public T GetValue<T>(string key)
-    {
-        return Get<JsObject, T>(this, key);
-    }
+    //public T GetValue<T>(string key)
+    //{
+    //    return Get<JsObject, T>(this, key);
+    //}
 
     public void SetValue<T>(string key, T value)
     {

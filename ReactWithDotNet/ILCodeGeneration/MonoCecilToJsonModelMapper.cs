@@ -174,6 +174,32 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
+    static bool IsNameAndParametersMatched(this MethodDefinition methodDefinition, MethodReference methodReference)
+    {
+        if (methodDefinition.Name != methodReference.Name)
+        {
+            return false;
+        }
+
+        var a = methodDefinition.Parameters;
+        var b = methodReference.Parameters;
+        
+        if (a.Count != b.Count)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < a.Count; i++)
+        {
+            if (a[i].ParameterType != b[i].ParameterType)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    
     static MethodBodyModel AsModel(this MethodBody body, MetadataTable metadataTable)
     {
         var instructions = new List<int>();
@@ -204,11 +230,17 @@ static class MonoCecilToJsonModelMapper
 
             if (operand is MethodReference methodReference)
             {
-                if (methodReference.FullName=="System.Void System.Object::.ctor()")
+                if (methodReference.DeclaringType.FullName == "System.Object")
                 {
-                    instructions[^1] = (int)OpCodes.Pop.Code;
-                    continue;
+                    var methodDefinition = MetadataHelper.AssemblyDefinitionOfCore.FindType(typeof(_System_.Object))
+                        .Methods.FirstOrDefault(x=>x.IsNameAndParametersMatched(methodReference));
+
+                    if (methodDefinition is not null)
+                    {
+                        methodReference = methodDefinition;
+                    }
                 }
+                
                 operands.Add(i, methodReference.IndexAt(metadataTable));
                 continue;
             }
@@ -434,13 +466,23 @@ static class MonoCecilToJsonModelMapper
 
     static int IndexAt(this MethodReference value, MetadataTable metadataTable)
     {
-        var index = metadataTable.Methods.FindIndex(x => IsSame(x, value, metadataTable));
+        var index = metadataTable.Methods.FindIndex(x => isSame(x, value, metadataTable));
         if (index >= 0)
         {
             return index;
         }
 
         return metadataTable.Methods.AddAndGetIndex(AsModel(value, metadataTable));
+        
+        static bool isSame(MemberReferenceModel model, MethodReference value, MetadataTable metadataTable)
+        {
+            if (model is MethodReferenceModel methodReferenceModel)
+            {
+                return value.Name == model.Name && value.DeclaringType.IndexAt(metadataTable) == methodReferenceModel.DeclaringType;
+            }
+
+            return false;
+        }
     }
 
     static bool IsExportableAttribute(CustomAttribute value)
@@ -488,15 +530,7 @@ static class MonoCecilToJsonModelMapper
         return false;
     }
 
-    static bool IsSame(MemberReferenceModel model, MethodReference value, MetadataTable metadataTable)
-    {
-        if (model is MethodReferenceModel methodReferenceModel)
-        {
-            return value.Name == model.Name && value.ReturnType.IndexAt(metadataTable) == methodReferenceModel.ReturnType;
-        }
-
-        return false;
-    }
+    
 
     static bool IsSame(TypeReferenceModel model, TypeReference value)
     {
