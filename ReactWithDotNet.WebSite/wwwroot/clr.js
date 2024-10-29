@@ -11,21 +11,24 @@ var GlobalMetadata =
 
 function SelfBindMetadataTable(metadataTable) 
 {
+    for (var i = 0; i < metadataTable.Methods.length; i++)
+    {
+        if (metadataTable.Methods[i].IsDefinition === true)
+        {
+            metadataTable.Methods[i].MetadataTable = metadataTable;
+
+        }
+    }
+
     for (var i = 0; i < metadataTable.Types.length; i++)
     {
-        if (metadataTable.Types[i].IsDefinition === true) 
+        if (metadataTable.Types[i].IsDefinition === true)
         {
             metadataTable.Types[i].MetadataTable = metadataTable;
         }
     }
 
-    for (var i = 0; i < metadataTable.Methods.length; i++)
-    {
-        if (metadataTable.Methods[i].IsDefinition === true) 
-        {
-            metadataTable.Methods[i].MetadataTable = metadataTable;
-        }
-    }
+    
 }
 
 var NativeJs =
