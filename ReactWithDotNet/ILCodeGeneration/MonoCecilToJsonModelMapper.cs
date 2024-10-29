@@ -189,9 +189,9 @@ static class MonoCecilToJsonModelMapper
             return false;
         }
 
-        for (int i = 0; i < a.Count; i++)
+        for (var i = 0; i < a.Count; i++)
         {
-            if (a[i].ParameterType != b[i].ParameterType)
+            if (a[i].ParameterType.FullName != b[i].ParameterType.FullName)
             {
                 return false;
             }
@@ -236,9 +236,9 @@ static class MonoCecilToJsonModelMapper
                     continue;
                 }
                 
-                if (methodReference.DeclaringType.FullName == "System.Object")
+                if (methodReference.DeclaringType.FullName == "System.String")
                 {
-                    var methodDefinition = MetadataHelper.AssemblyDefinitionOfCore.FindType(typeof(_System_.Object))
+                    var methodDefinition = MetadataHelper.AssemblyDefinitionOfCore.FindType(typeof(_System_.String))
                         .Methods.FirstOrDefault(x=>x.IsNameAndParametersMatched(methodReference));
 
                     if (methodDefinition is not null)

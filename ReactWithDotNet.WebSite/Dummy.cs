@@ -18,12 +18,12 @@ class Deneme45
 
     public Deneme45(string a)
     {
-        FF1 = a;
+        FF1 = a+"u";
     }
 
     void CallNonStaticMethod(string abc)
     {
-        FF1 = NativeJs.Sum("a", "b");
+        FF1 = "a" + "b";
     }
     
     public string GetA()
@@ -35,16 +35,20 @@ class Deneme45
 
     public static string Abc5()
     {
+        
         return static_method_1();
     }
 
     public static string static_method_1()
     {
-        return static_method_2("abc-123-0","abc-123-1",7);
+      
+        return static_method_2("a","b",7);
     }
     
     public static string static_method_2(string str1, string str2, int number1)
     {
+        
+        
         var instance = new Deneme45(str2);
         
         instance.CallNonStaticMethod("a");
