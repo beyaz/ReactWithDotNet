@@ -147,13 +147,13 @@ sealed record TypeDefinitionModel : TypeReferenceModel
     
     public required IReadOnlyList<int> Methods { get; init; }
     
-    public required IReadOnlyList<FieldDefinitionModel> Fields { get; init; }
+    public required IReadOnlyList<int> Fields { get; init; }
     
-    public required IReadOnlyList<PropertyDefinitionModel> Properties { get; init; }
+    public required IReadOnlyList<int> Properties { get; init; }
     
-    public required IReadOnlyList<TypeDefinitionModel> NestedTypes { get; init; }
+    public required IReadOnlyList<int> NestedTypes { get; init; }
     
-    public required IReadOnlyList<EventDefinitionModel> Events { get; init; }
+    public required IReadOnlyList<int> Events { get; init; }
     
     public required IReadOnlyList<InterfaceImplementationModel> Interfaces { get; init; }
 }

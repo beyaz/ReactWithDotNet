@@ -61,11 +61,11 @@ static class MonoCecilToJsonModelMapper
 
             CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel, metadataTable),
             BaseType         = value.BaseType.IndexAt(metadataTable),
-            Methods          = value.Methods.ToListOf(AsModel, metadataTable).IndexAt(metadataTable),
-            Fields           = value.Fields.ToListOf(AsModel, metadataTable),
-            Properties       = value.Properties.ToListOf(AsModel, metadataTable),
-            NestedTypes      = value.NestedTypes.ToListOf(AsModel, metadataTable),
-            Events           = value.Events.ToListOf(AsModel, metadataTable),
+            Methods          = metadataTable.Methods.ForceReplaceThenGetIndexes(value.Methods.ToListOf(AsModel, metadataTable)),
+            Fields           = metadataTable.Fields.ForceReplaceThenGetIndexes(value.Fields.ToListOf(AsModel, metadataTable)),
+            Properties       = metadataTable.Properties.ForceReplaceThenGetIndexes(value.Properties.ToListOf(AsModel, metadataTable)),
+            NestedTypes      = metadataTable.Types.ForceReplaceThenGetIndexes(value.NestedTypes.ToListOf(AsModel, metadataTable)),
+            Events           = metadataTable.Events.ForceReplaceThenGetIndexes(value.Events.ToListOf(AsModel, metadataTable)),
             Interfaces       = value.Interfaces.ToListOf(AsModel, metadataTable)
         };
     }
@@ -343,21 +343,21 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
-    static IReadOnlyList<int> IndexAt(this IEnumerable<MethodDefinitionModel> enumerable, MetadataTable metadataTable)
+    static IReadOnlyList<int> ForceReplaceThenGetIndexes<TDefinitionModel>(this List<MemberReferenceModel> targetList, IEnumerable<TDefinitionModel> enumerable) where TDefinitionModel : MemberReferenceModel
     {
         var list = new List<int>();
 
-        foreach (var methodDefinitionModel in enumerable)
+        foreach (var definitionModel in enumerable)
         {
-            var index = metadataTable.Methods.FindIndex(x => IsSame(x, methodDefinitionModel));
+            var index = targetList.FindIndex(x => IsSame(x, definitionModel));
             if (index >= 0)
             {
-                metadataTable.Methods[index] = methodDefinitionModel;
+                targetList[index] = definitionModel;
                 list.Add(index);
                 continue;
             }
 
-            index = metadataTable.Methods.AddAndGetIndex(methodDefinitionModel);
+            index = targetList.AddAndGetIndex(definitionModel);
             list.Add(index);
         }
 
@@ -445,7 +445,37 @@ static class MonoCecilToJsonModelMapper
 
     static bool IsSame(MemberReferenceModel a, MethodDefinitionModel b)
     {
-        return a.Name == b.Name && a.DeclaringType == b.DeclaringType;
+        return a is MethodReferenceModel && a.Name == b.Name && a.DeclaringType == b.DeclaringType;
+    }
+
+    static bool IsSame(MemberReferenceModel a, MemberReferenceModel b)
+    {
+        if (a is FieldReferenceModel && b is FieldReferenceModel)
+        {
+            return a.Name == b.Name && a.DeclaringType == b.DeclaringType;
+        }
+
+        if (a is PropertyReferenceModel && b is PropertyReferenceModel)
+        {
+            return a.Name == b.Name && a.DeclaringType == b.DeclaringType;
+        }
+
+        if (a is EventReferenceModel && b is EventReferenceModel)
+        {
+            return a.Name == b.Name && a.DeclaringType == b.DeclaringType;
+        }
+
+        if (a is MethodReferenceModel && b is MethodReferenceModel)
+        {
+            return a.Name == b.Name && a.DeclaringType == b.DeclaringType;
+        }
+
+        if (a is TypeReferenceModel aAsTypeReferenceModel && b is TypeReferenceModel bAsMemberReferenceModel)
+        {
+            return a.Name == b.Name && aAsTypeReferenceModel.Namespace == bAsMemberReferenceModel.Namespace;
+        }
+
+        return false;
     }
 
     static bool IsSame(MemberReferenceModel model, MethodReference value, MetadataTable metadataTable)

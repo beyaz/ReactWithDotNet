@@ -38,10 +38,8 @@ function Interpret(thread)
     var operands = callStack.Method.Body.Operands;
 
     var evaluationStack = callStack.EvaluationStack;
-
-    var methodArguments = callStack.MethodArguments;    
-
-    var localVariables = callStack.LocalVariables;
+    var methodArguments = callStack.MethodArguments;
+    var localVariables  = callStack.LocalVariables;
 
     let v0, v1, v2;
        
@@ -242,29 +240,32 @@ function Interpret(thread)
                 break;
             case 39: // Call
 
-                if (typeof operands[thread.Line] === 'number')
+                /*methodDefinitionOrMaybeNumber*/v0 = operands[thread.Line];
+
+                if (typeof /*methodDefinitionOrMaybeNumber*/v0 === 'number')
                 {
-                    operands[thread.Line] = thread.CallStack[thread.CallStack.length - 1].Method.Metadata.Methods[operands[thread.Line]];
+                    /*methodDefinition*/v0 = operands[thread.Line] = thread.CallStack[thread.CallStack.length - 1].Method.MetadataTable.Methods[operands[thread.Line]];
                 }
+
+                evaluationStack = [];
+                methodArguments = [];
+                localVariables  = [];
 
                 // create new StackFrame
                 thread.CallStack.push({
-                    EvaluationStack: [],
-                    LocalVariables: [],
-                    MethodArguments: evaluationStack,
-                    Method: operands[thread.Line],
-                    Line: 0
+                    Method: /*methodDefinition*/v0,
+                    Line: 0,
+
+                    EvaluationStack: evaluationStack,
+                    LocalVariables: localVariables,
+                    MethodArguments: methodArguments                    
                 });
 
-                var instructions = callStack.Method.Body.Instructions;
+                var instructions = /*methodDefinition*/v0.Body.Instructions;
 
-                var operands = callStack.Method.Body.Operands;
+                var operands = /*methodDefinition*/v0.Body.Operands;
 
-                var evaluationStack = callStack.EvaluationStack;
-
-                var methodArguments = callStack.MethodArguments;    
-
-                var localVariables = callStack.LocalVariables;
+               
 
                 thread.Line++;
                 break;
@@ -276,7 +277,25 @@ function Interpret(thread)
                 {
                     return;
                 }
-                thread.Line++;
+
+                var currentStackFrame = thread.CallStack.pop();
+
+                var previousStackFrame = thread.CallStack[thread.CallStack.length -1];
+
+                for (var i = 0; i < currentStackFrame.Method.Parameters.length; i++)
+                {
+                    previousStackFrame.EvaluationStack.pop();
+                }
+
+                instructions = previousStackFrame.Method.Body.Instructions;
+                operands     = previousStackFrame.Method.Body.Operands;
+
+                evaluationStack = previousStackFrame.EvaluationStack;
+                methodArguments = previousStackFrame.MethodArguments;
+                localVariables  = previousStackFrame.LocalVariables;
+                thread.Line     = previousStackFrame.Line;
+
+                
                 break;
             case 42: // Br_S
                 thread.Line = operands[thread.Line];
