@@ -11,8 +11,21 @@ static class Dummy
     public static string VideoUrl => "https://uploads.codesandbox.io/uploads/user/fb7bd72f-ef17-4810-9e14-ca854fb0f56e/9GBo-mountain-video.mp4";
 }
 
+
 class Deneme45
 {
+    public string FF1;
+
+    public Deneme45(string a)
+    {
+        FF1 = a;
+    }
+    
+    public string GetA()
+    {
+        return FF1;
+    }
+    
     public static string Abc5()
     {
         return static_method_1();
@@ -25,6 +38,8 @@ class Deneme45
     
     public static string static_method_2(string str1, string str2, int number1)
     {
-        return str2;
+        var instance = new Deneme45(str2);
+
+        return instance.FF1;
     }
 }

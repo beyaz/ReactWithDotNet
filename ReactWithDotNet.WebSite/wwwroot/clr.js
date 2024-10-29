@@ -42,6 +42,9 @@ function Interpret(thread)
     var methodArgumentsOfset= currentStackFrame.MethodArgumentsOfset;
 
     let previousStackFrame, v0, v1, v2;
+
+    var methodDefinitionOrMaybeNumber;
+    var methodDefinition;
        
     while(true)
     {
@@ -240,8 +243,7 @@ function Interpret(thread)
                 break;
             case 39: // Call
 
-            var methodDefinitionOrMaybeNumber;
-            var methodDefinition;
+          
 
                 methodDefinitionOrMaybeNumber = operands[currentStackFrame.Line];
 
@@ -579,6 +581,58 @@ function Interpret(thread)
                 currentStackFrame.Line++;
                 break;
             case 114: // Newobj
+                
+               var newObj = {};
+            
+                methodDefinitionOrMaybeNumber = operands[currentStackFrame.Line];
+
+                if (typeof methodDefinitionOrMaybeNumber === 'number')
+                {
+                    methodDefinition = operands[currentStackFrame.Line] = thread.CallStack[thread.CallStack.length - 1].Method.MetadataTable.Methods[operands[currentStackFrame.Line]];
+                    if (typeof methodDefinition.DeclaringType === 'number')
+                    {
+                        newObj['$type'] = methodDefinition.MetadataTable.Types[methodDefinition.DeclaringType];
+                    }
+                }
+
+                var tempArray = [];
+                tempArray.push(newObj);
+                tempArray.push(newObj);
+
+
+                for (var i = 0; i < methodDefinition.Parameters.length; i++)
+                {
+                    tempArray.push(evaluationStack.pop());
+                }
+
+                while(tempArray.length >= 0)
+                {
+                    evaluationStack.push(tempArray.pop());
+                }
+
+
+
+                instructions = methodDefinition.Body.Instructions;
+                operands     = methodDefinition.Body.Operands;
+
+                evaluationStack = [];
+                methodArguments = currentStackFrame.EvaluationStack;
+                methodArgumentsOfset = methodArguments.length - methodDefinition.Parameters.length;
+                localVariables  = [];
+                
+                currentStackFrame = 
+                {
+                    Method: methodDefinition,
+                    Line: 0,
+
+                    EvaluationStack: evaluationStack,
+                    LocalVariables: localVariables,
+                    MethodArguments: methodArguments,
+                    MethodArgumentsOfset: methodArgumentsOfset
+                };
+
+                thread.CallStack.push(currentStackFrame); 
+
                 currentStackFrame.Line++;
                 break;
             case 115: // Castclass

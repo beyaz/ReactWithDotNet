@@ -186,25 +186,3 @@ sealed record GenericInstanceMethodModel : MethodReferenceModel
     
     public required IReadOnlyList<int> GenericArguments { get; init; }
 }
-
-sealed class StackFrame
-{
-    public MethodDefinitionModel Method;
-    public Array EvaluationStack;
-    public Array LocalVariables;
-    public Array MethodArguments;
-    public int MethodArgumentsOfset;
-    public int Line;
-}
-
-sealed class Address
-{
-    public Array Array;
-    public int Index;
-}
-
-sealed class ThreadModel
-{
-    public Array CallStack;
-    public int Line;
-}

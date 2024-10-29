@@ -3,6 +3,8 @@ using Mono.Cecil.Cil;
 
 namespace ReactWithDotNet;
 
+
+
 static class MonoCecilToJsonModelMapper
 {
     static readonly string[] NotExportableAttributes =
@@ -199,6 +201,11 @@ static class MonoCecilToJsonModelMapper
 
             if (operand is MethodReference methodReference)
             {
+                if (methodReference.FullName=="System.Object::.ctor()")
+                {
+                    instructions[^1] = (int)OpCodes.Pop.Code;
+                    continue;
+                }
                 operands.Add(i, methodReference.IndexAt(metadataTable));
                 continue;
             }
