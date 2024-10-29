@@ -137,6 +137,10 @@ sealed record MethodDefinitionModel : MethodReferenceModel
     public required MethodBodyModel Body { get; init; }
     
     public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
+    
+    public bool IsStatic;
+
+    public bool IsConstructor;
 }
 
 sealed record TypeDefinitionModel : TypeReferenceModel

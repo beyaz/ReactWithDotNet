@@ -45,6 +45,8 @@ function Interpret(thread)
 
     var methodDefinitionOrMaybeNumber;
     var methodDefinition;
+    var fieldDefinition;
+    var fieldDefinitionOrMaybeNumber;
        
     while(true)
     {
@@ -249,7 +251,7 @@ function Interpret(thread)
 
                 if (typeof methodDefinitionOrMaybeNumber === 'number')
                 {
-                    methodDefinition = operands[currentStackFrame.Line] = thread.CallStack[thread.CallStack.length - 1].Method.MetadataTable.Methods[operands[currentStackFrame.Line]];
+                    methodDefinition = operands[currentStackFrame.Line] = currentStackFrame.Method.MetadataTable.Methods[operands[currentStackFrame.Line]];
                 }
 
                 instructions = methodDefinition.Body.Instructions;
@@ -259,6 +261,12 @@ function Interpret(thread)
                 methodArguments = currentStackFrame.EvaluationStack;
                 methodArgumentsOfset = methodArguments.length - methodDefinition.Parameters.length;
                 localVariables  = [];
+
+                if (methodDefinition.IsStatic === false)
+                {
+                      // 0: this
+                    methodArgumentsOfset--;
+                }
                 
                 currentStackFrame = 
                 {
@@ -298,6 +306,11 @@ function Interpret(thread)
                 methodArgumentsOfset = currentStackFrame.MethodArgumentsOfset;
                 
                 for (var i = 0; i < previousStackFrame.Method.Parameters.length; i++)
+                {
+                    evaluationStack.pop();
+                }
+
+                if (previousStackFrame.Method.IsStatic === false)
                 {
                     evaluationStack.pop();
                 }
@@ -588,7 +601,7 @@ function Interpret(thread)
 
                 if (typeof methodDefinitionOrMaybeNumber === 'number')
                 {
-                    methodDefinition = operands[currentStackFrame.Line] = thread.CallStack[thread.CallStack.length - 1].Method.MetadataTable.Methods[operands[currentStackFrame.Line]];
+                    methodDefinition = operands[currentStackFrame.Line] = currentStackFrame.Method.MetadataTable.Methods[operands[currentStackFrame.Line]];
                     if (typeof methodDefinition.DeclaringType === 'number')
                     {
                         newObj['$type'] = methodDefinition.MetadataTable.Types[methodDefinition.DeclaringType];
@@ -596,8 +609,7 @@ function Interpret(thread)
                 }
 
                 var tempArray = [];
-                tempArray.push(newObj);
-                tempArray.push(newObj);
+               
 
 
                 for (var i = 0; i < methodDefinition.Parameters.length; i++)
@@ -605,7 +617,11 @@ function Interpret(thread)
                     tempArray.push(evaluationStack.pop());
                 }
 
-                while(tempArray.length >= 0)
+                tempArray.push(newObj);
+                tempArray.push(newObj);
+                
+
+                while(tempArray.length > 0)
                 {
                     evaluationStack.push(tempArray.pop());
                 }
@@ -618,6 +634,7 @@ function Interpret(thread)
                 evaluationStack = [];
                 methodArguments = currentStackFrame.EvaluationStack;
                 methodArgumentsOfset = methodArguments.length - methodDefinition.Parameters.length;
+                methodArgumentsOfset--;
                 localVariables  = [];
                 
                 currentStackFrame = 
@@ -633,7 +650,6 @@ function Interpret(thread)
 
                 thread.CallStack.push(currentStackFrame); 
 
-                currentStackFrame.Line++;
                 break;
             case 115: // Castclass
                 currentStackFrame.Line++;
@@ -651,12 +667,35 @@ function Interpret(thread)
                 currentStackFrame.Line++;
                 break;
             case 120: // Ldfld
+            
+                fieldDefinitionOrMaybeNumber = operands[currentStackFrame.Line];
+                if (typeof fieldDefinitionOrMaybeNumber === 'number')
+                {
+                    fieldDefinition = operands[currentStackFrame.Line] = currentStackFrame.Method.MetadataTable.Fields[fieldDefinitionOrMaybeNumber];
+                }
+                
+                /*instance*/v0 = evaluationStack.pop();
+
+                evaluationStack.push(/*instance*/v0[fieldDefinition.Name]);
+
                 currentStackFrame.Line++;
                 break;
             case 121: // Ldflda
                 currentStackFrame.Line++;
                 break;
             case 122: // Stfld
+                
+                fieldDefinitionOrMaybeNumber = operands[currentStackFrame.Line];
+                if (typeof fieldDefinitionOrMaybeNumber === 'number')
+                {
+                    fieldDefinition = operands[currentStackFrame.Line] = currentStackFrame.Method.MetadataTable.Fields[fieldDefinitionOrMaybeNumber];
+                }
+                
+                /*value*/v1    = evaluationStack.pop();
+                /*instance*/v0 = evaluationStack.pop();
+
+                /*instance*/v0[fieldDefinition.Name] = /*value*/v1;
+
                 currentStackFrame.Line++;
                 break;
             case 123: // Ldsfld

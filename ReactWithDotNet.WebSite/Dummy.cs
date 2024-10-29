@@ -20,6 +20,11 @@ class Deneme45
     {
         FF1 = a;
     }
+
+    void CallNonStaticMethod(string abc)
+    {
+        FF1 = abc;
+    }
     
     public string GetA()
     {
@@ -39,6 +44,8 @@ class Deneme45
     public static string static_method_2(string str1, string str2, int number1)
     {
         var instance = new Deneme45(str2);
+        
+        instance.CallNonStaticMethod("a");
 
         return instance.FF1;
     }

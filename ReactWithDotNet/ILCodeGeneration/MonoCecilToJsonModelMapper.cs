@@ -77,10 +77,13 @@ static class MonoCecilToJsonModelMapper
         return new()
         {
             IsDefinition = true,
+            
 
             Name          = value.Name,
             DeclaringType = value.DeclaringType.IndexAt(metadataTable),
             Body          = value.Body?.AsModel(metadataTable),
+            IsConstructor = value.IsConstructor,
+            IsStatic      =value.IsStatic,
 
             Parameters       = value.Parameters.ToListOf(AsModel, metadataTable),
             ReturnType       = value.ReturnType.IndexAt(metadataTable),
@@ -201,7 +204,7 @@ static class MonoCecilToJsonModelMapper
 
             if (operand is MethodReference methodReference)
             {
-                if (methodReference.FullName=="System.Object::.ctor()")
+                if (methodReference.FullName=="System.Void System.Object::.ctor()")
                 {
                     instructions[^1] = (int)OpCodes.Pop.Code;
                     continue;
