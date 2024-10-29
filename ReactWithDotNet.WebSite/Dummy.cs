@@ -35,8 +35,25 @@ class Deneme45
 
     public static string Abc5()
     {
-        
-        return static_method_1();
+        string a = "o";
+
+        return Ref1(ref a);
+
+    }
+
+    static string Ref1(ref string a)
+    {
+        return Call1(a);
+    }
+
+    static string Call1(string a)
+    {
+        return a+"ş";
+    }
+
+    static string GenericCall1<A, B>(string p1)
+    {
+        return p1;
     }
 
     public static string static_method_1()

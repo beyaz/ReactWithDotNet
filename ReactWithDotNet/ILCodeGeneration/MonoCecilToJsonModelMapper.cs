@@ -275,6 +275,11 @@ static class MonoCecilToJsonModelMapper
                 continue;
             }
 
+            if (operand is VariableDefinition  variableDefinition)
+            {
+                operands.Add(i, body.Variables.IndexOf(variableDefinition));
+                continue;
+            }
             if (operand is Instruction[] operandAsInstructionList)
             {
                 operands.Add(i, operandAsInstructionList.Select(body.Instructions.IndexOf));
@@ -308,6 +313,8 @@ static class MonoCecilToJsonModelMapper
         {
             return new GenericInstanceMethodModel
             {
+                IsGenericInstance = genericInstanceMethod.IsGenericInstance,
+                
                 ElementMethod    = genericInstanceMethod.ElementMethod.IndexAt(metadataTable),
                 GenericArguments = genericInstanceMethod.GenericArguments.ToListOf(x => x.IndexAt(metadataTable)),
 

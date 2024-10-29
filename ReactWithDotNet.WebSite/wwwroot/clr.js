@@ -38,7 +38,7 @@ var NativeJs =
         const b = evaluationStack.pop();
         const a = evaluationStack.pop();
 
-        evaluationStack.push(b + b);
+        evaluationStack.push(a + b);
     }
 }
 
@@ -60,6 +60,7 @@ function Interpret(thread)
     var methodDefinition;
     var fieldDefinition;
     var fieldDefinitionOrMaybeNumber;
+   
        
     while(true)
     {
@@ -284,8 +285,21 @@ function Interpret(thread)
                     }
                 }
 
+                if (methodDefinition.IsGenericInstance)
+                {
+                    if (typeof methodDefinition.ElementMethod === 'number')
+                    {
+                        methodDefinition.ElementMethod = currentStackFrame.Method.MetadataTable.Methods[methodDefinition.ElementMethod];
+
+                        methodDefinition.Body = methodDefinition.ElementMethod.Body;
+                        methodDefinition.Parameters = methodDefinition.ElementMethod.Parameters;
+                        methodDefinition.IsStatic = methodDefinition.ElementMethod.IsStatic;
+                    }
+                }
+
                 instructions = methodDefinition.Body.Instructions;
                 operands     = methodDefinition.Body.Operands;
+
 
                 evaluationStack = [];
                 methodArguments = currentStackFrame.EvaluationStack;
@@ -315,7 +329,7 @@ function Interpret(thread)
             case 40: // Calli
                 currentStackFrame.Line++;
                 break;
-            case 41: //
+            case 41: // Ret
                 if (thread.CallStack.length === 1)
                 {
                     return;
@@ -499,9 +513,19 @@ function Interpret(thread)
                 currentStackFrame.Line++;
                 break;
             case 79: // Ldind_Ref
+                v0 = evaluationStack.pop();
+
+                evaluationStack.push(v0.Array[v0.Index]);
+
                 currentStackFrame.Line++;
                 break;
             case 80: // Stind_Ref
+                
+                v1 = evaluationStack.pop();
+                v0 = evaluationStack.pop();
+
+                v0.Array[v0.Index] = v1;
+
                 currentStackFrame.Line++;
                 break;
             case 81: // Stind_I1
