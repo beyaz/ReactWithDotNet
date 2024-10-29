@@ -167,10 +167,10 @@ sealed class MetadataTable
 {
     public readonly List<MetadataScopeModel> MetadataScopes = [];
     public readonly List<MemberReferenceModel> Types = [];
-    public readonly List<FieldReferenceModel> Fields = [];
+    public readonly List<MemberReferenceModel> Fields = [];
     public readonly List<MemberReferenceModel> Methods = [];
-    public readonly List<PropertyReferenceModel> Properties = [];
-    public readonly List<EventReferenceModel> Events = [];
+    public readonly List<MemberReferenceModel> Properties = [];
+    public readonly List<MemberReferenceModel> Events = [];
 }
 
 sealed record ArrayTypeModel : TypeReferenceModel
