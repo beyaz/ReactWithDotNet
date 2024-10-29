@@ -11,6 +11,14 @@ var GlobalMetadata =
 
 function SelfBindMetadataTable(metadataTable) 
 {
+    for (var i = 0; i < metadataTable.Types.length; i++)
+    {
+        if (metadataTable.Types[i].IsDefinition === true) 
+        {
+            metadataTable.Types[i].MetadataTable = metadataTable;
+        }
+    }
+
     for (var i = 0; i < metadataTable.Methods.length; i++)
     {
         if (metadataTable.Methods[i].IsDefinition === true) 
@@ -1005,7 +1013,7 @@ setTimeout(function ()
             for (var j = 0; j < table.Methods.length; j++) 
             {
             
-                var method = table.Methods[j];
+                var method = metadataTable.Methods[table.Methods[j]];
             
                 if (method.IsDefinition) 
                 {

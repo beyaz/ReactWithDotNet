@@ -28,6 +28,11 @@ static class MonoCecilToJsonModelMapper
         metadataTable.Types.Add(model);
     }
 
+    static bool IsSame(MemberReferenceModel a, MethodDefinitionModel b)
+    {
+        return a.Name == b.Name && a.DeclaringType == b.DeclaringType;
+    }
+    
     public static void Import(this MetadataTable metadataTable, MethodDefinition value)
     {
         var model = AsModel(value, metadataTable);
@@ -51,6 +56,28 @@ static class MonoCecilToJsonModelMapper
         return index;
     }
 
+    static IReadOnlyList<int> IndexAt(this IEnumerable<MethodDefinitionModel> enumerable, MetadataTable metadataTable)
+    {
+        var list = new List<int>();
+        
+        foreach (var methodDefinitionModel in enumerable)
+        {
+            var index = metadataTable.Methods.FindIndex(x => IsSame(x, methodDefinitionModel));
+            if (index >= 0)
+            {
+                metadataTable.Methods[index] = methodDefinitionModel;
+                list.Add(index);
+                continue;
+            }
+
+            index = metadataTable.Methods.AddAndGetIndex(methodDefinitionModel);    
+            list.Add(index);
+        }
+        
+        return list;
+        
+    }
+    
     static TypeDefinitionModel AsModel(this TypeDefinition value, MetadataTable metadataTable)
     {
         return new ()
@@ -63,7 +90,7 @@ static class MonoCecilToJsonModelMapper
 
             CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel, metadataTable),
             BaseType         = value.BaseType.IndexAt(metadataTable),
-            Methods          = value.Methods.ToListOf(AsModel, metadataTable),
+            Methods          = value.Methods.ToListOf(AsModel, metadataTable).IndexAt(metadataTable),
             Fields           = value.Fields.ToListOf(AsModel, metadataTable),
             Properties       = value.Properties.ToListOf(AsModel, metadataTable),
             NestedTypes      = value.NestedTypes.ToListOf(AsModel, metadataTable),
@@ -403,6 +430,16 @@ static class MonoCecilToJsonModelMapper
         return metadataTable.Types.AddAndGetIndex(AsModel(value, metadataTable));
     }
 
+    static bool IsSame(MemberReferenceModel model, MethodReference value, MetadataTable metadataTable)
+    {
+        if (model is MethodReferenceModel methodReferenceModel)
+        {
+            return value.Name == model.Name && value.ReturnType.IndexAt(metadataTable) == methodReferenceModel.ReturnType;    
+        }
+
+        return false;
+    }
+    
     static int IndexAt(this MethodReference value, MetadataTable metadataTable)
     {
         var index = metadataTable.Methods.FindIndex(x => IsSame(x, value, metadataTable));
@@ -432,11 +469,6 @@ static class MonoCecilToJsonModelMapper
     static bool IsSame(TypeReferenceModel a, TypeReferenceModel b)
     {
         return a.Name == b.Name && a.Namespace == b.Namespace;
-    }
-
-    static bool IsSame(MethodReferenceModel a, MethodReferenceModel b)
-    {
-        return a.Name == b.Name;
     }
 
     static bool IsSame(MethodReferenceModel model, MethodReference value, MetadataTable metadataTable)
