@@ -20,6 +20,11 @@ class Deneme45
     
     public static string static_method_1()
     {
-        return "abc-123";
+        return static_method_2("abc-123-0","abc-123-1",7);
+    }
+    
+    public static string static_method_2(string str1, string str2, int number1)
+    {
+        return str2;
     }
 }

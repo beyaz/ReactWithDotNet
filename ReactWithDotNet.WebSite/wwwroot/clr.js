@@ -37,8 +37,9 @@ function Interpret(thread)
     var operands = currentStackFrame.Method.Body.Operands;
 
     var evaluationStack = currentStackFrame.EvaluationStack;
-    var methodArguments = currentStackFrame.MethodArguments;
     var localVariables  = currentStackFrame.LocalVariables;
+    var methodArguments = currentStackFrame.MethodArguments;
+    var methodArgumentsOfset= currentStackFrame.MethodArgumentsOfset;
 
     let previousStackFrame, v0, v1, v2;
        
@@ -55,22 +56,22 @@ function Interpret(thread)
                 break;
 
             case 2: // Ldarg_0: Load argument 0 onto the stack
-                evaluationStack.push(methodArguments[0]);
+                evaluationStack.push(methodArguments[methodArgumentsOfset + 0]);
                 currentStackFrame.Line++;
                 break;
 
             case 3: // Ldarg_1: Load argument 1 onto the stack
-                evaluationStack.push(methodArguments[1]);
+                evaluationStack.push(methodArguments[methodArgumentsOfset + 1]);
                 currentStackFrame.Line++;
                 break;
 
             case 4: // Ldarg_2: Load argument 2 onto the stack
-                evaluationStack.push(methodArguments[2]);
+                evaluationStack.push(methodArguments[methodArgumentsOfset + 2]);
                 currentStackFrame.Line++;
                 break;
 
             case 5: // Ldarg_3: Load argument 3 onto the stack
-                evaluationStack.push(methodArguments[3]);
+                evaluationStack.push(methodArguments[methodArgumentsOfset + 3]);
                 currentStackFrame.Line++;
                 break;
 
@@ -115,17 +116,17 @@ function Interpret(thread)
                 break;
 
             case 14: // Ldarg_S: Load argument at a specified index (short form)
-                evaluationStack.push(methodArguments[operands[currentStackFrame.Line]]);
+                evaluationStack.push(methodArguments[methodArgumentsOfset + operands[currentStackFrame.Line]]);
                 currentStackFrame.Line++;
                 break;
 
             case 15: // Ldarga_S: Load address of argument at a specified index (short form)
-                evaluationStack.push({ Array: methodArguments, Index: operands[currentStackFrame.Line] } );
+                evaluationStack.push({ Array: methodArguments, Index: methodArgumentsOfset + operands[currentStackFrame.Line] } );
                 currentStackFrame.Line++;
                 break;
 
             case 16: // Starg_S: Store value from the stack into argument at specified index
-                methodArguments[operands[currentStackFrame.Line]] = evaluationStack.pop();
+                methodArguments[methodArgumentsOfset + operands[currentStackFrame.Line]] = evaluationStack.pop();
                 currentStackFrame.Line++;
                 break;
 
@@ -253,7 +254,8 @@ function Interpret(thread)
                 operands     = methodDefinition.Body.Operands;
 
                 evaluationStack = [];
-                methodArguments = [];
+                methodArguments = currentStackFrame.EvaluationStack;
+                methodArgumentsOfset = methodArguments.length - methodDefinition.Parameters.length;
                 localVariables  = [];
                 
                 currentStackFrame = 
@@ -263,7 +265,8 @@ function Interpret(thread)
 
                     EvaluationStack: evaluationStack,
                     LocalVariables: localVariables,
-                    MethodArguments: methodArguments                    
+                    MethodArguments: methodArguments,
+                    MethodArgumentsOfset: methodArgumentsOfset
                 };
 
                 thread.CallStack.push(currentStackFrame);              
@@ -282,18 +285,21 @@ function Interpret(thread)
 
                 currentStackFrame = thread.CallStack[thread.CallStack.length -1];
 
-                for (var i = 0; i < previousStackFrame.Method.Parameters.length; i++)
-                {
-                    currentStackFrame.EvaluationStack.pop();
-                }
+                
 
                 instructions = currentStackFrame.Method.Body.Instructions;
                 operands     = currentStackFrame.Method.Body.Operands;
 
                 evaluationStack = currentStackFrame.EvaluationStack;
-                methodArguments = currentStackFrame.MethodArguments;
                 localVariables  = currentStackFrame.LocalVariables;
+                methodArguments = currentStackFrame.MethodArguments;
+                methodArgumentsOfset = currentStackFrame.MethodArgumentsOfset;
                 
+                for (var i = 0; i < previousStackFrame.Method.Parameters.length; i++)
+                {
+                    evaluationStack.pop();
+                }
+
                 if(previousStackFrame.EvaluationStack.length > 0)
                 {
                     evaluationStack.push(previousStackFrame.EvaluationStack.pop());
@@ -989,6 +995,7 @@ function CallManagedStaticMethod(methodDefinition, args, success, fail)
         EvaluationStack:[],
         LocalVariables:[],
         MethodArguments: args,
+        MethodArgumentsOfset: 0,
         Line: 0
     };
 
