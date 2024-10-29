@@ -38,7 +38,6 @@ class Deneme45
         string a = "o";
 
         return Ref1(ref a);
-
     }
 
     static string Ref1(ref string a)
