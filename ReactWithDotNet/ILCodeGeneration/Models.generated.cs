@@ -2,9 +2,15 @@
 
 record TypeReferenceModel : MemberReferenceModel
 {
-    public required string Namespace { get; init; }
+    public string Namespace { get; init; }
     
-    public required int Scope { get; init; }
+    public int Scope { get; init; }
+    
+    public bool IsGenericInstance;
+
+    public int ElementType;
+    
+    public IReadOnlyList<int> GenericArguments;
 }
 
 sealed record ParameterDefinitionModel
@@ -38,9 +44,9 @@ sealed record ExceptionHandler
 
 record MemberReferenceModel
 {
-    public required string Name { get; init; }
+    public string Name { get; init; }
     
-    public required int? DeclaringType { get; init; }
+    public  int? DeclaringType { get; init; }
 
     public bool IsDefinition { get; init; }
 }

@@ -31,13 +31,25 @@ class Deneme45
         return FF1;
     }
 
+    class GenericClass1<A,B>
+    {
+        public A a;
+        public B b;
+
+        public string P;
+        
+        public GenericClass1(string p1)
+        {
+            P = p1;
+        }
+    }
 
 
     public static string Abc5()
     {
-        string a = "o";
+        var i = new GenericClass1<int, string>("C");
 
-        return Ref1(ref a);
+        return i.P;
     }
 
     static string Ref1(ref string a)
