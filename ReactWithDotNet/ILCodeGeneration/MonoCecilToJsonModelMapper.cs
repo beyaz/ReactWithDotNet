@@ -230,6 +230,12 @@ static class MonoCecilToJsonModelMapper
 
             if (operand is MethodReference methodReference)
             {
+                if (methodReference.FullName == "System.Void System.Object::.ctor()")
+                {
+                    instructions[^1] = (int)OpCodes.Pop.Code;
+                    continue;
+                }
+                
                 if (methodReference.DeclaringType.FullName == "System.Object")
                 {
                     var methodDefinition = MetadataHelper.AssemblyDefinitionOfCore.FindType(typeof(_System_.Object))

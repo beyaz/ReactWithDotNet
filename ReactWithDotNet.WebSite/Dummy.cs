@@ -30,22 +30,14 @@ class Deneme45
     {
         return FF1;
     }
-    
-    public static void Abc5()
-    {
-        new Deneme45("str2");
-    }
-    
-    //public static string Abc5()
-    //{
-    //    var instance = new Deneme45("str2");
-        
 
-    //    return instance.FF1;
-        
-    //    // return static_method_1();
-    //}
-    
+
+
+    public static string Abc5()
+    {
+        return static_method_1();
+    }
+
     public static string static_method_1()
     {
         return static_method_2("abc-123-0","abc-123-1",7);
