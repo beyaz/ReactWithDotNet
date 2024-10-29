@@ -47,9 +47,15 @@ class Deneme45
 
     public static string Abc5()
     {
-        var i = new GenericClass1<int, string>("C");
+        var arr = new string[1];
+        
+        arr[0] = "a";
 
-        return i.P;
+        return arr[0];
+
+        //var i = new GenericClass1<int, string>("C");
+
+        //return i.P;
     }
 
     static string Ref1(ref string a)

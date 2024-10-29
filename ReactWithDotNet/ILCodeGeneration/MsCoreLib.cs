@@ -12,7 +12,7 @@ namespace _System_
     
     class String
     {
-        public int Length => As<int>(Get(this,"length"));
+        public int Length => Get(this,"length").As<int>();
 
         public static string Concat(string a, string b)
         {

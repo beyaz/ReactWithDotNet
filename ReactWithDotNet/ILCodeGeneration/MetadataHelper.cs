@@ -73,6 +73,8 @@ static class MetadataHelper
 
         requests.Add(typeof(_System_.Object));
         requests.Add(typeof(_System_.String));
+        requests.Add(typeof(InterpreterBridge));
+        
 
         await httpContext.Response.WriteAsJsonAsync(GetMetadata(requests, isTypeForbiddenToSendClient), JsonSerializerOptions);
     }

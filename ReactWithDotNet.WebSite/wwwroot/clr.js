@@ -9,14 +9,30 @@ var GlobalMetadata =
     Events: []
 };
 
+const InterpreterBridge_Jump = 219;
+
+var InterpreterBridge_Jump_MethodDefinition;
+
 function SelfBindMetadataTable(metadataTable) 
 {
     for (var i = 0; i < metadataTable.Methods.length; i++)
     {
         if (metadataTable.Methods[i].IsDefinition === true)
         {
-            metadataTable.Methods[i].MetadataTable = metadataTable;
+            if (metadataTable.Methods[i].Name === "Jump" &&
+                metadataTable.Types[metadataTable.Methods[i].DeclaringType].Name === 'InterpreterBridge' &&
+                metadataTable.Types[metadataTable.Methods[i].DeclaringType].NamespaceName === 'ReactWithDotNet')
+            {
+                InterpreterBridge_Jump_MethodDefinition = metadataTable.Methods[i];
+            }
+        }
+    }
 
+    for (var i = 0; i < metadataTable.Methods.length; i++)
+    {
+        if (metadataTable.Methods[i].IsDefinition === true)
+        {
+            metadataTable.Methods[i].MetadataTable = metadataTable;
         }
     }
 
@@ -829,6 +845,7 @@ function Interpret(thread)
                 currentStackFrame.Line++;
                 break;
             case 138: // Newarr
+                
                 currentStackFrame.Line++;
                 break;
             case 139: // Ldlen
@@ -1131,6 +1148,28 @@ function Interpret(thread)
                 currentStackFrame.Line++;
                 break;
 
+            case 219: // Jump
+
+                instructions = InterpreterBridge_Jump_MethodDefinition.Body.Instructions;
+                operands     = InterpreterBridge_Jump_MethodDefinition.Body.Operands;
+
+                evaluationStack = [];
+                localVariables  = [];
+                                
+                currentStackFrame = 
+                {
+                    Method: InterpreterBridge_Jump_MethodDefinition,
+                    Line: 0,
+
+                    EvaluationStack: evaluationStack,
+                    LocalVariables: localVariables
+                };
+
+                thread.CallStack.push(currentStackFrame);
+                
+                nextInstruction = 0;
+
+                break;
 
 
 

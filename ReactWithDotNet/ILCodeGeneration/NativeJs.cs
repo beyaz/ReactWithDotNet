@@ -26,16 +26,26 @@ sealed class ThreadModel
     public int Line;
 }
 
-public static class NativeJs
+static class NativeJs
 {
-
-    public static extern T As<T>(object value);
-    
-    public static extern object CreateNewPlainObject();
     public static extern object Get<TInstance>(TInstance instance, string key);
-    public static extern void Set<TInstance, TValue>(TInstance instance, string key, TValue value);
+    
+    public static extern void Set<TValue>(this object instance, string key, TValue value);
 
     public static extern string Sum(string a, string b);
+    public static extern object CreateNewPlainObject();
+    
+    public static extern StackFrame CurrentStackFrame { get; }
+
+    public static extern object pop(this Array array);
+    
+    public static extern void push(this Array array, object value);
+    
+    public static extern object AsObject<T>(this T value);
+    
+    public static extern T As<T>(this object value);
+    
+    public static extern Array CreateNewArray();
 }
 
 
@@ -46,26 +56,17 @@ public static class NativeJs
 
 static class InterpreterBridge
 {
-    public static void NewObj(ThreadModel threadModel)
+    public static void Jump()
     {
         
-    }
-    
-    public static void GoPreviousMethod(ThreadModel threadModel)
-    {
         
+        var length = CurrentStackFrame.EvaluationStack.pop().As<int>();
+
+        var array = CreateNewArray();
+        
+        array.Set("length", length.AsObject());
+
+        CurrentStackFrame.EvaluationStack.push(array);
     }
 }
 
-sealed class JsObject
-{
-    //public T GetValue<T>(string key)
-    //{
-    //    return Get<JsObject, T>(this, key);
-    //}
-
-    public void SetValue<T>(string key, T value)
-    {
-        Set(this, key, value);
-    }
-}
