@@ -247,6 +247,7 @@ static class MonoCecilToJsonModelMapper
                     }
                 }
                 
+                
                 operands.Add(i, methodReference.IndexAt(metadataTable));
                 continue;
             }

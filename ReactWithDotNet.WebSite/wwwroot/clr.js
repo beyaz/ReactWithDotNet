@@ -658,13 +658,41 @@ function Interpret(thread)
                     methodDefinition = operands[currentStackFrame.Line] = currentStackFrame.Method.MetadataTable.Methods[operands[currentStackFrame.Line]];
                     if (typeof methodDefinition.DeclaringType === 'number')
                     {
-                        newObj['$type'] = methodDefinition.MetadataTable.Types[methodDefinition.DeclaringType];
+                        methodDefinition.DeclaringType = currentStackFrame.Method.MetadataTable.Types[methodDefinition.DeclaringType];
+                    }
+                    newObj['$type'] = methodDefinition.DeclaringType;
+                }
+
+                if (methodDefinition.DeclaringType.IsGenericInstance)
+                {
+                    if (typeof methodDefinition.DeclaringType.ElementType === 'number')
+                    {
+                        methodDefinition.DeclaringType.ElementType = currentStackFrame.Method.MetadataTable.Types[methodDefinition.DeclaringType.ElementType];
+                    }
+
+                    for (var i = 0; i < methodDefinition.DeclaringType.ElementType.Methods.length; i++)
+                    {
+                        if (typeof methodDefinition.DeclaringType.ElementType.Methods[i] === 'number')
+                        {
+                            methodDefinition.DeclaringType.ElementType.Methods[i] = currentStackFrame.Method.MetadataTable.Methods[methodDefinition.DeclaringType.ElementType.Methods[i]];
+                        }
+                    }
+
+                    for (var i = 0; i < methodDefinition.DeclaringType.ElementType.Methods.length; i++)
+                    {
+                        if (methodDefinition.DeclaringType.ElementType.Methods[i].IsDefinition)
+                        {
+                            if (methodDefinition.DeclaringType.ElementType.Methods[i].Name === methodDefinition.Name)
+                            {
+                                methodDefinition.Body = methodDefinition.DeclaringType.ElementType.Methods[i].Body;
+                                methodDefinition.Parameters = methodDefinition.DeclaringType.ElementType.Methods[i].Parameters;
+                                methodDefinition.IsStatic = methodDefinition.DeclaringType.ElementType.Methods[i].IsStatic;
+                            } 
+                        }
                     }
                 }
 
-                var tempArray = [];
-               
-
+                var tempArray = [];             
 
                 for (var i = 0; i < methodDefinition.Parameters.length; i++)
                 {
