@@ -236,6 +236,12 @@ static class MonoCecilToJsonModelMapper
                     continue;
                 }
                 
+                if (methodReference.DeclaringType.FullName == typeof(AsExtensions).FullName)
+                {
+                    instructions[^1] = (int)OpCodes.Nop.Code;
+                    continue;
+                }
+                
                 if (methodReference.DeclaringType.FullName == "System.String")
                 {
                     var methodDefinition = MetadataHelper.AssemblyDefinitionOfCore.FindType(typeof(_System_.String))

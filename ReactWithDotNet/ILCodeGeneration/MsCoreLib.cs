@@ -1,4 +1,7 @@
-﻿using static ReactWithDotNet.NativeJs;
+﻿using ReactWithDotNet;
+using static ReactWithDotNet.NativeJsHelper;
+using static ReactWithDotNet.NativeJs;
+
 
 namespace _System_
 {

@@ -48,7 +48,7 @@ class Deneme45
     public static string Abc5()
     {
         var arr = new string[1];
-        
+
         arr[0] = "a";
 
         return arr[0];

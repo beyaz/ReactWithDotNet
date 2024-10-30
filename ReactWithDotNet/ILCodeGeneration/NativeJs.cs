@@ -1,5 +1,8 @@
-﻿using System.Runtime.CompilerServices;
+﻿using ReactWithDotNet;
+using System.Runtime.CompilerServices;
 using static ReactWithDotNet.NativeJs;
+using static ReactWithDotNet.NativeJsHelper;
+
 
 namespace ReactWithDotNet;
 
@@ -26,24 +29,33 @@ sealed class ThreadModel
     public int Line;
 }
 
+
 static class NativeJs
 {
-    public static extern object Get<TInstance>(TInstance instance, string key);
+    public static extern object pop(this Array array);
     
-    public static extern void Set<TValue>(this object instance, string key, TValue value);
+    public static extern void push(this Array array, object value);
+}
+
+static class AsExtensions
+{
+    public static extern object AsObject<T>(this T value);
+    
+    public static extern T As<T>(this object value);
+}
+
+static class NativeJsHelper
+{
+    public static extern object Get(object instance, string key);
+    
+    public static extern void Set(this object instance, string key, object value);
 
     public static extern string Sum(string a, string b);
     public static extern object CreateNewPlainObject();
     
-    public static extern StackFrame CurrentStackFrame { get; }
+    public static extern StackFrame PreviousStackFrame { get; }
 
-    public static extern object pop(this Array array);
-    
-    public static extern void push(this Array array, object value);
-    
-    public static extern object AsObject<T>(this T value);
-    
-    public static extern T As<T>(this object value);
+
     
     public static extern Array CreateNewArray();
 }
@@ -58,15 +70,27 @@ static class InterpreterBridge
 {
     public static void Jump()
     {
+        const int InterpreterBridge_NewArr = 0;
         
+        var evaluationStack = PreviousStackFrame.EvaluationStack;
         
-        var length = CurrentStackFrame.EvaluationStack.pop().As<int>();
+        var instruction = evaluationStack.pop().As<int>();
+        
+        if (InterpreterBridge_NewArr == instruction)
+        {
+            var length = evaluationStack.pop().As<int>();
 
-        var array = CreateNewArray();
+            var array = CreateNewArray();
         
-        array.Set("length", length.AsObject());
+            array.Set("length", length.AsObject());
 
-        CurrentStackFrame.EvaluationStack.push(array);
+            evaluationStack.push(array);
+            
+            return;
+        }
+
+        throw new Exception();
+
     }
 }
 

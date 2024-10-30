@@ -9,6 +9,8 @@ var GlobalMetadata =
     Events: []
 };
 
+const InterpreterBridge_NewArr = 0;
+
 const InterpreterBridge_Jump = 219;
 
 var InterpreterBridge_Jump_MethodDefinition;
@@ -21,7 +23,7 @@ function SelfBindMetadataTable(metadataTable)
         {
             if (metadataTable.Methods[i].Name === "Jump" &&
                 metadataTable.Types[metadataTable.Methods[i].DeclaringType].Name === 'InterpreterBridge' &&
-                metadataTable.Types[metadataTable.Methods[i].DeclaringType].NamespaceName === 'ReactWithDotNet')
+                metadataTable.Types[metadataTable.Methods[i].DeclaringType].Namespace === 'ReactWithDotNet')
             {
                 InterpreterBridge_Jump_MethodDefinition = metadataTable.Methods[i];
             }
@@ -47,8 +49,19 @@ function SelfBindMetadataTable(metadataTable)
     
 }
 
-var NativeJs =
+var NativeJsHelper =
 {
+    Set: function(thread)
+    {
+        const stackFrame = thread.CallStack[thread.CallStack.length - 1];
+        const evaluationStack = stackFrame.EvaluationStack;
+
+        const b = evaluationStack.pop();
+        const a = evaluationStack.pop();
+        const instance = evaluationStack.pop();
+
+       instance[a] = b;
+    },
     Sum: function(thread)
     {
         const stackFrame = thread.CallStack[thread.CallStack.length - 1];
@@ -58,6 +71,20 @@ var NativeJs =
         const a = evaluationStack.pop();
 
         evaluationStack.push(a + b);
+    },
+    get_PreviousStackFrame: function(thread)
+    {
+        const stackFrame = thread.CallStack[thread.CallStack.length - 1];
+        const evaluationStack = stackFrame.EvaluationStack;
+
+        evaluationStack.push(thread.CallStack[thread.CallStack.length - 2]);
+    },
+    CreateNewArray: function(thread)
+    {
+        const stackFrame = thread.CallStack[thread.CallStack.length - 1];
+        const evaluationStack = stackFrame.EvaluationStack;
+
+        evaluationStack.push([]);
     }
 }
 
@@ -79,202 +106,204 @@ function Interpret(thread)
     var methodDefinition;
     var fieldDefinition;
     var fieldDefinitionOrMaybeNumber;
+
+    var nextInstruction = instructions[currentStackFrame.Line];
    
        
     while(true)
     {
-        switch (instructions[currentStackFrame.Line])
+        switch (nextInstruction)
         {
             case 0: // Nop: No operation
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 1: // Break: Inform debugger of a break point
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 2: // Ldarg_0: Load argument 0 onto the stack
                 evaluationStack.push(methodArguments[methodArgumentsOfset + 0]);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 3: // Ldarg_1: Load argument 1 onto the stack
                 evaluationStack.push(methodArguments[methodArgumentsOfset + 1]);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 4: // Ldarg_2: Load argument 2 onto the stack
                 evaluationStack.push(methodArguments[methodArgumentsOfset + 2]);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 5: // Ldarg_3: Load argument 3 onto the stack
                 evaluationStack.push(methodArguments[methodArgumentsOfset + 3]);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 6: // Ldloc_0: Load local variable 0 onto the stack
                 evaluationStack.push(localVariables[0]);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 7: // Ldloc_1: Load local variable 1 onto the stack
                 evaluationStack.push(localVariables[1]);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 8: // Ldloc_2: Load local variable 2 onto the stack
                 evaluationStack.push(localVariables[2]);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 9: // Ldloc_3: Load local variable 3 onto the stack
                 evaluationStack.push(localVariables[3]);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 10: // Stloc_0: Store value from the stack in local variable 0
                 localVariables[0] = evaluationStack.pop();
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 11: // Stloc_1: Store value from the stack in local variable 1
                 localVariables[1] = evaluationStack.pop();
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 12: // Stloc_2: Store value from the stack in local variable 2
                 localVariables[2] = evaluationStack.pop();
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 13: // Stloc_3: Store value from the stack in local variable 3
                 localVariables[3] = evaluationStack.pop();
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 14: // Ldarg_S: Load argument at a specified index (short form)
                 evaluationStack.push(methodArguments[methodArgumentsOfset + operands[currentStackFrame.Line]]);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 15: // Ldarga_S: Load address of argument at a specified index (short form)
                 evaluationStack.push({ Array: methodArguments, Index: methodArgumentsOfset + operands[currentStackFrame.Line] } );
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 16: // Starg_S: Store value from the stack into argument at specified index
                 methodArguments[methodArgumentsOfset + operands[currentStackFrame.Line]] = evaluationStack.pop();
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 17: // Ldloc_S: Load local variable at a specified index (short form)
                 evaluationStack.push(localVariables[operands[currentStackFrame.Line]]);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 18: // Ldloca_S: Load address of local variable at a specified index (short)
                 evaluationStack.push({ Array: localVariables, Index: operands[currentStackFrame.Line] });
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 19: // Stloc_S: Store value from the stack into local variable at specified index
                 localVariables[operands[currentStackFrame.Line]] = evaluationStack.pop();
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 20: // Ldnull: Push a null reference onto the stack
                 evaluationStack.push(null);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 21: // Ldc_I4_M1: Load integer constant -1 onto the stack
                 evaluationStack.push(-1);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 22: // Ldc_I4_0: Load integer constant 0 onto the stack
                 evaluationStack.push(0);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 23: // Ldc_I4_1: Load integer constant 1 onto the stack
                 evaluationStack.push(1);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 24: // Ldc_I4_2: Load integer constant 2 onto the stack
                 evaluationStack.push(2);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 25: // Ldc_I4_3: Load integer constant 3 onto the stack
                 evaluationStack.push(3);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 26: // Ldc_I4_4: Load integer constant 4 onto the stack
                 evaluationStack.push(4);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 27: // Ldc_I4_5: Load integer constant 5 onto the stack
                 evaluationStack.push(5);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 28: // Ldc_I4_6: Load integer constant 6 onto the stack
                 evaluationStack.push(6);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 29: // Ldc_I4_7: Load integer constant 7 onto the stack
                 evaluationStack.push(7);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 30: // Ldc_I4_8: Load integer constant 8 onto the stack
                 evaluationStack.push(8);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 31: // Ldc_I4_S: Load 4-byte integer constant onto the stack
                 evaluationStack.push(operands[currentStackFrame.Line]);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 32: // Ldc_I4: Load 8-byte integer constant onto the stack
                 evaluationStack.push(operands[currentStackFrame.Line]);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 33: // Ldc_I8: Load 4-byte floating-point constant onto the stack
                 evaluationStack.push(operands[currentStackFrame.Line]);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 34: // Ldc_R4: Load 8-byte floating-point constant onto the stack
                 evaluationStack.push(operands[currentStackFrame.Line]);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 35: // Ldc_R8: Load 8-byte floating-point constant onto the stack
                 evaluationStack.push(operands[currentStackFrame.Line]);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 36: // Dup: Duplicate the value on top of the stack
                 evaluationStack.push(evaluationStack[evaluationStack.length - 1]);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 37: // Pop: Remove the value from the top of the stack
                 evaluationStack.pop();
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 38: // Jmp
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 39: // Call
 
@@ -291,15 +320,43 @@ function Interpret(thread)
                 {
                     if (currentStackFrame.Method.MetadataTable.Types[methodDefinition.DeclaringType].Name === "NativeJs")
                     {
-                        var fn = NativeJs[methodDefinition.Name];
-                        if (fn === undefined)
+                        var nativeJsArguments = [];
+
+                        for (var i = 0; i < methodDefinition.Parameters.length - 1; i++)
+                        {
+                            nativeJsArguments.push(evaluationStack.pop());
+                        }
+
+                        var nativeObj = evaluationStack.pop();
+
+                        var nativeFn = nativeObj[methodDefinition.Name];
+                        if (nativeFn === undefined)
                         {
                             throw 'NativeJs has no function like:' + methodDefinition.Name;
                         }
 
+                        var nativeCallResponse = nativeFn.apply(nativeObj, nativeJsArguments);
+
+                        if (currentStackFrame.Method.MetadataTable.Types[methodDefinition.ReturnType].Name !== 'void')
+                        {
+                            evaluationStack.push(nativeCallResponse);
+                        }
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+
+                    if (currentStackFrame.Method.MetadataTable.Types[methodDefinition.DeclaringType].Name === "NativeJsHelper")
+                    {
+                        var fn = NativeJsHelper[methodDefinition.Name];
+                        if (fn === undefined)
+                        {
+                            throw 'NativeJsHelper has no function like:' + methodDefinition.Name;
+                        }
+
                         fn(thread);
 
-                        currentStackFrame.Line++;
+                        nextInstruction = instructions[++currentStackFrame.Line];
                         break;
                     }
                 }
@@ -342,11 +399,13 @@ function Interpret(thread)
                     MethodArgumentsOfset: methodArgumentsOfset
                 };
 
-                thread.CallStack.push(currentStackFrame);              
+                thread.CallStack.push(currentStackFrame);
+
+                nextInstruction = instructions[currentStackFrame.Line];
                
                 break;
             case 40: // Calli
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 41: // Ret
                 if (thread.CallStack.length === 1)
@@ -383,21 +442,24 @@ function Interpret(thread)
                     evaluationStack.push(previousStackFrame.EvaluationStack.pop());
                 }
 
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 
                 break;
             case 42: // Br_S
                 currentStackFrame.Line = operands[currentStackFrame.Line];
+                nextInstruction = instructions[currentStackFrame.Line];
                 break;
 
             case 43: // Brfalse_S
-                if (evaluationStack[evaluationStack.length])
+                if (evaluationStack[evaluationStack.length - 1])
                 {
-                    currentStackFrame.Line++;
+                    nextInstruction = instructions[++currentStackFrame.Line];
                 }
                 else
                 {
                     currentStackFrame.Line = operands[currentStackFrame.Line];
+
+                    nextInstruction = instructions[currentStackFrame.Line];
                 }
                 evaluationStack.pop();          
                 break;
@@ -406,18 +468,20 @@ function Interpret(thread)
                 if (evaluationStack[evaluationStack.length - 1])
                 {
                     currentStackFrame.Line = operands[currentStackFrame.Line];
+
+                    nextInstruction = instructions[currentStackFrame.Line];
                 }
                 else
                 {
-                    currentStackFrame.Line++;
+                    nextInstruction = instructions[++currentStackFrame.Line];
                 }
                 evaluationStack.pop(); 
                 break;
             case 45: // Beq_S
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 46: // Bge_S
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 47: // Bgt_S
@@ -430,113 +494,115 @@ function Interpret(thread)
                     if (v0 > v1)
                     {
                         currentStackFrame.Line = operands[currentStackFrame.Line];
+
+                        nextInstruction = instructions[currentStackFrame.Line];
                     }
                     else
                     {
-                        currentStackFrame.Line++;
+                        nextInstruction = instructions[++currentStackFrame.Line];
                     }
                 }
                 break;
 
             case 48: // Ble_S
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 49: // Blt_S
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 50: // Bne_Un_S
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 51: // Bge_Un_S
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 52: // Bgt_Un_S
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 53: // Ble_Un_S
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 54: // Blt_Un_S
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 55: // Br
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 56: // Brfalse
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 57: // Brtrue
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 58: // Beq
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 59: // Bge
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 60: // Bgt
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 61: // Ble
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 62: // Blt
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 63: // Bne_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 64: // Bge_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 65: // Bgt_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 66: // Ble_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 67: // Blt_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 68: // Switch
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 69: // Ldind_I1
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 70: // Ldind_U1
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 71: // Ldind_I2
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 72: // Ldind_U2
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 73: // Ldind_I4
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 74: // Ldind_U4
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 75: // Ldind_I8
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 76: // Ldind_I
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 77: // Ldind_R4
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 78: // Ldind_R8
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 79: // Ldind_Ref
                 v0 = evaluationStack.pop();
 
                 evaluationStack.push(v0.Array[v0.Index]);
 
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 80: // Stind_Ref
                 
@@ -545,49 +611,49 @@ function Interpret(thread)
 
                 v0.Array[v0.Index] = v1;
 
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 81: // Stind_I1
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 82: // Stind_I2
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 83: // Stind_I4
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 84: // Stind_I8
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 85: // Stind_R4
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 86: // Stind_R8
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 87: // Add
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 88: // Sub
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 89: // Mul
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 90: // Div
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 91: // Div_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 92: // Rem
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 93: // Rem_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 94: // And
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 95: // Or
@@ -597,7 +663,7 @@ function Interpret(thread)
 
                 evaluationStack.push(v0|v1);
 
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 96: // Xor
@@ -606,10 +672,10 @@ function Interpret(thread)
 
                 evaluationStack.push(v0 ^ v1);
 
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 97: // Shl
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 98: // Shr
                 v1 = evaluationStack.pop();
@@ -621,50 +687,50 @@ function Interpret(thread)
                 }
                 break;
             case 99: // Shr_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 100: // Neg
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 101: // Not
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 102: // Conv_I1
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 103: // Conv_I2
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 104: // Conv_I4
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 105: // Conv_I8
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 106: // Conv_R4
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 107: // Conv_R8
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 108: // Conv_U4
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 109: // Conv_U8
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 110: // Callvirt
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 111: // Cpobj
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 112: // Ldobj
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 113: // Ldstr
                 evaluationStack.push(operands[currentStackFrame.Line]);
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 114: // Newobj
                 
@@ -753,19 +819,19 @@ function Interpret(thread)
 
                 break;
             case 115: // Castclass
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 116: // Isinst
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 117: // Conv_R_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 118: // Unbox
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 119: // Throw
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 120: // Ldfld
             
@@ -779,10 +845,10 @@ function Interpret(thread)
 
                 evaluationStack.push(/*instance*/v0[fieldDefinition.Name]);
 
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 121: // Ldflda
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 122: // Stfld
                 
@@ -797,355 +863,361 @@ function Interpret(thread)
 
                 /*instance*/v0[fieldDefinition.Name] = /*value*/v1;
 
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 123: // Ldsfld
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 124: // Ldsflda
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 125: // Stsfld
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 126: // Stobj
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 127: // Conv_Ovf_I1_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 128: // Conv_Ovf_I2_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 129: // Conv_Ovf_I4_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 130: // Conv_Ovf_I8_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 131: // Conv_Ovf_U1_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 132: // Conv_Ovf_U2_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 133: // Conv_Ovf_U4_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 134: // Conv_Ovf_U8_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 135: // Conv_Ovf_I_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 136: // Conv_Ovf_U_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 137: // Box
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 138: // Newarr
-                
-                currentStackFrame.Line++;
+                evaluationStack.push(InterpreterBridge_NewArr);
+                nextInstruction = InterpreterBridge_Jump;
                 break;
             case 139: // Ldlen
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 140: // Ldelema
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 141: // Ldelem_I1
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 142: // Ldelem_U1
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 143: // Ldelem_I2
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 144: // Ldelem_U2
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 145: // Ldelem_I4
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 146: // Ldelem_U4
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 147: // Ldelem_I8
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 148: // Ldelem_I
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 149: // Ldelem_R4
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 150: // Ldelem_R8
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 151: // Ldelem_Ref
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 152: // Stelem_I
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 153: // Stelem_I1
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 154: // Stelem_I2
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 155: // Stelem_I4
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 156: // Stelem_I8
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 157: // Stelem_R4
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 158: // Stelem_R8
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 159: // Stelem_Ref
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 160: // Ldelem_Any
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 161: // Stelem_Any
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 162: // Unbox_Any
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 163: // Conv_Ovf_I1
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 164: // Conv_Ovf_U1
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 165: // Conv_Ovf_I2
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 166: // Conv_Ovf_U2
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 167: // Conv_Ovf_I4
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 168: // Conv_Ovf_U4
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 169: // Conv_Ovf_I8
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 170: // Conv_Ovf_U8
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 171: // Refanyval
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 172: // Ckfinite
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 173: // Mkrefany
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 174: // Ldtoken
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 175: // Conv_U2
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 176: // Conv_U1
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 177: // Conv_I
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 178: // Conv_Ovf_I
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 179: // Conv_Ovf_U
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 180: // Add_Ovf
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 181: // Add_Ovf_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 182: // Mul_Ovf
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 183: // Mul_Ovf_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 184: // Sub_Ovf
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 185: // Sub_Ovf_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 186: // Endfinally
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 187: // Leave
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 188: // Leave_S
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 189: // Stind_I
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 190: // Conv_U
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 191: // Arglist
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 192: // Ceq
-                currentStackFrame.Line++;
+
+                v1 = evaluationStack.pop();
+                v0 = evaluationStack.pop();
+
+                evaluationStack.push(v0 === v1);
+
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 193: // Cgt
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 194: // Cgt_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 195: // Clt
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 196: // Clt_Un
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 197: // Ldftn
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 198: // Ldvirtftn
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 199: // Ldarg
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 200: // Ldarga
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 201: // Starg
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 202: // Ldloc
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 203: // Ldloca
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 204: // Stloc
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 205: // Localloc
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 206: // Endfilter
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 207: // Unaligned
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 208: // Volatile
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 209: // Tail
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 210: // Initobj
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 211: // Constrained
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 212: // Cpblk
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 213: // Initblk
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 214: // No
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 215: // Rethrow
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 216: // Sizeof
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 217: // Refanytype
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 218: // Readonly
-                currentStackFrame.Line++;
+                nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 219: // Jump
@@ -1167,7 +1239,7 @@ function Interpret(thread)
 
                 thread.CallStack.push(currentStackFrame);
                 
-                nextInstruction = 0;
+                nextInstruction = instructions[currentStackFrame.Line];
 
                 break;
 
