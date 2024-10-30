@@ -64,8 +64,6 @@ static class NativeJsHelper
 
 
 
-
-
 static class InterpreterBridge
 {
     public static void Jump()
