@@ -11,6 +11,7 @@ static class MonoCecilToJsonModelMapper
     [
         "System.Runtime.CompilerServices.AsyncStateMachineAttribute",
         "System.Diagnostics.DebuggerStepThroughAttribute",
+        "System.Diagnostics.DebuggerBrowsableState",
         "System.Runtime.CompilerServices.ExtensionAttribute"
     ];
 
@@ -174,30 +175,32 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
-    static bool IsNameAndParametersMatched(this MethodDefinition methodDefinition, MethodReference methodReference)
+    static bool IsFullMatchWith(this Mono.Collections.Generic.Collection<ParameterDefinition> listA, Mono.Collections.Generic.Collection<ParameterDefinition> listB)
     {
-        if (methodDefinition.Name != methodReference.Name)
+        if (listA.Count != listB.Count)
         {
             return false;
         }
 
-        var a = methodDefinition.Parameters;
-        var b = methodReference.Parameters;
-        
-        if (a.Count != b.Count)
+        for (var i = 0; i < listA.Count; i++)
         {
-            return false;
-        }
-
-        for (var i = 0; i < a.Count; i++)
-        {
-            if (a[i].ParameterType.FullName != b[i].ParameterType.FullName)
+            if (listA[i].ParameterType.FullName != listB[i].ParameterType.FullName)
             {
                 return false;
             }
         }
 
         return true;
+    }
+    
+    static bool IsNameAndParametersMatched(this MethodDefinition methodDefinition, MethodReference methodReference)
+    {
+        if (methodDefinition.Name != methodReference.Name)
+        {
+            return false;
+        }
+        
+        return methodDefinition.Parameters.IsFullMatchWith(methodReference.Parameters);
     }
     
     static MethodBodyModel AsModel(this MethodBody body, MetadataTable metadataTable)
@@ -511,13 +514,33 @@ static class MonoCecilToJsonModelMapper
 
     static int IndexAt(this TypeReference value, MetadataTable metadataTable)
     {
-        var index = metadataTable.Types.FindIndex(x => IsSame((TypeReferenceModel)x, value));
+        var index = metadataTable.Types.FindIndex(x => isSame((TypeReferenceModel)x, value));
         if (index >= 0)
         {
             return index;
         }
 
         return metadataTable.Types.AddAndGetIndex(AsModel(value, metadataTable));
+        
+        static bool isSame(TypeReferenceModel model, TypeReference typeReference)
+        {
+            if (model.Name != typeReference.Name)
+            {
+                return false;
+            }
+
+            if (typeReference.Namespace == model.Namespace)
+            {
+                return true;
+            }
+            
+            if (typeReference.Namespace == nameof(_System_) && model.Namespace == nameof(System))
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 
     static int IndexAt(this MethodReference value, MetadataTable metadataTable)
@@ -534,13 +557,49 @@ static class MonoCecilToJsonModelMapper
         {
             if (model is MethodReferenceModel methodReferenceModel)
             {
-                return value.Name == model.Name && value.DeclaringType.IndexAt(metadataTable) == methodReferenceModel.DeclaringType;
+                if (value.Name != model.Name)
+                {
+                    return false;
+                }
+
+                if (value.DeclaringType.IndexAt(metadataTable) != methodReferenceModel.DeclaringType)
+                {
+                    return false;
+                }
+
+                if (!value.Parameters.IsFullMatchWith(methodReferenceModel.Parameters, metadataTable))
+                {
+                    return false;
+                }
+                
+                return true;
             }
 
             return false;
+            
         }
     }
+    
+    static bool IsFullMatchWith(this Mono.Collections.Generic.Collection<ParameterDefinition> listA, IReadOnlyList<ParameterDefinitionModel> listB, MetadataTable metadataTable)
+    {
+        if (listA.Count != listB.Count)
+        {
+            return false;
+        }
 
+        for (var i = 0; i < listA.Count; i++)
+        {
+            if (listA[i].ParameterType.IndexAt(metadataTable) != listB[i].ParameterType)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    
+    
     static bool IsExportableAttribute(CustomAttribute value)
     {
         if (NotExportableAttributes.Contains(value.AttributeType.FullName))
@@ -573,9 +632,24 @@ static class MonoCecilToJsonModelMapper
             return a.Name == b.Name && a.DeclaringType == b.DeclaringType;
         }
 
-        if (a is MethodReferenceModel && b is MethodReferenceModel)
+        if (a is MethodReferenceModel methodReferenceModelA && b is MethodReferenceModel methodReferenceModelB)
         {
-            return a.Name == b.Name && a.DeclaringType == b.DeclaringType;
+            if (methodReferenceModelA.Name != methodReferenceModelB.Name)
+            {
+                return false;
+            }
+            
+            if (methodReferenceModelA.DeclaringType != methodReferenceModelB.DeclaringType)
+            {
+                return false;
+            }
+            
+            if (methodReferenceModelA.Parameters.Count != methodReferenceModelB.Parameters.Count)
+            {
+                return false;
+            }
+
+            return methodReferenceModelA.Parameters.Where((_,i)=>!IsSameParameterType(methodReferenceModelA.Parameters[i],methodReferenceModelB.Parameters[i])).Any();
         }
 
         if (a is TypeReferenceModel aAsTypeReferenceModel && b is TypeReferenceModel bAsMemberReferenceModel)
@@ -584,14 +658,17 @@ static class MonoCecilToJsonModelMapper
         }
 
         return false;
+        
+        static bool IsSameParameterType(ParameterDefinitionModel a, ParameterDefinitionModel b)
+        {
+            return a.ParameterType == b.ParameterType;
+        }
     }
 
     
 
-    static bool IsSame(TypeReferenceModel model, TypeReference value)
-    {
-        return value.Name == model.Name && value.Namespace == model.Namespace;
-    }
+
+    
 
     static bool IsSame(TypeReferenceModel a, TypeReferenceModel b)
     {

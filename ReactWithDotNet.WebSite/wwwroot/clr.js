@@ -789,15 +789,12 @@ function Interpret(thread)
                 }
 
                 tempArray.push(newObj);
-                tempArray.push(newObj);
-                
+                tempArray.push(newObj);                
 
                 while(tempArray.length > 0)
                 {
                     evaluationStack.push(tempArray.pop());
                 }
-
-
 
                 instructions = methodDefinition.Body.Instructions;
                 operands     = methodDefinition.Body.Operands;
@@ -819,7 +816,9 @@ function Interpret(thread)
                     MethodArgumentsOfset: methodArgumentsOfset
                 };
 
-                thread.CallStack.push(currentStackFrame); 
+                thread.CallStack.push(currentStackFrame);
+
+                nextInstruction = instructions[0];
 
                 break;
             case 115: // Castclass
