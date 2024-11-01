@@ -337,7 +337,11 @@ function Interpret(thread)
 
                         var nativeCallResponse = nativeFn.apply(nativeObj, nativeJsArguments);
 
-                        if (currentStackFrame.Method.MetadataTable.Types[methodDefinition.ReturnType].Name !== 'void')
+                        /*returnType*/v0 = currentStackFrame.Method.MetadataTable.Types[methodDefinition.ReturnType];
+                        
+                        /*isSystem.Void*/v1 = /*returnType*/v0.Namespace === 'System' && /*returnType*/v0.Name === 'Void'
+
+                        if (/*isSystem.Void*/v1 !== true)
                         {
                             evaluationStack.push(nativeCallResponse);
                         }
@@ -951,6 +955,14 @@ function Interpret(thread)
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 151: // Ldelem_Ref
+              
+                /*index*/v1 = evaluationStack.pop();
+                /*array*/v0 = evaluationStack.pop();
+                                
+                // todo check index
+
+                evaluationStack.push(/*array*/v0[/*index*/v1]);
+
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 152: // Stelem_I
@@ -975,6 +987,15 @@ function Interpret(thread)
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 159: // Stelem_Ref
+                /*value*/v2 = evaluationStack.pop();
+                /*index*/v1 = evaluationStack.pop();
+                /*array*/v0 = evaluationStack.pop();
+
+                // todo: check array type
+                // todo check index
+
+                /*array*/v0[/*index*/v1] = /*value*/v2;
+
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 

@@ -222,6 +222,11 @@ static class MonoCecilToJsonModelMapper
                 continue;
             }
 
+            if (operand is null)
+            {
+                continue;
+            }
+            
             if (operand is Instruction operandAsInstruction)
             {
                 operands.Add(i, body.Instructions.IndexOf(operandAsInstruction));
@@ -290,7 +295,16 @@ static class MonoCecilToJsonModelMapper
             if (operand is Instruction[] operandAsInstructionList)
             {
                 operands.Add(i, operandAsInstructionList.Select(body.Instructions.IndexOf));
+                continue;
             }
+            
+            if (operand is sbyte || operand is byte || operand is short || operand is  int)
+            {
+                operands.Add(i, operand);
+                continue;
+            }
+
+            throw new NotImplementedException(code.ToString());
         }
 
         return new()
