@@ -244,6 +244,23 @@ static class MonoCecilToJsonModelMapper
                     continue;
                 }
                 
+                if (methodReference.DeclaringType?.FullName == typeof(NativeJsHelper).FullName)
+                {
+                    instructions[^1] = 220;
+                    operands.Add(i, methodReference.Name switch
+                    {
+                        nameof(NativeJsHelper.Set)                       => 0,
+                        nameof(NativeJsHelper.Get)                       => 1,
+                        nameof(NativeJsHelper.CreateNewPlainObject)      => 2,
+                        nameof(NativeJsHelper.CreateNewArray)            => 3,
+                        nameof(NativeJsHelper.Sum)                       => 4,
+                        "get_"+nameof(NativeJsHelper.PreviousStackFrame) => 5,
+                        _                                                => throw new NotImplementedException()
+                    });
+                    
+                    continue;
+                }
+                
                 if (methodReference.DeclaringType.FullName == typeof(AsExtensions).FullName)
                 {
                     instructions[^1] = (int)OpCodes.Nop.Code;

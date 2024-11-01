@@ -14,78 +14,50 @@ const InterpreterBridge_NewArr = 0;
 const InterpreterBridge_Jump = 219;
 
 var InterpreterBridge_Jump_MethodDefinition;
+var InterpreterBridge_ImportMetadata_MethodDefinition;
+
+function TryInitialize_InterpreterBridge(metadataTable) 
+{
+    for (var i = 0; i < metadataTable.Methods.length; i++)
+    {
+        if (metadataTable.Methods[i].IsDefinition === true)
+        {
+            if (metadataTable.Types[metadataTable.Methods[i].DeclaringType].Name === 'InterpreterBridge' &&
+                metadataTable.Types[metadataTable.Methods[i].DeclaringType].Namespace === 'ReactWithDotNet')
+            {
+                if (metadataTable.Methods[i].Name === "Jump")
+                {
+                    InterpreterBridge_Jump_MethodDefinition = metadataTable.Methods[i];
+                }
+
+                if (metadataTable.Methods[i].Name === "ImportMetadata")
+                {
+                    InterpreterBridge_ImportMetadata_MethodDefinition = metadataTable.Methods[i];
+                }
+            }
+        }
+    }    
+}
 
 function SelfBindMetadataTable(metadataTable) 
 {
-    for (var i = 0; i < metadataTable.Methods.length; i++)
-    {
-        if (metadataTable.Methods[i].IsDefinition === true)
-        {
-            if (metadataTable.Methods[i].Name === "Jump" &&
-                metadataTable.Types[metadataTable.Methods[i].DeclaringType].Name === 'InterpreterBridge' &&
-                metadataTable.Types[metadataTable.Methods[i].DeclaringType].Namespace === 'ReactWithDotNet')
-            {
-                InterpreterBridge_Jump_MethodDefinition = metadataTable.Methods[i];
-            }
-        }
-    }
+    //for (var i = 0; i < metadataTable.Methods.length; i++)
+    //{
+    //    if (metadataTable.Methods[i].IsDefinition === true)
+    //    {
+    //        metadataTable.Methods[i].MetadataTable = metadataTable;
+    //    }
+    //}
 
-    for (var i = 0; i < metadataTable.Methods.length; i++)
-    {
-        if (metadataTable.Methods[i].IsDefinition === true)
-        {
-            metadataTable.Methods[i].MetadataTable = metadataTable;
-        }
-    }
-
-    for (var i = 0; i < metadataTable.Types.length; i++)
-    {
-        if (metadataTable.Types[i].IsDefinition === true)
-        {
-            metadataTable.Types[i].MetadataTable = metadataTable;
-        }
-    }
+    //for (var i = 0; i < metadataTable.Types.length; i++)
+    //{
+    //    if (metadataTable.Types[i].IsDefinition === true)
+    //    {
+    //        metadataTable.Types[i].MetadataTable = metadataTable;
+    //    }
+    //}
 
     
-}
-
-var NativeJsHelper =
-{
-    Set: function(thread)
-    {
-        const stackFrame = thread.CallStack[thread.CallStack.length - 1];
-        const evaluationStack = stackFrame.EvaluationStack;
-
-        const b = evaluationStack.pop();
-        const a = evaluationStack.pop();
-        const instance = evaluationStack.pop();
-
-       instance[a] = b;
-    },
-    Sum: function(thread)
-    {
-        const stackFrame = thread.CallStack[thread.CallStack.length - 1];
-        const evaluationStack = stackFrame.EvaluationStack;
-
-        const b = evaluationStack.pop();
-        const a = evaluationStack.pop();
-
-        evaluationStack.push(a + b);
-    },
-    get_PreviousStackFrame: function(thread)
-    {
-        const stackFrame = thread.CallStack[thread.CallStack.length - 1];
-        const evaluationStack = stackFrame.EvaluationStack;
-
-        evaluationStack.push(thread.CallStack[thread.CallStack.length - 2]);
-    },
-    CreateNewArray: function(thread)
-    {
-        const stackFrame = thread.CallStack[thread.CallStack.length - 1];
-        const evaluationStack = stackFrame.EvaluationStack;
-
-        evaluationStack.push([]);
-    }
 }
 
 function Interpret(thread)
@@ -348,21 +320,7 @@ function Interpret(thread)
 
                         nextInstruction = instructions[++currentStackFrame.Line];
                         break;
-                    }
-
-                    if (currentStackFrame.Method.MetadataTable.Types[methodDefinition.DeclaringType].Name === "NativeJsHelper")
-                    {
-                        var fn = NativeJsHelper[methodDefinition.Name];
-                        if (fn === undefined)
-                        {
-                            throw 'NativeJsHelper has no function like:' + methodDefinition.Name;
-                        }
-
-                        fn(thread);
-
-                        nextInstruction = instructions[++currentStackFrame.Line];
-                        break;
-                    }
+                    }                    
                 }
 
                 if (methodDefinition.IsGenericInstance)
@@ -918,6 +876,11 @@ function Interpret(thread)
                 nextInstruction = InterpreterBridge_Jump;
                 break;
             case 139: // Ldlen
+                
+                /*array*/v0 = evaluationStack.pop();
+
+                evaluationStack.push(/*array*/v0.length);
+
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 140: // Ldelema
@@ -1268,7 +1231,48 @@ function Interpret(thread)
 
                 break;
 
+            case 220: // CallJsNative
+                switch(operands[currentStackFrame.Line])
+                {
+                    // set
+                    case 0:
+                    /*value*/v2    = evaluationStack.pop();
+                    /*key*/v1      = evaluationStack.pop();
+                    /*instance*/v0 = evaluationStack.pop();
+                    /*instance*/v0[/*key*/v1] = /*value*/v2;
+                    break;
 
+                    // get
+                    case 1:
+                    /*key*/v1      = evaluationStack.pop();
+                    /*instance*/v0 = evaluationStack.pop();
+                    evaluationStack.push(/*instance*/v0[/*key*/v1]);                     
+                    break;
+
+                    // CreateNewPlainObject
+                    case 2:
+                    evaluationStack.push({});
+                    break;
+
+                    // CreateNewArray
+                    case 3:
+                    evaluationStack.push([]);
+                    break;
+
+                    // Sum
+                    case 4:
+                    /*b*/v1 = evaluationStack.pop();
+                    /*a*/v0 = evaluationStack.pop();
+                    evaluationStack.push(/*a*/v0 + /*b*/v1);
+                    break;
+
+                    case 5: // PreviousStackFrame
+                    evaluationStack.push(thread.CallStack[thread.CallStack.length - 2]);
+                    break;
+                }
+            
+                nextInstruction = instructions[++currentStackFrame.Line];
+                break;
 
         }
     }
@@ -1345,6 +1349,10 @@ setTimeout(function ()
     {
         var metadataTable = response.Metadata;
         
+        TryInitialize_InterpreterBridge(metadataTable);
+
+        CallManagedStaticMethod(InterpreterBridge_ImportMetadata_MethodDefinition, [GlobalMetadata, metadataTable], console.log, console.log);
+
         SelfBindMetadataTable(metadataTable);
 
         for (var i = 0; i < metadataTable.Types.length; i++) 

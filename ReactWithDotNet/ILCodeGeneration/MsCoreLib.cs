@@ -1,6 +1,5 @@
 ﻿using ReactWithDotNet;
 using static ReactWithDotNet.NativeJsHelper;
-using static ReactWithDotNet.NativeJs;
 
 
 namespace _System_
@@ -39,7 +38,7 @@ namespace _System_
     
     class String
     {
-        public int Length => Get(this,"length").As<int>();
+        public int Length => this.Get("length").As<int>();
 
         public static string Concat(string a, string b)
         {

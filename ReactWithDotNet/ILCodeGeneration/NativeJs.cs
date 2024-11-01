@@ -1,4 +1,5 @@
-﻿using ReactWithDotNet;
+﻿using System.Diagnostics.CodeAnalysis;
+using ReactWithDotNet;
 using System.Runtime.CompilerServices;
 using static ReactWithDotNet.NativeJs;
 using static ReactWithDotNet.NativeJsHelper;
@@ -46,18 +47,17 @@ static class AsExtensions
 
 static class NativeJsHelper
 {
-    public static extern object Get(object instance, string key);
-    
     public static extern void Set(this object instance, string key, object value);
-
-    public static extern string Sum(string a, string b);
+    
+    public static extern object Get(this object instance, string key);
+    
     public static extern object CreateNewPlainObject();
+
+    public static extern Array CreateNewArray();
+    
+    public static extern string Sum(string a, string b);
     
     public static extern StackFrame PreviousStackFrame { get; }
-
-
-    
-    public static extern Array CreateNewArray();
 }
 
 
@@ -88,7 +88,30 @@ static class InterpreterBridge
         }
 
         throw new Exception();
+    }
 
+    [SuppressMessage("ReSharper", "ForCanBeConvertedToForeach")]
+    public static void ImportMetadata(MetadataTable globalMetadata, MetadataTable metadata)
+    {
+        var methods = metadata.Get(nameof(MetadataTable.Methods)).As<MethodReferenceModel[]>();
+        
+        for (var i = 0; i < methods.Length; i++)
+        {
+            if (methods[i].Get(nameof(MemberReferenceModel.IsDefinition)).As<bool>())
+            {
+                methods[i].Set("MetadataTable", metadata);
+            }
+        }
+        
+        var types = metadata.Get(nameof(MetadataTable.Types)).As<TypeReferenceModel[]>();
+        
+        for (var i = 0; i < types.Length; i++)
+        {
+            if (types[i].Get(nameof(MemberReferenceModel.IsDefinition)).As<bool>())
+            {
+                types[i].Set("MetadataTable", metadata);
+            }
+        }
     }
 }
 
