@@ -958,6 +958,11 @@ function Interpret(thread)
               
                 /*index*/v1 = evaluationStack.pop();
                 /*array*/v0 = evaluationStack.pop();
+
+                if (/*array*/v0.length <= /*index*/v1 || /*index*/v1 < 0)
+                {
+                    IndexOutOfRangeException(/*index*/v1);
+                }
                                 
                 // todo check index
 
