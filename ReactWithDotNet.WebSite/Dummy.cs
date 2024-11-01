@@ -47,17 +47,25 @@ class Deneme45
 
     public static string Abc5()
     {
-        var arr = new string[97];
+        var e = new Exception("abc");
 
-        arr[56] = "a";
-
-        return arr[56];
-
-        //var i = new GenericClass1<int, string>("C");
-
-        //return i.P;
+        return e.Message;
+        
+        //try
+        //{
+        //    return Call1455("t");
+        //}
+        //catch (Exception exception)
+        //{
+        //    return "catched";
+        //}
     }
 
+    static string Call1455(string a)
+    {
+        throw new Exception("abc");
+    }
+    
     static string Ref1(ref string a)
     {
         return Call1(a);

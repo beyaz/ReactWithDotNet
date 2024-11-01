@@ -835,7 +835,7 @@ function Interpret(thread)
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 119: // Throw
-                nextInstruction = instructions[++currentStackFrame.Line];
+                throw evaluationStack.pop();
                 break;
             case 120: // Ldfld
             

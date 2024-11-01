@@ -12,6 +12,30 @@ namespace _System_
         
         }
     }
+
+    class Exception
+    {
+        public Exception()
+        {
+            
+        }
+
+        public Exception(string message)
+        {
+            Message = message;
+        }
+        
+        public Exception(string message, Exception innerException)
+            : this()
+        {
+            Message        = message;
+            InnerException = innerException;
+        }
+
+        public string Message { get; }
+        
+        public Exception InnerException { get; }
+    }
     
     class String
     {

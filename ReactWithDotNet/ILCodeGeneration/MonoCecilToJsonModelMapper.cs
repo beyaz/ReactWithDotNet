@@ -258,6 +258,17 @@ static class MonoCecilToJsonModelMapper
                     }
                 }
                 
+                if (methodReference.DeclaringType.FullName == "System.Exception")
+                {
+                    var methodDefinition = MetadataHelper.AssemblyDefinitionOfCore.FindType(typeof(_System_.Exception))
+                        .Methods.FirstOrDefault(x=>x.IsNameAndParametersMatched(methodReference));
+
+                    if (methodDefinition is not null)
+                    {
+                        methodReference = methodDefinition;
+                    }
+                }
+                
                 
                 operands.Add(i, methodReference.IndexAt(metadataTable));
                 continue;
