@@ -269,6 +269,7 @@ function Interpret(thread)
                 if (method.IsGenericInstance)
                 {
                     elementMethod = GlobalMetadata.Methods[method.ElementMethod];
+
                     method.Body       = elementMethod.Body;
                     method.Parameters = elementMethod.Parameters;
                     method.IsStatic   = elementMethod.IsStatic;
@@ -289,7 +290,7 @@ function Interpret(thread)
                     methodArgumentsOfset--;
                 }
                 
-                currentStackFrame = 
+                currentStackFrame =
                 {
                     Method: method,
                     Line: 0,
@@ -696,9 +697,9 @@ function Interpret(thread)
                         {
                             if (methodTemp.Name === method.Name)
                             {
-                                methodDefinition.Body       = methodTemp.Body;
-                                methodDefinition.Parameters = methodTemp.Parameters;
-                                methodDefinition.IsStatic   = methodTemp.IsStatic;
+                                method.Body       = methodTemp.Body;
+                                method.Parameters = methodTemp.Parameters;
+                                method.IsStatic   = methodTemp.IsStatic;
                             } 
                         }
                     }
@@ -706,7 +707,7 @@ function Interpret(thread)
 
                 var tempArray = [];
 
-                for (var i = 0; i < methodDefinition.Parameters.length; i++)
+                for (var i = 0; i < method.Parameters.length; i++)
                 {
                     tempArray.push(evaluationStack.pop());
                 }
@@ -719,18 +720,18 @@ function Interpret(thread)
                     evaluationStack.push(tempArray.pop());
                 }
 
-                instructions = methodDefinition.Body.Instructions;
-                operands     = methodDefinition.Body.Operands;
+                instructions = method.Body.Instructions;
+                operands     = method.Body.Operands;
 
                 evaluationStack = [];
                 methodArguments = currentStackFrame.EvaluationStack;
-                methodArgumentsOfset = methodArguments.length - methodDefinition.Parameters.length;
+                methodArgumentsOfset = methodArguments.length - method.Parameters.length;
                 methodArgumentsOfset--;
                 localVariables  = [];
                 
                 currentStackFrame = 
                 {
-                    Method: methodDefinition,
+                    Method: method,
                     Line: 0,
 
                     EvaluationStack: evaluationStack,
