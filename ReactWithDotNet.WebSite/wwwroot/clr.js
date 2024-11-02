@@ -43,27 +43,6 @@ function TryInitialize_InterpreterBridge(metadataTable)
     }    
 }
 
-function SelfBindMetadataTable(metadataTable) 
-{
-    //for (var i = 0; i < metadataTable.Methods.length; i++)
-    //{
-    //    if (metadataTable.Methods[i].IsDefinition === true)
-    //    {
-    //        metadataTable.Methods[i].MetadataTable = metadataTable;
-    //    }
-    //}
-
-    //for (var i = 0; i < metadataTable.Types.length; i++)
-    //{
-    //    if (metadataTable.Types[i].IsDefinition === true)
-    //    {
-    //        metadataTable.Types[i].MetadataTable = metadataTable;
-    //    }
-    //}
-
-    
-}
-
 function Interpret(thread)
 {
     var currentStackFrame = thread.CallStack[thread.CallStack.length - 1];
@@ -289,12 +268,12 @@ function Interpret(thread)
 
                 if (typeof methodDefinitionOrMaybeNumber === 'number')
                 {
-                    methodDefinition = operands[currentStackFrame.Line] = currentStackFrame.Method.MetadataTable.Methods[operands[currentStackFrame.Line]];
+                    methodDefinition = operands[currentStackFrame.Line] = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
                 }
 
                 if (typeof methodDefinition.DeclaringType === 'number')
                 {
-                    if (currentStackFrame.Method.MetadataTable.Types[methodDefinition.DeclaringType].Name === "NativeJs")
+                    if (GlobalMetadata.Types[methodDefinition.DeclaringType].Name === "NativeJs")
                     {
                         var nativeJsArguments = [];
 
@@ -313,7 +292,7 @@ function Interpret(thread)
 
                         var nativeCallResponse = nativeFn.apply(nativeObj, nativeJsArguments);
 
-                        /*returnType*/v0 = currentStackFrame.Method.MetadataTable.Types[methodDefinition.ReturnType];
+                        /*returnType*/v0 = GlobalMetadata.Types[methodDefinition.ReturnType];
                         
                         /*isSystem.Void*/v1 = /*returnType*/v0.Namespace === 'System' && /*returnType*/v0.Name === 'Void'
 
@@ -331,7 +310,7 @@ function Interpret(thread)
                 {
                     if (typeof methodDefinition.ElementMethod === 'number')
                     {
-                        methodDefinition.ElementMethod = currentStackFrame.Method.MetadataTable.Methods[methodDefinition.ElementMethod];
+                        methodDefinition.ElementMethod = GlobalMetadata.Methods[methodDefinition.ElementMethod];
 
                         methodDefinition.Body = methodDefinition.ElementMethod.Body;
                         methodDefinition.Parameters = methodDefinition.ElementMethod.Parameters;
@@ -748,10 +727,10 @@ function Interpret(thread)
 
                 if (typeof methodDefinitionOrMaybeNumber === 'number')
                 {
-                    methodDefinition = operands[currentStackFrame.Line] = currentStackFrame.Method.MetadataTable.Methods[operands[currentStackFrame.Line]];
+                    methodDefinition = operands[currentStackFrame.Line] = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
                     if (typeof methodDefinition.DeclaringType === 'number')
                     {
-                        methodDefinition.DeclaringType = currentStackFrame.Method.MetadataTable.Types[methodDefinition.DeclaringType];
+                        methodDefinition.DeclaringType = GlobalMetadata.Types[methodDefinition.DeclaringType];
                     }
                     newObj['$type'] = methodDefinition.DeclaringType;
                 }
@@ -760,14 +739,14 @@ function Interpret(thread)
                 {
                     if (typeof methodDefinition.DeclaringType.ElementType === 'number')
                     {
-                        methodDefinition.DeclaringType.ElementType = currentStackFrame.Method.MetadataTable.Types[methodDefinition.DeclaringType.ElementType];
+                        methodDefinition.DeclaringType.ElementType = GlobalMetadata.Types[methodDefinition.DeclaringType.ElementType];
                     }
 
                     for (var i = 0; i < methodDefinition.DeclaringType.ElementType.Methods.length; i++)
                     {
                         if (typeof methodDefinition.DeclaringType.ElementType.Methods[i] === 'number')
                         {
-                            methodDefinition.DeclaringType.ElementType.Methods[i] = currentStackFrame.Method.MetadataTable.Methods[methodDefinition.DeclaringType.ElementType.Methods[i]];
+                            methodDefinition.DeclaringType.ElementType.Methods[i] = GlobalMetadata.Methods[methodDefinition.DeclaringType.ElementType.Methods[i]];
                         }
                     }
 
@@ -845,7 +824,7 @@ function Interpret(thread)
                 fieldDefinitionOrMaybeNumber = operands[currentStackFrame.Line];
                 if (typeof fieldDefinitionOrMaybeNumber === 'number')
                 {
-                    fieldDefinition = operands[currentStackFrame.Line] = currentStackFrame.Method.MetadataTable.Fields[fieldDefinitionOrMaybeNumber];
+                    fieldDefinition = operands[currentStackFrame.Line] = GlobalMetadata.Fields[fieldDefinitionOrMaybeNumber];
                 }
                 
                 /*instance*/v0 = evaluationStack.pop();
@@ -862,7 +841,7 @@ function Interpret(thread)
                 fieldDefinitionOrMaybeNumber = operands[currentStackFrame.Line];
                 if (typeof fieldDefinitionOrMaybeNumber === 'number')
                 {
-                    fieldDefinition = operands[currentStackFrame.Line] = currentStackFrame.Method.MetadataTable.Fields[fieldDefinitionOrMaybeNumber];
+                    fieldDefinition = operands[currentStackFrame.Line] = GlobalMetadata.Fields[fieldDefinitionOrMaybeNumber];
                 }
                 
                 /*value*/v1    = evaluationStack.pop();
@@ -1537,7 +1516,6 @@ setTimeout(function ()
 
         CallManagedStaticMethod(InterpreterBridge_ImportMetadata_MethodDefinition, [GlobalMetadata, metadataTable], console.log, console.log);
 
-        SelfBindMetadataTable(metadataTable);
 
         for (var i = 0; i < metadataTable.Types.length; i++) 
         {

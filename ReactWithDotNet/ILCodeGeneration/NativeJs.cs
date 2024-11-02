@@ -116,7 +116,31 @@ static class InterpreterBridge
     [SuppressMessage("ReSharper", "ForCanBeConvertedToForeach")]
     public static void ImportMetadata(MetadataTable globalMetadata, MetadataTable metadata)
     {
+        var typesGlobal = globalMetadata.Get(nameof(MetadataTable.Types)).As<TypeReferenceModel[]>();
+        
+        var types = metadata.Get(nameof(MetadataTable.Types)).As<TypeReferenceModel[]>();
+        var fields = metadata.Get(nameof(MetadataTable.Fields)).As<MethodReferenceModel[]>();
         var methods = metadata.Get(nameof(MetadataTable.Methods)).As<MethodReferenceModel[]>();
+        var properties = metadata.Get(nameof(MetadataTable.Properties)).As<MethodReferenceModel[]>();
+        var events = metadata.Get(nameof(MetadataTable.Events)).As<MethodReferenceModel[]>();
+        var metadataScopes = metadata.Get(nameof(MetadataTable.MetadataScopes)).As<MethodReferenceModel[]>();
+        
+        
+        
+        // is first load
+        if (typesGlobal.Length == 0)
+        {
+            typesGlobal.Set(nameof(MetadataTable.MetadataScopes), types);
+            typesGlobal.Set(nameof(MetadataTable.Types), types);
+            typesGlobal.Set(nameof(MetadataTable.Fields), types);
+            typesGlobal.Set(nameof(MetadataTable.Methods), types);
+            typesGlobal.Set(nameof(MetadataTable.Properties), types);
+            typesGlobal.Set(nameof(MetadataTable.Events), types);
+            
+        }
+        
+        
+        
         
         for (var i = 0; i < methods.Length; i++)
         {
@@ -126,7 +150,7 @@ static class InterpreterBridge
             }
         }
         
-        var types = metadata.Get(nameof(MetadataTable.Types)).As<TypeReferenceModel[]>();
+        
         
         for (var i = 0; i < types.Length; i++)
         {
