@@ -12,6 +12,8 @@ var GlobalMetadata =
 const InterpreterBridge_NewArr = 0;
 const InterpreterBridge_NullReferenceException = 1;
 const InterpreterBridge_ArgumentNullException = 2;
+const InterpreterBridge_Call = 3;
+
 
 
 
@@ -262,7 +264,11 @@ function Interpret(thread)
             case 38: // Jmp
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
-            case 39: // Call          
+            case 39: // Call
+
+                //evaluationStack.push('functionName');
+                //evaluationStack.push(InterpreterBridge_Call);
+                //nextInstruction = InterpreterBridge_Jump;
 
                 method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];               
                 
@@ -1423,6 +1429,10 @@ function Interpret(thread)
                         evaluationStack.push( /*instance*/v0[/*functionName*/v1].apply(/*instance*/v0, /*parameters*/v2));
 
                     break;
+
+                    case 11: // GlobalMetadata
+                        evaluationStack.push(GlobalMetadata);
+                        break;
                 }
             
                 nextInstruction = instructions[++currentStackFrame.Line];

@@ -311,6 +311,12 @@ static class MonoCecilToJsonModelMapper
                             continue;
                         }
                         
+                        if (methodReference.Name == "get_"+nameof(NativeJsHelper.GlobalMetadata))
+                        {
+                            operands.Add(i,11);
+                            continue;
+                        }
+                        
                     }
                     
                     operands.Add(i, methodReference.Name switch

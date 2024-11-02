@@ -60,11 +60,15 @@ static class NativeJsHelper
     
     public static extern StackFrame PreviousStackFrame { get; }
     
+    
+    
     public static extern object Call(this object instance, string functionName);
     public static extern object Call(this object instance, string functionName, object parameter1);
     public static extern object Call(this object instance, string functionName, object parameter1, object parameter2);
     public static extern object Call(this object instance, string functionName, object parameter1, object parameter2, object parameter3);
     public static extern object Call(this object instance, string functionName, object[] parameters);
+    
+    public static extern MetadataTable GlobalMetadata { get; }
 }
 
 
@@ -78,10 +82,18 @@ static class InterpreterBridge
         const int InterpreterBridge_NewArr = 0;
         const int InterpreterBridge_NullReferenceException = 1;
         const int InterpreterBridge_ArgumentNullException = 2;
+        const int InterpreterBridge_Call = 3;
         
         var evaluationStack = PreviousStackFrame.EvaluationStack;
         
         var instruction = evaluationStack.pop().As<int>();
+
+        if (instruction == InterpreterBridge_Call)
+        {
+            
+            return;
+        }
+        
         
         if (InterpreterBridge_NewArr == instruction)
         {
