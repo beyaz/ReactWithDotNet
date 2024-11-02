@@ -247,6 +247,72 @@ static class MonoCecilToJsonModelMapper
                 if (methodReference.DeclaringType?.FullName == typeof(NativeJsHelper).FullName)
                 {
                     instructions[^1] = 220;
+
+                    if (methodReference.Name == nameof(NativeJsHelper.Set))
+                    {
+                        operands.Add(i,0);
+                        continue;
+                    }
+                    if (methodReference.Name == nameof(NativeJsHelper.Get))
+                    {
+                        operands.Add(i,1);
+                        continue;
+                    }
+                    if (methodReference.Name == nameof(NativeJsHelper.CreateNewPlainObject))
+                    {
+                        operands.Add(i,2);
+                        continue;
+                    }
+                    if (methodReference.Name == nameof(NativeJsHelper.CreateNewArray))
+                    {
+                        operands.Add(i,3);
+                        continue;
+                    }
+                    if (methodReference.Name == nameof(NativeJsHelper.Sum))
+                    {
+                        operands.Add(i,4);
+                        continue;
+                    }
+                    if (methodReference.Name == "get_"+nameof(NativeJsHelper.PreviousStackFrame))
+                    {
+                        operands.Add(i,5);
+                        continue;
+                    }
+                    
+                    if (methodReference.Name == nameof(NativeJsHelper.Call))
+                    {
+                        if (methodReference.Parameters.Count == 2)
+                        {
+                            operands.Add(i,6);
+                            continue;
+                        }
+                        
+                        if (methodReference.Parameters.Count == 3 && methodReference.Parameters.Last().ParameterType.Name == "Object")
+                        {
+                            operands.Add(i,7);
+                            continue;
+                        }
+                        
+                        if (methodReference.Parameters.Count == 4)
+                        {
+                            operands.Add(i,8);
+                            continue;
+                        }
+                        
+                        if (methodReference.Parameters.Count == 5)
+                        {
+                            operands.Add(i,9);
+                            continue;
+                        }
+                        
+                        if (methodReference.Parameters.Count == 3)
+                        {
+                            operands.Add(i,10);
+                            continue;
+                        }
+                        
+                    }
+                    
                     operands.Add(i, methodReference.Name switch
                     {
                         nameof(NativeJsHelper.Set)                       => 0,
@@ -255,6 +321,8 @@ static class MonoCecilToJsonModelMapper
                         nameof(NativeJsHelper.CreateNewArray)            => 3,
                         nameof(NativeJsHelper.Sum)                       => 4,
                         "get_"+nameof(NativeJsHelper.PreviousStackFrame) => 5,
+                        
+                        
                         _                                                => throw new NotImplementedException()
                     });
                     
@@ -264,6 +332,12 @@ static class MonoCecilToJsonModelMapper
                 if (methodReference.DeclaringType.FullName == typeof(AsExtensions).FullName)
                 {
                     instructions[^1] = (int)OpCodes.Nop.Code;
+                    continue;
+                }
+                
+                if (methodReference.FullName == "System.Boolean System.String::op_Equality(System.String,System.String)")
+                {
+                    instructions[^1] = (int)OpCodes.Ceq.Code;
                     continue;
                 }
                 
@@ -281,6 +355,17 @@ static class MonoCecilToJsonModelMapper
                 if (methodReference.DeclaringType.FullName == "System.Exception")
                 {
                     var methodDefinition = MetadataHelper.AssemblyDefinitionOfCore.FindType(typeof(_System_.Exception))
+                        .Methods.FirstOrDefault(x=>x.IsNameAndParametersMatched(methodReference));
+
+                    if (methodDefinition is not null)
+                    {
+                        methodReference = methodDefinition;
+                    }
+                }
+                
+                if (methodReference.DeclaringType.FullName == "System.Int64")
+                {
+                    var methodDefinition = MetadataHelper.AssemblyDefinitionOfCore.FindType(typeof(_System_.Int64))
                         .Methods.FirstOrDefault(x=>x.IsNameAndParametersMatched(methodReference));
 
                     if (methodDefinition is not null)

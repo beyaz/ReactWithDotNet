@@ -47,10 +47,22 @@ class Deneme45
 
     public static string Abc5()
     {
-        var e = new Exception("abc");
+        string a = "abo";
+        string b = "ag";
 
-        return e.Message;
         
+
+        if (a == b)
+        {
+            return "X";
+        }
+        
+        return "Y";
+
+        //var e = new Exception("abc");
+
+        //return e.Message;
+
         //try
         //{
         //    return Call1455("t");

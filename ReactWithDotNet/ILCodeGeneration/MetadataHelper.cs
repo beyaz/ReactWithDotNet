@@ -72,6 +72,7 @@ static class MetadataHelper
         var requests = await JsonSerializer.DeserializeAsync<List<MetadataRequest>>(httpContext.Request.Body);
 
         requests.Add(typeof(InterpreterBridge));
+        requests.Add(typeof(_System_.Int64));
         requests.Add(typeof(_System_.Exception));
         requests.Add(typeof(_System_.String));
         requests.Add(typeof(_System_.Object));

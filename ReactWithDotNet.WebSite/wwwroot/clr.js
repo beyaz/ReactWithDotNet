@@ -10,6 +10,10 @@ var GlobalMetadata =
 };
 
 const InterpreterBridge_NewArr = 0;
+const InterpreterBridge_NullReferenceException = 1;
+const InterpreterBridge_ArgumentNullException = 2;
+
+
 
 const InterpreterBridge_Jump = 219;
 
@@ -72,7 +76,7 @@ function Interpret(thread)
     var methodArguments = currentStackFrame.MethodArguments;
     var methodArgumentsOfset= currentStackFrame.MethodArgumentsOfset;
 
-    let previousStackFrame, v0, v1, v2, evaluationStackIndex, item;
+    let previousStackFrame, v0, v1, v2, v3, v4, evaluationStackIndex, item;
 
     var methodDefinitionOrMaybeNumber;
     var methodDefinition;
@@ -703,8 +707,14 @@ function Interpret(thread)
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 105: // Conv_I8
+                
+                evaluationStackIndex = evaluationStack.length - 1;
+
+                evaluationStack[evaluationStackIndex] = Long.fromNumber(evaluationStack[evaluationStackIndex]);
+                
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
+
             case 106: // Conv_R4
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
@@ -1311,6 +1321,138 @@ function Interpret(thread)
                     case 5: // PreviousStackFrame
                     evaluationStack.push(thread.CallStack[thread.CallStack.length - 2]);
                     break;
+
+                    // instance.Call('functionName')
+                    case 6:
+
+                        /*functionName*/v1 = evaluationStack.pop();
+                        /*instance*/v0     = evaluationStack.pop();
+
+                        if ( /*functionName*/v1 == null)
+                        {
+                            evaluationStack.push('functionName');
+                            evaluationStack.push(InterpreterBridge_ArgumentNullException);
+                            nextInstruction = InterpreterBridge_Jump;
+                            break;
+                        }
+
+                        if ( /*instance*/v0 == null)
+                        {
+                            evaluationStack.push(/*functionName*/v1 + ' not found.');
+                            evaluationStack.push(InterpreterBridge_NullReferenceException);
+                            nextInstruction = InterpreterBridge_Jump;
+                            break;
+                        }
+                        evaluationStack.push( /*instance*/v0[/*functionName*/v1]());
+
+                    break;
+
+                    // instance.Call('functionName', parameter1)
+                    case 7:
+
+                        /*parameter1*/v2   = evaluationStack.pop();
+                        /*functionName*/v1 = evaluationStack.pop();
+                        /*instance*/v0     = evaluationStack.pop();
+
+                        if ( /*functionName*/v1 == null)
+                        {
+                            evaluationStack.push('functionName');
+                            evaluationStack.push(InterpreterBridge_ArgumentNullException);
+                            nextInstruction = InterpreterBridge_Jump;
+                            break;
+                        }
+
+                        if ( /*instance*/v0 == null)
+                        {
+                            evaluationStack.push(/*functionName*/v1 + ' not found.');
+                            evaluationStack.push(InterpreterBridge_NullReferenceException);
+                            nextInstruction = InterpreterBridge_Jump;
+                            break;
+                        }
+                        evaluationStack.push( /*instance*/v0[/*functionName*/v1](/*parameter1*/v2));
+
+                    break;
+
+                    // instance.Call('functionName', parameter1, parameter2)
+                    case 8:
+
+                        /*parameter2*/v3   = evaluationStack.pop();
+                        /*parameter1*/v2   = evaluationStack.pop();
+                        /*functionName*/v1 = evaluationStack.pop();
+                        /*instance*/v0     = evaluationStack.pop();
+
+                        if ( /*functionName*/v1 == null)
+                        {
+                            evaluationStack.push('functionName');
+                            evaluationStack.push(InterpreterBridge_ArgumentNullException);
+                            nextInstruction = InterpreterBridge_Jump;
+                            break;
+                        }
+
+                        if ( /*instance*/v0 == null)
+                        {
+                            evaluationStack.push(/*functionName*/v1 + ' not found.');
+                            evaluationStack.push(InterpreterBridge_NullReferenceException);
+                            nextInstruction = InterpreterBridge_Jump;
+                            break;
+                        }
+                        evaluationStack.push( /*instance*/v0[/*functionName*/v1](/*parameter1*/v2, /*parameter1*/v3));
+
+                    break;
+
+                    // instance.Call('functionName', parameter1, parameter2, parameter3)
+                    case 9:
+
+                        /*parameter3*/v4   = evaluationStack.pop();
+                        /*parameter2*/v3   = evaluationStack.pop();
+                        /*parameter1*/v2   = evaluationStack.pop();
+                        /*functionName*/v1 = evaluationStack.pop();
+                        /*instance*/v0     = evaluationStack.pop();
+
+                        if ( /*functionName*/v1 == null)
+                        {
+                            evaluationStack.push('functionName');
+                            evaluationStack.push(InterpreterBridge_ArgumentNullException);
+                            nextInstruction = InterpreterBridge_Jump;
+                            break;
+                        }
+
+                        if ( /*instance*/v0 == null)
+                        {
+                            evaluationStack.push(/*functionName*/v1 + ' not found.');
+                            evaluationStack.push(InterpreterBridge_NullReferenceException);
+                            nextInstruction = InterpreterBridge_Jump;
+                            break;
+                        }
+                        evaluationStack.push( /*instance*/v0[/*functionName*/v1](/*parameter1*/v2, /*parameter1*/v3, /*parameter3*/v4));
+
+                    break;
+
+                    // instance.Call('functionName', parameters)
+                    case 10:
+
+                        /*parameters*/v2   = evaluationStack.pop();
+                        /*functionName*/v1 = evaluationStack.pop();
+                        /*instance*/v0     = evaluationStack.pop();
+
+                        if ( /*functionName*/v1 == null)
+                        {
+                            evaluationStack.push('functionName');
+                            evaluationStack.push(InterpreterBridge_ArgumentNullException);
+                            nextInstruction = InterpreterBridge_Jump;
+                            break;
+                        }
+
+                        if ( /*instance*/v0 == null)
+                        {
+                            evaluationStack.push(/*functionName*/v1 + ' not found.');
+                            evaluationStack.push(InterpreterBridge_NullReferenceException);
+                            nextInstruction = InterpreterBridge_Jump;
+                            break;
+                        }
+                        evaluationStack.push( /*instance*/v0[/*functionName*/v1].apply(/*instance*/v0, /*parameters*/v2));
+
+                    break;
                 }
             
                 nextInstruction = instructions[++currentStackFrame.Line];
@@ -1442,7 +1584,4 @@ const CLR =
 
 };
 window.CLR = CLR;
-
-
-
 

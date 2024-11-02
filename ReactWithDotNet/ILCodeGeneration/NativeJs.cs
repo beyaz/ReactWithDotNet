@@ -45,6 +45,7 @@ static class AsExtensions
     public static extern T As<T>(this object value);
 }
 
+
 static class NativeJsHelper
 {
     public static extern void Set(this object instance, string key, object value);
@@ -58,6 +59,12 @@ static class NativeJsHelper
     public static extern string Sum(string a, string b);
     
     public static extern StackFrame PreviousStackFrame { get; }
+    
+    public static extern object Call(this object instance, string functionName);
+    public static extern object Call(this object instance, string functionName, object parameter1);
+    public static extern object Call(this object instance, string functionName, object parameter1, object parameter2);
+    public static extern object Call(this object instance, string functionName, object parameter1, object parameter2, object parameter3);
+    public static extern object Call(this object instance, string functionName, object[] parameters);
 }
 
 
@@ -69,6 +76,8 @@ static class InterpreterBridge
     public static void Jump()
     {
         const int InterpreterBridge_NewArr = 0;
+        const int InterpreterBridge_NullReferenceException = 1;
+        const int InterpreterBridge_ArgumentNullException = 2;
         
         var evaluationStack = PreviousStackFrame.EvaluationStack;
         
@@ -85,6 +94,20 @@ static class InterpreterBridge
             evaluationStack.push(array);
             
             return;
+        }
+        
+        if (InterpreterBridge_NullReferenceException == instruction)
+        {
+            var message = evaluationStack.pop().As<string>();
+
+            throw new NullReferenceException(message);
+        }
+        
+        if (InterpreterBridge_ArgumentNullException == instruction)
+        {
+            var message = evaluationStack.pop().As<string>();
+
+            throw new ArgumentNullException(message);
         }
 
         throw new Exception();

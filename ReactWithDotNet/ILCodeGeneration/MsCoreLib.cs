@@ -12,6 +12,14 @@ namespace _System_
         }
     }
 
+    class Int64
+    {
+        public override string ToString()
+        {
+            return this.Call("toString").As<string>();
+        }
+    }
+    
     class Exception
     {
         public Exception()
@@ -44,5 +52,6 @@ namespace _System_
         {
             return Sum(a, b);
         }
+        
     }
 }
