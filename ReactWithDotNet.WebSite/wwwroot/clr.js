@@ -47,7 +47,7 @@ function TryInitialize_InterpreterBridge(metadataTable)
 
 function Interpret(thread)
 {
-    var currentStackFrame = thread.CallStack[thread.CallStack.length - 1];
+    var currentStackFrame = thread.LastFrame;
 
     var instructions = currentStackFrame.Method.Body.Instructions;
     var operands = currentStackFrame.Method.Body.Operands;
@@ -297,8 +297,10 @@ function Interpret(thread)
                     methodArgumentsOfset--;
                 }
                 
-                currentStackFrame =
+                currentStackFrame = thread.LastFrame =
                 {
+                    Prev: thread.LastFrame,
+
                     Method: method,
                     Line: 0,
 
@@ -308,8 +310,6 @@ function Interpret(thread)
                     MethodArgumentsOfset: methodArgumentsOfset
                 };
 
-                thread.CallStack.push(currentStackFrame);
-
                 nextInstruction = instructions[currentStackFrame.Line];
                
                 break;
@@ -317,14 +317,14 @@ function Interpret(thread)
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 41: // Ret
-                if (thread.CallStack.length === 1)
+                if (currentStackFrame.Prev === null)
                 {
                     return;
                 }
 
-                previousStackFrame = thread.CallStack.pop();
+                previousStackFrame = currentStackFrame;
 
-                currentStackFrame = thread.CallStack[thread.CallStack.length -1];
+                thread.LastFrame = currentStackFrame = currentStackFrame.Prev;
 
                 
 
@@ -752,8 +752,10 @@ function Interpret(thread)
                 methodArgumentsOfset--;
                 localVariables  = [];
                 
-                currentStackFrame = 
+                currentStackFrame = thread.LastFrame =
                 {
+                    Prev: thread.LastFrame,
+
                     Method: method,
                     Line: 0,
 
@@ -762,8 +764,6 @@ function Interpret(thread)
                     MethodArguments: methodArguments,
                     MethodArgumentsOfset: methodArgumentsOfset
                 };
-
-                thread.CallStack.push(currentStackFrame);
 
                 nextInstruction = instructions[0];
 
@@ -1244,17 +1244,17 @@ function Interpret(thread)
                 evaluationStack = [];
                 localVariables  = [];
                                 
-                currentStackFrame = 
+                currentStackFrame = thread.LastFrame = 
                 {
+                    Prev: thread.LastFrame,
+
                     Method: InterpreterBridge_Jump_MethodDefinition,
                     Line: 0,
 
                     EvaluationStack: evaluationStack,
                     LocalVariables: localVariables
                 };
-
-                thread.CallStack.push(currentStackFrame);
-                
+                                
                 nextInstruction = instructions[currentStackFrame.Line];
 
                 break;
@@ -1295,7 +1295,7 @@ function Interpret(thread)
                     break;
 
                     case 5: // PreviousStackFrame
-                    evaluationStack.push(thread.CallStack[thread.CallStack.length - 2]);
+                    evaluationStack.push(currentStackFrame.Prev);
                     break;
 
                     // instance.Call('functionName')
@@ -1467,21 +1467,17 @@ function CallManagedStaticMethod(methodDefinition, args, success, fail)
     
     const thread =
     {
-        CallStack: [],
-        Line: 0
+        LastFrame: 
+        {
+            Method: methodDefinition,
+            EvaluationStack:[],
+            LocalVariables:[],
+            MethodArguments: args,
+            MethodArgumentsOfset: 0,
+            Line: 0,
+            Prev: null
+        }
     };
-
-    const stackFrame =
-    {
-        Method: methodDefinition,
-        EvaluationStack:[],
-        LocalVariables:[],
-        MethodArguments: args,
-        MethodArgumentsOfset: 0,
-        Line: 0
-    };
-
-    thread.CallStack.push(stackFrame);
 
     try 
     {
@@ -1494,9 +1490,9 @@ function CallManagedStaticMethod(methodDefinition, args, success, fail)
 
     if (success) 
     {
-        if (thread.CallStack[0].EvaluationStack.length > 0) 
+        if (thread.LastFrame.EvaluationStack.length > 0) 
         {
-            const returnValue = thread.CallStack[0].EvaluationStack.pop();
+            const returnValue = thread.LastFrame.EvaluationStack.pop();
             
             success(returnValue);
 

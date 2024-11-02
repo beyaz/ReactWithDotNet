@@ -16,6 +16,7 @@ sealed class StackFrame
     public Array MethodArguments;
     public int MethodArgumentsOfset;
     public int Line;
+    public StackFrame Prev;
 }
 
 sealed class Address
@@ -26,8 +27,7 @@ sealed class Address
 
 sealed class ThreadModel
 {
-    public Array CallStack;
-    public int Line;
+    public StackFrame LastFrame;
 }
 
 
