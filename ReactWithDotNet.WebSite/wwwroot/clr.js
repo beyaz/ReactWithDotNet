@@ -265,6 +265,7 @@ function Interpret(thread)
             case 39: // Call          
 
                 method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];               
+                
 
                 if (method.IsGenericInstance)
                 {
@@ -380,6 +381,22 @@ function Interpret(thread)
                 evaluationStack.pop(); 
                 break;
             case 45: // Beq_S
+                v1 = evaluationStack.pop();
+                v0 = evaluationStack.pop();
+
+                if (typeof v0 === 'number')
+                {
+                    if (v0 === v1)
+                    {
+                        currentStackFrame.Line = operands[currentStackFrame.Line];
+
+                        nextInstruction = instructions[currentStackFrame.Line];
+                    }
+                    else
+                    {
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                    }
+                }
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 46: // Bge_S
@@ -1071,19 +1088,52 @@ function Interpret(thread)
                 break;
 
             case 193: // Cgt
+                        
+                v1 = evaluationStack.pop();
+                v0 = evaluationStack.pop();
+
+                if (typeof v1 === 'number')
+                {
+                    evaluationStack.push(v1 < v0 ? 1 : 0);
+                }
+                else
+                {
+                    evaluationStack.push(v1.lessThan(v0) ? 1 : 0);
+                }
+
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 194: // Cgt_Un
+
+                v1 = evaluationStack.pop();
+                v0 = evaluationStack.pop();
+
+                if (typeof v1 === 'number')
+                {
+                    evaluationStack.push(v1 < v0 ? 1 : 0);
+                }
+                else
+                {
+                    evaluationStack.push(v1.lessThan(v0) ? 1 : 0);
+                }
+
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
             case 195: // Clt
-                
+
                 v1 = evaluationStack.pop();
                 v0 = evaluationStack.pop();
 
-                evaluationStack.push( v0 < v1 ? 1 : 0 );
+                if (typeof v1 === 'number')
+                {
+                    evaluationStack.push(v0 < v1 ? 1 : 0);
+                }
+                else
+                {
+                    evaluationStack.push(v0.lessThan(v1) ? 1 : 0);
+                }
 
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;

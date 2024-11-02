@@ -1,4 +1,5 @@
 ﻿using ReactWithDotNet.WebSite.HeaderComponents;
+using System;
 
 namespace ReactWithDotNet.WebSite;
 
@@ -10,6 +11,7 @@ static class Dummy
 
     public static string VideoUrl => "https://uploads.codesandbox.io/uploads/user/fb7bd72f-ef17-4810-9e14-ca854fb0f56e/9GBo-mountain-video.mp4";
 }
+
 
 
 class Deneme45
@@ -44,11 +46,24 @@ class Deneme45
     //    }
     //}
 
-
+    public static string Compare(int a, ref long b)
+    {
+        return a == b ? "Equal" : "Not Equal";
+    }
     public static string Abc5()
     {
-        return Call1("a");
+        console.log("started");
         
+        var l = 't';
+        var i = 56;
+
+        if (l==i)
+        {
+            i = 78;
+        }
+
+        return "b";
+
         //string a = "abo";
         //string b = "ag";
 
@@ -85,6 +100,15 @@ class Deneme45
     //    return Call1(a);
     //}
 
+    static string Call1(char a)
+    {
+        if (a == 'y')
+        {
+            return "r";
+        }
+        return "ş";
+    }
+    
     static string Call1(string a)
     {
         return a+"ş";

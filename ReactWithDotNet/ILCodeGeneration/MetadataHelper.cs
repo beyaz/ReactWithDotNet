@@ -6,6 +6,16 @@ using AssemblyDefinition = Mono.Cecil.AssemblyDefinition;
 
 namespace ReactWithDotNet;
 
+[AttributeUsage(AttributeTargets.All)]
+public sealed class ExternalAttribute : Attribute
+{
+}
+[External]
+public static class console
+{
+    public static extern void log(object data);
+}
+
 sealed record MetadataRequest
 {
     public string AssemblyName { get; init; }
@@ -72,6 +82,8 @@ static class MetadataHelper
         var requests = await JsonSerializer.DeserializeAsync<List<MetadataRequest>>(httpContext.Request.Body);
 
         requests.Add(typeof(InterpreterBridge));
+        requests.Add(typeof(ExternalAttribute));
+        requests.Add(typeof(console));
         requests.Add(typeof(_System_.Int64));
         requests.Add(typeof(_System_.Exception));
         requests.Add(typeof(_System_.String));
