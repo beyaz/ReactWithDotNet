@@ -72,7 +72,7 @@ function Interpret(thread)
     var methodArguments = currentStackFrame.MethodArguments;
     var methodArgumentsOfset= currentStackFrame.MethodArgumentsOfset;
 
-    let previousStackFrame, v0, v1, v2;
+    let previousStackFrame, v0, v1, v2, evaluationStackIndex, item;
 
     var methodDefinitionOrMaybeNumber;
     var methodDefinition;
@@ -594,6 +594,11 @@ function Interpret(thread)
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 87: // Add
+                v1 = evaluationStack.pop();
+                v0 = evaluationStack.pop();
+
+                evaluationStack.push(v0 + v1);
+
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 88: // Sub
@@ -664,6 +669,37 @@ function Interpret(thread)
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 104: // Conv_I4
+                
+                evaluationStackIndex = evaluationStack.length - 1;
+
+                item = evaluationStack[evaluationStackIndex];
+
+                if (typeof item === 'number')
+                {
+                    if ( item  >= 0 )
+                    {
+                        if ( item > /*Int32.MaxValue*/2147483647 )
+                        {
+                            evaluationStack[evaluationStackIndex] = /*Int32.MinValue*/-2147483648;
+                        }
+                        else
+                        {
+                            evaluationStack[evaluationStackIndex] = item << 0;
+                        }
+                    }
+                    else
+                    {
+                        if( item < /*Int32.MinValue*/-2147483648 )
+                        {
+                            evaluationStack[evaluationStackIndex] = /*Int32.MinValue*/-2147483648;
+                        }
+                        else
+                        {
+                            evaluationStack[evaluationStackIndex] = Math.ceil(item);
+                        }
+                    }
+                }
+
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 105: // Conv_I8
@@ -1113,6 +1149,12 @@ function Interpret(thread)
                 break;
 
             case 195: // Clt
+                
+                v1 = evaluationStack.pop();
+                v0 = evaluationStack.pop();
+
+                evaluationStack.push( v0 < v1 ? 1 : 0 );
+
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
 
