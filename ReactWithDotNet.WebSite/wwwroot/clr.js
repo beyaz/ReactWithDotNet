@@ -57,6 +57,8 @@ function Interpret(thread)
 
     let previousStackFrame, v0, v1, v2, v3, v4, evaluationStackIndex, item;
 
+    var method;
+    var elementMethod;
     var methodDefinitionOrMaybeNumber;
     var methodDefinition;
     var fieldDefinition;
@@ -260,74 +262,28 @@ function Interpret(thread)
             case 38: // Jmp
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
-            case 39: // Call
+            case 39: // Call          
 
-          
+                method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];               
 
-                methodDefinitionOrMaybeNumber = operands[currentStackFrame.Line];
-
-                if (typeof methodDefinitionOrMaybeNumber === 'number')
+                if (method.IsGenericInstance)
                 {
-                    methodDefinition = operands[currentStackFrame.Line] = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
+                    elementMethod = GlobalMetadata.Methods[method.ElementMethod];
+                    method.Body       = elementMethod.Body;
+                    method.Parameters = elementMethod.Parameters;
+                    method.IsStatic   = elementMethod.IsStatic;
                 }
 
-                if (typeof methodDefinition.DeclaringType === 'number')
-                {
-                    if (GlobalMetadata.Types[methodDefinition.DeclaringType].Name === "NativeJs")
-                    {
-                        var nativeJsArguments = [];
-
-                        for (var i = 0; i < methodDefinition.Parameters.length - 1; i++)
-                        {
-                            nativeJsArguments.push(evaluationStack.pop());
-                        }
-
-                        var nativeObj = evaluationStack.pop();
-
-                        var nativeFn = nativeObj[methodDefinition.Name];
-                        if (nativeFn === undefined)
-                        {
-                            throw 'NativeJs has no function like:' + methodDefinition.Name;
-                        }
-
-                        var nativeCallResponse = nativeFn.apply(nativeObj, nativeJsArguments);
-
-                        /*returnType*/v0 = GlobalMetadata.Types[methodDefinition.ReturnType];
-                        
-                        /*isSystem.Void*/v1 = /*returnType*/v0.Namespace === 'System' && /*returnType*/v0.Name === 'Void'
-
-                        if (/*isSystem.Void*/v1 !== true)
-                        {
-                            evaluationStack.push(nativeCallResponse);
-                        }
-
-                        nextInstruction = instructions[++currentStackFrame.Line];
-                        break;
-                    }                    
-                }
-
-                if (methodDefinition.IsGenericInstance)
-                {
-                    if (typeof methodDefinition.ElementMethod === 'number')
-                    {
-                        methodDefinition.ElementMethod = GlobalMetadata.Methods[methodDefinition.ElementMethod];
-
-                        methodDefinition.Body = methodDefinition.ElementMethod.Body;
-                        methodDefinition.Parameters = methodDefinition.ElementMethod.Parameters;
-                        methodDefinition.IsStatic = methodDefinition.ElementMethod.IsStatic;
-                    }
-                }
-
-                instructions = methodDefinition.Body.Instructions;
-                operands     = methodDefinition.Body.Operands;
+                instructions = method.Body.Instructions;
+                operands     = method.Body.Operands;
 
 
                 evaluationStack = [];
                 methodArguments = currentStackFrame.EvaluationStack;
-                methodArgumentsOfset = methodArguments.length - methodDefinition.Parameters.length;
+                methodArgumentsOfset = methodArguments.length - method.Parameters.length;
                 localVariables  = [];
 
-                if (methodDefinition.IsStatic === false)
+                if (method.IsStatic === false)
                 {
                       // 0: this
                     methodArgumentsOfset--;
@@ -335,7 +291,7 @@ function Interpret(thread)
                 
                 currentStackFrame = 
                 {
-                    Method: methodDefinition,
+                    Method: method,
                     Line: 0,
 
                     EvaluationStack: evaluationStack,
@@ -721,50 +677,34 @@ function Interpret(thread)
                 break;
             case 114: // Newobj
                 
-               var newObj = {};
-            
-                methodDefinitionOrMaybeNumber = operands[currentStackFrame.Line];
+                method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
 
-                if (typeof methodDefinitionOrMaybeNumber === 'number')
+                declaringType = GlobalMetadata.Types[method.DeclaringType];
+
+                var newObj = {};
+                newObj['$type'] = declaringType;
+
+                if (declaringType.IsGenericInstance)
                 {
-                    methodDefinition = operands[currentStackFrame.Line] = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
-                    if (typeof methodDefinition.DeclaringType === 'number')
-                    {
-                        methodDefinition.DeclaringType = GlobalMetadata.Types[methodDefinition.DeclaringType];
-                    }
-                    newObj['$type'] = methodDefinition.DeclaringType;
-                }
+                    elementType = GlobalMetadata.Types[declaringType.ElementType];
 
-                if (methodDefinition.DeclaringType.IsGenericInstance)
-                {
-                    if (typeof methodDefinition.DeclaringType.ElementType === 'number')
+                    for (var i = 0; i < elementType.Methods.length; i++)
                     {
-                        methodDefinition.DeclaringType.ElementType = GlobalMetadata.Types[methodDefinition.DeclaringType.ElementType];
-                    }
+                        var methodTemp = GlobalMetadata.Methods[elementType.Methods[i]];
 
-                    for (var i = 0; i < methodDefinition.DeclaringType.ElementType.Methods.length; i++)
-                    {
-                        if (typeof methodDefinition.DeclaringType.ElementType.Methods[i] === 'number')
+                        if (methodTemp.IsDefinition)
                         {
-                            methodDefinition.DeclaringType.ElementType.Methods[i] = GlobalMetadata.Methods[methodDefinition.DeclaringType.ElementType.Methods[i]];
-                        }
-                    }
-
-                    for (var i = 0; i < methodDefinition.DeclaringType.ElementType.Methods.length; i++)
-                    {
-                        if (methodDefinition.DeclaringType.ElementType.Methods[i].IsDefinition)
-                        {
-                            if (methodDefinition.DeclaringType.ElementType.Methods[i].Name === methodDefinition.Name)
+                            if (methodTemp.Name === method.Name)
                             {
-                                methodDefinition.Body = methodDefinition.DeclaringType.ElementType.Methods[i].Body;
-                                methodDefinition.Parameters = methodDefinition.DeclaringType.ElementType.Methods[i].Parameters;
-                                methodDefinition.IsStatic = methodDefinition.DeclaringType.ElementType.Methods[i].IsStatic;
+                                methodDefinition.Body       = methodTemp.Body;
+                                methodDefinition.Parameters = methodTemp.Parameters;
+                                methodDefinition.IsStatic   = methodTemp.IsStatic;
                             } 
                         }
                     }
                 }
 
-                var tempArray = [];             
+                var tempArray = [];
 
                 for (var i = 0; i < methodDefinition.Parameters.length; i++)
                 {

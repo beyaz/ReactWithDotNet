@@ -751,7 +751,15 @@ static class MonoCecilToJsonModelMapper
                 return false;
             }
 
-            return methodReferenceModelA.Parameters.Where((_,i)=>!IsSameParameterType(methodReferenceModelA.Parameters[i],methodReferenceModelB.Parameters[i])).Any();
+            for (int i = 0; i < methodReferenceModelA.Parameters.Count; i++)
+            {
+                if (methodReferenceModelA.Parameters[i].ParameterType != methodReferenceModelB.Parameters[i].ParameterType)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         if (a is TypeReferenceModel aAsTypeReferenceModel && b is TypeReferenceModel bAsMemberReferenceModel)
@@ -761,10 +769,7 @@ static class MonoCecilToJsonModelMapper
 
         return false;
         
-        static bool IsSameParameterType(ParameterDefinitionModel a, ParameterDefinitionModel b)
-        {
-            return a.ParameterType == b.ParameterType;
-        }
+        
     }
 
     

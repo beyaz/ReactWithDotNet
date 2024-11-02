@@ -130,35 +130,34 @@ static class InterpreterBridge
         // is first load
         if (typesGlobal.Length == 0)
         {
-            typesGlobal.Set(nameof(MetadataTable.MetadataScopes), types);
-            typesGlobal.Set(nameof(MetadataTable.Types), types);
-            typesGlobal.Set(nameof(MetadataTable.Fields), types);
-            typesGlobal.Set(nameof(MetadataTable.Methods), types);
-            typesGlobal.Set(nameof(MetadataTable.Properties), types);
-            typesGlobal.Set(nameof(MetadataTable.Events), types);
-            
+            globalMetadata.Set(nameof(MetadataTable.MetadataScopes), metadataScopes);
+            globalMetadata.Set(nameof(MetadataTable.Types), types);
+            globalMetadata.Set(nameof(MetadataTable.Fields), fields);
+            globalMetadata.Set(nameof(MetadataTable.Methods), methods);
+            globalMetadata.Set(nameof(MetadataTable.Properties), properties);
+            globalMetadata.Set(nameof(MetadataTable.Events), events);
         }
         
         
         
         
-        for (var i = 0; i < methods.Length; i++)
-        {
-            if (methods[i].Get(nameof(MemberReferenceModel.IsDefinition)).As<bool>())
-            {
-                methods[i].Set("MetadataTable", metadata);
-            }
-        }
+        //for (var i = 0; i < methods.Length; i++)
+        //{
+        //    if (methods[i].Get(nameof(MemberReferenceModel.IsDefinition)).As<bool>())
+        //    {
+        //        methods[i].Set("MetadataTable", metadata);
+        //    }
+        //}
         
         
         
-        for (var i = 0; i < types.Length; i++)
-        {
-            if (types[i].Get(nameof(MemberReferenceModel.IsDefinition)).As<bool>())
-            {
-                types[i].Set("MetadataTable", metadata);
-            }
-        }
+        //for (var i = 0; i < types.Length; i++)
+        //{
+        //    if (types[i].Get(nameof(MemberReferenceModel.IsDefinition)).As<bool>())
+        //    {
+        //        types[i].Set("MetadataTable", metadata);
+        //    }
+        //}
     }
 }
 
