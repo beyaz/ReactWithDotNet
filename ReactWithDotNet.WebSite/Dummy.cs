@@ -52,17 +52,19 @@ class Deneme45
     }
     public static string Abc5()
     {
-        console.log("started");
+        return Call1("T");
         
-        var l = 't';
-        var i = 56;
+        //console.log("started");
 
-        if (l==i)
-        {
-            i = 78;
-        }
+        //var l = 't';
+        //var i = 56;
 
-        return "b";
+        //if (l==i)
+        //{
+        //    i = 78;
+        //}
+
+        // return "b";
 
         //string a = "abo";
         //string b = "ag";
