@@ -316,7 +316,9 @@ function Interpret(thread)
             case 40: // Calli
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
+            
             case 41: // Ret
+
                 if (currentStackFrame.Prev === null)
                 {
                     return;
@@ -326,27 +328,31 @@ function Interpret(thread)
 
                 thread.LastFrame = currentStackFrame = currentStackFrame.Prev;
 
-                
-
+                // arrange fast access variables
                 instructions = currentStackFrame.Method.Body.Instructions;
                 operands     = currentStackFrame.Method.Body.Operands;
 
-                evaluationStack = currentStackFrame.EvaluationStack;
-                localVariables  = currentStackFrame.LocalVariables;
-                methodArguments = currentStackFrame.MethodArguments;
+                // arrange fast access variables
+                evaluationStack      = currentStackFrame.EvaluationStack;
+                localVariables       = currentStackFrame.LocalVariables;
+                methodArguments      = currentStackFrame.MethodArguments;
                 methodArgumentsOfset = currentStackFrame.MethodArgumentsOfset;
                 
-                for (var i = 0; i < previousStackFrame.Method.Parameters.length; i++)
+                // remove parameters
+                length = previousStackFrame.Method.Parameters.length;
+                while(length-- > 0)
                 {
                     evaluationStack.pop();
                 }
 
+                // remove instance
                 if (previousStackFrame.Method.IsStatic === false)
                 {
                     evaluationStack.pop();
                 }
 
-                if(previousStackFrame.EvaluationStack.length > 0)
+                // check has any return value
+                if(previousStackFrame.EvaluationStack.length === 1)
                 {
                     evaluationStack.push(previousStackFrame.EvaluationStack.pop());
                 }
