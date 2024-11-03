@@ -1795,161 +1795,187 @@ function Interpret(thread)
                     NotImplementedOpCode(); break;
                 }
 
-                case 193: // Cgt
+                case 193: // Cgt: If the first value is greater than the second, the integer value 1 (int32) is pushed onto the evaluation stack; otherwise 0 (int32) is pushed onto the evaluation stack.
                 {
                     let value1 = evaluationStack.pop();
                     let value0 = evaluationStack.pop();
 
                     if (typeof value0 === 'number' && typeof value1 === 'number')
                     {
-                        evaluationStack.push(value0 === value1 ? 1 : 0);
-
-                        nextInstruction = instructions[++currentStackFrame.Line];
-                        break;
+                        evaluationStack.push(value1 < value0 ? 1 : 0);
                     }
-                    NotImplementedOpCode(); break;
+                    else
+                    {
+                        evaluationStack.push(value1.lessThan(value0) ? 1 : 0);
+                    }
+                    
+                    nextInstruction = instructions[++currentStackFrame.Line];
+                    break;
                 }
                 
-                    v1 = evaluationStack.pop();
-                    v0 = evaluationStack.pop();
-
-                    if (typeof v1 === 'number')
-                    {
-                        evaluationStack.push(v1 < v0 ? 1 : 0);
-                    }
-                    else
-                    {
-                        evaluationStack.push(v1.lessThan(v0) ? 1 : 0);
-                    }
-
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
-
                 case 194: // Cgt_Un
+                {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
 
-                    v1 = evaluationStack.pop();
-                    v0 = evaluationStack.pop();
-
-                    if (typeof v1 === 'number')
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
                     {
-                        evaluationStack.push(v1 < v0 ? 1 : 0);
+                        evaluationStack.push(value1 < value0 ? 1 : 0);
                     }
                     else
                     {
-                        evaluationStack.push(v1.lessThan(v0) ? 1 : 0);
+                        evaluationStack.push(value1.lessThan(value0) ? 1 : 0);
                     }
 
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }
 
                 case 195: // Clt
+                {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
 
-                    v1 = evaluationStack.pop();
-                    v0 = evaluationStack.pop();
-
-                    if (typeof v1 === 'number')
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
                     {
-                        evaluationStack.push(v0 < v1 ? 1 : 0);
+                        evaluationStack.push(value0 < value1 ? 1 : 0);
                     }
                     else
                     {
-                        evaluationStack.push(v0.lessThan(v1) ? 1 : 0);
+                        evaluationStack.push(value0.lessThan(value1) ? 1 : 0);
                     }
 
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }
 
                 case 196: // Clt_Un
+                {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
+
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    {
+                        evaluationStack.push(value0 < value1 ? 1 : 0);
+                    }
+                    else
+                    {
+                        evaluationStack.push(value0.lessThan(value1) ? 1 : 0);
+                    }
+
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }
 
                 case 197: // Ldftn
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 198: // Ldvirtftn
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 199: // Ldarg
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 200: // Ldarga
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 201: // Starg
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 202: // Ldloc
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 203: // Ldloca
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 204: // Stloc
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 205: // Localloc
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 206: // Endfilter
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 207: // Unaligned
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 208: // Volatile
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 209: // Tail
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 210: // Initobj
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 211: // Constrained
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 212: // Cpblk
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 213: // Initblk
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 214: // No
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 215: // Rethrow
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 216: // Sizeof
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 217: // Refanytype
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 218: // Readonly
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 219: // Jump
 
@@ -2193,7 +2219,7 @@ function Interpret(thread)
                     break;
 
             }   
-        } 
+        }
         catch (exception)
         {
             let isExceptionHandled = false;
