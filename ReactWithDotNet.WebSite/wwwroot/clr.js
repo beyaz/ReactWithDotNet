@@ -1,5 +1,5 @@
 
-var GlobalMetadata =
+const GlobalMetadata =
 {
     MetadataScopes: [],
     Types: [],
@@ -46,8 +46,8 @@ function AssertNotNull(value)
 
 const InterpreterBridge_Jump = 219;
 
-var InterpreterBridge_Jump_MethodDefinition;
-var InterpreterBridge_ImportMetadata_MethodDefinition;
+let InterpreterBridge_Jump_MethodDefinition;
+let InterpreterBridge_ImportMetadata_MethodDefinition;
 
 function TryInitialize_InterpreterBridge(metadataTable) 
 {
@@ -72,6 +72,10 @@ function TryInitialize_InterpreterBridge(metadataTable)
     }    
 }
 
+function NotImplementedOpCode()
+{
+    throw 'NotImplementedOpCode';
+}
 function Interpret(thread)
 {
     let currentStackFrame = thread.LastFrame;
@@ -102,208 +106,288 @@ function Interpret(thread)
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
                 }
-
+                
                 case 1: // Break: Inform debugger of a break point
+                {
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 2: // Ldarg_0: Load argument 0 onto the stack
+                {
                     evaluationStack.push(methodArguments[methodArgumentsOffset + 0]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 3: // Ldarg_1: Load argument 1 onto the stack
+                {
                     evaluationStack.push(methodArguments[methodArgumentsOffset + 1]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 4: // Ldarg_2: Load argument 2 onto the stack
+                {
                     evaluationStack.push(methodArguments[methodArgumentsOffset + 2]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 5: // Ldarg_3: Load argument 3 onto the stack
+                {
                     evaluationStack.push(methodArguments[methodArgumentsOffset + 3]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 6: // Ldloc_0: Load local variable 0 onto the stack
+                {
                     evaluationStack.push(localVariables[0]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 7: // Ldloc_1: Load local variable 1 onto the stack
+                {
                     evaluationStack.push(localVariables[1]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 8: // Ldloc_2: Load local variable 2 onto the stack
+                {
                     evaluationStack.push(localVariables[2]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 9: // Ldloc_3: Load local variable 3 onto the stack
+                {
                     evaluationStack.push(localVariables[3]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 10: // Stloc_0: Store value from the stack in local variable 0
+                {
                     localVariables[0] = evaluationStack.pop();
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 11: // Stloc_1: Store value from the stack in local variable 1
+                {
                     localVariables[1] = evaluationStack.pop();
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 12: // Stloc_2: Store value from the stack in local variable 2
+                {
                     localVariables[2] = evaluationStack.pop();
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 13: // Stloc_3: Store value from the stack in local variable 3
+                {
                     localVariables[3] = evaluationStack.pop();
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 14: // Ldarg_S: Load argument at a specified index (short form)
+                {
                     evaluationStack.push(methodArguments[methodArgumentsOffset + operands[currentStackFrame.Line]]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 15: // Ldarga_S: Load address of argument at a specified index (short form)
+                {
                     evaluationStack.push({
                         Array: methodArguments,
                         Index: methodArgumentsOffset + operands[currentStackFrame.Line]
                     });
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 16: // Starg_S: Store value from the stack into argument at specified index
+                {
                     methodArguments[methodArgumentsOffset + operands[currentStackFrame.Line]] = evaluationStack.pop();
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 17: // Ldloc_S: Load local variable at a specified index (short form)
+                {
                     evaluationStack.push(localVariables[operands[currentStackFrame.Line]]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 18: // Ldloca_S: Load address of local variable at a specified index (short)
-                    evaluationStack.push({Array: localVariables, Index: operands[currentStackFrame.Line]});
+                {
+                    evaluationStack.push({
+                        Array: localVariables,
+                        Index: operands[currentStackFrame.Line]
+                    });
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 19: // Stloc_S: Store value from the stack into local variable at specified index
+                {
                     localVariables[operands[currentStackFrame.Line]] = evaluationStack.pop();
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 20: // Ldnull: Push a null reference onto the stack
+                {
                     evaluationStack.push(null);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 21: // Ldc_I4_M1: Load integer constant -1 onto the stack
+                {
                     evaluationStack.push(-1);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 22: // Ldc_I4_0: Load integer constant 0 onto the stack
+                {
                     evaluationStack.push(0);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 23: // Ldc_I4_1: Load integer constant 1 onto the stack
+                {
                     evaluationStack.push(1);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 24: // Ldc_I4_2: Load integer constant 2 onto the stack
+                {
                     evaluationStack.push(2);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 25: // Ldc_I4_3: Load integer constant 3 onto the stack
+                {
                     evaluationStack.push(3);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 26: // Ldc_I4_4: Load integer constant 4 onto the stack
+                {
                     evaluationStack.push(4);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 27: // Ldc_I4_5: Load integer constant 5 onto the stack
+                {
                     evaluationStack.push(5);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 28: // Ldc_I4_6: Load integer constant 6 onto the stack
+                {
                     evaluationStack.push(6);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 29: // Ldc_I4_7: Load integer constant 7 onto the stack
+                {
                     evaluationStack.push(7);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 30: // Ldc_I4_8: Load integer constant 8 onto the stack
+                {
                     evaluationStack.push(8);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 31: // Ldc_I4_S: Load 4-byte integer constant onto the stack
+                {
                     evaluationStack.push(operands[currentStackFrame.Line]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 32: // Ldc_I4: Load 8-byte integer constant onto the stack
+                {
                     evaluationStack.push(operands[currentStackFrame.Line]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 33: // Ldc_I8: Load 4-byte floating-point constant onto the stack
+                {
                     evaluationStack.push(operands[currentStackFrame.Line]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 34: // Ldc_R4: Load 8-byte floating-point constant onto the stack
+                {
                     evaluationStack.push(operands[currentStackFrame.Line]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 35: // Ldc_R8: Load 8-byte floating-point constant onto the stack
+                {
                     evaluationStack.push(operands[currentStackFrame.Line]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 36: // Dup: Duplicate the value on top of the stack
+                {
                     evaluationStack.push(evaluationStack[evaluationStack.length - 1]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }    
 
                 case 37: // Pop: Remove the value from the top of the stack
+                {
                     evaluationStack.pop();
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
-
+                }
+                
                 case 38: // Jmp
+                {
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }
+                
                 case 39: // Call
-
-                    method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
+                {
+                    let method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
 
                     if (method.IsGenericInstance)
                     {
                         let elementMethod = GlobalMetadata.Methods[method.ElementMethod];
 
-                        method.Body = elementMethod.Body;
+                        method.Body       = elementMethod.Body;
                         method.Parameters = elementMethod.Parameters;
-                        method.IsStatic = elementMethod.IsStatic;
+                        method.IsStatic   = elementMethod.IsStatic;
                     }
 
                     // arrange opcodes
@@ -325,25 +409,27 @@ function Interpret(thread)
 
                     // connect frame
                     currentStackFrame = thread.LastFrame =
-                        {
-                            Prev: thread.LastFrame,
+                    {
+                        Prev: thread.LastFrame,
 
-                            Method: method,
-                            Line: 0,
+                        Method: method,
+                        Line: 0,
 
-                            MethodArguments: methodArguments,
-                            methodArgumentsOffset: methodArgumentsOffset,
+                        MethodArguments: methodArguments,
+                        MethodArgumentsOffset: methodArgumentsOffset,
 
-                            EvaluationStack: evaluationStack,
-                            LocalVariables: localVariables
-                        };
+                        EvaluationStack: evaluationStack,
+                        LocalVariables: localVariables
+                    };
 
-                    nextInstruction = instructions[currentStackFrame.Line];
+                    nextInstruction = instructions[0];                    
                     break;
+                }                  
 
                 case 40: // Calli
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 41: // Ret
                 {
@@ -386,119 +472,94 @@ function Interpret(thread)
                     }
 
                     nextInstruction = instructions[++currentStackFrame.Line];
-
                     break;
                 }
+                
                 case 42: // Br_S
-                    currentStackFrame.Line = operands[currentStackFrame.Line];
-                    nextInstruction = instructions[currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 55;
                     break;
-
+                }
+                
                 case 43: // Brfalse_S
                 {
-                    let booleanValue = evaluationStack.pop();
-                
-                    AssertBoolean(booleanValue);
-                
-                    if (booleanValue)
-                    {
-                        nextInstruction = instructions[++currentStackFrame.Line];
-                    }
-                    else
-                    {
-                        currentStackFrame.Line = operands[currentStackFrame.Line];
-
-                        nextInstruction = instructions[currentStackFrame.Line];
-                    }
-                    
+                    instructions[currentStackFrame.Line] = nextInstruction = 56;
                     break;
                 }
                 
                 case 44: // Brtrue_S
-                    if (evaluationStack[evaluationStack.length - 1])
-                    {
-                        currentStackFrame.Line = operands[currentStackFrame.Line];
-
-                        nextInstruction = instructions[currentStackFrame.Line];
-                    }
-                    else
-                    {
-                        nextInstruction = instructions[++currentStackFrame.Line];
-                    }
-                    evaluationStack.pop(); 
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 57;
                     break;
+                }
+                
                 case 45: // Beq_S
-                    v1 = evaluationStack.pop();
-                    v0 = evaluationStack.pop();
-
-                    if (typeof v0 === 'number')
-                    {
-                        if (v0 === v1)
-                        {
-                            currentStackFrame.Line = operands[currentStackFrame.Line];
-
-                            nextInstruction = instructions[currentStackFrame.Line];
-                        }
-                        else
-                        {
-                            nextInstruction = instructions[++currentStackFrame.Line];
-                        }
-                    }
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 58;
                     break;
+                }
+                
                 case 46: // Bge_S
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 59;
                     break;
+                }
 
                 case 47: // Bgt_S
-
-                    v1 = evaluationStack.pop();
-                    v0 = evaluationStack.pop();
-
-                    if (typeof v0 === 'number')
-                    {
-                        if (v0 > v1)
-                        {
-                            currentStackFrame.Line = operands[currentStackFrame.Line];
-
-                            nextInstruction = instructions[currentStackFrame.Line];
-                        }
-                        else
-                        {
-                            nextInstruction = instructions[++currentStackFrame.Line];
-                        }
-                    }
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 60;
                     break;
+                }                    
 
                 case 48: // Ble_S
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 61;
                     break;
+                }
+                
                 case 49: // Blt_S
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 62;
                     break;
+                }
+                
                 case 50: // Bne_Un_S
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 63;
                     break;
+                }
                 case 51: // Bge_Un_S
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 64;
                     break;
+                }
                 case 52: // Bgt_Un_S
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 65;
                     break;
+                }
                 case 53: // Ble_Un_S
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 66;
                     break;
+                }
                 case 54: // Blt_Un_S
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 67;
                     break;
-                case 55: // Br
+                }
+                    
+                case 55: // Br: Unconditionally transfers control to a target instruction.
+                {
                     currentStackFrame.Line = operands[currentStackFrame.Line];
-
                     nextInstruction = instructions[currentStackFrame.Line];
                     break;
-                case 56: // Brfalse
-                    v0 = evaluationStack.pop();
-                    if (v0)
+                }    
+                
+                case 56: // Brfalse: Transfers control to a target instruction if value is false, a null reference, or zero.
+                {
+                    let value = evaluationStack.pop();
+                    if (value)
                     {
                         nextInstruction = instructions[++currentStackFrame.Line];
                     }
@@ -508,43 +569,181 @@ function Interpret(thread)
 
                         nextInstruction = instructions[currentStackFrame.Line];
                     }
+
                     break;
-                case 57: // Brtrue
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                }
+                
+                case 57: // Brtrue: Transfers control to a target instruction (short form) if value is true, not null, or non-zero.
+                {
+                    let value = evaluationStack.pop();
+                    if (value)
+                    {
+                        currentStackFrame.Line = operands[currentStackFrame.Line];
+
+                        nextInstruction = instructions[currentStackFrame.Line];
+                    }
+                    else
+                    {
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                    }
+
                     break;
-                case 58: // Beq
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
-                case 59: // Bge
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
-                case 60: // Bgt
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
-                case 61: // Ble
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
-                case 62: // Blt
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                }
+                
+                case 58: // Beq: Transfers control to a target instruction if two values are equal.
+                {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
+
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    {
+                        if (value0 === value1)
+                        {
+                            currentStackFrame.Line = operands[currentStackFrame.Line];
+
+                            nextInstruction = instructions[currentStackFrame.Line];
+                        }
+                        else
+                        {
+                            nextInstruction = instructions[++currentStackFrame.Line];
+                        }
+
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
+                
+                case 59: // Bge: Transfers control to a target instruction if the first value is greater than or equal to the second value.
+                {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
+
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    {
+                        if (value0 >= value1)
+                        {
+                            currentStackFrame.Line = operands[currentStackFrame.Line];
+
+                            nextInstruction = instructions[currentStackFrame.Line];
+                        }
+                        else
+                        {
+                            nextInstruction = instructions[++currentStackFrame.Line];
+                        }
+
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
+                    
+                case 60: // Bgt: Transfers control to a target instruction if the first value is greater than the second value.
+                {   
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
+
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    {
+                        if (value0 > value1)
+                        {
+                            currentStackFrame.Line = operands[currentStackFrame.Line];
+
+                            nextInstruction = instructions[currentStackFrame.Line];
+                        }
+                        else
+                        {
+                            nextInstruction = instructions[++currentStackFrame.Line];
+                        }
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
+                
+                case 61: // Ble: Transfers control to a target instruction if the first value is less than or equal to the second value.
+                {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
+
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    {
+                        if (value0 <= value1)
+                        {
+                            currentStackFrame.Line = operands[currentStackFrame.Line];
+
+                            nextInstruction = instructions[currentStackFrame.Line];
+                        }
+                        else
+                        {
+                            nextInstruction = instructions[++currentStackFrame.Line];
+                        }
+
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
+                
+                case 62: // Blt: Transfers control to a target instruction if the first value is less than the second value.
+                {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
+
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    {
+                        if (value0 < value1)
+                        {
+                            currentStackFrame.Line = operands[currentStackFrame.Line];
+
+                            nextInstruction = instructions[currentStackFrame.Line];
+                        }
+                        else
+                        {
+                            nextInstruction = instructions[++currentStackFrame.Line];
+                        }
+
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
                 case 63: // Bne_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 64: // Bge_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 65: // Bgt_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 66: // Ble_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 67: // Blt_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    NotImplementedOpCode(); break;
+                }
+                
+                case 68: // Switch: Implements a jump table.
+                {
+                    let jumpTable = operands[currentStackFrame.Line];
+                    
+                    let caseIndex = evaluationStack.pop();
+                    
+                    if ( caseIndex > 0 && jumpTable.length > caseIndex)
+                    {
+                        currentStackFrame.Line = jumpTable[caseIndex];
+
+                        nextInstruction = instructions[currentStackFrame.Line];
+                    }
+                    else
+                    {
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                    }
+                    
                     break;
-                case 68: // Switch
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                }
+                    
                 case 69: // Ldind_I1
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
