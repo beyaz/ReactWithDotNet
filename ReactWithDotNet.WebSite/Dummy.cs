@@ -50,20 +50,50 @@ class Deneme45
     {
         return a == b ? "Equal" : "Not Equal";
     }
-    public static string Abc5()
-    {
-        var e = new Exception("a");
 
+    static void TestCase_Try_Catch_In_Current_Method()
+    {
+        var result = "0";
+
+        var e = new Exception("success");
+        
         try
         {
             throw e;
         }
         catch (Exception exception)
         {
-            return exception.Message;
+            result = exception.Message;
         }
         
+        console.log(result);
         
+        
+    }
+    public static string Abc5()
+    {
+        var e = new Exception("a");
+
+        var res = "F";
+
+        try
+        {
+             throw e;
+            //res = "f";
+        }
+        catch (ArgumentException exception)
+        {
+            return exception.Message;
+        }
+        //finally
+        //{
+        //    res = "X";
+        //}
+
+        return res;
+
+
+
         //return e.Message;
 
         //console.log("started");
