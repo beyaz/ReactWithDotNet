@@ -35,6 +35,14 @@ function AssertBoolean(value)
     throw 'AssertBoolean: ' + value;
 }
 
+function AssertNotNull(value)
+{
+    if (value == null)
+    {
+        throw 'AssertNotNull';
+    }
+}
+
 
 const InterpreterBridge_Jump = 219;
 
@@ -735,7 +743,73 @@ function Interpret(thread)
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 110: // Callvirt
-                nextInstruction = instructions[++currentStackFrame.Line];
+                
+                method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
+                
+                let methodParameterCount = method.Parameters.length;
+
+                // arrange arguments
+                methodArguments      = evaluationStack;
+                methodArgumentsOfset = evaluationStack.length - methodParameterCount - 1;
+
+                instance = methodArguments[methodArgumentsOfset];
+
+                AssertNotNull(instance.$type);
+
+                // find target method
+
+                let targetMethod = null;
+
+                let instanceMethods = instance.$type.Methods;
+                let instanceMethodsLength = instanceMethods.length;
+
+                for (let i = 0; i < instanceMethodsLength; i++)
+                {
+                    targetMethod = GlobalMetadata.Methods[instanceMethods[i]];
+
+                    if (targetMethod.Name !== method.Name)
+                    {
+                        continue;
+                    }
+                    
+                    if (IsTwoParameterListFullMatch(method, targetMethod) === false)
+                    {
+                        continue;
+                    }
+
+                    method = targetMethod;
+                    break;
+                }
+
+                if (method !== targetMethod)
+                {
+                    throw 'MissingMethodException' + method.Name;
+                }
+
+
+                // arrange opcodes
+                instructions = method.Body.Instructions;
+                operands     = method.Body.Operands;
+                                
+                // arrange calculation stacks
+                evaluationStack = [];
+                localVariables  = [];
+                              
+                // connect frame
+                currentStackFrame = thread.LastFrame =
+                {
+                    Prev: thread.LastFrame,
+
+                    Method: method,
+                    Line: 0,
+
+                    MethodArguments: methodArguments,
+                    MethodArgumentsOfset: methodArgumentsOfset,
+
+                    EvaluationStack: evaluationStack,
+                    LocalVariables: localVariables                    
+                };
+                nextInstruction = instructions[0];
                 break;
             case 111: // Cpobj
                 nextInstruction = instructions[++currentStackFrame.Line];
@@ -1651,4 +1725,25 @@ const CLR =
 
 };
 window.CLR = CLR;
+
+function IsTwoParameterListFullMatch(parametersA, parametersB)
+{
+    let lengthA = parametersA.length;
+    let lengthB = parametersB.length;
+
+    if (lengthA !== lengthB)
+    {
+        return false;
+    }
+
+    for (let i = 0; i < lengthA; i++)
+    {
+        if (parametersA[i].ParameterType !== parametersB[i].ParameterType)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
 

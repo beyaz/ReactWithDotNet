@@ -22,6 +22,7 @@ namespace _System_
     
     class Exception
     {
+        readonly string _message;
         public Exception()
         {
             
@@ -29,17 +30,18 @@ namespace _System_
 
         public Exception(string message)
         {
-            Message = message;
+            _message = message;
         }
         
         public Exception(string message, Exception innerException)
             : this()
         {
-            Message        = message;
+            _message       = message;
             InnerException = innerException;
         }
 
-        public string Message { get; }
+        // ReSharper disable once ConvertToAutoProperty
+        public string Message => _message;
         
         public Exception InnerException { get; }
     }
