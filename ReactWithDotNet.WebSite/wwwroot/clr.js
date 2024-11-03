@@ -51,7 +51,7 @@ var InterpreterBridge_ImportMetadata_MethodDefinition;
 
 function TryInitialize_InterpreterBridge(metadataTable) 
 {
-    for (var i = 0; i < metadataTable.Methods.length; i++)
+    for (let i = 0; i < metadataTable.Methods.length; i++)
     {
         if (metadataTable.Methods[i].IsDefinition === true)
         {
@@ -77,19 +77,20 @@ function Interpret(thread)
     let currentStackFrame = thread.LastFrame;
 
     let instructions = currentStackFrame.Method.Body.Instructions;
-    let operands = currentStackFrame.Method.Body.Operands;
+    let operands     = currentStackFrame.Method.Body.Operands;
 
     let evaluationStack = currentStackFrame.EvaluationStack;
     let localVariables  = currentStackFrame.LocalVariables;
-    let methodArguments = currentStackFrame.MethodArguments;
-    let methodArgumentsOfset= currentStackFrame.MethodArgumentsOfset;
+    
+    let methodArguments       = currentStackFrame.MethodArguments;
+    let methodArgumentsOffset = currentStackFrame.MethodArgumentsOffset;
 
-    let previousStackFrame, v0, v1, v2, v3, v4, evaluationStackIndex, item;
+    let previousStackFrame, v0, v1, v2, v3, v4;
 
     let method;
-    
-    var nextInstruction = instructions[currentStackFrame.Line];
-       
+
+    let nextInstruction = instructions[currentStackFrame.Line];
+
     while(true)
     {
         try
@@ -107,22 +108,22 @@ function Interpret(thread)
                     break;
 
                 case 2: // Ldarg_0: Load argument 0 onto the stack
-                    evaluationStack.push(methodArguments[methodArgumentsOfset + 0]);
+                    evaluationStack.push(methodArguments[methodArgumentsOffset + 0]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
 
                 case 3: // Ldarg_1: Load argument 1 onto the stack
-                    evaluationStack.push(methodArguments[methodArgumentsOfset + 1]);
+                    evaluationStack.push(methodArguments[methodArgumentsOffset + 1]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
 
                 case 4: // Ldarg_2: Load argument 2 onto the stack
-                    evaluationStack.push(methodArguments[methodArgumentsOfset + 2]);
+                    evaluationStack.push(methodArguments[methodArgumentsOffset + 2]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
 
                 case 5: // Ldarg_3: Load argument 3 onto the stack
-                    evaluationStack.push(methodArguments[methodArgumentsOfset + 3]);
+                    evaluationStack.push(methodArguments[methodArgumentsOffset + 3]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
 
@@ -167,17 +168,20 @@ function Interpret(thread)
                     break;
 
                 case 14: // Ldarg_S: Load argument at a specified index (short form)
-                    evaluationStack.push(methodArguments[methodArgumentsOfset + operands[currentStackFrame.Line]]);
+                    evaluationStack.push(methodArguments[methodArgumentsOffset + operands[currentStackFrame.Line]]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
 
                 case 15: // Ldarga_S: Load address of argument at a specified index (short form)
-                    evaluationStack.push({ Array: methodArguments, Index: methodArgumentsOfset + operands[currentStackFrame.Line] } );
+                    evaluationStack.push({
+                        Array: methodArguments,
+                        Index: methodArgumentsOffset + operands[currentStackFrame.Line]
+                    });
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
 
                 case 16: // Starg_S: Store value from the stack into argument at specified index
-                    methodArguments[methodArgumentsOfset + operands[currentStackFrame.Line]] = evaluationStack.pop();
+                    methodArguments[methodArgumentsOffset + operands[currentStackFrame.Line]] = evaluationStack.pop();
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
 
@@ -187,7 +191,7 @@ function Interpret(thread)
                     break;
 
                 case 18: // Ldloca_S: Load address of local variable at a specified index (short)
-                    evaluationStack.push({ Array: localVariables, Index: operands[currentStackFrame.Line] });
+                    evaluationStack.push({Array: localVariables, Index: operands[currentStackFrame.Line]});
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
 
@@ -291,58 +295,58 @@ function Interpret(thread)
                     break;
                 case 39: // Call
 
-                    method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];               
+                    method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
 
                     if (method.IsGenericInstance)
                     {
                         let elementMethod = GlobalMetadata.Methods[method.ElementMethod];
 
-                        method.Body       = elementMethod.Body;
+                        method.Body = elementMethod.Body;
                         method.Parameters = elementMethod.Parameters;
-                        method.IsStatic   = elementMethod.IsStatic;
+                        method.IsStatic = elementMethod.IsStatic;
                     }
 
                     // arrange opcodes
                     instructions = method.Body.Instructions;
-                    operands     = method.Body.Operands;
+                    operands = method.Body.Operands;
 
                     // arrange arguments
-                    methodArguments      = evaluationStack;
-                    methodArgumentsOfset = evaluationStack.length - method.Parameters.length;
+                    methodArguments = evaluationStack;
+                    methodArgumentsOffset = evaluationStack.length - method.Parameters.length;
                     if (method.IsStatic === false)
                     {
-                          // 0: this
-                        methodArgumentsOfset--;
+                        // 0: this
+                        methodArgumentsOffset--;
                     }
 
                     // arrange calculation stacks
                     evaluationStack = [];
-                    localVariables  = [];
-                              
+                    localVariables = [];
+
                     // connect frame
                     currentStackFrame = thread.LastFrame =
-                    {
-                        Prev: thread.LastFrame,
+                        {
+                            Prev: thread.LastFrame,
 
-                        Method: method,
-                        Line: 0,
+                            Method: method,
+                            Line: 0,
 
-                        MethodArguments: methodArguments,
-                        MethodArgumentsOfset: methodArgumentsOfset,
+                            MethodArguments: methodArguments,
+                            methodArgumentsOffset: methodArgumentsOffset,
 
-                        EvaluationStack: evaluationStack,
-                        LocalVariables: localVariables                    
-                    };
+                            EvaluationStack: evaluationStack,
+                            LocalVariables: localVariables
+                        };
 
-                    nextInstruction = instructions[currentStackFrame.Line];               
+                    nextInstruction = instructions[currentStackFrame.Line];
                     break;
 
                 case 40: // Calli
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
-            
-                case 41: // Ret
 
+                case 41: // Ret
+                {
                     if (currentStackFrame.Prev === null)
                     {
                         return;
@@ -354,17 +358,17 @@ function Interpret(thread)
 
                     // arrange fast access variables
                     instructions = currentStackFrame.Method.Body.Instructions;
-                    operands     = currentStackFrame.Method.Body.Operands;
+                    operands = currentStackFrame.Method.Body.Operands;
 
                     // arrange fast access variables
-                    evaluationStack      = currentStackFrame.EvaluationStack;
-                    localVariables       = currentStackFrame.LocalVariables;
-                    methodArguments      = currentStackFrame.MethodArguments;
-                    methodArgumentsOfset = currentStackFrame.MethodArgumentsOfset;
-                
+                    evaluationStack = currentStackFrame.EvaluationStack;
+                    localVariables = currentStackFrame.LocalVariables;
+                    methodArguments = currentStackFrame.MethodArguments;
+                    methodArgumentsOffset = currentStackFrame.MethodArgumentsOffset;
+
                     // remove parameters
-                    length = previousStackFrame.Method.Parameters.length;
-                    while(length-- > 0)
+                    let length = previousStackFrame.Method.Parameters.length;
+                    while (length-- > 0)
                     {
                         evaluationStack.pop();
                     }
@@ -376,26 +380,27 @@ function Interpret(thread)
                     }
 
                     // check has any return value
-                    if(previousStackFrame.EvaluationStack.length === 1)
+                    if (previousStackFrame.EvaluationStack.length === 1)
                     {
                         evaluationStack.push(previousStackFrame.EvaluationStack.pop());
                     }
 
                     nextInstruction = instructions[++currentStackFrame.Line];
-                
+
                     break;
+                }
                 case 42: // Br_S
                     currentStackFrame.Line = operands[currentStackFrame.Line];
                     nextInstruction = instructions[currentStackFrame.Line];
                     break;
 
                 case 43: // Brfalse_S
+                {
+                    let booleanValue = evaluationStack.pop();
                 
-                    item = evaluationStack.pop();
+                    AssertBoolean(booleanValue);
                 
-                    AssertBoolean(item);
-                
-                    if (item)
+                    if (booleanValue)
                     {
                         nextInstruction = instructions[++currentStackFrame.Line];
                     }
@@ -404,9 +409,11 @@ function Interpret(thread)
                         currentStackFrame.Line = operands[currentStackFrame.Line];
 
                         nextInstruction = instructions[currentStackFrame.Line];
-                    }                         
+                    }
+                    
                     break;
-
+                }
+                
                 case 44: // Brtrue_S
                     if (evaluationStack[evaluationStack.length - 1])
                     {
@@ -682,49 +689,55 @@ function Interpret(thread)
                 case 103: // Conv_I2
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+
                 case 104: // Conv_I4
-                
-                    evaluationStackIndex = evaluationStack.length - 1;
-
-                    item = evaluationStack[evaluationStackIndex];
-
-                    if (typeof item === 'number')
+                {
+                    let value = evaluationStack.pop();
+                    
+                    if (typeof value === 'number')
                     {
-                        if ( item  >= 0 )
+                        if (value >= 0)
                         {
-                            if ( item > /*Int32.MaxValue*/2147483647 )
+                            if (value > /*Int32.MaxValue*/2147483647)
                             {
-                                evaluationStack[evaluationStackIndex] = /*Int32.MinValue*/-2147483648;
+                                value = /*Int32.MinValue*/ -2147483648;
                             }
                             else
                             {
-                                evaluationStack[evaluationStackIndex] = item << 0;
+                                value = value << 0;
                             }
                         }
                         else
                         {
-                            if( item < /*Int32.MinValue*/-2147483648 )
+                            if (value < /*Int32.MinValue*/ -2147483648)
                             {
-                                evaluationStack[evaluationStackIndex] = /*Int32.MinValue*/-2147483648;
+                                value = /*Int32.MinValue*/ -2147483648;
                             }
                             else
                             {
-                                evaluationStack[evaluationStackIndex] = Math.ceil(item);
+                                value = Math.ceil(value);
                             }
                         }
                     }
 
+                    evaluationStack.push(value);
+                    
                     nextInstruction = instructions[++currentStackFrame.Line];
+                    
                     break;
+                }
+                
                 case 105: // Conv_I8
-                
-                    evaluationStackIndex = evaluationStack.length - 1;
+                {
+                    let value = evaluationStack.pop();
 
-                    evaluationStack[evaluationStackIndex] = Long.fromNumber(evaluationStack[evaluationStackIndex]);
-                
+                    evaluationStack.push(Long.fromNumber(value));
+
                     nextInstruction = instructions[++currentStackFrame.Line];
+                    
                     break;
-
+                }
+                
                 case 106: // Conv_R4
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
@@ -745,9 +758,9 @@ function Interpret(thread)
 
                     // arrange arguments
                     methodArguments      = evaluationStack;
-                    methodArgumentsOfset = evaluationStack.length - methodParameterCount - 1;
+                    methodArgumentsOffset = evaluationStack.length - methodParameterCount - 1;
 
-                    let instance = methodArguments[methodArgumentsOfset];
+                    let instance = methodArguments[methodArgumentsOffset];
 
                     AssertNotNull(instance.$type);
 
@@ -800,7 +813,7 @@ function Interpret(thread)
                         Line: 0,
 
                         MethodArguments: methodArguments,
-                        MethodArgumentsOfset: methodArgumentsOfset,
+                        MethodArgumentsOffset: methodArgumentsOffset,
 
                         EvaluationStack: evaluationStack,
                         LocalVariables: localVariables                    
@@ -831,7 +844,7 @@ function Interpret(thread)
                     {
                         elementType = GlobalMetadata.Types[declaringType.ElementType];
 
-                        for (var i = 0; i < elementType.Methods.length; i++)
+                        for (let i = 0; i < elementType.Methods.length; i++)
                         {
                             var methodTemp = GlobalMetadata.Methods[elementType.Methods[i]];
 
@@ -867,8 +880,8 @@ function Interpret(thread)
 
                     evaluationStack = [];
                     methodArguments = currentStackFrame.EvaluationStack;
-                    methodArgumentsOfset = methodArguments.length - method.Parameters.length;
-                    methodArgumentsOfset--;
+                    methodArgumentsOffset = methodArguments.length - method.Parameters.length;
+                    methodArgumentsOffset--;
                     localVariables  = [];
                 
                     currentStackFrame = thread.LastFrame =
@@ -881,7 +894,7 @@ function Interpret(thread)
                         EvaluationStack: evaluationStack,
                         LocalVariables: localVariables,
                         MethodArguments: methodArguments,
-                        MethodArgumentsOfset: methodArgumentsOfset
+                        MethodArgumentsOffset: methodArgumentsOffset
                     };
 
                     nextInstruction = instructions[0];
@@ -905,8 +918,6 @@ function Interpret(thread)
                     ++currentStackFrame.Line;
 
                     throw evaluationStack.pop();
-
-                    break;
                 }
 
                 case 120: // Ldfld
@@ -1605,9 +1616,10 @@ function Interpret(thread)
                             break;
 
                         case 13: // array.pop
-                            /*arrayInstance*/v0 = evaluationStack.pop();
+                        {
+                            let arrayInstance = evaluationStack.pop();
 
-                            if ( /*arrayInstance*/v0 == null)
+                            if ( arrayInstance == null)
                             {
                                 evaluationStack.push('array is null. when call push');
                                 evaluationStack.push(InterpreterBridge_NullReferenceException);
@@ -1615,9 +1627,9 @@ function Interpret(thread)
                                 break;
                             }
 
-                            evaluationStack.push(/*array*/v0.pop(/*item*/v1));
+                            evaluationStack.push(arrayInstance.pop());
                             break;
-
+                        }    
                         case 14: // Dump
                             console.log(evaluationStack.pop());
                             break;
@@ -1682,7 +1694,7 @@ function Interpret(thread)
                         evaluationStack      = currentStackFrame.EvaluationStack;
                         localVariables       = currentStackFrame.LocalVariables;
                         methodArguments      = currentStackFrame.MethodArguments;
-                        methodArgumentsOfset = currentStackFrame.MethodArgumentsOfset;
+                        methodArgumentsOffset = currentStackFrame.MethodArgumentsOffset;
                 
                         // remove parameters
                         length = previousStackFrame.Method.Parameters.length;
@@ -1755,7 +1767,7 @@ function CallManagedStaticMethod(methodDefinition, args, success, fail)
             EvaluationStack:[],
             LocalVariables:[],
             MethodArguments: args,
-            MethodArgumentsOfset: 0,
+            MethodArgumentsOffset: 0,
             Line: 0,
             Prev: null
         }

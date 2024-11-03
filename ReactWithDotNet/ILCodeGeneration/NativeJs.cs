@@ -13,7 +13,7 @@ sealed class StackFrame
     public Array EvaluationStack;
     public Array LocalVariables;
     public Array MethodArguments;
-    public int MethodArgumentsOfset;
+    public int MethodArgumentsOffset;
     public int Line;
     public StackFrame Prev;
 }
@@ -121,7 +121,7 @@ static class InterpreterBridge
             frame.Set(nameof(StackFrame.EvaluationStack), CreateNewArray());
             frame.Set(nameof(StackFrame.LocalVariables), CreateNewArray());
             frame.Set(nameof(StackFrame.MethodArguments), methodArguments);
-            frame.Set(nameof(StackFrame.MethodArgumentsOfset), methodArgumentsOffset.As<object>() );
+            frame.Set(nameof(StackFrame.MethodArgumentsOffset), methodArgumentsOffset.As<object>() );
             
             CurrentStackFrame.Set(nameof(CurrentStackFrame.Prev), frame);
             

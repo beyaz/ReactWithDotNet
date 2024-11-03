@@ -66,12 +66,14 @@ class Deneme45
             result = exception.Message;
         }
         
-        console.log(result);
+        // console.log(result);
         
         
     }
     public static string Abc5()
     {
+        return "abc";
+        
         var result = "0";
 
         try
