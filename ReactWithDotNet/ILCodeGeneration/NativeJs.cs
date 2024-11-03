@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using ReactWithDotNet;
 using System.Runtime.CompilerServices;
-using static ReactWithDotNet.NativeJs;
 using static ReactWithDotNet.NativeJsHelper;
 
 
@@ -30,14 +29,6 @@ sealed class ThreadModel
     public StackFrame LastFrame;
 }
 
-
-static class NativeJs
-{
-    public static extern object pop(this Array array);
-    
-    public static extern void push(this Array array, object value);
-}
-
 static class AsExtensions
 {
     public static extern object AsObject<T>(this T value);
@@ -51,6 +42,7 @@ static class NativeJsHelper
     public static extern void Set(this object instance, string key, object value);
     
     public static extern object Get(this object instance, string key);
+    public static extern object Get(this object instance, int key);
     
     public static extern object CreateNewPlainObject();
 
@@ -69,6 +61,14 @@ static class NativeJsHelper
     public static extern object Call(this object instance, string functionName, object[] parameters);
     
     public static extern MetadataTable GlobalMetadata { get; }
+    
+    public static extern object pop(this Array array);
+    
+    public static extern void push(this Array array, object value);
+    
+    public static extern void Dump(object value);
+    
+    public static extern StackFrame CurrentStackFrame { get; }
 }
 
 
@@ -77,44 +77,88 @@ static class NativeJsHelper
 
 static class InterpreterBridge
 {
+   
     public static void Jump()
     {
         const int InterpreterBridge_NewArr = 0;
         const int InterpreterBridge_NullReferenceException = 1;
         const int InterpreterBridge_ArgumentNullException = 2;
         const int InterpreterBridge_Call = 3;
+
+        var previousStackFrame = PreviousStackFrame;
+        var previousStackFrameLine = previousStackFrame.Get(nameof(StackFrame.Line)).As<int>();
         
-        var evaluationStack = PreviousStackFrame.EvaluationStack;
+        var evaluationStack = previousStackFrame.EvaluationStack;
         
         var instruction = evaluationStack.pop().As<int>();
 
         if (instruction == InterpreterBridge_Call)
         {
+            var method = GlobalMetadata.Get(nameof(GlobalMetadata.Methods)).As<MethodDefinitionModel[]>()
+                [previousStackFrame
+                     .Get(nameof(previousStackFrame.Method))
+                     .Get(nameof(MethodDefinitionModel.Body))
+                     .Get(nameof(MethodDefinitionModel.Body.Operands))
+                     .Get(previousStackFrameLine).As<int>()];
+            
+
+            
+            
+            var frame = CreateNewPlainObject();
+
+            var methodArguments = evaluationStack;
+
+            var methodArgumentsOffset = methodArguments.Get("length").As<int>() - method.Get(nameof(method.Parameters)).As<int[]>().Get("length").As<int>();
+           
+            if (method.IsStatic is false)
+            {
+                methodArgumentsOffset--;
+            }
+            
+            frame.Set(nameof(StackFrame.Prev),PreviousStackFrame);
+            frame.Set(nameof(StackFrame.Method),method);
+            frame.Set(nameof(StackFrame.Line),0.As<object>());
+            frame.Set(nameof(StackFrame.EvaluationStack), CreateNewArray());
+            frame.Set(nameof(StackFrame.LocalVariables), CreateNewArray());
+            frame.Set(nameof(StackFrame.MethodArguments), methodArguments);
+            frame.Set(nameof(StackFrame.MethodArgumentsOfset), methodArgumentsOffset.As<object>() );
+            
+            CurrentStackFrame.Set(nameof(CurrentStackFrame.Prev), frame);
+            
+            
+            //if (method.IsGenericInstance)
+            //{
+            //    elementMethod = GlobalMetadata.Methods[method.ElementMethod];
+
+            //    method.Body       = elementMethod.Body;
+            //    method.Parameters = elementMethod.Parameters;
+            //    method.IsStatic   = elementMethod.IsStatic;
+            //}
             
             return;
         }
-        
-        
+
+
         if (InterpreterBridge_NewArr == instruction)
         {
             var length = evaluationStack.pop().As<int>();
 
             var array = CreateNewArray();
-        
+
             array.Set("length", length.AsObject());
 
             evaluationStack.push(array);
-            
+
             return;
         }
-        
+
         if (InterpreterBridge_NullReferenceException == instruction)
         {
             var message = evaluationStack.pop().As<string>();
 
             throw new NullReferenceException(message);
         }
-        
+
         if (InterpreterBridge_ArgumentNullException == instruction)
         {
             var message = evaluationStack.pop().As<string>();

@@ -310,29 +310,38 @@ static class MonoCecilToJsonModelMapper
                             operands.Add(i,10);
                             continue;
                         }
-                        
-                        if (methodReference.Name == "get_"+nameof(NativeJsHelper.GlobalMetadata))
-                        {
-                            operands.Add(i,11);
-                            continue;
-                        }
-                        
+
+                        throw new NotImplementedException();
                     }
                     
-                    operands.Add(i, methodReference.Name switch
+                    if (methodReference.Name == "get_"+nameof(NativeJsHelper.GlobalMetadata))
                     {
-                        nameof(NativeJsHelper.Set)                       => 0,
-                        nameof(NativeJsHelper.Get)                       => 1,
-                        nameof(NativeJsHelper.CreateNewPlainObject)      => 2,
-                        nameof(NativeJsHelper.CreateNewArray)            => 3,
-                        nameof(NativeJsHelper.Sum)                       => 4,
-                        "get_"+nameof(NativeJsHelper.PreviousStackFrame) => 5,
-                        
-                        
-                        _                                                => throw new NotImplementedException()
-                    });
+                        operands.Add(i,11);
+                        continue;
+                    }
                     
-                    continue;
+                    if (methodReference.Name == nameof(NativeJsHelper.push))
+                    {
+                        operands.Add(i,12);
+                        continue;
+                    }
+                    if (methodReference.Name == nameof(NativeJsHelper.pop))
+                    {
+                        operands.Add(i,13);
+                        continue;
+                    }
+                    if (methodReference.Name == nameof(NativeJsHelper.Dump))
+                    {
+                        operands.Add(i,14);
+                        continue;
+                    }
+                    
+                    if (methodReference.Name == "get_"+nameof(NativeJsHelper.CurrentStackFrame))
+                    {
+                        operands.Add(i,15);
+                        continue;
+                    }
+                    
                 }
                 
                 if (methodReference.DeclaringType.FullName == typeof(AsExtensions).FullName)

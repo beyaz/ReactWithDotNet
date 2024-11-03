@@ -53,7 +53,7 @@ class Deneme45
     public static string Abc5()
     {
         return Call1("T");
-        
+
         //console.log("started");
 
         //var l = 't';
@@ -116,6 +116,8 @@ class Deneme45
         return a+"ş";
     }
 
+    
+    
     //static string GenericCall1<A, B>(string p1)
     //{
     //    return p1;

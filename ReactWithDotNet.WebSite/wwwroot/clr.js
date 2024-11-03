@@ -15,6 +15,25 @@ const InterpreterBridge_ArgumentNullException = 2;
 const InterpreterBridge_Call = 3;
 
 
+function AssertNumber(value)
+{
+    if (typeof value === 'number')
+    {
+        return;
+    }
+
+    throw 'AssertNumber: ' + value;
+}
+
+function AssertBoolean(value)
+{
+    if (typeof value === 'boolean')
+    {
+        return;
+    }
+
+    throw 'AssertBoolean: ' + value;
+}
 
 
 const InterpreterBridge_Jump = 219;
@@ -64,6 +83,9 @@ function Interpret(thread)
     var methodDefinitionOrMaybeNumber;
     var methodDefinition;
     var fieldDefinition;
+    var fieldReference;
+    var value;
+    var instance;
     var fieldDefinitionOrMaybeNumber;
 
     var nextInstruction = instructions[currentStackFrame.Line];
@@ -266,12 +288,7 @@ function Interpret(thread)
                 break;
             case 39: // Call
 
-                //evaluationStack.push('functionName');
-                //evaluationStack.push(InterpreterBridge_Call);
-                //nextInstruction = InterpreterBridge_Jump;
-
                 method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];               
-                
 
                 if (method.IsGenericInstance)
                 {
@@ -282,21 +299,24 @@ function Interpret(thread)
                     method.IsStatic   = elementMethod.IsStatic;
                 }
 
+                // arrange opcodes
                 instructions = method.Body.Instructions;
                 operands     = method.Body.Operands;
 
-
-                evaluationStack = [];
-                methodArguments = currentStackFrame.EvaluationStack;
-                methodArgumentsOfset = methodArguments.length - method.Parameters.length;
-                localVariables  = [];
-
+                // arrange arguments
+                methodArguments      = evaluationStack;
+                methodArgumentsOfset = evaluationStack.length - method.Parameters.length;
                 if (method.IsStatic === false)
                 {
                       // 0: this
                     methodArgumentsOfset--;
                 }
-                
+
+                // arrange calculation stacks
+                evaluationStack = [];
+                localVariables  = [];
+                              
+                // connect frame
                 currentStackFrame = thread.LastFrame =
                 {
                     Prev: thread.LastFrame,
@@ -304,15 +324,16 @@ function Interpret(thread)
                     Method: method,
                     Line: 0,
 
-                    EvaluationStack: evaluationStack,
-                    LocalVariables: localVariables,
                     MethodArguments: methodArguments,
-                    MethodArgumentsOfset: methodArgumentsOfset
+                    MethodArgumentsOfset: methodArgumentsOfset,
+
+                    EvaluationStack: evaluationStack,
+                    LocalVariables: localVariables                    
                 };
 
-                nextInstruction = instructions[currentStackFrame.Line];
-               
+                nextInstruction = instructions[currentStackFrame.Line];               
                 break;
+
             case 40: // Calli
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
@@ -366,7 +387,12 @@ function Interpret(thread)
                 break;
 
             case 43: // Brfalse_S
-                if (evaluationStack[evaluationStack.length - 1])
+                
+                item = evaluationStack.pop();
+                
+                AssertBoolean(item);
+                
+                if (item)
                 {
                     nextInstruction = instructions[++currentStackFrame.Line];
                 }
@@ -375,8 +401,7 @@ function Interpret(thread)
                     currentStackFrame.Line = operands[currentStackFrame.Line];
 
                     nextInstruction = instructions[currentStackFrame.Line];
-                }
-                evaluationStack.pop();          
+                }                         
                 break;
 
             case 44: // Brtrue_S
@@ -457,10 +482,22 @@ function Interpret(thread)
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 55: // Br
-                nextInstruction = instructions[++currentStackFrame.Line];
+                currentStackFrame.Line = operands[currentStackFrame.Line];
+
+                nextInstruction = instructions[currentStackFrame.Line];
                 break;
             case 56: // Brfalse
-                nextInstruction = instructions[++currentStackFrame.Line];
+                v0 = evaluationStack.pop();
+                if (v0)
+                {
+                    nextInstruction = instructions[++currentStackFrame.Line];
+                }
+                else
+                {
+                    currentStackFrame.Line = operands[currentStackFrame.Line];
+
+                    nextInstruction = instructions[currentStackFrame.Line];
+                }
                 break;
             case 57: // Brtrue
                 nextInstruction = instructions[++currentStackFrame.Line];
@@ -571,6 +608,11 @@ function Interpret(thread)
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 88: // Sub
+                v1 = evaluationStack.pop();
+                v0 = evaluationStack.pop();
+
+                evaluationStack.push(v0 - v1);
+
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 89: // Mul
@@ -791,15 +833,18 @@ function Interpret(thread)
                 break;
             case 120: // Ldfld
             
-                fieldDefinitionOrMaybeNumber = operands[currentStackFrame.Line];
-                if (typeof fieldDefinitionOrMaybeNumber === 'number')
-                {
-                    fieldDefinition = operands[currentStackFrame.Line] = GlobalMetadata.Fields[fieldDefinitionOrMaybeNumber];
-                }
-                
-                /*instance*/v0 = evaluationStack.pop();
+                fieldReference = GlobalMetadata.Fields[operands[currentStackFrame.Line]];
+                                
+                instance = evaluationStack.pop();
 
-                evaluationStack.push(/*instance*/v0[fieldDefinition.Name]);
+                value = instance[fieldReference.Name]
+
+                if (typeof value === 'boolean')
+                {
+                    value = value ? 1 : 0;
+                }
+
+                evaluationStack.push(value);
 
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
@@ -1093,6 +1138,9 @@ function Interpret(thread)
 
                 v1 = evaluationStack.pop();
                 v0 = evaluationStack.pop();
+
+                AssertNumber(v1);
+                AssertNumber(v0);
 
                 evaluationStack.push(v0 === v1);
 
@@ -1439,6 +1487,44 @@ function Interpret(thread)
                     case 11: // GlobalMetadata
                         evaluationStack.push(GlobalMetadata);
                         break;
+
+                    case 12: // array.push
+                        /*item*/v1 = evaluationStack.pop();
+                        /*arrayInstance*/v0 = evaluationStack.pop();
+
+                        if ( /*arrayInstance*/v0 == null)
+                        {
+                            evaluationStack.push('array is null. when call push');
+                            evaluationStack.push(InterpreterBridge_NullReferenceException);
+                            nextInstruction = InterpreterBridge_Jump;
+                            break;
+                        }
+
+                        /*array*/v0.push(/*item*/v1);
+                        break;
+
+                    case 13: // array.pop
+                        /*arrayInstance*/v0 = evaluationStack.pop();
+
+                        if ( /*arrayInstance*/v0 == null)
+                        {
+                            evaluationStack.push('array is null. when call push');
+                            evaluationStack.push(InterpreterBridge_NullReferenceException);
+                            nextInstruction = InterpreterBridge_Jump;
+                            break;
+                        }
+
+                        evaluationStack.push(/*array*/v0.pop(/*item*/v1));
+                        break;
+
+                    case 14: // Dump
+                        console.log(evaluationStack.pop());
+                        break;
+
+                    case 15: // CurrentStackFrame
+                        evaluationStack.push(currentStackFrame);
+                        break;
+
                 }
             
                 nextInstruction = instructions[++currentStackFrame.Line];
