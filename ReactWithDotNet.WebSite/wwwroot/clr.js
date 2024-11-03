@@ -74,30 +74,21 @@ function TryInitialize_InterpreterBridge(metadataTable)
 
 function Interpret(thread)
 {
-    var currentStackFrame = thread.LastFrame;
+    let currentStackFrame = thread.LastFrame;
 
-    var instructions = currentStackFrame.Method.Body.Instructions;
-    var operands = currentStackFrame.Method.Body.Operands;
+    let instructions = currentStackFrame.Method.Body.Instructions;
+    let operands = currentStackFrame.Method.Body.Operands;
 
-    var evaluationStack = currentStackFrame.EvaluationStack;
-    var localVariables  = currentStackFrame.LocalVariables;
-    var methodArguments = currentStackFrame.MethodArguments;
-    var methodArgumentsOfset= currentStackFrame.MethodArgumentsOfset;
+    let evaluationStack = currentStackFrame.EvaluationStack;
+    let localVariables  = currentStackFrame.LocalVariables;
+    let methodArguments = currentStackFrame.MethodArguments;
+    let methodArgumentsOfset= currentStackFrame.MethodArgumentsOfset;
 
     let previousStackFrame, v0, v1, v2, v3, v4, evaluationStackIndex, item;
 
-    var method;
-    var elementMethod;
-    var methodDefinitionOrMaybeNumber;
-    var methodDefinition;
-    var fieldDefinition;
-    var fieldReference;
-    var value;
-    var instance;
-    var fieldDefinitionOrMaybeNumber;
-
+    let method;
+    
     var nextInstruction = instructions[currentStackFrame.Line];
-   
        
     while(true)
     {
@@ -304,7 +295,7 @@ function Interpret(thread)
 
                     if (method.IsGenericInstance)
                     {
-                        elementMethod = GlobalMetadata.Methods[method.ElementMethod];
+                        let elementMethod = GlobalMetadata.Methods[method.ElementMethod];
 
                         method.Body       = elementMethod.Body;
                         method.Parameters = elementMethod.Parameters;
@@ -756,7 +747,7 @@ function Interpret(thread)
                     methodArguments      = evaluationStack;
                     methodArgumentsOfset = evaluationStack.length - methodParameterCount - 1;
 
-                    instance = methodArguments[methodArgumentsOfset];
+                    let instance = methodArguments[methodArgumentsOfset];
 
                     AssertNotNull(instance.$type);
 
@@ -919,12 +910,22 @@ function Interpret(thread)
                 }
 
                 case 120: // Ldfld
-            
-                    fieldReference = GlobalMetadata.Fields[operands[currentStackFrame.Line]];
+                {
+                    let fieldReference = GlobalMetadata.Fields[operands[currentStackFrame.Line]];
                                 
-                    instance = evaluationStack.pop();
+                    let instance = evaluationStack.pop();
 
-                    value = instance[fieldReference.Name]
+                    if (instance == null)
+                    {
+                        // NullReferenceException
+                        evaluationStack.push(fieldReference.Name);
+                        evaluationStack.push(InterpreterBridge_NullReferenceException);
+                        nextInstruction = InterpreterBridge_Jump;
+                        break;
+                    }
+
+
+                    let value = instance[fieldReference.Name];
 
                     if (typeof value === 'boolean')
                     {
@@ -935,24 +936,31 @@ function Interpret(thread)
 
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }
                 case 121: // Ldflda
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
                 case 122: // Stfld
-                
-                    fieldDefinitionOrMaybeNumber = operands[currentStackFrame.Line];
-                    if (typeof fieldDefinitionOrMaybeNumber === 'number')
-                    {
-                        fieldDefinition = operands[currentStackFrame.Line] = GlobalMetadata.Fields[fieldDefinitionOrMaybeNumber];
-                    }
-                
-                    /*value*/v1    = evaluationStack.pop();
-                    /*instance*/v0 = evaluationStack.pop();
+                {    
+                    let fieldReference = GlobalMetadata.Fields[operands[currentStackFrame.Line]];
+                                    
+                    let value    = evaluationStack.pop();
+                    let instance = evaluationStack.pop();
 
-                    /*instance*/v0[fieldDefinition.Name] = /*value*/v1;
+                    if (instance == null)
+                    {
+                        // NullReferenceException
+                        evaluationStack.push(fieldReference.Name);
+                        evaluationStack.push(InterpreterBridge_NullReferenceException);
+                        nextInstruction = InterpreterBridge_Jump;
+                        break;
+                    }
+
+                    instance[fieldReference.Name] = value;
 
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }
                 case 123: // Ldsfld
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
@@ -1713,7 +1721,6 @@ function Interpret(thread)
                 throw exception;
             }
         }
-
     }
 }
 
