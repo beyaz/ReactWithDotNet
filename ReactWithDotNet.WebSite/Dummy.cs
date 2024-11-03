@@ -53,10 +53,18 @@ class Deneme45
     public static string Abc5()
     {
         var e = new Exception("a");
+
+        try
+        {
+            throw e;
+        }
+        catch (Exception exception)
+        {
+            return exception.Message;
+        }
         
         
-        
-        return e.Message;
+        //return e.Message;
 
         //console.log("started");
 

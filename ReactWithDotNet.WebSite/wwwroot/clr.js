@@ -104,8 +104,10 @@ function Interpret(thread)
         switch (nextInstruction)
         {
             case 0: // Nop: No operation
+            {
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
+            }
 
             case 1: // Break: Inform debugger of a break point
                 nextInstruction = instructions[++currentStackFrame.Line];
@@ -743,8 +745,8 @@ function Interpret(thread)
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
             case 110: // Callvirt
-                
-                method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
+            {
+                let method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
                 
                 let methodParameterCount = method.Parameters.length;
 
@@ -759,26 +761,27 @@ function Interpret(thread)
                 // find target method
 
                 let targetMethod = null;
+                {                    
+                    let instanceMethods = instance.$type.Methods;
+                    let instanceMethodsLength = instanceMethods.length;
 
-                let instanceMethods = instance.$type.Methods;
-                let instanceMethodsLength = instanceMethods.length;
-
-                for (let i = 0; i < instanceMethodsLength; i++)
-                {
-                    targetMethod = GlobalMetadata.Methods[instanceMethods[i]];
-
-                    if (targetMethod.Name !== method.Name)
+                    for (let i = 0; i < instanceMethodsLength; i++)
                     {
-                        continue;
-                    }
+                        targetMethod = GlobalMetadata.Methods[instanceMethods[i]];
+
+                        if (targetMethod.Name !== method.Name)
+                        {
+                            continue;
+                        }
                     
-                    if (IsTwoParameterListFullMatch(method, targetMethod) === false)
-                    {
-                        continue;
-                    }
+                        if (IsTwoParameterListFullMatch(method, targetMethod) === false)
+                        {
+                            continue;
+                        }
 
-                    method = targetMethod;
-                    break;
+                        method = targetMethod;
+                        break;
+                    }
                 }
 
                 if (method !== targetMethod)
@@ -811,6 +814,7 @@ function Interpret(thread)
                 };
                 nextInstruction = instructions[0];
                 break;
+            }   
             case 111: // Cpobj
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
@@ -1209,17 +1213,18 @@ function Interpret(thread)
                 break;
 
             case 192: // Ceq
+            {                
+                let value1 = evaluationStack.pop();
+                let value0 = evaluationStack.pop();
 
-                v1 = evaluationStack.pop();
-                v0 = evaluationStack.pop();
+                AssertNumber(value1);
+                AssertNumber(value0);
 
-                AssertNumber(v1);
-                AssertNumber(v0);
-
-                evaluationStack.push(v0 === v1);
+                evaluationStack.push(value0 === value1);
 
                 nextInstruction = instructions[++currentStackFrame.Line];
                 break;
+            }
 
             case 193: // Cgt
                         
