@@ -70,26 +70,107 @@ class Deneme45
         
         
     }
+
+    static string Ref2(ref sbyte value)
+    {
+        if (value == 0)
+        {
+            return "0";
+        }
+
+        return "1";
+    }
+    static string Ref2(ref byte value)
+    {
+        if (value == 0)
+        {
+            return "0";
+        }
+
+        return "1";
+    }
+    static string Ref2(ref short value)
+    {
+        if (value == 0)
+        {
+            return "0";
+        }
+
+        return "1";
+    }
+    static string Ref2(ref int value)
+    {
+        if (value == 0)
+        {
+            return "0";
+        }
+
+        return "1";
+    }
+    static string Ref2(ref float value)
+    {
+        if (value == 0)
+        {
+            return "0";
+        }
+
+        return "1";
+    }
+    static string Ref2(ref long value)
+    {
+        if (value == 0)
+        {
+            return "0";
+        }
+
+        return "1";
+    }
+    
     public static string Abc5()
     {
-        return "abc";
-        
-        var result = "0";
 
-        try
-        {
-            result = Call1("A");
-        }
-        catch (ArgumentException exception)
-        {
-            result = exception.Message;
-        }
+        DivideByZeroException
+        sbyte v0 = 1;
+        byte v1 = 1;
+        short v2 = 1;
+        int v3 = 1;
+        float v4 = 1;
+        long v5 = 1;
+
+        var response = Ref2(ref v0);
+        
+        response = Ref2(ref v1);
+        
+        response = Ref2(ref v2);
+        
+        response = Ref2(ref v3);
+        
+        response = Ref2(ref v4);
+        
+        response = Ref2(ref v5);
+        
+
+        return response;
+
+
+
+
+
+        //var result = "0";
+
+        //try
+        //{
+        //    result = Call1("A");
+        //}
+        //catch (ArgumentException exception)
+        //{
+        //    result = exception.Message;
+        //}
         //finally
         //{
         //    result = "ok";
         //}
 
-        return result;
 
 
 

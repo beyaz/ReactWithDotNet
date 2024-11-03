@@ -83,7 +83,9 @@ static class InterpreterBridge
         const int InterpreterBridge_NewArr = 0;
         const int InterpreterBridge_NullReferenceException = 1;
         const int InterpreterBridge_ArgumentNullException = 2;
-        const int InterpreterBridge_Call = 3;
+        const int InterpreterBridge_DivideByZeroException = 3;
+        const int InterpreterBridge_IndexOutOfRangeException = 4;
+        
 
         var previousStackFrame = PreviousStackFrame;
         var previousStackFrameLine = previousStackFrame.Get(nameof(StackFrame.Line)).As<int>();
@@ -92,51 +94,7 @@ static class InterpreterBridge
         
         var instruction = evaluationStack.pop().As<int>();
 
-        if (instruction == InterpreterBridge_Call)
-        {
-            var method = GlobalMetadata.Get(nameof(GlobalMetadata.Methods)).As<MethodDefinitionModel[]>()
-                [previousStackFrame
-                     .Get(nameof(previousStackFrame.Method))
-                     .Get(nameof(MethodDefinitionModel.Body))
-                     .Get(nameof(MethodDefinitionModel.Body.Operands))
-                     .Get(previousStackFrameLine).As<int>()];
-            
-
-            
-            
-            var frame = CreateNewPlainObject();
-
-            var methodArguments = evaluationStack;
-
-            var methodArgumentsOffset = methodArguments.Get("length").As<int>() - method.Get(nameof(method.Parameters)).As<int[]>().Get("length").As<int>();
-           
-            if (method.IsStatic is false)
-            {
-                methodArgumentsOffset--;
-            }
-            
-            frame.Set(nameof(StackFrame.Prev),PreviousStackFrame);
-            frame.Set(nameof(StackFrame.Method),method);
-            frame.Set(nameof(StackFrame.Line),0.As<object>());
-            frame.Set(nameof(StackFrame.EvaluationStack), CreateNewArray());
-            frame.Set(nameof(StackFrame.LocalVariables), CreateNewArray());
-            frame.Set(nameof(StackFrame.MethodArguments), methodArguments);
-            frame.Set(nameof(StackFrame.MethodArgumentsOffset), methodArgumentsOffset.As<object>() );
-            
-            CurrentStackFrame.Set(nameof(CurrentStackFrame.Prev), frame);
-            
-            
-            //if (method.IsGenericInstance)
-            //{
-            //    elementMethod = GlobalMetadata.Methods[method.ElementMethod];
-
-            //    method.Body       = elementMethod.Body;
-            //    method.Parameters = elementMethod.Parameters;
-            //    method.IsStatic   = elementMethod.IsStatic;
-            //}
-            
-            return;
-        }
+        
 
 
         if (InterpreterBridge_NewArr == instruction)
@@ -164,6 +122,20 @@ static class InterpreterBridge
             var message = evaluationStack.pop().As<string>();
 
             throw new ArgumentNullException(message);
+        }
+        
+        if (InterpreterBridge_DivideByZeroException == instruction)
+        {
+            var message = evaluationStack.pop().As<string>();
+
+            throw new DivideByZeroException(message);
+        }
+        
+        if (InterpreterBridge_IndexOutOfRangeException == instruction)
+        {
+            var message = evaluationStack.pop().As<string>();
+
+            throw new IndexOutOfRangeException(message);
         }
 
         throw new Exception();

@@ -1,3 +1,4 @@
+import eventationStack from "./ReactWithDotNet/debug/chunk-VJLMXLTX";
 
 const GlobalMetadata =
 {
@@ -12,7 +13,9 @@ const GlobalMetadata =
 const InterpreterBridge_NewArr = 0;
 const InterpreterBridge_NullReferenceException = 1;
 const InterpreterBridge_ArgumentNullException = 2;
-const InterpreterBridge_Call = 3;
+const InterpreterBridge_DivideByZeroException = 3;
+const InterpreterBridge_IndexOutOfRangeException = 4;
+
 
 
 function AssertNumber(value)
@@ -745,149 +748,348 @@ function Interpret(thread)
                 }
                     
                 case 69: // Ldind_I1
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 79;
                     break;
+                }
                 case 70: // Ldind_U1
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 79;
                     break;
+                }
                 case 71: // Ldind_I2
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 79;
                     break;
+                }
                 case 72: // Ldind_U2
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 79;
                     break;
+                }
                 case 73: // Ldind_I4
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 79;
                     break;
+                }
                 case 74: // Ldind_U4
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 79;
                     break;
+                }
                 case 75: // Ldind_I8
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 79;
                     break;
+                }
                 case 76: // Ldind_I
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 79;
                     break;
+                }
                 case 77: // Ldind_R4
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 79;
                     break;
+                }
                 case 78: // Ldind_R8
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 79;
+                    break;
+                }
+                case 79: // Ldind_Ref: Loads an object reference as a type O (object reference) onto the evaluation stack indirectly.
+                {
+                    let address = evaluationStack.pop();
+                    
+                    evaluationStack.push(address.Array[address.Index]);
+
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
-                case 79: // Ldind_Ref
-                    v0 = evaluationStack.pop();
-
-                    evaluationStack.push(v0.Array[v0.Index]);
-
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
-                case 80: // Stind_Ref
+                }
                 
-                    v1 = evaluationStack.pop();
-                    v0 = evaluationStack.pop();
+                case 80: // Stind_Ref: Stores a object reference value at a supplied address.
+                {
+                    let value   = evaluationStack.pop();
+                    let address = evaluationStack.pop();
 
-                    v0.Array[v0.Index] = v1;
+                    address.Array[address.Index] = value;
 
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }
+                    
                 case 81: // Stind_I1
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 80;
                     break;
+                }
                 case 82: // Stind_I2
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 80;
                     break;
+                }
                 case 83: // Stind_I4
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 80;
                     break;
+                }
                 case 84: // Stind_I8
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 80;
                     break;
+                }
                 case 85: // Stind_R4
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 80;
                     break;
+                }
                 case 86: // Stind_R8
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 80;
                     break;
+                }
+                
                 case 87: // Add
-                    v1 = evaluationStack.pop();
-                    v0 = evaluationStack.pop();
+                {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
 
-                    evaluationStack.push(v0 + v1);
-
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    {
+                        evaluationStack.push(value0 + value1);
+                        
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
+                
                 case 88: // Sub
-                    v1 = evaluationStack.pop();
-                    v0 = evaluationStack.pop();
+                {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
 
-                    evaluationStack.push(v0 - v1);
-
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    {
+                        evaluationStack.push(value0 - value1);
+                        
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
+                
                 case 89: // Mul
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
+
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    {
+                        evaluationStack.push(value0 * value1);
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
                 case 90: // Div
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
+
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    {
+                        if (value1 === 0)
+                        {
+                            evaluationStack.push(value0 + ' cannot divide by zero');
+                            evaluationStack.push(InterpreterBridge_DivideByZeroException);
+                            nextInstruction = InterpreterBridge_Jump;
+                            break;
+                        }
+                        
+                        evaluationStack.push(value0 / value1);
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
                 case 91: // Div_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 92: // Rem
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
+
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    {
+                        evaluationStack.push(value0 % value1);
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
+                
                 case 93: // Rem_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
+                
                 case 94: // And
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
+
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    {
+                        evaluationStack.push(value0 & value1);
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
 
                 case 95: // Or
+                {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
 
-                    v1 = evaluationStack.pop();
-                    v0 = evaluationStack.pop();
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    {
+                        evaluationStack.push(value0 | value1);
 
-                    evaluationStack.push(v0|v1);
-
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
 
                 case 96: // Xor
-                    v1 = evaluationStack.pop();
-                    v0 = evaluationStack.pop();
+                {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
 
-                    evaluationStack.push(v0 ^ v1);
-
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
-                case 97: // Shl
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
-                case 98: // Shr
-                    v1 = evaluationStack.pop();
-                    v0 = evaluationStack.pop();
-
-                    if (typeof v0 === 'number')
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
                     {
-                        evaluationStack.push(v0 >> v1);
+                        evaluationStack.push(value0 ^ value1);
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
                     }
-                    break;
+                    NotImplementedOpCode(); break;
+                }
+                
+                case 97: // Shl
+                {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
+
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    {
+                        evaluationStack.push(value0 << value1);
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
+                
+                case 98: // Shr
+                {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
+
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    {
+                        evaluationStack.push(value0 >> value1);
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
                 case 99: // Shr_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
+                
                 case 100: // Neg
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    let value = evaluationStack.pop();
+
+                    if (typeof value === 'number')
+                    {
+                        evaluationStack.push(value * -1);
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
+                
                 case 101: // Not
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    let value = evaluationStack.pop();
+
+                    if (typeof value === 'number')
+                    {
+                        evaluationStack.push(~value);
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
+                
                 case 102: // Conv_I1
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    let value = evaluationStack.pop();
+    
+                    if (typeof value === 'number')
+                    {
+                        if (value > /*Int32.MaxValue*/2147483647 || value < /*Int32.MinValue*/ -2147483648)
+                        {
+                            value = 0;
+                        }
+                        else
+                        {
+                            value = /*Number_To_Int8*/~~(value << 24) >> 24;
+                        }
+                        
+                        evaluationStack.push(value);
+                        
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
                 case 103: // Conv_I2
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    let value = evaluationStack.pop();
+
+                    if (typeof value === 'number')
+                    {
+                        if (value > /*Int32.MaxValue*/2147483647 || value < /*Int32.MinValue*/ -2147483648)
+                        {
+                            value = 0;
+                        }
+                        else
+                        {
+                            value = /*Number_To_Int16*/~~(value << 16) >> 16;
+                        }
+
+                        evaluationStack.push(value);
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
 
                 case 104: // Conv_I4
                 {
@@ -917,13 +1119,14 @@ function Interpret(thread)
                                 value = Math.ceil(value);
                             }
                         }
+
+                        evaluationStack.push(value);
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
                     }
 
-                    evaluationStack.push(value);
-                    
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    
-                    break;
+                    NotImplementedOpCode(); break;                   
                 }
                 
                 case 105: // Conv_I8
@@ -932,23 +1135,26 @@ function Interpret(thread)
 
                     evaluationStack.push(Long.fromNumber(value));
 
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    
+                    nextInstruction = instructions[++currentStackFrame.Line];                    
                     break;
                 }
                 
                 case 106: // Conv_R4
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 107: // Conv_R8
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 108: // Conv_U4
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 109: // Conv_U8
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 110: // Callvirt
                 {
                     let method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
@@ -994,7 +1200,6 @@ function Interpret(thread)
                         throw 'MissingMethodException' + method.Name;
                     }
 
-
                     // arrange opcodes
                     instructions = method.Body.Instructions;
                     operands     = method.Body.Operands;
@@ -1021,31 +1226,36 @@ function Interpret(thread)
                     break;
                 }   
                 case 111: // Cpobj
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 112: // Ldobj
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 113: // Ldstr
+                {
                     evaluationStack.push(operands[currentStackFrame.Line]);
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
-                case 114: // Newobj
+                }
                 
-                    method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
+                case 114: // Newobj
+                {
+                    let method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
 
-                    declaringType = GlobalMetadata.Types[method.DeclaringType];
+                    let declaringType = GlobalMetadata.Types[method.DeclaringType];
 
-                    var newObj = {};
+                    let newObj = {};
                     newObj['$type'] = declaringType;
 
                     if (declaringType.IsGenericInstance)
                     {
-                        elementType = GlobalMetadata.Types[declaringType.ElementType];
+                        let elementType = GlobalMetadata.Types[declaringType.ElementType];
 
                         for (let i = 0; i < elementType.Methods.length; i++)
                         {
-                            var methodTemp = GlobalMetadata.Methods[elementType.Methods[i]];
+                            let methodTemp = GlobalMetadata.Methods[elementType.Methods[i]];
 
                             if (methodTemp.IsDefinition)
                             {
@@ -1054,20 +1264,20 @@ function Interpret(thread)
                                     method.Body       = methodTemp.Body;
                                     method.Parameters = methodTemp.Parameters;
                                     method.IsStatic   = methodTemp.IsStatic;
-                                } 
+                                }
                             }
                         }
                     }
 
-                    var tempArray = [];
+                    let tempArray = [];
 
-                    for (var i = 0; i < method.Parameters.length; i++)
+                    for (let i = 0; i < method.Parameters.length; i++)
                     {
                         tempArray.push(evaluationStack.pop());
                     }
 
                     tempArray.push(newObj);
-                    tempArray.push(newObj);                
+                    tempArray.push(newObj);
 
                     while(tempArray.length > 0)
                     {
@@ -1082,7 +1292,7 @@ function Interpret(thread)
                     methodArgumentsOffset = methodArguments.length - method.Parameters.length;
                     methodArgumentsOffset--;
                     localVariables  = [];
-                
+
                     currentStackFrame = thread.LastFrame =
                     {
                         Prev: thread.LastFrame,
@@ -1099,19 +1309,24 @@ function Interpret(thread)
                     nextInstruction = instructions[0];
 
                     break;
+                }
+                    
                 case 115: // Castclass
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 116: // Isinst
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 117: // Conv_R_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 118: // Unbox
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
-
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 119: // Throw
                 {
                     ++currentStackFrame.Line;
@@ -1148,8 +1363,18 @@ function Interpret(thread)
                     break;
                 }
                 case 121: // Ldflda
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    let fieldReference = GlobalMetadata.Fields[operands[currentStackFrame.Line]];
+                    
+                    let instance = evaluationStack.pop();
+                    
+                    eventationStack.push({
+                        Array: instance,
+                        Index: fieldReference.Name
+                    });
+                    
                     break;
+                }
                 case 122: // Stfld
                 {    
                     let fieldReference = GlobalMetadata.Fields[operands[currentStackFrame.Line]];
@@ -1172,256 +1397,364 @@ function Interpret(thread)
                     break;
                 }
                 case 123: // Ldsfld
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 124: // Ldsflda
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 125: // Stsfld
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 126: // Stobj
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 127: // Conv_Ovf_I1_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 128: // Conv_Ovf_I2_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 129: // Conv_Ovf_I4_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 130: // Conv_Ovf_I8_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 131: // Conv_Ovf_U1_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 132: // Conv_Ovf_U2_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 133: // Conv_Ovf_U4_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 134: // Conv_Ovf_U8_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 135: // Conv_Ovf_I_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 136: // Conv_Ovf_U_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 137: // Box
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 138: // Newarr
+                {
                     evaluationStack.push(InterpreterBridge_NewArr);
                     nextInstruction = InterpreterBridge_Jump;
                     break;
+                }
                 case 139: // Ldlen
-                
-                    /*array*/v0 = evaluationStack.pop();
+                {
+                    let array = evaluationStack.pop();
 
-                    evaluationStack.push(/*array*/v0.length);
+                    evaluationStack.push(array.length);
 
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }
+                    
                 case 140: // Ldelema
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
                 case 141: // Ldelem_I1
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 151;
                     break;
+                }
                 case 142: // Ldelem_U1
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 151;
                     break;
+                }
                 case 143: // Ldelem_I2
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 151;
                     break;
+                }
                 case 144: // Ldelem_U2
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 151;
                     break;
+                }
                 case 145: // Ldelem_I4
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 151;
                     break;
+                }
                 case 146: // Ldelem_U4
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 151;
                     break;
+                }
                 case 147: // Ldelem_I8
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 151;
                     break;
+                }
                 case 148: // Ldelem_I
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 151;
                     break;
+                }
                 case 149: // Ldelem_R4
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 151;
                     break;
+                }
                 case 150: // Ldelem_R8
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 151;
                     break;
+                }
                 case 151: // Ldelem_Ref
-              
-                    /*index*/v1 = evaluationStack.pop();
-                    /*array*/v0 = evaluationStack.pop();
+                {
+                    let index = evaluationStack.pop();
+                    let array = evaluationStack.pop();
 
-                    if (/*array*/v0.length <= /*index*/v1 || /*index*/v1 < 0)
+                    if ( array == null)
                     {
-                        IndexOutOfRangeException(/*index*/v1);
+                        evaluationStack.push('@array is null when load index');
+                        evaluationStack.push(InterpreterBridge_NullReferenceException);
+                        nextInstruction = InterpreterBridge_Jump;
+                        break;
                     }
-                                
-                    // todo check index
+                    
+                    if (array.length <= index || index < 0)
+                    {
+                        evaluationStack.push('@array.length:' + array.length + ' @index: ' + index);
+                        evaluationStack.push(InterpreterBridge_IndexOutOfRangeException);
+                        nextInstruction = InterpreterBridge_Jump;
+                        break;
+                    }
 
-                    evaluationStack.push(/*array*/v0[/*index*/v1]);
+                    evaluationStack.push(array[index]);
 
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }
+                    
                 case 152: // Stelem_I
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 159;
                     break;
+                }
                 case 153: // Stelem_I1
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 159;
                     break;
+                }
                 case 154: // Stelem_I2
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 159;
                     break;
+                }
                 case 155: // Stelem_I4
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 159;
                     break;
+                }
                 case 156: // Stelem_I8
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 159;
                     break;
+                }
                 case 157: // Stelem_R4
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 159;
                     break;
+                }
                 case 158: // Stelem_R8
-                    nextInstruction = instructions[++currentStackFrame.Line];
+                {
+                    instructions[currentStackFrame.Line] = nextInstruction = 159;
                     break;
+                }
                 case 159: // Stelem_Ref
-                    /*value*/v2 = evaluationStack.pop();
-                    /*index*/v1 = evaluationStack.pop();
-                    /*array*/v0 = evaluationStack.pop();
+                {
+                    let value = evaluationStack.pop();
+                    let index = evaluationStack.pop();
+                    let array = evaluationStack.pop();
 
-                    // todo: check array type
-                    // todo check index
+                    if ( array == null)
+                    {
+                        evaluationStack.push('@array is null when set index');
+                        evaluationStack.push(InterpreterBridge_NullReferenceException);
+                        nextInstruction = InterpreterBridge_Jump;
+                        break;
+                    }
 
-                    /*array*/v0[/*index*/v1] = /*value*/v2;
+                    if (array.length <= index || index < 0)
+                    {
+                        evaluationStack.push('@array.length:' + array.length + ' @index: ' + index);
+                        evaluationStack.push(InterpreterBridge_IndexOutOfRangeException);
+                        nextInstruction = InterpreterBridge_Jump;
+                        break;
+                    }
+
+                    array[index] = value;
 
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }
 
                 case 160: // Ldelem_Any
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 161: // Stelem_Any
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 162: // Unbox_Any
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 163: // Conv_Ovf_I1
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 164: // Conv_Ovf_U1
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 165: // Conv_Ovf_I2
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 166: // Conv_Ovf_U2
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 167: // Conv_Ovf_I4
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 168: // Conv_Ovf_U4
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 169: // Conv_Ovf_I8
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 170: // Conv_Ovf_U8
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 171: // Refanyval
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 172: // Ckfinite
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 173: // Mkrefany
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 174: // Ldtoken
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 175: // Conv_U2
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 176: // Conv_U1
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 177: // Conv_I
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 178: // Conv_Ovf_I
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 179: // Conv_Ovf_U
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 180: // Add_Ovf
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 181: // Add_Ovf_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 182: // Mul_Ovf
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 183: // Mul_Ovf_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 184: // Sub_Ovf
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 185: // Sub_Ovf_Un
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 186: // Endfinally
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 187: // Leave
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 188: // Leave_S
                 {
@@ -1433,33 +1766,50 @@ function Interpret(thread)
                 }  
 
                 case 189: // Stind_I
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 190: // Conv_U
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 191: // Arglist
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                {
+                    NotImplementedOpCode(); break;
+                }
 
                 case 192: // Ceq
-                {                
+                {
                     let value1 = evaluationStack.pop();
                     let value0 = evaluationStack.pop();
 
-                    AssertNumber(value1);
-                    AssertNumber(value0);
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    {
+                        evaluationStack.push(value0 === value1 ? 1 : 0);
 
-                    evaluationStack.push(value0 === value1);
-
-                    nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
                 }
 
                 case 193: // Cgt
-                        
+                {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
+
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    {
+                        evaluationStack.push(value0 === value1 ? 1 : 0);
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    NotImplementedOpCode(); break;
+                }
+                
                     v1 = evaluationStack.pop();
                     v0 = evaluationStack.pop();
 
