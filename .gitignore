@@ -358,3 +358,4 @@ MigrationBackup/
 /ReactWithDotNet.WebSite/wwwroot/dist.debug
 /ReactWithDotNet.WebSite/wwwroot/dist.release
 *.bkp
+.idea
