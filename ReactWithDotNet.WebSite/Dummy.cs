@@ -72,25 +72,22 @@ class Deneme45
     }
     public static string Abc5()
     {
-        var e = new Exception("a");
-
-        var res = "F";
+        var result = "0";
 
         try
         {
-             throw e;
-            //res = "f";
+            result = Call1("A");
         }
         catch (ArgumentException exception)
         {
-            return exception.Message;
+            result = exception.Message;
         }
         //finally
         //{
-        //    res = "X";
+        //    result = "ok";
         //}
 
-        return res;
+        return result;
 
 
 
