@@ -137,7 +137,7 @@ sealed class MainLayout : PureComponent, IPageLayout
                 // optimized for english characters (40kb -> 6kb)
                 new link
                 {
-                    rel         = "preload",
+                    // rel         = "preload",
                     href        = $"{fonts}PlusJakartaSans-ExtraBold-subset.woff2",
                     type        = "font/woff2",
                     crossOrigin = "anonymous",
