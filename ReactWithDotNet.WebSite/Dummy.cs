@@ -129,7 +129,6 @@ class Deneme45
     public static string Abc5()
     {
 
-        DivideByZeroException
         sbyte v0 = 1;
         byte v1 = 1;
         short v2 = 1;

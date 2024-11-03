@@ -1,4 +1,3 @@
-import eventationStack from "./ReactWithDotNet/debug/chunk-VJLMXLTX";
 
 const GlobalMetadata =
 {
@@ -16,27 +15,6 @@ const InterpreterBridge_ArgumentNullException = 2;
 const InterpreterBridge_DivideByZeroException = 3;
 const InterpreterBridge_IndexOutOfRangeException = 4;
 
-
-
-function AssertNumber(value)
-{
-    if (typeof value === 'number')
-    {
-        return;
-    }
-
-    throw 'AssertNumber: ' + value;
-}
-
-function AssertBoolean(value)
-{
-    if (typeof value === 'boolean')
-    {
-        return;
-    }
-
-    throw 'AssertBoolean: ' + value;
-}
 
 function AssertNotNull(value)
 {
@@ -91,10 +69,6 @@ function Interpret(thread)
     
     let methodArguments       = currentStackFrame.MethodArguments;
     let methodArgumentsOffset = currentStackFrame.MethodArgumentsOffset;
-
-    let previousStackFrame, v0, v1, v2, v3, v4;
-
-    let method;
 
     let nextInstruction = instructions[currentStackFrame.Line];
 
@@ -441,7 +415,7 @@ function Interpret(thread)
                         return;
                     }
 
-                    previousStackFrame = currentStackFrame;
+                    let previousStackFrame = currentStackFrame;
 
                     thread.LastFrame = currentStackFrame = currentStackFrame.Prev;
 
@@ -1367,8 +1341,8 @@ function Interpret(thread)
                     let fieldReference = GlobalMetadata.Fields[operands[currentStackFrame.Line]];
                     
                     let instance = evaluationStack.pop();
-                    
-                    eventationStack.push({
+
+                    evaluationStack.push({
                         Array: instance,
                         Index: fieldReference.Name
                     });
@@ -1792,6 +1766,14 @@ function Interpret(thread)
                         nextInstruction = instructions[++currentStackFrame.Line];
                         break;
                     }
+                    if (Long.isLong(value0) && Long.isLong(value1))
+                    {
+                        evaluationStack.push(value0.compare( value1 ) === 0 ? 1 : 0);
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    
                     NotImplementedOpCode(); break;
                 }
 
@@ -2005,47 +1987,65 @@ function Interpret(thread)
                     {
                         // set
                         case 0:
-                        /*value*/v2    = evaluationStack.pop();
-                        /*key*/v1      = evaluationStack.pop();
-                        /*instance*/v0 = evaluationStack.pop();
-                        /*instance*/v0[/*key*/v1] = /*value*/v2;
-                        break;
+                        {
+                            let value    = evaluationStack.pop();
+                            let key      = evaluationStack.pop();
+                            let instance = evaluationStack.pop();
+                            
+                            instance[key] = value;
+                            
+                            break;
+                        }
 
                         // get
                         case 1:
-                        /*key*/v1      = evaluationStack.pop();
-                        /*instance*/v0 = evaluationStack.pop();
-                        evaluationStack.push(/*instance*/v0[/*key*/v1]);                     
-                        break;
+                        {
+                            let key      = evaluationStack.pop();
+                            let instance = evaluationStack.pop();
+                            
+                            evaluationStack.push( instance[key] );
+                            
+                            break;
+                        }
 
                         // CreateNewPlainObject
                         case 2:
-                        evaluationStack.push({});
-                        break;
+                        {
+                            evaluationStack.push({});
+                            break;
+                        }
 
                         // CreateNewArray
                         case 3:
-                        evaluationStack.push([]);
-                        break;
+                        {
+                            evaluationStack.push([]);
+                            break;
+                        }
 
                         // Sum
                         case 4:
-                        /*b*/v1 = evaluationStack.pop();
-                        /*a*/v0 = evaluationStack.pop();
-                        evaluationStack.push(/*a*/v0 + /*b*/v1);
-                        break;
+                        {
+                            let value1 = evaluationStack.pop();
+                            let value0 = evaluationStack.pop();
+                            
+                            evaluationStack.push( value0 + value1 );
+                            
+                            break;
+                        }
 
                         case 5: // PreviousStackFrame
-                        evaluationStack.push(currentStackFrame.Prev);
-                        break;
+                        {
+                            evaluationStack.push(currentStackFrame.Prev);
+                            break;
+                        }
 
                         // instance.Call('functionName')
                         case 6:
+                        {
+                            let functionName = evaluationStack.pop();
+                            let instance     = evaluationStack.pop();
 
-                            /*functionName*/v1 = evaluationStack.pop();
-                            /*instance*/v0     = evaluationStack.pop();
-
-                            if ( /*functionName*/v1 == null)
+                            if ( functionName == null)
                             {
                                 evaluationStack.push('functionName');
                                 evaluationStack.push(InterpreterBridge_ArgumentNullException);
@@ -2053,25 +2053,27 @@ function Interpret(thread)
                                 break;
                             }
 
-                            if ( /*instance*/v0 == null)
+                            if ( instance == null)
                             {
-                                evaluationStack.push(/*functionName*/v1 + ' not found.');
+                                evaluationStack.push(functionName + ' not found.');
                                 evaluationStack.push(InterpreterBridge_NullReferenceException);
                                 nextInstruction = InterpreterBridge_Jump;
                                 break;
                             }
-                            evaluationStack.push( /*instance*/v0[/*functionName*/v1]());
+                            evaluationStack.push( instance[functionName]());
 
-                        break;
+                            break;
+                        }
+                            
 
                         // instance.Call('functionName', parameter1)
                         case 7:
+                        {
+                            let parameter1   = evaluationStack.pop();
+                            let functionName = evaluationStack.pop();
+                            let instance     = evaluationStack.pop();
 
-                            /*parameter1*/v2   = evaluationStack.pop();
-                            /*functionName*/v1 = evaluationStack.pop();
-                            /*instance*/v0     = evaluationStack.pop();
-
-                            if ( /*functionName*/v1 == null)
+                            if ( functionName == null)
                             {
                                 evaluationStack.push('functionName');
                                 evaluationStack.push(InterpreterBridge_ArgumentNullException);
@@ -2079,26 +2081,28 @@ function Interpret(thread)
                                 break;
                             }
 
-                            if ( /*instance*/v0 == null)
+                            if ( instance == null)
                             {
-                                evaluationStack.push(/*functionName*/v1 + ' not found.');
+                                evaluationStack.push(functionName + ' not found.');
                                 evaluationStack.push(InterpreterBridge_NullReferenceException);
                                 nextInstruction = InterpreterBridge_Jump;
                                 break;
                             }
-                            evaluationStack.push( /*instance*/v0[/*functionName*/v1](/*parameter1*/v2));
+                            evaluationStack.push( instance[functionName]( parameter1 ));
 
-                        break;
+                            break;
+                        }
+                            
 
                         // instance.Call('functionName', parameter1, parameter2)
                         case 8:
+                        {
+                            let parameter2   = evaluationStack.pop();
+                            let parameter1   = evaluationStack.pop();
+                            let functionName = evaluationStack.pop();
+                            let instance     = evaluationStack.pop();
 
-                            /*parameter2*/v3   = evaluationStack.pop();
-                            /*parameter1*/v2   = evaluationStack.pop();
-                            /*functionName*/v1 = evaluationStack.pop();
-                            /*instance*/v0     = evaluationStack.pop();
-
-                            if ( /*functionName*/v1 == null)
+                            if ( functionName == null)
                             {
                                 evaluationStack.push('functionName');
                                 evaluationStack.push(InterpreterBridge_ArgumentNullException);
@@ -2106,27 +2110,29 @@ function Interpret(thread)
                                 break;
                             }
 
-                            if ( /*instance*/v0 == null)
+                            if ( instance == null)
                             {
-                                evaluationStack.push(/*functionName*/v1 + ' not found.');
+                                evaluationStack.push(functionName + ' not found.');
                                 evaluationStack.push(InterpreterBridge_NullReferenceException);
                                 nextInstruction = InterpreterBridge_Jump;
                                 break;
                             }
-                            evaluationStack.push( /*instance*/v0[/*functionName*/v1](/*parameter1*/v2, /*parameter1*/v3));
+                            evaluationStack.push( instance[functionName]( parameter1, parameter2));
 
-                        break;
+                            break;
+                        }
+                            
 
                         // instance.Call('functionName', parameter1, parameter2, parameter3)
                         case 9:
+                        {
+                            let parameter3   = evaluationStack.pop();
+                            let parameter2   = evaluationStack.pop();
+                            let parameter1   = evaluationStack.pop();
+                            let functionName = evaluationStack.pop();
+                            let instance     = evaluationStack.pop();
 
-                            /*parameter3*/v4   = evaluationStack.pop();
-                            /*parameter2*/v3   = evaluationStack.pop();
-                            /*parameter1*/v2   = evaluationStack.pop();
-                            /*functionName*/v1 = evaluationStack.pop();
-                            /*instance*/v0     = evaluationStack.pop();
-
-                            if ( /*functionName*/v1 == null)
+                            if ( functionName == null)
                             {
                                 evaluationStack.push('functionName');
                                 evaluationStack.push(InterpreterBridge_ArgumentNullException);
@@ -2134,25 +2140,27 @@ function Interpret(thread)
                                 break;
                             }
 
-                            if ( /*instance*/v0 == null)
+                            if ( instance == null)
                             {
-                                evaluationStack.push(/*functionName*/v1 + ' not found.');
+                                evaluationStack.push(functionName + ' not found.');
                                 evaluationStack.push(InterpreterBridge_NullReferenceException);
                                 nextInstruction = InterpreterBridge_Jump;
                                 break;
                             }
-                            evaluationStack.push( /*instance*/v0[/*functionName*/v1](/*parameter1*/v2, /*parameter1*/v3, /*parameter3*/v4));
+                            evaluationStack.push( instance[functionName]( parameter1, parameter2, parameter3));
 
-                        break;
+                            break;
+                        }
+                            
 
                         // instance.Call('functionName', parameters)
                         case 10:
+                        {
+                            let parameters   = evaluationStack.pop();
+                            let functionName = evaluationStack.pop();
+                            let instance     = evaluationStack.pop();
 
-                            /*parameters*/v2   = evaluationStack.pop();
-                            /*functionName*/v1 = evaluationStack.pop();
-                            /*instance*/v0     = evaluationStack.pop();
-
-                            if ( /*functionName*/v1 == null)
+                            if ( functionName == null)
                             {
                                 evaluationStack.push('functionName');
                                 evaluationStack.push(InterpreterBridge_ArgumentNullException);
@@ -2160,26 +2168,31 @@ function Interpret(thread)
                                 break;
                             }
 
-                            if ( /*instance*/v0 == null)
+                            if ( instance == null)
                             {
-                                evaluationStack.push(/*functionName*/v1 + ' not found.');
+                                evaluationStack.push(functionName + ' not found.');
                                 evaluationStack.push(InterpreterBridge_NullReferenceException);
                                 nextInstruction = InterpreterBridge_Jump;
                                 break;
                             }
-                            evaluationStack.push( /*instance*/v0[/*functionName*/v1].apply(/*instance*/v0, /*parameters*/v2));
+                            evaluationStack.push( instance[functionName].apply(instance, parameters));
 
-                        break;
+                            break;
+                        }
+                            
 
                         case 11: // GlobalMetadata
+                        {
                             evaluationStack.push(GlobalMetadata);
                             break;
+                        }
 
                         case 12: // array.push
-                            /*item*/v1 = evaluationStack.pop();
-                            /*arrayInstance*/v0 = evaluationStack.pop();
+                        {
+                            let item = evaluationStack.pop();
+                            let arrayInstance = evaluationStack.pop();
 
-                            if ( /*arrayInstance*/v0 == null)
+                            if ( arrayInstance == null)
                             {
                                 evaluationStack.push('array is null. when call push');
                                 evaluationStack.push(InterpreterBridge_NullReferenceException);
@@ -2187,8 +2200,9 @@ function Interpret(thread)
                                 break;
                             }
 
-                            /*array*/v0.push(/*item*/v1);
+                            arrayInstance.push(item);
                             break;
+                        }
 
                         case 13: // array.pop
                         {
@@ -2206,13 +2220,16 @@ function Interpret(thread)
                             break;
                         }    
                         case 14: // Dump
+                        {
                             console.log(evaluationStack.pop());
                             break;
+                        }
 
                         case 15: // CurrentStackFrame
+                        {
                             evaluationStack.push(currentStackFrame);
                             break;
-
+                        }
                     }
             
                     nextInstruction = instructions[++currentStackFrame.Line];
@@ -2257,7 +2274,7 @@ function Interpret(thread)
                         }
 
                         // arrange stack frame
-                        previousStackFrame = currentStackFrame;
+                        let previousStackFrame = currentStackFrame;
 
                         thread.LastFrame = currentStackFrame = currentStackFrame.Prev;
 

@@ -429,7 +429,7 @@ static class MonoCecilToJsonModelMapper
                 continue;
             }
             
-            if (operand is sbyte || operand is byte || operand is short || operand is  int)
+            if (operand is sbyte || operand is byte || operand is short || operand is  int || operand is  float)
             {
                 operands.Add(i, operand);
                 continue;
