@@ -56,10 +56,10 @@ static class Extensions
     {
         const string jsCode =
             """
-            var frame = window.frames[0];
+            var frame = document.getElementById('ComponentPreview')
             if(frame)
             {
-              var reactWithDotNet = frame.ReactWithDotNet;
+              var reactWithDotNet = frame.contentWindow.ReactWithDotNet;
               if(reactWithDotNet)
               {
                 reactWithDotNet.DispatchEvent('RefreshComponentPreview', []);
