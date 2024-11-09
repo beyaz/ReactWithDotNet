@@ -425,11 +425,6 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
         var hoverEffect = new Fragment
         {
-            new FlexRowCentered(PositionFixed, BorderRadius(4), Background("#4597F7"), Color("#DECBFC"), Id("ReactWithDotNetCurrentHighlightedElementSizeIndicator"))
-            {
-                    
-            },
-            
             new style
             {
                 """

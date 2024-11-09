@@ -11,6 +11,13 @@ class SampleComponent: Component
       // s t a r t 
       new div(new Style { border = "0px solid rgb(229, 231, 235)", boxSizing = "border-box", paddingBottom = "96px", paddingTop = "96px" })
       {
+          
+          new FlexRowCentered(Background(Yellow400), Size(200))
+          {
+              PaddingLeft(150),
+              new div{ Size(40),  Background(Gray400) }
+          },
+          
           new h1
           {
               text = "A simple CMS for your Next.js app",

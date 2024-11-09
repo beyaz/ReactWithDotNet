@@ -16,9 +16,23 @@ public sealed class EmbeddedJavaScriptMiddleware
     {
         if (context.Request.Path.Value?.EndsWith(".js", StringComparison.OrdinalIgnoreCase) is true)
         {
+            
             var assembly = Assembly.GetExecutingAssembly();
 
             var resourceName = context.Request.Path.Value.RemoveFromStart("/");
+            
+            // for my development
+            if (Environment.UserName == "beyaz" && resourceName =="ReactWithDotNet.UIDesigner.Resources.ComponentIndicator.js")
+            {
+                await using (var fileStream =File.OpenRead(@"C:\github\ReactWithDotNet\ReactWithDotNet\UIDesigner\Resources\ComponentIndicator.js"))
+                {
+                    context.Response.ContentType = "application/javascript";
+
+                    await fileStream.CopyToAsync(context.Response.Body);
+
+                    return;
+                }
+            }
 
             await using (var stream = assembly.GetManifestResourceStream(resourceName))
             {
