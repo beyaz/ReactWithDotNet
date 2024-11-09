@@ -11,6 +11,8 @@ public static class ReactWithDotNetIntegration
 {
     public static void ConfigureReactWithDotNet(this WebApplication app)
     {
+        app.UseMiddleware<EmbeddedJavaScriptMiddleware>();
+        
         var map = typeof(Page)
             .GetFields(BindingFlags.Static | BindingFlags.Public)
             .Where(f => f.FieldType == typeof(PageRouteInfo))
