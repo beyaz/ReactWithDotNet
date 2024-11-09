@@ -4,8 +4,14 @@
         || targetElement === leftPaddingIndicatorLineElement 
         || targetElement === leftPaddingIndicatorBoxElement
         
+        || targetElement === rightPaddingIndicatorLineElement
+        || targetElement === rightPaddingIndicatorBoxElement
+
         || targetElement === topPaddingIndicatorLineElement
         || targetElement === topPaddingIndicatorBoxElement
+
+        || targetElement === bottomPaddingIndicatorLineElement
+        || targetElement === bottomPaddingIndicatorBoxElement
     )
     {
         return false;
@@ -131,8 +137,16 @@ let sizeIndicatorBoxElement = null;
 let leftPaddingIndicatorLineElement = null;
 let leftPaddingIndicatorBoxElement = null;
 
+let rightPaddingIndicatorLineElement = null;
+let rightPaddingIndicatorBoxElement = null;
+
 let topPaddingIndicatorLineElement = null;
 let topPaddingIndicatorBoxElement = null;
+
+let bottomPaddingIndicatorLineElement = null;
+let bottomPaddingIndicatorBoxElement = null;
+
+
 
 function applyHoverEffect(targetElement)
 {
@@ -150,21 +164,26 @@ function applyHoverEffect(targetElement)
 
         sizeIndicatorBoxElement.style.position = 'fixed';
         sizeIndicatorBoxElement.style.zIndex = '999999';
-        sizeIndicatorBoxElement.style.borderRadius = '4px';
-        sizeIndicatorBoxElement.style.padding = '3px';        
+        sizeIndicatorBoxElement.style.borderRadius = '3px';      
         sizeIndicatorBoxElement.style.background = '#4597F7';
         sizeIndicatorBoxElement.style.color = '#DECBFC';
-        sizeIndicatorBoxElement.style.fontSize = '10px';
-        sizeIndicatorBoxElement.style.lineHeight = '10px';
-        
-        sizeIndicatorBoxElement.style.left = rect.left + rect.width / 2 - 50 + 'px';
-        sizeIndicatorBoxElement.style.top = rect.bottom + 4 + 'px';
+        sizeIndicatorBoxElement.style.fontFamily = 'monospace';
         
         sizeIndicatorBoxElement.innerHTML =
-            "<div style = 'display: flex; flex-direction: column; line-height: 14px; padding:4px;  font-size:12px;' >" +
-            "<div style='display: flex; gap: 4px;'><span>W</span>" + WrapInSpanIfHasValue(GetStyleValue(targetElement, 'width')) + NumberAsPixel(rect.width) + "</div>" +
-            "<div style='display: flex; gap: 4px;'><span>H</span>" + WrapInSpanIfHasValue(GetStyleValue(targetElement, 'height')) + NumberAsPixel(rect.height) + "</div>" +
+            "<div style = 'display: flex; flex-direction: column; line-height: 12px; padding:3px;  font-size:11px;' >" +
+            "<div style='display: flex; gap: 4px;'><span>W</span>" + WrapInSpanIfHasValue(GetStyleValue(targetElement, 'width')) + NumberToString(rect.width) + "</div>" +
+            "<div style='display: flex; gap: 4px;'><span>H</span>" + WrapInSpanIfHasValue(GetStyleValue(targetElement, 'height')) + NumberToString(rect.height) + "</div>" +
             "</div>";
+
+        const popupRect = sizeIndicatorBoxElement.getBoundingClientRect();
+        let leftPositionAsNumber= rect.left + rect.width / 2 - popupRect.width / 2;
+        if (leftPositionAsNumber < 0 )
+        {
+            leftPositionAsNumber = 0;
+        }
+        
+        sizeIndicatorBoxElement.style.left = leftPositionAsNumber + 'px';
+        sizeIndicatorBoxElement.style.top = rect.bottom + 4 + 'px';
 
         function WrapInSpanIfHasValue(value)
         {
@@ -184,6 +203,7 @@ function applyHoverEffect(targetElement)
     
     // initialize elements
     {
+        // left
         if(leftPaddingIndicatorLineElement === null)
         {
             leftPaddingIndicatorLineElement = document.createElement('div');
@@ -196,6 +216,20 @@ function applyHoverEffect(targetElement)
             document.body.appendChild(leftPaddingIndicatorBoxElement);
         }
 
+        // right
+        if(rightPaddingIndicatorLineElement === null)
+        {
+            rightPaddingIndicatorLineElement = document.createElement('div');
+            document.body.appendChild(rightPaddingIndicatorLineElement);
+        }
+
+        if(rightPaddingIndicatorBoxElement === null)
+        {
+            rightPaddingIndicatorBoxElement = document.createElement('div');
+            document.body.appendChild(rightPaddingIndicatorBoxElement);
+        }
+
+        // top
         if(topPaddingIndicatorLineElement === null)
         {
             topPaddingIndicatorLineElement = document.createElement('div');
@@ -206,6 +240,19 @@ function applyHoverEffect(targetElement)
         {
             topPaddingIndicatorBoxElement = document.createElement('div');
             document.body.appendChild(topPaddingIndicatorBoxElement);
+        }
+
+        // bottom
+        if(bottomPaddingIndicatorLineElement === null)
+        {
+            bottomPaddingIndicatorLineElement = document.createElement('div');
+            document.body.appendChild(bottomPaddingIndicatorLineElement);
+        }
+
+        if(bottomPaddingIndicatorBoxElement === null)
+        {
+            bottomPaddingIndicatorBoxElement = document.createElement('div');
+            document.body.appendChild(bottomPaddingIndicatorBoxElement);
         }
     }
 
@@ -235,10 +282,9 @@ function applyHoverEffect(targetElement)
             {
                 applySharedBoxStyles(leftPaddingIndicatorBoxElement.style);
 
-
                 let paddingLeftValue = GetStyleValue(targetElement, 'paddingLeft');
                 
-                let finalInnerHTML = NumberAsPixel(paddingLeftAsNumber);
+                let finalInnerHTML = NumberToString(paddingLeftAsNumber);
                 if (!(paddingLeftValue == null || paddingLeft === '' || paddingLeft === '0px' || paddingLeft === paddingLeftValue))
                 {
                     finalInnerHTML += "<br> (" + paddingLeftValue + ")";
@@ -247,12 +293,60 @@ function applyHoverEffect(targetElement)
                 leftPaddingIndicatorBoxElement.innerHTML = finalInnerHTML;
 
                 const boxRect = leftPaddingIndicatorBoxElement.getBoundingClientRect();
-                leftPaddingIndicatorBoxElement.style.left = rect.left + paddingLeftAsNumber / 2 - boxRect.width / 2 + 'px';
+                let positionLeftAsNumber = rect.left + paddingLeftAsNumber / 2 - boxRect.width / 2;
+                if(positionLeftAsNumber < 0)
+                {
+                    positionLeftAsNumber = 0;
+                }
+                leftPaddingIndicatorBoxElement.style.left = positionLeftAsNumber + 'px';
                 leftPaddingIndicatorBoxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2  + 'px';
             }
         }
     }
 
+    // PADDING RIGHT
+    {
+        let paddingRight =  getComputedStyle(targetElement).paddingRight;
+        let paddingRightAsNumber = parseFloat(paddingRight.replace('px', ''));
+
+        if (paddingRight === '' || paddingRight === '0px')
+        {
+            rightPaddingIndicatorLineElement.style.display = 'none';
+            rightPaddingIndicatorBoxElement.style.display = 'none';
+        }
+        else
+        {
+            // line
+            {
+                applySharedLineStyles(rightPaddingIndicatorLineElement.style);
+
+                rightPaddingIndicatorLineElement.style.height = '1px';
+                rightPaddingIndicatorLineElement.style.width = paddingRightAsNumber + 'px';
+                rightPaddingIndicatorLineElement.style.left = rect.left + rect.width - paddingRightAsNumber + 'px';
+                rightPaddingIndicatorLineElement.style.top = rect.top + rect.height / 2 + 'px';
+            }
+
+            // box
+            {
+                applySharedBoxStyles(rightPaddingIndicatorBoxElement.style);
+
+                let paddingRightValue = GetStyleValue(targetElement, 'paddingRight');
+
+                let finalInnerHTML = NumberToString(paddingRightAsNumber);
+                if (!(paddingRightValue == null || paddingRight === '' || paddingRight === '0px' || paddingRight === paddingRightValue))
+                {
+                    finalInnerHTML += "<br> (" + paddingRightValue + ")";
+                }
+
+                rightPaddingIndicatorBoxElement.innerHTML = finalInnerHTML;
+
+                const boxRect = rightPaddingIndicatorBoxElement.getBoundingClientRect();
+                rightPaddingIndicatorBoxElement.style.left = rect.left + rect.width - paddingRightAsNumber/2 - boxRect.width / 2 + 'px';
+                rightPaddingIndicatorBoxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2  + 'px';
+            }
+        }
+    }
+    
     // PADDING TOP
     {
         let paddingTop =  getComputedStyle(targetElement).paddingTop;
@@ -271,12 +365,12 @@ function applyHoverEffect(targetElement)
             {
                 applySharedBoxStyles(topPaddingIndicatorBoxElement.style);
 
-                let paddingLeftValue = GetStyleValue(targetElement, 'paddingTop');
+                let paddingTopValue = GetStyleValue(targetElement, 'paddingTop');
 
-                let finalInnerHTML = paddingTop;
-                if (!(paddingLeftValue == null || paddingTop === '' || paddingTop === '0px' || paddingTop === paddingLeftValue))
+                let finalInnerHTML = NumberToString(paddingTopAsNumber);
+                if (!(paddingTopValue == null || paddingTop === '' || paddingTop === '0px' || paddingTop === paddingTopValue))
                 {
-                    finalInnerHTML += " (" + paddingLeftValue + ")";
+                    finalInnerHTML += " (" + paddingTopValue + ")";
                 }
 
                 topPaddingIndicatorBoxElement.innerHTML = finalInnerHTML;
@@ -294,10 +388,52 @@ function applyHoverEffect(targetElement)
                 topPaddingIndicatorLineElement.style.height = paddingTopAsNumber + 'px';
                 topPaddingIndicatorLineElement.style.top = rect.top + 'px';
                 topPaddingIndicatorLineElement.style.left = rect.left + rect.width / 2 + 'px';
-                // topPaddingIndicatorLineElement.style.bottom = rect.bottom - rect.height / 2 + 'px';
+            }
+        }
+    }
+
+    // PADDING BOTTOM
+    {
+        let paddingBottom =  getComputedStyle(targetElement).paddingBottom;
+        let paddingBottomAsNumber = parseFloat(paddingBottom.replace('px', ''));
+
+        if (paddingBottom === '' || paddingBottom === '0px')
+        {
+            bottomPaddingIndicatorLineElement.style.display = 'none';
+            bottomPaddingIndicatorBoxElement.style.display = 'none';
+        }
+        else
+        {
+            // box
+            {
+                applySharedBoxStyles(bottomPaddingIndicatorBoxElement.style);
+
+                let paddingBottomValue = GetStyleValue(targetElement, 'paddingBottom');
+
+                let finalInnerHTML = NumberToString(paddingBottomAsNumber);
+                if (!(paddingBottomValue == null || paddingBottom === '' || paddingBottom === '0px' || paddingBottom === paddingBottomValue))
+                {
+                    finalInnerHTML += " (" + paddingBottomValue + ")";
+                }
+
+                bottomPaddingIndicatorBoxElement.innerHTML = finalInnerHTML;
+
+                const boxRect = bottomPaddingIndicatorBoxElement.getBoundingClientRect();
+                bottomPaddingIndicatorBoxElement.style.left = rect.left + rect.width / 2  - boxRect.width / 2 + 'px';
+                bottomPaddingIndicatorBoxElement.style.top = rect.top + rect.height - paddingBottomAsNumber / 2 - boxRect.height / 2 + 'px';
             }
 
-            
+            // line
+            {
+                applySharedLineStyles(bottomPaddingIndicatorLineElement.style);
+
+                bottomPaddingIndicatorLineElement.style.width = '1px';
+                bottomPaddingIndicatorLineElement.style.height = paddingBottomAsNumber + 'px';
+                bottomPaddingIndicatorLineElement.style.left = rect.left + rect.width / 2 + 'px';
+                bottomPaddingIndicatorLineElement.style.top = rect.top + rect.height - paddingBottomAsNumber + 'px';
+            }
+
+
 
 
 
@@ -313,12 +449,13 @@ function applyHoverEffect(targetElement)
         style.position = 'fixed';
         style.zIndex = '999999';
         style.borderRadius = '3px';
-        style.padding = '3px';
+        style.padding = '2px';
         style.background = '#4597F7';
         style.color = '#DECBFC';
         style.fontSize = '10px';
         style.lineHeight = '10px';
         style.textAlign = 'center';
+        style.fontFamily = 'monospace';
     }
 
     function applySharedLineStyles(style)
