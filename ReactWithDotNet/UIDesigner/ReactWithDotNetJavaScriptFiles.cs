@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Http;
 
 namespace ReactWithDotNet;
 
-public sealed class EmbeddedJavaScriptMiddleware
+public sealed class ReactWithDotNetJavaScriptFiles
 {
     readonly RequestDelegate _next;
 
-    public EmbeddedJavaScriptMiddleware(RequestDelegate next)
+    public ReactWithDotNetJavaScriptFiles(RequestDelegate next)
     {
         _next = next;
     }

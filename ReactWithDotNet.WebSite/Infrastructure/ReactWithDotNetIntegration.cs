@@ -11,7 +11,7 @@ public static class ReactWithDotNetIntegration
 {
     public static void ConfigureReactWithDotNet(this WebApplication app)
     {
-        app.UseMiddleware<EmbeddedJavaScriptMiddleware>();
+        app.UseMiddleware<ReactWithDotNetJavaScriptFiles>();
         
         var map = typeof(Page)
             .GetFields(BindingFlags.Static | BindingFlags.Public)
