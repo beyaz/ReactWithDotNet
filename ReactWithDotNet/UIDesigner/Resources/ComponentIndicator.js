@@ -1,9 +1,12 @@
 ﻿function canApplyHoverEffect(targetElement)
 {
-    if ( targetElement === leftPaddingIndicatorLineElement || 
-         targetElement === leftPaddingIndicatorBoxElement ||
-         targetElement === sizeIndicatorBoxElement
-        )
+    if ( targetElement === sizeIndicatorBoxElement
+        || targetElement === leftPaddingIndicatorLineElement 
+        || targetElement === leftPaddingIndicatorBoxElement
+        
+        || targetElement === topPaddingIndicatorLineElement
+        || targetElement === topPaddingIndicatorBoxElement
+    )
     {
         return false;
     }
@@ -80,14 +83,7 @@ function getMediaQueryStyle(element, propertyName)
     return null;
 }
 
-function WrapInSpanIfHasValue(value)
-{
-    if (value == null || value === '')
-    {
-        return '';
-    }
-    return "<span style = 'color:white;'>" + value + "</span>";
-}
+
 function GetStyleValue(element, propertyName)
 {
     let value = element.style[propertyName] + '';
@@ -108,36 +104,35 @@ function GetStyleValue(element, propertyName)
     {
         if (valueArray.indexOf(matchedMediaQueryValue) >= 0 || matchedMediaQueryValue.indexOf('%') > 0)
         {
-            return "<span style = 'color:white;'>" + matchedMediaQueryValue + "</span>";
+            return matchedMediaQueryValue;
         }
     }
 
     if (valueArray.indexOf(calculatedValue) >= 0 || calculatedValue.indexOf('%') > 0)
     {
-        return "<span style = 'color:white;'>" + calculatedValue + "</span>";
+        return calculatedValue;
     }
 
     if (valueArray.indexOf(value) >= 0 || value.indexOf('%') > 0)
     {
-        return "<span style = 'color:white;'>" + value + "</span>";
+        return value;
     }
 
     if (value.indexOf('px') > 0)
     {
-        if (propertyName === 'width' || propertyName === 'height')
-        {
-            return "<span style = 'color:white;'>" + 'fixed' + "</span>";
-        }
-
-        return "<span style = 'color:white;'>" + value + "</span>";
+        return value;
     }
 
     return '';
 }
 
+let sizeIndicatorBoxElement = null;
+
 let leftPaddingIndicatorLineElement = null;
 let leftPaddingIndicatorBoxElement = null;
-let sizeIndicatorBoxElement = null;
+
+let topPaddingIndicatorLineElement = null;
+let topPaddingIndicatorBoxElement = null;
 
 function applyHoverEffect(targetElement)
 {
@@ -170,9 +165,24 @@ function applyHoverEffect(targetElement)
             "<div style='display: flex; gap: 4px;'><span>W</span>" + WrapInSpanIfHasValue(GetStyleValue(targetElement, 'width')) + NumberAsPixel(rect.width) + "</div>" +
             "<div style='display: flex; gap: 4px;'><span>H</span>" + WrapInSpanIfHasValue(GetStyleValue(targetElement, 'height')) + NumberAsPixel(rect.height) + "</div>" +
             "</div>";
+
+        function WrapInSpanIfHasValue(value)
+        {
+            if (value == null || value === '')
+            {
+                return '';
+            }
+            
+            if (value.indexOf('px') > 0)
+            {
+                value = 'fixed';
+            }
+            
+            return "<span style = 'color:white;'>" + value + "</span>";
+        }
     }
     
-    // LEFT PADDING
+    // initialize elements
     {
         if(leftPaddingIndicatorLineElement === null)
         {
@@ -185,56 +195,137 @@ function applyHoverEffect(targetElement)
             leftPaddingIndicatorBoxElement = document.createElement('div');
             document.body.appendChild(leftPaddingIndicatorBoxElement);
         }
-        
+
+        if(topPaddingIndicatorLineElement === null)
+        {
+            topPaddingIndicatorLineElement = document.createElement('div');
+            document.body.appendChild(topPaddingIndicatorLineElement);
+        }
+
+        if(topPaddingIndicatorBoxElement === null)
+        {
+            topPaddingIndicatorBoxElement = document.createElement('div');
+            document.body.appendChild(topPaddingIndicatorBoxElement);
+        }
+    }
+
+    // PADDING LEFT
+    {
         let paddingLeft =  getComputedStyle(targetElement).paddingLeft;
-        if (paddingLeft == null || paddingLeft === '' || paddingLeft === '0px')
+        let paddingLeftAsNumber = parseFloat(paddingLeft.replace('px', ''));
+        
+        if (paddingLeft === '' || paddingLeft === '0px')
         {
             leftPaddingIndicatorLineElement.style.display = 'none';
             leftPaddingIndicatorBoxElement.style.display = 'none';
         }
         else
         {
-            let paddingLeftAsNumber = parseFloat(paddingLeft.replace('px', ''));
-
             // line
             {
-                leftPaddingIndicatorLineElement.style.display = 'block';
+                applySharedLineStyles(leftPaddingIndicatorLineElement.style);
 
-                leftPaddingIndicatorLineElement.style.position = 'fixed';
-                leftPaddingIndicatorLineElement.style.left = rect.left + 'px';
-                leftPaddingIndicatorLineElement.style.top = rect.bottom - rect.height / 2 -4 + 'px';
-
-                leftPaddingIndicatorLineElement.style.width = paddingLeftAsNumber + 'px';
                 leftPaddingIndicatorLineElement.style.height = '1px';
-                leftPaddingIndicatorLineElement.style.backgroundColor = 'blue';
+                leftPaddingIndicatorLineElement.style.width = paddingLeftAsNumber + 'px';
+                leftPaddingIndicatorLineElement.style.left = rect.left + 'px';
+                leftPaddingIndicatorLineElement.style.top = rect.bottom - rect.height / 2 + 'px';
             }
             
             // box
             {
-                leftPaddingIndicatorBoxElement.style.display = 'block';
-                leftPaddingIndicatorBoxElement.innerHTML = paddingLeft;
+                applySharedBoxStyles(leftPaddingIndicatorBoxElement.style);
+
+
+                let paddingLeftValue = GetStyleValue(targetElement, 'paddingLeft');
+                
+                let finalInnerHTML = NumberAsPixel(paddingLeftAsNumber);
+                if (!(paddingLeftValue == null || paddingLeft === '' || paddingLeft === '0px' || paddingLeft === paddingLeftValue))
+                {
+                    finalInnerHTML += "<br> (" + paddingLeftValue + ")";
+                }
+                
+                leftPaddingIndicatorBoxElement.innerHTML = finalInnerHTML;
 
                 const boxRect = leftPaddingIndicatorBoxElement.getBoundingClientRect();
-
-                leftPaddingIndicatorBoxElement.style.position = 'fixed';
-                leftPaddingIndicatorBoxElement.style.zIndex = '999999';
-                leftPaddingIndicatorBoxElement.style.padding = '3px';
-                leftPaddingIndicatorBoxElement.style.background = '#4597F7';
-                leftPaddingIndicatorBoxElement.style.color = '#DECBFC';
-                leftPaddingIndicatorBoxElement.style.fontSize = '10px';
-                leftPaddingIndicatorBoxElement.style.lineHeight = '10px';
-
-                leftPaddingIndicatorBoxElement.style.borderRadius = '4px';
                 leftPaddingIndicatorBoxElement.style.left = rect.left + paddingLeftAsNumber / 2 - boxRect.width / 2 + 'px';
-                leftPaddingIndicatorBoxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2 - 3 + 'px';
+                leftPaddingIndicatorBoxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2  + 'px';
+            }
+        }
+    }
+
+    // PADDING TOP
+    {
+        let paddingTop =  getComputedStyle(targetElement).paddingTop;
+        let paddingTopAsNumber = parseFloat(paddingTop.replace('px', ''));
+        
+        if (paddingTop === '' || paddingTop === '0px')
+        {
+            topPaddingIndicatorLineElement.style.display = 'none';
+            topPaddingIndicatorBoxElement.style.display = 'none';
+        }
+        else
+        {
+            
+
+            // box
+            {
+                applySharedBoxStyles(topPaddingIndicatorBoxElement.style);
+
+                let paddingLeftValue = GetStyleValue(targetElement, 'paddingTop');
+
+                let finalInnerHTML = paddingTop;
+                if (!(paddingLeftValue == null || paddingTop === '' || paddingTop === '0px' || paddingTop === paddingLeftValue))
+                {
+                    finalInnerHTML += " (" + paddingLeftValue + ")";
+                }
+
+                topPaddingIndicatorBoxElement.innerHTML = finalInnerHTML;
+
+                const boxRect = topPaddingIndicatorBoxElement.getBoundingClientRect();
+                topPaddingIndicatorBoxElement.style.left = rect.left + rect.width / 2  - boxRect.width / 2 + 'px';
+                topPaddingIndicatorBoxElement.style.top = rect.top + paddingTopAsNumber / 2 - boxRect.height / 2 + 'px';
             }
             
+            // line
+            {
+                applySharedLineStyles(topPaddingIndicatorLineElement.style);
+
+                topPaddingIndicatorLineElement.style.width = '1px';
+                topPaddingIndicatorLineElement.style.height = paddingTopAsNumber + 'px';
+                topPaddingIndicatorLineElement.style.top = rect.top + 'px';
+                topPaddingIndicatorLineElement.style.left = rect.left + rect.width / 2 + 'px';
+                // topPaddingIndicatorLineElement.style.bottom = rect.bottom - rect.height / 2 + 'px';
+            }
+
             
-            
-            
-           
+
+
+
+
+
+
         }
-        
+    }
+
+    function applySharedBoxStyles(style)
+    {
+        style.display = 'block';
+        style.position = 'fixed';
+        style.zIndex = '999999';
+        style.borderRadius = '3px';
+        style.padding = '3px';
+        style.background = '#4597F7';
+        style.color = '#DECBFC';
+        style.fontSize = '10px';
+        style.lineHeight = '10px';
+        style.textAlign = 'center';
+    }
+
+    function applySharedLineStyles(style)
+    {
+        style.display = 'block';
+        style.position = 'fixed';
+        style.backgroundColor = '#4597F7';
     }
 }
 

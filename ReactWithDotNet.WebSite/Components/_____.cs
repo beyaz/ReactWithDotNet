@@ -12,10 +12,19 @@ class SampleComponent: Component
       new div(new Style { border = "0px solid rgb(229, 231, 235)", boxSizing = "border-box", paddingBottom = "96px", paddingTop = "96px" })
       {
           
-          new FlexRowCentered(Background(Yellow400), Size(200))
+          new FlexRowCentered(Background(Yellow400), SizeFitContent)
           {
-              PaddingLeft(150),
+              PaddingLeft(13*percent),
+              PaddingTop(56),
+              PaddingRight(24),
+              PaddingBottom(28),
               new div{ Size(40),  Background(Gray400) }
+          },
+          
+          new FlexRowCentered(Background(Amber300), SizeFitContent)
+          {
+              Padding(22,50),
+              new div{ "Abc" }
           },
           
           new h1
