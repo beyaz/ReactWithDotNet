@@ -2,7 +2,8 @@
 {
     return !(
 
-        targetElement === sizeIndicatorBoxElement
+        targetElement === sizeIndicatorBoxElement ||
+        targetElement === overlayElement
 
         // padding
         || targetElement === paddingLeftIndicatorLineElement
@@ -175,6 +176,8 @@ function GetStyleValue(element, propertyName)
 
 let sizeIndicatorBoxElement = null;
 
+let overlayElement = null;
+
 // padding
 let paddingLeftIndicatorLineElement = null;
 let paddingLeftIndicatorBoxElement = null;
@@ -208,7 +211,36 @@ function applyHoverEffect(targetElement)
 
     const rect = targetElement.getBoundingClientRect();
 
-    // apply background
+    const linearGradientValueForOverlayBackground = 'repeating-linear-gradient(45deg, #fde047 0, #fde047 1px, transparent 0, transparent 50%)';
+    const backgroundSizeValueForOverlayBackground = '5px 5px';
+    
+    if(targetElement.tagName.toUpperCase() === 'IMG')
+    {
+        // overlay on image element
+        
+        if (overlayElement === null)
+        {
+            overlayElement = document.createElement('div');
+            document.body.appendChild(overlayElement);
+
+            overlayElement.style.position = 'fixed';
+            overlayElement.style.outline = '1px dashed #bfdbfe';
+            overlayElement.style.backgroundImage = linearGradientValueForOverlayBackground;
+            overlayElement.style.backgroundSize = backgroundSizeValueForOverlayBackground;
+            overlayElement.style.zIndex = '999999999';
+        }
+
+        overlayElement.style.display = 'block';
+
+        // align
+        {
+            overlayElement.style.width = rect.width + 'px';
+            overlayElement.style.height = rect.height + 'px';
+            overlayElement.style.left = rect.left + 'px';
+            overlayElement.style.top = rect.top + 'px';
+        }
+    }
+    else // apply background
     {
         targetElement.outlineReal = targetElement.style.outline;
         targetElement.backgroundImageReal = targetElement.style.backgroundImage
@@ -217,7 +249,7 @@ function applyHoverEffect(targetElement)
         
         targetElement.style.outline = '1px dashed #bfdbfe';
         
-        const linearGradientValue = 'repeating-linear-gradient(45deg, #fde047 0, #fde047 1px, transparent 0, transparent 50%)';
+        
         
         const hasNoBackgroundImage = 
             targetElement.style.backgroundImage === 'none' || 
@@ -227,20 +259,20 @@ function applyHoverEffect(targetElement)
         
         if (!hasNoBackgroundImage)
         {
-            targetElement.style.backgroundImage = linearGradientValue + "," + targetElement.style.backgroundImage;
-            targetElement.style.backgroundSize = '5px 5px, cover';
+            targetElement.style.backgroundImage = linearGradientValueForOverlayBackground + "," + targetElement.style.backgroundImage;
+            targetElement.style.backgroundSize = backgroundSizeValueForOverlayBackground + ', cover';
         }
         else
         {
             if (computedStyle.background === '')
             {
-                targetElement.style.backgroundImage = linearGradientValue;
-                targetElement.style.backgroundSize = '5px 5px';
+                targetElement.style.backgroundImage = linearGradientValueForOverlayBackground;
+                targetElement.style.backgroundSize = backgroundSizeValueForOverlayBackground;
             }
             else 
             {
-                targetElement.style.background = linearGradientValue + "," + computedStyle.background;
-                targetElement.style.backgroundSize = '5px 5px';
+                targetElement.style.background = linearGradientValueForOverlayBackground + "," + computedStyle.background;
+                targetElement.style.backgroundSize = backgroundSizeValueForOverlayBackground;
             }            
         }
     }
@@ -266,7 +298,6 @@ function applyHoverEffect(targetElement)
             "<div style='display: flex; gap: 4px;'><span>W</span>" + WrapInSpanIfHasValue(GetStyleValue(targetElement, 'width')) + NumberToString(rect.width) + "</div>" +
             "<div style='display: flex; gap: 4px;'><span>H</span>" + WrapInSpanIfHasValue(GetStyleValue(targetElement, 'height')) + NumberToString(rect.height) + "</div>" +
             "</div>";
-
 
         // align
         {
@@ -918,7 +949,8 @@ function removeHoverEffect(element)
         }
         element.style.display = 'none';
     }
-    
+
+    displayNone(overlayElement);
     displayNone(sizeIndicatorBoxElement);
 
     // padding
