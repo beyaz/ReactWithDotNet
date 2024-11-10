@@ -68,6 +68,11 @@ function HasBackground(element)
 
     while (currentElement)
     {
+        if (currentElement.tagName.toLowerCase() === 'img')
+        {
+            return true;
+        }
+        
         const style = window.getComputedStyle(currentElement);
 
         // Check if there is a non-transparent background color
