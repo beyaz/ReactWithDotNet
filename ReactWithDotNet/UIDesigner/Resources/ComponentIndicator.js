@@ -1,20 +1,32 @@
 ﻿function canApplyHoverEffect(targetElement)
 {
     if ( targetElement === sizeIndicatorBoxElement
-        || targetElement === leftPaddingIndicatorLineElement 
-        || targetElement === leftPaddingIndicatorBoxElement
         
-        || targetElement === rightPaddingIndicatorLineElement
-        || targetElement === rightPaddingIndicatorBoxElement
+        // padding
+        || targetElement === paddingLeftIndicatorLineElement 
+        || targetElement === paddingLeftIndicatorBoxElement
+        
+        || targetElement === paddingRightIndicatorLineElement
+        || targetElement === paddingRightIndicatorBoxElement
 
-        || targetElement === topPaddingIndicatorLineElement
-        || targetElement === topPaddingIndicatorBoxElement
+        || targetElement === paddingTopIndicatorLineElement
+        || targetElement === paddingTopIndicatorBoxElement
 
-        || targetElement === bottomPaddingIndicatorLineElement
-        || targetElement === bottomPaddingIndicatorBoxElement
+        || targetElement === paddingBottomIndicatorLineElement
+        || targetElement === paddingBottomIndicatorBoxElement
 
+        // margin
         || targetElement === marginLeftIndicatorLineElement
         || targetElement === marginLeftIndicatorBoxElement
+
+        || targetElement === marginRightIndicatorLineElement
+        || targetElement === marginRightIndicatorBoxElement
+
+        || targetElement === marginTopIndicatorLineElement
+        || targetElement === marginTopIndicatorBoxElement
+
+        || targetElement === marginBottomIndicatorLineElement
+        || targetElement === marginBottomIndicatorBoxElement
     )
     {
         return false;
@@ -68,13 +80,45 @@ function getMediaQueryStyle(element, propertyName)
                                 {
                                     return styleRule.style.height;
                                 }
-                                if (propertyName === 'paddingLeft')
+
+                                // padding
                                 {
-                                    return styleRule.style.paddingLeft;
+                                    if (propertyName === 'paddingLeft')
+                                    {
+                                        return styleRule.style.paddingLeft;
+                                    }
+                                    if (propertyName === 'paddingRight')
+                                    {
+                                        return styleRule.style.paddingRight;
+                                    }
+                                    if (propertyName === 'paddingTop')
+                                    {
+                                        return styleRule.style.paddingTop;
+                                    }
+                                    if (propertyName === 'paddingBottom')
+                                    {
+                                        return styleRule.style.paddingBottom;
+                                    }
                                 }
-                                if (propertyName === 'marginLeft')
+
+                                // margin
                                 {
-                                    return styleRule.style.marginLeft;
+                                    if (propertyName === 'marginLeft')
+                                    {
+                                        return styleRule.style.marginLeft;
+                                    }
+                                    if (propertyName === 'marginRight')
+                                    {
+                                        return styleRule.style.marginRight;
+                                    }
+                                    if (propertyName === 'marginTop')
+                                    {
+                                        return styleRule.style.marginTop;
+                                    }
+                                    if (propertyName === 'marginBottom')
+                                    {
+                                        return styleRule.style.marginBottom;
+                                    }
                                 }
                                 console.log("NotImplemented:" + propertyName);
                             }
@@ -136,28 +180,36 @@ function GetStyleValue(element, propertyName)
 
 let sizeIndicatorBoxElement = null;
 
-let leftPaddingIndicatorLineElement = null;
-let leftPaddingIndicatorBoxElement = null;
+let paddingLeftIndicatorLineElement = null;
+let paddingLeftIndicatorBoxElement = null;
 
-let rightPaddingIndicatorLineElement = null;
-let rightPaddingIndicatorBoxElement = null;
+let paddingRightIndicatorLineElement = null;
+let paddingRightIndicatorBoxElement = null;
 
-let topPaddingIndicatorLineElement = null;
-let topPaddingIndicatorBoxElement = null;
+let paddingTopIndicatorLineElement = null;
+let paddingTopIndicatorBoxElement = null;
 
-let bottomPaddingIndicatorLineElement = null;
-let bottomPaddingIndicatorBoxElement = null;
-
+let paddingBottomIndicatorLineElement = null;
+let paddingBottomIndicatorBoxElement = null;
 
 
 let marginLeftIndicatorLineElement = null;
 let marginLeftIndicatorBoxElement = null;
 
+let marginRightIndicatorLineElement = null;
+let marginRightIndicatorBoxElement = null;
 
+let marginTopIndicatorLineElement = null;
+let marginTopIndicatorBoxElement = null;
+
+let marginBottomIndicatorLineElement = null;
+let marginBottomIndicatorBoxElement = null;
 
 function applyHoverEffect(targetElement)
 {
     targetElement.classList.add('react-with-dotnet-designer-hover-effect');
+
+    const computedStyle = getComputedStyle(targetElement);
 
     const rect = targetElement.getBoundingClientRect();
 
@@ -182,15 +234,25 @@ function applyHoverEffect(targetElement)
             "<div style='display: flex; gap: 4px;'><span>H</span>" + WrapInSpanIfHasValue(GetStyleValue(targetElement, 'height')) + NumberToString(rect.height) + "</div>" +
             "</div>";
 
-        const popupRect = sizeIndicatorBoxElement.getBoundingClientRect();
-        let leftPositionAsNumber= rect.left + rect.width / 2 - popupRect.width / 2;
-        if (leftPositionAsNumber < 0 )
+
+        // align
         {
-            leftPositionAsNumber = 0;
+            const popupRect = sizeIndicatorBoxElement.getBoundingClientRect();
+            
+            let leftPositionAsNumber= rect.left + rect.width / 2 - popupRect.width / 2;
+            if (leftPositionAsNumber < 0 )
+            {
+                leftPositionAsNumber = 0;
+            }
+            sizeIndicatorBoxElement.style.left = leftPositionAsNumber + 'px';
+
+            let topPositionAsNumber= rect.bottom + 3;
+            if (computedStyle.marginBottom != null && computedStyle.marginBottom.indexOf('px') > 0)
+            {
+                topPositionAsNumber += parseFloat(computedStyle.marginBottom.replace('px',''));
+            }
+            sizeIndicatorBoxElement.style.top = topPositionAsNumber + 'px';
         }
-        
-        sizeIndicatorBoxElement.style.left = leftPositionAsNumber + 'px';
-        sizeIndicatorBoxElement.style.top = rect.bottom + 4 + 'px';
 
         function WrapInSpanIfHasValue(value)
         {
@@ -210,312 +272,561 @@ function applyHoverEffect(targetElement)
     
     // initialize elements
     {
-        // left
-        if(leftPaddingIndicatorLineElement === null)
+        // padding
         {
-            leftPaddingIndicatorLineElement = document.createElement('div');
-            document.body.appendChild(leftPaddingIndicatorLineElement);
+            // left
+            if(paddingLeftIndicatorLineElement === null)
+            {
+                paddingLeftIndicatorLineElement = document.createElement('div');
+                document.body.appendChild(paddingLeftIndicatorLineElement);
+            }
+
+            if(paddingLeftIndicatorBoxElement === null)
+            {
+                paddingLeftIndicatorBoxElement = document.createElement('div');
+                document.body.appendChild(paddingLeftIndicatorBoxElement);
+            }
+
+            // right
+            if(paddingRightIndicatorLineElement === null)
+            {
+                paddingRightIndicatorLineElement = document.createElement('div');
+                document.body.appendChild(paddingRightIndicatorLineElement);
+            }
+
+            if(paddingRightIndicatorBoxElement === null)
+            {
+                paddingRightIndicatorBoxElement = document.createElement('div');
+                document.body.appendChild(paddingRightIndicatorBoxElement);
+            }
+
+            // top
+            if(paddingTopIndicatorLineElement === null)
+            {
+                paddingTopIndicatorLineElement = document.createElement('div');
+                document.body.appendChild(paddingTopIndicatorLineElement);
+            }
+
+            if(paddingTopIndicatorBoxElement === null)
+            {
+                paddingTopIndicatorBoxElement = document.createElement('div');
+                document.body.appendChild(paddingTopIndicatorBoxElement);
+            }
+
+            // bottom
+            if(paddingBottomIndicatorLineElement === null)
+            {
+                paddingBottomIndicatorLineElement = document.createElement('div');
+                document.body.appendChild(paddingBottomIndicatorLineElement);
+            }
+
+            if(paddingBottomIndicatorBoxElement === null)
+            {
+                paddingBottomIndicatorBoxElement = document.createElement('div');
+                document.body.appendChild(paddingBottomIndicatorBoxElement);
+            }
         }
 
-        if(leftPaddingIndicatorBoxElement === null)
+        // margin
         {
-            leftPaddingIndicatorBoxElement = document.createElement('div');
-            document.body.appendChild(leftPaddingIndicatorBoxElement);
+            // left
+            if(marginLeftIndicatorLineElement === null)
+            {
+                marginLeftIndicatorLineElement = document.createElement('div');
+                document.body.appendChild(marginLeftIndicatorLineElement);
+            }
+
+            if(marginLeftIndicatorBoxElement === null)
+            {
+                marginLeftIndicatorBoxElement = document.createElement('div');
+                document.body.appendChild(marginLeftIndicatorBoxElement);
+            }
+
+            // right
+            if(marginRightIndicatorLineElement === null)
+            {
+                marginRightIndicatorLineElement = document.createElement('div');
+                document.body.appendChild(marginRightIndicatorLineElement);
+            }
+
+            if(marginRightIndicatorBoxElement === null)
+            {
+                marginRightIndicatorBoxElement = document.createElement('div');
+                document.body.appendChild(marginRightIndicatorBoxElement);
+            }
+
+            // top
+            if(marginTopIndicatorLineElement === null)
+            {
+                marginTopIndicatorLineElement = document.createElement('div');
+                document.body.appendChild(marginTopIndicatorLineElement);
+            }
+
+            if(marginTopIndicatorBoxElement === null)
+            {
+                marginTopIndicatorBoxElement = document.createElement('div');
+                document.body.appendChild(marginTopIndicatorBoxElement);
+            }
+
+            // bottom
+            if(marginBottomIndicatorLineElement === null)
+            {
+                marginBottomIndicatorLineElement = document.createElement('div');
+                document.body.appendChild(marginBottomIndicatorLineElement);
+            }
+
+            if(marginBottomIndicatorBoxElement === null)
+            {
+                marginBottomIndicatorBoxElement = document.createElement('div');
+                document.body.appendChild(marginBottomIndicatorBoxElement);
+            }
+        }
+    }
+
+    // P A D D I N G
+    {
+        // left
+        {
+            let lineElement = paddingLeftIndicatorLineElement;
+            let boxElement  = paddingLeftIndicatorBoxElement;
+
+            let computedValue =  computedStyle.paddingLeft;
+            let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
+
+            if (computedValue === '' || computedValue === '0px')
+            {
+                lineElement.style.display = 'none';
+                boxElement.style.display = 'none';
+            }
+            else
+            {
+                // line
+                {
+                    applySharedLineStyles(lineElement.style);
+
+                    lineElement.style.height = '1px';
+                    lineElement.style.width = computedValueAsNumber + 'px';
+                    lineElement.style.left = rect.left + 'px';
+                    lineElement.style.top = rect.bottom - rect.height / 2 + 'px';
+                }
+
+                // box
+                {
+                    applySharedBoxStyles(boxElement.style);
+
+                    // content
+                    {
+                        let finalInnerHTML = NumberToString(computedValueAsNumber);
+                        {
+                            let valueAsKeyword = GetStyleValue(targetElement, 'paddingLeft');
+
+                            if (!(valueAsKeyword == null || valueAsKeyword === '' || valueAsKeyword.indexOf('px') > 0))
+                            {
+                                finalInnerHTML += "<br> (" + valueAsKeyword + ")";
+                            }
+                        }
+                        boxElement.innerHTML = finalInnerHTML;
+                    }
+
+                    // align
+                    {
+                        const boxRect = boxElement.getBoundingClientRect();
+                        let positionLeftAsNumber = rect.left + computedValueAsNumber / 2 - boxRect.width / 2;
+                        if(positionLeftAsNumber < 0)
+                        {
+                            positionLeftAsNumber = 0;
+                        }
+                        boxElement.style.left = positionLeftAsNumber + 'px';
+                        boxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2  + 'px';
+                    }                    
+                }
+            }
         }
 
         // right
-        if(rightPaddingIndicatorLineElement === null)
         {
-            rightPaddingIndicatorLineElement = document.createElement('div');
-            document.body.appendChild(rightPaddingIndicatorLineElement);
-        }
+            let lineElement = paddingRightIndicatorLineElement;
+            let boxElement = paddingRightIndicatorBoxElement;
 
-        if(rightPaddingIndicatorBoxElement === null)
-        {
-            rightPaddingIndicatorBoxElement = document.createElement('div');
-            document.body.appendChild(rightPaddingIndicatorBoxElement);
+            let computedValue =  computedStyle.paddingRight;
+            let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
+
+            if (computedValue === '' || computedValue === '0px')
+            {
+                lineElement.style.display = 'none';
+                boxElement.style.display = 'none';
+            }
+            else
+            {
+                // line
+                {
+                    applySharedLineStyles(lineElement.style);
+
+                    lineElement.style.height = '1px';
+                    lineElement.style.width = computedValueAsNumber + 'px';
+                    lineElement.style.left = rect.left + rect.width - computedValueAsNumber + 'px';
+                    lineElement.style.top = rect.top + rect.height / 2 + 'px';
+                }
+
+                // box
+                {
+                    applySharedBoxStyles(boxElement.style);
+
+                    // content
+                    {
+                        let finalInnerHTML = NumberToString(computedValueAsNumber);
+                        {
+                            let valueAsKeyword = GetStyleValue(targetElement, 'paddingRight');
+
+                            if (!(valueAsKeyword == null || valueAsKeyword === '' || valueAsKeyword.indexOf('px') > 0))
+                            {
+                                finalInnerHTML += "<br> (" + valueAsKeyword + ")";
+                            }
+                        }
+                        boxElement.innerHTML = finalInnerHTML;
+                    }
+
+                    // align
+                    {
+                        const boxRect = boxElement.getBoundingClientRect();
+                        boxElement.style.left = rect.left + rect.width - computedValueAsNumber/2 - boxRect.width / 2 + 'px';
+                        boxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2  + 'px';
+                    }
+                }
+            }
         }
 
         // top
-        if(topPaddingIndicatorLineElement === null)
         {
-            topPaddingIndicatorLineElement = document.createElement('div');
-            document.body.appendChild(topPaddingIndicatorLineElement);
-        }
+            let lineElement = paddingTopIndicatorLineElement;
+            let boxElement = paddingTopIndicatorBoxElement;
 
-        if(topPaddingIndicatorBoxElement === null)
-        {
-            topPaddingIndicatorBoxElement = document.createElement('div');
-            document.body.appendChild(topPaddingIndicatorBoxElement);
+            let computedValue =  computedStyle.paddingTop;
+            let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
+
+            if (computedValue === '' || computedValue === '0px')
+            {
+                lineElement.style.display = 'none';
+                boxElement.style.display = 'none';
+            }
+            else
+            {
+                // box
+                {
+                    applySharedBoxStyles(boxElement.style);
+
+                    // content
+                    {
+                        let finalInnerHTML = NumberToString(computedValueAsNumber);
+                        {
+                            let valueAsKeyword = GetStyleValue(targetElement, 'paddingTop');
+
+                            if (!(valueAsKeyword == null || valueAsKeyword === '' || valueAsKeyword.indexOf('px') > 0))
+                            {
+                                finalInnerHTML += "<br> (" + valueAsKeyword + ")";
+                            }
+                        }
+                        boxElement.innerHTML = finalInnerHTML;
+                    }
+
+                    // align
+                    {
+                        const boxRect = boxElement.getBoundingClientRect();
+                        boxElement.style.left = rect.left + rect.width / 2  - boxRect.width / 2 + 'px';
+                        boxElement.style.top = rect.top + computedValueAsNumber / 2 - boxRect.height / 2 + 'px';
+                    }
+                }
+
+                // line
+                {
+                    applySharedLineStyles(lineElement.style);
+
+                    lineElement.style.width = '1px';
+                    lineElement.style.height = computedValueAsNumber + 'px';
+                    lineElement.style.top = rect.top + 'px';
+                    lineElement.style.left = rect.left + rect.width / 2 + 'px';
+                }
+            }
         }
 
         // bottom
-        if(bottomPaddingIndicatorLineElement === null)
         {
-            bottomPaddingIndicatorLineElement = document.createElement('div');
-            document.body.appendChild(bottomPaddingIndicatorLineElement);
-        }
+            let lineElement = paddingBottomIndicatorLineElement;
+            let boxElement = paddingBottomIndicatorBoxElement;
 
-        if(bottomPaddingIndicatorBoxElement === null)
-        {
-            bottomPaddingIndicatorBoxElement = document.createElement('div');
-            document.body.appendChild(bottomPaddingIndicatorBoxElement);
-        }
+            let computedValue = computedStyle.paddingBottom;
+            let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
 
-        // marginLeft
-        if(marginLeftIndicatorLineElement === null)
-        {
-            marginLeftIndicatorLineElement = document.createElement('div');
-            document.body.appendChild(marginLeftIndicatorLineElement);
-        }
+            if (computedValue === '' || computedValue === '0px')
+            {
+                lineElement.style.display = 'none';
+                boxElement.style.display = 'none';
+            }
+            else
+            {
+                // box
+                {
+                    applySharedBoxStyles(boxElement.style);
 
-        if(marginLeftIndicatorBoxElement === null)
-        {
-            marginLeftIndicatorBoxElement = document.createElement('div');
-            document.body.appendChild(marginLeftIndicatorBoxElement);
+                    // content
+                    {
+                        let finalInnerHTML = NumberToString(computedValueAsNumber);
+                        {
+                            let valueAsKeyword = GetStyleValue(targetElement, 'paddingBottom');
+
+                            if (!(valueAsKeyword == null || valueAsKeyword === '' || valueAsKeyword.indexOf('px') > 0))
+                            {
+                                finalInnerHTML += "<br> (" + valueAsKeyword + ")";
+                            }
+                        }
+                        boxElement.innerHTML = finalInnerHTML;
+                    }
+
+                    // align
+                    {
+                        const boxRect = boxElement.getBoundingClientRect();
+                        boxElement.style.left = rect.left + rect.width / 2 - boxRect.width / 2 + 'px';
+                        boxElement.style.top = rect.top + rect.height - computedValueAsNumber / 2 - boxRect.height / 2 + 'px';
+                    }
+                }
+
+                // line
+                {
+                    applySharedLineStyles(lineElement.style);
+
+                    lineElement.style.width = '1px';
+                    lineElement.style.height = computedValueAsNumber + 'px';
+                    lineElement.style.left = rect.left + rect.width / 2 + 'px';
+                    lineElement.style.top = rect.top + rect.height - computedValueAsNumber + 'px';
+                }
+            }
         }
     }
 
-    // PADDING LEFT
+    // M A R G I N
     {
-        let lineElement = leftPaddingIndicatorLineElement;
-        let boxElement = leftPaddingIndicatorBoxElement;
-        
-        let paddingLeft =  getComputedStyle(targetElement).paddingLeft;
-        let computedValueAsNumber = parseFloat(paddingLeft.replace('px', ''));
-        
-        if (paddingLeft === '' || paddingLeft === '0px')
+        // Left
         {
-            lineElement.style.display = 'none';
-            boxElement.style.display = 'none';
-        }
-        else
-        {
-            // line
-            {
-                applySharedLineStyles(lineElement.style);
+            let lineElement = marginLeftIndicatorLineElement;
+            let boxElement = marginLeftIndicatorBoxElement;
 
-                lineElement.style.height = '1px';
-                lineElement.style.width = computedValueAsNumber + 'px';
-                lineElement.style.left = rect.left + 'px';
-                lineElement.style.top = rect.bottom - rect.height / 2 + 'px';
+            let computedValue =  computedStyle.marginLeft;
+            let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
+
+            if (computedValue === '' || computedValue === '0px')
+            {
+                lineElement.style.display = 'none';
+                boxElement.style.display = 'none';
             }
-            
-            // box
+            else
             {
-                applySharedBoxStyles(boxElement.style);
-
-                let paddingLeftValue = GetStyleValue(targetElement, 'paddingLeft');
-                
-                let finalInnerHTML = NumberToString(computedValueAsNumber);
-                if (!(paddingLeftValue == null || paddingLeft === '' || paddingLeftValue.indexOf('px') > 0))
+                // line
                 {
-                    finalInnerHTML += "<br> (" + paddingLeftValue + ")";
+                    applySharedLineStyles(lineElement.style);
+
+                    lineElement.style.height = '1px';
+                    lineElement.style.width = computedValueAsNumber + 'px';
+                    lineElement.style.left = rect.left - computedValueAsNumber + 'px';
+                    lineElement.style.top = rect.bottom - rect.height / 2 + 'px';
                 }
 
-                boxElement.innerHTML = finalInnerHTML;
-
-                const boxRect = boxElement.getBoundingClientRect();
-                let positionLeftAsNumber = rect.left + computedValueAsNumber / 2 - boxRect.width / 2;
-                if(positionLeftAsNumber < 0)
+                // box
                 {
-                    positionLeftAsNumber = 0;
+                    applySharedBoxStyles(boxElement.style);
+
+                    // content
+                    {
+                        let finalInnerHTML = NumberToString(computedValueAsNumber);
+                        {
+                            let valueAsKeyword = GetStyleValue(targetElement, 'marginLeft');
+
+                            if (!(valueAsKeyword == null || valueAsKeyword === '' || valueAsKeyword.indexOf('px') > 0))
+                            {
+                                finalInnerHTML += "<br> (" + valueAsKeyword + ")";
+                            }
+                        }
+                        boxElement.innerHTML = finalInnerHTML;
+                    }
+                    
+                    // align
+                    {
+                        const boxRect = boxElement.getBoundingClientRect();
+                        let positionLeftAsNumber = rect.left - computedValueAsNumber / 2 - boxRect.width / 2;
+                        if(positionLeftAsNumber < 0)
+                        {
+                            positionLeftAsNumber = 0;
+                        }
+                        boxElement.style.left = positionLeftAsNumber + 'px';
+                        boxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2  + 'px';
+                    }                    
                 }
-                boxElement.style.left = positionLeftAsNumber + 'px';
-                boxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2  + 'px';
             }
         }
-    }
 
-    // PADDING RIGHT
-    {
-        let lineElement = rightPaddingIndicatorLineElement;
-        let boxElement = rightPaddingIndicatorBoxElement;
-        
-        let paddingRight =  getComputedStyle(targetElement).paddingRight;
-        let computedValueAsNumber = parseFloat(paddingRight.replace('px', ''));
+        // right
+        {
+            let lineElement = marginRightIndicatorLineElement;
+            let boxElement  = marginRightIndicatorBoxElement;
 
-        if (paddingRight === '' || paddingRight === '0px')
-        {
-            lineElement.style.display = 'none';
-            boxElement.style.display = 'none';
-        }
-        else
-        {
-            // line
+            let computedValue =  computedStyle.marginRight;
+            let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
+
+            if (computedValue === '' || computedValue === '0px')
             {
-                applySharedLineStyles(lineElement.style);
-
-                lineElement.style.height = '1px';
-                lineElement.style.width = computedValueAsNumber + 'px';
-                lineElement.style.left = rect.left + rect.width - computedValueAsNumber + 'px';
-                lineElement.style.top = rect.top + rect.height / 2 + 'px';
+                lineElement.style.display = 'none';
+                boxElement.style.display = 'none';
             }
-
-            // box
+            else
             {
-                applySharedBoxStyles(boxElement.style);
-
-                let paddingRightValue = GetStyleValue(targetElement, 'paddingRight');
-
-                let finalInnerHTML = NumberToString(computedValueAsNumber);
-                if (!(paddingRightValue == null || paddingRight === '' || paddingRight.indexOf('px') > 0))
+                // line
                 {
-                    finalInnerHTML += "<br> (" + paddingRightValue + ")";
-                }
+                    applySharedLineStyles(lineElement.style);
 
-                boxElement.innerHTML = finalInnerHTML;
-
-                const boxRect = boxElement.getBoundingClientRect();
-                boxElement.style.left = rect.left + rect.width - computedValueAsNumber/2 - boxRect.width / 2 + 'px';
-                boxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2  + 'px';
-            }
-        }
-    }
-    
-    // PADDING TOP
-    {
-        let lineElement = topPaddingIndicatorLineElement;
-        let boxElement = topPaddingIndicatorBoxElement;
-        
-        let paddingTop =  getComputedStyle(targetElement).paddingTop;
-        let computedValueAsNumber = parseFloat(paddingTop.replace('px', ''));
-        
-        if (paddingTop === '' || paddingTop === '0px')
-        {
-            lineElement.style.display = 'none';
-            boxElement.style.display = 'none';
-        }
-        else
-        {
-            // box
-            {
-                applySharedBoxStyles(boxElement.style);
-
-                let paddingTopValue = GetStyleValue(targetElement, 'paddingTop');
-
-                let finalInnerHTML = NumberToString(computedValueAsNumber);
-                if (!(paddingTopValue == null || paddingTop === '' || paddingTop.indexOf('px') > 0))
-                {
-                    finalInnerHTML += " (" + paddingTopValue + ")";
+                    lineElement.style.height = '1px';
+                    lineElement.style.width = computedValueAsNumber + 'px';
+                    lineElement.style.left = rect.left + rect.width + 'px';
+                    lineElement.style.top = rect.bottom - rect.height / 2 + 'px';
                 }
 
-                boxElement.innerHTML = finalInnerHTML;
-
-                const boxRect = boxElement.getBoundingClientRect();
-                boxElement.style.left = rect.left + rect.width / 2  - boxRect.width / 2 + 'px';
-                boxElement.style.top = rect.top + computedValueAsNumber / 2 - boxRect.height / 2 + 'px';
-            }
-            
-            // line
-            {
-                applySharedLineStyles(lineElement.style);
-
-                lineElement.style.width = '1px';
-                lineElement.style.height = computedValueAsNumber + 'px';
-                lineElement.style.top = rect.top + 'px';
-                lineElement.style.left = rect.left + rect.width / 2 + 'px';
-            }
-        }
-    }
-
-    // PADDING BOTTOM
-    {
-        let lineElement = bottomPaddingIndicatorLineElement;
-        let boxElement = bottomPaddingIndicatorBoxElement;
-        
-        let paddingBottom = getComputedStyle(targetElement).paddingBottom;
-        let computedValueAsNumber = parseFloat(paddingBottom.replace('px', ''));
-
-        if (paddingBottom === '' || paddingBottom === '0px')
-        {
-            lineElement.style.display = 'none';
-            boxElement.style.display = 'none';
-        }
-        else
-        {
-            // box
-            {
-                applySharedBoxStyles(boxElement.style);
-
-                let paddingBottomValue = GetStyleValue(targetElement, 'paddingBottom');
-
-                let finalInnerHTML = NumberToString(computedValueAsNumber);
-                if (!(paddingBottomValue == null || paddingBottom === '' || paddingBottom.indexOf('px') > 0))
+                // box
                 {
-                    finalInnerHTML += " (" + paddingBottomValue + ")";
+                    applySharedBoxStyles(boxElement.style);
+
+                    // content
+                    {
+                        let finalInnerHTML = NumberToString(computedValueAsNumber);
+                        {
+                            let valueAsKeyword = GetStyleValue(targetElement, 'marginRight');
+
+                            if (!(valueAsKeyword == null || valueAsKeyword === '' || valueAsKeyword.indexOf('px') > 0))
+                            {
+                                finalInnerHTML += "<br> (" + valueAsKeyword + ")";
+                            }
+                        }
+                        boxElement.innerHTML = finalInnerHTML;
+                    }
+
+                    // align
+                    {
+                        const boxRect = boxElement.getBoundingClientRect();
+                        let positionLeftAsNumber = rect.left + rect.width + computedValueAsNumber / 2 - boxRect.width / 2;
+                        if(positionLeftAsNumber < 0)
+                        {
+                            positionLeftAsNumber = 0;
+                        }
+                        boxElement.style.left = positionLeftAsNumber + 'px';
+                        boxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2  + 'px';
+                    }
+                }
+            }
+        }
+
+        // top
+        {
+            let lineElement = marginTopIndicatorLineElement;
+            let boxElement  = marginTopIndicatorBoxElement;
+
+            let computedValue =  computedStyle.marginTop;
+            let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
+
+            if (computedValue === '' || computedValue === '0px')
+            {
+                lineElement.style.display = 'none';
+                boxElement.style.display = 'none';
+            }
+            else
+            {
+                // box
+                {
+                    applySharedBoxStyles(boxElement.style);
+
+                    // content
+                    {
+                        let finalInnerHTML = NumberToString(computedValueAsNumber);
+                        {
+                            let valueAsKeyword = GetStyleValue(targetElement, 'marginTop');
+
+                            if (!(valueAsKeyword == null || valueAsKeyword === '' || valueAsKeyword.indexOf('px') > 0))
+                            {
+                                finalInnerHTML += "<br> (" + valueAsKeyword + ")";
+                            }
+                        }
+                        boxElement.innerHTML = finalInnerHTML;
+                    }
+
+                    // align
+                    {
+                        const boxRect = boxElement.getBoundingClientRect();
+                        boxElement.style.left = rect.left + rect.width / 2  - boxRect.width / 2 + 'px';
+                        boxElement.style.top = rect.top - computedValueAsNumber / 2 - boxRect.height / 2 + 'px';
+                    }
                 }
 
-                boxElement.innerHTML = finalInnerHTML;
-
-                const boxRect = boxElement.getBoundingClientRect();
-                boxElement.style.left = rect.left + rect.width / 2 - boxRect.width / 2 + 'px';
-                boxElement.style.top = rect.top + rect.height - computedValueAsNumber / 2 - boxRect.height / 2 + 'px';
-            }
-
-            // line
-            {
-                applySharedLineStyles(lineElement.style);
-
-                lineElement.style.width = '1px';
-                lineElement.style.height = computedValueAsNumber + 'px';
-                lineElement.style.left = rect.left + rect.width / 2 + 'px';
-                lineElement.style.top = rect.top + rect.height - computedValueAsNumber + 'px';
-            }
-        }
-    }
-
-    // Left
-    {
-        let lineElement = marginLeftIndicatorLineElement;
-        let boxElement = marginLeftIndicatorBoxElement;
-        
-        let marginLeft =  getComputedStyle(targetElement).marginLeft;
-        let computedValueAsNumber = parseFloat(marginLeft.replace('px', ''));
-
-        if (marginLeft === '' || marginLeft === '0px')
-        {
-            lineElement.style.display = 'none';
-            boxElement.style.display = 'none';
-        }
-        else
-        {
-            // line
-            {
-                applySharedLineStyles(lineElement.style);
-
-                lineElement.style.height = '1px';
-                lineElement.style.width = computedValueAsNumber + 'px';
-                lineElement.style.left = rect.left - computedValueAsNumber + 'px';
-                lineElement.style.top = rect.bottom - rect.height / 2 + 'px';
-            }
-
-            // box
-            {
-                applySharedBoxStyles(boxElement.style);
-
-                let marginLeftValue = GetStyleValue(targetElement, 'marginLeft');
-
-                let finalInnerHTML = NumberToString(computedValueAsNumber);
-                if (!(marginLeftValue == null || marginLeft === '' || marginLeftValue.indexOf('px') > 0))
+                // line
                 {
-                    finalInnerHTML += "<br> (" + marginLeftValue + ")";
+                    applySharedLineStyles(lineElement.style);
+
+                    lineElement.style.width = '1px';
+                    lineElement.style.height = computedValueAsNumber + 'px';
+                    lineElement.style.top = rect.top - computedValueAsNumber + 'px';
+                    lineElement.style.left = rect.left + rect.width / 2 + 'px';
+                }
+            }
+        }
+
+        // bottom
+        {
+            let lineElement = marginBottomIndicatorLineElement;
+            let boxElement  = marginBottomIndicatorBoxElement;
+
+            let computedValue = computedStyle.marginBottom;
+            let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
+
+            if (computedValue === '' || computedValue === '0px')
+            {
+                lineElement.style.display = 'none';
+                boxElement.style.display = 'none';
+            }
+            else
+            {
+                // box
+                {
+                    applySharedBoxStyles(boxElement.style);
+
+                    // content
+                    {
+                        let finalInnerHTML = NumberToString(computedValueAsNumber);
+                        {
+                            let valueAsKeyword = GetStyleValue(targetElement, 'marginBottom');
+
+                            if (!(valueAsKeyword == null || valueAsKeyword === '' || valueAsKeyword.indexOf('px') > 0))
+                            {
+                                finalInnerHTML += "<br> (" + valueAsKeyword + ")";
+                            }
+                        }
+                        boxElement.innerHTML = finalInnerHTML;
+                    }
+
+                    // align
+                    {
+                        const boxRect = boxElement.getBoundingClientRect();
+                        boxElement.style.left = rect.left + rect.width / 2 - boxRect.width / 2 + 'px';
+                        boxElement.style.top = rect.top + rect.height + computedValueAsNumber / 2 - boxRect.height / 2 + 'px';
+                    }
                 }
 
-                boxElement.innerHTML = finalInnerHTML;
-
-                const boxRect = boxElement.getBoundingClientRect();
-                let positionLeftAsNumber = rect.left - computedValueAsNumber / 2 - boxRect.width / 2;
-                if(positionLeftAsNumber < 0)
+                // line
                 {
-                    positionLeftAsNumber = 0;
+                    applySharedLineStyles(lineElement.style);
+
+                    lineElement.style.width = '1px';
+                    lineElement.style.height = computedValueAsNumber + 'px';
+                    lineElement.style.left = rect.left + rect.width / 2 + 'px';
+                    lineElement.style.top = rect.top + rect.height + 'px';
                 }
-                boxElement.style.left = positionLeftAsNumber + 'px';
-                boxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2  + 'px';
             }
         }
-    }
-    
+    }    
     
     function applySharedBoxStyles(style)
     {
