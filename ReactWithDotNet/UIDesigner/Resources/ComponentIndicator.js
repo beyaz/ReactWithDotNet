@@ -12,6 +12,9 @@
 
         || targetElement === bottomPaddingIndicatorLineElement
         || targetElement === bottomPaddingIndicatorBoxElement
+
+        || targetElement === marginLeftIndicatorLineElement
+        || targetElement === marginLeftIndicatorBoxElement
     )
     {
         return false;
@@ -68,6 +71,10 @@ function getMediaQueryStyle(element, propertyName)
                                 if (propertyName === 'paddingLeft')
                                 {
                                     return styleRule.style.paddingLeft;
+                                }
+                                if (propertyName === 'marginLeft')
+                                {
+                                    return styleRule.style.marginLeft;
                                 }
                                 console.log("NotImplemented:" + propertyName);
                             }
@@ -140,6 +147,11 @@ let topPaddingIndicatorBoxElement = null;
 
 let bottomPaddingIndicatorLineElement = null;
 let bottomPaddingIndicatorBoxElement = null;
+
+
+
+let marginLeftIndicatorLineElement = null;
+let marginLeftIndicatorBoxElement = null;
 
 
 
@@ -248,6 +260,19 @@ function applyHoverEffect(targetElement)
         {
             bottomPaddingIndicatorBoxElement = document.createElement('div');
             document.body.appendChild(bottomPaddingIndicatorBoxElement);
+        }
+
+        // marginLeft
+        if(marginLeftIndicatorLineElement === null)
+        {
+            marginLeftIndicatorLineElement = document.createElement('div');
+            document.body.appendChild(marginLeftIndicatorLineElement);
+        }
+
+        if(marginLeftIndicatorBoxElement === null)
+        {
+            marginLeftIndicatorBoxElement = document.createElement('div');
+            document.body.appendChild(marginLeftIndicatorBoxElement);
         }
     }
 
@@ -428,6 +453,55 @@ function applyHoverEffect(targetElement)
         }
     }
 
+    // Left
+    {
+        let marginLeft =  getComputedStyle(targetElement).marginLeft;
+        let marginLeftAsNumber = parseFloat(marginLeft.replace('px', ''));
+
+        if (marginLeft === '' || marginLeft === '0px')
+        {
+            marginLeftIndicatorLineElement.style.display = 'none';
+            marginLeftIndicatorBoxElement.style.display = 'none';
+        }
+        else
+        {
+            // line
+            {
+                applySharedLineStyles(marginLeftIndicatorLineElement.style);
+
+                marginLeftIndicatorLineElement.style.height = '1px';
+                marginLeftIndicatorLineElement.style.width = marginLeftAsNumber + 'px';
+                marginLeftIndicatorLineElement.style.left = rect.left - marginLeftAsNumber + 'px';
+                marginLeftIndicatorLineElement.style.top = rect.bottom - rect.height / 2 + 'px';
+            }
+
+            // box
+            {
+                applySharedBoxStyles(marginLeftIndicatorBoxElement.style);
+
+                let marginLeftValue = GetStyleValue(targetElement, 'marginLeft');
+
+                let finalInnerHTML = NumberToString(marginLeftAsNumber);
+                if (!(marginLeftValue == null || marginLeft === '' || marginLeftValue.indexOf('px') > 0))
+                {
+                    finalInnerHTML += "<br> (" + marginLeftValue + ")";
+                }
+
+                marginLeftIndicatorBoxElement.innerHTML = finalInnerHTML;
+
+                const boxRect = marginLeftIndicatorBoxElement.getBoundingClientRect();
+                let positionLeftAsNumber = rect.left - marginLeftAsNumber / 2 - boxRect.width / 2;
+                if(positionLeftAsNumber < 0)
+                {
+                    positionLeftAsNumber = 0;
+                }
+                marginLeftIndicatorBoxElement.style.left = positionLeftAsNumber + 'px';
+                marginLeftIndicatorBoxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2  + 'px';
+            }
+        }
+    }
+    
+    
     function applySharedBoxStyles(style)
     {
         style.display = 'block';

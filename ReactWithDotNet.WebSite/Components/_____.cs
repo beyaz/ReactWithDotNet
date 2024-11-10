@@ -20,7 +20,8 @@ class SampleComponent: Component
               PaddingBottom(28),
               new div
               {
-                  MarginLeft(67),
+                  Margin(67,23),
+                  PaddingLeft(23),
                   Size(40),  Background(Gray400)
               }
           },
