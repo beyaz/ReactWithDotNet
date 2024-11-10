@@ -213,20 +213,35 @@ function applyHoverEffect(targetElement)
         targetElement.outlineReal = targetElement.style.outline;
         targetElement.backgroundImageReal = targetElement.style.backgroundImage
         targetElement.backgroundSizeReal = targetElement.style.backgroundSize;
+        targetElement.backgroundReal = targetElement.style.background;
         
         targetElement.style.outline = '1px dashed #bfdbfe';
         
         const linearGradientValue = 'repeating-linear-gradient(45deg, #fde047 0, #fde047 1px, transparent 0, transparent 50%)';
         
-        if (targetElement.style.backgroundImage !== 'none')
+        const hasNoBackgroundImage = 
+            targetElement.style.backgroundImage === 'none' || 
+            targetElement.style.backgroundImage === 'initial' ||
+            targetElement.style.backgroundImage === '' ||
+            targetElement.style.backgroundImage == null;
+        
+        if (!hasNoBackgroundImage)
         {
             targetElement.style.backgroundImage = linearGradientValue + "," + targetElement.style.backgroundImage;
             targetElement.style.backgroundSize = '5px 5px, cover';
         }
         else
         {
-            targetElement.style.backgroundImage = linearGradientValue;
-            targetElement.style.backgroundSize = '5px 5px';
+            if (computedStyle.background === '')
+            {
+                targetElement.style.backgroundImage = linearGradientValue;
+                targetElement.style.backgroundSize = '5px 5px';
+            }
+            else 
+            {
+                targetElement.style.background = linearGradientValue + "," + computedStyle.background;
+                targetElement.style.backgroundSize = '5px 5px';
+            }            
         }
     }
     
@@ -889,6 +904,7 @@ function removeHoverEffect(element)
     element.style.outline = element.outlineReal
     element.style.backgroundImage = element.backgroundImageReal;
     element.style.backgroundSize = element.backgroundSizeReal;
+    element.style.background = element.backgroundReal;    
     
     function displayNone(element)
     {
