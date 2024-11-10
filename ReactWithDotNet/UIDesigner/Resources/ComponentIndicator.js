@@ -1034,3 +1034,8 @@ document.addEventListener("mousemove", (event) =>
         }
     }
 });
+
+document.addEventListener("scroll", () =>
+{
+    removeHoverEffect(lastIndicatedElement);
+});
