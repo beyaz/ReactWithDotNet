@@ -214,9 +214,9 @@ function applyHoverEffect(targetElement)
     const linearGradientValueForOverlayBackground = 'repeating-linear-gradient(45deg, #fde047 0, #fde047 1px, transparent 0, transparent 50%)';
     const backgroundSizeValueForOverlayBackground = '5px 5px';
     
-    if(targetElement.tagName.toUpperCase() === 'IMG')
+    if(targetElement.tagName.toUpperCase() === 'IMG' || targetElement.tagName.toUpperCase() === 'SVG')
     {
-        // overlay on image element
+        // overlay on element
         
         if (overlayElement === null)
         {
@@ -228,6 +228,7 @@ function applyHoverEffect(targetElement)
             overlayElement.style.backgroundImage = linearGradientValueForOverlayBackground;
             overlayElement.style.backgroundSize = backgroundSizeValueForOverlayBackground;
             overlayElement.style.zIndex = '999999999';
+            overlayElement.style.pointerEvents = 'none';
         }
 
         overlayElement.style.display = 'block';
@@ -910,6 +911,7 @@ function applyHoverEffect(targetElement)
         style.lineHeight = '10px';
         style.textAlign = 'center';
         style.fontFamily = 'monospace';
+        style.pointerEvents = 'none';
 
         if (targetProperty.indexOf('margin') === 0)
         {
@@ -921,6 +923,7 @@ function applyHoverEffect(targetElement)
     {
         style.display = 'block';
         style.position = 'fixed';
+        style.pointerEvents = 'none';
         style.backgroundColor = '#4597F7';
 
         if (targetProperty.indexOf('margin') === 0)
