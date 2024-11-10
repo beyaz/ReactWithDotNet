@@ -290,7 +290,7 @@ public sealed class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerM
                 {
                     OnClick(async _ =>
                     {
-                        if (state.Scale <= 50)
+                        if (state.Scale <= 20)
                         {
                             return;
                         }
