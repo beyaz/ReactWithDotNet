@@ -418,9 +418,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
     protected override async Task<Element> renderAsync()
     {
         var element = await CreateElement(state, Context);
-
-        // element += ComponentIndicatorStyle;
-
+        
         Client.RefreshComponentPreviewCompleted();
 
         var hoverEffect = new Fragment
