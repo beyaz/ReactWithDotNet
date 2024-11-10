@@ -215,19 +215,20 @@ function applyHoverEffect(targetElement)
 
     // Size indicator box
     {
-        if(sizeIndicatorBoxElement === null)
+        if (sizeIndicatorBoxElement === null)
         {
             sizeIndicatorBoxElement = document.createElement('div');
             document.body.appendChild(sizeIndicatorBoxElement);
         }
 
+        sizeIndicatorBoxElement.style.display = 'block';
         sizeIndicatorBoxElement.style.position = 'fixed';
         sizeIndicatorBoxElement.style.zIndex = '999999';
-        sizeIndicatorBoxElement.style.borderRadius = '3px';      
+        sizeIndicatorBoxElement.style.borderRadius = '3px';
         sizeIndicatorBoxElement.style.background = '#4597F7';
         sizeIndicatorBoxElement.style.color = '#DECBFC';
         sizeIndicatorBoxElement.style.fontFamily = 'monospace';
-        
+
         sizeIndicatorBoxElement.innerHTML =
             "<div style = 'display: flex; flex-direction: column; line-height: 12px; padding:3px;  font-size:11px;' >" +
             "<div style='display: flex; gap: 4px;'><span>W</span>" + WrapInSpanIfHasValue(GetStyleValue(targetElement, 'width')) + NumberToString(rect.width) + "</div>" +
@@ -238,18 +239,18 @@ function applyHoverEffect(targetElement)
         // align
         {
             const popupRect = sizeIndicatorBoxElement.getBoundingClientRect();
-            
-            let leftPositionAsNumber= rect.left + rect.width / 2 - popupRect.width / 2;
-            if (leftPositionAsNumber < 0 )
+
+            let leftPositionAsNumber = rect.left + rect.width / 2 - popupRect.width / 2;
+            if (leftPositionAsNumber < 0)
             {
                 leftPositionAsNumber = 0;
             }
             sizeIndicatorBoxElement.style.left = leftPositionAsNumber + 'px';
 
-            let topPositionAsNumber= rect.bottom + 3;
+            let topPositionAsNumber = rect.bottom + 3;
             if (computedStyle.marginBottom != null && computedStyle.marginBottom.indexOf('px') > 0)
             {
-                topPositionAsNumber += parseFloat(computedStyle.marginBottom.replace('px',''));
+                topPositionAsNumber += parseFloat(computedStyle.marginBottom.replace('px', ''));
             }
             sizeIndicatorBoxElement.style.top = topPositionAsNumber + 'px';
         }
@@ -260,67 +261,67 @@ function applyHoverEffect(targetElement)
             {
                 return '';
             }
-            
+
             if (value.indexOf('px') > 0)
             {
                 value = 'fixed';
             }
-            
+
             return "<span style = 'color:white;'>" + value + "</span>";
         }
     }
-    
+
     // initialize elements
     {
         // padding
         {
             // left
-            if(paddingLeftIndicatorLineElement === null)
+            if (paddingLeftIndicatorLineElement === null)
             {
                 paddingLeftIndicatorLineElement = document.createElement('div');
                 document.body.appendChild(paddingLeftIndicatorLineElement);
             }
 
-            if(paddingLeftIndicatorBoxElement === null)
+            if (paddingLeftIndicatorBoxElement === null)
             {
                 paddingLeftIndicatorBoxElement = document.createElement('div');
                 document.body.appendChild(paddingLeftIndicatorBoxElement);
             }
 
             // right
-            if(paddingRightIndicatorLineElement === null)
+            if (paddingRightIndicatorLineElement === null)
             {
                 paddingRightIndicatorLineElement = document.createElement('div');
                 document.body.appendChild(paddingRightIndicatorLineElement);
             }
 
-            if(paddingRightIndicatorBoxElement === null)
+            if (paddingRightIndicatorBoxElement === null)
             {
                 paddingRightIndicatorBoxElement = document.createElement('div');
                 document.body.appendChild(paddingRightIndicatorBoxElement);
             }
 
             // top
-            if(paddingTopIndicatorLineElement === null)
+            if (paddingTopIndicatorLineElement === null)
             {
                 paddingTopIndicatorLineElement = document.createElement('div');
                 document.body.appendChild(paddingTopIndicatorLineElement);
             }
 
-            if(paddingTopIndicatorBoxElement === null)
+            if (paddingTopIndicatorBoxElement === null)
             {
                 paddingTopIndicatorBoxElement = document.createElement('div');
                 document.body.appendChild(paddingTopIndicatorBoxElement);
             }
 
             // bottom
-            if(paddingBottomIndicatorLineElement === null)
+            if (paddingBottomIndicatorLineElement === null)
             {
                 paddingBottomIndicatorLineElement = document.createElement('div');
                 document.body.appendChild(paddingBottomIndicatorLineElement);
             }
 
-            if(paddingBottomIndicatorBoxElement === null)
+            if (paddingBottomIndicatorBoxElement === null)
             {
                 paddingBottomIndicatorBoxElement = document.createElement('div');
                 document.body.appendChild(paddingBottomIndicatorBoxElement);
@@ -330,52 +331,52 @@ function applyHoverEffect(targetElement)
         // margin
         {
             // left
-            if(marginLeftIndicatorLineElement === null)
+            if (marginLeftIndicatorLineElement === null)
             {
                 marginLeftIndicatorLineElement = document.createElement('div');
                 document.body.appendChild(marginLeftIndicatorLineElement);
             }
 
-            if(marginLeftIndicatorBoxElement === null)
+            if (marginLeftIndicatorBoxElement === null)
             {
                 marginLeftIndicatorBoxElement = document.createElement('div');
                 document.body.appendChild(marginLeftIndicatorBoxElement);
             }
 
             // right
-            if(marginRightIndicatorLineElement === null)
+            if (marginRightIndicatorLineElement === null)
             {
                 marginRightIndicatorLineElement = document.createElement('div');
                 document.body.appendChild(marginRightIndicatorLineElement);
             }
 
-            if(marginRightIndicatorBoxElement === null)
+            if (marginRightIndicatorBoxElement === null)
             {
                 marginRightIndicatorBoxElement = document.createElement('div');
                 document.body.appendChild(marginRightIndicatorBoxElement);
             }
 
             // top
-            if(marginTopIndicatorLineElement === null)
+            if (marginTopIndicatorLineElement === null)
             {
                 marginTopIndicatorLineElement = document.createElement('div');
                 document.body.appendChild(marginTopIndicatorLineElement);
             }
 
-            if(marginTopIndicatorBoxElement === null)
+            if (marginTopIndicatorBoxElement === null)
             {
                 marginTopIndicatorBoxElement = document.createElement('div');
                 document.body.appendChild(marginTopIndicatorBoxElement);
             }
 
             // bottom
-            if(marginBottomIndicatorLineElement === null)
+            if (marginBottomIndicatorLineElement === null)
             {
                 marginBottomIndicatorLineElement = document.createElement('div');
                 document.body.appendChild(marginBottomIndicatorLineElement);
             }
 
-            if(marginBottomIndicatorBoxElement === null)
+            if (marginBottomIndicatorBoxElement === null)
             {
                 marginBottomIndicatorBoxElement = document.createElement('div');
                 document.body.appendChild(marginBottomIndicatorBoxElement);
@@ -388,9 +389,9 @@ function applyHoverEffect(targetElement)
         // left
         {
             let lineElement = paddingLeftIndicatorLineElement;
-            let boxElement  = paddingLeftIndicatorBoxElement;
+            let boxElement = paddingLeftIndicatorBoxElement;
 
-            let computedValue =  computedStyle.paddingLeft;
+            let computedValue = computedStyle.paddingLeft;
             let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
 
             if (computedValue === '' || computedValue === '0px')
@@ -402,7 +403,7 @@ function applyHoverEffect(targetElement)
             {
                 // line
                 {
-                    applySharedLineStyles(lineElement.style);
+                    applySharedLineStyles(lineElement.style, 'paddingLeft');
 
                     lineElement.style.height = '1px';
                     lineElement.style.width = computedValueAsNumber + 'px';
@@ -412,7 +413,7 @@ function applyHoverEffect(targetElement)
 
                 // box
                 {
-                    applySharedBoxStyles(boxElement.style);
+                    applySharedBoxStyles(boxElement.style, 'paddingLeft');
 
                     // content
                     {
@@ -432,13 +433,13 @@ function applyHoverEffect(targetElement)
                     {
                         const boxRect = boxElement.getBoundingClientRect();
                         let positionLeftAsNumber = rect.left + computedValueAsNumber / 2 - boxRect.width / 2;
-                        if(positionLeftAsNumber < 0)
+                        if (positionLeftAsNumber < 0)
                         {
                             positionLeftAsNumber = 0;
                         }
                         boxElement.style.left = positionLeftAsNumber + 'px';
-                        boxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2  + 'px';
-                    }                    
+                        boxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2 + 'px';
+                    }
                 }
             }
         }
@@ -448,7 +449,7 @@ function applyHoverEffect(targetElement)
             let lineElement = paddingRightIndicatorLineElement;
             let boxElement = paddingRightIndicatorBoxElement;
 
-            let computedValue =  computedStyle.paddingRight;
+            let computedValue = computedStyle.paddingRight;
             let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
 
             if (computedValue === '' || computedValue === '0px')
@@ -460,7 +461,7 @@ function applyHoverEffect(targetElement)
             {
                 // line
                 {
-                    applySharedLineStyles(lineElement.style);
+                    applySharedLineStyles(lineElement.style, 'paddingRight');
 
                     lineElement.style.height = '1px';
                     lineElement.style.width = computedValueAsNumber + 'px';
@@ -470,7 +471,7 @@ function applyHoverEffect(targetElement)
 
                 // box
                 {
-                    applySharedBoxStyles(boxElement.style);
+                    applySharedBoxStyles(boxElement.style, 'paddingRight');
 
                     // content
                     {
@@ -489,8 +490,8 @@ function applyHoverEffect(targetElement)
                     // align
                     {
                         const boxRect = boxElement.getBoundingClientRect();
-                        boxElement.style.left = rect.left + rect.width - computedValueAsNumber/2 - boxRect.width / 2 + 'px';
-                        boxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2  + 'px';
+                        boxElement.style.left = rect.left + rect.width - computedValueAsNumber / 2 - boxRect.width / 2 + 'px';
+                        boxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2 + 'px';
                     }
                 }
             }
@@ -501,7 +502,7 @@ function applyHoverEffect(targetElement)
             let lineElement = paddingTopIndicatorLineElement;
             let boxElement = paddingTopIndicatorBoxElement;
 
-            let computedValue =  computedStyle.paddingTop;
+            let computedValue = computedStyle.paddingTop;
             let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
 
             if (computedValue === '' || computedValue === '0px')
@@ -513,7 +514,7 @@ function applyHoverEffect(targetElement)
             {
                 // box
                 {
-                    applySharedBoxStyles(boxElement.style);
+                    applySharedBoxStyles(boxElement.style, 'paddingTop');
 
                     // content
                     {
@@ -532,14 +533,14 @@ function applyHoverEffect(targetElement)
                     // align
                     {
                         const boxRect = boxElement.getBoundingClientRect();
-                        boxElement.style.left = rect.left + rect.width / 2  - boxRect.width / 2 + 'px';
+                        boxElement.style.left = rect.left + rect.width / 2 - boxRect.width / 2 + 'px';
                         boxElement.style.top = rect.top + computedValueAsNumber / 2 - boxRect.height / 2 + 'px';
                     }
                 }
 
                 // line
                 {
-                    applySharedLineStyles(lineElement.style);
+                    applySharedLineStyles(lineElement.style, 'paddingTop');
 
                     lineElement.style.width = '1px';
                     lineElement.style.height = computedValueAsNumber + 'px';
@@ -566,7 +567,7 @@ function applyHoverEffect(targetElement)
             {
                 // box
                 {
-                    applySharedBoxStyles(boxElement.style);
+                    applySharedBoxStyles(boxElement.style, 'paddingBottom');
 
                     // content
                     {
@@ -592,7 +593,7 @@ function applyHoverEffect(targetElement)
 
                 // line
                 {
-                    applySharedLineStyles(lineElement.style);
+                    applySharedLineStyles(lineElement.style, 'paddingBottom');
 
                     lineElement.style.width = '1px';
                     lineElement.style.height = computedValueAsNumber + 'px';
@@ -610,7 +611,7 @@ function applyHoverEffect(targetElement)
             let lineElement = marginLeftIndicatorLineElement;
             let boxElement = marginLeftIndicatorBoxElement;
 
-            let computedValue =  computedStyle.marginLeft;
+            let computedValue = computedStyle.marginLeft;
             let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
 
             if (computedValue === '' || computedValue === '0px')
@@ -622,7 +623,7 @@ function applyHoverEffect(targetElement)
             {
                 // line
                 {
-                    applySharedLineStyles(lineElement.style);
+                    applySharedLineStyles(lineElement.style, 'marginLeft');
 
                     lineElement.style.height = '1px';
                     lineElement.style.width = computedValueAsNumber + 'px';
@@ -632,7 +633,7 @@ function applyHoverEffect(targetElement)
 
                 // box
                 {
-                    applySharedBoxStyles(boxElement.style);
+                    applySharedBoxStyles(boxElement.style, 'marginLeft');
 
                     // content
                     {
@@ -647,18 +648,18 @@ function applyHoverEffect(targetElement)
                         }
                         boxElement.innerHTML = finalInnerHTML;
                     }
-                    
+
                     // align
                     {
                         const boxRect = boxElement.getBoundingClientRect();
                         let positionLeftAsNumber = rect.left - computedValueAsNumber / 2 - boxRect.width / 2;
-                        if(positionLeftAsNumber < 0)
+                        if (positionLeftAsNumber < 0)
                         {
                             positionLeftAsNumber = 0;
                         }
                         boxElement.style.left = positionLeftAsNumber + 'px';
-                        boxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2  + 'px';
-                    }                    
+                        boxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2 + 'px';
+                    }
                 }
             }
         }
@@ -666,9 +667,9 @@ function applyHoverEffect(targetElement)
         // right
         {
             let lineElement = marginRightIndicatorLineElement;
-            let boxElement  = marginRightIndicatorBoxElement;
+            let boxElement = marginRightIndicatorBoxElement;
 
-            let computedValue =  computedStyle.marginRight;
+            let computedValue = computedStyle.marginRight;
             let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
 
             if (computedValue === '' || computedValue === '0px')
@@ -680,7 +681,7 @@ function applyHoverEffect(targetElement)
             {
                 // line
                 {
-                    applySharedLineStyles(lineElement.style);
+                    applySharedLineStyles(lineElement.style, 'marginRight');
 
                     lineElement.style.height = '1px';
                     lineElement.style.width = computedValueAsNumber + 'px';
@@ -690,7 +691,7 @@ function applyHoverEffect(targetElement)
 
                 // box
                 {
-                    applySharedBoxStyles(boxElement.style);
+                    applySharedBoxStyles(boxElement.style, 'marginRight');
 
                     // content
                     {
@@ -710,12 +711,12 @@ function applyHoverEffect(targetElement)
                     {
                         const boxRect = boxElement.getBoundingClientRect();
                         let positionLeftAsNumber = rect.left + rect.width + computedValueAsNumber / 2 - boxRect.width / 2;
-                        if(positionLeftAsNumber < 0)
+                        if (positionLeftAsNumber < 0)
                         {
                             positionLeftAsNumber = 0;
                         }
                         boxElement.style.left = positionLeftAsNumber + 'px';
-                        boxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2  + 'px';
+                        boxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2 + 'px';
                     }
                 }
             }
@@ -724,9 +725,9 @@ function applyHoverEffect(targetElement)
         // top
         {
             let lineElement = marginTopIndicatorLineElement;
-            let boxElement  = marginTopIndicatorBoxElement;
+            let boxElement = marginTopIndicatorBoxElement;
 
-            let computedValue =  computedStyle.marginTop;
+            let computedValue = computedStyle.marginTop;
             let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
 
             if (computedValue === '' || computedValue === '0px')
@@ -738,7 +739,7 @@ function applyHoverEffect(targetElement)
             {
                 // box
                 {
-                    applySharedBoxStyles(boxElement.style);
+                    applySharedBoxStyles(boxElement.style, 'marginTop');
 
                     // content
                     {
@@ -757,14 +758,14 @@ function applyHoverEffect(targetElement)
                     // align
                     {
                         const boxRect = boxElement.getBoundingClientRect();
-                        boxElement.style.left = rect.left + rect.width / 2  - boxRect.width / 2 + 'px';
+                        boxElement.style.left = rect.left + rect.width / 2 - boxRect.width / 2 + 'px';
                         boxElement.style.top = rect.top - computedValueAsNumber / 2 - boxRect.height / 2 + 'px';
                     }
                 }
 
                 // line
                 {
-                    applySharedLineStyles(lineElement.style);
+                    applySharedLineStyles(lineElement.style, 'marginTop');
 
                     lineElement.style.width = '1px';
                     lineElement.style.height = computedValueAsNumber + 'px';
@@ -777,7 +778,7 @@ function applyHoverEffect(targetElement)
         // bottom
         {
             let lineElement = marginBottomIndicatorLineElement;
-            let boxElement  = marginBottomIndicatorBoxElement;
+            let boxElement = marginBottomIndicatorBoxElement;
 
             let computedValue = computedStyle.marginBottom;
             let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
@@ -791,7 +792,7 @@ function applyHoverEffect(targetElement)
             {
                 // box
                 {
-                    applySharedBoxStyles(boxElement.style);
+                    applySharedBoxStyles(boxElement.style, 'marginBottom');
 
                     // content
                     {
@@ -817,7 +818,7 @@ function applyHoverEffect(targetElement)
 
                 // line
                 {
-                    applySharedLineStyles(lineElement.style);
+                    applySharedLineStyles(lineElement.style, 'marginBottom');
 
                     lineElement.style.width = '1px';
                     lineElement.style.height = computedValueAsNumber + 'px';
@@ -826,34 +827,87 @@ function applyHoverEffect(targetElement)
                 }
             }
         }
-    }    
-    
-    function applySharedBoxStyles(style)
+    }
+
+    function applySharedBoxStyles(style, targetProperty)
     {
         style.display = 'block';
         style.position = 'fixed';
         style.zIndex = '999999';
         style.borderRadius = '3px';
-        style.padding = '2px';
+        
+        style.paddingLeft = '2px';
+        style.paddingRight = '2px';
+        style.paddingTop = '1px';
+        style.paddingBottom = '1px';
+        
         style.background = '#4597F7';
         style.color = '#DECBFC';
         style.fontSize = '10px';
         style.lineHeight = '10px';
         style.textAlign = 'center';
         style.fontFamily = 'monospace';
+
+        if (targetProperty.indexOf('margin') === 0)
+        {
+            style.background = '#EA3FB8';
+        }
     }
 
-    function applySharedLineStyles(style)
+    function applySharedLineStyles(style, targetProperty)
     {
         style.display = 'block';
         style.position = 'fixed';
         style.backgroundColor = '#4597F7';
+
+        if (targetProperty.indexOf('margin') === 0)
+        {
+            style.backgroundColor = '#EA3FB8';
+        }
     }
 }
 
 function removeHoverEffect(targetElement)
 {
     targetElement.classList.remove('react-with-dotnet-designer-hover-effect');
+
+    function displayNone(element)
+    {
+        if(element == null)
+        {
+            return;
+        }
+        
+        element.style.display = 'none';
+    }
+
+    displayNone(sizeIndicatorBoxElement);
+
+    // padding
+    displayNone(paddingLeftIndicatorLineElement);
+    displayNone(paddingLeftIndicatorBoxElement);
+
+    displayNone(paddingRightIndicatorLineElement);
+    displayNone(paddingRightIndicatorBoxElement);
+
+    displayNone(paddingTopIndicatorLineElement);
+    displayNone(paddingTopIndicatorBoxElement);
+
+    displayNone(paddingBottomIndicatorLineElement);
+    displayNone(paddingBottomIndicatorBoxElement);
+
+    // margin
+    displayNone(marginLeftIndicatorLineElement);
+    displayNone(marginLeftIndicatorBoxElement);
+
+    displayNone(marginRightIndicatorLineElement);
+    displayNone(marginRightIndicatorBoxElement);
+
+    displayNone(marginTopIndicatorLineElement);
+    displayNone(marginTopIndicatorBoxElement);
+
+    displayNone(marginBottomIndicatorLineElement);
+    displayNone(marginBottomIndicatorBoxElement);    
 }
 
 document.addEventListener('mouseover', (e) => 

@@ -21,7 +21,7 @@ class SampleComponent: Component
               new div
               {
                   Margin(67,45,23,34),
-                  // PaddingLeft(23),
+                  PaddingLeft(23),
                   Size(40),  Background(Gray400)
               }
           },
