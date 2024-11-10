@@ -18,7 +18,11 @@ class SampleComponent: Component
               PaddingTop(56),
               PaddingRight(24),
               PaddingBottom(28),
-              new div{ Size(40),  Background(Gray400) }
+              new div
+              {
+                  MarginLeft(67),
+                  Size(40),  Background(Gray400)
+              }
           },
           
           new FlexRowCentered(Background(Amber300), SizeFitContent)

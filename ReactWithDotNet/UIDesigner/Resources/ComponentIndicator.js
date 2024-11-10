@@ -34,11 +34,6 @@ function NumberToString(number)
     }
 }
 
-function NumberAsPixel(number) 
-{
-    return NumberToString(number) + 'px';
-}
-
 function getMediaQueryStyle(element, propertyName)
 {
     const stylesheets = Array.from(document.styleSheets);
@@ -47,7 +42,7 @@ function getMediaQueryStyle(element, propertyName)
     {
         try
         {
-            const rules = stylesheet.cssRules || stylesheet.rules;
+            const rules = stylesheet.cssRules;
 
             for (const rule of rules)
             {
@@ -285,7 +280,7 @@ function applyHoverEffect(targetElement)
                 let paddingLeftValue = GetStyleValue(targetElement, 'paddingLeft');
                 
                 let finalInnerHTML = NumberToString(paddingLeftAsNumber);
-                if (!(paddingLeftValue == null || paddingLeft === '' || paddingLeft === '0px' || paddingLeft === paddingLeftValue))
+                if (!(paddingLeftValue == null || paddingLeft === '' || paddingLeftValue.indexOf('px') > 0))
                 {
                     finalInnerHTML += "<br> (" + paddingLeftValue + ")";
                 }
@@ -333,7 +328,7 @@ function applyHoverEffect(targetElement)
                 let paddingRightValue = GetStyleValue(targetElement, 'paddingRight');
 
                 let finalInnerHTML = NumberToString(paddingRightAsNumber);
-                if (!(paddingRightValue == null || paddingRight === '' || paddingRight === '0px' || paddingRight === paddingRightValue))
+                if (!(paddingRightValue == null || paddingRight === '' || paddingRight.indexOf('px') > 0))
                 {
                     finalInnerHTML += "<br> (" + paddingRightValue + ")";
                 }
@@ -359,8 +354,6 @@ function applyHoverEffect(targetElement)
         }
         else
         {
-            
-
             // box
             {
                 applySharedBoxStyles(topPaddingIndicatorBoxElement.style);
@@ -368,7 +361,7 @@ function applyHoverEffect(targetElement)
                 let paddingTopValue = GetStyleValue(targetElement, 'paddingTop');
 
                 let finalInnerHTML = NumberToString(paddingTopAsNumber);
-                if (!(paddingTopValue == null || paddingTop === '' || paddingTop === '0px' || paddingTop === paddingTopValue))
+                if (!(paddingTopValue == null || paddingTop === '' || paddingTop.indexOf('px') > 0))
                 {
                     finalInnerHTML += " (" + paddingTopValue + ")";
                 }
@@ -394,7 +387,7 @@ function applyHoverEffect(targetElement)
 
     // PADDING BOTTOM
     {
-        let paddingBottom =  getComputedStyle(targetElement).paddingBottom;
+        let paddingBottom = getComputedStyle(targetElement).paddingBottom;
         let paddingBottomAsNumber = parseFloat(paddingBottom.replace('px', ''));
 
         if (paddingBottom === '' || paddingBottom === '0px')
@@ -411,7 +404,7 @@ function applyHoverEffect(targetElement)
                 let paddingBottomValue = GetStyleValue(targetElement, 'paddingBottom');
 
                 let finalInnerHTML = NumberToString(paddingBottomAsNumber);
-                if (!(paddingBottomValue == null || paddingBottom === '' || paddingBottom === '0px' || paddingBottom === paddingBottomValue))
+                if (!(paddingBottomValue == null || paddingBottom === '' || paddingBottom.indexOf('px') > 0))
                 {
                     finalInnerHTML += " (" + paddingBottomValue + ")";
                 }
@@ -419,7 +412,7 @@ function applyHoverEffect(targetElement)
                 bottomPaddingIndicatorBoxElement.innerHTML = finalInnerHTML;
 
                 const boxRect = bottomPaddingIndicatorBoxElement.getBoundingClientRect();
-                bottomPaddingIndicatorBoxElement.style.left = rect.left + rect.width / 2  - boxRect.width / 2 + 'px';
+                bottomPaddingIndicatorBoxElement.style.left = rect.left + rect.width / 2 - boxRect.width / 2 + 'px';
                 bottomPaddingIndicatorBoxElement.style.top = rect.top + rect.height - paddingBottomAsNumber / 2 - boxRect.height / 2 + 'px';
             }
 
@@ -432,14 +425,6 @@ function applyHoverEffect(targetElement)
                 bottomPaddingIndicatorLineElement.style.left = rect.left + rect.width / 2 + 'px';
                 bottomPaddingIndicatorLineElement.style.top = rect.top + rect.height - paddingBottomAsNumber + 'px';
             }
-
-
-
-
-
-
-
-
         }
     }
 
