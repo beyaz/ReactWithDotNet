@@ -22,7 +22,8 @@ class SampleComponent: Component
               {
                   Margin(67,45,23,34),
                   PaddingLeft(23),
-                  ZIndex("none"),
+                  Background("red"),
+                  "XY",
                   Size(40),  Background(Gray400)
               }
           },
