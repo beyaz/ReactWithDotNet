@@ -32,7 +32,7 @@
         return false;
     }
     
-    const style = window.getComputedStyle(targetElement);
+    const style = getComputedStyle(targetElement);
 
     return style.outlineStyle === 'none';
 }
