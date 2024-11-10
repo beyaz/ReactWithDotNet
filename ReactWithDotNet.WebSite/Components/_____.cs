@@ -25,6 +25,15 @@ class SampleComponent: Component
                   Background("red"),
                   "XY",
                   Size(40),  Background(Gray400)
+              },
+              
+              new div
+              {
+                  Margin(67,45,23,34),
+                  PaddingLeft(23),
+                  
+                  "XY",
+                  Size(40),  BackgroundImage(url(DummySrc(40)))
               }
           },
           

@@ -2,8 +2,7 @@
 {
     return !(
 
-        targetElement === sizeIndicatorBoxElement ||
-        targetElement === indicatorElement
+        targetElement === sizeIndicatorBoxElement
 
         // padding
         || targetElement === paddingLeftIndicatorLineElement
@@ -43,54 +42,6 @@ function NumberToString(number)
     {
         return number.toFixed(2);
     }
-}
-
-function GetEffectiveZIndex(element) 
-{
-    let zIndex = getComputedStyle(element).zIndex;
-    
-    let currentElement = element;
-
-    // Traverse up the DOM tree to find the closest stacking context with a numeric z-index
-    while (zIndex === 'auto' && currentElement.parentElement) 
-    {
-        currentElement = currentElement.parentElement;
-        zIndex = window.getComputedStyle(currentElement).zIndex;
-    }
-
-    // Return the found z-index, or "auto" if none was found
-    return zIndex === 'auto' ? 0 : parseInt(zIndex, 10);
-}
-
-function HasBackground(element)
-{
-    let currentElement = element;
-
-    while (currentElement)
-    {
-        if (currentElement.tagName.toLowerCase() === 'img')
-        {
-            return true;
-        }
-        
-        const style = window.getComputedStyle(currentElement);
-
-        // Check if there is a non-transparent background color
-        const hasBackgroundColor = style.backgroundColor !== 'rgba(0, 0, 0, 0)' && style.backgroundColor !== 'transparent';
-
-        // Check if there is a background image
-        const hasBackgroundImage = style.backgroundImage !== 'none';
-
-        if (hasBackgroundColor || hasBackgroundImage)
-        {
-            return true;
-        }
-
-        // Move to the parent element to continue checking
-        currentElement = currentElement.parentElement;
-    }
-
-    return false;
 }
 
 function getMediaQueryStyle(element, propertyName)
@@ -224,8 +175,6 @@ function GetStyleValue(element, propertyName)
 
 let sizeIndicatorBoxElement = null;
 
-let indicatorElement = null;
-
 // padding
 let paddingLeftIndicatorLineElement = null;
 let paddingLeftIndicatorBoxElement = null;
@@ -259,40 +208,25 @@ function applyHoverEffect(targetElement)
 
     const rect = targetElement.getBoundingClientRect();
 
-    // indicatorElement
-    { 
-        if (indicatorElement === null)
-        {
-            indicatorElement = document.createElement('div');
-            document.body.appendChild(indicatorElement);
-            
-            
-            indicatorElement.style.position = 'fixed';
-            indicatorElement.style.outline = '1px dashed #bfdbfe';
-            indicatorElement.style.backgroundImage = 'repeating-linear-gradient(45deg, #fde047 0, #fde047 1px, transparent 0, transparent 50%)';
-            indicatorElement.style.backgroundSize = '5px 5px';
-        }
-
-        indicatorElement.style.display = 'block';
+    // apply background
+    {
+        targetElement.outlineReal = targetElement.style.outline;
+        targetElement.backgroundImageReal = targetElement.style.backgroundImage
+        targetElement.backgroundSizeReal = targetElement.style.backgroundSize;
         
-        // arrange z-index
-        {
-            let effectiveZIndex = GetEffectiveZIndex(targetElement);
-
-            indicatorElement.style.zIndex = (effectiveZIndex - 1).toString();
-
-            if (HasBackground(targetElement))
-            {
-                indicatorElement.style.zIndex = (effectiveZIndex + 1).toString();
-            }    
-        }
+        targetElement.style.outline = '1px dashed #bfdbfe';
         
-        // align
+        const linearGradientValue = 'repeating-linear-gradient(45deg, #fde047 0, #fde047 1px, transparent 0, transparent 50%)';
+        
+        if (targetElement.style.backgroundImage !== 'none')
         {
-            indicatorElement.style.width = rect.width + 'px';
-            indicatorElement.style.height = rect.height + 'px';
-            indicatorElement.style.left = rect.left + 'px';
-            indicatorElement.style.top = rect.top + 'px';
+            targetElement.style.backgroundImage = linearGradientValue + "," + targetElement.style.backgroundImage;
+            targetElement.style.backgroundSize = '5px 5px, cover';
+        }
+        else
+        {
+            targetElement.style.backgroundImage = linearGradientValue;
+            targetElement.style.backgroundSize = '5px 5px';
         }
     }
     
@@ -950,8 +884,12 @@ function applyHoverEffect(targetElement)
     }
 }
 
-function removeHoverEffect()
+function removeHoverEffect(element)
 {
+    element.style.outline = element.outlineReal
+    element.style.backgroundImage = element.backgroundImageReal;
+    element.style.backgroundSize = element.backgroundSizeReal;
+    
     function displayNone(element)
     {
         if(element == null)
@@ -964,8 +902,7 @@ function removeHoverEffect()
         }
         element.style.display = 'none';
     }
-
-    displayNone(indicatorElement);
+    
     displayNone(sizeIndicatorBoxElement);
 
     // padding
@@ -1034,7 +971,7 @@ document.addEventListener("mousemove", (event) =>
         if (lastIndicatedElement) 
         {
             // Trigger a "mouseleave" effect for the previous element
-            removeHoverEffect();
+            removeHoverEffect(lastIndicatedElement);
         }
 
         // Trigger a "mouseenter" effect for the new element
