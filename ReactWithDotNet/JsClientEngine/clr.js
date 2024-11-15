@@ -680,8 +680,30 @@ function Interpret(thread)
                     }
                     NotImplementedOpCode(); break;
                 }
-                case 63: // Bne_Un
+                case 63: // Bne_Un: Transfers control to a target instruction when two unsigned integer values or unordered float values are not equal.
                 {
+                    let value1 = evaluationStack.pop();
+                    let value0 = evaluationStack.pop();
+
+                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    {
+                        // use >>> for support UInt32
+                        // NaN >>> 0 is 0 and NaN === NaN is false
+                        // Infinity >>> 0 and Infinity === Infinity is true
+                        
+                        if (value0 === value1 || value0 >>> 0 === value1 >>> 0)
+                        {
+                            nextInstruction = instructions[++currentStackFrame.Line];
+                        }
+                        else
+                        {
+                            currentStackFrame.Line = operands[currentStackFrame.Line];
+
+                            nextInstruction = instructions[currentStackFrame.Line];
+                        }
+
+                        break;
+                    }
                     NotImplementedOpCode(); break;
                 }
                 case 64: // Bge_Un
