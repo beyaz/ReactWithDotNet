@@ -17,7 +17,7 @@
       <EmbeddedResource Include="UIDesigner\Resources\Namespace.svg" />
       <EmbeddedResource Include="UIDesigner\Resources\ComponentIndicator.js" />
 
-      <EmbeddedResource Include="JsClientEngine\CompiledClientFiles\**\*" />
+      <EmbeddedResource Include="JsClientEngine\dist\*" />
     </ItemGroup>
 
     <ItemGroup>

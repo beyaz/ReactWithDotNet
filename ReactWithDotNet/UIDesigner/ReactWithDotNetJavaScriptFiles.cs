@@ -77,7 +77,7 @@ public sealed class ReactWithDotNetJavaScriptFiles
         {
             if (requestPath.StartsWith("/ReactWithDotNet/", StringComparison.OrdinalIgnoreCase))
             {
-                resourceName = "ReactWithDotNet.JsClientEngine.CompiledClientFiles.debug." + requestPath.RemoveFromStart("/ReactWithDotNet/");
+                resourceName = "ReactWithDotNet.JsClientEngine.dist." + requestPath.RemoveFromStart("/ReactWithDotNet/");
             }
 
             if (resourceName is null)
@@ -92,7 +92,7 @@ public sealed class ReactWithDotNetJavaScriptFiles
 
                     if (path.Contains("/ReactWithDotNet/", StringComparison.OrdinalIgnoreCase))
                     {
-                        resourceName = "ReactWithDotNet.JsClientEngine.CompiledClientFiles.debug." + requestPath.RemoveFromStart("/ReactWithDotNet/");
+                        resourceName = "ReactWithDotNet.JsClientEngine.dist." + requestPath.RemoveFromStart("/ReactWithDotNet/");
                     }
                 }
             }
