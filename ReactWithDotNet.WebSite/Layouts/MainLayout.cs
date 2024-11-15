@@ -1,35 +1,13 @@
-﻿using System.IO;
-
-namespace ReactWithDotNet.WebSite;
+﻿namespace ReactWithDotNet.WebSite;
 
 sealed class MainLayout : PureComponent, IPageLayout
 {
-    static string LastWriteTimeOfIndexJsFile;
-
     public string ContainerDomElementId => "app";
 
     public ComponentRenderInfo RenderInfo { get; set; }
 
-    static string CompilerMode
-    {
-        get
-        {
-#if DEBUG
-            return "debug";
-#else
-                return "release";
-#endif
-        }
-    }
-
-    string IndexCssFilePath => $"/{Context.wwwroot}/ReactWithDotNet/{CompilerMode}/index.css";
-
-    string IndexJsFilePath => $"/{Context.wwwroot}/ReactWithDotNet/{CompilerMode}/index.js";
-
     protected override Element render()
     {
-        LastWriteTimeOfIndexJsFile ??= new FileInfo(IndexJsFilePath).LastWriteTime.Ticks.ToString();
-
         var root = Context.wwwroot;
 
         var fonts = root + "/assets/fonts/";
@@ -60,7 +38,7 @@ sealed class MainLayout : PureComponent, IPageLayout
                 {
                     rel         = "stylesheet",
                     type        = "text/css",
-                    href        = $"{IndexCssFilePath}?v={LastWriteTimeOfIndexJsFile}",
+                    href        = IndexCssFilePath,
                     crossOrigin = "anonymous"
                 },
                 
@@ -87,16 +65,14 @@ sealed class MainLayout : PureComponent, IPageLayout
 
                 // After page first rendered in client then connect with react system in background.
                 // So user first iteraction time will be minimize.
-
                 
-
                 new script
                 {
                     type = "module",
 
                     text =
                         $$"""
-                          import {ReactWithDotNet} from '{{IndexJsFilePath}}?v={{LastWriteTimeOfIndexJsFile}}';
+                          import {ReactWithDotNet} from '{{IndexJsFilePath}}';
 
                           ReactWithDotNet.StrictMode = false;
 

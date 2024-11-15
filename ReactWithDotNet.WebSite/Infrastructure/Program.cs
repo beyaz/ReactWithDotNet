@@ -38,6 +38,8 @@ public class Program
 
         app.UseRouting();
 
+        app.ConfigureReactWithDotNet();
+        
         app.UseStaticFiles(new StaticFileOptions
         {
             RequestPath         = new PathString("/wwwroot"),
@@ -46,8 +48,6 @@ public class Program
         });
 
         app.UseResponseCompression();
-
-        app.ConfigureReactWithDotNet();
 
         app.Run();
     }

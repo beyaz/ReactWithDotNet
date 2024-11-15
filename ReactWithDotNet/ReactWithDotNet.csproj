@@ -22,6 +22,11 @@
         <WarningLevel>3</WarningLevel>
     </PropertyGroup>
 
+	<ItemGroup>
+		<EmbeddedResource Include="JsClientEngine\CompiledClientFiles\**\*" />
+	</ItemGroup>
+	
+	
     <ItemGroup>
       <EmbeddedResource Include="UIDesigner\Resources\Class.svg" />
       <EmbeddedResource Include="UIDesigner\Resources\Method.svg" />
@@ -50,15 +55,6 @@
 		<PackageTags>react;reactjs;ReactWithDotNet</PackageTags>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<Content Include="JsClientEngine\CompiledClientFiles\**\*" Pack="true" PackagePath="build\CompiledClientFiles" />
-		<None Include="build\ReactWithDotNet.targets" Pack="true" PackagePath="build\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="build\" />
-	</ItemGroup>
 
 	<Target Name="UpdateLocalNuget" AfterTargets="Build" Condition="$(Configuration) == 'Release'">
 		<Exec Command="dotnet pack $(ProjectPath) -o C:\NugetPackages" />

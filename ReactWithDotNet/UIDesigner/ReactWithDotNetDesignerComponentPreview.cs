@@ -437,7 +437,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
             },
             new script
             {
-                src = "ReactWithDotNet.UIDesigner.Resources.ComponentIndicator.js"
+                src = HelperJsFileResourceName
             }
         };
 
@@ -447,4 +447,6 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
             element
         };
     }
+
+    public static readonly string HelperJsFileResourceName = "ReactWithDotNet.UIDesigner.Resources.ComponentIndicator.js";
 }
