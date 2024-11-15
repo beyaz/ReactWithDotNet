@@ -8,40 +8,23 @@
         <LangVersion>preview</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	    <WarningLevel>3</WarningLevel>
     </PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Mono.Cecil" Version="0.11.6" />
-	</ItemGroup>
-	
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <WarningLevel>3</WarningLevel>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <WarningLevel>3</WarningLevel>
-    </PropertyGroup>
-
-	<ItemGroup>
-		<EmbeddedResource Include="JsClientEngine\CompiledClientFiles\**\*" />
-	</ItemGroup>
-	
 	
     <ItemGroup>
       <EmbeddedResource Include="UIDesigner\Resources\Class.svg" />
       <EmbeddedResource Include="UIDesigner\Resources\Method.svg" />
       <EmbeddedResource Include="UIDesigner\Resources\Namespace.svg" />
       <EmbeddedResource Include="UIDesigner\Resources\ComponentIndicator.js" />
+
+      <EmbeddedResource Include="JsClientEngine\CompiledClientFiles\**\*" />
     </ItemGroup>
 
     <ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="Mono.Cecil" Version="0.11.6" />
+		<ProjectReference Include="..\ReactWithDotNet.SourceGenerator\ReactWithDotNet.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\ReactWithDotNet.SourceGenerator\ReactWithDotNet.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    </ItemGroup>
-
 
 	<PropertyGroup>
 		<PackageId>ReactWithDotNet</PackageId>
