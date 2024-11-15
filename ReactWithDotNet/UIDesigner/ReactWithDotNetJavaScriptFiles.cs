@@ -72,6 +72,20 @@ public sealed class ReactWithDotNetJavaScriptFiles
 
             resourceName = requestPath;
         }
+        
+        if (requestPath == "/clr.js" || requestPath == "/long.js")
+        {
+            if (Environment.UserName == "beyaz")
+            {
+                return new()
+                {
+                    Type = ContentTypeApplication_Javascript,
+                    Data = File.ReadAllBytes($@"C:\github\ReactWithDotNet\ReactWithDotNet\JsClientEngine\{requestPath.RemoveFromStart("/")}")
+                };
+            }
+
+            resourceName = requestPath;
+        }
 
         if (resourceName is null)
         {

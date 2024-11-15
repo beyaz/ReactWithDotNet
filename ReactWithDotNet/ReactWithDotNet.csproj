@@ -18,6 +18,8 @@
       <EmbeddedResource Include="UIDesigner\Resources\ComponentIndicator.js" />
 
       <EmbeddedResource Include="JsClientEngine\dist\*" />
+      <EmbeddedResource Include="JsClientEngine\clr.js" />
+      <EmbeddedResource Include="JsClientEngine\long.js" />
     </ItemGroup>
 
     <ItemGroup>
