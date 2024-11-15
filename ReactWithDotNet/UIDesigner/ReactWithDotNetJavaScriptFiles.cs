@@ -17,12 +17,19 @@ public sealed class ReactWithDotNetJavaScriptFiles
         _next = next;
     }
 
+    /// <summary>
+    ///     Default value is 5 minute.
+    /// </summary>
+    public static TimeSpan Timeout { get; set; } = TimeSpan.FromMinutes(5);
+
     public async Task InvokeAsync(HttpContext context)
     {
         var content = TryGetContentOfJsFile(context);
         if (content != null)
         {
             context.Response.ContentType = content.Type;
+
+            context.Response.Headers.Append("Cache-Control", $"public, max-age={Timeout.TotalSeconds}");
 
             await context.Response.Body.WriteAsync(content.Data);
 
@@ -35,7 +42,7 @@ public sealed class ReactWithDotNetJavaScriptFiles
     ContentInfo TryGetContentOfJsFile(HttpContext context)
     {
         const string ContentTypeApplication_Javascript = "application/javascript";
-        
+
         const string ContentTypeText_Css = "text/css";
 
         var httpRequest = context.Request;
@@ -72,7 +79,7 @@ public sealed class ReactWithDotNetJavaScriptFiles
 
             resourceName = requestPath;
         }
-        
+
         if (requestPath == "/clr.js" || requestPath == "/long.js")
         {
             if (Environment.UserName == "beyaz")
