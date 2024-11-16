@@ -2148,29 +2148,31 @@ function Interpret(thread)
                 }
 
                 case 219: // Jump
-
+                {
                     instructions = InterpreterBridge_Jump_MethodDefinition.Body.Instructions;
                     operands     = InterpreterBridge_Jump_MethodDefinition.Body.Operands;
 
                     evaluationStack = [];
                     localVariables  = [];
-                                
-                    currentStackFrame = thread.LastFrame = 
-                    {
-                        Prev: thread.LastFrame,
 
-                        Method: InterpreterBridge_Jump_MethodDefinition,
-                        Line: 0,
+                    currentStackFrame = thread.LastFrame =
+                        {
+                            Prev: thread.LastFrame,
 
-                        EvaluationStack: evaluationStack,
-                        LocalVariables: localVariables
-                    };
-                                
+                            Method: InterpreterBridge_Jump_MethodDefinition,
+                            Line: 0,
+
+                            EvaluationStack: evaluationStack,
+                            LocalVariables: localVariables
+                        };
+
                     nextInstruction = instructions[currentStackFrame.Line];
 
                     break;
+                }                    
 
                 case 220: // CallJsNative
+                {
                     switch(operands[currentStackFrame.Line])
                     {
                         // set
@@ -2179,9 +2181,9 @@ function Interpret(thread)
                             let value    = evaluationStack.pop();
                             let key      = evaluationStack.pop();
                             let instance = evaluationStack.pop();
-                            
+
                             instance[key] = value;
-                            
+
                             break;
                         }
 
@@ -2190,9 +2192,9 @@ function Interpret(thread)
                         {
                             let key      = evaluationStack.pop();
                             let instance = evaluationStack.pop();
-                            
+
                             evaluationStack.push( instance[key] );
-                            
+
                             break;
                         }
 
@@ -2215,9 +2217,9 @@ function Interpret(thread)
                         {
                             let value1 = evaluationStack.pop();
                             let value0 = evaluationStack.pop();
-                            
+
                             evaluationStack.push( value0 + value1 );
-                            
+
                             break;
                         }
 
@@ -2252,7 +2254,7 @@ function Interpret(thread)
 
                             break;
                         }
-                            
+
 
                         // instance.Call('functionName', parameter1)
                         case 7:
@@ -2280,7 +2282,7 @@ function Interpret(thread)
 
                             break;
                         }
-                            
+
 
                         // instance.Call('functionName', parameter1, parameter2)
                         case 8:
@@ -2309,7 +2311,7 @@ function Interpret(thread)
 
                             break;
                         }
-                            
+
 
                         // instance.Call('functionName', parameter1, parameter2, parameter3)
                         case 9:
@@ -2339,7 +2341,7 @@ function Interpret(thread)
 
                             break;
                         }
-                            
+
 
                         // instance.Call('functionName', parameters)
                         case 10:
@@ -2367,7 +2369,7 @@ function Interpret(thread)
 
                             break;
                         }
-                            
+
 
                         case 11: // GlobalMetadata
                         {
@@ -2406,7 +2408,7 @@ function Interpret(thread)
 
                             evaluationStack.push(arrayInstance.pop());
                             break;
-                        }    
+                        }
                         case 14: // Dump
                         {
                             console.log(evaluationStack.pop());
@@ -2419,11 +2421,12 @@ function Interpret(thread)
                             break;
                         }
                     }
-            
+
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }
 
-            }   
+            }
         }
         catch (exception)
         {
@@ -2431,7 +2434,7 @@ function Interpret(thread)
 
             let exceptionStack = [];
 
-            // buble up exception
+            // bubble up exception
             while(true)
             {
                 exceptionStack.push(currentStackFrame);
