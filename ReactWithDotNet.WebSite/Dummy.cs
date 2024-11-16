@@ -211,21 +211,21 @@ class Deneme45
 
     static void TryCatchFinaly_0()
     {
-        string value = "";
+        string value = "0";
         try
-        {
-            value += "0";
-        }
-        catch (Exception)
         {
             value += "1";
         }
-        finally
+        catch (Exception)
         {
             value += "2";
         }
+        finally
+        {
+            value += "3";
+        }
 
-        if (value == "02")
+        if (value == "013")
         {
             console.log("success");
         }
@@ -237,33 +237,33 @@ class Deneme45
     
     static void TryCatchFinaly_1()
     {
-        string value = "";
+        string value = "0";
 
         try
         {
             try
             {
-                value += "0";
+                value += "1";
             }
             catch (Exception)
             {
-                value +="1";
+                value +="2";
             }
             finally
             {
-                value += "2";
+                value += "3";
             }
         }
         catch (Exception)
         {
-            value += "3";
+            value += "4";
         }
         finally
         {
-            value += "4";
+            value += "5";
         }
 
-        if (value == "024")
+        if (value == "0135")
         {
             console.log("success");
         }
@@ -335,13 +335,13 @@ class Deneme45
     }
     public static string Abc5()
     {
-        //ExternalCallTest.Static_Void_Call();
-        //ExternalCallTest.Static_NonVoid_Call();
-        //LdInd();
-        //TryCatchFinaly_0();
-        //TryCatchFinaly_1();
-        // TryCatch_0();
+        ExternalCallTest.Static_Void_Call();
+        ExternalCallTest.Static_NonVoid_Call();
+        LdInd();
+        TryCatch_0();
         TryCatch_1();
+        TryCatchFinaly_0();
+        TryCatchFinaly_1();
 
 
 
