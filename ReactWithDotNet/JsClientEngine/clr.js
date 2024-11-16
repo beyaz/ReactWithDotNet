@@ -1255,13 +1255,13 @@ function Interpret(thread)
 
                     let instance = methodArguments[methodArgumentsOffset];
 
-                    AssertNotNull(instance.$type);
+                    AssertNotNull(instance.$typeIndex);
 
                     // find target method
 
                     let targetMethod = null;
                     {                    
-                        let instanceMethods = instance.$type.Methods;
+                        let instanceMethods = GlobalMetadata.Types[instance.$typeIndex].Methods;
                         let instanceMethodsLength = instanceMethods.length;
 
                         for (let i = 0; i < instanceMethodsLength; i++)
@@ -1335,7 +1335,7 @@ function Interpret(thread)
                     let declaringType = GlobalMetadata.Types[method.DeclaringType];
 
                     let newObj = {};
-                    newObj['$type'] = declaringType;
+                    newObj.$typeIndex = method.DeclaringType;
 
                     if (declaringType.IsGenericInstance)
                     {
@@ -1415,11 +1415,13 @@ function Interpret(thread)
                 {
                     NotImplementedOpCode(); break;
                 }
-                case 119: // Throw
+                case 119: // Throw: Throws the exception object currently on the evaluation stack.
                 {
                     ++currentStackFrame.Line;
 
-                    throw evaluationStack.pop();
+                    nextInstruction = 221;
+                    
+                    break;
                 }
 
                 case 120: // Ldfld
@@ -2425,96 +2427,140 @@ function Interpret(thread)
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
                 }
+                
+                case 221: // handle exception
+                {
+                    let exception = evaluationStack.pop();
+
+                    if(typeof exception === 'string')
+                    {
+                        exception = new Error(exception);
+                    }
+
+                    let handlerFound = 0;
+                    while( currentStackFrame && !handlerFound )
+                    {
+                        let exceptionHandlers = currentStackFrame.Method.Body.ExceptionHandlers;
+                        let exceptionHandlersLength = exceptionHandlers.length;
+
+                        for (let i = 0; i < exceptionHandlersLength; i++)
+                        {
+                            let exceptionHandler = exceptionHandlers[i];
+
+                            if ( exceptionHandler.CatchType >= 0 )
+                            {
+                                let catchTypeIsDotNetRootException =  
+                                    GlobalMetadata.Types[exceptionHandler.CatchType].Namespace === 'System' &&
+                                    GlobalMetadata.Types[exceptionHandler.CatchType].Name === 'Exception';
+                                
+                                if ( exception.$typeIndex ===  exceptionHandler.CatchType || catchTypeIsDotNetRootException )
+                                {
+                                    if (exceptionHandler.TryStart <= currentStackFrame.Line &&
+                                        exceptionHandler.TryEnd >= currentStackFrame.Line)
+                                    {
+                                        handlerFound = 1;
+                                        
+                                        evaluationStack.push(exception);
+
+                                        currentStackFrame.Line = exceptionHandler.HandlerStart;
+                                        nextInstruction = instructions[currentStackFrame.Line];
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        const Finally = 2;
+                        
+                        let finallyFound = 0;
+                        
+                        // try to find finally block
+                        if (!handlerFound)
+                        {
+                            for (let i = 0; i < exceptionHandlersLength; i++)
+                            {
+                                let exceptionHandler = exceptionHandlers[i];
+
+                                if ( exceptionHandler.HandlerType === Finally )
+                                {
+                                    if (exceptionHandler.HandlerStart <= currentStackFrame.Line &&
+                                        exceptionHandler.HandlerEnd >= currentStackFrame.Line)
+                                    {
+                                        finallyFound = 1;
+                                        currentStackFrame.Line = exceptionHandler.HandlerStart;
+                                        nextInstruction = instructions[currentStackFrame.Line];
+                                        break;
+                                    }
+                                }
+                            }
+                            
+                            if( finallyFound )
+                            {
+                                thread.ExceptionObjectThatMustThrownWhenExitFinallyBlock = exception;
+                            }
+                        }
+
+                        if ( !handlerFound )
+                        {
+                            if(!exception._stackTrace)
+                            {
+                                exception._stackTrace =[];
+                            }
+                            exception._stackTrace.push(currentStackFrame.Method);
+
+                            if( currentStackFrame.Prev === null)
+                            {
+                                // exit thread
+                                throw exception;
+                            }
+
+                            // go previous stack frame
+                            {
+                                // arrange stack frame
+                                let previousStackFrame = currentStackFrame;
+
+                                thread.LastFrame = currentStackFrame = currentStackFrame.Prev;
+
+                                // arrange fast access variables
+                                instructions = currentStackFrame.Method.Body.Instructions;
+                                operands     = currentStackFrame.Method.Body.Operands;
+
+                                // arrange fast access variables
+                                evaluationStack      = currentStackFrame.EvaluationStack;
+                                localVariables       = currentStackFrame.LocalVariables;
+                                methodArguments      = currentStackFrame.MethodArguments;
+                                methodArgumentsOffset = currentStackFrame.MethodArgumentsOffset;
+
+                                // remove parameters
+                                length = previousStackFrame.Method.Parameters.length;
+                                while(length-- > 0)
+                                {
+                                    evaluationStack.pop();
+                                }
+
+                                // remove instance
+                                if (previousStackFrame.Method.IsStatic === false)
+                                {
+                                    evaluationStack.pop();
+                                }
+                            }
+                        }
+                    }
+                }
 
             }
         }
         catch (exception)
         {
-            let isExceptionHandled = false;
-
-            let exceptionStack = [];
-
-            // bubble up exception
-            while(true)
-            {
-                exceptionStack.push(currentStackFrame);
-
-                let isInHandlerRange = false;
-
-                let exceptionHandlers = currentStackFrame.Method.Body.ExceptionHandlers;
-                let exceptionHandlersLength = exceptionHandlers.length;
-
-                for (let i = 0; i < exceptionHandlersLength; i++)
-                {
-                    let exceptionHandler = exceptionHandlers[i];
-
-                    // is in range
-                    if (exceptionHandler.HandlerStart <= currentStackFrame.Line && 
-                        exceptionHandler.HandlerEnd >= currentStackFrame.Line)
-                    {
-                        isInHandlerRange = true;
-
-                        // no need to go previous method
-                        if (exceptionStack.length === 1)
-                        {
-                            evaluationStack.push(exception);
-
-                            currentStackFrame.Line = exceptionHandler.HandlerStart;
-                            nextInstruction = instructions[currentStackFrame.Line];
-                            break;
-                        }
-
-                        // arrange stack frame
-                        let previousStackFrame = currentStackFrame;
-
-                        thread.LastFrame = currentStackFrame = currentStackFrame.Prev;
-
-                        // arrange fast access variables
-                        instructions = currentStackFrame.Method.Body.Instructions;
-                        operands     = currentStackFrame.Method.Body.Operands;
-
-                        // arrange fast access variables
-                        evaluationStack      = currentStackFrame.EvaluationStack;
-                        localVariables       = currentStackFrame.LocalVariables;
-                        methodArguments      = currentStackFrame.MethodArguments;
-                        methodArgumentsOffset = currentStackFrame.MethodArgumentsOffset;
-                
-                        // remove parameters
-                        length = previousStackFrame.Method.Parameters.length;
-                        while(length-- > 0)
-                        {
-                            evaluationStack.pop();
-                        }
-
-                        // remove instance
-                        if (previousStackFrame.Method.IsStatic === false)
-                        {
-                            evaluationStack.pop();
-                        }
-
-                        // check has any return value
-                        if(previousStackFrame.EvaluationStack.length === 1)
-                        {
-                            evaluationStack.push(previousStackFrame.EvaluationStack.pop());
-                        }
-
-                        nextInstruction = instructions[++currentStackFrame.Line];
-
-                        break;
-                    }
-                }
-
-                if (isInHandlerRange)
-                {
-                    isExceptionHandled = true;
-                    break;
-                }
-            }
-
-            if (!isExceptionHandled)
+            // exit thread
+            if (nextInstruction === 221)
             {
                 throw exception;
             }
+
+            // handle exception
+            evaluationStack.push(exception);
+            nextInstruction = 221;
         }
     }
 }

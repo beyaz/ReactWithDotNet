@@ -444,6 +444,9 @@ static class MonoCecilToJsonModelMapper
             Operands     = operands,
             ExceptionHandlers = body.ExceptionHandlers.ToListOf(handler => new ExceptionHandler
             {
+                TryStart = body.Instructions.IndexOf(handler.TryStart),
+                TryEnd   = body.Instructions.IndexOf(handler.TryEnd),
+                
                 HandlerStart = body.Instructions.IndexOf(handler.HandlerStart),
                 HandlerEnd   = body.Instructions.IndexOf(handler.HandlerEnd),
                 CatchType    = handler.CatchType?.IndexAt(metadataTable),

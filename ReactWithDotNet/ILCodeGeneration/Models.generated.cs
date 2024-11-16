@@ -32,6 +32,10 @@ enum ExceptionHandlerType
 
 sealed record ExceptionHandler
 {
+    public int TryStart { get; set; }
+    
+    public int TryEnd { get; set; }
+    
     public required int HandlerEnd { get; init; }
     
     public required int HandlerStart { get; init; }
@@ -39,6 +43,7 @@ sealed record ExceptionHandler
     public required int? CatchType { get; init; }
 
     public required ExceptionHandlerType  HandlerType { get; init; }
+   
 }
 
 
@@ -186,8 +191,6 @@ sealed class MetadataTable
 sealed record ArrayTypeModel : TypeReferenceModel
 {
     public required int Rank { get; init; }
-    
-    public required int ElementType { get; init; }
 }
 
 sealed record GenericInstanceMethodModel : MethodReferenceModel

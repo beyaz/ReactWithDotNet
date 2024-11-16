@@ -273,24 +273,51 @@ class Deneme45
         }
     }
     
-    static void TryCatch_1()
+    static void TryCatch_0()
     {
-        var trace = "";
+        var trace = "0";
+        
         try
         {
-            trace += "0";
-            
-            trace += Call1455("t");
+            trace += "1";
+
+            throw new Exception("-abc-");
         }
         catch (Exception exception)
         {
-            trace +=  "1";
+            trace +=  "2";
 
             trace += exception.Message;
         }
 
         
-        if (trace == "01-abc-")
+        if (trace == "012-abc-")
+        {
+            console.log("success");
+        }
+        else
+        {
+            console.log("fail");
+        }
+    }
+    static void TryCatch_1()
+    {
+        var trace = "0";
+        try
+        {
+            trace += "1";
+            
+            trace += Call1455("t");
+        }
+        catch (Exception exception)
+        {
+            trace +=  "2";
+
+            trace += exception.Message;
+        }
+
+        
+        if (trace == "012-abc-")
         {
             console.log("success");
         }
@@ -313,6 +340,7 @@ class Deneme45
         //LdInd();
         //TryCatchFinaly_0();
         //TryCatchFinaly_1();
+        // TryCatch_0();
         TryCatch_1();
 
 
