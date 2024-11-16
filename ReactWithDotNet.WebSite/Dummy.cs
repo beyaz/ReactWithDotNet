@@ -129,47 +129,63 @@ class Deneme45
     public static string Abc5()
     {
 
-        sbyte v0 = 1;
-        byte v1 = 1;
-        short v2 = 1;
-        int v3 = 1;
-        float v4 = 1;
-        long v5 = 1;
+        //sbyte v0 = 1;
+        //byte v1 = 1;
+        //short v2 = 1;
+        //int v3 = 1;
+        //float v4 = 1;
+        //long v5 = 1;
 
-        var response = Ref2(ref v0);
-        
-        response = Ref2(ref v1);
-        
-        response = Ref2(ref v2);
-        
-        response = Ref2(ref v3);
-        
-        response = Ref2(ref v4);
-        
-        response = Ref2(ref v5);
-        
+        //var response = Ref2(ref v0);
 
-        return response;
+        //response = Ref2(ref v1);
+
+        //response = Ref2(ref v2);
+
+        //response = Ref2(ref v3);
+
+        //response = Ref2(ref v4);
+
+        //response = Ref2(ref v5);
 
 
+        //return response;
 
 
 
-        //var result = "0";
 
-        //try
-        //{
-        //    result = Call1("A");
-        //}
-        //catch (ArgumentException exception)
-        //{
-        //    result = exception.Message;
-        //}
-        //finally
-        //{
-        //    result = "ok";
-        //}
 
+        var result = "0";
+
+        try
+        {
+            //try
+            //{
+               console.log("Call_1");
+            //    result = Call1("A");
+            //    result = "1";
+            //    console.log("Call_2");
+            //}
+            //catch (ArgumentException exception)
+            //{
+            //    result = exception.Message;
+            //}
+            //finally
+            //{
+            //    console.log("Call_3");
+            //}
+        }
+        catch (ArgumentException exception)
+        {
+            result = exception.Message;
+        }
+        finally
+        {
+            console.log("Call_4");
+            result = "ok";
+        }
+
+        return result;
 
 
 

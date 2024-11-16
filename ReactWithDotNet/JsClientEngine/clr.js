@@ -71,6 +71,8 @@ function Interpret(thread)
     let methodArgumentsOffset = currentStackFrame.MethodArgumentsOffset;
 
     let nextInstruction = instructions[currentStackFrame.Line];
+    
+  
 
     while(true)
     {
@@ -1744,21 +1746,93 @@ function Interpret(thread)
 
                 case 186: // Endfinally
                 {
-                    NotImplementedOpCode(); break;
+                    if( thread.ExceptionObjectThatMustThrownWhenExitFinallyBlock !== null )
+                    {
+                        let exception = thread.ExceptionObjectThatMustThrownWhenExitFinallyBlock;
+                        thread.ExceptionObjectThatMustThrownWhenExitFinallyBlock = null;
+                        
+                        throw exception;
+                    }
+                    
+                    let line = currentStackFrame.Line;
+                    
+                    if (thread.LeaveJumpIndex !== null)
+                    {
+                        line = thread.LeaveJumpIndex;
+                        thread.LeaveJumpIndex = null;
+                    }
+                    else
+                    {
+                        line++;
+                    }
+
+                    // branch
+                    currentStackFrame.Line = line;
+                    nextInstruction = instructions[line];
+                    
+                    break;
                 }
 
-                case 187: // Leave
-                {
-                    NotImplementedOpCode(); break;
+                case 187: // Leave: Exits a protected region of code, unconditionally transferring control to a specific target instruction.
+                {   
+                    const Catch = 0;
+                    const Finally = 2;
+                    
+                    let exceptionHandlers = currentStackFrame.Method.Body.ExceptionHandlers;
+                    let exceptionHandlersLength = exceptionHandlers.length;
+                    
+                    let line = currentStackFrame.Line;
+                    
+                    let finallyFound = false;
+
+                    for (let i = 0; i < exceptionHandlersLength; i++)
+                    {
+                        let exceptionHandler = exceptionHandlers[i];
+                        
+                        if (exceptionHandler.HandlerType === Catch)
+                        {
+                            // is successfully passed protected region code
+                            if( line + 1 === exceptionHandler.HandlerStart  )
+                            {
+                                break;
+                            }
+                        }
+                        else if (exceptionHandler.HandlerType === Finally)
+                        {
+                            if( line <= exceptionHandler.HandlerEnd)
+                            {
+                                if( line + 1 >= exceptionHandler.HandlerStart)
+                                {
+                                    thread.LeaveJumpIndex = operands[line];
+                                    finallyFound = true;
+                                    line = exceptionHandler.HandlerStart;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    if( finallyFound === true )
+                    {
+                        currentStackFrame.Line = line;
+                        nextInstruction = instructions[currentStackFrame.Line];
+                    }
+                    else
+                    {
+                        // nextInstruction = instructions[++currentStackFrame.Line];
+
+                        // branch
+                        currentStackFrame.Line = operands[line];
+                        nextInstruction = instructions[currentStackFrame.Line];
+                    }
+
+                    break;
                 }
 
                 case 188: // Leave_S
                 {
-                    // branch
-                    currentStackFrame.Line = operands[currentStackFrame.Line];
-                    nextInstruction = instructions[currentStackFrame.Line];
-
-                    break;
+                    instructions[currentStackFrame.Line] = nextInstruction = 187;
+                    break;                   
                 }  
 
                 case 189: // Stind_I
@@ -2384,7 +2458,10 @@ function CallManagedStaticMethod(methodDefinition, args, success, fail)
             MethodArgumentsOffset: 0,
             Line: 0,
             Prev: null
-        }
+        },
+
+        LeaveJumpIndex: null,
+        ExceptionObjectThatMustThrownWhenExitFinallyBlock: null
     };
 
     try 
@@ -2488,4 +2565,5 @@ function IsTwoParameterListFullMatch(parametersA, parametersB)
 
     return true;
 }
+
 
