@@ -71,60 +71,7 @@ class Deneme45
         
     }
 
-    static string Ref2(ref sbyte value)
-    {
-        if (value == 0)
-        {
-            return "0";
-        }
-
-        return "1";
-    }
-    static string Ref2(ref byte value)
-    {
-        if (value == 0)
-        {
-            return "0";
-        }
-
-        return "1";
-    }
-    static string Ref2(ref short value)
-    {
-        if (value == 0)
-        {
-            return "0";
-        }
-
-        return "1";
-    }
-    static string Ref2(ref int value)
-    {
-        if (value == 0)
-        {
-            return "0";
-        }
-
-        return "1";
-    }
-    static string Ref2(ref float value)
-    {
-        if (value == 0)
-        {
-            return "0";
-        }
-
-        return "1";
-    }
-    static string Ref2(ref long value)
-    {
-        if (value == 0)
-        {
-            return "0";
-        }
-
-        return "1";
-    }
+   
     
     static class ExternalCallTest
     {
@@ -147,32 +94,227 @@ class Deneme45
             
         }
     }
+
+    static void LdInd()
+    {
+        sbyte v0 = 1;
+        byte v1 = 1;
+        short v2 = 1;
+        int v3 = 1;
+        float v4 = 1;
+        long v5 = 1;
+
+        var response = refSByte(ref v0);
+        if (response == "0")
+        {
+            throw new Exception(nameof(LdInd));
+        }
+        response = refByte(ref v1);
+        if (response == "0")
+        {
+            throw new Exception(nameof(LdInd));
+        }
+
+        response = refShort(ref v2);
+        if (response == "0")
+        {
+            throw new Exception(nameof(LdInd));
+        }
+
+        response = refInt32(ref v3);
+        if (response == "0")
+        {
+            throw new Exception(nameof(LdInd));
+        }
+
+        response = refFloat(ref v4);
+        if (response == "0")
+        {
+            throw new Exception(nameof(LdInd));
+        }
+        response = refLong(ref v5);
+        if (response == "0")
+        {
+            throw new Exception(nameof(LdInd));
+        }
+
+        console.log("success");
+        
+        return;
+        
+        static string refSByte(ref sbyte value)
+        {
+            if (value == 0)
+            {
+                return "0";
+            }
+
+            return "1";
+        }
+        static string refByte(ref byte value)
+        {
+            if (value == 0)
+            {
+                return "0";
+            }
+
+            return "1";
+        }
+        
+        static string refShort(ref short value)
+        {
+            if (value == 0)
+            {
+                return "0";
+            }
+
+            return "1";
+        }
+        
+        
+        static string refInt32(ref int value)
+        {
+            if (value == 0)
+            {
+                return "0";
+            }
+
+            return "1";
+        }
+        
+        static string refFloat(ref float value)
+        {
+            if (value == 0)
+            {
+                return "0";
+            }
+
+            return "1";
+        }
+        
+        static string refLong(ref long value)
+        {
+            if (value == 0)
+            {
+                return "0";
+            }
+
+            return "1";
+        }
+    }
+
+
+
+
+
+
+
+    static void TryCatchFinaly_0()
+    {
+        string value = "";
+        try
+        {
+            value += "0";
+        }
+        catch (Exception)
+        {
+            value += "1";
+        }
+        finally
+        {
+            value += "2";
+        }
+
+        if (value == "02")
+        {
+            console.log("success");
+        }
+        else
+        {
+            console.log("fail");
+        }
+    }
+    
+    static void TryCatchFinaly_1()
+    {
+        string value = "";
+
+        try
+        {
+            try
+            {
+                value += "0";
+            }
+            catch (Exception)
+            {
+                value +="1";
+            }
+            finally
+            {
+                value += "2";
+            }
+        }
+        catch (Exception)
+        {
+            value += "3";
+        }
+        finally
+        {
+            value += "4";
+        }
+
+        if (value == "024")
+        {
+            console.log("success");
+        }
+        else
+        {
+            console.log("fail");
+        }
+    }
+    
+    static void TryCatch_1()
+    {
+        var trace = "";
+        try
+        {
+            trace += "0";
+            
+            trace += Call1455("t");
+        }
+        catch (Exception exception)
+        {
+            trace +=  "1";
+
+            trace += exception.Message;
+        }
+
+        
+        if (trace == "01-abc-")
+        {
+            console.log("success");
+        }
+        else
+        {
+            console.log("fail");
+        }
+        
+        return;
+
+        static string Call1455(string a)
+        {
+            throw new Exception("-abc-");
+        }
+    }
     public static string Abc5()
     {
-        ExternalCallTest.Static_Void_Call();
-        ExternalCallTest.Static_NonVoid_Call();
+        //ExternalCallTest.Static_Void_Call();
+        //ExternalCallTest.Static_NonVoid_Call();
+        //LdInd();
+        //TryCatchFinaly_0();
+        //TryCatchFinaly_1();
+        TryCatch_1();
 
-        //sbyte v0 = 1;
-        //byte v1 = 1;
-        //short v2 = 1;
-        //int v3 = 1;
-        //float v4 = 1;
-        //long v5 = 1;
-
-        //var response = Ref2(ref v0);
-
-        //response = Ref2(ref v1);
-
-        //response = Ref2(ref v2);
-
-        //response = Ref2(ref v3);
-
-        //response = Ref2(ref v4);
-
-        //response = Ref2(ref v5);
-
-
-        //return response;
 
 
 
@@ -180,10 +322,7 @@ class Deneme45
 
         var result = "0";
 
-        console.log("Call_3");
-        console.log("Call_3");
-        console.log("Call_3");
-        console.log("Call_3");
+        
         
         //try
         //{
@@ -256,6 +395,8 @@ class Deneme45
         //    return "catched";
         //}
     }
+
+    
 
     //static string Call1455(string a)
     //{

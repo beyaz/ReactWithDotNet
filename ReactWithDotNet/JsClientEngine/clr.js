@@ -1940,18 +1940,20 @@ function Interpret(thread)
                     NotImplementedOpCode(); break;
                 }
 
-                case 192: // Ceq
+                case 192: // Ceq: Compares two values. If they are equal, the integer value 1 (int32) is pushed onto the evaluation stack; otherwise 0 (int32) is pushed onto the evaluation stack.
                 {
                     let value1 = evaluationStack.pop();
                     let value0 = evaluationStack.pop();
 
-                    if (typeof value0 === 'number' && typeof value1 === 'number')
+                    if (typeof value0 === 'number' && typeof value1 === 'number' ||
+                        typeof value0 === 'string' && typeof value1 === 'string')
                     {
                         evaluationStack.push(value0 === value1 ? 1 : 0);
 
                         nextInstruction = instructions[++currentStackFrame.Line];
                         break;
                     }
+                    
                     if (Long.isLong(value0) && Long.isLong(value1))
                     {
                         evaluationStack.push(value0.compare( value1 ) === 0 ? 1 : 0);
