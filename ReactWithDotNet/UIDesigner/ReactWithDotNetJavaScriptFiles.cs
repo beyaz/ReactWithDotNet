@@ -66,7 +66,7 @@ public sealed class ReactWithDotNetJavaScriptFiles
         string resourceName = null;
 
         // for my development
-        if (requestPath == ReactWithDotNetDesignerComponentPreview.HelperJsFileResourceName)
+        if (requestPath.EndsWith(ReactWithDotNetDesignerComponentPreview.HelperJsFileResourceName))
         {
             if (Environment.UserName == "beyaz")
             {
