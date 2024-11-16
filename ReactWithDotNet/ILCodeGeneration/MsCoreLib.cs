@@ -60,5 +60,15 @@ namespace _System_
             return Sum(a, b);
         }
         
+        public static bool op_Inequality(string a, string b)
+        {
+            if (a==b)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        
     }
 }

@@ -186,8 +186,9 @@ function Interpret(thread)
                 case 15: // Ldarga_S: Load address of argument at a specified index (short form)
                 {
                     evaluationStack.push({
-                        Array: methodArguments,
-                        Index: methodArgumentsOffset + operands[currentStackFrame.Line]
+                        $isAddress: 1,
+                        $object: methodArguments,
+                        $key: methodArgumentsOffset + operands[currentStackFrame.Line]
                     });
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
@@ -210,8 +211,9 @@ function Interpret(thread)
                 case 18: // Ldloca_S: Load address of local variable at a specified index (short)
                 {
                     evaluationStack.push({
-                        Array: localVariables,
-                        Index: operands[currentStackFrame.Line]
+                        $isAddress: 1,
+                        $object: localVariables,
+                        $key: operands[currentStackFrame.Line]
                     });
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
@@ -889,7 +891,7 @@ function Interpret(thread)
                 {
                     let address = evaluationStack.pop();
                     
-                    evaluationStack.push(address.Array[address.Index]);
+                    evaluationStack.push(address.$object[address.$key]);
 
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
@@ -900,7 +902,7 @@ function Interpret(thread)
                     let value   = evaluationStack.pop();
                     let address = evaluationStack.pop();
 
-                    address.Array[address.Index] = value;
+                    address.$object[address.$key] = value;
 
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
@@ -1474,6 +1476,10 @@ function Interpret(thread)
                         break;
                     }
 
+                    if (instance.$isAddress)
+                    {
+                        instance = instance.$object[instance.$key];
+                    }
 
                     let value = instance[fieldReference.Name];
 
@@ -1494,8 +1500,9 @@ function Interpret(thread)
                     let instance = evaluationStack.pop();
 
                     evaluationStack.push({
-                        Array: instance,
-                        Index: fieldReference.Name
+                        $isAddress: 1,
+                        $object: instance,
+                        $key: fieldReference.Name
                     });
                     
                     break;
@@ -1514,6 +1521,11 @@ function Interpret(thread)
                         evaluationStack.push(InterpreterBridge_NullReferenceException);
                         nextInstruction = InterpreterBridge_Jump;
                         break;
+                    }
+                    
+                    if (instance.$isAddress)
+                    {
+                        instance = instance.$object[instance.$key];
                     }
 
                     instance[fieldReference.Name] = value;
@@ -2007,18 +2019,29 @@ function Interpret(thread)
                     let value1 = evaluationStack.pop();
                     let value0 = evaluationStack.pop();
 
+                    let result = null;
+                    
                     if (typeof value0 === 'number' && typeof value1 === 'number' ||
                         typeof value0 === 'string' && typeof value1 === 'string')
                     {
-                        evaluationStack.push(value0 === value1 ? 1 : 0);
-
-                        nextInstruction = instructions[++currentStackFrame.Line];
-                        break;
+                        result = value0 === value1 ? 1 : 0;
+                    }
+                    else if (Long.isLong(value0) && Long.isLong(value1))
+                    {
+                        result = value0.compare( value1 ) === 0 ? 1 : 0;
+                    }
+                    else if ( value0 === undefined )
+                    {
+                        result = value1 == null ? 1 : 0;
+                    }
+                    else if ( value1 === undefined )
+                    {
+                        result = value0 == null ? 1 : 0;
                     }
                     
-                    if (Long.isLong(value0) && Long.isLong(value1))
+                    if (result !== null)
                     {
-                        evaluationStack.push(value0.compare( value1 ) === 0 ? 1 : 0);
+                        evaluationStack.push(result);
 
                         nextInstruction = instructions[++currentStackFrame.Line];
                         break;
@@ -2185,7 +2208,7 @@ function Interpret(thread)
                             $typeIndex: typeIndex
                         };
 
-                        address.Array[address.Index] = newObj;
+                        address.$object[address.$key] = newObj;
                     }                    
 
                     nextInstruction = instructions[++currentStackFrame.Line];

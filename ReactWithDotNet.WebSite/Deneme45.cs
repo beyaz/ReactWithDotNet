@@ -413,14 +413,21 @@ class Deneme45
             F0 = 4,
             F1 = "abc"
         };
-
-        if (myStruct.F1 == "abc")
+        
+        if (myStruct.F1 != "abc")
         {
-            console.log("success");
+            console.log("fail");    
             return;
         }
         
-        console.log("fail");
+        if (myStruct.F0 != 4)
+        {
+            console.log("fail");    
+            return;
+        }
+
+        console.log("success");
+        
     }
     
     public static string Abc5()
