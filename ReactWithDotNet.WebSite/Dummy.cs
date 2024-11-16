@@ -126,8 +126,31 @@ class Deneme45
         return "1";
     }
     
+    static class ExternalCallTest
+    {
+        public static void Static_Void_Call()
+        {
+            console.log("success");
+        }
+        
+        public static void Static_NonVoid_Call()
+        {
+            var result = Math.max(1, 2);
+            if (result ==2)
+            {
+                console.log("success");    
+            }
+            else
+            {
+                console.log("fail");
+            }
+            
+        }
+    }
     public static string Abc5()
     {
+        ExternalCallTest.Static_Void_Call();
+        ExternalCallTest.Static_NonVoid_Call();
 
         //sbyte v0 = 1;
         //byte v1 = 1;
@@ -157,33 +180,38 @@ class Deneme45
 
         var result = "0";
 
-        try
-        {
-            //try
-            //{
-               console.log("Call_1");
-            //    result = Call1("A");
-            //    result = "1";
-            //    console.log("Call_2");
-            //}
-            //catch (ArgumentException exception)
-            //{
-            //    result = exception.Message;
-            //}
-            //finally
-            //{
-            //    console.log("Call_3");
-            //}
-        }
-        catch (ArgumentException exception)
-        {
-            result = exception.Message;
-        }
-        finally
-        {
-            console.log("Call_4");
-            result = "ok";
-        }
+        console.log("Call_3");
+        console.log("Call_3");
+        console.log("Call_3");
+        console.log("Call_3");
+        
+        //try
+        //{
+        //    //try
+        //    //{
+        //       console.log("Call_1");
+        //    //    result = Call1("A");
+        //    //    result = "1";
+        //    //    console.log("Call_2");
+        //    //}
+        //    //catch (ArgumentException exception)
+        //    //{
+        //    //    result = exception.Message;
+        //    //}
+        //    //finally
+        //    //{
+        //    //    console.log("Call_3");
+        //    //}
+        //}
+        //catch (ArgumentException exception)
+        //{
+        //    result = exception.Message;
+        //}
+        //finally
+        //{
+        //    console.log("Call_4");
+        //    result = "ok";
+        //}
 
         return result;
 

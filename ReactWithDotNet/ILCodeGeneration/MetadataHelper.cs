@@ -10,10 +10,18 @@ namespace ReactWithDotNet;
 public sealed class ExternalAttribute : Attribute
 {
 }
+
 [External]
 public static class console
 {
     public static extern void log(object data);
+}
+
+[External]
+public static class Math
+{
+    public static extern double max(double a, double b);
+    public static extern int max(int a, int b);
 }
 
 sealed record MetadataRequest
@@ -84,6 +92,7 @@ static class MetadataHelper
         requests.Add(typeof(InterpreterBridge));
         requests.Add(typeof(ExternalAttribute));
         requests.Add(typeof(console));
+        requests.Add(typeof(Math));
         requests.Add(typeof(_System_.Int64));
         requests.Add(typeof(_System_.Exception));
         requests.Add(typeof(_System_.String));

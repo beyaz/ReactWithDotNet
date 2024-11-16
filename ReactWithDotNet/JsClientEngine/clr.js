@@ -369,10 +369,6 @@ function Interpret(thread)
                         method.IsStatic   = elementMethod.IsStatic;
                     }
 
-                    // arrange opcodes
-                    instructions = method.Body.Instructions;
-                    operands = method.Body.Operands;
-
                     // arrange arguments
                     methodArguments = evaluationStack;
                     methodArgumentsOffset = evaluationStack.length - method.Parameters.length;
@@ -380,6 +376,100 @@ function Interpret(thread)
                     {
                         // 0: this
                         methodArgumentsOffset--;
+                    }
+
+                    // arrange opcodes
+                    instructions = method.Body.Instructions;
+                    operands = method.Body.Operands;
+                    
+                    // maybe external method
+                    if (instructions.length === 0)
+                    {
+                        let declaringType = GlobalMetadata.Types[method.DeclaringType];
+                        
+                        let isDeclaringTypeExternal = false;
+                        {
+                            let customAttributes = declaringType.CustomAttributes;
+
+                            let length = customAttributes.length;
+
+                            for (let i= 0; i < length; i++)
+                            {
+                                let attribute = customAttributes[i];
+
+                                let constructor = GlobalMetadata.Methods[attribute.Constructor];
+
+                                let declaringTypeOfConstructor = GlobalMetadata.Types[constructor.DeclaringType];
+                                if (declaringTypeOfConstructor.Name === 'ExternalAttribute' &&
+                                    declaringTypeOfConstructor.Namespace === 'ReactWithDotNet')
+                                {
+                                    isDeclaringTypeExternal = true;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        if (isDeclaringTypeExternal === true)
+                        {
+                            let instance = null;
+                            
+                            let fnArguments = [];
+                            
+                            // move arguments to fnArguments
+                            {
+                                let length = method.Parameters.length;
+                                while (length-- > 0)
+                                {
+                                    fnArguments.push(evaluationStack.pop());
+                                }
+
+                                fnArguments.reverse();
+                            }
+
+                            let isVoid = false;
+                            {
+                                let returnType = GlobalMetadata.Types[method.ReturnType];
+                                
+                                isVoid = returnType.Namespace === 'System' && returnType.Name === 'Void';
+                            }
+
+                            if (method.IsStatic === false)
+                            {
+                                instance = evaluationStack.pop();
+                            }
+                            
+                            let fn = null;
+                            
+                            if (method.IsStatic === true)
+                            {
+                                let externalType = window[declaringType.Name];
+
+                                fn = externalType[method.Name];                                
+                            }
+                            
+                            if (fn == null)
+                            {
+                                throw new Error(`Missing function:'${method.Name}'.`);
+                            }
+
+                            let fnResult = fn.apply(null, fnArguments);
+
+                            if (isVoid === false)
+                            {
+                                evaluationStack.push(fnResult);
+                            }
+                            
+                            // arrange fast access variables
+                            instructions = currentStackFrame.Method.Body.Instructions;
+                            operands = currentStackFrame.Method.Body.Operands;
+
+                            // arrange fast access variables
+                            methodArguments = currentStackFrame.MethodArguments;
+                            methodArgumentsOffset = currentStackFrame.MethodArgumentsOffset;
+
+                            nextInstruction = instructions[++currentStackFrame.Line];
+                            break;
+                        }                                          
                     }
 
                     // arrange calculation stacks
