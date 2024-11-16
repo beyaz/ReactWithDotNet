@@ -1414,6 +1414,24 @@ function Interpret(thread)
                 }
                 case 116: // Isinst
                 {
+                    let value = evaluationStack.pop();
+                    if ( value == null)
+                    {
+                        evaluationStack.push(null);
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+
+                    if (value.$isBox)
+                    {
+                        if (operands[currentStackFrame.Line] === value.$typeIndex)
+                        {
+                            evaluationStack.push(value.rawValue);
+                            nextInstruction = instructions[++currentStackFrame.Line];
+                            break;
+                        }
+                    }
+                    
                     NotImplementedOpCode(); break;
                 }
                 case 117: // Conv_R_Un
@@ -1553,7 +1571,16 @@ function Interpret(thread)
                 }
                 case 137: // Box
                 {
-                    NotImplementedOpCode(); break;
+                    let value = evaluationStack.pop();
+                    
+                    evaluationStack.push({
+                        $isBox: 1,
+                        $typeIndex: operands[currentStackFrame.Line],
+                        rawValue: value                        
+                    });
+
+                    nextInstruction = instructions[++currentStackFrame.Line];
+                    break;
                 }
                 case 138: // Newarr
                 {
@@ -1727,6 +1754,22 @@ function Interpret(thread)
 
                 case 162: // Unbox_Any
                 {
+                    let box = evaluationStack.pop();
+                    if ( box == null)
+                    {
+                        NotImplementedOpCode(); break;
+                    }
+
+                    if (box.$isBox)
+                    {
+                        if (operands[currentStackFrame.Line] === box.$typeIndex)
+                        {
+                            evaluationStack.push(box.rawValue);
+                            nextInstruction = instructions[++currentStackFrame.Line];
+                            break;
+                        }
+                    }
+                    
                     NotImplementedOpCode(); break;
                 }
 

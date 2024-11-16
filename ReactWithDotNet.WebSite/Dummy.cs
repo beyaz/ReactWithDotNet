@@ -372,8 +372,25 @@ class Deneme45
             throw new Exception("-abc-");
         }
     }
+
+    static void BoxTest1()
+    {
+        int a = 5;
+
+        object obj = a;
+
+        if (obj is 5)
+        {
+            console.log("success");
+            return;
+        }
+        
+        console.log("fail");
+    }
+    
     public static string Abc5()
     {
+        BoxTest1();
         ExternalCallTest.Static_Void_Call();
         ExternalCallTest.Static_NonVoid_Call();
         LdInd();
