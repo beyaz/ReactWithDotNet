@@ -326,8 +326,6 @@ class Deneme45
         catch (NullReferenceException e)
         {
             trace +=  "5";
-            
-            console.log(e);
         }
 
         
@@ -376,14 +374,14 @@ class Deneme45
     }
     public static string Abc5()
     {
-        //ExternalCallTest.Static_Void_Call();
-        //ExternalCallTest.Static_NonVoid_Call();
-        //LdInd();
-        //TryCatch_0();
-        //TryCatch_1();
+        ExternalCallTest.Static_Void_Call();
+        ExternalCallTest.Static_NonVoid_Call();
+        LdInd();
+        TryCatch_0();
+        TryCatch_1();
         TryCatch_HandlerType();
-        //TryCatchFinaly_0();
-        //TryCatchFinaly_1();
+        TryCatchFinaly_0();
+        TryCatchFinaly_1();
 
 
 
