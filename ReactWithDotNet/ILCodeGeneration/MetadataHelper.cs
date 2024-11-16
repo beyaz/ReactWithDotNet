@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http;
 using Mono.Cecil;
@@ -27,10 +26,17 @@ public static class Math
 
 sealed record MetadataRequest
 {
-    public string AssemblyName { get; init; }
-    public string MethodName { get; init; }
-    public string NamespaceName { get; init; }
-    public string TypeName { get; init; }
+    public bool IsInitialRequest { get; init; }
+    
+    public List<Item> RequestedTypes { get; init; }
+    
+    public sealed record Item
+    {
+        public string AssemblyName { get; init; }
+        public string MethodName { get; init; }
+        public string NamespaceName { get; init; }
+        public string TypeName { get; init; }
+    }
 }
 
 sealed record MetadataResponse
@@ -77,9 +83,9 @@ static class MetadataHelper
         }
     };
 
-    static void Add(this List<MetadataRequest> requests, Type type)
+    static void Add(this List<MetadataRequest.Item> requests, Type type)
     {
-        requests.Add(new MetadataRequest
+        requests.Add(new()
         {
             AssemblyName  = Path.GetFileName(type.Assembly.Location),
             NamespaceName = type.Namespace,
@@ -88,27 +94,32 @@ static class MetadataHelper
     }
     public static async Task GetMetadata(HttpContext httpContext, Func<string, bool> isTypeForbiddenToSendClient = null)
     {
-        var requests = await JsonSerializer.DeserializeAsync<List<MetadataRequest>>(httpContext.Request.Body);
+        var request = await JsonSerializer.DeserializeAsync<MetadataRequest>(httpContext.Request.Body);
 
-        requests.Add(typeof(InterpreterBridge));
-        requests.Add(typeof(ExternalAttribute));
-        requests.Add(typeof(console));
-        requests.Add(typeof(Math));
-        requests.Add(typeof(_System_.Int64));
-        requests.Add(typeof(_System_.Exception));
-        requests.Add(typeof(SystemException));
-        requests.Add(typeof(NullReferenceException));
-        requests.Add(typeof(_System_.String));
-        requests.Add(typeof(_System_.Object));
+        if (request.IsInitialRequest)
+        {
+            request.RequestedTypes.Add(typeof(Nullable<>));
+            request.RequestedTypes.Add(typeof(InterpreterBridge));
+            request.RequestedTypes.Add(typeof(ExternalAttribute));
+            request.RequestedTypes.Add(typeof(console));
+            request.RequestedTypes.Add(typeof(Math));
+            request.RequestedTypes.Add(typeof(_System_.Int64));
+            request.RequestedTypes.Add(typeof(_System_.Exception));
+            request.RequestedTypes.Add(typeof(SystemException));
+            request.RequestedTypes.Add(typeof(NullReferenceException));
+            request.RequestedTypes.Add(typeof(_System_.String));
+            request.RequestedTypes.Add(typeof(_System_.Object));
+
+            request.RequestedTypes.Reverse();
+        }
+        
+        
         
 
-        requests.Reverse();
-        
-
-        await httpContext.Response.WriteAsJsonAsync(GetMetadata(requests, isTypeForbiddenToSendClient), JsonSerializerOptions);
+        await httpContext.Response.WriteAsJsonAsync(GetMetadata(request.RequestedTypes, isTypeForbiddenToSendClient), JsonSerializerOptions);
     }
 
-    static TypeDefinition FindType(this AssemblyDefinition assemblyDefinition, MetadataRequest request)
+    static TypeDefinition FindType(this AssemblyDefinition assemblyDefinition, MetadataRequest.Item request)
     {
         foreach (var moduleDefinition in assemblyDefinition.Modules)
         {
@@ -141,7 +152,7 @@ static class MetadataHelper
     
     
     
-    static MetadataResponse GetMetadata(IEnumerable<MetadataRequest> requests, Func<string, bool> isTypeForbiddenToSendClient = null)
+    static MetadataResponse GetMetadata(IEnumerable<MetadataRequest.Item> requests, Func<string, bool> isTypeForbiddenToSendClient = null)
     {
         var metadataTable = new MetadataTable();
 

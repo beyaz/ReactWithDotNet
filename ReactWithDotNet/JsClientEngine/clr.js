@@ -2,12 +2,14 @@
 const GlobalMetadata =
 {
     MetadataScopes: [],
-    Types: [],
+    Types: [ { IsValueType: 0 }],
     Fields: [],
     Methods: [],
     Properties: [],
     Events: []
 };
+
+GlobalMetadata.Types.pop();
 
 const InterpreterBridge_NewArr = 0;
 const InterpreterBridge_NullReferenceException = 1;
@@ -71,8 +73,6 @@ function Interpret(thread)
     let methodArgumentsOffset = currentStackFrame.MethodArgumentsOffset;
 
     let nextInstruction = instructions[currentStackFrame.Line];
-    
-  
 
     while(true)
     {
@@ -1343,9 +1343,6 @@ function Interpret(thread)
 
                     let declaringType = GlobalMetadata.Types[method.DeclaringType];
 
-                    let newObj = {};
-                    newObj.$typeIndex = method.DeclaringType;
-
                     if (declaringType.IsGenericInstance)
                     {
                         let elementType = GlobalMetadata.Types[declaringType.ElementType];
@@ -1366,6 +1363,17 @@ function Interpret(thread)
                         }
                     }
 
+                    if (!method.IsDefinition)
+                    {
+                        // Load method at runtime
+                        evaluationStack.push(method);
+                        nextInstruction = 222;
+                        break;
+                    }
+                    
+                    let newObj = {};
+                    newObj.$typeIndex = method.DeclaringType;
+                    
                     let tempArray = [];
 
                     for (let i = 0; i < method.Parameters.length; i++)
@@ -2156,9 +2164,32 @@ function Interpret(thread)
                     NotImplementedOpCode(); break;
                 }
 
-                case 210: // Initobj
+                case 210: // Initobj: Initializes each field of the value type at a specified address to a null reference or a 0 of the appropriate primitive type.
                 {
-                    NotImplementedOpCode(); break;
+                    //The address is popped from the stack; the value type object at the specified address is initialized as type
+                    
+                    let typeIndex = operands[currentStackFrame.Line];
+                    
+                    let typeReference = GlobalMetadata.Types[typeIndex];
+
+                    let address = evaluationStack.pop();
+                    
+                    if (!typeReference.IsValueType)
+                    {                
+                        address.Array[address.Index] = null;
+                    }
+                    else
+                    {
+                        let newObj =
+                        {
+                            $typeIndex: typeIndex
+                        };
+
+                        address.Array[address.Index] = newObj;
+                    }                    
+
+                    nextInstruction = instructions[++currentStackFrame.Line];
+                    break;
                 }
 
                 case 211: // Constrained
@@ -2598,8 +2629,55 @@ function Interpret(thread)
                             }
                         }
                     }
+                    
+                    if ( handlerFound )
+                    {
+                        break;
+                    }
+
+                    // exit thread
+                    throw exception;
                 }
 
+                case 222: // Load method at runtime
+                {
+                    let methodReference = evaluationStack.pop();
+
+                    let declaringType = GlobalMetadata.Types[methodReference.DeclaringType];
+                    
+                    let assemblyName = GlobalMetadata.MetadataScopes[declaringType.Scope].Name;
+                                        
+                    function onSuccess(response)
+                    {
+                        if (response.Success === false)
+                        {
+                            throw response.ErrorMessage;
+                        }
+
+                        let metadataTable = response.Metadata;
+
+                        CallManagedStaticMethod(InterpreterBridge_ImportMetadata_MethodDefinition, [GlobalMetadata, metadataTable], console.log, console.log);
+                        
+                        Interpret(thread);
+                    }
+
+                    let request =
+                    {
+                        IsInitialRequest: false,
+                        RequestedTypes:
+                        [
+                            {
+                                AssemblyName: assemblyName,
+                                NamespaceName: declaringType.Namespace,
+                                TypeName: declaringType.Name,
+                                MethodName: methodReference.Name
+                            }
+                        ]
+                    };
+                    
+                    GetMetadata(request, onSuccess);
+                    return;
+                }
             }
         }
         catch (exception)
@@ -2724,14 +2802,18 @@ setTimeout(function ()
 
     }
     
-    var request =
-    [
-        {
-            AssemblyName: "ReactWithDotNet.WebSite.dll",
-            NamespaceName: "ReactWithDotNet.WebSite",
-            TypeName: "Deneme45"
-        }
-    ];
+    let request =
+    {
+        IsInitialRequest: true,
+        RequestedTypes:
+        [
+            {
+                AssemblyName: "ReactWithDotNet.WebSite.dll",
+                NamespaceName: "ReactWithDotNet.WebSite",
+                TypeName: "Deneme45"
+            }
+        ]
+    };
 
     GetMetadata(request, onSuccess);    
     

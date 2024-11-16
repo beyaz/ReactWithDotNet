@@ -386,19 +386,58 @@ class Deneme45
         
         console.log("fail");
     }
+
+    static void NullableIntTest()
+    {
+        int? nullableInt = 5;
+
+        if (nullableInt.HasValue)
+        {
+            console.log("success");
+            return;
+        }
+        
+        console.log("fail");
+    }
+
+    struct MyStruct
+    {
+        public int F0;
+        public string F1;  
+    }
+    
+    static void StructCreationTest()
+    {
+        var myStruct = new MyStruct
+        {
+            F0 = 4,
+            F1 = "abc"
+        };
+
+        if (myStruct.F1 == "abc")
+        {
+            console.log("success");
+            return;
+        }
+        
+        console.log("fail");
+    }
     
     public static string Abc5()
     {
-        BoxTest1();
-        ExternalCallTest.Static_Void_Call();
-        ExternalCallTest.Static_NonVoid_Call();
-        LdInd();
-        TryCatch_0();
-        TryCatch_1();
-        TryCatch_HandlerType();
-        TryCatchFinaly_0();
-        TryCatchFinaly_1();
-        AutomaticallyLoadType();
+        StructCreationTest();
+        
+        //BoxTest1();
+        //ExternalCallTest.Static_Void_Call();
+        //ExternalCallTest.Static_NonVoid_Call();
+        //LdInd();
+        // NullableIntTest();
+        //TryCatch_0();
+        //TryCatch_1();
+        //TryCatch_HandlerType();
+        //TryCatchFinaly_0();
+        //TryCatchFinaly_1();
+        //AutomaticallyLoadType();
 
         return "E N D";
     }

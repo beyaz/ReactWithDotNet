@@ -61,6 +61,7 @@ static class MonoCecilToJsonModelMapper
             Namespace     = value.Namespace,
             Scope         = value.Scope.IndexAt(metadataTable),
             DeclaringType = value.DeclaringType?.IndexAt(metadataTable),
+            IsValueType   = value.IsValueType ? 1: 0,
 
             CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel, metadataTable),
             BaseType         = value.BaseType.IndexAt(metadataTable),
@@ -434,6 +435,12 @@ static class MonoCecilToJsonModelMapper
                 operands.Add(i, operand);
                 continue;
             }
+            
+            if (operand is ParameterDefinition  parameterDefinition)
+            {
+                operands.Add(i, parameterDefinition.Index);
+                continue;
+            }
 
             throw new NotImplementedException(code.ToString());
         }
@@ -555,12 +562,14 @@ static class MonoCecilToJsonModelMapper
             };
         }
 
+        
         return new()
         {
             Name          = value.Name,
             Namespace     = value.Namespace,
             Scope         = value.Scope.IndexAt(metadataTable),
-            DeclaringType = value.DeclaringType?.IndexAt(metadataTable)
+            DeclaringType = value.DeclaringType?.IndexAt(metadataTable),
+            IsValueType = value.IsValueType ? 1: 0
         };
     }
 
@@ -587,7 +596,13 @@ static class MonoCecilToJsonModelMapper
 
     static int IndexAt(this IMetadataScope value, MetadataTable metadataTable)
     {
-        var index = metadataTable.MetadataScopes.FindIndex(x => x.Name == value.Name);
+        var scope = value.Name;
+        if (scope == "System.Runtime")
+        {
+            scope = typeof(string).Assembly.Modules.First().Name;
+        }
+        
+        var index = metadataTable.MetadataScopes.FindIndex(x => x.Name == scope);
         if (index >= 0)
         {
             return index;
@@ -595,7 +610,7 @@ static class MonoCecilToJsonModelMapper
 
         return metadataTable.MetadataScopes.AddAndGetIndex(new()
         {
-            Name = value.Name
+            Name = scope
         });
     }
 

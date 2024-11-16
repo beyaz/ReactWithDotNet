@@ -6,6 +6,8 @@ record TypeReferenceModel : MemberReferenceModel
     
     public int Scope { get; init; }
     
+    public int IsValueType { get; set; }
+
     public bool IsGenericInstance;
 
     public int ElementType;

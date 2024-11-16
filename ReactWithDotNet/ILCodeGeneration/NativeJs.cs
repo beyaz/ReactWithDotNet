@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using ReactWithDotNet;
 using System.Runtime.CompilerServices;
+using Mono.Cecil.Cil;
 using static ReactWithDotNet.NativeJsHelper;
 
 
@@ -153,8 +154,6 @@ static class InterpreterBridge
         var events = metadata.Get(nameof(MetadataTable.Events)).As<MethodReferenceModel[]>();
         var metadataScopes = metadata.Get(nameof(MetadataTable.MetadataScopes)).As<MethodReferenceModel[]>();
         
-        
-        
         // is first load
         if (typesGlobal.Length == 0)
         {
@@ -164,28 +163,78 @@ static class InterpreterBridge
             globalMetadata.Set(nameof(MetadataTable.Methods), methods);
             globalMetadata.Set(nameof(MetadataTable.Properties), properties);
             globalMetadata.Set(nameof(MetadataTable.Events), events);
+            
+            return;
+        }
+        
+        for (var i = 0; i < methods.Length; i++)
+        {
+            var methodReferenceModel = methods[i];
+            if (methodReferenceModel.IsDefinition)
+            {
+                var methodDefinitionModel = methodReferenceModel.As<MethodDefinitionModel>();
+
+                var instructions = methodDefinitionModel.Body.Instructions.As<int[]>();
+                
+                var operands = methodDefinitionModel.Body.Operands.As<object>();
+                
+                for (var j = 0; j < instructions.Length; j++)
+                {
+                    var instruction = instructions[j];
+                    if (instruction == (int)OpCodes.Call.Code)
+                    {
+                        var targetMethodReference = operands.Get(j);
+                        
+                    }
+                }
+            }
+        }
+
+
+        static int indexAt(MetadataTable globalMetadata,  MetadataTable metadata, MethodReferenceModel targetMethodReference, int index)
+        {
+            var types = metadata.Get(nameof(MetadataTable.Types)).As<TypeReferenceModel[]>();
+            var fields = metadata.Get(nameof(MetadataTable.Fields)).As<MethodReferenceModel[]>();
+            var methods = metadata.Get(nameof(MetadataTable.Methods)).As<MethodReferenceModel[]>();
+            var properties = metadata.Get(nameof(MetadataTable.Properties)).As<MethodReferenceModel[]>();
+            var events = metadata.Get(nameof(MetadataTable.Events)).As<MethodReferenceModel[]>();
+            var metadataScopes = metadata.Get(nameof(MetadataTable.MetadataScopes)).As<MethodReferenceModel[]>();
+            
+            
+            var global_types = globalMetadata.Get(nameof(MetadataTable.Types)).As<TypeReferenceModel[]>();
+            var global_fields = globalMetadata.Get(nameof(MetadataTable.Fields)).As<MethodReferenceModel[]>();
+            var global_methods = globalMetadata.Get(nameof(MetadataTable.Methods)).As<MethodReferenceModel[]>();
+            var global_properties = globalMetadata.Get(nameof(MetadataTable.Properties)).As<MethodReferenceModel[]>();
+            var global_events = globalMetadata.Get(nameof(MetadataTable.Events)).As<MethodReferenceModel[]>();
+            var global_metadataScopes = globalMetadata.Get(nameof(MetadataTable.MetadataScopes)).As<MethodReferenceModel[]>();
+            
+            for (var i = 0; i < global_methods.Length; i++)
+            {
+                var methodReference = global_methods[i];
+                
+                if (targetMethodReference.Name != methodReference.Name)
+                {
+                    continue;
+                }
+
+                if (methodReference.DeclaringType == null)
+                {
+                    continue;
+                }
+                
+                
+                
+
+
+            }
+
+            return index;
+
         }
         
         
         
         
-        //for (var i = 0; i < methods.Length; i++)
-        //{
-        //    if (methods[i].Get(nameof(MemberReferenceModel.IsDefinition)).As<bool>())
-        //    {
-        //        methods[i].Set("MetadataTable", metadata);
-        //    }
-        //}
-        
-        
-        
-        //for (var i = 0; i < types.Length; i++)
-        //{
-        //    if (types[i].Get(nameof(MemberReferenceModel.IsDefinition)).As<bool>())
-        //    {
-        //        types[i].Set("MetadataTable", metadata);
-        //    }
-        //}
     }
 }
 
