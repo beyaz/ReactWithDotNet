@@ -1255,6 +1255,15 @@ function Interpret(thread)
 
                     let instance = methodArguments[methodArgumentsOffset];
 
+                    if (instance == null)
+                    {
+                        // NullReferenceException
+                        evaluationStack.push(method.Name);
+                        evaluationStack.push(InterpreterBridge_NullReferenceException);
+                        nextInstruction = InterpreterBridge_Jump;
+                        break;
+                    }
+                    
                     AssertNotNull(instance.$typeIndex);
 
                     // find target method
@@ -2158,15 +2167,15 @@ function Interpret(thread)
                     localVariables  = [];
 
                     currentStackFrame = thread.LastFrame =
-                        {
-                            Prev: thread.LastFrame,
+                    {
+                        Prev: thread.LastFrame,
 
-                            Method: InterpreterBridge_Jump_MethodDefinition,
-                            Line: 0,
+                        Method: InterpreterBridge_Jump_MethodDefinition,
+                        Line: 0,
 
-                            EvaluationStack: evaluationStack,
-                            LocalVariables: localVariables
-                        };
+                        EvaluationStack: evaluationStack,
+                        LocalVariables: localVariables
+                    };
 
                     nextInstruction = instructions[currentStackFrame.Line];
 
@@ -2633,7 +2642,13 @@ setTimeout(function ()
 {
     function onSuccess(response)
     {
-        var metadataTable = response.Metadata;
+        
+        if (response.Success === false)
+        {
+            throw response.ErrorMessage;
+        }
+        
+        let metadataTable = response.Metadata;
         
         TryInitialize_InterpreterBridge(metadataTable);
 

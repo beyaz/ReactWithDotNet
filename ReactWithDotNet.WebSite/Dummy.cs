@@ -300,6 +300,47 @@ class Deneme45
             console.log("fail");
         }
     }
+    
+    static void TryCatch_HandlerType()
+    {
+        Exception instance = null;
+        
+        var trace = "0";
+        
+        try
+        {
+            trace += "1";
+
+            instance.Message.ToString();
+            
+            trace += "2";
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            trace +=  "3";
+        }
+        catch (ArgumentException)
+        {
+            trace +=  "4";
+        }
+        catch (NullReferenceException e)
+        {
+            trace +=  "5";
+            
+            console.log(e);
+        }
+
+        
+        if (trace == "015")
+        {
+            console.log("success");
+        }
+        else
+        {
+            console.log("fail");
+        }
+    }
+    
     static void TryCatch_1()
     {
         var trace = "0";
@@ -335,142 +376,27 @@ class Deneme45
     }
     public static string Abc5()
     {
-        ExternalCallTest.Static_Void_Call();
-        ExternalCallTest.Static_NonVoid_Call();
-        LdInd();
-        TryCatch_0();
-        TryCatch_1();
-        TryCatchFinaly_0();
-        TryCatchFinaly_1();
+        //ExternalCallTest.Static_Void_Call();
+        //ExternalCallTest.Static_NonVoid_Call();
+        //LdInd();
+        //TryCatch_0();
+        //TryCatch_1();
+        TryCatch_HandlerType();
+        //TryCatchFinaly_0();
+        //TryCatchFinaly_1();
 
 
 
 
 
 
-        var result = "0";
-
-        
-        
-        //try
-        //{
-        //    //try
-        //    //{
-        //       console.log("Call_1");
-        //    //    result = Call1("A");
-        //    //    result = "1";
-        //    //    console.log("Call_2");
-        //    //}
-        //    //catch (ArgumentException exception)
-        //    //{
-        //    //    result = exception.Message;
-        //    //}
-        //    //finally
-        //    //{
-        //    //    console.log("Call_3");
-        //    //}
-        //}
-        //catch (ArgumentException exception)
-        //{
-        //    result = exception.Message;
-        //}
-        //finally
-        //{
-        //    console.log("Call_4");
-        //    result = "ok";
-        //}
-
-        return result;
+        return "E N D";
 
 
-
-        //return e.Message;
-
-        //console.log("started");
-
-        //var l = 't';
-        //var i = 56;
-
-        //if (l==i)
-        //{
-        //    i = 78;
-        //}
-
-        // return "b";
-
-        //string a = "abo";
-        //string b = "ag";
-
-
-
-        //if (a == b)
-        //{
-        //    return "X";
-        //}
-
-        //return "Y";
-
-        //var e = new Exception("abc");
-
-        //return e.Message;
-
-        //try
-        //{
-        //    return Call1455("t");
-        //}
-        //catch (Exception exception)
-        //{
-        //    return "catched";
-        //}
     }
 
     
 
-    //static string Call1455(string a)
-    //{
-    //    throw new Exception("abc");
-    //}
     
-    //static string Ref1(ref string a)
-    //{
-    //    return Call1(a);
-    //}
-
-    static string Call1(char a)
-    {
-        if (a == 'y')
-        {
-            return "r";
-        }
-        return "ş";
-    }
-    
-    static string Call1(string a)
-    {
-        return a+"ş";
-    }
-
-    
-    
-    //static string GenericCall1<A, B>(string p1)
-    //{
-    //    return p1;
-    //}
-
-    //public static string static_method_1()
-    //{
-      
-    //    return static_method_2("a","b",7);
-    //}
-    
-    //public static string static_method_2(string str1, string str2, int number1)
-    //{
-        
-        
-    //    var instance = new Deneme45(str2);
-        
-    //    instance.CallNonStaticMethod("a");
-
-    //    return instance.FF1;
-    //}
+   
 }

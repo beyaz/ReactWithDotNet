@@ -22,6 +22,11 @@ namespace _System_
     
     class Exception
     {
+        int _HResult;
+        public int HResult
+        {
+            get => _HResult; set=>_HResult = value; }
+        
         readonly string _message;
         public Exception()
         {

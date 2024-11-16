@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Reflection;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http;
 using Mono.Cecil;
@@ -95,6 +96,8 @@ static class MetadataHelper
         requests.Add(typeof(Math));
         requests.Add(typeof(_System_.Int64));
         requests.Add(typeof(_System_.Exception));
+        requests.Add(typeof(SystemException));
+        requests.Add(typeof(NullReferenceException));
         requests.Add(typeof(_System_.String));
         requests.Add(typeof(_System_.Object));
         
@@ -147,10 +150,18 @@ static class MetadataHelper
             var assemblyFilePath = Path.Combine(Path.GetDirectoryName(typeof(Mixin).Assembly.Location) ?? string.Empty, request.AssemblyName);
             if (!File.Exists(assemblyFilePath))
             {
-                return new()
+                if ( request.AssemblyName == "System.Private.CoreLib.dll")
                 {
-                    ErrorMessage = $"FileNotFound. @file: {assemblyFilePath}"
-                };
+                    assemblyFilePath = typeof(string).Assembly.Location;
+                }
+                else
+                {
+                    return new()
+                    {
+                        ErrorMessage = $"FileNotFound. @file: {assemblyFilePath}"
+                    };
+                }
+                
             }
 
             var typeDefinition = AssemblyDefinition.ReadAssembly(assemblyFilePath).FindType(request);
