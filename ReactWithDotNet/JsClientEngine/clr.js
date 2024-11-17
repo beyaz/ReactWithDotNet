@@ -370,6 +370,16 @@ function Interpret(thread)
                         method.Parameters = elementMethod.Parameters;
                         method.IsStatic   = elementMethod.IsStatic;
                     }
+                    
+                    if (method.Name === '.ctor')
+                    {
+                        let declaringType = GlobalMetadata.Types[method.DeclaringType];
+                        
+                        if (declaringType.IsGenericInstance)
+                        {
+                            
+                        }
+                    }
 
                     // arrange arguments
                     methodArguments = evaluationStack;
@@ -2199,7 +2209,7 @@ function Interpret(thread)
                     
                     if (!typeReference.IsValueType)
                     {                
-                        address.Array[address.Index] = null;
+                        address.$object[address.$key] = null;
                     }
                     else
                     {

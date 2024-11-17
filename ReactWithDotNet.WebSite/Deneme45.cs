@@ -406,6 +406,14 @@ class Deneme45
         public string F1;  
     }
     
+    struct MyStructGeneric<A,B>
+    {
+        public int F0;
+        public string F1; 
+        public A F2;
+        public B F3;
+    }
+    
     static void StructCreationTest()
     {
         var myStruct = new MyStruct
@@ -427,18 +435,55 @@ class Deneme45
         }
 
         console.log("success");
+    }
+    
+    static void StructCreationGenericTest()
+    {
+        var myStruct = new MyStructGeneric<int,string>
+        {
+            F0 = 4,
+            F1 = "abc",
+            F2 = 6,
+            F3 = "a"
+        };
         
+        if (myStruct.F0 != 4)
+        {
+            console.log("fail");    
+            return;
+        }
+        
+        if (myStruct.F1 != "abc")
+        {
+            console.log("fail");    
+            return;
+        }
+        
+        if (myStruct.F2 != 6)
+        {
+            console.log("fail");    
+            return;
+        }
+        
+        if (myStruct.F3 != "a")
+        {
+            console.log("fail");    
+            return;
+        }
+
+        console.log("success");
     }
     
     public static string Abc5()
     {
-        StructCreationTest();
+        //StructCreationTest();
+        StructCreationGenericTest();
         
         //BoxTest1();
         //ExternalCallTest.Static_Void_Call();
         //ExternalCallTest.Static_NonVoid_Call();
         //LdInd();
-        // NullableIntTest();
+        NullableIntTest();
         //TryCatch_0();
         //TryCatch_1();
         //TryCatch_HandlerType();

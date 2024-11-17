@@ -389,8 +389,7 @@ static class MonoCecilToJsonModelMapper
                         methodReference = methodDefinition;
                     }
                 }
-                
-                
+
                 operands.Add(i, methodReference.IndexAt(metadataTable));
                 continue;
             }
@@ -487,6 +486,7 @@ static class MonoCecilToJsonModelMapper
             };
         }
 
+        
         return new()
         {
             ReturnType    = methodReference.ReturnType.IndexAt(metadataTable),
@@ -558,7 +558,8 @@ static class MonoCecilToJsonModelMapper
             {
                 IsGenericInstance = genericInstanceType.IsGenericInstance,
                 GenericArguments  = genericInstanceType.GenericArguments.ToListOf(x => x.IndexAt(metadataTable)),
-                ElementType       = genericInstanceType.ElementType.IndexAt(metadataTable)
+                ElementType       = genericInstanceType.ElementType.IndexAt(metadataTable),
+                IsValueType       = value.IsValueType ? 1: 0
             };
         }
 
@@ -649,7 +650,7 @@ static class MonoCecilToJsonModelMapper
 
     static int IndexAt(this TypeReference value, MetadataTable metadataTable)
     {
-        var index = metadataTable.Types.FindIndex(x => isSame((TypeReferenceModel)x, value));
+        var index = metadataTable.Types.FindIndex(x => isSame((TypeReferenceModel)x, value,metadataTable));
         if (index >= 0)
         {
             return index;
@@ -657,7 +658,7 @@ static class MonoCecilToJsonModelMapper
 
         return metadataTable.Types.AddAndGetIndex(AsModel(value, metadataTable));
         
-        static bool isSame(TypeReferenceModel model, TypeReference typeReference)
+        static bool isSame(TypeReferenceModel model, TypeReference typeReference,MetadataTable metadataTable)
         {
             if (model.Name != typeReference.Name)
             {
@@ -666,6 +667,23 @@ static class MonoCecilToJsonModelMapper
 
             if (typeReference.Namespace == model.Namespace)
             {
+                if (typeReference is GenericInstanceType genericInstanceType)
+                {
+                    if (genericInstanceType.GenericArguments.Count != model.GenericArguments?.Count)
+                    {
+                        return false;
+                    }
+
+                    for (var i = 0; i < genericInstanceType.GenericArguments.Count; i++)
+                    {
+                        var genericArgument = genericInstanceType.GenericArguments[i];
+
+                        if (!isSame((TypeReferenceModel)metadataTable.Types[model.GenericArguments[i]], genericArgument, metadataTable))
+                        {
+                            return false;
+                        }
+                    }
+                }
                 return true;
             }
             
