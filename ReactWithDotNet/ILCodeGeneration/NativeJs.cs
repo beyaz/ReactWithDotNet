@@ -41,6 +41,7 @@ static class AsExtensions
 static class NativeJsHelper
 {
     public static extern void Set(this object instance, string key, object value);
+    public static extern void Set(this object instance, int key, object value);
     
     public static extern object Get(this object instance, string key);
     public static extern object Get(this object instance, int key);
@@ -142,99 +143,5 @@ static class InterpreterBridge
         throw new Exception();
     }
 
-    [SuppressMessage("ReSharper", "ForCanBeConvertedToForeach")]
-    public static void ImportMetadata(MetadataTable globalMetadata, MetadataTable metadata)
-    {
-        var typesGlobal = globalMetadata.Get(nameof(MetadataTable.Types)).As<TypeReferenceModel[]>();
-        
-        var types = metadata.Get(nameof(MetadataTable.Types)).As<TypeReferenceModel[]>();
-        var fields = metadata.Get(nameof(MetadataTable.Fields)).As<MethodReferenceModel[]>();
-        var methods = metadata.Get(nameof(MetadataTable.Methods)).As<MethodReferenceModel[]>();
-        var properties = metadata.Get(nameof(MetadataTable.Properties)).As<MethodReferenceModel[]>();
-        var events = metadata.Get(nameof(MetadataTable.Events)).As<MethodReferenceModel[]>();
-        var metadataScopes = metadata.Get(nameof(MetadataTable.MetadataScopes)).As<MethodReferenceModel[]>();
-        
-        // is first load
-        if (typesGlobal.Length == 0)
-        {
-            globalMetadata.Set(nameof(MetadataTable.MetadataScopes), metadataScopes);
-            globalMetadata.Set(nameof(MetadataTable.Types), types);
-            globalMetadata.Set(nameof(MetadataTable.Fields), fields);
-            globalMetadata.Set(nameof(MetadataTable.Methods), methods);
-            globalMetadata.Set(nameof(MetadataTable.Properties), properties);
-            globalMetadata.Set(nameof(MetadataTable.Events), events);
-            
-            return;
-        }
-        
-        for (var i = 0; i < methods.Length; i++)
-        {
-            var methodReferenceModel = methods[i];
-            if (methodReferenceModel.IsDefinition)
-            {
-                var methodDefinitionModel = methodReferenceModel.As<MethodDefinitionModel>();
-
-                var instructions = methodDefinitionModel.Body.Instructions.As<int[]>();
-                
-                var operands = methodDefinitionModel.Body.Operands.As<object>();
-                
-                for (var j = 0; j < instructions.Length; j++)
-                {
-                    var instruction = instructions[j];
-                    if (instruction == (int)OpCodes.Call.Code)
-                    {
-                        var targetMethodReference = operands.Get(j);
-                        
-                    }
-                }
-            }
-        }
-
-
-        static int indexAt(MetadataTable globalMetadata,  MetadataTable metadata, MethodReferenceModel targetMethodReference, int index)
-        {
-            var types = metadata.Get(nameof(MetadataTable.Types)).As<TypeReferenceModel[]>();
-            var fields = metadata.Get(nameof(MetadataTable.Fields)).As<MethodReferenceModel[]>();
-            var methods = metadata.Get(nameof(MetadataTable.Methods)).As<MethodReferenceModel[]>();
-            var properties = metadata.Get(nameof(MetadataTable.Properties)).As<MethodReferenceModel[]>();
-            var events = metadata.Get(nameof(MetadataTable.Events)).As<MethodReferenceModel[]>();
-            var metadataScopes = metadata.Get(nameof(MetadataTable.MetadataScopes)).As<MethodReferenceModel[]>();
-            
-            
-            var global_types = globalMetadata.Get(nameof(MetadataTable.Types)).As<TypeReferenceModel[]>();
-            var global_fields = globalMetadata.Get(nameof(MetadataTable.Fields)).As<MethodReferenceModel[]>();
-            var global_methods = globalMetadata.Get(nameof(MetadataTable.Methods)).As<MethodReferenceModel[]>();
-            var global_properties = globalMetadata.Get(nameof(MetadataTable.Properties)).As<MethodReferenceModel[]>();
-            var global_events = globalMetadata.Get(nameof(MetadataTable.Events)).As<MethodReferenceModel[]>();
-            var global_metadataScopes = globalMetadata.Get(nameof(MetadataTable.MetadataScopes)).As<MethodReferenceModel[]>();
-            
-            for (var i = 0; i < global_methods.Length; i++)
-            {
-                var methodReference = global_methods[i];
-                
-                if (targetMethodReference.Name != methodReference.Name)
-                {
-                    continue;
-                }
-
-                if (methodReference.DeclaringType == null)
-                {
-                    continue;
-                }
-                
-                
-                
-
-
-            }
-
-            return index;
-
-        }
-        
-        
-        
-        
-    }
 }
 

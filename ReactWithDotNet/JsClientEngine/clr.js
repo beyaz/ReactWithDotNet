@@ -42,6 +42,21 @@ const GlobalMetadata =
 GlobalMetadata.Types.pop();
 GlobalMetadata.Methods.pop();
 
+
+function ImportMetadata(metadata)
+{
+    if(GlobalMetadata.Types.length === 0)
+    {
+        GlobalMetadata.MetadataScopes = metadata.MetadataScopes;
+        GlobalMetadata.Types = metadata.Types;
+        GlobalMetadata.Fields = metadata.Fields;
+        GlobalMetadata.Methods = metadata.Methods;
+        GlobalMetadata.Properties = metadata.Properties;
+        GlobalMetadata.Events = metadata.Events;
+    }
+        
+}
+
 const InterpreterBridge_NewArr = 0;
 const InterpreterBridge_NullReferenceException = 1;
 const InterpreterBridge_ArgumentNullException = 2;
@@ -61,7 +76,6 @@ function AssertNotNull(value)
 const InterpreterBridge_Jump = 219;
 
 let InterpreterBridge_Jump_MethodDefinition;
-let InterpreterBridge_ImportMetadata_MethodDefinition;
 
 function TryInitialize_InterpreterBridge(metadataTable) 
 {
@@ -75,11 +89,6 @@ function TryInitialize_InterpreterBridge(metadataTable)
                 if (metadataTable.Methods[i].Name === "Jump")
                 {
                     InterpreterBridge_Jump_MethodDefinition = metadataTable.Methods[i];
-                }
-
-                if (metadataTable.Methods[i].Name === "ImportMetadata")
-                {
-                    InterpreterBridge_ImportMetadata_MethodDefinition = metadataTable.Methods[i];
                 }
             }
         }
@@ -2755,9 +2764,7 @@ function Interpret(thread)
                             throw response.ErrorMessage;
                         }
 
-                        let metadataTable = response.Metadata;
-
-                        CallManagedStaticMethod(InterpreterBridge_ImportMetadata_MethodDefinition, [GlobalMetadata, metadataTable], console.log, console.log);
+                        ImportMetadata(response.Metadata);
                         
                         Interpret(thread);
                     }
@@ -2874,7 +2881,7 @@ setTimeout(function ()
         
         TryInitialize_InterpreterBridge(metadataTable);
 
-        CallManagedStaticMethod(InterpreterBridge_ImportMetadata_MethodDefinition, [GlobalMetadata, metadataTable], console.log, console.log);
+        ImportMetadata(metadataTable);
 
 
         for (var i = 0; i < metadataTable.Types.length; i++) 
