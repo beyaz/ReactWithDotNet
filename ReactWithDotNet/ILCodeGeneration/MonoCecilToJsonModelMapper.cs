@@ -81,11 +81,11 @@ static class MonoCecilToJsonModelMapper
             IsDefinition = true,
             
 
-            Name          = value.Name,
-            DeclaringType = value.DeclaringType.IndexAt(metadataTable),
-            Body          = value.Body?.AsModel(metadataTable),
-            IsConstructor = value.IsConstructor,
-            IsStatic      =value.IsStatic,
+            Name              = value.Name,
+            DeclaringType     = value.DeclaringType.IndexAt(metadataTable),
+            Body              = value.Body?.AsModel(metadataTable),
+            IsConstructor     = value.IsConstructor,
+            IsStatic          =value.IsStatic,
 
             Parameters       = value.Parameters.ToListOf(AsModel, metadataTable),
             ReturnType       = value.ReturnType.IndexAt(metadataTable),

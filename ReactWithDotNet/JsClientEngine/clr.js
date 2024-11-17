@@ -1,15 +1,46 @@
 
+
 const GlobalMetadata =
 {
     MetadataScopes: [],
     Types: [ { IsValueType: 0 }],
     Fields: [],
-    Methods: [],
+    Methods: 
+    [ 
+        {
+            Name: '', 
+            DeclaringType: 0, 
+            IsDefinition: true, 
+            ReturnType:0,
+            Parameters: 
+            [
+                {
+                    Index:0, 
+                    Name: '', 
+                    ParameterType: ''
+                }
+            ],
+            IsStatic:0, 
+            IsConstructor:0,
+            IsNull:false,
+            Body: 
+            { 
+                Instructions: [0,1], 
+                Operands:{'0':0},
+                ExceptionHandlers:[{TryStart:0, TryEnd:0, HandlerEnd: 0, HandlerStart:0, CatchType:0, HandlerType:0}]
+            },
+            ElementMethod: 0,
+            IsGenericInstance: 0,
+            GenericArguments: [0,1]
+        } 
+    ],
     Properties: [],
     Events: []
 };
 
+// intellisense dummy values
 GlobalMetadata.Types.pop();
+GlobalMetadata.Methods.pop();
 
 const InterpreterBridge_NewArr = 0;
 const InterpreterBridge_NullReferenceException = 1;
@@ -371,13 +402,50 @@ function Interpret(thread)
                         method.IsStatic   = elementMethod.IsStatic;
                     }
                     
-                    if (method.Name === '.ctor')
+                    // call instance bool value type [System.Runtime]System.Nullable`1<int32>::get_HasValue()
+                    if (!method.Body)
                     {
                         let declaringType = GlobalMetadata.Types[method.DeclaringType];
-                        
                         if (declaringType.IsGenericInstance)
                         {
+                            let realMethod = null;
+                            {
+                                let elementType = GlobalMetadata.Types[declaringType.ElementType];
+
+                                let methods = elementType.Methods;
+                                let length = methods.length;
+                                for ( let i = 0; i < length; i++ )
+                                {
+                                    let methodDefinitionModel = GlobalMetadata.Methods[methods[i]];
+                                    if (methodDefinitionModel.Name === method.Name)
+                                    {
+                                        realMethod = methodDefinitionModel;
+                                        break;
+                                    }
+                                }                                
+                            }
                             
+                            if (realMethod)
+                            {
+                                method.Body       = realMethod.Body;
+                                method.Parameters = realMethod.Parameters;
+                                method.IsStatic   = realMethod.IsStatic;
+
+                                if (method.Name === '.ctor')
+                                {
+                                    let elementType = GlobalMetadata.Types[declaringType.ElementType];
+                                    if (elementType.IsValueType)
+                                    {
+                                        let instanceIndex = evaluationStack.length - realMethod.Parameters.length - 1;
+
+                                        let address = evaluationStack[instanceIndex];
+
+                                        address.$object[address.$key] = {
+                                            $typeIndex: method.DeclaringType
+                                        };
+                                    }
+                                }
+                            }
                         }
                     }
 

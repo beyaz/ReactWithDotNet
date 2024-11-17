@@ -477,7 +477,7 @@ class Deneme45
     public static string Abc5()
     {
         //StructCreationTest();
-        StructCreationGenericTest();
+        //StructCreationGenericTest();
         
         //BoxTest1();
         //ExternalCallTest.Static_Void_Call();
