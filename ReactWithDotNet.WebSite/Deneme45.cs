@@ -391,13 +391,26 @@ class Deneme45
     {
         int? nullableInt = 5;
 
-        if (nullableInt.HasValue)
+        if (nullableInt.HasValue == false)
         {
-            console.log("success");
+            console.log("fail");    
             return;
         }
         
-        console.log("fail");
+        if (nullableInt == null)
+        {
+            console.log("fail");    
+            return;
+        }
+        
+        if (nullableInt != 5)
+        {
+            console.log("fail");    
+            return;
+        }
+        
+        console.log("success");
+        
     }
 
     struct MyStruct
@@ -476,19 +489,19 @@ class Deneme45
     
     public static string Abc5()
     {
-        //StructCreationTest();
-        //StructCreationGenericTest();
-        
-        //BoxTest1();
-        //ExternalCallTest.Static_Void_Call();
-        //ExternalCallTest.Static_NonVoid_Call();
-        //LdInd();
+        StructCreationTest();
+        StructCreationGenericTest();
+
+        BoxTest1();
+        ExternalCallTest.Static_Void_Call();
+        ExternalCallTest.Static_NonVoid_Call();
+        LdInd();
         NullableIntTest();
-        //TryCatch_0();
-        //TryCatch_1();
-        //TryCatch_HandlerType();
-        //TryCatchFinaly_0();
-        //TryCatchFinaly_1();
+        TryCatch_0();
+        TryCatch_1();
+        TryCatch_HandlerType();
+        TryCatchFinaly_0();
+        TryCatchFinaly_1();
         //AutomaticallyLoadType();
 
         return "E N D";
