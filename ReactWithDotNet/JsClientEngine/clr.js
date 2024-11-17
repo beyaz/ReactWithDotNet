@@ -45,6 +45,9 @@ GlobalMetadata.Methods.pop();
 
 function ImportMetadata(metadata)
 {
+    const globalTypes = GlobalMetadata.Types;
+    const globalMethods = GlobalMetadata.Methods;
+    
     if(GlobalMetadata.Types.length === 0)
     {
         GlobalMetadata.MetadataScopes = metadata.MetadataScopes;
@@ -53,8 +56,139 @@ function ImportMetadata(metadata)
         GlobalMetadata.Methods = metadata.Methods;
         GlobalMetadata.Properties = metadata.Properties;
         GlobalMetadata.Events = metadata.Events;
-    }
         
+        return;
+    }
+
+    const typeIndexMap = { };
+    const methodIndexMap = {};
+    
+    
+    const methods = metadata.Methods;
+    
+    // arrange operands of opcode
+    {
+        const OpCode_Call = 39;
+        
+        const methodsLength =  methods.length;
+        
+        for( let i = 0; i < methodsLength; i++ )
+        {
+            let method = methods[i];
+            
+            if(!method.Body)
+            {
+                continue;
+            }
+
+            const operands = method.Body.Operands;
+            
+            const instructions = method.Body.Instructions;
+
+            const instructionsLength = instructions.length;
+            
+            for( let j = 0; j < instructionsLength; j++ )
+            {
+                const instruction = instructions[j];
+                
+                if (instruction === OpCode_Call)
+                {
+                    operands[j] = getOrCalculateNewMethodIndex(operands[j]);
+                }
+            }
+        }
+    }
+    
+    
+    function getOrCalculateNewMethodIndex(methodIndex)
+    {
+        let newIndex = methodIndexMap[methodIndex];
+        if ( newIndex >= 0)
+        {
+            return newIndex;
+        }
+
+        newIndex = null;
+        
+        let targetMethod = metadata.Methods[methodIndex];
+
+        let length = globalMethods.length;
+
+        for (let i = 0; i < length; i++)
+        {
+            const methodItem = globalMethods[i];
+            
+            if (methodItem.Name !== targetMethod.Name)
+            {
+                continue;
+            }
+
+            if (methodItem.DeclaringType !== getOrCalculateNewTypeIndex(targetMethod.DeclaringType))
+            {
+                continue;
+            }
+
+            // found
+            newIndex = i;
+            break;
+        }
+
+        if (newIndex === null)
+        {
+            newIndex = globalMethods.length;
+
+            globalMethods.push(targetMethod);
+        }
+
+        methodIndexMap[methodIndex] = newIndex;
+
+        return newIndex;
+    }
+
+    
+    function getOrCalculateNewTypeIndex(typeIndex)
+    {
+        let newIndex = typeIndexMap[typeIndex];
+        if ( newIndex >= 0)
+        {
+            return newIndex;
+        }
+
+        newIndex = null;
+        
+        let targetType = metadata.Types[typeIndex];
+        
+        let length = globalTypes.length;
+        
+        for (let i = 0; i < length; i++)
+        {
+            const typeItem = globalTypes[i];
+            if (typeItem.Name !== targetType.Name)
+            {
+                continue;
+            }
+
+            if (typeItem.Namespace !== targetType.Namespace)
+            {
+                continue;
+            }
+            
+            // found
+            newIndex = i;
+            break;            
+        }
+
+        if (newIndex === null)
+        {
+            newIndex = globalTypes.length;
+            
+            globalTypes.push(targetType);
+        }
+        
+        typeIndexMap[typeIndex] = newIndex;
+
+        return newIndex;
+    }
 }
 
 const InterpreterBridge_NewArr = 0;
