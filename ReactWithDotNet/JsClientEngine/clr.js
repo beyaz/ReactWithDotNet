@@ -248,25 +248,25 @@ function ImportMetadata(metadata)
         return;
     }
 
+    Foreach(metadata.Methods, (method, i)=>
     {
-        const methods = metadata.Methods;
-
-        const length = methods.length;
-
-        for (let i = 0; i < length; i++)
+        if ( method.IsDefinition )
         {
-            const method = methods[i];
-            
-            if ( method.IsDefinition )
-            {
-                const globalMethodIndex = GetGlobalMethodIndex(metadata, i);
-                
-                GlobalMetadata.Methods[globalMethodIndex] = method;
-            }
+            const globalMethodIndex = GetGlobalMethodIndex(metadata, i);
+
+            GlobalMetadata.Methods[globalMethodIndex] = method;
         }
-    }
-    
-    
+    });
+
+    Foreach(metadata.Types, (type, i)=>
+    {
+        if ( type.IsDefinition )
+        {
+            const globalTypeIndex = GetGlobalTypeIndex(metadata, i);
+
+            GlobalMetadata.Types[globalTypeIndex] = type;
+        }
+    });
 }
 
 const InterpreterBridge_NewArr = 0;
@@ -1571,27 +1571,43 @@ function Interpret(thread)
 
                     let targetMethod = null;
                     {
-                        const instanceType = GlobalMetadata.Types[instance.$typeIndex];
-                        
-                        let instanceMethods = instanceType.Methods;
-                        let instanceMethodsLength = instanceMethods.length;
-
-                        for (let i = 0; i < instanceMethodsLength; i++)
+                        let type = GlobalMetadata.Types[instance.$typeIndex];
+                        while (type)
                         {
-                            targetMethod = GetMethod(instanceType.Metadata, instanceMethods[i]);
+                            let typeMethods = type.Methods;
+                            let typeMethodsLength = typeMethods.length;
 
-                            if (targetMethod.Name !== method.Name)
+                            for (let i = 0; i < typeMethodsLength; i++)
                             {
-                                continue;
-                            }
-                    
-                            if (IsTwoMethodParametersFullMatch(method, targetMethod) === false)
-                            {
-                                continue;
+                                targetMethod = GetMethod(type.Metadata, typeMethods[i]);
+
+                                if (targetMethod.Name !== method.Name)
+                                {
+                                    continue;
+                                }
+
+                                if (IsTwoMethodParametersFullMatch(method, targetMethod) === false)
+                                {
+                                    continue;
+                                }
+
+                                method = targetMethod;
+                                break;
                             }
 
-                            method = targetMethod;
-                            break;
+                            if (method === targetMethod)
+                            {
+                                break;
+                            }
+                            
+                            if (type.BaseType >= 0)
+                            {
+                                type = GetType(type.Metadata, type.BaseType);
+                            }
+                            else
+                            {
+                                break;
+                            }
                         }
                     }
 
@@ -1669,8 +1685,8 @@ function Interpret(thread)
                     if (!method.IsDefinition)
                     {
                         // Load method at runtime
-                        evaluationStack.push(method);
-                        nextInstruction = 222;
+                        evaluationStack.push(declaringType);
+                        nextInstruction = 223;
                         break;
                     }
                     
@@ -3001,6 +3017,44 @@ function Interpret(thread)
                     
                     thread.IsSuspended = 1;
                     
+                    return;
+                }
+
+                case 223: // Load type at runtime
+                {
+                    const typeReference = evaluationStack.pop();
+
+                    const assemblyName = typeReference.Metadata.MetadataScopes[typeReference.Scope].Name;
+
+                    const request =
+                    {
+                        IsInitialRequest: false,
+                        RequestedTypes:
+                        [
+                            {
+                                AssemblyName: assemblyName,
+                                NamespaceName: typeReference.Namespace,
+                                TypeName: typeReference.Name
+                            }
+                        ]
+                    };
+
+                    GetMetadata(request, response =>
+                    {
+                        if (response.Success === false)
+                        {
+                            throw response.ErrorMessage;
+                        }
+
+                        ImportMetadata(response.Metadata);
+
+                        thread.IsSuspended = 0;
+
+                        Interpret(thread);
+                    });
+
+                    thread.IsSuspended = 1;
+
                     return;
                 }
             }
