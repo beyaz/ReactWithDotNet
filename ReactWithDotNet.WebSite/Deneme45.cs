@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet.WebSite;
+﻿using System.Runtime.InteropServices;
+
+namespace ReactWithDotNet.WebSite;
 
 class Deneme45
 {
@@ -377,8 +379,10 @@ class Deneme45
     static void AutomaticallyLoadType()
     {
         var instance = new InvalidProgramException("abc");
+        
+        var instance2 = new InvalidComObjectException("a", instance);
 
-        if (instance.Message == "abc")
+        if (instance2.Message =="a" && instance2.InnerException?.Message == "abc")
         {
             console.log("success");
             return;

@@ -587,7 +587,7 @@ static class MonoCecilToJsonModelMapper
     static int IndexAt(this IMetadataScope value, MetadataTable metadataTable)
     {
         var scope = value.Name;
-        if (scope == "System.Runtime")
+        if (scope == "System.Runtime"||scope=="System.Runtime.InteropServices")
         {
             scope = typeof(string).Assembly.Modules.First().Name;
         }
