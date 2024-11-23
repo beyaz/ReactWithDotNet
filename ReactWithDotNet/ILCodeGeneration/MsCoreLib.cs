@@ -20,36 +20,7 @@ namespace _System_
         }
     }
     
-    class Exception
-    {
-        int _HResult;
-        public int HResult
-        {
-            get => _HResult; set=>_HResult = value; }
-        
-        readonly string _message;
-        public Exception()
-        {
-            
-        }
-
-        public Exception(string message)
-        {
-            _message = message;
-        }
-        
-        public Exception(string message, Exception innerException)
-            : this()
-        {
-            _message       = message;
-            InnerException = innerException;
-        }
-
-        // ReSharper disable once ConvertToAutoProperty
-        public string Message => _message;
-        
-        public Exception InnerException { get; }
-    }
+    
     
     class String
     {

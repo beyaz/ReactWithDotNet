@@ -368,17 +368,6 @@ static class MonoCecilToJsonModelMapper
                     }
                 }
                 
-                if (methodReference.DeclaringType?.FullName == "System.Exception")
-                {
-                    var methodDefinition = MetadataHelper.AssemblyDefinitionOfCore.FindType(typeof(_System_.Exception))
-                        .Methods.FirstOrDefault(x=>x.IsNameAndParametersMatched(methodReference));
-
-                    if (methodDefinition is not null)
-                    {
-                        methodReference = methodDefinition;
-                    }
-                }
-                
                 if (methodReference.DeclaringType?.FullName == "System.Int64")
                 {
                     var methodDefinition = MetadataHelper.AssemblyDefinitionOfCore.FindType(typeof(_System_.Int64))
@@ -547,7 +536,7 @@ static class MonoCecilToJsonModelMapper
                 Name          = default,
                 Namespace     = default,
                 Scope         = default,
-                DeclaringType = value.DeclaringType.IndexAt(metadataTable)
+                DeclaringType = value.DeclaringType?.IndexAt(metadataTable)
             };
         }
         
