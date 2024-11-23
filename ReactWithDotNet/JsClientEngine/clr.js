@@ -69,6 +69,7 @@ function ImportMetadata(metadata)
     // arrange operands of opcode
     {
         const OpCode_Call = 39;
+        const OpCode_NewObj = 114;
         
         const methodsLength =  methods.length;
         
@@ -81,6 +82,8 @@ function ImportMetadata(metadata)
                 continue;
             }
 
+            getOrCalculateNewMethodIndex(i);
+
             const operands = method.Body.Operands;
             
             const instructions = method.Body.Instructions;
@@ -91,7 +94,7 @@ function ImportMetadata(metadata)
             {
                 const instruction = instructions[j];
                 
-                if (instruction === OpCode_Call)
+                if (instruction === OpCode_Call || instruction === OpCode_NewObj)
                 {
                     operands[j] = getOrCalculateNewMethodIndex(operands[j]);
                 }
@@ -111,12 +114,18 @@ function ImportMetadata(metadata)
         newIndex = null;
         
         let targetMethod = metadata.Methods[methodIndex];
+        if ( targetMethod.IsDefinition )
+        {
+            ;
+        }
 
         let length = globalMethods.length;
 
+        let methodItem = null;
+        
         for (let i = 0; i < length; i++)
         {
-            const methodItem = globalMethods[i];
+            methodItem = globalMethods[i];
             
             if (methodItem.Name !== targetMethod.Name)
             {
@@ -139,12 +148,82 @@ function ImportMetadata(metadata)
 
             globalMethods.push(targetMethod);
         }
+        else
+        {
+            // update method if incoming method is definition
+            if (methodItem && targetMethod.IsDefinition)
+            {
+                arrangeTypeIndexesAsGlobal(targetMethod);
+                
+                globalMethods[newIndex] = targetMethod;
+            }
+        }
 
         methodIndexMap[methodIndex] = newIndex;
 
         return newIndex;
     }
 
+    function arrangeTypeIndexesAsGlobal(localMethodInfo)
+    {
+        localMethodInfo.DeclaringType = getOrCalculateNewTypeIndex(localMethodInfo.DeclaringType);
+        localMethodInfo.ReturnType    = getOrCalculateNewTypeIndex(localMethodInfo.ReturnType);
+        
+        // Parameters
+        {
+            const parameters = localMethodInfo.Parameters;
+            const length = parameters.length;
+            for( let i = 0; i < length; i++ )
+            {
+                const parameter = parameters[i];
+
+                parameter.ParameterType = getOrCalculateNewTypeIndex(parameter.ParameterType);
+            }
+        }
+
+        // CustomAttributes
+        {
+            const customAttributes = localMethodInfo.CustomAttributes;
+            
+            const length = customAttributes.length;
+            
+            for( let i = 0; i < length; i++ )
+            {
+                const customAttribute = customAttributes[i];
+
+                customAttribute.Constructor = getOrCalculateNewMethodIndex(customAttribute.Constructor);
+
+                // ConstructorArguments
+                {
+                    const constructorArguments = customAttribute.ConstructorArguments;
+                    
+                    const length = constructorArguments.length;
+                    
+                    for( let i = 0; i < length; i++ )
+                    {
+                        const constructorArgument = constructorArguments[i];
+
+                        constructorArgument.Type = getOrCalculateNewTypeIndex(constructorArgument.Type);
+                    }
+                }
+
+                // Properties
+                {
+                    const properties = customAttribute.Properties;
+
+                    const length = properties.length;
+
+                    for( let i = 0; i < length; i++ )
+                    {
+                        const property = properties[i];
+
+                        property.Argument.Type = getOrCalculateNewTypeIndex(property.Argument.Type);
+                    }
+                }
+            }
+        }
+        // 
+    }
     
     function getOrCalculateNewTypeIndex(typeIndex)
     {
@@ -162,13 +241,13 @@ function ImportMetadata(metadata)
         
         for (let i = 0; i < length; i++)
         {
-            const typeItem = globalTypes[i];
-            if (typeItem.Name !== targetType.Name)
+            const tempType = globalTypes[i];
+            if (tempType.Name !== targetType.Name)
             {
                 continue;
             }
 
-            if (typeItem.Namespace !== targetType.Namespace)
+            if (tempType.Namespace !== targetType.Namespace)
             {
                 continue;
             }
@@ -2900,6 +2979,8 @@ function Interpret(thread)
 
                         ImportMetadata(response.Metadata);
                         
+                        thread.IsSuspended = 0;
+                        
                         Interpret(thread);
                     }
 
@@ -2918,6 +2999,9 @@ function Interpret(thread)
                     };
                     
                     GetMetadata(request, onSuccess);
+                    
+                    thread.IsSuspended = 1;
+                    
                     return;
                 }
             }
@@ -2974,7 +3058,8 @@ function CallManagedStaticMethod(methodDefinition, args, success, fail)
         },
 
         LeaveJumpIndex: null,
-        ExceptionObjectThatMustThrownWhenExitFinallyBlock: null
+        ExceptionObjectThatMustThrownWhenExitFinallyBlock: null,
+        IsSuspended: 0
     };
 
     try 
@@ -2986,7 +3071,7 @@ function CallManagedStaticMethod(methodDefinition, args, success, fail)
         fail(e);
     } 
 
-    if (success) 
+    if (success && !thread.IsSuspended)
     {
         if (thread.LastFrame.EvaluationStack.length > 0) 
         {
