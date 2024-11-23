@@ -345,7 +345,7 @@ static class MonoCecilToJsonModelMapper
                     
                 }
                 
-                if (methodReference.DeclaringType.FullName == typeof(AsExtensions).FullName)
+                if (methodReference.DeclaringType?.FullName == typeof(AsExtensions).FullName)
                 {
                     instructions[^1] = (int)OpCodes.Nop.Code;
                     continue;
@@ -357,7 +357,7 @@ static class MonoCecilToJsonModelMapper
                     continue;
                 }
                 
-                if (methodReference.DeclaringType.FullName == "System.String")
+                if (methodReference.DeclaringType?.FullName == "System.String")
                 {
                     var methodDefinition = MetadataHelper.AssemblyDefinitionOfCore.FindType(typeof(_System_.String))
                         .Methods.FirstOrDefault(x=>x.IsNameAndParametersMatched(methodReference));
@@ -368,7 +368,7 @@ static class MonoCecilToJsonModelMapper
                     }
                 }
                 
-                if (methodReference.DeclaringType.FullName == "System.Exception")
+                if (methodReference.DeclaringType?.FullName == "System.Exception")
                 {
                     var methodDefinition = MetadataHelper.AssemblyDefinitionOfCore.FindType(typeof(_System_.Exception))
                         .Methods.FirstOrDefault(x=>x.IsNameAndParametersMatched(methodReference));
@@ -379,7 +379,7 @@ static class MonoCecilToJsonModelMapper
                     }
                 }
                 
-                if (methodReference.DeclaringType.FullName == "System.Int64")
+                if (methodReference.DeclaringType?.FullName == "System.Int64")
                 {
                     var methodDefinition = MetadataHelper.AssemblyDefinitionOfCore.FindType(typeof(_System_.Int64))
                         .Methods.FirstOrDefault(x=>x.IsNameAndParametersMatched(methodReference));
@@ -750,6 +750,24 @@ static class MonoCecilToJsonModelMapper
 
         return true;
     }
+    
+    static bool IsFullMatchWith(this IReadOnlyList<ParameterDefinitionModel> listA, IReadOnlyList<ParameterDefinitionModel> listB)
+    {
+        if (listA.Count != listB.Count)
+        {
+            return false;
+        }
+
+        for (var i = 0; i < listA.Count; i++)
+        {
+            if (listA[i].ParameterType != listB[i].ParameterType)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     
     
@@ -765,7 +783,7 @@ static class MonoCecilToJsonModelMapper
 
     static bool IsSame(MemberReferenceModel a, MethodDefinitionModel b)
     {
-        return a is MethodReferenceModel && a.Name == b.Name && a.DeclaringType == b.DeclaringType;
+        return a is MethodReferenceModel a_as_methodReferenceModel && a.Name == b.Name && a.DeclaringType == b.DeclaringType && a_as_methodReferenceModel.Parameters.IsFullMatchWith(b.Parameters);
     }
 
     static bool IsSame(MemberReferenceModel a, MemberReferenceModel b)

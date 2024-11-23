@@ -1,6 +1,6 @@
 
 
-const GlobalMetadata =
+let GlobalMetadata =
 {
     MetadataScopes: [],
     Types: [ { IsValueType: 0 }],
@@ -42,232 +42,231 @@ const GlobalMetadata =
 GlobalMetadata.Types.pop();
 GlobalMetadata.Methods.pop();
 
+GlobalMetadata = null;
 
+
+function GetMetadataScope(thread, index)
+{
+    const metadata = thread.LastFrame.Metadata;
+    
+    const metadataScope = metadata.MetadataScopes[index];
+    
+    if (metadata === GlobalMetadata)
+    {
+        return metadataScope;
+    }
+
+    const indexMap = metadata.MetadataScopes_GlobalIndexMap = metadata.MetadataScopes_GlobalIndexMap || {};
+    
+    const globalIndex = indexMap[index];
+    
+    if ( globalIndex === undefined )
+    {
+        const globalMetadataScopes = GlobalMetadata.MetadataScopes;
+
+        const length = globalMetadataScopes.length;
+
+        for ( let i = 0; i < length; i++ )
+        {
+            const globalMetadataScope = globalMetadataScopes[i];
+
+            if ( globalMetadataScope.Name === metadataScope.Name )
+            {
+                indexMap[index] = i;
+                
+                return globalMetadataScope;
+            }            
+        }
+
+        indexMap[index] = globalMetadataScopes.length;
+        
+        globalMetadataScopes.push(metadataScope);
+        
+        return metadataScope;
+    }
+
+    return GlobalMetadata.MetadataScopes[ globalIndex ];
+}
+
+function GetDeclaringTypeOfMethod(method)
+{
+    return GetType(method.Metadata, method.DeclaringType);
+}
+
+function GetElementType(type)
+{
+    return GetType(type.Metadata, type.ElementType);
+}
+
+function GetDeclaringTypeIndexOfMethod(method)
+{
+    return GetGlobalTypeIndex(method.Metadata, method.DeclaringType);
+}
+
+function GetGlobalTypeIndex(metadata, index)
+{
+    if (metadata === GlobalMetadata)
+    {
+        return index;
+    }
+    
+    const type = metadata.Types[index];    
+
+    const globalTypes = GlobalMetadata.Types;
+    
+    const indexMap = metadata.Types_GlobalIndexMap = metadata.Types_GlobalIndexMap || {};
+
+    const globalIndex = indexMap[index];
+
+    if ( globalIndex === undefined )
+    {
+        const length = globalTypes.length;
+
+        for ( let i = 0; i < length; i++ )
+        {
+            const globalType = globalTypes[i];
+
+            if ( globalType.Name !== type.Name )
+            {
+                continue;
+            }
+
+            if ( globalType.Namespace !== type.Namespace )
+            {
+                continue;
+            }
+
+            indexMap[index] = i;
+
+            return i;
+        }
+
+        indexMap[index] = globalTypes.length;
+
+        globalTypes.push(type);
+
+        return globalTypes.length - 1;
+    }
+
+    return globalIndex;
+}
+
+function GetType(metadata, index)
+{
+    return GlobalMetadata.Types[GetGlobalTypeIndex(metadata, index)];    
+}
+
+function GetGlobalMethodIndex(metadata, index)
+{
+    if (metadata === GlobalMetadata)
+    {
+        return index;
+    }
+    
+    const method = metadata.Methods[index];
+    
+    const indexMap = metadata.Methods_GlobalIndexMap = metadata.Methods_GlobalIndexMap || {};
+
+    let globalIndex = indexMap[index];
+
+    if ( globalIndex === undefined )
+    {
+        const globalMethods = GlobalMetadata.Methods;
+        
+        const length = globalMethods.length;
+
+        for ( let i = 0; i < length; i++ )
+        {
+            const globalMethod = globalMethods[i];
+
+            if ( globalMethod.Name !== method.Name )
+            {
+                continue;
+            }
+
+            if ( GetDeclaringTypeOfMethod(globalMethod) !== GetDeclaringTypeOfMethod(method) )
+            {
+                continue;
+            }
+            
+            if ( !IsTwoMethodParametersFullMatch(globalMethod, method) )
+            {
+                continue;
+            }
+
+            indexMap[index] = i;
+
+            return i;
+        }
+
+        globalIndex = indexMap[index] = globalMethods.length;
+
+        globalMethods.push(method);
+
+        return globalIndex;
+    }
+
+    return globalIndex;
+}
+
+function GetMethod(metadata, index)
+{
+    return GlobalMetadata.Methods[GetGlobalMethodIndex(metadata, index)];
+}
+
+function GetMetadataOfThread(thread)
+{
+    return thread.LastFrame.Method.Metadata;
+}
+
+function Foreach(array, fn_item_index)
+{
+    const length = array.length;
+
+    for (let i = 0; i < length; i++)
+    {
+        fn_item_index(array[i], i);
+    }
+}
 function ImportMetadata(metadata)
 {
-    const globalTypes = GlobalMetadata.Types;
-    const globalMethods = GlobalMetadata.Methods;
-    
-    if(GlobalMetadata.Types.length === 0)
+    // connect metadata
     {
-        GlobalMetadata.MetadataScopes = metadata.MetadataScopes;
-        GlobalMetadata.Types = metadata.Types;
-        GlobalMetadata.Fields = metadata.Fields;
-        GlobalMetadata.Methods = metadata.Methods;
-        GlobalMetadata.Properties = metadata.Properties;
-        GlobalMetadata.Events = metadata.Events;
+        Foreach(metadata.Methods, (method, index)=> {
+            method.Metadata = metadata;
+        });
+
+        Foreach(metadata.Types, (type, index)=> {
+            type.Metadata = metadata;
+        });
+    }
+
+    if (GlobalMetadata === null)
+    {
+        GlobalMetadata = metadata;
         
         return;
     }
 
-    const typeIndexMap = { };
-    const methodIndexMap = {};
-    
-    
-    const methods = metadata.Methods;
-    
-    // arrange operands of opcode
     {
-        const OpCode_Call = 39;
-        const OpCode_NewObj = 114;
-        
-        const methodsLength =  methods.length;
-        
-        for( let i = 0; i < methodsLength; i++ )
-        {
-            let method = methods[i];
-            
-            if(!method.Body)
-            {
-                continue;
-            }
+        const methods = metadata.Methods;
 
-            getOrCalculateNewMethodIndex(i);
+        const length = methods.length;
 
-            const operands = method.Body.Operands;
-            
-            const instructions = method.Body.Instructions;
-
-            const instructionsLength = instructions.length;
-            
-            for( let j = 0; j < instructionsLength; j++ )
-            {
-                const instruction = instructions[j];
-                
-                if (instruction === OpCode_Call || instruction === OpCode_NewObj)
-                {
-                    operands[j] = getOrCalculateNewMethodIndex(operands[j]);
-                }
-            }
-        }
-    }
-    
-    
-    function getOrCalculateNewMethodIndex(methodIndex)
-    {
-        let newIndex = methodIndexMap[methodIndex];
-        if ( newIndex >= 0)
-        {
-            return newIndex;
-        }
-
-        newIndex = null;
-        
-        let targetMethod = metadata.Methods[methodIndex];
-        if ( targetMethod.IsDefinition )
-        {
-            ;
-        }
-
-        let length = globalMethods.length;
-
-        let methodItem = null;
-        
         for (let i = 0; i < length; i++)
         {
-            methodItem = globalMethods[i];
+            const method = methods[i];
             
-            if (methodItem.Name !== targetMethod.Name)
+            if ( method.IsDefinition )
             {
-                continue;
-            }
-
-            if (methodItem.DeclaringType !== getOrCalculateNewTypeIndex(targetMethod.DeclaringType))
-            {
-                continue;
-            }
-
-            // found
-            newIndex = i;
-            break;
-        }
-
-        if (newIndex === null)
-        {
-            newIndex = globalMethods.length;
-
-            globalMethods.push(targetMethod);
-        }
-        else
-        {
-            // update method if incoming method is definition
-            if (methodItem && targetMethod.IsDefinition)
-            {
-                arrangeTypeIndexesAsGlobal(targetMethod);
+                const globalMethodIndex = GetGlobalMethodIndex(metadata, i);
                 
-                globalMethods[newIndex] = targetMethod;
+                GlobalMetadata.Methods[globalMethodIndex] = method;
             }
         }
-
-        methodIndexMap[methodIndex] = newIndex;
-
-        return newIndex;
-    }
-
-    function arrangeTypeIndexesAsGlobal(localMethodInfo)
-    {
-        localMethodInfo.DeclaringType = getOrCalculateNewTypeIndex(localMethodInfo.DeclaringType);
-        localMethodInfo.ReturnType    = getOrCalculateNewTypeIndex(localMethodInfo.ReturnType);
-        
-        // Parameters
-        {
-            const parameters = localMethodInfo.Parameters;
-            const length = parameters.length;
-            for( let i = 0; i < length; i++ )
-            {
-                const parameter = parameters[i];
-
-                parameter.ParameterType = getOrCalculateNewTypeIndex(parameter.ParameterType);
-            }
-        }
-
-        // CustomAttributes
-        {
-            const customAttributes = localMethodInfo.CustomAttributes;
-            
-            const length = customAttributes.length;
-            
-            for( let i = 0; i < length; i++ )
-            {
-                const customAttribute = customAttributes[i];
-
-                customAttribute.Constructor = getOrCalculateNewMethodIndex(customAttribute.Constructor);
-
-                // ConstructorArguments
-                {
-                    const constructorArguments = customAttribute.ConstructorArguments;
-                    
-                    const length = constructorArguments.length;
-                    
-                    for( let i = 0; i < length; i++ )
-                    {
-                        const constructorArgument = constructorArguments[i];
-
-                        constructorArgument.Type = getOrCalculateNewTypeIndex(constructorArgument.Type);
-                    }
-                }
-
-                // Properties
-                {
-                    const properties = customAttribute.Properties;
-
-                    const length = properties.length;
-
-                    for( let i = 0; i < length; i++ )
-                    {
-                        const property = properties[i];
-
-                        property.Argument.Type = getOrCalculateNewTypeIndex(property.Argument.Type);
-                    }
-                }
-            }
-        }
-        // 
     }
     
-    function getOrCalculateNewTypeIndex(typeIndex)
-    {
-        let newIndex = typeIndexMap[typeIndex];
-        if ( newIndex >= 0)
-        {
-            return newIndex;
-        }
-
-        newIndex = null;
-        
-        let targetType = metadata.Types[typeIndex];
-        
-        let length = globalTypes.length;
-        
-        for (let i = 0; i < length; i++)
-        {
-            const tempType = globalTypes[i];
-            if (tempType.Name !== targetType.Name)
-            {
-                continue;
-            }
-
-            if (tempType.Namespace !== targetType.Namespace)
-            {
-                continue;
-            }
-            
-            // found
-            newIndex = i;
-            break;            
-        }
-
-        if (newIndex === null)
-        {
-            newIndex = globalTypes.length;
-            
-            globalTypes.push(targetType);
-        }
-        
-        typeIndexMap[typeIndex] = newIndex;
-
-        return newIndex;
-    }
+    
 }
 
 const InterpreterBridge_NewArr = 0;
@@ -315,7 +314,7 @@ function NotImplementedOpCode()
 function Interpret(thread)
 {
     let currentStackFrame = thread.LastFrame;
-
+    
     let instructions = currentStackFrame.Method.Body.Instructions;
     let operands     = currentStackFrame.Method.Body.Operands;
 
@@ -613,11 +612,11 @@ function Interpret(thread)
                 
                 case 39: // Call
                 {
-                    let method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
+                    let method = GetMethod(GetMetadataOfThread(thread), operands[currentStackFrame.Line]);
 
                     if (method.IsGenericInstance)
                     {
-                        let elementMethod = GlobalMetadata.Methods[method.ElementMethod];
+                        let elementMethod = GetMethod(method.Metadata, method.ElementMethod);
 
                         method.Body       = elementMethod.Body;
                         method.Parameters = elementMethod.Parameters;
@@ -627,18 +626,18 @@ function Interpret(thread)
                     // call instance bool value type [System.Runtime]System.Nullable`1<int32>::get_HasValue()
                     if (!method.Body)
                     {
-                        let declaringType = GlobalMetadata.Types[method.DeclaringType];
+                        let declaringType = GetType(method.Metadata, method.DeclaringType);
                         if (declaringType.IsGenericInstance)
                         {
                             let realMethod = null;
                             {
-                                let elementType = GlobalMetadata.Types[declaringType.ElementType];
+                                let elementType = GetElementType(declaringType);
 
                                 let methods = elementType.Methods;
                                 let length = methods.length;
                                 for ( let i = 0; i < length; i++ )
                                 {
-                                    let methodDefinitionModel = GlobalMetadata.Methods[methods[i]];
+                                    let methodDefinitionModel =  GetMethod(elementType.Metadata, methods[i]);
                                     if (methodDefinitionModel.Name === method.Name)
                                     {
                                         realMethod = methodDefinitionModel;
@@ -655,7 +654,7 @@ function Interpret(thread)
 
                                 if (method.Name === '.ctor')
                                 {
-                                    let elementType = GlobalMetadata.Types[declaringType.ElementType];
+                                    let elementType = GetElementType(declaringType);
                                     if (elementType.IsValueType)
                                     {
                                         let instanceIndex = evaluationStack.length - realMethod.Parameters.length - 1;
@@ -687,7 +686,7 @@ function Interpret(thread)
                     // maybe external method
                     if (instructions.length === 0)
                     {
-                        let declaringType = GlobalMetadata.Types[method.DeclaringType];
+                        let declaringType = GetDeclaringTypeOfMethod(method);
                         
                         let isDeclaringTypeExternal = false;
                         {
@@ -699,9 +698,9 @@ function Interpret(thread)
                             {
                                 let attribute = customAttributes[i];
 
-                                let constructor = GlobalMetadata.Methods[attribute.Constructor];
-
-                                let declaringTypeOfConstructor = GlobalMetadata.Types[constructor.DeclaringType];
+                                let constructor = GetMethod(declaringType.Metadata, attribute.Constructor);
+                                
+                                let declaringTypeOfConstructor = GetType(declaringType.Metadata, constructor.DeclaringType);
                                 if (declaringTypeOfConstructor.Name === 'ExternalAttribute' &&
                                     declaringTypeOfConstructor.Namespace === 'ReactWithDotNet')
                                 {
@@ -730,7 +729,7 @@ function Interpret(thread)
 
                             let isVoid = false;
                             {
-                                let returnType = GlobalMetadata.Types[method.ReturnType];
+                                let returnType = GetType(method.Metadata, method.ReturnType);
                                 
                                 isVoid = returnType.Namespace === 'System' && returnType.Name === 'Void';
                             }
@@ -1547,7 +1546,7 @@ function Interpret(thread)
                 }
                 case 110: // Callvirt
                 {
-                    let method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
+                    let method = GetMethod(GetMetadataOfThread(thread), operands[currentStackFrame.Line]);
                 
                     let methodParameterCount = method.Parameters.length;
 
@@ -1571,20 +1570,22 @@ function Interpret(thread)
                     // find target method
 
                     let targetMethod = null;
-                    {                    
-                        let instanceMethods = GlobalMetadata.Types[instance.$typeIndex].Methods;
+                    {
+                        const instanceType = GlobalMetadata.Types[instance.$typeIndex];
+                        
+                        let instanceMethods = instanceType.Methods;
                         let instanceMethodsLength = instanceMethods.length;
 
                         for (let i = 0; i < instanceMethodsLength; i++)
                         {
-                            targetMethod = GlobalMetadata.Methods[instanceMethods[i]];
+                            targetMethod = GetMethod(instanceType.Metadata, instanceMethods[i]);
 
                             if (targetMethod.Name !== method.Name)
                             {
                                 continue;
                             }
                     
-                            if (IsTwoParameterListFullMatch(method, targetMethod) === false)
+                            if (IsTwoMethodParametersFullMatch(method, targetMethod) === false)
                             {
                                 continue;
                             }
@@ -1641,17 +1642,17 @@ function Interpret(thread)
                 
                 case 114: // Newobj
                 {
-                    let method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
+                    let method = GetMethod(GetMetadataOfThread(thread), operands[currentStackFrame.Line]);
 
-                    let declaringType = GlobalMetadata.Types[method.DeclaringType];
+                    let declaringType = GetDeclaringTypeOfMethod(method);
 
                     if (declaringType.IsGenericInstance)
                     {
-                        let elementType = GlobalMetadata.Types[declaringType.ElementType];
+                        let elementType = GetElementType(declaringType);
 
                         for (let i = 0; i < elementType.Methods.length; i++)
                         {
-                            let methodTemp = GlobalMetadata.Methods[elementType.Methods[i]];
+                            let methodTemp = GetMethod(elementType.Metadata, elementType.Methods[i]);
 
                             if (methodTemp.IsDefinition)
                             {
@@ -1674,7 +1675,7 @@ function Interpret(thread)
                     }
                     
                     let newObj = {};
-                    newObj.$typeIndex = method.DeclaringType;
+                    newObj.$typeIndex = GetDeclaringTypeIndexOfMethod(method);
                     
                     let tempArray = [];
 
@@ -1763,7 +1764,7 @@ function Interpret(thread)
 
                 case 120: // Ldfld
                 {
-                    let fieldReference = GlobalMetadata.Fields[operands[currentStackFrame.Line]];
+                    let fieldReference = GetMetadataOfThread(thread).Fields[operands[currentStackFrame.Line]];
                                 
                     let instance = evaluationStack.pop();
 
@@ -1795,7 +1796,7 @@ function Interpret(thread)
                 }
                 case 121: // Ldflda
                 {
-                    let fieldReference = GlobalMetadata.Fields[operands[currentStackFrame.Line]];
+                    let fieldReference = GetMetadataOfThread(thread).Fields[operands[currentStackFrame.Line]];
                     
                     let instance = evaluationStack.pop();
 
@@ -1809,7 +1810,7 @@ function Interpret(thread)
                 }
                 case 122: // Stfld
                 {    
-                    let fieldReference = GlobalMetadata.Fields[operands[currentStackFrame.Line]];
+                    let fieldReference = GetMetadataOfThread(thread).Fields[operands[currentStackFrame.Line]];
                                     
                     let value    = evaluationStack.pop();
                     let instance = evaluationStack.pop();
@@ -2493,7 +2494,7 @@ function Interpret(thread)
                     
                     let typeIndex = operands[currentStackFrame.Line];
                     
-                    let typeReference = GlobalMetadata.Types[typeIndex];
+                    let typeReference = GetType(GetMetadataOfThread(thread), typeIndex);
 
                     let address = evaluationStack.pop();
                     
@@ -2503,12 +2504,9 @@ function Interpret(thread)
                     }
                     else
                     {
-                        let newObj =
-                        {
+                        address.$object[address.$key] = {
                             $typeIndex: typeIndex
                         };
-
-                        address.$object[address.$key] = newObj;
                     }                    
 
                     nextInstruction = instructions[++currentStackFrame.Line];
@@ -2855,9 +2853,10 @@ function Interpret(thread)
 
                             if ( exceptionHandler.CatchType >= 0 )
                             {
-                                let catchTypeIsDotNetRootException =  
-                                    GlobalMetadata.Types[exceptionHandler.CatchType].Namespace === 'System' &&
-                                    GlobalMetadata.Types[exceptionHandler.CatchType].Name === 'Exception';
+                                
+                                let catchTypeIsDotNetRootException =
+                                    GetType(currentStackFrame.Method.Metadata, exceptionHandler.CatchType).Namespace === 'System' &&
+                                    GetType(currentStackFrame.Method.Metadata, exceptionHandler.CatchType).Name === 'Exception';
                                 
                                 if ( exception.$typeIndex ===  exceptionHandler.CatchType || catchTypeIsDotNetRootException )
                                 {
@@ -2965,10 +2964,10 @@ function Interpret(thread)
                 case 222: // Load method at runtime
                 {
                     let methodReference = evaluationStack.pop();
-
-                    let declaringType = GlobalMetadata.Types[methodReference.DeclaringType];
                     
-                    let assemblyName = GlobalMetadata.MetadataScopes[declaringType.Scope].Name;
+                    let declaringType = GetDeclaringTypeOfMethod(methodReference);
+                    
+                    let assemblyName = declaringType.Metadata.MetadataScopes[declaringType.Scope].Name;
                                         
                     function onSuccess(response)
                     {
@@ -3102,7 +3101,6 @@ setTimeout(function ()
 
         ImportMetadata(metadataTable);
 
-
         for (var i = 0; i < metadataTable.Types.length; i++) 
         {
             var table = metadataTable.Types[i];
@@ -3153,8 +3151,11 @@ const CLR =
 };
 window.CLR = CLR;
 
-function IsTwoParameterListFullMatch(parametersA, parametersB)
+function IsTwoMethodParametersFullMatch(methodA, methodB)
 {
+    const parametersA = methodA.Parameters;
+    const parametersB = methodB.Parameters;
+    
     let lengthA = parametersA.length;
     let lengthB = parametersB.length;
 
@@ -3165,7 +3166,7 @@ function IsTwoParameterListFullMatch(parametersA, parametersB)
 
     for (let i = 0; i < lengthA; i++)
     {
-        if (parametersA[i].ParameterType !== parametersB[i].ParameterType)
+        if (GetType(methodA.Metadata, parametersA[i].ParameterType) !== GetType(methodB.Metadata, parametersB[i].ParameterType))
         {
             return false;
         }
