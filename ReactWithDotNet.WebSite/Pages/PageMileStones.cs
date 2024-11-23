@@ -42,7 +42,7 @@ sealed class PageMilestones : PureComponent
             new MilestoneContainer
             {
                 new h5 { "Milestone 3: Use Client option" },
-                new Progressbar { Value = 3 },
+                new Progressbar { Value = 10 },
                 new p
                 {
                     "After this part finished, you can write js code in c# language. I'm planning mini .net runtime in js language. My plan is not to build a new c# to js compiler. My plan is creating a new MSIL code interpreter in js language. Not getting all .net core assemblies. Only required part of MSIL codes will be downloaded into client side."
