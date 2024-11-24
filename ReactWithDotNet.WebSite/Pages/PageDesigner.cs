@@ -37,6 +37,13 @@ sealed class PageDesigner : PureComponent
                 new img { Src(Asset("design.png")), WidthFull, Padding(16) },
                 "When you edit code in hotreload mode then designer updates component preview."
             },
+            
+            SpaceY(24),
+            new PlayButton
+            {
+                Label    = "Play tutorial (1 min)",
+                VideoUrl = Asset("Designer.mp4")
+            },
 
             SpaceY(80)
         };
