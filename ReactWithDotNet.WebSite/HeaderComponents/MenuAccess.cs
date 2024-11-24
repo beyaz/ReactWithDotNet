@@ -37,12 +37,21 @@ static class MenuAccess
                         Title       = "Modifiers",
                         PageLink    = Page.PageModifiers.Url,
                         Description = "What is modifier"
-                    },
+                    }
+                ]
+            },
+            
+            new()
+            {
+                Title = "Helper App",
+                Children =
+                [
                     new()
                     {
                         Title       = "Import Html",
                         PageLink    = Page.LiveEditor.Url,
-                        Description = "Import any html / Live Editor"
+                        Description = "Import any html / Live Editor",
+                        SvgFileName = "import.svg"
                     }
                 ]
             }
