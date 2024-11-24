@@ -52,6 +52,13 @@ static class MenuAccess
                         PageLink    = Page.LiveEditor.Url,
                         Description = "Import any html / Live Editor",
                         SvgFileName = "import.svg"
+                    },
+                    new()
+                    {
+                        Title       = "Design",
+                        PageLink    = Page.PageDesigner.Url,
+                        Description = "Preview components in hotreload mode",
+                        SvgFileName = "design.svg"
                     }
                 ]
             }
