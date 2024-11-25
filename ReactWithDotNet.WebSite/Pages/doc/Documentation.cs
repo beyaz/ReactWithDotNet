@@ -99,27 +99,7 @@ abstract class PageDocumentation : Component<PageDocumentation.State>
                     {
                         new { Label = "Getting started", Url  = Page.DocStart.Url },
                         new { Label = "Server Driven UI", Url = Page.DocServerDrivenUI.Url },
-                        new { Label = "React and .Net", Url   = "#" }
-                    }
-                },
-                new
-                {
-                    Title = "Core concept",
-                    Links = new[]
-                    {
-                        new { Label = "Syntax Sugars", Url   = "#" },
-                        new { Label = "Modifiers", Url       = "#" },
-                        new { Label = "Sample Todo App", Url = "#" }
-                    }
-                },
-                new
-                {
-                    Title = "Advanced concept",
-                    Links = new[]
-                    {
-                        new { Label = "Syntax Sugars", Url   = "/getuser" },
-                        new { Label = "Modifiers", Url       = "/getuser" },
-                        new { Label = "Sample Todo App", Url = "/getuser" }
+                        new { Label = "Setup", Url   = "#" }
                     }
                 }
             };
