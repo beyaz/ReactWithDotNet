@@ -101,16 +101,21 @@ sealed class PageDocumentation_Start : PageDocumentation
                 },
                 new p(LineHeight28, MarginBottom(1.5 * rem))
                 {
-                    new CodeViewer(CodeViewer.LangTypeScript, Height(120), MD(Width(400)))
+                    new CodeViewer(CodeViewer.LangTypeScript, Height(200), MD(Width(400)))
                     {
                         """
                         const HelloWorld = () => {
                           return (
-                            <div>
+                            <div style={{ fontSize: '14px', color: 'gray' }}>
                               <h1>Hello World!</h1>
                             </div>
                           );
                         };
+                        
+                        // sample usage
+                        <div className="App">
+                          <HelloWorld />
+                        </div>
                         """
                     }
                 },
@@ -121,18 +126,64 @@ sealed class PageDocumentation_Start : PageDocumentation
                 },
                 new p(LineHeight28, MarginBottom(1.5 * rem))
                 {
-                    new CodeViewer(CodeViewer.LangTypeScript, Height(120), MD(Width(400)))
+                    new CodeViewer(CodeViewer.LangTypeScript, Height(210), MD(Width(400)))
                     {
                         """
                         Element HelloWorld()
                         {
-                          return new div
+                          return new div(FontSize14, Color("gray"))
                           {
-                              new h1 { "Hello World!" }
+                            new h1 { "Hello World!" }
                           };
+                        }
+                        
+                        // sample usage
+                        new div(ClassName("App"))
+                        {
+                            HelloWorld
                         }
                         """
                     }
+                },
+                
+                new h2(FontSize20, FontWeight400, LineHeight32, MarginBottom(1 * rem))
+                {
+                    "Here is c# async version"
+                },
+                new p(LineHeight28, MarginBottom(1.5 * rem))
+                {
+                    new CodeViewer(CodeViewer.LangTypeScript, Height(330), MD(Width(400)))
+                    {
+                        """
+                        async Task<string> GetMessageFromDb()
+                        {
+                            await Task.Delay(1);
+                        
+                            return "Hello World!";
+                        }
+                        
+                        async Task<Element> HelloWorld()
+                        {
+                            return new div(ClassName("App"))
+                            {
+                                new h1 { await GetMessageFromDb() }
+                            };
+                        }
+
+                        // sample usage
+                        new div(ClassName("App"))
+                        {
+                            HelloWorld
+                        }
+                        """
+                    }
+                },
+                
+                new p(LineHeight28, MarginBottom(1.5 * rem))
+                {
+                    "As you can see, main idea is writing react components in c# language at serverside.",
+                    br,
+                    "Our aim is to combine the strengths of both platforms (C# and ReactJS) to provide an easier web development environment."
                 },
             }
         };
