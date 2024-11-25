@@ -31,7 +31,7 @@ sealed class PageDocumentation_Start : PageDocumentation
                 },
                 new p(LineHeight28, MarginBottom(1.5 * rem))
                 {
-                    new CodeViewerForTypeScript(Height(300), MD(Width(300)))
+                    new CodeViewer(CodeViewer.LangTypeScript, Height(300), MD(Width(300)))
                     {
                         """
                         class PrintHello extends React.Component 
@@ -62,7 +62,7 @@ sealed class PageDocumentation_Start : PageDocumentation
                 },
                 new p(LineHeight28, MarginBottom(1.5 * rem))
                 {
-                    new CodeViewerForTypeScript(Height(300), MD(Width(300)))
+                    new CodeViewer(CodeViewer.LangCSharp, Height(300), MD(Width(300)))
                     {
                         """
                         record PrintHelloState
