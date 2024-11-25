@@ -25,13 +25,13 @@ sealed class PageDocumentation_Start : PageDocumentation
                     "Build react component tree and event handlers in c# language at .net core server afterthat component tree will render in browser."
                 },
 
-                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1 * rem))
+                new h3(FontSize20, FontWeight400, LineHeight32, MarginBottom(1 * rem))
                 {
                     "Lets look at component decleration in react"
                 },
                 new p(LineHeight28, MarginBottom(1.5 * rem))
                 {
-                    new CodeViewer(CodeViewer.LangTypeScript, Height(300), MD(Width(300)))
+                    new CodeViewer(CodeViewer.LangTypeScript, Height(300), MD(Width(400)))
                     {
                         """
                         class PrintHello extends React.Component 
@@ -56,13 +56,13 @@ sealed class PageDocumentation_Start : PageDocumentation
                     }
                 },
                
-                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1 * rem))
+                new h2(FontSize20, FontWeight400, LineHeight32, MarginBottom(1 * rem))
                 {
                     "In ReactWithDotNet system, the c# version of this component is"
                 },
                 new p(LineHeight28, MarginBottom(1.5 * rem))
                 {
-                    new CodeViewer(CodeViewer.LangCSharp, Height(400), MD(Width(300)))
+                    new CodeViewer(CodeViewer.LangCSharp, Height(400), MD(Width(400)))
                     {
                         """
                         record PrintHelloState
@@ -94,6 +94,46 @@ sealed class PageDocumentation_Start : PageDocumentation
                     }
                 },
 
+                
+                new h2(FontSize20, FontWeight400, LineHeight32, MarginBottom(1 * rem))
+                {
+                    "Let's create simple functional component"
+                },
+                new p(LineHeight28, MarginBottom(1.5 * rem))
+                {
+                    new CodeViewer(CodeViewer.LangTypeScript, Height(120), MD(Width(400)))
+                    {
+                        """
+                        const HelloWorld = () => {
+                          return (
+                            <div>
+                              <h1>Hello World!</h1>
+                            </div>
+                          );
+                        };
+                        """
+                    }
+                },
+                
+                new h2(FontSize20, FontWeight400, LineHeight32, MarginBottom(1 * rem))
+                {
+                    "Here is c# version"
+                },
+                new p(LineHeight28, MarginBottom(1.5 * rem))
+                {
+                    new CodeViewer(CodeViewer.LangTypeScript, Height(120), MD(Width(400)))
+                    {
+                        """
+                        Element HelloWorld()
+                        {
+                          return new div
+                          {
+                              new h1 { "Hello World!" }
+                          };
+                        }
+                        """
+                    }
+                },
             }
         };
     
