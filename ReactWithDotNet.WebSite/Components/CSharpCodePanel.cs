@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.WebSite.Components;
 
-sealed class CodeViewer : PureComponent
+sealed class CodeViewer_old : PureComponent
 {
     public required string Code { get; init; }
 
@@ -77,7 +77,7 @@ sealed class CSharpCodePanel : PureComponent
 
     protected override Element render()
     {
-        return new CodeViewer { Code = Code, LanguageIsCSharp = true };
+        return new CodeViewer_old { Code = Code, LanguageIsCSharp = true };
     }
 }
 
@@ -95,7 +95,7 @@ sealed class CodeViewerForTypeScript : PureComponent
 
         return new div
         {
-            new CodeViewer
+            new CodeViewer_old
             {
                 Code = htmlTextNode?.text, LanguageIsTypeScript = true
             }
