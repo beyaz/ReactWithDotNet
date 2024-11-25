@@ -265,7 +265,22 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
         object createInstance(Type type)
         {
-            var instance = Activator.CreateInstance(type);
+            
+            object[] constructorArguments = [];
+            {
+                var constructorInfoList = type.GetConstructors();
+                if (constructorInfoList.Length == 1)
+                {
+                    var parameterInfoList = constructorInfoList[0].GetParameters();
+                    
+                    if (parameterInfoList.Length == 1 && parameterInfoList[0].ParameterType == typeof(Modifier[]))
+                    {
+                        constructorArguments = [new Modifier[] { }];
+                    }
+                }
+            }
+           
+            var instance = Activator.CreateInstance(type,constructorArguments);
             if (instance is ReactComponentBase component)
             {
                 component.key     = "0";
@@ -344,12 +359,31 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
             bool hasMatchWithPropertyType(PropertyInfo propertyInfo)
             {
+                if (isSimpleCommonPrimitiveType(targetLocationType))
+                {
+                    return false;
+                }
+                
                 if (propertyInfo.PropertyType == targetLocationType)
                 {
                     return true;
                 }
 
                 return false;
+
+                static bool isSimpleCommonPrimitiveType(Type type)
+                {
+                    return type == typeof(string) ||
+                           type == typeof(sbyte) ||
+                           type == typeof(byte) ||
+                           type == typeof(short) ||
+                           type == typeof(int) ||
+                           type == typeof(double) ||
+                           type == typeof(float) ||
+                           type == typeof(long) ||
+                           type == typeof(ulong) ||
+                           type == typeof(decimal);
+                }
             }
 
             static TSource firstOrDefault<TSource>(IReadOnlyCollection<TSource> source, params Func<TSource, bool>[] predicates) where TSource : class

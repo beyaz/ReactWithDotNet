@@ -31,6 +31,8 @@ sealed class CodeViewer : PureComponent
 
         if (DesignMode && code is null)
         {
+            Add(SizeFull);
+            
             code = """"
                    using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
 
@@ -62,8 +64,9 @@ sealed class CodeViewer : PureComponent
                    """";
         }
 
-        return new div
+        return new FlexRowCentered(Border(1,solid,Gray200), BorderRadius(4), Padding(4))
         {
+            SpaceY(4),
             new Editor
             {
                 defaultLanguage = language,
