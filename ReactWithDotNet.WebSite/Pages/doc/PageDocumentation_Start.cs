@@ -4,8 +4,6 @@ sealed class PageDocumentation_Start : PageDocumentation
 {
     protected override Element CreateContent()
     {
-        
-    
         return new FlexRow(JustifyContentCenter, WidthFull)
         {
             new article(PaddingTopBottom(4 * rem))
@@ -55,7 +53,7 @@ sealed class PageDocumentation_Start : PageDocumentation
                         """
                     }
                 },
-               
+
                 new h2(FontSize20, FontWeight400, LineHeight32, MarginBottom(1 * rem))
                 {
                     "In ReactWithDotNet system, the c# version of this component is"
@@ -94,7 +92,6 @@ sealed class PageDocumentation_Start : PageDocumentation
                     }
                 },
 
-                
                 new h2(FontSize20, FontWeight400, LineHeight32, MarginBottom(1 * rem))
                 {
                     "Let's create simple functional component"
@@ -111,7 +108,7 @@ sealed class PageDocumentation_Start : PageDocumentation
                             </div>
                           );
                         };
-                        
+
                         // sample usage
                         <div className="App">
                           <HelloWorld />
@@ -119,7 +116,7 @@ sealed class PageDocumentation_Start : PageDocumentation
                         """
                     }
                 },
-                
+
                 new h2(FontSize20, FontWeight400, LineHeight32, MarginBottom(1 * rem))
                 {
                     "Here is c# version"
@@ -136,7 +133,7 @@ sealed class PageDocumentation_Start : PageDocumentation
                             new h1 { "Hello World!" }
                           };
                         }
-                        
+
                         // sample usage
                         new div(ClassName("App"))
                         {
@@ -145,7 +142,7 @@ sealed class PageDocumentation_Start : PageDocumentation
                         """
                     }
                 },
-                
+
                 new h2(FontSize20, FontWeight400, LineHeight32, MarginBottom(1 * rem))
                 {
                     "Here is c# async version"
@@ -161,7 +158,7 @@ sealed class PageDocumentation_Start : PageDocumentation
                         
                             return "Hello World!";
                         }
-                        
+
                         async Task<Element> HelloWorld()
                         {
                             return new div(ClassName("App"))
@@ -178,15 +175,16 @@ sealed class PageDocumentation_Start : PageDocumentation
                         """
                     }
                 },
-                
+
                 new p(LineHeight28, MarginBottom(1.5 * rem))
                 {
                     "As you can see, main idea is writing react components in c# language at serverside.",
                     br,
-                    "Our aim is to combine the strengths of both platforms (C# and ReactJS) to provide an easier web development environment."
-                },
+                    "Our aim is to combine the strengths of both platforms (C# and ReactJS) to provide an easier web development environment.",
+                    br,
+                    "You dont need to import or compile any js library. All you need to reference ReactWithDotNet.dll to your .net core webapi project."
+                }
             }
         };
-    
     }
 }
