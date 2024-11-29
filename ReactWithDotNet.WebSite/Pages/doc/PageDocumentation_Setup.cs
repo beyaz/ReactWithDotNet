@@ -4,8 +4,6 @@ sealed class PageDocumentation_Setup : PageDocumentation
 {
     protected override Element CreateContent()
     {
-        
-    
         return new FlexRow(JustifyContentCenter, WidthFull)
         {
             new article(PaddingTopBottom(4 * rem))
@@ -20,9 +18,9 @@ sealed class PageDocumentation_Setup : PageDocumentation
                 },
                 new p(LineHeight28, MarginBottom(1.5 * rem))
                 {
-                    "Skip long and boring documentations!"  ,
-                    
-                    br,br,
+                    "Skip long and boring documentations!",
+
+                    br, br,
                     "As always we said that, if you are familiar to c# and react library, you are already know ReactWithDotNet library",
                     br, br,
                     "Best way to learn ReactWithDotNet library is see our 'Counter' sample project",
@@ -33,12 +31,8 @@ sealed class PageDocumentation_Setup : PageDocumentation
                         "Counter Sample",
                         Href("https://github.com/beyaz/ReactWithDotNet.Samples")
                     }
-                },
-
-                
-
+                }
             }
         };
-    
     }
 }
