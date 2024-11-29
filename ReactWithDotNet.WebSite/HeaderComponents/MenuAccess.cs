@@ -23,7 +23,7 @@ static class MenuAccess
         [
             new()
             {
-                Title = "Products",
+                Title = "Technical",
                 Children =
                 [
                     new()

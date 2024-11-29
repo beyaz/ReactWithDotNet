@@ -64,7 +64,7 @@ sealed class CodeViewer : PureComponent
                    """";
         }
 
-        return new FlexRowCentered(Border(1,solid,Gray200), BorderRadius(4), Padding(4))
+        return new FlexRowCentered(Border(1,solid,Gray200), BorderRadius(4), Padding(4), SizeFull)
         {
             SpaceY(4),
             new Editor
