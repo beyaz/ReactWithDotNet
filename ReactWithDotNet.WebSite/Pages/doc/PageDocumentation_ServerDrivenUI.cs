@@ -12,51 +12,25 @@ sealed class PageDocumentation_ServerDrivenUI : PageDocumentation
             {
                 new h1(FontSize32, FontWeight400, LineHeight32, MarginBottom(1.2 * rem))
                 {
-                    "Server Driven UI"
+                    "Setup"
                 },
                 new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1 * rem))
                 {
-                    "Quis vel iste dicta"
+                    "How to initialize"
                 },
 
                 new p(LineHeight28, MarginBottom(1.5 * rem))
                 {
-                    "Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
+                    "Skip long and boring documentations",
+                    br,
+                    new a
+                    {
+                        "Counter Sample",
+                        Href("https://github.com/beyaz/ReactWithDotNet.Samples")
+                    }
                 },
 
-                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1 * rem))
-                {
-                    "Quis vel iste dicta 2"
-                },
-                new p(LineHeight28, MarginBottom(1.5 * rem))
-                {
-                    "2 Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
-                },
-                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1 * rem))
-                {
-                    "Quis vel iste dicta"
-                },
-                new p(LineHeight28, MarginBottom(1.5 * rem))
-                {
-                    "Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
-                },
-
-                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1 * rem))
-                {
-                    "Quis vel iste dicta 2"
-                },
-                new p(LineHeight28, MarginBottom(1.5 * rem))
-                {
-                    "2 Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
-                },
-                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1 * rem))
-                {
-                    "Quis vel iste dicta"
-                },
-                new p(LineHeight28, MarginBottom(1.5 * rem))
-                {
-                    "Sit commodi iste iure molestias qui amet voluptatem sed quaerat. Nostrum aut pariatur. Sint ipsa praesentium dolor error cumque velit tenetur."
-                },
+                
 
             }
         };
