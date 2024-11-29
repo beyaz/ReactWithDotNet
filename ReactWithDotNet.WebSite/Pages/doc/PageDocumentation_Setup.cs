@@ -19,6 +19,8 @@ sealed class PageDocumentation_Setup : PageDocumentation
                 new p(LineHeight28, MarginBottom(1.5 * rem))
                 {
                     "Skip long and boring documentations!",
+                    br,
+                    "Stop thinking about js bundle size problems, npm and library dependencies.",
 
                     br, br,
                     "As always we said that, if you are familiar to c# and react library, you are already know ReactWithDotNet library",
