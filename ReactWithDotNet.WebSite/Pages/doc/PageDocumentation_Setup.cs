@@ -1,6 +1,6 @@
 ﻿namespace ReactWithDotNet.WebSite.Pages;
 
-sealed class PageDocumentation_ServerDrivenUI : PageDocumentation
+sealed class PageDocumentation_Setup : PageDocumentation
 {
     protected override Element CreateContent()
     {
