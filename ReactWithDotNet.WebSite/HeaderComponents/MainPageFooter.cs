@@ -6,8 +6,9 @@ sealed class MainPageFooter : PureComponent
     {
         return new footer
         {
+            PaddingY(8),
             DisplayFlexRowCentered,
-            WidthFull,Height(50),
+            WidthFull,
             BorderTop(1, solid, Gray100), 
             Background(White),
             

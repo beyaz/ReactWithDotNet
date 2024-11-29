@@ -6,11 +6,14 @@ sealed class PageLayout : PureComponent
 {
     protected override Element render()
     {
-        return new div(SizeFull)
+        return new FlexColumn(SizeFull)
         {
             new MainPageHeader(),
 
-            children,
+            new div(FlexGrow(1))
+            {
+                children 
+            },
 
             new MainPageFooter()
         };

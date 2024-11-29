@@ -18,7 +18,7 @@ abstract class PageDocumentation : Component<PageDocumentation.State>
     {
         return new PageLayout
         {
-            new main(DisplayFlexRow)
+            new main(DisplayFlexRow, HeightFull)
             {
                 new LeftMenuView
                 {
