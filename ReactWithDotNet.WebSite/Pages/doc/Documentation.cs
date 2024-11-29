@@ -98,8 +98,7 @@ abstract class PageDocumentation : Component<PageDocumentation.State>
                     Links = new[]
                     {
                         new { Label = "Getting started", Url  = Page.DocStart.Url },
-                        new { Label = "Server Driven UI", Url = Page.DocSetup.Url },
-                        new { Label = "Setup", Url   = "#" }
+                        new { Label = "Setup", Url = Page.DocSetup.Url }
                     }
                 }
             };
