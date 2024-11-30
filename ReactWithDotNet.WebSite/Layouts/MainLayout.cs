@@ -8,10 +8,6 @@ sealed class MainLayout : PureComponent, IPageLayout
 
     protected override Element render()
     {
-        var root = Context.wwwroot;
-
-        var fonts = root + "/assets/fonts/";
-
         return new html
         {
             Lang("tr"),
@@ -107,77 +103,11 @@ sealed class MainLayout : PureComponent, IPageLayout
                 new link { href = "https://fonts.googleapis.com", rel = "preconnect" },
 
                 new link { href = "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap", rel = "stylesheet" },
+                
+                new link { href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Wix+Madefor+Text:ital,wght@0,400..800;1,400..800&display=swap", rel = "stylesheet" },
+                
+                new link { href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Wix+Madefor+Text:ital,wght@0,400..800;1,400..800&display=swap", rel = "stylesheet" }
 
-                // prevent font flash
-                // optimized for english characters (40kb -> 6kb)
-                new link
-                {
-                    rel         = "preload",
-                    href        = $"{fonts}PlusJakartaSans-ExtraBold-subset.woff2",
-                    type        = "font/woff2",
-                    @as         = "font"
-                },
-
-                new style
-                {
-                    @$"""
-
-
-                    
-html{{  }}
-
-/* IBM Plex Sans */
-
-@font-face{{
-    font-family:'IBM Plex Sans';
-    src:url({fonts}IBMPlexSans-Regular.woff2) format('woff2'),url({fonts}IBMPlexSans-Regular.woff) format('woff'),url({fonts}IBMPlexSans-Regular.ttf) format('truetype');
-    font-weight:400;
-    font-style:normal;
-    font-display:swap
-}}
-@font-face{{
-    font-family:'IBM Plex Sans';
-    src:url({fonts}IBMPlexSans-Medium.woff2) format('woff2'),url({fonts}IBMPlexSans-Medium.woff) format('woff'),url({fonts}IBMPlexSans-Medium.ttf) format('truetype');
-    font-weight:500;
-    font-style:normal;
-    font-display:swap
-}}
-@font-face{{
-    font-family:'IBM Plex Sans';
-    src:url({fonts}IBMPlexSans-SemiBold.woff2) format('woff2'),url({fonts}IBMPlexSans-SemiBold.woff) format('woff'),url({fonts}IBMPlexSans-SemiBold.ttf) format('truetype');
-    font-weight:600;
-    font-style:normal;
-    font-display:swap
-}}
-@font-face{{
-    font-family:'IBM Plex Sans';
-    src:url({fonts}IBMPlexSans-Bold.woff2) format('woff2'),url({fonts}IBMPlexSans-Bold.woff) format('woff'),url({fonts}IBMPlexSans-Bold.ttf) format('truetype');
-    font-weight:700;
-    font-style:normal;
-    font-display:swap
-}}
-
-
-
-/* PlusJakartaSans */
-
-@font-face{{
-    font-family:'PlusJakartaSans-ExtraBold';
-    font-style:normal;
-    font-weight:800;
-    font-display:swap;
-    src:url('{fonts}PlusJakartaSans-ExtraBold-subset.woff2') format('woff2');
-}}
- @font-face{{
-    font-family:'PlusJakartaSans-Bold';
-    font-style:normal;
-    font-weight:700;
-    font-display:swap;
-    src:url('{fonts}PlusJakartaSans-Bold-subset.woff2') format('woff2');
-}}
-
-                    """
-                }
             };
         }
     }
@@ -186,5 +116,5 @@ html{{  }}
 partial class Extensions
 {
     public static StyleModifier FontFamily_IBM_Plex_Sans => FontFamily("'IBM Plex Sans'");
-    public static StyleModifier FontFamily_PlusJakartaSans_ExtraBold => FontFamily("PlusJakartaSans-ExtraBold");
+    public static StyleModifier FontFamily_PlusJakartaSans_ExtraBold => FontFamily("'Plus Jakarta Sans'");
 }
