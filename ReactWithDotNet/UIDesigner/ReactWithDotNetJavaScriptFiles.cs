@@ -80,14 +80,14 @@ public sealed class ReactWithDotNetJavaScriptFiles
             resourceName = requestPath;
         }
 
-        if (requestPath == "/clr.js" || requestPath == "/long.js")
+        if (requestPath.EndsWith("/clr.js", StringComparison.OrdinalIgnoreCase) || requestPath.EndsWith("/long.js", StringComparison.OrdinalIgnoreCase))
         {
             if (Environment.UserName == "beyaz")
             {
                 return new()
                 {
                     Type = ContentTypeApplication_Javascript,
-                    Data = File.ReadAllBytes($@"C:\github\ReactWithDotNet\ReactWithDotNet\JsClientEngine\{requestPath.RemoveFromStart("/")}")
+                    Data = File.ReadAllBytes($@"C:\github\ReactWithDotNet\ReactWithDotNet\JsClientEngine\{requestPath.Split('/').Last()}")
                 };
             }
 
