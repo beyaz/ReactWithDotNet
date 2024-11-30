@@ -36,11 +36,16 @@
 		<Company>ReactWithDotNet</Company>
 		<Description>Write react app in c# language on .net core server</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageProjectUrl>https://reactwithdotnet.com</PackageProjectUrl>
+		<PackageProjectUrl>https://reactwithdot.net</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/beyaz/ReactWithDotNet</RepositoryUrl>
 		<PackageTags>react;reactjs;ReactWithDotNet</PackageTags>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\README.md" Pack="true" PackagePath="\"/>
+	</ItemGroup>
 
 	<Target Name="UpdateLocalNuget" AfterTargets="Build" Condition="$(Configuration) == 'Release'">
 		<Exec Command="dotnet pack $(ProjectPath) -o C:\NugetPackages" />
