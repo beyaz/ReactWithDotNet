@@ -39,8 +39,6 @@ sealed class ComponentRequest
     public int LastUsedComponentUniqueIdentifier { get; init; }
 
     public string MethodName { get; init; }
-
-    public string QueryString { get; init; }
 }
 
 class ComponentResponse

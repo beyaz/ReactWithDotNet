@@ -68,7 +68,6 @@ partial class Mixin
         {
             Component                      = component,
             HttpContext                    = httpContext,
-            QueryString                    = httpContext.Request.QueryString.ToString(),
             OnReactContextCreated          = input.OnReactContextCreated,
             OnReactContextDisposed         = input.OnReactContextDisposed,
             BeforeSerializeElementToClient = input.BeforeSerializeElementToClient
@@ -79,6 +78,7 @@ partial class Mixin
         var sb = await CalculateComponentHtmlText(new CalculateComponentHtmlTextInput
         {
             HttpContext                    = httpContext,
+            // ReSharper disable once SuspiciousTypeConversion.Global
             Component                      = (Element)layoutInstance,
             QueryString                    = httpContext.Request.QueryString.ToString(),
             OnReactContextCreated          = input.OnReactContextCreated,
@@ -142,8 +142,7 @@ partial class Mixin
                 MethodName                        = "FetchComponent",
                 FullName                          = input.Component.GetType().SerializeToString(),
                 LastUsedComponentUniqueIdentifier = 1,
-                ComponentUniqueIdentifier         = 1,
-                QueryString                       = input.QueryString
+                ComponentUniqueIdentifier         = 1
             }
         };
 
@@ -180,13 +179,12 @@ partial class Mixin
             BeforeSerializeElementToClient                        = input.BeforeSerializeElementToClient,
             CalculateSuspenseFallbackForThirdPartyReactComponents = true,
 
-            ComponentRequest = new ComponentRequest
+            ComponentRequest = new()
             {
                 MethodName                        = "FetchComponent",
                 FullName                          = input.Component.GetType().SerializeToString(),
                 LastUsedComponentUniqueIdentifier = 1000,
-                ComponentUniqueIdentifier         = 1000,
-                QueryString                       = input.QueryString
+                ComponentUniqueIdentifier         = 1000
             }
         };
 
@@ -197,11 +195,12 @@ partial class Mixin
             throw DeveloperException(componentResponse.ErrorMessage);
         }
 
-        return new ComponentRenderInfo { ComponentResponse = componentResponse };
+        return new() { ComponentResponse = componentResponse };
     }
 
     static void Inject(ComponentResponse componentResponse, Element component)
     {
+        // ReSharper disable once SuspiciousTypeConversion.Global
         if (component is IPageLayout mainLayout)
         {
             var app = mainLayout.RenderInfo.ComponentResponse.ElementAsJson;
@@ -275,15 +274,16 @@ partial class Mixin
 
 public sealed class ProcessReactWithDotNetPageRequestInput
 {
-    public Type LayoutType, MainContentType;
-    public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; init; }
-
     public HttpContext HttpContext { get; init; }
+    
+    public Type LayoutType { get; init; }
+    
+    public Type MainContentType { get; init; }
 
     public OnReactContextCreated OnReactContextCreated { get; init; }
     public OnReactContextDisposed OnReactContextDisposed { get; init; }
-
-    public string QueryString { get; init; }
+    
+    public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; init; }
 }
 
 sealed class CalculateComponentHtmlTextInput
@@ -319,7 +319,6 @@ sealed class CalculateComponentRenderInfoInput
     public HttpContext HttpContext { get; init; }
     public OnReactContextCreated OnReactContextCreated { get; init; }
     public OnReactContextDisposed OnReactContextDisposed { get; init; }
-    public string QueryString { get; init; }
 }
 
 public delegate Task BeforeSerializeElementToClient(ReactContext reactContext, Element element, Element parent);
