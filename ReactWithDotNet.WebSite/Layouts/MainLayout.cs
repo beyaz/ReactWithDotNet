@@ -118,7 +118,7 @@ sealed class MainLayout : PureComponent, IPageLayout
                     @as         = "font"
                 },
 
-                new style
+                new style(ReactWithDotNet.style.Type("text/css"))
                 {
                     @$"""
 

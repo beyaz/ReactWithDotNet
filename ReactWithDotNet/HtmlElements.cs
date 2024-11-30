@@ -23,7 +23,7 @@ public sealed class HtmlTextNode : HtmlElement
 
 sealed class br : HtmlElement;
 
-public sealed class style : HtmlElement
+partial class style
 {
     public void Add(CssClass classInfo)
     {

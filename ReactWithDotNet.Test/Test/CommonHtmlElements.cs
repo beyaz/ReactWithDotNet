@@ -1083,7 +1083,35 @@ public class ExportingCommonHtmlElements
                 ],
                 EnableCastFromString = false
             },
+            new()
+            {
+                Tag = "style",
+                Attributes =
+                [
+                    new () 
+                    { 
+                        Name    = "type", 
+                        Comment = "Specifies the MIME type of the `style` content.", 
+                        Type    = "string" 
+                    },
+                    new () 
+                    { 
+                        Name    = "media", 
+                        Comment = "Specifies the media type(s) for which the styles are intended.", 
+                        Type    = "string" 
+                    },
+                    
+                    new () 
+                    { 
+                        Name    = "scoped", 
+                        Comment = "Indicates that the styles are scoped to the parent element.", 
+                        Type    = "UnionProp<string,bool>"
+                    }
 
+                ],
+                EnableCastFromString = false,
+                CreateClassAsPartial = true
+            },
             new()
             {
                 Tag                  = "label",

@@ -5292,6 +5292,99 @@ public sealed class html : HtmlElement
 
 }
 
+public sealed partial class style : HtmlElement
+{
+    #region string type
+    PropertyValueNode<string> _type;
+    static readonly PropertyValueDefinition _type_ = new()
+    {
+        name = nameof(type)
+    };
+    /// <summary>
+    ///     Specifies the MIME type of the `style` content.
+    /// </summary>
+    public string type
+    {
+        get => _type?.value;
+        set => SetValue(_type_, ref _type, value);
+    }
+    #endregion
+
+
+    #region string media
+    PropertyValueNode<string> _media;
+    static readonly PropertyValueDefinition _media_ = new()
+    {
+        name = nameof(media)
+    };
+    /// <summary>
+    ///     Specifies the media type(s) for which the styles are intended.
+    /// </summary>
+    public string media
+    {
+        get => _media?.value;
+        set => SetValue(_media_, ref _media, value);
+    }
+    #endregion
+
+
+    #region string scoped
+    PropertyValueNode<UnionProp<string,bool>> _scoped;
+    static readonly PropertyValueDefinition _scoped_ = new()
+    {
+        name = nameof(scoped)
+    };
+    /// <summary>
+    ///     Indicates that the styles are scoped to the parent element.
+    /// </summary>
+    public UnionProp<string,bool> scoped
+    {
+        get => _scoped?.value;
+        set => SetValue(_scoped_, ref _scoped, value);
+    }
+    #endregion
+
+
+
+    public style(string className) : base(className) {  }
+
+    public style(string className, params Modifier[] modifiers) : base(className, modifiers) {  }
+    public style() { }
+
+    public style(params Modifier[] modifiers) : base(modifiers) { }
+
+    public style(Style style) : base(style) { }
+
+    public style(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public style(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
+    public style(List<Modifier> modifiers) : base(modifiers) { }
+
+    public static HtmlElementModifier Modify(Action<style> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     type = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the MIME type of the `style` content.
+    /// </summary>
+    public static HtmlElementModifier Type(string value) => Modify(x => x.type = value);
+
+    /// <summary>
+    ///     media = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the media type(s) for which the styles are intended.
+    /// </summary>
+    public static HtmlElementModifier Media(string value) => Modify(x => x.media = value);
+
+    /// <summary>
+    ///     scoped = <paramref name="value"/>
+    /// <br/>
+    ///     Indicates that the styles are scoped to the parent element.
+    /// </summary>
+    public static HtmlElementModifier Scoped(UnionProp<string,bool> value) => Modify(x => x.scoped = value);
+
+}
+
 public sealed class label : HtmlElement
 {
     #region string htmlFor
