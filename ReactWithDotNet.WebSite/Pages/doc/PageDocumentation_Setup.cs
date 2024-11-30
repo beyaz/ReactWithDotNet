@@ -15,7 +15,7 @@ sealed class PageDocumentation_Setup : PageDocumentation
                 {
                     "Setup"
                 },
-                SpaceY(16),
+                Space,
                 new p
                 {
                     "Skip long and boring documentations!",

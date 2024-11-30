@@ -2,6 +2,9 @@
 
 abstract class PageDocumentation : Component<PageDocumentation.State>
 {
+    
+    protected static Element Space => SpaceY(8);
+    
     protected override Task componentDidMount()
     {
         if (!Client.WidthHasMatch(MD))
