@@ -137,7 +137,7 @@ partial class Mixin
             BeforeSerializeElementToClient                        = input.BeforeSerializeElementToClient,
             CalculateSuspenseFallbackForThirdPartyReactComponents = true,
 
-            ComponentRequest = new ComponentRequest
+            ComponentRequest = new()
             {
                 MethodName                        = "FetchComponent",
                 FullName                          = input.Component.GetType().SerializeToString(),
