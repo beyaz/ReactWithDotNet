@@ -434,4 +434,20 @@ public class ToHtmlTests
         
         Assert(element, expectedHtml);
     }
+    
+    [TestMethod]
+    public void StyleTest2()
+    {
+        const string expectedHtml
+            = """
+              <style>abC</style>
+              """;
+
+        var element = new style
+        {
+            "abC"
+        };
+        
+        Assert(element, expectedHtml);
+    }
 }
