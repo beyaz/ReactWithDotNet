@@ -8,11 +8,11 @@ sealed class PageDocumentation_Start : PageDocumentation
         {
             new article(PaddingTopBottom(4 * rem))
             {
-                new h1(FontSize32, FontWeight400, LineHeight32, MarginBottom(1.2 * rem))
+                new h1(FontSize26, FontWeight400, LineHeight32, MarginBottom(1.2 * rem))
                 {
                     "Quick Start"
                 },
-                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1 * rem))
+                new h2(FontSize20, FontWeight400, LineHeight32, MarginBottom(1 * rem))
                 {
                     "c# & react"
                 },

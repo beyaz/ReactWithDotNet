@@ -8,7 +8,7 @@ sealed class BlogH1 : PureComponent
         {
             children,
             FontFamily("'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"),
-            FontSize36,
+            FontSize20,
             LineHeight(36),
             LetterSpacing(-0.2),
             FontWeight600,
@@ -24,7 +24,7 @@ sealed class BlogP : PureComponent
         return new p
         {
             children,
-            FontSize14
+            FontSize16
         };
     }
 }

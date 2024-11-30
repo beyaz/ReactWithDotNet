@@ -23,7 +23,7 @@ sealed class PageReactContexts : PureComponent
                     "Let's show you on an example how to manage db connection."
                 },
 
-                SpaceY(8),
+                SpaceY(16),
                 
                 new CodeViewer(CodeViewer.LangCSharp, Height(70), MD(Width(550)))
                 {
@@ -80,6 +80,7 @@ sealed class PageReactContexts : PureComponent
                     }
                     """
                 },
+                
                 SpaceY(16),
                 new p
                 {
