@@ -15,59 +15,55 @@ public class MenuItem
 
 static class MenuAccess
 {
-    public static IReadOnlyList<Menu> MenuList { get; set; }
-
-    static MenuAccess()
-    {
-        MenuList =
-        [
-            new()
-            {
-                Title = "Technical",
-                Children =
-                [
-                    new()
-                    {
-                        Title       = "Technical Detail",
-                        PageLink    = Page.PageTechnicalDetail.Url,
-                        Description = "Teknink details of ReactWithDotnet"
-                    },
-                    new()
-                    {
-                        Title       = "Modifiers",
-                        PageLink    = Page.Modifiers.Url,
-                        Description = "What is modifier"
-                    },
-                    new()
-                    {
-                        Title       = "React Context",
-                        PageLink    = Page.ReactContexts.Url,
-                        Description = "How to implement react contexts"
-                    }
-                ]
-            },
+    public static IReadOnlyList<Menu> MenuList =>
+    [
+        new()
+        {
+            Title = "Technical",
+            Children =
+            [
+                new()
+                {
+                    Title       = "Technical Detail",
+                    PageLink    = Page.PageTechnicalDetail.Url,
+                    Description = "Technical details of ReactWithDotnet"
+                },
+                new()
+                {
+                    Title       = "Modifiers",
+                    PageLink    = Page.Modifiers.Url,
+                    Description = "What is modifier"
+                },
+                new()
+                {
+                    Title       = "React Context",
+                    PageLink    = Page.ReactContexts.Url,
+                    Description = "How to implement react contexts"
+                }
+            ]
+        },
             
-            new()
-            {
-                Title = "Helper App",
-                Children =
-                [
-                    new()
-                    {
-                        Title       = "Designer",
-                        PageLink    = Page.PageDesigner.Url,
-                        Description = "Preview components in hotreload mode",
-                        SvgFileName = "design.svg"
-                    },
-                    new()
-                    {
-                        Title       = "Import Html",
-                        PageLink    = Page.LiveEditor.Url,
-                        Description = "Import any html / Live Editor",
-                        SvgFileName = "import.svg"
-                    }
-                ]
-            }
-        ];
-    }
+        new()
+        {
+            Title = "Helper App",
+            Children =
+            [
+                new()
+                {
+                    Title       = "Designer",
+                    PageLink    = Page.PageDesigner.Url,
+                    Description = "Preview components in hotreload mode",
+                    SvgFileName = "design.svg"
+                },
+                new()
+                {
+                    Title       = "Import Html",
+                    PageLink    = Page.LiveEditor.Url,
+                    Description = "Import any html / Live Editor",
+                    SvgFileName = "import.svg"
+                }
+            ]
+        }
+    ];
+
 }

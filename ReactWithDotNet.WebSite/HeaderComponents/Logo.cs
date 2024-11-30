@@ -9,9 +9,9 @@ sealed class Logo : PureComponent
             new FlexRow
             {
                 SpaceX(12),
-                new img { Src(Asset("react.svg")), Size(24) },
+                new img { Src(Asset("react.svg")), Size(24), Alt("React js") },
                 SpaceX(60),
-                new img { Src(Asset("net_core_logo.svg")), Size(24) }
+                new img { Src(Asset("net_core_logo.svg")), Size(24), Alt(".Net") }
             },
 
             new FlexRow

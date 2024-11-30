@@ -38,8 +38,7 @@ sealed class MainLayout : PureComponent, IPageLayout
                 {
                     rel         = "stylesheet",
                     type        = "text/css",
-                    href        = IndexCssFilePath,
-                    crossOrigin = "anonymous"
+                    href        = IndexCssFilePath
                 },
                 
                 new style
@@ -103,7 +102,7 @@ sealed class MainLayout : PureComponent, IPageLayout
         {
             return new Element[]
             {
-                new link { href = "https://fonts.gstatic.com", rel = "preconnect", crossOrigin = "anonymous" },
+                new link { href = "https://fonts.gstatic.com", rel = "preconnect" },
 
                 new link { href = "https://fonts.googleapis.com", rel = "preconnect" },
 
@@ -113,10 +112,9 @@ sealed class MainLayout : PureComponent, IPageLayout
                 // optimized for english characters (40kb -> 6kb)
                 new link
                 {
-                    // rel         = "preload",
+                    rel         = "preload",
                     href        = $"{fonts}PlusJakartaSans-ExtraBold-subset.woff2",
                     type        = "font/woff2",
-                    crossOrigin = "anonymous",
                     @as         = "font"
                 },
 
