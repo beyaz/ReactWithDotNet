@@ -7,7 +7,7 @@ sealed class PageDocumentation_Setup : PageDocumentation
 {
     protected override Element CreateContent()
     {
-        return new FlexRow(JustifyContentCenter, WidthFull)
+        return new FlexRow(WidthFull)
         {
             new article(PaddingTopBottom(4 * rem))
             {

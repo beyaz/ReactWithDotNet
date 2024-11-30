@@ -9,7 +9,7 @@ sealed class PageDocumentation_Start : PageDocumentation
     {
         
             
-        return new FlexRow(JustifyContentCenter, WidthFull)
+        return new FlexRow(WidthFull)
         {
             new article(PaddingTopBottom(4 * rem))
             {
