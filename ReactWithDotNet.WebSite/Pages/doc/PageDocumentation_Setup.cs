@@ -31,7 +31,10 @@ sealed class PageDocumentation_Setup : PageDocumentation
                     "Counter Sample",
                     Href("https://github.com/beyaz/ReactWithDotNet.Samples")
                 }
-            }
+            },
+            SpaceY(200)
+            
+            
         };
     }
 }

@@ -25,7 +25,7 @@ static class MenuAccess
                 new()
                 {
                     Title       = "Technical Detail",
-                    PageLink    = Page.PageTechnicalDetail.Url,
+                    PageLink    = Page.TechnicalDetail.Url,
                     Description = "Technical details of ReactWithDotnet"
                 },
                 new()
@@ -51,7 +51,7 @@ static class MenuAccess
                 new()
                 {
                     Title       = "Designer",
-                    PageLink    = Page.PageDesigner.Url,
+                    PageLink    = Page.Designer.Url,
                     Description = "Preview components in hotreload mode",
                     SvgFileName = "design.svg"
                 },

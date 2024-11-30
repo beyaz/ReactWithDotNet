@@ -7,16 +7,16 @@ sealed record PageRouteInfo(string Url, Type page);
 
 static class Page
 {
- 
+    // H o m e
     public static readonly PageRouteInfo Home = new("/", typeof(PageMain));
-  
-    public static readonly PageRouteInfo DemoPreview = new($"/{nameof(DemoPreview)}", typeof(DemoPreview));
-    public static readonly PageRouteInfo Milestones = new($"/{nameof(Milestones)}", typeof(PageMilestones));
-    public static readonly PageRouteInfo Showcase = new($"/{nameof(PageShowcase)}", typeof(PageShowcase));
-   
     
-    public static readonly PageRouteInfo PageTechnicalDetail = new($"/{nameof(Pages.PageTechnicalDetail)}", typeof(PageTechnicalDetail));
-    public static readonly PageRouteInfo Modifiers = new($"/{nameof(PageModifiers)}", typeof(PageModifiers));
+    // H o m e   b u t t o n s
+    public static readonly PageRouteInfo Milestones = new($"/{nameof(Milestones)}", typeof(PageMilestones));
+    public static readonly PageRouteInfo Showcase = new($"/{nameof(Showcase)}", typeof(PageShowcase));
+    
+    // T e c h n i c a l
+    public static readonly PageRouteInfo TechnicalDetail = new($"/{nameof(TechnicalDetail)}", typeof(PageTechnicalDetail));
+    public static readonly PageRouteInfo Modifiers = new($"/{nameof(Modifiers)}", typeof(PageModifiers));
     public static readonly PageRouteInfo ReactContexts = new($"/{nameof(ReactContexts)}", typeof(PageReactContexts));
     
     // D o c
@@ -26,7 +26,10 @@ static class Page
     // H e l p e r   A p p s
     public static readonly PageRouteInfo LiveEditor = new("/LiveEditor", typeof(HtmlToCSharpView));
     public static readonly PageRouteInfo LivePreview = new($"/{nameof(LivePreview)}", typeof(LivePreview));
-    public static readonly PageRouteInfo PageDesigner = new($"/{nameof(Pages.PageDesigner)}", typeof(PageDesigner));
+    public static readonly PageRouteInfo Designer = new($"/{nameof(Designer)}", typeof(PageDesigner));
+    
+    // i n t e r n a l
+    public static readonly PageRouteInfo DemoPreview = new($"/{nameof(DemoPreview)}", typeof(DemoPreview));
     
 
     public static string DemoPreviewUrl(string fullTypeName)
