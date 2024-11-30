@@ -9,6 +9,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
 	    <WarningLevel>3</WarningLevel>
+	    <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
     </PropertyGroup>
 	
     <ItemGroup>
