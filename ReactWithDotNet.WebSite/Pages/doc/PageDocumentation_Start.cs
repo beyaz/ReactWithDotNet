@@ -23,6 +23,7 @@ sealed class PageDocumentation_Start : PageDocumentation
             new p
             {
                 "If you know reactjs and c# language, you already familier to ReactWithDotNet ecosystem.",
+                br,
                 "Build react component tree and event handlers in c# language at .net core server afterthat component tree will render in browser."
             },
             Space,
