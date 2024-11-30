@@ -22,7 +22,6 @@ sealed class MainLayout : PureComponent, IPageLayout
             FontWeight400,
             FontSize(1 * rem),
             LineHeight(1.5 * CssUnit.em),
-            // Background(url(Asset("background.svg"))), // TODO: check usage remove
 
             new head
             {
