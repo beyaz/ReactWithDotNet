@@ -35,8 +35,14 @@ static class MenuAccess
                     new()
                     {
                         Title       = "Modifiers",
-                        PageLink    = Page.PageModifiers.Url,
+                        PageLink    = Page.Modifiers.Url,
                         Description = "What is modifier"
+                    },
+                    new()
+                    {
+                        Title       = "React Context",
+                        PageLink    = Page.ReactContexts.Url,
+                        Description = "How to implement react contexts"
                     }
                 ]
             },
@@ -48,17 +54,17 @@ static class MenuAccess
                 [
                     new()
                     {
+                        Title       = "Designer",
+                        PageLink    = Page.PageDesigner.Url,
+                        Description = "Preview components in hotreload mode",
+                        SvgFileName = "design.svg"
+                    },
+                    new()
+                    {
                         Title       = "Import Html",
                         PageLink    = Page.LiveEditor.Url,
                         Description = "Import any html / Live Editor",
                         SvgFileName = "import.svg"
-                    },
-                    new()
-                    {
-                        Title       = "Design",
-                        PageLink    = Page.PageDesigner.Url,
-                        Description = "Preview components in hotreload mode",
-                        SvgFileName = "design.svg"
                     }
                 ]
             }

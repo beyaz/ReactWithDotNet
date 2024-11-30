@@ -11,11 +11,13 @@ static class Page
     public static readonly PageRouteInfo Home = new("/", typeof(PageMain));
   
     public static readonly PageRouteInfo DemoPreview = new($"/{nameof(DemoPreview)}", typeof(DemoPreview));
-    public static readonly PageRouteInfo PageMilestones = new($"/{nameof(PageMilestones)}", typeof(PageMilestones));
-    public static readonly PageRouteInfo PageShowcase = new($"/{nameof(Pages.PageShowcase)}", typeof(PageShowcase));
-    public static readonly PageRouteInfo PageModifiers = new($"/{nameof(Pages.PageModifiers)}", typeof(PageModifiers));
-    public static readonly PageRouteInfo PageTechnicalDetail = new($"/{nameof(Pages.PageTechnicalDetail)}", typeof(PageTechnicalDetail));
+    public static readonly PageRouteInfo Milestones = new($"/{nameof(Milestones)}", typeof(PageMilestones));
+    public static readonly PageRouteInfo Showcase = new($"/{nameof(PageShowcase)}", typeof(PageShowcase));
+   
     
+    public static readonly PageRouteInfo PageTechnicalDetail = new($"/{nameof(Pages.PageTechnicalDetail)}", typeof(PageTechnicalDetail));
+    public static readonly PageRouteInfo Modifiers = new($"/{nameof(PageModifiers)}", typeof(PageModifiers));
+    public static readonly PageRouteInfo ReactContexts = new($"/{nameof(ReactContexts)}", typeof(PageReactContexts));
     
     // D o c
     public static readonly PageRouteInfo DocStart = new("/doc/start", typeof(PageDocumentation_Start));
