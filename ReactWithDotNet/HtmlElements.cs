@@ -80,6 +80,8 @@ partial class style
             sb.AppendLine("}");
         }
     }
+    
+    public static HtmlElementModifier TypeTextCss => CreateHtmlElementModifier<style>(element => element.type = "text/css");
 }
 
 public sealed class CssClass
