@@ -13,16 +13,16 @@ sealed class PageTechnicalDetail : PureComponent
             SpaceY(16),
             new p
             {
-                "How is it working? How to connect React and c# language?"
+                "How does it work? How are React and C# languages connected?"
             },
 
             new p
             {
                 "ReactWithDotNet is working on the .net core. Creates ReactNode hierarchy in c# language then serialize to client.",
-                br,
-                "Our client engine recalculates React nodes from incoming c# generated nodes",
-                br,
-                "If any react event occurs then serialize only sub react nodes values to server"
+                br,br,
+                "ReactWithDotNet client engine recalculates React nodes from incoming c# generated nodes.",
+                br,br,
+                "If any react event occurs then serialize only sub react node informations to server."
             },
             
             SpaceY(50),
@@ -58,11 +58,11 @@ sealed class PageTechnicalDetail : PureComponent
             new p
             {
                 "As you can see at images, main idea is server driven UI, just like react server components.",
-                br,
+                br,br,
                 "Main differences server is not nodejs, language is not typescript or js.",
                 br,
                 "Server is .NetCore server and language is c# language.",
-                br,
+                br,br,
                 "As a result; power of two technology is combined. " +
                 "We have many benefits of c# language and serverside approach and react components flexibility."
             },
