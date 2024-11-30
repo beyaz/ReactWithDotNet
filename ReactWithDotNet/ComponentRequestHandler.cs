@@ -113,6 +113,7 @@ static class ComponentRequestHandler
                 }
             }
 
+            Exception exception = null;
             try
             {
                 if (request.MethodName == "FetchComponent")
@@ -125,9 +126,13 @@ static class ComponentRequestHandler
                     return await handleComponentEvent();
                 }
             }
+            catch(Exception e)
+            {
+                exception = e;
+            }
             finally
             {
-                var task = input.OnReactContextDisposed?.Invoke(context);
+                var task = input.OnReactContextDisposed?.Invoke(context, exception);
                 if (task is not null)
                 {
                     await task;

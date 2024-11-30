@@ -17,134 +17,124 @@ sealed class PageReactContexts : PureComponent
                 {
                     "React Context is a powerful feature that allows you to manage and share state or data across a component tree without having to pass props down manually at every level.",
                     br,
+                    br,
                     "ReactWithDotNet has only one context. Every component can access this context",
                     br,
-                    "Let's show you on an example"
+                    "Let's show you on an example how to manage db connection."
                 },
 
                 SpaceY(8),
                 
-                new div(Height(360))
+                new CodeViewer(CodeViewer.LangCSharp, Height(70), MD(Width(550)))
                 {
-                    new CodeViewer(CodeViewer.LangCSharp)
-                    {
-                       
-                    }
-                }
-            },
-
-            SpaceY(50),
-            
-            new FlexColumn
-            {
+                    """
+                    /// <summary>
+                    ///      Defines a key for access db connection instance
+                    /// </summary>
+                    static ReactContextKey<IDbConnection> DbConnection = new(nameof(DbConnection));
+                    """
+                },
+                SpaceY(16),
                 new p
                 {
-                    "We suggest better alternatives"
+                    "When request started"
                 },
-                SpaceY(8),
-                new div(Height(200))
+                
+                new CodeViewer(CodeViewer.LangCSharp, Height(240), MD(Width(550)))
                 {
-                    new RenderPreview
+                    """
+                    /// <summary>
+                    ///      Every component request enter this method.
+                    /// </summary>
+                    static Task HandleReactWithDotNetRequest(HttpContext httpContext)
                     {
-                        RenderPartOfCSharpCode =
-                            """
-                            
-                            new button
-                            {
-                               "button",
-                               DisplayFlexRowCentered,
-                               Padding(8, 12),
-                               Border(1, solid, Blue),
-                               BorderRadius(3),
-                               FontSize15,
-                               Background(White),
-                               Hover(Background(WhiteSmoke), BorderColor(Red))
-                            }
-                            
-                            """
+                        httpContext.Response.ContentType =  "application/json; charset=utf-8";
+                    
+                        return ProcessReactWithDotNetComponentRequest(new()
+                        {
+                            HttpContext           = httpContext,
+                            OnReactContextCreated = OnReactContextCreated,
+                            OnReactContextDisposed = OnReactContextDisposed
+                        });
                     }
+                    """
                 },
-                SpaceY(50),
+                
+                SpaceY(16),
+                
                 new p
                 {
-                    "Also you can move any modifiers to constructor"
+                    "initialize db connection"
                 },
-                SpaceY(8),
-                new div(Height(170))
+                
+                new CodeViewer(CodeViewer.LangCSharp, Height(140), MD(Width(550)))
                 {
-                    new RenderPreview
+                    """
+                    static Task OnReactContextCreated(ReactContext context)
                     {
-                        RenderPartOfCSharpCode =
-                            """
-                            
-                            new button(DisplayFlexRowCentered, Padding(8, 12))
-                            {
-                               "button",
-                               Border(1, solid, Blue),
-                               BorderRadius(3),
-                               FontSize15,
-                               Background(White),
-                               Hover(Background(WhiteSmoke), BorderColor(Red))
-                            }
-                            
-                            """
+                        var httpContext = context.HttpContext;
+                        
+                        context.Set(DbConnection, CreateDbConnection(httpContext));
+                        
+                        return Task.CompletedTask;
                     }
+                    """
+                },
+                SpaceY(16),
+                new p
+                {
+                    "Before send response to client"
+                },
+                
+                new CodeViewer(CodeViewer.LangCSharp, Height(290), MD(Width(550)))
+                {
+                    """
+                    static Task OnReactContextDisposed(ReactContext context, Exception exception)
+                    {
+                        var dbConnection = DbConnection[context];
+                    
+                        if (exception == null)
+                        {
+                            // commit
+                        }
+                        else
+                        {
+                            // rollback
+                        }
+                        
+                        dbConnection?.Dispose();
+                        
+                        return Task.CompletedTask;
+                    }
+                    """
+                },
+                
+                
+                SpaceY(32),
+                new p
+                {
+                    "You can use this connection object in component"
+                },
+                
+                new CodeViewer(CodeViewer.LangCSharp, Height(150), MD(Width(550)))
+                {
+                    """
+                    protected override Task componentDidMount()
+                    {
+                        var dbConnection = DbConnection[Context];
+                        
+                        dbConnection.....
+                        
+                        return Task.CompletedTask;
+                    }
+                    """
                 }
                 
             },
-            SpaceY(80),
+            SpaceY(32),
             new p
             {
-                "Custom modifier can be declared as below and can be use anywhere.",
-            },
-            SpaceY(8),
-            new div(Height(300))
-            {
-                new CSharpCodePanel
-                {
-                    Code = """
-                           
-                           static class SharedStyles
-                           {
-                               public static Style SectionStyle =>
-                               [
-                                   Background(White),
-                                   BorderRadius(8),
-                                   Padding(6)
-                               ];
-                           }
-                           
-                           static Element CreateUserSection(string userName)
-                           {
-                               return new div(SharedStyles.SectionStyle)
-                               {
-                                   userName
-                               };
-                           }
-                           
-                           """
-                }
-            },
-            
-            SpaceY(80),
-            new p
-            {
-                "Tailwind like library class names be can use like ",
-            },
-            SpaceY(8),
-            new div(Height(100))
-            {
-                new CSharpCodePanel
-                {
-                    Code = """
-
-                           new div("w-full text-gray-600", FontSize15)
-                           {
-                               "Any text"
-                           }
-
-                           """
-                }
+                "You can manage session, theme or other futures that you want as just like in this sample"
             },
             
             SpaceY(50)

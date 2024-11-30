@@ -1,5 +1,4 @@
 using System.IO;
-using System.Net.Mime;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
