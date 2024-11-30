@@ -9,7 +9,7 @@ sealed class BlogH1 : PureComponent
             children,
             FontFamily("'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"),
             FontSize36,
-            LineHeight(44),
+            LineHeight(36),
             LetterSpacing(-0.2),
             FontWeight600,
             Color(rgb(15, 18, 20)),

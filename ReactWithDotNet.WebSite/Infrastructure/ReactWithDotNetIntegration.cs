@@ -1,4 +1,5 @@
 using System.IO;
+using System.Net.Mime;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -66,7 +67,7 @@ public static class ReactWithDotNetIntegration
 
     static Task HandleReactWithDotNetRequest(HttpContext httpContext)
     {
-        httpContext.Response.ContentType = "application/json; charset=utf-8";
+        httpContext.Response.ContentType =  "application/json; charset=utf-8";
 
         return ProcessReactWithDotNetComponentRequest(new()
         {

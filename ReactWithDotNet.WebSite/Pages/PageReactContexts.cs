@@ -9,49 +9,26 @@ sealed class PageReactContexts : PureComponent
     {
         return new BlogPageLayout
         {
-            new h1 { "Modifiers" },
+            new h1 { "React context" },
             SpaceY(8),
             new FlexColumn
             {
                 new p
                 {
-                    "Clasical way to create element"
+                    "React Context is a powerful feature that allows you to manage and share state or data across a component tree without having to pass props down manually at every level.",
+                    br,
+                    "ReactWithDotNet has only one context. Every component can access this context",
+                    br,
+                    "Let's show you on an example"
                 },
 
                 SpaceY(8),
                 
                 new div(Height(360))
                 {
-                    new RenderPreview
+                    new CodeViewer(CodeViewer.LangCSharp)
                     {
-                        RenderPartOfCSharpCode =
-                            """
-                            
-                            new button
-                            {
-                               text = "button",
-                               style = 
-                               {
-                                  display = "flex",
-                                  justifyContent = "center",
-                                  alignItems = "center",
-                                  paddingLeft = "12px",
-                                  paddingRight = "12px",
-                                  paddingTop = "8px",
-                                  paddingBottom = "8px",
-                                  border = "1px solid blue",
-                                  fontSize = "15px",
-                                  borderRadius = "3px",
-                                  background = "White",
-                                  hover = 
-                                  {
-                                      background = "WhiteSmoke",
-                                      borderColor = "Red"
-                                  }
-                               }
-                            }
-
-                            """
+                       
                     }
                 }
             },
