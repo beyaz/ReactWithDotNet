@@ -28,7 +28,7 @@ static class MenuAccess
                 [
                     new()
                     {
-                        Title       = "PageTechnicalDetail",
+                        Title       = "Technical Detail",
                         PageLink    = Page.PageTechnicalDetail.Url,
                         Description = "Teknink details of ReactWithDotnet"
                     },
