@@ -2,8 +2,6 @@
 
 partial class Mixin
 {
-   
-
     /// <summary>
     ///     a.target = '_blank'
     /// </summary>
