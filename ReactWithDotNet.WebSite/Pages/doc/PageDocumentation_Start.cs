@@ -1,5 +1,8 @@
 ﻿namespace ReactWithDotNet.WebSite.Pages;
 
+using h1 = BlogH1;
+using p = BlogP;
+
 sealed class PageDocumentation_Start : PageDocumentation
 {
     protected override Element CreateContent()
@@ -8,7 +11,7 @@ sealed class PageDocumentation_Start : PageDocumentation
         {
             new article(PaddingTopBottom(4 * rem))
             {
-                new h1(FontSize26, FontWeight400, LineHeight32, MarginBottom(1.2 * rem))
+                new h1
                 {
                     "Quick Start"
                 },
@@ -17,7 +20,7 @@ sealed class PageDocumentation_Start : PageDocumentation
                     "c# & react"
                 },
 
-                new p(LineHeight28, MarginBottom(1.5 * rem))
+                new p
                 {
                     "If you know reactjs and c# language, you already familier to ReactWithDotNet ecosystem.",
                     "Build react component tree and event handlers in c# language at .net core server afterthat component tree will render in browser."
@@ -27,7 +30,7 @@ sealed class PageDocumentation_Start : PageDocumentation
                 {
                     "Lets look at component decleration in react"
                 },
-                new p(LineHeight28, MarginBottom(1.5 * rem))
+                new p
                 {
                     new CodeViewer(CodeViewer.LangTypeScript, Height(300), MD(Width(400)))
                     {
@@ -58,7 +61,7 @@ sealed class PageDocumentation_Start : PageDocumentation
                 {
                     "In ReactWithDotNet system, the c# version of this component is"
                 },
-                new p(LineHeight28, MarginBottom(1.5 * rem))
+                new p
                 {
                     new CodeViewer(CodeViewer.LangCSharp, Height(400), MD(Width(400)))
                     {
@@ -96,7 +99,7 @@ sealed class PageDocumentation_Start : PageDocumentation
                 {
                     "Let's create simple functional component"
                 },
-                new p(LineHeight28, MarginBottom(1.5 * rem))
+                new p
                 {
                     new CodeViewer(CodeViewer.LangTypeScript, Height(200), MD(Width(400)))
                     {
@@ -121,7 +124,7 @@ sealed class PageDocumentation_Start : PageDocumentation
                 {
                     "Here is c# version"
                 },
-                new p(LineHeight28, MarginBottom(1.5 * rem))
+                new p
                 {
                     new CodeViewer(CodeViewer.LangTypeScript, Height(210), MD(Width(400)))
                     {
@@ -147,7 +150,7 @@ sealed class PageDocumentation_Start : PageDocumentation
                 {
                     "Here is c# async version"
                 },
-                new p(LineHeight28, MarginBottom(1.5 * rem))
+                new p
                 {
                     new CodeViewer(CodeViewer.LangTypeScript, Height(330), MD(Width(400)))
                     {
@@ -176,7 +179,7 @@ sealed class PageDocumentation_Start : PageDocumentation
                     }
                 },
 
-                new p(LineHeight28, MarginBottom(1.5 * rem))
+                new p
                 {
                     "As you can see, main idea is writing react components in c# language at serverside.",
                     br,

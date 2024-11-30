@@ -1,5 +1,8 @@
 ﻿namespace ReactWithDotNet.WebSite.Pages;
 
+using h1 = BlogH1;
+using p = BlogP;
+
 sealed class PageDocumentation_Setup : PageDocumentation
 {
     protected override Element CreateContent()
@@ -8,22 +11,19 @@ sealed class PageDocumentation_Setup : PageDocumentation
         {
             new article(PaddingTopBottom(4 * rem))
             {
-                new h1(FontSize32, FontWeight400, LineHeight32, MarginBottom(1.2 * rem))
+                new h1
                 {
                     "Setup"
                 },
-                new h2(FontSize24, FontWeight400, LineHeight32, MarginBottom(1 * rem))
-                {
-                    "How to initialize"
-                },
-                new p(LineHeight28, MarginBottom(1.5 * rem))
+               SpaceY(16),
+                new p
                 {
                     "Skip long and boring documentations!",
                     br,
                     "Stop thinking about js bundle size problems, npm and library dependencies.",
 
                     br, br,
-                    "As always we said that, if you are familiar to c# and react library, you are already know ReactWithDotNet library",
+                    "As always we said that, if you are familiar to c# and react library, you are already know ReactWithDotNet library.",
                     br, br,
                     "Best way to learn ReactWithDotNet library is see our 'Counter' sample project",
                     br,
