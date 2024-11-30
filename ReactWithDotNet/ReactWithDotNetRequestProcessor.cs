@@ -75,7 +75,7 @@ partial class Mixin
 
         var reactContext = layoutInstance.RenderInfo.ComponentResponse.ReactContext;
 
-        var sb = await CalculateComponentHtmlText(new CalculateComponentHtmlTextInput
+        var sb = await CalculateComponentHtmlText(new()
         {
             HttpContext                    = httpContext,
             // ReSharper disable once SuspiciousTypeConversion.Global
