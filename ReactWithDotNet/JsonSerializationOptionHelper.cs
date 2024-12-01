@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Immutable;
 using System.Reflection;
 using System.Text.Json;
@@ -536,6 +537,12 @@ static partial class JsonSerializationOptionHelper
 
         public override bool CanConvert(Type typeToConvert)
         {
+            // NOTE: do not handle generated list classes
+            if (typeof(IEnumerable).IsAssignableFrom(typeToConvert))
+            {
+                return false;
+            }
+
             return typeToConvert.IsCompilerGenerated();
         }
 
