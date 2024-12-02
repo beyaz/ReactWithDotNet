@@ -648,9 +648,10 @@ function Interpret(thread)
                             
                             if (realMethod)
                             {
-                                method.Body       = realMethod.Body;
-                                method.Parameters = realMethod.Parameters;
-                                method.IsStatic   = realMethod.IsStatic;
+                                method.Body         = realMethod.Body;
+                                method.Parameters   = realMethod.Parameters;
+                                method.IsStatic     = realMethod.IsStatic;
+                                method.IsDefinition = realMethod.IsDefinition;
 
                                 if (method.Name === '.ctor')
                                 {
@@ -668,6 +669,14 @@ function Interpret(thread)
                                 }
                             }
                         }
+                    }
+
+                    if (!method.IsDefinition)
+                    {
+                        // Load method at runtime
+                        evaluationStack.push(method);
+                        nextInstruction = 222;
+                        break;
                     }
 
                     // arrange arguments
