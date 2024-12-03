@@ -351,7 +351,8 @@ static class MonoCecilToJsonModelMapper
                     continue;
                 }
                 
-                if (methodReference.FullName == "System.Boolean System.String::op_Equality(System.String,System.String)")
+                if (methodReference.FullName == "System.Boolean System.String::op_Equality(System.String,System.String)"||
+                    methodReference.FullName == "System.Boolean System.String::Equals(System.String,System.String)")
                 {
                     instructions[^1] = (int)OpCodes.Ceq.Code;
                     continue;
