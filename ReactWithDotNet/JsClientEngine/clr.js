@@ -2991,9 +2991,11 @@ function Interpret(thread)
                     let methodReference = evaluationStack.pop();
                     
                     let declaringType = GetDeclaringTypeOfMethod(methodReference);
-                    
-                    let assemblyName = declaringType.Metadata.MetadataScopes[declaringType.Scope].Name;
-                                        
+
+                    let declaringTypeAsJson = SerializeTypeReference(declaringType);
+
+                    let query = Object.assign({},declaringTypeAsJson);
+                    query.MethodName = methodReference.Name;
                     function onSuccess(response)
                     {
                         if (response.Success === false)
@@ -3013,12 +3015,7 @@ function Interpret(thread)
                         IsInitialRequest: false,
                         RequestedTypes:
                         [
-                            {
-                                AssemblyName: assemblyName,
-                                NamespaceName: declaringType.Namespace,
-                                TypeName: declaringType.Name,
-                                MethodName: methodReference.Name
-                            }
+                            query
                         ]
                     };
                     
@@ -3033,18 +3030,12 @@ function Interpret(thread)
                 {
                     const typeReference = evaluationStack.pop();
 
-                    const assemblyName = typeReference.Metadata.MetadataScopes[typeReference.Scope].Name;
-
                     const request =
                     {
                         IsInitialRequest: false,
                         RequestedTypes:
                         [
-                            {
-                                AssemblyName: assemblyName,
-                                NamespaceName: typeReference.Namespace,
-                                TypeName: typeReference.Name
-                            }
+                            SerializeTypeReference(typeReference)
                         ]
                     };
 
@@ -3083,6 +3074,30 @@ function Interpret(thread)
     }
 }
 
+function SerializeTypeReference(typeReference)
+{
+    if (!typeReference)
+    {
+        return null;
+    }
+
+    let declaringTypeAsJson = null;
+    
+    const assemblyName = typeReference.Metadata.MetadataScopes[typeReference.Scope].Name;
+
+    const declaringType = typeReference.DeclaringType;
+    if (declaringType)
+    {
+        declaringTypeAsJson = SerializeTypeReference(typeReference.Metadata.Types[declaringType]);
+    }
+
+    return {
+        AssemblyName: assemblyName,
+        NamespaceName: typeReference.Namespace,
+        TypeName: typeReference.Name,
+        DeclaringType: declaringTypeAsJson
+    }
+}
 
 function GetMetadata(request, onSuccess, onFail)
 {

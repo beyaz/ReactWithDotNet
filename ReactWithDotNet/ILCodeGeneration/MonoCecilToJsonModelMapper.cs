@@ -552,7 +552,6 @@ static class MonoCecilToJsonModelMapper
             };
         }
 
-        
         return new()
         {
             Name          = value.Name,

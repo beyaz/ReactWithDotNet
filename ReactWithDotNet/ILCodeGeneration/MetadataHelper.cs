@@ -36,6 +36,7 @@ sealed record MetadataRequest
         public string MethodName { get; init; }
         public string NamespaceName { get; init; }
         public string TypeName { get; init; }
+        public Item DeclaringType { get; init; }
     }
 }
 
@@ -121,6 +122,18 @@ static class MetadataHelper
 
     static TypeDefinition FindType(this AssemblyDefinition assemblyDefinition, MetadataRequest.Item request)
     {
+        if (request.DeclaringType is not null)
+        {
+            var declaringType = FindType(assemblyDefinition, request.DeclaringType);
+
+            foreach (var nestedType in declaringType.NestedTypes)
+            {
+                if (nestedType.Name == request.TypeName)
+                {
+                    return nestedType;
+                }
+            }
+        }
         foreach (var moduleDefinition in assemblyDefinition.Modules)
         {
             var typeDefinition = moduleDefinition.GetType(request.NamespaceName, request.TypeName);
