@@ -679,6 +679,10 @@ function Interpret(thread)
                         break;
                     }
 
+                    if (!method.Body)
+                    {
+                        NotImplementedOpCode();
+                    }
                     // arrange arguments
                     methodArguments = evaluationStack;
                     methodArgumentsOffset = evaluationStack.length - method.Parameters.length;
@@ -3056,6 +3060,42 @@ function Interpret(thread)
                     thread.IsSuspended = 1;
 
                     return;
+                }
+                
+                case 224: // System.String System.String::Concat(System.String,System.String)
+                {
+                    let b    = evaluationStack.pop() || '';
+                    let a      = evaluationStack.pop() || '';
+                    
+                    evaluationStack.push(a + b);
+
+                    nextInstruction = instructions[++currentStackFrame.Line];
+                    break;
+                }
+
+                case 225: // System.String System.String::Concat(System.String,System.String,System.String)
+                {
+                    let c    = evaluationStack.pop() || '';
+                    let b    = evaluationStack.pop() || '';
+                    let a      = evaluationStack.pop() || '';
+
+                    evaluationStack.push(a + b + c);
+
+                    nextInstruction = instructions[++currentStackFrame.Line];
+                    break;
+                }
+
+                case 226: // System.String System.String::Concat(System.String,System.String,System.String,System.String)
+                {
+                    let d    = evaluationStack.pop() || '';
+                    let c    = evaluationStack.pop() || '';
+                    let b    = evaluationStack.pop() || '';
+                    let a      = evaluationStack.pop() || '';
+
+                    evaluationStack.push(a + b + c + d);
+
+                    nextInstruction = instructions[++currentStackFrame.Line];
+                    break;
                 }
             }
         }

@@ -358,6 +358,28 @@ static class MonoCecilToJsonModelMapper
                     continue;
                 }
                 
+                if (methodReference.FullName == "System.Int32 System.String::get_Length()")
+                {
+                    instructions[^1] = (int)OpCodes.Ldlen.Code;
+                    continue;
+                }
+                
+                if (methodReference.FullName == "System.String System.String::Concat(System.String,System.String)")
+                {
+                    instructions[^1] = 224;
+                    continue;
+                }
+                if (methodReference.FullName == "System.String System.String::Concat(System.String,System.String,System.String)")
+                {
+                    instructions[^1] = 225;
+                    continue;
+                }
+                if (methodReference.FullName == "System.String System.String::Concat(System.String,System.String,System.String,System.String)")
+                {
+                    instructions[^1] = 226;
+                    continue;
+                }
+                
                 if (methodReference.DeclaringType?.FullName == "System.String")
                 {
                     var methodDefinition = MetadataHelper.AssemblyDefinitionOfCore.FindType(typeof(_System_.String))

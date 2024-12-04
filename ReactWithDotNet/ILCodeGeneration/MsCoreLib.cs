@@ -26,11 +26,6 @@ namespace _System_
     {
         public int Length => this.Get("length").As<int>();
 
-        public static string Concat(string a, string b)
-        {
-            return Sum(a, b);
-        }
-        
         public static bool op_Inequality(string a, string b)
         {
             if (a==b)
