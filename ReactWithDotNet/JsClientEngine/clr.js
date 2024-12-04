@@ -125,6 +125,52 @@ function GetGlobalTypeIndex(metadata, index)
         for ( let i = 0; i < length; i++ )
         {
             const globalType = globalTypes[i];
+            
+            if (type.IsGenericInstance)
+            {
+                if (!globalType.IsGenericInstance)
+                {
+                    continue;
+                }
+
+                if (GetGlobalTypeIndex(type.Metadata, type.ElementType) !== GetGlobalTypeIndex(globalType.Metadata, globalType.ElementType))
+                {
+                    continue;
+                }
+                
+                if (type.GenericArguments.length  !== globalType.GenericArguments.length)
+                {
+                    continue;
+                }
+
+                // is GenericArguments Full Same
+                {
+                    let isGenericArgumentsFullSame = 1;
+                    {
+                        const length = type.GenericArguments.length;
+                        for ( let i = 0; i < length; i++ )
+                        {
+                            if (GetGlobalTypeIndex(type.Metadata, type.GenericArguments[i]) !== GetGlobalTypeIndex(globalType.Metadata, globalType.GenericArguments[i]))
+                            {
+                                isGenericArgumentsFullSame = 0;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    if (isGenericArgumentsFullSame === 0)
+                    {
+                        continue;
+                    }
+
+                    // found
+                    indexMap[index] = i;
+
+                    return i;
+                }
+                
+                
+            }
 
             if ( globalType.Name !== type.Name )
             {
@@ -136,6 +182,7 @@ function GetGlobalTypeIndex(metadata, index)
                 continue;
             }
 
+            // found
             indexMap[index] = i;
 
             return i;
