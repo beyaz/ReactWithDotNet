@@ -6,22 +6,22 @@
 /**
  * @typedef {Object} MemberReference
  * @property {string} Name
- * @property {int?} DeclaringType
+ * @property {number | null} DeclaringType
  * @property {number} IsDefinition
  */
 
 /**
  * @typedef {Object} TypeReferenceModel
  * @property {string} Name
- * @property {int?} DeclaringType
+ * @property {number | null} DeclaringType
  * @property {number} IsDefinition
- *
+ * 
  * @property {string} Namespace
  * @property {number} Scope
  * @property {number} IsValueType
  * @property {number} IsGenericParameter
  * @property {number} Position
- * @property {number?} DeclaringMethod
+ * @property {number | null} DeclaringMethod
  * @property {number} IsGenericInstance
  * @property {number} ElementType
  * @property {number[]} GenericArguments
@@ -30,13 +30,27 @@
  * 
  */
 
+
 /**
- * @type {TypeReferenceModel}
+ * @enum {number}
  */
-let Aloha;
+const ExceptionHandlerType =
+{
+    Catch: 0,
+    Filter: 1,
+    Finally: 2,
+    Fault: 4,
+}
 
-Aloha.na
-
+/**
+ * @typedef {Object} ExceptionHandler
+ * @property {number} TryStart
+ * @property {number} TryEnd
+ * @property {number} HandlerStart
+ * @property {number} HandlerEnd
+ * @property {number | null} CatchType
+ * @property {ExceptionHandlerType} HandlerType
+ */
 
 /**
  * @typedef {Object} Metadata
@@ -1276,7 +1290,7 @@ function Interpret(thread)
                     break;
                 }
                 
-                case 80: // Stind_Ref: Stores a object reference value at a supplied address.
+                case 80: // Stind_Ref: Stores  object reference value at a supplied address.
                 {
                     let value   = evaluationStack.pop();
                     let address = evaluationStack.pop();
@@ -2338,7 +2352,10 @@ function Interpret(thread)
                 {   
                     const Catch = 0;
                     const Finally = 2;
-                    
+
+                    /**
+                     * @type {ExceptionHandler[]}
+                     */
                     let exceptionHandlers = currentStackFrame.Method.Body.ExceptionHandlers;
                     let exceptionHandlersLength = exceptionHandlers.length;
                     
@@ -3312,7 +3329,7 @@ setTimeout(function ()
             {
                 AssemblyName: "ReactWithDotNet.WebSite.dll",
                 NamespaceName: "ReactWithDotNet.WebSite",
-                TypeName: "Deneme45"
+                TypeName: "Test45"
             }
         ]
     };

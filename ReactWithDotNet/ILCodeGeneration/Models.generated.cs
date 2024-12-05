@@ -42,9 +42,9 @@ sealed record ExceptionHandler
     
     public int TryEnd { get; set; }
     
-    public required int HandlerEnd { get; init; }
-    
     public required int HandlerStart { get; init; }
+    
+    public required int HandlerEnd { get; init; }
     
     public required int? CatchType { get; init; }
 
