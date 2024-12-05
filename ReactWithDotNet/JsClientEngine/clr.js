@@ -1,49 +1,57 @@
+/**
+ * @typedef {Object} MetadataScopeModel
+ * @property {string} Name
+ */
+
+/**
+ * @typedef {Object} MemberReference
+ * @property {string} Name
+ * @property {int?} DeclaringType
+ * @property {number} IsDefinition
+ */
+
+/**
+ * @typedef {Object} TypeReferenceModel
+ * @property {string} Name
+ * @property {int?} DeclaringType
+ * @property {number} IsDefinition
+ *
+ * @property {string} Namespace
+ * @property {number} Scope
+ * @property {number} IsValueType
+ * @property {number} IsGenericParameter
+ * @property {number} Position
+ * @property {number?} DeclaringMethod
+ * @property {number} IsGenericInstance
+ * @property {number} ElementType
+ * @property {number[]} GenericArguments
+ * 
+ * @property {number} Rank
+ * 
+ */
+
+/**
+ * @type {TypeReferenceModel}
+ */
+let Aloha;
+
+Aloha.na
 
 
-let GlobalMetadata =
-{
-    MetadataScopes: [],
-    Types: [ { IsValueType: 0 }],
-    Fields: [],
-    Methods: 
-    [ 
-        {
-            Name: '', 
-            DeclaringType: 0, 
-            IsDefinition: true, 
-            ReturnType:0,
-            Parameters: 
-            [
-                {
-                    Index:0, 
-                    Name: '', 
-                    ParameterType: ''
-                }
-            ],
-            IsStatic:0, 
-            IsConstructor:0,
-            IsNull:false,
-            Body: 
-            { 
-                Instructions: [0,1], 
-                Operands:{'0':0},
-                ExceptionHandlers:[{TryStart:0, TryEnd:0, HandlerEnd: 0, HandlerStart:0, CatchType:0, HandlerType:0}]
-            },
-            ElementMethod: 0,
-            IsGenericInstance: 0,
-            GenericArguments: [0,1]
-        } 
-    ],
-    Properties: [],
-    Events: []
-};
+/**
+ * @typedef {Object} Metadata
+ * @property {MetadataScopeModel[]} MetadataScopes
+ * @property {MemberReference[]} Types
+ * @property {MemberReference[]} Fields
+ * @property {MemberReference[]} Methods
+ * @property {MemberReference[]} Properties
+ * @property {MemberReference[]} Events
+ */
 
-// intellisense dummy values
-GlobalMetadata.Types.pop();
-GlobalMetadata.Methods.pop();
-
-GlobalMetadata = null;
-
+/**
+ * @type {Metadata}
+ */
+let GlobalMetadata;
 
 function GetMetadataScope(thread, index)
 {
@@ -288,12 +296,16 @@ function ImportMetadata(metadata)
         });
     }
 
-    if (GlobalMetadata === null)
+    if (!GlobalMetadata)
     {
         GlobalMetadata = metadata;
         
         return;
     }
+
+    
+    
+    
 
     Foreach(metadata.Methods, (method, i)=>
     {
@@ -1290,7 +1302,7 @@ function Interpret(thread)
                     instructions[currentStackFrame.Line] = nextInstruction = 80;
                     break;
                 }
-                case 84: // Stind_I8
+                case 84: // 'Stind_I8'
                 {
                     instructions[currentStackFrame.Line] = nextInstruction = 80;
                     break;
@@ -1717,7 +1729,7 @@ function Interpret(thread)
                 {
                     NotImplementedOpCode(); break;
                 }
-                case 113: // Ldstr
+                case 113: // Ldstr: Load string
                 {
                     evaluationStack.push(operands[currentStackFrame.Line]);
                     nextInstruction = instructions[++currentStackFrame.Line];
