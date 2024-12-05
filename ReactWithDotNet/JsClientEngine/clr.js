@@ -863,8 +863,16 @@ function Interpret(thread)
 
                 case 41: // Ret
                 {
+                    // exit thread
                     if (currentStackFrame.Prev === null)
                     {
+                        if (evaluationStack.length > 0)
+                        {
+                            const returnValue = evaluationStack.pop();
+
+                            thread.OnSuccess(returnValue);
+                        }
+                        
                         return;
                     }
 
@@ -3222,7 +3230,14 @@ function CallManagedStaticMethod(methodDefinition, args, success, fail)
 
         LeaveJumpIndex: null,
         ExceptionObjectThatMustThrownWhenExitFinallyBlock: null,
-        IsSuspended: 0
+        IsSuspended: 0,
+        OnSuccess: function(value)
+        {
+            if (success)
+            {
+                success(value);   
+            }
+        }
     };
 
     try 
@@ -3232,21 +3247,7 @@ function CallManagedStaticMethod(methodDefinition, args, success, fail)
     catch (e) 
     {
         fail(e);
-    } 
-
-    if (success && !thread.IsSuspended)
-    {
-        if (thread.LastFrame.EvaluationStack.length > 0) 
-        {
-            const returnValue = thread.LastFrame.EvaluationStack.pop();
-            
-            success(returnValue);
-
-            return returnValue;
-        }
     }
- 
-    // ReSharper disable once NotAllPathsReturnValue
 }
 
 setTimeout(function () 
