@@ -486,7 +486,7 @@ static class MonoCecilToJsonModelMapper
         {
             return new GenericInstanceMethodModel
             {
-                IsGenericInstance = genericInstanceMethod.IsGenericInstance,
+                IsGenericInstance = 1,
                 
                 ElementMethod    = genericInstanceMethod.ElementMethod.IndexAt(metadataTable),
                 GenericArguments = genericInstanceMethod.GenericArguments.ToListOf(x => x.IndexAt(metadataTable)),

@@ -205,5 +205,5 @@ sealed record GenericInstanceMethodModel : MethodReferenceModel
     
     public required IReadOnlyList<int> GenericArguments { get; init; }
     
-    public required bool IsGenericInstance;
+    public required int IsGenericInstance;
 }

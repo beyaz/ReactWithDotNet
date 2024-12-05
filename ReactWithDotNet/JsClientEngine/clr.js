@@ -11,11 +11,7 @@
  */
 
 /**
- * @typedef {Object} TypeReferenceModel
- * @property {string} Name
- * @property {number | null} DeclaringType
- * @property {number} IsDefinition
- * 
+ * @typedef {MemberReference} TypeReferenceModel
  * @property {string} Namespace
  * @property {number} Scope
  * @property {number} IsValueType
@@ -28,6 +24,16 @@
  * 
  * @property {number} Rank
  * 
+ */
+
+/**
+ * @typedef {TypeReferenceModel} TypeDefinitionModel
+ * @property {number} BaseType
+ * @property {number} Methods
+ * @property {number} Fields
+ * @property {number} Properties
+ * @property {number} NestedTypes
+ * @property {number} Events
  */
 
 
@@ -52,12 +58,57 @@ const ExceptionHandlerType =
  * @property {ExceptionHandlerType} HandlerType
  */
 
+
+/**
+ * @typedef {Object} MethodBodyModel
+ * @property {number[]} Instructions
+ * @property {Object[]} Operands
+ * @property {ExceptionHandler[]} ExceptionHandlers
+ */
+
+
+/**
+ * @typedef {Object} ParameterDefinitionModel
+ * @property {number} Index
+ * @property {string} Name
+ * @property {number} ParameterType
+ */
+
+
+/**
+ * @typedef {Object} MethodReferenceModel
+ * @property {number} ReturnType
+ * @property {ParameterDefinitionModel[]} Parameters
+ */
+
+/**
+ * @typedef {Object} CustomAttributeModel
+ * @property {number} ReturnType
+ * @property {Object[]} Parameters
+ */
+
+/**
+ * @typedef {Object} MethodDefinitionModel
+ * @property {MethodBodyModel} Body
+ * @property {CustomAttributeModel[]} CustomAttributes
+ * @property {number} IsStatic
+ * @property {number} IsConstructor
+ */
+
+
+/**
+ * @typedef {Object} GenericInstanceMethodModel
+ * @property {number} ElementMethod
+ * @property {number[]} GenericArguments
+ * @property {number} IsGenericInstance
+ */
+
 /**
  * @typedef {Object} Metadata
  * @property {MetadataScopeModel[]} MetadataScopes
- * @property {MemberReference[]} Types
+ * @property {Array<TypeReferenceModel>} Types
  * @property {MemberReference[]} Fields
- * @property {MemberReference[]} Methods
+ * @property {Array<MethodDefinitionModel | MethodReferenceModel | GenericInstanceMethodModel>} Methods
  * @property {MemberReference[]} Properties
  * @property {MemberReference[]} Events
  */
@@ -3085,7 +3136,7 @@ function Interpret(thread)
                     query.MethodName = methodReference.Name;
                     function onSuccess(response)
                     {
-                        if (response.Success === false)
+                        if (response.Success === 0)
                         {
                             throw response.ErrorMessage;
                         }
@@ -3095,6 +3146,10 @@ function Interpret(thread)
                         thread.IsSuspended = 0;
                         
                         Interpret(thread);
+                    }
+                    function onFail(exception)
+                    {
+                        throw exception;
                     }
 
                     let request =
@@ -3106,7 +3161,7 @@ function Interpret(thread)
                         ]
                     };
                     
-                    GetMetadata(request, onSuccess);
+                    GetMetadata(request, onSuccess, onFail);
                     
                     thread.IsSuspended = 1;
                     
@@ -3128,7 +3183,7 @@ function Interpret(thread)
 
                     GetMetadata(request, response =>
                     {
-                        if (response.Success === false)
+                        if (response.Success === 0)
                         {
                             throw response.ErrorMessage;
                         }
@@ -3138,7 +3193,7 @@ function Interpret(thread)
                         thread.IsSuspended = 0;
 
                         Interpret(thread);
-                    });
+                    }, e=>throw e);
 
                     thread.IsSuspended = 1;
 
@@ -3222,6 +3277,11 @@ function SerializeTypeReference(typeReference)
     }
 }
 
+/**
+ * @param request
+ * @param {(response: MetadataResponse) => void} onSuccess
+ * @param {(e: Error) => void} onFail
+ */
 function GetMetadata(request, onSuccess, onFail)
 {
     const url = "/GetMetadata";
@@ -3279,16 +3339,28 @@ function CallManagedStaticMethod(methodDefinition, args, success, fail)
     }
 }
 
+/**
+ * @typedef {Object} MetadataResponse
+ * @property {string | null} ErrorMessage
+ * @property {Metadata | null} Metadata
+ * @property {number} Success
+ */
+
 setTimeout(function () 
 {
+    /**
+     * @param {MetadataResponse} response
+     */
     function onSuccess(response)
-    {
-        
-        if (response.Success === false)
+    {        
+        if (response.Success === 0)
         {
             throw response.ErrorMessage;
         }
-        
+
+        /**
+         * @type {Metadata}
+         */
         let metadataTable = response.Metadata;
         
         TryInitialize_InterpreterBridge(metadataTable);

@@ -44,7 +44,7 @@ sealed record MetadataResponse
 {
     public string ErrorMessage { get; init; }
     public MetadataTable Metadata { get; init; }
-    public bool Success { get; init; }
+    public int Success { get; init; }
 }
 
 static partial class Mixin
@@ -219,7 +219,7 @@ static class MetadataHelper
 
         return new()
         {
-            Success  = true,
+            Success  = 1,
             Metadata = metadataTable
         };
     }
