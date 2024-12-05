@@ -574,6 +574,18 @@ static class MonoCecilToJsonModelMapper
                 IsValueType       = value.IsValueType ? 1: 0
             };
         }
+        
+        if (value is GenericParameter genericParameter)
+        {
+            return new()
+            {
+                IsGenericParameter = genericParameter.IsGenericParameter,
+                Position           = genericParameter.Position,
+                Name               = genericParameter.Name,
+                DeclaringType      = genericParameter.DeclaringType?.IndexAt(metadataTable),
+                DeclaringMethod    = genericParameter.DeclaringMethod?.IndexAt(metadataTable),
+            };
+        }
 
         return new()
         {

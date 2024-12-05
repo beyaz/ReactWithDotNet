@@ -7,6 +7,10 @@ record TypeReferenceModel : MemberReferenceModel
     public int Scope { get; init; }
     
     public int IsValueType { get; set; }
+    
+    public bool IsGenericParameter { get; set; }
+    public int Position { get; set; }
+    public int? DeclaringMethod { get; set; }
 
     public bool IsGenericInstance;
 
