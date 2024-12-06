@@ -87,6 +87,8 @@ static class InterpreterBridge
         const int InterpreterBridge_ArgumentNullException = 2;
         const int InterpreterBridge_DivideByZeroException = 3;
         const int InterpreterBridge_IndexOutOfRangeException = 4;
+        const int InterpreterBridge_MissingMethodException = 5;
+        
         
 
         var previousStackFrame = PreviousStackFrame;
@@ -138,6 +140,13 @@ static class InterpreterBridge
             var message = evaluationStack.pop().As<string>();
 
             throw new IndexOutOfRangeException(message);
+        }
+        
+        if (InterpreterBridge_MissingMethodException == instruction)
+        {
+            var methodReferenceModel = evaluationStack.pop().As<MethodReferenceModel>();
+
+            throw new MissingMethodException(methodReferenceModel.Name);
         }
 
         throw new Exception();

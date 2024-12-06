@@ -352,11 +352,11 @@ function ImportMetadata(metadata)
 {
     // connect metadata
     {
-        Foreach(metadata.Methods, (method, index)=> {
+        Foreach(metadata.Methods, (method)=> {
             method.Metadata = metadata;
         });
 
-        Foreach(metadata.Types, (type, index)=> {
+        Foreach(metadata.Types, (type)=> {
             type.Metadata = metadata;
         });
     }
@@ -398,6 +398,7 @@ const InterpreterBridge_NullReferenceException = 1;
 const InterpreterBridge_ArgumentNullException = 2;
 const InterpreterBridge_DivideByZeroException = 3;
 const InterpreterBridge_IndexOutOfRangeException = 4;
+const InterpreterBridge_MissingMethodException = 5;
 
 
 function AssertNotNull(value)
@@ -887,7 +888,10 @@ function Interpret(thread)
                             
                             if (fn == null)
                             {
-                                throw new Error(`Missing function:'${method.Name}'.`);
+                                evaluationStack.push(method);
+                                evaluationStack.push(InterpreterBridge_MissingMethodException);
+                                nextInstruction = InterpreterBridge_Jump;
+                                break;
                             }
 
                             let fnResult = fn.apply(null, fnArguments);
@@ -1758,7 +1762,10 @@ function Interpret(thread)
 
                     if (method !== targetMethod)
                     {
-                        throw 'MissingMethodException' + method.Name;
+                        evaluationStack.push(method);
+                        evaluationStack.push(InterpreterBridge_MissingMethodException);
+                        nextInstruction = InterpreterBridge_Jump;
+                        break;
                     }
 
                     // arrange opcodes
@@ -2375,9 +2382,13 @@ function Interpret(thread)
                     if( thread.ExceptionObjectThatMustThrownWhenExitFinallyBlock !== null )
                     {
                         let exception = thread.ExceptionObjectThatMustThrownWhenExitFinallyBlock;
-                        thread.ExceptionObjectThatMustThrownWhenExitFinallyBlock = null;
                         
-                        throw exception;
+                        thread.ExceptionObjectThatMustThrownWhenExitFinallyBlock = null;
+
+                        // handle exception
+                        evaluationStack.push(exception);
+                        nextInstruction = 221;
+                        break;
                     }
                     
                     let line = currentStackFrame.Line;
@@ -3079,7 +3090,8 @@ function Interpret(thread)
                             if( currentStackFrame.Prev === null)
                             {
                                 // exit thread
-                                throw exception;
+                                thread.OnFail(exception);
+                                return;
                             }
 
                             // go previous stack frame
@@ -3121,7 +3133,8 @@ function Interpret(thread)
                     }
 
                     // exit thread
-                    throw exception;
+                    thread.OnFail(exception);
+                    return;
                 }
 
                 case 222: // Load method at runtime
@@ -3326,6 +3339,10 @@ function CallManagedStaticMethod(methodDefinition, args, success, fail)
             {
                 success(value);   
             }
+        },
+        OnFail: function(exception)
+        {
+            fail(exception);
         }
     };
 
@@ -3347,52 +3364,7 @@ function CallManagedStaticMethod(methodDefinition, args, success, fail)
  */
 
 setTimeout(function () 
-{
-    /**
-     * @param {MetadataResponse} response
-     */
-    function onSuccess(response)
-    {        
-        if (response.Success === 0)
-        {
-            throw response.ErrorMessage;
-        }
-
-        /**
-         * @type {Metadata}
-         */
-        let metadataTable = response.Metadata;
-        
-        TryInitialize_InterpreterBridge(metadataTable);
-
-        ImportMetadata(metadataTable);
-
-        for (var i = 0; i < metadataTable.Types.length; i++) 
-        {
-            var table = metadataTable.Types[i];
-
-            if (!table.IsDefinition)
-            {
-                continue;
-            }
-            
-            for (var j = 0; j < table.Methods.length; j++) 
-            {
-            
-                var method = metadataTable.Methods[table.Methods[j]];
-            
-                if (method.IsDefinition) 
-                {
-                    if (method.Name === "Abc5")
-                    {
-                        CallManagedStaticMethod(method,[],console.log,console.log);
-                    }
-                }  
-            } 
-        }       
-
-    }
-    
+{   
     let request =
     {
         IsInitialRequest: true,
@@ -3406,7 +3378,51 @@ setTimeout(function ()
         ]
     };
 
-    GetMetadata(request, onSuccess);    
+    function onSuccess(response)
+    {
+        if (response.Success === 0)
+        {
+            throw response.ErrorMessage;
+        }
+
+        let metadataTable = response.Metadata;
+
+        TryInitialize_InterpreterBridge(metadataTable);
+
+        ImportMetadata(metadataTable);
+
+        for (let i = 0; i < metadataTable.Types.length; i++)
+        {
+            const table = metadataTable.Types[i];
+
+            if (!table.IsDefinition)
+            {
+                continue;
+            }
+
+            for (let j = 0; j < table.Methods.length; j++)
+            {
+
+                const method = metadataTable.Methods[table.Methods[j]];
+
+                if (method.IsDefinition)
+                {
+                    if (method.Name === "Abc5")
+                    {
+                        CallManagedStaticMethod(method,[],console.log,console.log);
+                    }
+                }
+            }
+        }
+
+    }
+
+    function onFail(error)
+    {
+        throw error;
+    }
+
+    GetMetadata(request, onSuccess, onFail);    
     
 }, 2000);
 
