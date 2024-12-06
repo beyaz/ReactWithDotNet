@@ -76,7 +76,7 @@ const ExceptionHandlerType =
 
 
 /**
- * @typedef {Object} MethodReferenceModel
+ * @typedef {MemberReference} MethodReferenceModel
  * @property {number} ReturnType
  * @property {ParameterDefinitionModel[]} Parameters
  */
@@ -118,47 +118,368 @@ const ExceptionHandlerType =
  */
 let GlobalMetadata;
 
-function GetMetadataScope(thread, index)
+
+/**
+ * @param {Metadata} metadata
+ * @returns {void}
+ */
+function ImportMetadata(metadata)
 {
-    const metadata = thread.LastFrame.Metadata;
-    
-    const metadataScope = metadata.MetadataScopes[index];
-    
-    if (metadata === GlobalMetadata)
+    if (!GlobalMetadata)
     {
-        return metadataScope;
+        GlobalMetadata = metadata;
+
+        return;
     }
 
-    const indexMap = metadata.MetadataScopes_GlobalIndexMap = metadata.MetadataScopes_GlobalIndexMap || {};
-    
-    const globalIndex = indexMap[index];
-    
-    if ( globalIndex === undefined )
+    const getGlobalScopeIndex = CreateFunction_GetGlobalScopeIndex(metadata);
+    const getGlobalTypeIndex  = CreateFunction_GetGlobalTypeIndex(metadata);
+    const getGlobalMethodIndex= CreateFunction_GetGlobalMethodIndex(metadata, getGlobalTypeIndex);
+
+    function recalculateIndexesOfType(type)
     {
-        const globalMetadataScopes = GlobalMetadata.MetadataScopes;
+        
+    }
 
-        const length = globalMetadataScopes.length;
-
-        for ( let i = 0; i < length; i++ )
+    function recalculateIndexesOfMethod(method)
+    {
+        if (method.ReturnType != null)
         {
-            const globalMetadataScope = globalMetadataScopes[i];
-
-            if ( globalMetadataScope.Name === metadataScope.Name )
-            {
-                indexMap[index] = i;
-                
-                return globalMetadataScope;
-            }            
+            method.ReturnType = getGlobalTypeIndex(method.ReturnType);
         }
 
-        indexMap[index] = globalMetadataScopes.length;
+        if (method.DeclaringType != null)
+        {
+            method.DeclaringType = getGlobalTypeIndex(method.DeclaringType);
+        }
+
+        {
+            const customAttributes = method.CustomAttributes;
+            
+            const len = customAttributes.length;
+            
+            for (let i = 0; i < len; i++)
+            {
+                const customAttribute = customAttributes[i];
+                
+                customAttribute.Constructor = getGlobalMethodIndex(customAttribute.Constructor);
+            }
+        }   
         
-        globalMetadataScopes.push(metadataScope);
+        const body = method.Body;
+        if (body &&  body.Instructions)
+        {
+            const instructions = body.Instructions;
+            const operands = body.Operands;
+            
+            const len = instructions.length;
+            for(let i = 0; i < len; i++)
+            {
+                const instruction = instructions[i];
+                if (instruction === 39)
+                {
+                    operands[i] = getGlobalMethodIndex( /** @type {number} */ operands[i] );
+                }
+            }
+        }
         
-        return metadataScope;
+    }
+    
+    function importTypeDefinitions()
+    {
+        const globalTypes = GlobalMetadata.Types;
+        
+        const types = metadata.Types;
+        
+        const length = types.length;
+
+        for (let i = 0; i < length; i++)
+        {
+            const type = types[i];
+            
+            if (!type.IsDefinition)
+            {
+                continue;
+            }
+            
+            const globalTypeIndex = getGlobalTypeIndex(i);
+            if ( globalTypes[globalTypeIndex] === type )
+            {
+                continue;
+            }
+
+            globalTypes[globalTypeIndex] = type;
+
+            recalculateIndexesOfType(type);
+        }
     }
 
-    return GlobalMetadata.MetadataScopes[ globalIndex ];
+    function importMethodDefinitions()
+    {
+        const globalMethods = GlobalMetadata.Methods;
+
+        const methods = metadata.Methods;
+
+        const length = methods.length;
+
+        for (let i = 0; i < length; i++)
+        {
+            const method = methods[i];
+
+            if (!method.IsDefinition)
+            {
+                continue;
+            }
+
+            const globalMethodIndex = getGlobalMethodIndex(i);
+            if ( globalMethods[globalMethodIndex] === method )
+            {
+                continue;
+            }
+
+            globalMethods[globalMethodIndex] = method;
+
+            recalculateIndexesOfMethod(method);
+        }
+    }
+
+    /**
+     * @param {Metadata} metadata
+     * @returns {(index: number) => number}
+     */
+    function CreateFunction_GetGlobalScopeIndex(metadata)
+    {
+        const globalScopes = GlobalMetadata.MetadataScopes;
+
+        const cache = {};
+
+        /**
+         * @param {MetadataScopeModel} scopeA
+         * @param {MetadataScopeModel} scopeB
+         */
+        const isSameScope = function(scopeA, scopeB)
+        {
+            return scopeA.Name !== scopeB.Name;
+        }
+
+        return function(index)
+        {
+            const globalIndex = cache[index];
+            if ( globalIndex !== undefined )
+            {
+                return globalIndex;
+            }
+
+            const searchValue = metadata.MetadataScopes[index];
+
+            const length = globalScopes.length;
+
+            for (let i = 0; i < length; i++)
+            {
+                if (isSameScope(globalScopes[i], searchValue))
+                {
+                    return cache[index] = i;
+                }
+            }
+
+            cache[index] = globalScopes.length;
+
+            globalScopes.push(searchValue);
+
+            return cache[index];
+        }
+    }
+
+    /**
+     * @param {Metadata} metadata
+     * @returns {(index: number) => number}
+     */
+    function CreateFunction_GetGlobalTypeIndex(metadata)
+    {
+        const globalTypes = GlobalMetadata.Types;
+
+        const cache = {};
+
+        /**
+         * @param {TypeReferenceModel} globalType
+         * @param {TypeReferenceModel} type
+         */
+        const isSameType = function(globalType, type)
+        {            
+            if ( globalType.Name !== type.Name )
+            {
+                return false;
+            }
+
+            if ( globalType.Namespace !== type.Namespace )
+            {
+                return false;
+            }
+
+            if (globalType.IsGenericInstance)
+            {
+                if (!type.IsGenericInstance)
+                {
+                    return false;
+                }
+
+                if (globalType.GenericArguments.length  !== type.GenericArguments.length)
+                {
+                    return false;
+                }
+
+                if (globalType.ElementType !== getGlobalTypeIndex(type.ElementType))
+                {
+                    return false;
+                }
+
+                // is GenericArguments Full Same
+                let isGenericArgumentsFullSame = 1;
+                {
+                    const length = type.GenericArguments.length;
+                    for ( let i = 0; i < length; i++ )
+                    {
+                        if (globalType.GenericArguments[i] !== getGlobalTypeIndex(type.GenericArguments[i]))
+                        {
+                            isGenericArgumentsFullSame = 0;
+                            break;
+                        }
+                    }
+                }
+
+                return isGenericArgumentsFullSame === 1;
+            }
+
+            return true;
+        }
+
+        const getGlobalTypeIndex = function(index)
+        {
+            const globalIndex = cache[index];
+            if ( globalIndex !== undefined )
+            {
+                return globalIndex;
+            }
+
+            const searchValue = metadata.Types[index];
+
+            const length = globalTypes.length;
+
+            for (let i = 0; i < length; i++)
+            {
+                if (isSameType(globalTypes[i], searchValue))
+                {
+                    return cache[index] = i;
+                }
+            }
+
+            cache[index] = globalTypes.length;
+
+            globalTypes.push(searchValue);
+
+            recalculateIndexesOfType(searchValue);
+
+            return cache[index];
+        }
+
+        return getGlobalTypeIndex;
+    }
+
+    /**
+     * @param {Metadata} metadata
+     * @param {(index: number) => number} getGlobalTypeIndex
+     * @returns {(index: number) => number}
+     */
+    function CreateFunction_GetGlobalMethodIndex(metadata, getGlobalTypeIndex)
+    {
+        const globalMethods = GlobalMetadata.Methods;
+
+        const cache = {};
+
+        /**
+         * @param {MethodReferenceModel} globalMethod
+         * @param {MethodReferenceModel} method
+         */
+        const isSameMethod = function(globalMethod, method)
+        {
+            if ( globalMethod.Name && globalMethod.Name !== method.Name )
+            {
+                return false;
+            }
+
+            if ( globalMethod.DeclaringType != null && method.DeclaringType == null )
+            {
+                return false;
+            }
+
+            if ( method.DeclaringType != null && globalMethod.DeclaringType == null )
+            {
+                return false;
+            }
+
+            if ( globalMethod.DeclaringType != null && globalMethod.DeclaringType !== getGlobalTypeIndex(method.DeclaringType))
+            {
+                return false;
+            }
+
+            // Is method parameters full match
+            {
+                const parametersA = globalMethod.Parameters;
+                const parametersB = method.Parameters;
+
+                let lengthA = parametersA.length;
+                let lengthB = parametersB.length;
+
+                if (lengthA !== lengthB)
+                {
+                    return false;
+                }
+
+                for (let i = 0; i < lengthA; i++)
+                {
+                    if (parametersA[i].ParameterType !== getGlobalTypeIndex(parametersB[i].ParameterType))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        return function(index)
+        {
+            const globalIndex = cache[index];
+            if ( globalIndex !== undefined )
+            {
+                return globalIndex;
+            }
+
+            const searchValue = metadata.Methods[index];
+
+            const length = globalMethods.length;
+
+            for (let i = 0; i < length; i++)
+            {
+                if (isSameMethod(globalMethods[i], searchValue))
+                {
+                    return cache[index] = i;
+                }
+            }
+
+            cache[index] = globalMethods.length;
+
+            globalMethods.push(searchValue);
+
+            recalculateIndexesOfMethod(searchValue);
+
+            return cache[index];
+        }
+    }
+
+
+    importTypeDefinitions();
+    importMethodDefinitions();
 }
 
 function GetDeclaringTypeOfMethod(method)
@@ -339,59 +660,6 @@ function GetMetadataOfThread(thread)
     return thread.LastFrame.Method.Metadata;
 }
 
-function Foreach(array, fn_item_index)
-{
-    const length = array.length;
-
-    for (let i = 0; i < length; i++)
-    {
-        fn_item_index(array[i], i);
-    }
-}
-function ImportMetadata(metadata)
-{
-    // connect metadata
-    {
-        Foreach(metadata.Methods, (method)=> {
-            method.Metadata = metadata;
-        });
-
-        Foreach(metadata.Types, (type)=> {
-            type.Metadata = metadata;
-        });
-    }
-
-    if (!GlobalMetadata)
-    {
-        GlobalMetadata = metadata;
-        
-        return;
-    }
-
-    
-    
-    
-
-    Foreach(metadata.Methods, (method, i)=>
-    {
-        if ( method.IsDefinition )
-        {
-            const globalMethodIndex = GetGlobalMethodIndex(metadata, i);
-
-            GlobalMetadata.Methods[globalMethodIndex] = method;
-        }
-    });
-
-    Foreach(metadata.Types, (type, i)=>
-    {
-        if ( type.IsDefinition )
-        {
-            const globalTypeIndex = GetGlobalTypeIndex(metadata, i);
-
-            GlobalMetadata.Types[globalTypeIndex] = type;
-        }
-    });
-}
 
 const InterpreterBridge_NewArr = 0;
 const InterpreterBridge_NullReferenceException = 1;
@@ -438,6 +706,9 @@ function NotImplementedOpCode()
 }
 function Interpret(thread)
 {
+    const AllTypes = GlobalMetadata.Types;
+    const AllMethods = GlobalMetadata.Methods;
+    
     let currentStackFrame = thread.LastFrame;
     
     let instructions = currentStackFrame.Method.Body.Instructions;
@@ -737,7 +1008,7 @@ function Interpret(thread)
                 
                 case 39: // Call
                 {
-                    let method = GetMethod(GetMetadataOfThread(thread), operands[currentStackFrame.Line]);
+                    let method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
 
                     if (method.IsGenericInstance)
                     {
@@ -751,7 +1022,7 @@ function Interpret(thread)
                     // call instance bool value type [System.Runtime]System.Nullable`1<int32>::get_HasValue()
                     if (!method.Body)
                     {
-                        let declaringType = GetType(method.Metadata, method.DeclaringType);
+                        let declaringType = GlobalMetadata.Types[method.DeclaringType];
                         if (declaringType.IsGenericInstance)
                         {
                             let realMethod = null;
@@ -824,7 +1095,7 @@ function Interpret(thread)
                     // maybe external method
                     if (instructions.length === 0)
                     {
-                        let declaringType = GetDeclaringTypeOfMethod(method);
+                        const declaringType = AllTypes[method.DeclaringType];
                         
                         let isDeclaringTypeExternal = false;
                         {
@@ -836,9 +1107,9 @@ function Interpret(thread)
                             {
                                 let attribute = customAttributes[i];
 
-                                let constructor = GetMethod(declaringType.Metadata, attribute.Constructor);
+                                let constructor = AllMethods[attribute.Constructor]
                                 
-                                let declaringTypeOfConstructor = GetType(declaringType.Metadata, constructor.DeclaringType);
+                                let declaringTypeOfConstructor = AllTypes[constructor.DeclaringType];
                                 if (declaringTypeOfConstructor.Name === 'ExternalAttribute' &&
                                     declaringTypeOfConstructor.Namespace === 'ReactWithDotNet')
                                 {
@@ -867,7 +1138,7 @@ function Interpret(thread)
 
                             let isVoid = false;
                             {
-                                let returnType = GetType(method.Metadata, method.ReturnType);
+                                let returnType = AllTypes[method.ReturnType];
                                 
                                 isVoid = returnType.Namespace === 'System' && returnType.Name === 'Void';
                             }
@@ -3141,7 +3412,7 @@ function Interpret(thread)
                 {
                     let methodReference = evaluationStack.pop();
                     
-                    let declaringType = GetDeclaringTypeOfMethod(methodReference);
+                    let declaringType = AllTypes[methodReference.DeclaringType];
 
                     let declaringTypeAsJson = SerializeTypeReference(declaringType);
 
@@ -3194,7 +3465,7 @@ function Interpret(thread)
                         ]
                     };
 
-                    GetMetadata(request, response =>
+                    const onSuccess = response =>
                     {
                         if (response.Success === 0)
                         {
@@ -3206,7 +3477,14 @@ function Interpret(thread)
                         thread.IsSuspended = 0;
 
                         Interpret(thread);
-                    }, e=>throw e);
+                    };
+                    
+                    const onFail = (e)=>
+                    {
+                        throw e;
+                    };
+                    
+                    GetMetadata(request, onSuccess, onFail);
 
                     thread.IsSuspended = 1;
 
@@ -3274,12 +3552,12 @@ function SerializeTypeReference(typeReference)
 
     let declaringTypeAsJson = null;
     
-    const assemblyName = typeReference.Metadata.MetadataScopes[typeReference.Scope].Name;
+    const assemblyName = GlobalMetadata.MetadataScopes[typeReference.Scope].Name;
 
     const declaringType = typeReference.DeclaringType;
-    if (declaringType)
+    if (declaringType != null)
     {
-        declaringTypeAsJson = SerializeTypeReference(typeReference.Metadata.Types[declaringType]);
+        declaringTypeAsJson = SerializeTypeReference(GlobalMetadata.Types[declaringType]);
     }
 
     return {

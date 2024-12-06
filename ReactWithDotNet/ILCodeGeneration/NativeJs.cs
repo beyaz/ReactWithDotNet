@@ -90,7 +90,6 @@ static class InterpreterBridge
         const int InterpreterBridge_MissingMethodException = 5;
         
         
-
         var previousStackFrame = PreviousStackFrame;
         var previousStackFrameLine = previousStackFrame.Get(nameof(StackFrame.Line)).As<int>();
         
