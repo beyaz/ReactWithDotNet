@@ -104,11 +104,12 @@ static class MonoCecilToJsonModelMapper
 
     static FieldReferenceModel AsModel(this FieldReference value, MetadataTable metadataTable)
     {
-        return new()
+        return new ()
         {
+            IsFieldReference = 1,
             Name          = value.Name,
             FieldType     = value.FieldType.IndexAt(metadataTable),
-            DeclaringType = value.DeclaringType?.IndexAt(metadataTable)
+            DeclaringType = value.DeclaringType.IndexAt(metadataTable)
         };
     }
 
@@ -116,11 +117,11 @@ static class MonoCecilToJsonModelMapper
     {
         return new()
         {
+            IsFieldDefinition = 1,
             Name             = value.Name,
             FieldType        = value.FieldType.IndexAt(metadataTable),
-            DeclaringType    = value.DeclaringType?.IndexAt(metadataTable),
-            CustomAttributes = value.CustomAttributes.ToListOf(AsModel, metadataTable),
-            IsDefinition     = true
+            DeclaringType    = value.DeclaringType.IndexAt(metadataTable),
+            CustomAttributes = value.CustomAttributes.ToListOf(AsModel, metadataTable)
         };
     }
 

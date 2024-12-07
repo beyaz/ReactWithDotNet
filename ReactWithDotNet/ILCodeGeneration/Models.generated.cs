@@ -62,13 +62,27 @@ record MemberReferenceModel
     public bool IsDefinition { get; init; }
 }
 
-record FieldReferenceModel : MemberReferenceModel
+sealed record FieldReferenceModel
 {
+    public required int IsFieldReference;
+    
+    public required string Name { get; init; }
+    
+    public  required int DeclaringType { get; init; }
+    
     public required int FieldType { get; init; }
 }
 
-record FieldDefinitionModel : FieldReferenceModel
+sealed record FieldDefinitionModel
 {
+    public required int IsFieldDefinition;
+    
+    public required string Name { get; init; }
+    
+    public required int DeclaringType { get; init; }
+    
+    public required int FieldType { get; init; }
+    
     public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
 }
 
