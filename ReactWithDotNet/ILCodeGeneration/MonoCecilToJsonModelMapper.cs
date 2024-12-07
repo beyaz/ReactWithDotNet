@@ -592,7 +592,7 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
-    static IReadOnlyList<int> ForceReplaceThenGetIndexes<TDefinitionModel>(this List<MemberReferenceModel> targetList, IEnumerable<TDefinitionModel> enumerable, MetadataTable metadataTable) where TDefinitionModel : MemberReferenceModel
+    static IReadOnlyList<int> ForceReplaceThenGetIndexes<TModel>(this List<object> targetList, IEnumerable<TModel> enumerable, MetadataTable metadataTable)
     {
         var list = new List<int>();
 
@@ -716,7 +716,7 @@ static class MonoCecilToJsonModelMapper
 
     static int IndexAt(this MethodReference value, MetadataTable metadataTable)
     {
-        var index = metadataTable.Methods.FindIndex(x => isSame(x, value, metadataTable));
+        var index = metadataTable.Methods.FindIndex(x => IsSame(x, value, metadataTable));
         if (index >= 0)
         {
             return index;
@@ -724,31 +724,7 @@ static class MonoCecilToJsonModelMapper
 
         return metadataTable.Methods.AddAndGetIndex(AsModel(value, metadataTable));
         
-        static bool isSame(MemberReferenceModel model, MethodReference value, MetadataTable metadataTable)
-        {
-            if (model is MethodReferenceModel methodReferenceModel)
-            {
-                if (value.Name != model.Name)
-                {
-                    return false;
-                }
-
-                if (value.DeclaringType.IndexAt(metadataTable) != methodReferenceModel.DeclaringType)
-                {
-                    return false;
-                }
-
-                if (!value.Parameters.IsFullMatchWith(methodReferenceModel.Parameters, metadataTable))
-                {
-                    return false;
-                }
-                
-                return true;
-            }
-
-            return false;
-            
-        }
+        
     }
     
     static bool IsFullMatchWith(this Mono.Collections.Generic.Collection<ParameterDefinition> listA, IReadOnlyList<ParameterDefinitionModel> listB, MetadataTable metadataTable)
@@ -863,6 +839,26 @@ static class MonoCecilToJsonModelMapper
                 }
 
                 return true;
+            }
+
+            if (a is MethodReferenceModel model && b is MethodReference reference )
+            {
+                    if (reference.Name != model.Name)
+                    {
+                        return false;
+                    }
+
+                    if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
+                    {
+                        return false;
+                    }
+
+                    if (!reference.Parameters.IsFullMatchWith(model.Parameters, metadataTable))
+                    {
+                        return false;
+                    }
+                
+                    return true;
             }
         }
         
