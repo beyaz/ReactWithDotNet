@@ -832,16 +832,6 @@ static class MonoCecilToJsonModelMapper
         throw new NotImplementedException();
     }
 
-    
-
-
-    
-
-    static bool IsSame(TypeReferenceModel a, TypeReferenceModel b)
-    {
-        return a.Name == b.Name && a.Namespace == b.Namespace;
-    }
-
     static bool IsSame(PropertyReference value, MemberReferenceModel model, MetadataTable metadataTable)
     {
         return model is PropertyReferenceModel referenceModel &&
