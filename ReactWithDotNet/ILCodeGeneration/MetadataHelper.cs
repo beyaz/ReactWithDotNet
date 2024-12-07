@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http;
 using Mono.Cecil;
 using AssemblyDefinition = Mono.Cecil.AssemblyDefinition;
@@ -59,29 +58,11 @@ static partial class Mixin
 
 static class MetadataHelper
 {
-    class PolymorphicJsonConverter<TBase> : JsonConverter<TBase>
-    {
-        public override TBase Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            throw new NotImplementedException(); 
-        }
-
-        public override void Write(Utf8JsonWriter writer, TBase value, JsonSerializerOptions options)
-        {
-            var type = value.GetType();
-            JsonSerializer.Serialize(writer, value, type, options);
-        }
-    }
-    
     static readonly JsonSerializerOptions JsonSerializerOptions = new()
     {
         WriteIndented = true,
         IncludeFields = true,
-        PropertyNamingPolicy =null,
-        Converters =
-        {
-            new PolymorphicJsonConverter<MemberReferenceModel>()
-        }
+        PropertyNamingPolicy =null
     };
 
     static void Add(this List<MetadataRequest.Item> requests, Type type)
@@ -105,7 +86,7 @@ static class MetadataHelper
             request.RequestedTypes.Add(typeof(console));
             request.RequestedTypes.Add(typeof(Math));
             request.RequestedTypes.Add(typeof(_System_.Int64));
-            request.RequestedTypes.Add(typeof(System.Exception));
+            request.RequestedTypes.Add(typeof(Exception));
             request.RequestedTypes.Add(typeof(SystemException));
             request.RequestedTypes.Add(typeof(NullReferenceException));
             request.RequestedTypes.Add(typeof(_System_.String));

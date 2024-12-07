@@ -1,22 +1,43 @@
 ﻿namespace ReactWithDotNet;
 
-record TypeReferenceModel : MemberReferenceModel
+static class ValueTypeId
 {
-    public string Namespace { get; init; }
+    public const int TypeDefinition = 0;
+    public const int TypeReference = 1;
+    public const int ArrayType = 2;
+    public const int GenericInstanceType = 3;
+    public const int GenericParameter = 4;
+}
+sealed record TypeReferenceModel 
+{
+    public required int ValueTypeId  { get; init; }
     
-    public int Scope { get; init; }
+    public required string Name { get; init; }
     
-    public int IsValueType { get; set; }
+    public required string Namespace { get; init; }
     
-    public bool IsGenericParameter { get; set; }
-    public int Position { get; set; }
-    public int? DeclaringMethod { get; set; }
+    public required int Scope { get; init; }
+    
+    public required int? DeclaringType { get; init; }
+    
+    public required int IsValueType { get; init; }
+}
 
-    public bool IsGenericInstance;
+sealed class GenericParameterModel
+{
+    public required int ValueTypeId  { get; init; }
+    public int Position { get; init; }
+    public string Name { get; init; }
+    public int DeclaringType { get; init; }
+    public int DeclaringMethod { get; init; }
+}
 
-    public int? ElementType;
-    
-    public IReadOnlyList<int> GenericArguments;
+sealed record GenericInstanceTypeModel
+{
+    public required int ValueTypeId;
+    public required IReadOnlyList<int> GenericArguments;
+    public required int ElementType;
+    public required int IsValueType;
 }
 
 sealed record ParameterDefinitionModel
@@ -38,9 +59,9 @@ enum ExceptionHandlerType
 
 sealed record ExceptionHandler
 {
-    public int TryStart { get; set; }
+    public int TryStart { get; init; }
     
-    public int TryEnd { get; set; }
+    public int TryEnd { get; init; }
     
     public required int HandlerStart { get; init; }
     
@@ -50,16 +71,6 @@ sealed record ExceptionHandler
 
     public required ExceptionHandlerType  HandlerType { get; init; }
    
-}
-
-
-record MemberReferenceModel
-{
-    public string Name { get; init; }
-    
-    public  int? DeclaringType { get; init; }
-
-    public bool IsDefinition { get; init; }
 }
 
 sealed record FieldReferenceModel
@@ -223,9 +234,21 @@ sealed record MethodDefinitionModel
     public bool IsConstructor;
 }
 
-sealed record TypeDefinitionModel : TypeReferenceModel
+sealed record TypeDefinitionModel
 {
     public required int BaseType { get; init; }
+    
+    public required int ValueTypeId { get; init; }
+    
+    public required  string Name{ get; init; }
+    
+    public required string Namespace{ get; init; }
+    
+    public required int Scope{ get; init; }
+    
+    public required int? DeclaringType{ get; init; }
+    
+    public required int IsValueType{ get; init; }
     
     public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
     
@@ -240,6 +263,7 @@ sealed record TypeDefinitionModel : TypeReferenceModel
     public required IReadOnlyList<int> Events { get; init; }
     
     public required IReadOnlyList<InterfaceImplementationModel> Interfaces { get; init; }
+    
 }
 
 sealed record MetadataScopeModel
@@ -257,9 +281,11 @@ sealed class MetadataTable
     public readonly List<object> Events = [];
 }
 
-sealed record ArrayTypeModel : TypeReferenceModel
+sealed record ArrayTypeModel
 {
+    public required int ValueTypeId;
     public required int Rank { get; init; }
+    public required int ElementType { get; init; }
 }
 
 sealed record GenericInstanceMethodModel
