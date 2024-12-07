@@ -26,9 +26,13 @@ sealed record TypeReferenceModel
 sealed class GenericParameterModel
 {
     public required int ValueTypeId  { get; init; }
+    
     public int Position { get; init; }
+    
     public string Name { get; init; }
+    
     public int DeclaringType { get; init; }
+    
     public int DeclaringMethod { get; init; }
 }
 
