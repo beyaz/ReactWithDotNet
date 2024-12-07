@@ -783,84 +783,95 @@ static class MonoCecilToJsonModelMapper
     
     static bool IsSame(object a, object b, MetadataTable metadataTable)
     {
+        // f i e l d
+        {
+            if (a is FieldReference reference && b is FieldReferenceModel model)
+            {
+                return reference.Name == model.Name && reference.DeclaringType.IndexAt(metadataTable) == model.DeclaringType;
+            }
+            
+            if (a is FieldReferenceModel modelA && b is FieldReferenceModel modelB)
+            {
+                return modelA.Name == modelB.Name && modelA.DeclaringType == modelB.DeclaringType;
+            }
+        }
 
+        // p r o p e r t y
         {
             if (a is PropertyReference reference && b is PropertyReferenceModel model)
             {
                 return reference.Name == model.Name && reference.DeclaringType.IndexAt(metadataTable) == model.DeclaringType;
             }
-             
-        }
-
-        {
-            if (a is PropertyReferenceModel propertyReferenceA && b is PropertyReferenceModel propertyReferenceB)
+            
+            if (a is PropertyReferenceModel modelA && b is PropertyReferenceModel modelB)
             {
-                return propertyReferenceA.Name == propertyReferenceB.Name && propertyReferenceA.DeclaringType == propertyReferenceB.DeclaringType;
+                return modelA.Name == modelB.Name && modelA.DeclaringType == modelB.DeclaringType;
             }
         }
-        
-        
-        if (a is FieldReferenceModel fieldReferenceA && b is FieldReferenceModel fieldReferenceB)
-        {
-            return fieldReferenceA.Name == fieldReferenceB.Name && fieldReferenceA.DeclaringType == fieldReferenceB.DeclaringType;
-        }
 
-        
-
-        if (a is EventReferenceModel eventReferenceA && b is EventReferenceModel eventReferenceB)
+        // e v e n t
         {
-            return eventReferenceA.Name == eventReferenceB.Name && eventReferenceA.DeclaringType == eventReferenceB.DeclaringType;
-        }
-
-        if (a is MethodReferenceModel methodReferenceA && b is MethodReferenceModel methodReferenceB)
-        {
-            if (methodReferenceA.Name != methodReferenceB.Name)
+            if (a is EventReference reference && b is EventReferenceModel model)
             {
-                return false;
+                return reference.Name == model.Name && reference.DeclaringType.IndexAt(metadataTable) == model.DeclaringType;
             }
             
-            if (methodReferenceA.DeclaringType != methodReferenceB.DeclaringType)
+            if (a is EventReferenceModel modelA && b is EventReferenceModel modelB)
             {
-                return false;
+                return modelA.Name == modelB.Name && modelA.DeclaringType == modelB.DeclaringType;
+            }
+        }
+
+        // t y p e
+        {
+            if (a is TypeReference reference && b is TypeReferenceModel model)
+            {
+                return reference.Name == model.Name && reference.Namespace == model.Namespace;
             }
             
-            if (methodReferenceA.Parameters.Count != methodReferenceB.Parameters.Count)
+            if (a is TypeReferenceModel modelA && b is TypeReferenceModel modelB)
             {
-                return false;
+                return modelA.Name == modelB.Name && modelA.Namespace == modelB.Namespace;
             }
+        }
 
-            for (var i = 0; i < methodReferenceA.Parameters.Count; i++)
+        // m e t h o d
+        {
+            if (a is MethodReferenceModel modelA && b is MethodReferenceModel modelB)
             {
-                if (methodReferenceA.Parameters[i].ParameterType != methodReferenceB.Parameters[i].ParameterType)
+                if (modelA.Name != modelB.Name)
                 {
                     return false;
                 }
+            
+                if (modelA.DeclaringType != modelB.DeclaringType)
+                {
+                    return false;
+                }
+            
+                if (modelA.Parameters.Count != modelB.Parameters.Count)
+                {
+                    return false;
+                }
+
+                for (var i = 0; i < modelA.Parameters.Count; i++)
+                {
+                    if (modelA.Parameters[i].ParameterType != modelB.Parameters[i].ParameterType)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
             }
-
-            return true;
         }
-
-        if (a is TypeReferenceModel typeReferenceA && b is TypeReferenceModel typeReferenceB)
-        {
-            return typeReferenceA.Name == typeReferenceB.Name && typeReferenceA.Namespace == typeReferenceB.Namespace;
-        }
-
+        
         throw new NotImplementedException();
     }
     
-    static bool IsSame(FieldReference value, MemberReferenceModel model, MetadataTable metadataTable)
-    {
-        return model is FieldReferenceModel referenceModel &&
-               value.Name == referenceModel.Name &&
-               value.DeclaringType.IndexAt(metadataTable) == referenceModel.DeclaringType;
-    }
+  
 
-    static bool IsSame(EventReference value, MemberReferenceModel model, MetadataTable metadataTable)
-    {
-        return model is EventReferenceModel referenceModel &&
-               value.Name == referenceModel.Name &&
-               value.DeclaringType.IndexAt(metadataTable) == referenceModel.DeclaringType;
-    }
+    
 
     static IReadOnlyList<B> ToListOf<A, B>(this IEnumerable<A> enumerable, Func<A, B> convertFunc)
     {
