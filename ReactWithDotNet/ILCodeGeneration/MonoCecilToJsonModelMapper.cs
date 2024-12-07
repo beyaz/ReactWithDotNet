@@ -19,7 +19,7 @@ static class MonoCecilToJsonModelMapper
     {
         var model = AsModel(value, metadataTable);
 
-        var index = metadataTable.Types.FindIndex(x => IsSame((TypeReferenceModel)x, model));
+        var index = metadataTable.Types.FindIndex(x => IsSame(x, model, metadataTable));
         if (index >= 0)
         {
             metadataTable.Types[index] = model;
@@ -33,7 +33,7 @@ static class MonoCecilToJsonModelMapper
     {
         var model = AsModel(value, metadataTable);
 
-        var index = metadataTable.Methods.FindIndex(x => IsSame(x, model));
+        var index = metadataTable.Methods.FindIndex(x => IsSame(x, model,metadataTable));
         if (index >= 0)
         {
             metadataTable.Methods[index] = model;
@@ -65,11 +65,11 @@ static class MonoCecilToJsonModelMapper
 
             CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel, metadataTable),
             BaseType         = value.BaseType.IndexAt(metadataTable),
-            Methods          = metadataTable.Methods.ForceReplaceThenGetIndexes(value.Methods.ToListOf(AsModel, metadataTable)),
-            Fields           = metadataTable.Fields.ForceReplaceThenGetIndexes(value.Fields.ToListOf(AsModel, metadataTable)),
-            Properties       = metadataTable.Properties.ForceReplaceThenGetIndexes(value.Properties.ToListOf(AsModel, metadataTable)),
-            NestedTypes      = metadataTable.Types.ForceReplaceThenGetIndexes(value.NestedTypes.ToListOf(AsModel, metadataTable)),
-            Events           = metadataTable.Events.ForceReplaceThenGetIndexes(value.Events.ToListOf(AsModel, metadataTable)),
+            Methods          = metadataTable.Methods.ForceReplaceThenGetIndexes(value.Methods.ToListOf(AsModel, metadataTable), metadataTable),
+            Fields           = metadataTable.Fields.ForceReplaceThenGetIndexes(value.Fields.ToListOf(AsModel, metadataTable),metadataTable),
+            Properties       = metadataTable.Properties.ForceReplaceThenGetIndexes(value.Properties.ToListOf(AsModel, metadataTable),metadataTable),
+            NestedTypes      = metadataTable.Types.ForceReplaceThenGetIndexes(value.NestedTypes.ToListOf(AsModel, metadataTable),metadataTable),
+            Events           = metadataTable.Events.ForceReplaceThenGetIndexes(value.Events.ToListOf(AsModel, metadataTable),metadataTable),
             Interfaces       = value.Interfaces.ToListOf(AsModel, metadataTable)
         };
     }
@@ -592,13 +592,13 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
-    static IReadOnlyList<int> ForceReplaceThenGetIndexes<TDefinitionModel>(this List<MemberReferenceModel> targetList, IEnumerable<TDefinitionModel> enumerable) where TDefinitionModel : MemberReferenceModel
+    static IReadOnlyList<int> ForceReplaceThenGetIndexes<TDefinitionModel>(this List<MemberReferenceModel> targetList, IEnumerable<TDefinitionModel> enumerable, MetadataTable metadataTable) where TDefinitionModel : MemberReferenceModel
     {
         var list = new List<int>();
 
         foreach (var definitionModel in enumerable)
         {
-            var index = targetList.FindIndex(x => IsSame(x, definitionModel));
+            var index = targetList.FindIndex(x => IsSame(x, definitionModel,metadataTable));
             if (index >= 0)
             {
                 targetList[index] = definitionModel;
@@ -779,17 +779,33 @@ static class MonoCecilToJsonModelMapper
         return true;
     }
     
-    static bool IsSame(object a, object b)
+    
+    
+    static bool IsSame(object a, object b, MetadataTable metadataTable)
     {
+
+        {
+            if (a is PropertyReference reference && b is PropertyReferenceModel model)
+            {
+                return reference.Name == model.Name && reference.DeclaringType.IndexAt(metadataTable) == model.DeclaringType;
+            }
+             
+        }
+
+        {
+            if (a is PropertyReferenceModel propertyReferenceA && b is PropertyReferenceModel propertyReferenceB)
+            {
+                return propertyReferenceA.Name == propertyReferenceB.Name && propertyReferenceA.DeclaringType == propertyReferenceB.DeclaringType;
+            }
+        }
+        
+        
         if (a is FieldReferenceModel fieldReferenceA && b is FieldReferenceModel fieldReferenceB)
         {
             return fieldReferenceA.Name == fieldReferenceB.Name && fieldReferenceA.DeclaringType == fieldReferenceB.DeclaringType;
         }
 
-        if (a is PropertyReferenceModel propertyReferenceA && b is PropertyReferenceModel propertyReferenceB)
-        {
-            return propertyReferenceA.Name == propertyReferenceB.Name && propertyReferenceA.DeclaringType == propertyReferenceB.DeclaringType;
-        }
+        
 
         if (a is EventReferenceModel eventReferenceA && b is EventReferenceModel eventReferenceB)
         {
@@ -831,14 +847,7 @@ static class MonoCecilToJsonModelMapper
 
         throw new NotImplementedException();
     }
-
-    static bool IsSame(PropertyReference value, MemberReferenceModel model, MetadataTable metadataTable)
-    {
-        return model is PropertyReferenceModel referenceModel &&
-               value.Name == referenceModel.Name &&
-               value.DeclaringType.IndexAt(metadataTable) == referenceModel.DeclaringType;
-    }
-
+    
     static bool IsSame(FieldReference value, MemberReferenceModel model, MetadataTable metadataTable)
     {
         return model is FieldReferenceModel referenceModel &&
