@@ -769,26 +769,6 @@ static class MonoCecilToJsonModelMapper
         return true;
     }
     
-    static bool IsFullMatchWith(this IReadOnlyList<ParameterDefinitionModel> listA, IReadOnlyList<ParameterDefinitionModel> listB)
-    {
-        if (listA.Count != listB.Count)
-        {
-            return false;
-        }
-
-        for (var i = 0; i < listA.Count; i++)
-        {
-            if (listA[i].ParameterType != listB[i].ParameterType)
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    
-    
     static bool IsExportableAttribute(CustomAttribute value)
     {
         if (NotExportableAttributes.Contains(value.AttributeType.FullName))
@@ -798,12 +778,7 @@ static class MonoCecilToJsonModelMapper
 
         return true;
     }
-
-    static bool IsSame(MemberReferenceModel a, MethodDefinitionModel b)
-    {
-        return a is MethodReferenceModel a_as_methodReferenceModel && a.Name == b.Name && a.DeclaringType == b.DeclaringType && a_as_methodReferenceModel.Parameters.IsFullMatchWith(b.Parameters);
-    }
-
+    
     static bool IsSame(object a, object b)
     {
         if (a is FieldReferenceModel fieldReferenceA && b is FieldReferenceModel fieldReferenceB)
@@ -821,26 +796,26 @@ static class MonoCecilToJsonModelMapper
             return eventReferenceA.Name == eventReferenceB.Name && eventReferenceA.DeclaringType == eventReferenceB.DeclaringType;
         }
 
-        if (a is MethodReferenceModel methodReferenceModelA && b is MethodReferenceModel methodReferenceModelB)
+        if (a is MethodReferenceModel methodReferenceA && b is MethodReferenceModel methodReferenceB)
         {
-            if (methodReferenceModelA.Name != methodReferenceModelB.Name)
+            if (methodReferenceA.Name != methodReferenceB.Name)
             {
                 return false;
             }
             
-            if (methodReferenceModelA.DeclaringType != methodReferenceModelB.DeclaringType)
+            if (methodReferenceA.DeclaringType != methodReferenceB.DeclaringType)
             {
                 return false;
             }
             
-            if (methodReferenceModelA.Parameters.Count != methodReferenceModelB.Parameters.Count)
+            if (methodReferenceA.Parameters.Count != methodReferenceB.Parameters.Count)
             {
                 return false;
             }
 
-            for (int i = 0; i < methodReferenceModelA.Parameters.Count; i++)
+            for (var i = 0; i < methodReferenceA.Parameters.Count; i++)
             {
-                if (methodReferenceModelA.Parameters[i].ParameterType != methodReferenceModelB.Parameters[i].ParameterType)
+                if (methodReferenceA.Parameters[i].ParameterType != methodReferenceB.Parameters[i].ParameterType)
                 {
                     return false;
                 }
