@@ -14,7 +14,7 @@ record TypeReferenceModel : MemberReferenceModel
 
     public bool IsGenericInstance;
 
-    public int ElementType;
+    public int? ElementType;
     
     public IReadOnlyList<int> GenericArguments;
 }

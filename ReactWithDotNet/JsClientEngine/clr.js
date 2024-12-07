@@ -132,12 +132,31 @@ function ImportMetadata(metadata)
         return;
     }
 
-    const getGlobalScopeIndex = CreateFunction_GetGlobalScopeIndex(metadata);
-    const getGlobalTypeIndex  = CreateFunction_GetGlobalTypeIndex(metadata);
-    const getGlobalMethodIndex= CreateFunction_GetGlobalMethodIndex(metadata, getGlobalTypeIndex);
+    const getGlobalScopeIndex  = CreateFunction_GetGlobalScopeIndex(metadata);
+    const getGlobalTypeIndex   = CreateFunction_GetGlobalTypeIndex(metadata);
+    const getGlobalMethodIndex = CreateFunction_GetGlobalMethodIndex(metadata);
 
+    /**
+     * @param {TypeReferenceModel | TypeDefinitionModel } type
+     */
     function recalculateIndexesOfType(type)
     {
+        if (type.Scope != null)
+        {
+            type.Scope = getGlobalScopeIndex(type.Scope);
+        }
+        
+        if (type.BaseType != null)
+        {
+            type.BaseType = getGlobalTypeIndex(type.BaseType);    
+        }
+
+        if (type.ElementType != null)
+        {
+            type.ElementType = getGlobalTypeIndex(type.ElementType);
+        }
+        
+        
         
     }
 
@@ -387,10 +406,9 @@ function ImportMetadata(metadata)
 
     /**
      * @param {Metadata} metadata
-     * @param {(index: number) => number} getGlobalTypeIndex
      * @returns {(index: number) => number}
      */
-    function CreateFunction_GetGlobalMethodIndex(metadata, getGlobalTypeIndex)
+    function CreateFunction_GetGlobalMethodIndex(metadata)
     {
         const globalMethods = GlobalMetadata.Methods;
 
@@ -2081,9 +2099,9 @@ function Interpret(thread)
                 
                 case 114: // Newobj
                 {
-                    let method = GetMethod(GetMetadataOfThread(thread), operands[currentStackFrame.Line]);
+                    let method = AllMethods[ operands[currentStackFrame.Line] ];
 
-                    let declaringType = GetDeclaringTypeOfMethod(method);
+                    let declaringType = AllTypes[method.DeclaringType];
 
                     if (declaringType.IsGenericInstance)
                     {
@@ -2114,7 +2132,7 @@ function Interpret(thread)
                     }
                     
                     let newObj = {};
-                    newObj.$typeIndex = GetDeclaringTypeIndexOfMethod(method);
+                    newObj.$typeIndex = method.DeclaringType;
                     
                     let tempArray = [];
 
