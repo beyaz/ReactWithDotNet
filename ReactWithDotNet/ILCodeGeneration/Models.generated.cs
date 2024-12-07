@@ -161,8 +161,14 @@ sealed record MethodBodyModel
     public required IReadOnlyList<ExceptionHandler> ExceptionHandlers { get; init; }
 }
 
-record MethodReferenceModel : MemberReferenceModel
+sealed record MethodReferenceModel
 {
+    public required int IsMethodReference;
+    
+    public required string Name { get; init; }
+    
+    public required int DeclaringType { get; init; }
+    
     public required int ReturnType { get; init; }
     
     public required IReadOnlyList<ParameterDefinitionModel> Parameters { get; init; }
@@ -193,8 +199,21 @@ sealed record CustomAttributeModel
     public required int? Constructor { get; init; }
 }
 
-sealed record MethodDefinitionModel : MethodReferenceModel
+sealed record MethodDefinitionModel
 {
+    public required int IsMethodDefinition;
+    
+    public required string Name { get; init; }
+    
+    
+    
+    public required int DeclaringType { get; init; }
+
+    public required int ReturnType;
+    
+    public required IReadOnlyList<ParameterDefinitionModel> Parameters { get; init; }
+    
+    
     public required MethodBodyModel Body { get; init; }
     
     public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
@@ -243,11 +262,11 @@ sealed record ArrayTypeModel : TypeReferenceModel
     public required int Rank { get; init; }
 }
 
-sealed record GenericInstanceMethodModel : MethodReferenceModel
+sealed record GenericInstanceMethodModel
 {
-    public required int ElementMethod { get; init; }
+    public required int ElementMethod;
+
+    public required IReadOnlyList<int> GenericArguments;
     
-    public required IReadOnlyList<int> GenericArguments { get; init; }
-    
-    public required int IsGenericInstance;
+    public required int IsGenericInstanceMethod;
 }

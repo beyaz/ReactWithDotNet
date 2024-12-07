@@ -78,7 +78,7 @@ static class MonoCecilToJsonModelMapper
     {
         return new()
         {
-            IsDefinition = true,
+            IsMethodDefinition = 1,
             
 
             Name              = value.Name,
@@ -483,27 +483,22 @@ static class MonoCecilToJsonModelMapper
         };
     }
 
-    static MethodReferenceModel AsModel(this MethodReference methodReference, MetadataTable metadataTable)
+    static object AsModel(this MethodReference methodReference, MetadataTable metadataTable)
     {
         if (methodReference is GenericInstanceMethod genericInstanceMethod)
         {
             return new GenericInstanceMethodModel
             {
-                IsGenericInstance = 1,
-                
+                IsGenericInstanceMethod = 1,
                 ElementMethod    = genericInstanceMethod.ElementMethod.IndexAt(metadataTable),
-                GenericArguments = genericInstanceMethod.GenericArguments.ToListOf(x => x.IndexAt(metadataTable)),
-
-                Parameters    = default,
-                Name          = default,
-                DeclaringType = default,
-                ReturnType    = default
+                GenericArguments = genericInstanceMethod.GenericArguments.ToListOf(x => x.IndexAt(metadataTable))
             };
         }
 
         
-        return new()
+        return new MethodReferenceModel
         {
+            IsMethodReference = 1,
             ReturnType    = methodReference.ReturnType.IndexAt(metadataTable),
             Name          = methodReference.Name,
             Parameters    = methodReference.Parameters.ToListOf(AsModel, metadataTable),
