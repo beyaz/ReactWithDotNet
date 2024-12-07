@@ -765,7 +765,26 @@ static class MonoCecilToJsonModelMapper
         // t y p e
         {
             {
-                if (a is TypeReference reference && b is TypeReferenceModel model)
+                TypeReference reference=null;
+                TypeReferenceModel model=null;
+
+                var isComparable = false;
+                
+                if (a is TypeReference && b is TypeReferenceModel)
+                {
+                    isComparable = true;
+                    reference = (TypeReference)a;
+                    model = (TypeReferenceModel)b;
+                }
+                else if (b is TypeReference && a is TypeReferenceModel)
+                {
+                    isComparable = true;
+                    
+                    reference = (TypeReference)b;
+                    model     = (TypeReferenceModel)a;
+                }
+                
+                if (isComparable)
                 {
                     if (model.Name != reference.Name)
                     {
