@@ -804,21 +804,21 @@ static class MonoCecilToJsonModelMapper
         return a is MethodReferenceModel a_as_methodReferenceModel && a.Name == b.Name && a.DeclaringType == b.DeclaringType && a_as_methodReferenceModel.Parameters.IsFullMatchWith(b.Parameters);
     }
 
-    static bool IsSame(MemberReferenceModel a, MemberReferenceModel b)
+    static bool IsSame(object a, object b)
     {
-        if (a is FieldReferenceModel && b is FieldReferenceModel)
+        if (a is FieldReferenceModel fieldReferenceA && b is FieldReferenceModel fieldReferenceB)
         {
-            return a.Name == b.Name && a.DeclaringType == b.DeclaringType;
+            return fieldReferenceA.Name == fieldReferenceB.Name && fieldReferenceA.DeclaringType == fieldReferenceB.DeclaringType;
         }
 
-        if (a is PropertyReferenceModel && b is PropertyReferenceModel)
+        if (a is PropertyReferenceModel propertyReferenceA && b is PropertyReferenceModel propertyReferenceB)
         {
-            return a.Name == b.Name && a.DeclaringType == b.DeclaringType;
+            return propertyReferenceA.Name == propertyReferenceB.Name && propertyReferenceA.DeclaringType == propertyReferenceB.DeclaringType;
         }
 
-        if (a is EventReferenceModel && b is EventReferenceModel)
+        if (a is EventReferenceModel eventReferenceA && b is EventReferenceModel eventReferenceB)
         {
-            return a.Name == b.Name && a.DeclaringType == b.DeclaringType;
+            return eventReferenceA.Name == eventReferenceB.Name && eventReferenceA.DeclaringType == eventReferenceB.DeclaringType;
         }
 
         if (a is MethodReferenceModel methodReferenceModelA && b is MethodReferenceModel methodReferenceModelB)
@@ -849,14 +849,12 @@ static class MonoCecilToJsonModelMapper
             return true;
         }
 
-        if (a is TypeReferenceModel aAsTypeReferenceModel && b is TypeReferenceModel bAsMemberReferenceModel)
+        if (a is TypeReferenceModel typeReferenceA && b is TypeReferenceModel typeReferenceB)
         {
-            return a.Name == b.Name && aAsTypeReferenceModel.Namespace == bAsMemberReferenceModel.Namespace;
+            return typeReferenceA.Name == typeReferenceB.Name && typeReferenceA.Namespace == typeReferenceB.Namespace;
         }
 
-        return false;
-        
-        
+        throw new NotImplementedException();
     }
 
     
