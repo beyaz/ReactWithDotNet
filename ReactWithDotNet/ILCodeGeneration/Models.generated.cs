@@ -86,15 +86,31 @@ sealed record FieldDefinitionModel
     public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
 }
 
-record PropertyReferenceModel : MemberReferenceModel
+sealed record PropertyReferenceModel
 {
+    public required int IsPropertyReference;
+    
+    public required string Name { get; init; }
+    
+    public required int DeclaringType { get; init; }
+    
     public required int PropertyType { get; init; }
     
     public required IReadOnlyList<ParameterDefinitionModel> Parameters { get; init; }
 }
 
-record PropertyDefinitionModel : PropertyReferenceModel
+sealed record PropertyDefinitionModel
 {
+    public required int IsPropertyDefinition;
+    
+    public required string Name { get; init; }
+    
+    public required int DeclaringType { get; init; }
+    
+    public required int PropertyType { get; init; }
+    
+    public required IReadOnlyList<ParameterDefinitionModel> Parameters { get; init; }
+    
     public required int? GetMethod { get; init; }
     
     public required int? SetMethod { get; init; }
@@ -102,16 +118,30 @@ record PropertyDefinitionModel : PropertyReferenceModel
     public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
 }
 
-record EventReferenceModel : MemberReferenceModel
+sealed record EventReferenceModel
 {
+    public required int IsEventReference;
+    
+    public required string Name { get; init; }
+    
+    public required int DeclaringType { get; init; }
+    
     public required int EventType { get; init; }
 }
 
-record EventDefinitionModel : EventReferenceModel
+sealed record EventDefinitionModel
 {
-    public required MethodDefinitionModel AddMethod { get; init; }
+    public required int IsEventDefinition;
     
-    public required MethodDefinitionModel RemoveMethod { get; init; }
+    public required string Name { get; init; }
+    
+    public required int DeclaringType { get; init; }
+    
+    public required int EventType { get; init; }
+    
+    public required int? AddMethod { get; init; }
+    
+    public required int? RemoveMethod { get; init; }
 }
 
 sealed record InterfaceImplementationModel

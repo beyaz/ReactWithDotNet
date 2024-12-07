@@ -129,9 +129,10 @@ static class MonoCecilToJsonModelMapper
     {
         return new()
         {
+            IsEventReference = 1,
             Name          = value.Name,
             EventType     = value.EventType.IndexAt(metadataTable),
-            DeclaringType = value.DeclaringType?.IndexAt(metadataTable)
+            DeclaringType = value.DeclaringType.IndexAt(metadataTable)
         };
     }
 
@@ -139,13 +140,13 @@ static class MonoCecilToJsonModelMapper
     {
         return new()
         {
-            IsDefinition  = true,
+            IsEventDefinition  = 1,
             Name          = value.Name,
             EventType     = value.EventType.IndexAt(metadataTable),
-            DeclaringType = value.DeclaringType?.IndexAt(metadataTable),
+            DeclaringType = value.DeclaringType.IndexAt(metadataTable),
 
-            AddMethod    = value.AddMethod.AsModel(metadataTable),
-            RemoveMethod = value.RemoveMethod.AsModel(metadataTable)
+            AddMethod    = value.AddMethod?.IndexAt(metadataTable),
+            RemoveMethod = value.RemoveMethod?.IndexAt(metadataTable)
         };
     }
 
@@ -153,9 +154,10 @@ static class MonoCecilToJsonModelMapper
     {
         return new()
         {
+            IsPropertyReference = 1,
             Name          = value.Name,
             PropertyType  = value.PropertyType.IndexAt(metadataTable),
-            DeclaringType = value.DeclaringType?.IndexAt(metadataTable),
+            DeclaringType = value.DeclaringType.IndexAt(metadataTable),
             Parameters    = value.Parameters.ToListOf(AsModel, metadataTable)
         };
     }
@@ -164,11 +166,11 @@ static class MonoCecilToJsonModelMapper
     {
         return new()
         {
-            IsDefinition = true,
+            IsPropertyDefinition = 1,
 
             Name          = value.Name,
             PropertyType  = value.PropertyType.IndexAt(metadataTable),
-            DeclaringType = value.DeclaringType?.IndexAt(metadataTable),
+            DeclaringType = value.DeclaringType.IndexAt(metadataTable),
             Parameters    = value.Parameters.ToListOf(AsModel, metadataTable),
 
             GetMethod        = value.GetMethod?.IndexAt(metadataTable),
