@@ -668,7 +668,7 @@ static class MonoCecilToJsonModelMapper
 
     static int IndexAt(this TypeReference value, MetadataTable metadataTable)
     {
-        var index = metadataTable.Types.FindIndex(x => IsSame((TypeReferenceModel)x, value,metadataTable));
+        var index = metadataTable.Types.FindIndex(x => IsSame(x, value,metadataTable));
         if (index >= 0)
         {
             return index;
@@ -764,24 +764,46 @@ static class MonoCecilToJsonModelMapper
 
         // t y p e
         {
+            static bool namespacesAreNotSame(string namespaceA, string namespaceB)
             {
-                TypeReference reference=null;
-                TypeReferenceModel model=null;
+                if (namespaceA == namespaceB)
+                {
+                    return false;
+                }
+                        
+                if (namespaceA == nameof(_System_) && namespaceB == nameof(System))
+                {
+                    return false;
+                }
+                        
+                if (namespaceA == nameof(System) && namespaceB == nameof(_System_))
+                {
+                    return false;
+                }
+                        
+                return true;
+            }
+            
+            // TypeReference <> TypeDefinitionModel
+            {
+                TypeReference reference = null;
+                TypeDefinitionModel model = null;
 
                 var isComparable = false;
                 
-                if (a is TypeReference && b is TypeReferenceModel)
-                {
-                    isComparable = true;
-                    reference = (TypeReference)a;
-                    model = (TypeReferenceModel)b;
-                }
-                else if (b is TypeReference && a is TypeReferenceModel)
+                if (a is TypeReference referenceA && b is TypeDefinitionModel definitionB)
                 {
                     isComparable = true;
                     
-                    reference = (TypeReference)b;
-                    model     = (TypeReferenceModel)a;
+                    reference  = referenceA;
+                    model = definitionB;
+                }
+                else if (b is TypeReference referenceB && a is TypeDefinitionModel definitionA)
+                {
+                    isComparable = true;
+                    
+                    reference  = referenceB;
+                    model = definitionA;
                 }
                 
                 if (isComparable)
@@ -791,8 +813,101 @@ static class MonoCecilToJsonModelMapper
                         return false;
                     }
 
-                    if (reference.Namespace == model.Namespace || 
-                        reference.Namespace == nameof(_System_) && model.Namespace == nameof(System))
+                    if (namespacesAreNotSame(reference.Namespace,model.Namespace ))
+                    {
+                        return false;
+                    }
+                
+                    return true;
+                }
+            }
+            
+            // TypeReferenceModel <> TypeDefinitionModel
+            {
+                TypeReferenceModel referenceModel = null;
+                TypeDefinitionModel definitionModel = null;
+
+                var isComparable = false;
+                
+                if (a is TypeReferenceModel referenceA && b is TypeDefinitionModel definitionB)
+                {
+                    isComparable = true;
+                    
+                    referenceModel    = referenceA;
+                    definitionModel        = definitionB;
+                }
+                else if (b is TypeReferenceModel referenceB && a is TypeDefinitionModel definitionA)
+                {
+                    isComparable = true;
+                    
+                    referenceModel = referenceB;
+                    definitionModel     = definitionA;
+                }
+                
+                if (isComparable)
+                {
+                    if (definitionModel.Name != referenceModel.Name)
+                    {
+                        return false;
+                    }
+
+                    if (namespacesAreNotSame(referenceModel.Namespace , definitionModel.Namespace ))
+                    {
+                        return false;
+                    }
+                
+                    return true;
+                }
+            }
+            
+            // TypeDefinitionModel <> TypeDefinitionModel
+            {
+                if (a is TypeDefinitionModel modelA && b is TypeDefinitionModel modelB)
+                {
+                    if (modelA.Name != modelB.Name)
+                    {
+                        return false;
+                    }
+                    
+                    if (namespacesAreNotSame(modelA.Namespace, modelB.Namespace))
+                    {
+                        return false;
+                    }
+                
+                    return true;
+                }
+            }
+            
+            
+            // TypeReference <> TypeReferenceModel
+            {
+                TypeReference reference=null;
+                TypeReferenceModel model=null;
+
+                var isComparable = false;
+                
+                if (a is TypeReference referenceA && b is TypeReferenceModel modelB)
+                {
+                    isComparable = true;
+                    reference = referenceA;
+                    model = modelB;
+                }
+                else if (b is TypeReference referenceB && a is TypeReferenceModel modelA)
+                {
+                    isComparable = true;
+                    
+                    reference = referenceB;
+                    model     = modelA;
+                }
+                
+                if (isComparable)
+                {
+                    if (model.Name != reference.Name)
+                    {
+                        return false;
+                    }
+
+                    if (namespacesAreNotSame(reference.Namespace, model.Namespace))
                     {
                         return false;
                     }
@@ -801,6 +916,7 @@ static class MonoCecilToJsonModelMapper
                 }
             }
 
+            // GenericInstanceType <> GenericInstanceTypeModel
             {
                 if (a is GenericInstanceType reference && b is GenericInstanceTypeModel model)
                 {
@@ -822,10 +938,13 @@ static class MonoCecilToJsonModelMapper
                     return true;
                 }
             }
-            
-            if (a is TypeReferenceModel modelA && b is TypeReferenceModel modelB)
+
+            // TypeReferenceModel <> TypeReferenceModel
             {
-                return modelA.Name == modelB.Name && modelA.Namespace == modelB.Namespace;
+                if (a is TypeReferenceModel modelA && b is TypeReferenceModel modelB)
+                {
+                    return modelA.Name == modelB.Name && modelA.Namespace == modelB.Namespace;
+                }
             }
             
            
@@ -833,36 +952,76 @@ static class MonoCecilToJsonModelMapper
 
         // m e t h o d
         {
-            if (a is MethodReferenceModel modelA && b is MethodReferenceModel modelB)
             {
-                if (modelA.Name != modelB.Name)
+                if (a is MethodDefinitionModel modelA && b is MethodReferenceModel modelB)
                 {
-                    return false;
+                    return IsSame(modelB, modelA);
                 }
+            }
             
-                if (modelA.DeclaringType != modelB.DeclaringType)
+            {
+                if (a is MethodReferenceModel modelA && b is MethodReferenceModel modelB)
                 {
-                    return false;
-                }
-            
-                if (modelA.Parameters.Count != modelB.Parameters.Count)
-                {
-                    return false;
-                }
-
-                for (var i = 0; i < modelA.Parameters.Count; i++)
-                {
-                    if (modelA.Parameters[i].ParameterType != modelB.Parameters[i].ParameterType)
+                    if (modelA.Name != modelB.Name)
                     {
                         return false;
                     }
-                }
+            
+                    if (modelA.DeclaringType != modelB.DeclaringType)
+                    {
+                        return false;
+                    }
+            
+                    if (modelA.Parameters.Count != modelB.Parameters.Count)
+                    {
+                        return false;
+                    }
 
-                return true;
+                    for (var i = 0; i < modelA.Parameters.Count; i++)
+                    {
+                        if (modelA.Parameters[i].ParameterType != modelB.Parameters[i].ParameterType)
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
             }
 
-            if (a is MethodReferenceModel model && b is MethodReference reference )
             {
+                if (a is MethodDefinitionModel modelA && b is MethodDefinitionModel modelB)
+                {
+                    if (modelA.Name != modelB.Name)
+                    {
+                        return false;
+                    }
+            
+                    if (modelA.DeclaringType != modelB.DeclaringType)
+                    {
+                        return false;
+                    }
+            
+                    if (modelA.Parameters.Count != modelB.Parameters.Count)
+                    {
+                        return false;
+                    }
+
+                    for (var i = 0; i < modelA.Parameters.Count; i++)
+                    {
+                        if (modelA.Parameters[i].ParameterType != modelB.Parameters[i].ParameterType)
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+            }
+
+            {
+                if (a is MethodReferenceModel model && b is MethodReference reference )
+                {
                     if (reference.Name != model.Name)
                     {
                         return false;
@@ -879,6 +1038,21 @@ static class MonoCecilToJsonModelMapper
                     }
                 
                     return true;
+                }
+            }
+            
+            {
+                if (a is MethodDefinitionModel model && b is MethodReference reference )
+                {
+                    return IsSame(metadataTable, model, reference);
+                }
+            }
+            
+            {
+                if (a is MethodReference reference && b is MethodDefinitionModel model )
+                {
+                    return IsSame(metadataTable, model, reference);
+                }
             }
         }
         
@@ -886,7 +1060,53 @@ static class MonoCecilToJsonModelMapper
     }
     
   
+    static bool IsSame(MetadataTable metadataTable, MethodDefinitionModel model, MethodReference reference)
+    {
+        if (reference.Name != model.Name)
+        {
+            return false;
+        }
 
+        if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
+        {
+            return false;
+        }
+
+        if (!reference.Parameters.IsFullMatchWith(model.Parameters, metadataTable))
+        {
+            return false;
+        }
+                
+        return true;
+    }
+            
+    static bool IsSame(MethodReferenceModel modelA, MethodDefinitionModel modelB)
+    {
+        if (modelA.Name != modelB.Name)
+        {
+            return false;
+        }
+            
+        if (modelA.DeclaringType != modelB.DeclaringType)
+        {
+            return false;
+        }
+            
+        if (modelA.Parameters.Count != modelB.Parameters.Count)
+        {
+            return false;
+        }
+
+        for (var i = 0; i < modelA.Parameters.Count; i++)
+        {
+            if (modelA.Parameters[i].ParameterType != modelB.Parameters[i].ParameterType)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
     
 
     static IReadOnlyList<B> ToListOf<A, B>(this IEnumerable<A> enumerable, Func<A, B> convertFunc)
