@@ -554,12 +554,7 @@ static class MonoCecilToJsonModelMapper
             return new ArrayTypeModel
             {
                 Rank        = arrayType.Rank,
-                ElementType = arrayType.ElementType.IndexAt(metadataTable),
-
-                Name          = default,
-                Namespace     = default,
-                Scope         = default,
-                DeclaringType = value.DeclaringType?.IndexAt(metadataTable)
+                ElementType = arrayType.ElementType.IndexAt(metadataTable)
             };
         }
         
