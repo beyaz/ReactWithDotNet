@@ -354,7 +354,7 @@ function ImportMetadata(metadata)
                 {
                     operands[i] = getGlobalFieldIndex( /** @type {number} */ operands[i] );
                 }
-                if (instruction === 210)
+                if (instruction === 210 || instruction === 174)
                 {
                     operands[i] = getGlobalTypeIndex( /** @type {number} */ operands[i] );
                 }
@@ -1210,79 +1210,48 @@ function Interpret(thread)
                 {
                     let method = AllMethods[operands[currentStackFrame.Line]];
 
-                    if (method.IsGenericInstance)
+                    let genericInstanceMethod= null;
+                    
+                    if (method.IsGenericInstanceMethod)
                     {
-                        let elementMethod = GetMethod(method.Metadata, method.ElementMethod);
-
-                        method.Body       = elementMethod.Body;
-                        method.Parameters = elementMethod.Parameters;
-                        method.IsStatic   = elementMethod.IsStatic;
+                        genericInstanceMethod = method;
+                        
+                        method = AllMethods[method.ElementMethod];
                     }
                     
                     // call instance bool value type [System.Runtime]System.Nullable`1<int32>::get_HasValue()
-                    if (!method.Body)
+                    if (method.Name === '.ctor' && genericInstanceMethod)
                     {
-                        let declaringType = GlobalMetadata.Types[method.DeclaringType];
-                        if (declaringType.IsGenericInstance)
+                        let elementType = AllTypes[method.DeclaringType];
+                        if (elementType.IsValueType)
                         {
-                            let realMethod = null;
-                            {
-                                let elementType = GetElementType(declaringType);
+                            let instanceIndex = evaluationStack.length - method.Parameters.length - 1;
 
-                                let methods = elementType.Methods;
-                                let length = methods.length;
-                                for ( let i = 0; i < length; i++ )
-                                {
-                                    let methodDefinitionModel =  GetMethod(elementType.Metadata, methods[i]);
-                                    if (methodDefinitionModel.Name === method.Name)
-                                    {
-                                        realMethod = methodDefinitionModel;
-                                        break;
-                                    }
-                                }                                
-                            }
-                            
-                            if (realMethod)
-                            {
-                                method.Body         = realMethod.Body;
-                                method.Parameters   = realMethod.Parameters;
-                                method.IsStatic     = realMethod.IsStatic;
-                                method.IsDefinition = realMethod.IsDefinition;
+                            let address = evaluationStack[instanceIndex];
 
-                                if (method.Name === '.ctor')
-                                {
-                                    let elementType = GetElementType(declaringType);
-                                    if (elementType.IsValueType)
-                                    {
-                                        let instanceIndex = evaluationStack.length - realMethod.Parameters.length - 1;
-
-                                        let address = evaluationStack[instanceIndex];
-
-                                        address.$object[address.$key] = {
-                                            $typeIndex: method.DeclaringType
-                                        };
-                                    }
-                                }
-                            }
+                            address.$object[address.$key] = {
+                                $typeIndex: method.DeclaringType
+                            };
                         }
                     }
 
-                    if (!method.IsMethodDefinition)
+                    if (method.IsMethodReference)
                     {
                         // Load method at runtime
                         evaluationStack.push(method);
                         nextInstruction = 222;
                         break;
                     }
-
+                    
                     if (!method.Body)
                     {
                         NotImplementedOpCode();
                     }
+                    
                     // arrange arguments
                     methodArguments = evaluationStack;
                     methodArgumentsOffset = evaluationStack.length - method.Parameters.length;
-                    if (method.IsStatic === false)
+                    if (!method.IsStatic)
                     {
                         // 0: this
                         methodArgumentsOffset--;
@@ -1343,14 +1312,14 @@ function Interpret(thread)
                                 isVoid = returnType.Namespace === 'System' && returnType.Name === 'Void';
                             }
 
-                            if (method.IsStatic === false)
+                            if (!method.IsStatic)
                             {
                                 instance = evaluationStack.pop();
                             }
                             
                             let fn = null;
                             
-                            if (method.IsStatic === true)
+                            if (method.IsStatic)
                             {
                                 let externalType = window[declaringType.Name];
 
@@ -1401,7 +1370,9 @@ function Interpret(thread)
                         MethodArgumentsOffset: methodArgumentsOffset,
 
                         EvaluationStack: evaluationStack,
-                        LocalVariables: localVariables
+                        LocalVariables: localVariables,
+
+                        GenericInstanceMethod: genericInstanceMethod
                     };
 
                     nextInstruction = instructions[0];                    
@@ -2790,7 +2761,27 @@ function Interpret(thread)
 
                 case 174: // Ldtoken
                 {
-                    NotImplementedOpCode(); break;
+                    let type = AllTypes[operands[currentStackFrame.Line]];
+                    
+                    if (type.ValueTypeId === GenericParameter)
+                    {
+                        if (type.DeclaringType != null)
+                        {
+                            
+                        }
+
+                        if (type.DeclaringMethod != null)
+                        {
+                            /** GenericInstanceMethodModel */ const genericInstanceMethod = currentStackFrame.GenericInstanceMethod;
+
+                            type = AllTypes[genericInstanceMethod.GenericArguments[type.Position]];
+                        }
+                    }
+                    
+                    evaluationStack.push(type);
+                    
+                    nextInstruction = instructions[++currentStackFrame.Line];
+                    break;
                 }
 
                 case 175: // Conv_U2

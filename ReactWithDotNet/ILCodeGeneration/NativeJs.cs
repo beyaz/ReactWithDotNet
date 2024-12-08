@@ -1,8 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using ReactWithDotNet;
-using System.Runtime.CompilerServices;
-using Mono.Cecil.Cil;
-using static ReactWithDotNet.NativeJsHelper;
+﻿using static ReactWithDotNet.NativeJsHelper;
 
 
 namespace ReactWithDotNet;
@@ -17,6 +13,8 @@ sealed class StackFrame
     public int MethodArgumentsOffset;
     public int Line;
     public StackFrame Prev;
+    
+    public MethodDefinitionModel GenericInstanceMethod;
 }
 
 sealed class Address
