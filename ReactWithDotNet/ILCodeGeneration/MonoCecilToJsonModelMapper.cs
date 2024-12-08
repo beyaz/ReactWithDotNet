@@ -1285,10 +1285,7 @@ static class MonoCecilToJsonModelMapper
                 return true;
             }),
             
-            isSame<GenericInstanceMethodModel,object>(( modelA, obj)=>
-            {
-                return false;
-            })
+            isSame<GenericInstanceMethodModel,object>(( _, _)=> false)
             
         ];
 
