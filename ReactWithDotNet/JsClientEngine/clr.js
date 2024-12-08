@@ -345,13 +345,18 @@ function ImportMetadata(metadata)
             for(let i = 0; i < len; i++)
             {
                 const instruction = instructions[i];
-                if (instruction === 39)
+                
+                if (instruction === 39 || instruction === 110)
                 {
                     operands[i] = getGlobalMethodIndex( /** @type {number} */ operands[i] );
                 }
                 if (instruction === 120 || instruction === 121 || instruction === 122)
                 {
                     operands[i] = getGlobalFieldIndex( /** @type {number} */ operands[i] );
+                }
+                if (instruction === 210)
+                {
+                    operands[i] = getGlobalTypeIndex( /** @type {number} */ operands[i] );
                 }
             }
         }
@@ -856,192 +861,12 @@ function ImportMetadata(metadata)
     importMethodDefinitions();
 }
 
-function GetDeclaringTypeOfMethod(method)
-{
-    return GetType(method.Metadata, method.DeclaringType);
-}
-
-function GetElementType(type)
-{
-    return GetType(type.Metadata, type.ElementType);
-}
-
-function GetDeclaringTypeIndexOfMethod(method)
-{
-    return GetGlobalTypeIndex(method.Metadata, method.DeclaringType);
-}
-
-function GetGlobalTypeIndex(metadata, index)
-{
-    if (metadata === GlobalMetadata)
-    {
-        return index;
-    }
-    
-    const type = metadata.Types[index];    
-
-    const globalTypes = GlobalMetadata.Types;
-    
-    const indexMap = metadata.Types_GlobalIndexMap = metadata.Types_GlobalIndexMap || {};
-
-    const globalIndex = indexMap[index];
-
-    if ( globalIndex === undefined )
-    {
-        const length = globalTypes.length;
-
-        for ( let i = 0; i < length; i++ )
-        {
-            const globalType = globalTypes[i];
-            
-            if (type.IsGenericInstance)
-            {
-                if (!globalType.IsGenericInstance)
-                {
-                    continue;
-                }
-
-                if (GetGlobalTypeIndex(type.Metadata, type.ElementType) !== GetGlobalTypeIndex(globalType.Metadata, globalType.ElementType))
-                {
-                    continue;
-                }
-                
-                if (type.GenericArguments.length  !== globalType.GenericArguments.length)
-                {
-                    continue;
-                }
-
-                // is GenericArguments Full Same
-                {
-                    let isGenericArgumentsFullSame = 1;
-                    {
-                        const length = type.GenericArguments.length;
-                        for ( let i = 0; i < length; i++ )
-                        {
-                            if (GetGlobalTypeIndex(type.Metadata, type.GenericArguments[i]) !== GetGlobalTypeIndex(globalType.Metadata, globalType.GenericArguments[i]))
-                            {
-                                isGenericArgumentsFullSame = 0;
-                                break;
-                            }
-                        }
-                    }
-                    
-                    if (isGenericArgumentsFullSame === 0)
-                    {
-                        continue;
-                    }
-
-                    // found
-                    indexMap[index] = i;
-
-                    return i;
-                }
-                
-                
-            }
-
-            if ( globalType.Name !== type.Name )
-            {
-                continue;
-            }
-
-            if ( namespacesAreNotSame(globalType.Namespace, type.Namespace) )
-            {
-                continue;
-            }
-
-            // found
-            indexMap[index] = i;
-
-            return i;
-        }
-
-        indexMap[index] = globalTypes.length;
-
-        globalTypes.push(type);
-
-        return globalTypes.length - 1;
-    }
-
-    return globalIndex;
-}
-
-function GetType(metadata, index)
-{
-    return GlobalMetadata.Types[GetGlobalTypeIndex(metadata, index)];    
-}
-
-function GetGlobalMethodIndex(metadata, index)
-{
-    if (metadata === GlobalMetadata)
-    {
-        return index;
-    }
-    
-    const method = metadata.Methods[index];
-    
-    const indexMap = metadata.Methods_GlobalIndexMap = metadata.Methods_GlobalIndexMap || {};
-
-    let globalIndex = indexMap[index];
-
-    if ( globalIndex === undefined )
-    {
-        const globalMethods = GlobalMetadata.Methods;
-        
-        const length = globalMethods.length;
-
-        for ( let i = 0; i < length; i++ )
-        {
-            const globalMethod = globalMethods[i];
-
-            if ( globalMethod.Name !== method.Name )
-            {
-                continue;
-            }
-
-            if ( GetDeclaringTypeOfMethod(globalMethod) !== GetDeclaringTypeOfMethod(method) )
-            {
-                continue;
-            }
-            
-            if ( !IsTwoMethodParametersFullMatch(globalMethod, method) )
-            {
-                continue;
-            }
-
-            indexMap[index] = i;
-
-            return i;
-        }
-
-        globalIndex = indexMap[index] = globalMethods.length;
-
-        globalMethods.push(method);
-
-        return globalIndex;
-    }
-
-    return globalIndex;
-}
-
-function GetMethod(metadata, index)
-{
-    return GlobalMetadata.Methods[GetGlobalMethodIndex(metadata, index)];
-}
-
-function GetMetadataOfThread(thread)
-{
-    return thread.LastFrame.Method.Metadata;
-}
-
-
 const InterpreterBridge_NewArr = 0;
 const InterpreterBridge_NullReferenceException = 1;
 const InterpreterBridge_ArgumentNullException = 2;
 const InterpreterBridge_DivideByZeroException = 3;
 const InterpreterBridge_IndexOutOfRangeException = 4;
 const InterpreterBridge_MissingMethodException = 5;
-
 
 function AssertNotNull(value)
 {
@@ -1383,7 +1208,7 @@ function Interpret(thread)
                 
                 case 39: // Call
                 {
-                    let method = GlobalMetadata.Methods[operands[currentStackFrame.Line]];
+                    let method = AllMethods[operands[currentStackFrame.Line]];
 
                     if (method.IsGenericInstance)
                     {
@@ -2341,7 +2166,7 @@ function Interpret(thread)
                 }
                 case 110: // Callvirt
                 {
-                    let method = GetMethod(GetMetadataOfThread(thread), operands[currentStackFrame.Line]);
+                    let method = AllMethods[operands[currentStackFrame.Line]];
                 
                     let methodParameterCount = method.Parameters.length;
 
