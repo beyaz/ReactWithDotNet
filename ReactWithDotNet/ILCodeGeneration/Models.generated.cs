@@ -39,10 +39,13 @@ sealed class GenericParameterModel
 
 sealed class GenericInstanceTypeModel
 {
-    public required int ValueTypeId;
-    public required IReadOnlyList<int> GenericArguments;
-    public required int ElementType;
-    public required int IsValueType;
+    public required int ValueTypeId { get; init; }
+    
+    public required int ElementType { get; init; }
+    
+    public required IReadOnlyList<int> GenericArguments { get; init; }
+    
+    public required int IsValueType { get; init; }
 }
 
 sealed class ParameterDefinitionModel
@@ -80,80 +83,80 @@ sealed class ExceptionHandler
 
 sealed class FieldReferenceModel
 {
-    public required int IsFieldReference;
+    public required int IsFieldReference { get; init; }
     
     public required string Name { get; init; }
     
-    public  required int DeclaringType { get; init; }
-    
     public required int FieldType { get; init; }
+    
+    public  required int DeclaringType { get; init; }
 }
 
 sealed class FieldDefinitionModel
 {
-    public required int IsFieldDefinition;
+    public required int IsFieldDefinition { get; init; }
     
     public required string Name { get; init; }
     
-    public required int DeclaringType { get; init; }
-    
     public required int FieldType { get; init; }
+    
+    public required int DeclaringType { get; init; }
     
     public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
 }
 
 sealed class PropertyReferenceModel
 {
-    public required int IsPropertyReference;
+    public required int IsPropertyReference { get; init; }
     
     public required string Name { get; init; }
     
-    public required int DeclaringType { get; init; }
-    
     public required int PropertyType { get; init; }
+    
+    public required int DeclaringType { get; init; }
     
     public required IReadOnlyList<ParameterDefinitionModel> Parameters { get; init; }
 }
 
 sealed class PropertyDefinitionModel
 {
-    public required int IsPropertyDefinition;
+    public required int IsPropertyDefinition { get; init; }
     
     public required string Name { get; init; }
     
-    public required int DeclaringType { get; init; }
-    
     public required int PropertyType { get; init; }
     
-    public required IReadOnlyList<ParameterDefinitionModel> Parameters { get; init; }
+    public required int DeclaringType { get; init; }
     
     public required int? GetMethod { get; init; }
     
     public required int? SetMethod { get; init; }
     
     public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
+    
+    public required IReadOnlyList<ParameterDefinitionModel> Parameters { get; init; }
 }
 
 sealed class EventReferenceModel
 {
-    public required int IsEventReference;
+    public required int IsEventReference { get; init; }
     
     public required string Name { get; init; }
     
-    public required int DeclaringType { get; init; }
-    
     public required int EventType { get; init; }
+    
+    public required int DeclaringType { get; init; }
 }
 
 sealed class EventDefinitionModel
 {
-    public required int IsEventDefinition;
+    public required int IsEventDefinition { get; init; }
     
     public required string Name { get; init; }
     
-    public required int DeclaringType { get; init; }
-    
     public required int EventType { get; init; }
+    
+    public required int DeclaringType { get; init; }
     
     public required int? AddMethod { get; init; }
     
@@ -165,29 +168,6 @@ sealed class InterfaceImplementationModel
     public required int InterfaceType { get; init; }
     
     public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
-}
-
-
-sealed class MethodBodyModel
-{
-    public required IReadOnlyList<int> Instructions { get; init; }
-
-    public required IReadOnlyDictionary<int, object> Operands { get; init; }
-      
-    public required IReadOnlyList<ExceptionHandler> ExceptionHandlers { get; init; }
-}
-
-sealed class MethodReferenceModel
-{
-    public required int IsMethodReference;
-    
-    public required string Name { get; init; }
-    
-    public required int DeclaringType { get; init; }
-    
-    public required int ReturnType { get; init; }
-    
-    public required IReadOnlyList<ParameterDefinitionModel> Parameters { get; init; }
 }
 
 sealed class CustomAttributeArgumentModel
@@ -215,17 +195,39 @@ sealed class CustomAttributeModel
     public required int? Constructor { get; init; }
 }
 
-sealed class MethodDefinitionModel
+sealed class MethodReferenceModel
 {
-    public required int IsMethodDefinition;
+    public required int IsMethodReference { get; init; }
     
     public required string Name { get; init; }
     
+    public required IReadOnlyList<ParameterDefinitionModel> Parameters { get; init; }
     
+    public required int DeclaringType { get; init; }
+    
+    public required int ReturnType { get; init; }
+    
+    
+}
+
+sealed class MethodBodyModel
+{
+    public required IReadOnlyList<int> Instructions { get; init; }
+
+    public required IReadOnlyDictionary<int, object> Operands { get; init; }
+      
+    public required IReadOnlyList<ExceptionHandler> ExceptionHandlers { get; init; }
+}
+
+sealed class MethodDefinitionModel
+{
+    public required int IsMethodDefinition { get; init; }
+    
+    public required string Name { get; init; }
     
     public required int DeclaringType { get; init; }
 
-    public required int ReturnType;
+    public required int ReturnType { get; init; }
     
     public required IReadOnlyList<ParameterDefinitionModel> Parameters { get; init; }
     
@@ -234,9 +236,9 @@ sealed class MethodDefinitionModel
     
     public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
     
-    public bool IsStatic;
+    public bool IsStatic { get; init; }
 
-    public bool IsConstructor;
+    public bool IsConstructor { get; init; }
 }
 
 sealed class TypeDefinitionModel
@@ -295,9 +297,9 @@ sealed class ArrayTypeModel
 
 sealed class GenericInstanceMethodModel
 {
-    public required int ElementMethod;
+    public required int ElementMethod { get; init; }
 
-    public required IReadOnlyList<int> GenericArguments;
+    public required IReadOnlyList<int> GenericArguments { get; init; }
     
-    public required int IsGenericInstanceMethod;
+    public required int IsGenericInstanceMethod { get; init; }
 }

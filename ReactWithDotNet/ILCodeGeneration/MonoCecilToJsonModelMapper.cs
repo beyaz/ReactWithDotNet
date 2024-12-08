@@ -565,7 +565,7 @@ static class MonoCecilToJsonModelMapper
                 ValueTypeId = ValueTypeId.GenericInstanceType,
                 GenericArguments  = genericInstanceType.GenericArguments.ToListOf(x => x.IndexAt(metadataTable)),
                 ElementType       = genericInstanceType.ElementType.IndexAt(metadataTable),
-                IsValueType       = value.IsValueType ? 1: 0
+                IsValueType       = genericInstanceType.IsValueType ? 1: 0
             };
         }
         
