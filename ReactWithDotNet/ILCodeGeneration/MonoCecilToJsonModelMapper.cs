@@ -718,23 +718,90 @@ static class MonoCecilToJsonModelMapper
 
         return true;
     }
+
+    #region IsSame
     
+
+    
+    static bool IsSame(FieldReferenceModel modelA, FieldReferenceModel modelB)
+    {
+        return modelA.Name == modelB.Name && modelA.DeclaringType == modelB.DeclaringType;
+    }
+    
+    static bool IsSame(MetadataTable metadataTable, FieldReference reference, FieldReferenceModel model)
+    {
+        return reference.Name == model.Name && reference.DeclaringType.IndexAt(metadataTable) == model.DeclaringType;
+    }
+    
+    static bool? IsSame<A,B>(MetadataTable metadataTable, object a, object b, Func<MetadataTable,A,B, bool> compareFunc)
+    {
+        {
+            if (a is A _a && b is B _b)
+            {
+                return compareFunc(metadataTable, _a, _b);
+            }
+        }
+
+        {
+            if (a is B _b && b is A _a)
+            {
+                return compareFunc(metadataTable, _a, _b);
+            }
+        }
+
+        return null;
+    }
+    
+    static bool? IsSame<A,B>(object a, object b, Func<A,B, bool> compareFunc)
+    {
+        {
+            if (a is A _a && b is B _b)
+            {
+                return compareFunc(_a, _b);
+            }
+        }
+
+        {
+            if (a is B _b && b is A _a)
+            {
+                return compareFunc(_a, _b);
+            }
+        }
+
+        return null;
+    }
+
     
     
     static bool IsSame(object a, object b, MetadataTable metadataTable)
     {
-        // f i e l d
-        {
-            if (a is FieldReference reference && b is FieldReferenceModel model)
-            {
-                return reference.Name == model.Name && reference.DeclaringType.IndexAt(metadataTable) == model.DeclaringType;
-            }
+        var result = run([
             
-            if (a is FieldReferenceModel modelA && b is FieldReferenceModel modelB)
-            {
-                return modelA.Name == modelB.Name && modelA.DeclaringType == modelB.DeclaringType;
-            }
+            // f i e l d
+            () => IsSame<FieldReference, FieldReferenceModel>(metadataTable, a, b, IsSame),
+            () => IsSame<FieldReferenceModel, FieldReferenceModel>(a, b, IsSame)
+            
+            
+        ]);
+        if (result is not null)
+        {
+            return result.Value;
         }
+        
+        static bool? run(Func<bool?>[] funcs)
+        {
+            foreach (var func in funcs)
+            {
+                var result = func();
+                if (result is not null)
+                {
+                    return result.Value;
+                }
+            }
+
+            return null;
+        }
+       
 
         // p r o p e r t y
         {
@@ -1107,7 +1174,7 @@ static class MonoCecilToJsonModelMapper
 
         return true;
     }
-    
+    #endregion
 
     static IReadOnlyList<B> ToListOf<A, B>(this IEnumerable<A> enumerable, Func<A, B> convertFunc)
     {
