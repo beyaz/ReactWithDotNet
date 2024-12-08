@@ -27,13 +27,13 @@ sealed class GenericParameterModel
 {
     public required int ValueTypeId  { get; init; }
     
-    public int Position { get; init; }
+    public required int Position { get; init; }
     
-    public string Name { get; init; }
+    public required string Name { get; init; }
     
-    public int DeclaringType { get; init; }
+    public required int? DeclaringType { get; init; }
     
-    public int DeclaringMethod { get; init; }
+    public required int? DeclaringMethod { get; init; }
 }
 
 sealed record GenericInstanceTypeModel
