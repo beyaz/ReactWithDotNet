@@ -8,7 +8,8 @@ static class ValueTypeId
     public const int GenericInstanceType = 3;
     public const int GenericParameter = 4;
 }
-sealed record TypeReferenceModel 
+
+sealed class TypeReferenceModel 
 {
     public required int ValueTypeId  { get; init; }
     
@@ -36,7 +37,7 @@ sealed class GenericParameterModel
     public required int? DeclaringMethod { get; init; }
 }
 
-sealed record GenericInstanceTypeModel
+sealed class GenericInstanceTypeModel
 {
     public required int ValueTypeId;
     public required IReadOnlyList<int> GenericArguments;
@@ -44,7 +45,7 @@ sealed record GenericInstanceTypeModel
     public required int IsValueType;
 }
 
-sealed record ParameterDefinitionModel
+sealed class ParameterDefinitionModel
 {
     public required int Index { get; init; }
 
@@ -61,7 +62,7 @@ enum ExceptionHandlerType
     Fault = 4,
 }
 
-sealed record ExceptionHandler
+sealed class ExceptionHandler
 {
     public int TryStart { get; init; }
     
@@ -77,7 +78,7 @@ sealed record ExceptionHandler
    
 }
 
-sealed record FieldReferenceModel
+sealed class FieldReferenceModel
 {
     public required int IsFieldReference;
     
@@ -88,7 +89,7 @@ sealed record FieldReferenceModel
     public required int FieldType { get; init; }
 }
 
-sealed record FieldDefinitionModel
+sealed class FieldDefinitionModel
 {
     public required int IsFieldDefinition;
     
@@ -101,7 +102,7 @@ sealed record FieldDefinitionModel
     public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
 }
 
-sealed record PropertyReferenceModel
+sealed class PropertyReferenceModel
 {
     public required int IsPropertyReference;
     
@@ -114,7 +115,7 @@ sealed record PropertyReferenceModel
     public required IReadOnlyList<ParameterDefinitionModel> Parameters { get; init; }
 }
 
-sealed record PropertyDefinitionModel
+sealed class PropertyDefinitionModel
 {
     public required int IsPropertyDefinition;
     
@@ -133,7 +134,7 @@ sealed record PropertyDefinitionModel
     public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
 }
 
-sealed record EventReferenceModel
+sealed class EventReferenceModel
 {
     public required int IsEventReference;
     
@@ -144,7 +145,7 @@ sealed record EventReferenceModel
     public required int EventType { get; init; }
 }
 
-sealed record EventDefinitionModel
+sealed class EventDefinitionModel
 {
     public required int IsEventDefinition;
     
@@ -159,7 +160,7 @@ sealed record EventDefinitionModel
     public required int? RemoveMethod { get; init; }
 }
 
-sealed record InterfaceImplementationModel
+sealed class InterfaceImplementationModel
 {
     public required int InterfaceType { get; init; }
     
@@ -167,7 +168,7 @@ sealed record InterfaceImplementationModel
 }
 
 
-sealed record MethodBodyModel
+sealed class MethodBodyModel
 {
     public required IReadOnlyList<int> Instructions { get; init; }
 
@@ -176,7 +177,7 @@ sealed record MethodBodyModel
     public required IReadOnlyList<ExceptionHandler> ExceptionHandlers { get; init; }
 }
 
-sealed record MethodReferenceModel
+sealed class MethodReferenceModel
 {
     public required int IsMethodReference;
     
@@ -189,21 +190,21 @@ sealed record MethodReferenceModel
     public required IReadOnlyList<ParameterDefinitionModel> Parameters { get; init; }
 }
 
-sealed record CustomAttributeArgumentModel
+sealed class CustomAttributeArgumentModel
 {
     public required int Type { get; init; }
     
     public required object Value { get; init; }
 }
 
-sealed record CustomAttributeNamedArgumentModel
+sealed class CustomAttributeNamedArgumentModel
 {
     public required string Name { get; init; }
     
     public required CustomAttributeArgumentModel Argument { get; init; }
 }
 
-sealed record CustomAttributeModel
+sealed class CustomAttributeModel
 {
     public required IReadOnlyList<CustomAttributeNamedArgumentModel> Fields { get; init; }
     
@@ -214,7 +215,7 @@ sealed record CustomAttributeModel
     public required int? Constructor { get; init; }
 }
 
-sealed record MethodDefinitionModel
+sealed class MethodDefinitionModel
 {
     public required int IsMethodDefinition;
     
@@ -238,7 +239,7 @@ sealed record MethodDefinitionModel
     public bool IsConstructor;
 }
 
-sealed record TypeDefinitionModel
+sealed class TypeDefinitionModel
 {
     public required int BaseType { get; init; }
     
@@ -270,7 +271,7 @@ sealed record TypeDefinitionModel
     
 }
 
-sealed record MetadataScopeModel
+sealed class MetadataScopeModel
 {
     public required string Name { get; init; }
 }
@@ -285,14 +286,14 @@ sealed class MetadataTable
     public readonly List<object> Events = [];
 }
 
-sealed record ArrayTypeModel
+sealed class ArrayTypeModel
 {
     public required int ValueTypeId;
     public required int Rank { get; init; }
     public required int ElementType { get; init; }
 }
 
-sealed record GenericInstanceMethodModel
+sealed class GenericInstanceMethodModel
 {
     public required int ElementMethod;
 

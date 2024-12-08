@@ -23,13 +23,13 @@ public static class Math
     public static extern int max(int a, int b);
 }
 
-sealed record MetadataRequest
+sealed class MetadataRequest
 {
     public bool IsInitialRequest { get; init; }
     
     public List<Item> RequestedTypes { get; init; }
     
-    public sealed record Item
+    public sealed class Item
     {
         public string AssemblyName { get; init; }
         public string MethodName { get; init; }
@@ -39,7 +39,7 @@ sealed record MetadataRequest
     }
 }
 
-sealed record MetadataResponse
+sealed class MetadataResponse
 {
     public string ErrorMessage { get; init; }
     public MetadataTable Metadata { get; init; }
