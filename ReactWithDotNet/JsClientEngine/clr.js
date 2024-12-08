@@ -1,40 +1,227 @@
+
+const TypeDefinition = 0;
+const TypeReference = 1;
+const ArrayType = 2;
+const GenericInstanceType = 3;
+const GenericParameter = 4;
+
 /**
+ * Represents a type reference.
+ * @typedef {Object} TypeReferenceModel
+ * @property {number} ValueTypeId - The value type identifier.
+ * @property {string} Name - The name of the type.
+ * @property {string} Namespace - The namespace of the type.
+ * @property {number} Scope - The scope of the type.
+ * @property {?number} DeclaringType - The declaring type, if applicable.
+ * @property {number} IsValueType - Indicates if the type is a value type.
+ */
+
+/**
+ * Represents a generic parameter.
+ * @typedef {Object} GenericParameterModel
+ * @property {number} ValueTypeId - The value type identifier.
+ * @property {number} Position - The position of the generic parameter.
+ * @property {string} Name - The name of the generic parameter.
+ * @property {?number} DeclaringType - The declaring type, if applicable.
+ * @property {?number} DeclaringMethod - The declaring method, if applicable.
+ */
+
+/**
+ * Represents a generic instance type.
+ * @typedef {Object} GenericInstanceTypeModel
+ * @property {number} ValueTypeId - The value type identifier.
+ * @property {number} ElementType - The element type.
+ * @property {number[]} GenericArguments - The generic arguments of the type.
+ * @property {number} IsValueType - Indicates if the type is a value type.
+ */
+
+/**
+ * Represents a parameter definition.
+ * @typedef {Object} ParameterDefinitionModel
+ * @property {number} Index - The index of the parameter.
+ * @property {string} Name - The name of the parameter.
+ * @property {number} ParameterType - The type of the parameter.
+ */
+
+/**
+ * Represents an exception handler.
+ * @typedef {Object} ExceptionHandler
+ * @property {number} TryStart - The start of the try block.
+ * @property {number} TryEnd - The end of the try block.
+ * @property {number} HandlerStart - The start of the handler block.
+ * @property {number} HandlerEnd - The end of the handler block.
+ * @property {?number} CatchType - The catch type, if applicable.
+ * @property {ExceptionHandlerType} HandlerType - The type of the handler.
+ */
+
+/**
+ * Represents a field reference.
+ * @typedef {Object} FieldReferenceModel
+ * @property {number} IsFieldReference - Indicates if the object is a field reference.
+ * @property {string} Name - The name of the field.
+ * @property {number} FieldType - The type of the field.
+ * @property {number} DeclaringType - The declaring type of the field.
+ */
+
+/**
+ * Represents a field definition.
+ * @typedef {Object} FieldDefinitionModel
+ * @property {number} IsFieldDefinition - Indicates if the object is a field definition.
+ * @property {string} Name - The name of the field.
+ * @property {number} FieldType - The type of the field.
+ * @property {number} DeclaringType - The declaring type of the field.
+ * @property {CustomAttributeModel[]} CustomAttributes - The custom attributes of the field.
+ */
+
+/**
+ * Represents a property reference.
+ * @typedef {Object} PropertyReferenceModel
+ * @property {number} IsPropertyReference - Indicates if the object is a property reference.
+ * @property {string} Name - The name of the property.
+ * @property {number} PropertyType - The type of the property.
+ * @property {number} DeclaringType - The declaring type of the property.
+ * @property {ParameterDefinitionModel[]} Parameters - The parameters of the property.
+ */
+
+/**
+ * Represents a property definition.
+ * @typedef {Object} PropertyDefinitionModel
+ * @property {number} IsPropertyDefinition - Indicates if the object is a property definition.
+ * @property {string} Name - The name of the property.
+ * @property {number} PropertyType - The type of the property.
+ * @property {number} DeclaringType - The declaring type of the property.
+ * @property {?number} GetMethod - The getter method, if applicable.
+ * @property {?number} SetMethod - The setter method, if applicable.
+ * @property {CustomAttributeModel[]} CustomAttributes - The custom attributes of the property.
+ * @property {ParameterDefinitionModel[]} Parameters - The parameters of the property.
+ */
+
+/**
+ * Represents an event reference.
+ * @typedef {Object} EventReferenceModel
+ * @property {number} IsEventReference - Indicates if the object is an event reference.
+ * @property {string} Name - The name of the event.
+ * @property {number} EventType - The type of the event.
+ * @property {number} DeclaringType - The declaring type of the event.
+ */
+
+/**
+ * Represents an event definition.
+ * @typedef {Object} EventDefinitionModel
+ * @property {number} IsEventDefinition - Indicates if the object is an event definition.
+ * @property {string} Name - The name of the event.
+ * @property {number} EventType - The type of the event.
+ * @property {number} DeclaringType - The declaring type of the event.
+ * @property {?number} AddMethod - The add method, if applicable.
+ * @property {?number} RemoveMethod - The remove method, if applicable.
+ */
+
+/**
+ * Represents an interface implementation.
+ * @typedef {Object} InterfaceImplementationModel
+ * @property {number} InterfaceType - The type of the interface being implemented.
+ * @property {CustomAttributeModel[]} CustomAttributes - The custom attributes of the implementation.
+ */
+
+/**
+ * Represents an argument for a custom attribute.
+ * @typedef {Object} CustomAttributeArgumentModel
+ * @property {number} Type - The type of the argument.
+ * @property {any} Value - The value of the argument.
+ */
+
+/**
+ * Represents a named argument for a custom attribute.
+ * @typedef {Object} CustomAttributeNamedArgumentModel
+ * @property {string} Name - The name of the argument.
+ * @property {CustomAttributeArgumentModel} Argument - The argument itself.
+ */
+
+/**
+ * Represents a custom attribute.
+ * @typedef {Object} CustomAttributeModel
+ * @property {CustomAttributeNamedArgumentModel[]} Fields - The fields of the custom attribute.
+ * @property {CustomAttributeNamedArgumentModel[]} Properties - The properties of the custom attribute.
+ * @property {CustomAttributeArgumentModel[]} ConstructorArguments - The constructor arguments of the custom attribute.
+ * @property {?number} Constructor - The constructor, if applicable.
+ */
+
+/**
+ * Represents a method reference.
+ * @typedef {Object} MethodReferenceModel
+ * @property {number} IsMethodReference - Indicates if the object is a method reference.
+ * @property {string} Name - The name of the method.
+ * @property {ParameterDefinitionModel[]} Parameters - The parameters of the method.
+ * @property {number} DeclaringType - The declaring type of the method.
+ * @property {number} ReturnType - The return type of the method.
+ */
+
+/**
+ * Represents the body of a method.
+ * @typedef {Object} MethodBodyModel
+ * @property {number[]} Instructions - The instructions of the method body.
+ * @property {Object<number, any>} Operands - The operands of the method body.
+ * @property {ExceptionHandler[]} ExceptionHandlers - The exception handlers in the method body.
+ */
+
+/**
+ * Represents a method definition.
+ * @typedef {Object} MethodDefinitionModel
+ * @property {number} IsMethodDefinition - Indicates if the object is a method definition.
+ * @property {string} Name - The name of the method.
+ * @property {number} DeclaringType - The declaring type of the method.
+ * @property {number} ReturnType - The return type of the method.
+ * @property {ParameterDefinitionModel[]} Parameters - The parameters of the method.
+ * @property {MethodBodyModel} Body - The body of the method.
+ * @property {CustomAttributeModel[]} CustomAttributes - The custom attributes of the method.
+ * @property {boolean} IsStatic - Indicates if the method is static.
+ * @property {boolean} IsConstructor - Indicates if the method is a constructor.
+ */
+
+/**
+ * Represents a type definition.
+ * @typedef {Object} TypeDefinitionModel
+ * @property {number} BaseType - The base type of the definition.
+ * @property {number} ValueTypeId - The value type identifier.
+ * @property {string} Name - The name of the type.
+ * @property {string} Namespace - The namespace of the type.
+ * @property {number} Scope - The scope of the type.
+ * @property {?number} DeclaringType - The declaring type, if applicable.
+ * @property {number} IsValueType - Indicates if the type is a value type.
+ * @property {CustomAttributeModel[]} CustomAttributes - The custom attributes of the type.
+ * @property {number[]} Methods - The methods in the type.
+ * @property {number[]} Fields - The fields in the type.
+ * @property {number[]} Properties - The properties in the type.
+ * @property {number[]} NestedTypes - The nested types in the type.
+ * @property {number[]} Events - The events in the type.
+ * @property {InterfaceImplementationModel[]} Interfaces - The implemented interfaces.
+ */
+
+/**
+ * Represents metadata scopes.
  * @typedef {Object} MetadataScopeModel
- * @property {string} Name
+ * @property {string} Name - The name of the metadata scope.
+ */
+
+
+
+/**
+ * Represents an array type.
+ * @typedef {Object} ArrayTypeModel
+ * @property {number} ValueTypeId - The value type identifier.
+ * @property {number} Rank - The rank of the array.
+ * @property {number} ElementType - The element type of the array.
  */
 
 /**
- * @typedef {Object} MemberReference
- * @property {string} Name
- * @property {number | null} DeclaringType
- * @property {number} IsDefinition
+ * Represents a generic instance method.
+ * @typedef {Object} GenericInstanceMethodModel
+ * @property {number} ElementMethod - The element method of the generic instance.
+ * @property {number[]} GenericArguments - The generic arguments of the method.
+ * @property {number} IsGenericInstanceMethod - Indicates if the object is a generic instance method.
  */
 
-/**
- * @typedef {MemberReference} TypeReferenceModel
- * @property {string} Namespace
- * @property {number} Scope
- * @property {number} IsValueType
- * @property {number} IsGenericParameter
- * @property {number} Position
- * @property {number | null} DeclaringMethod
- * @property {number} IsGenericInstance
- * @property {number} ElementType
- * @property {number[]} GenericArguments
- * 
- * @property {number} Rank
- * 
- */
 
-/**
- * @typedef {TypeReferenceModel} TypeDefinitionModel
- * @property {number} BaseType
- * @property {number} Methods
- * @property {number} Fields
- * @property {number} Properties
- * @property {number} NestedTypes
- * @property {number} Events
- */
 
 
 /**
@@ -47,16 +234,6 @@ const ExceptionHandlerType =
     Finally: 2,
     Fault: 4,
 }
-
-/**
- * @typedef {Object} ExceptionHandler
- * @property {number} TryStart
- * @property {number} TryEnd
- * @property {number} HandlerStart
- * @property {number} HandlerEnd
- * @property {number | null} CatchType
- * @property {ExceptionHandlerType} HandlerType
- */
 
 
 /**
@@ -76,41 +253,13 @@ const ExceptionHandlerType =
 
 
 /**
- * @typedef {MemberReference} MethodReferenceModel
- * @property {number} ReturnType
- * @property {ParameterDefinitionModel[]} Parameters
- */
-
-/**
- * @typedef {Object} CustomAttributeModel
- * @property {number} ReturnType
- * @property {Object[]} Parameters
- */
-
-/**
- * @typedef {Object} MethodDefinitionModel
- * @property {MethodBodyModel} Body
- * @property {CustomAttributeModel[]} CustomAttributes
- * @property {number} IsStatic
- * @property {number} IsConstructor
- */
-
-
-/**
- * @typedef {Object} GenericInstanceMethodModel
- * @property {number} ElementMethod
- * @property {number[]} GenericArguments
- * @property {number} IsGenericInstance
- */
-
-/**
  * @typedef {Object} Metadata
  * @property {MetadataScopeModel[]} MetadataScopes
- * @property {Array<TypeReferenceModel>} Types
- * @property {MemberReference[]} Fields
+ * @property {Array<TypeReferenceModel | TypeDefinitionModel | GenericInstanceTypeModel | ArrayTypeModel | GenericParameterModel>} Types
+ * @property {Array<FieldReferenceModel | FieldDefinitionModel>} Fields
  * @property {Array<MethodDefinitionModel | MethodReferenceModel | GenericInstanceMethodModel>} Methods
- * @property {MemberReference[]} Properties
- * @property {MemberReference[]} Events
+ * @property {Array<PropertyReferenceModel | PropertyDefinitionModel>} Properties
+ * @property {Array<EventReferenceModel | EventDefinitionModel>} Events
  */
 
 /**
@@ -135,6 +284,7 @@ function ImportMetadata(metadata)
     const getGlobalScopeIndex  = CreateFunction_GetGlobalScopeIndex(metadata);
     const getGlobalTypeIndex   = CreateFunction_GetGlobalTypeIndex(metadata);
     const getGlobalMethodIndex = CreateFunction_GetGlobalMethodIndex(metadata);
+    const getGlobalFieldIndex = CreateFunction_GetGlobalFieldIndex(metadata);
 
     /**
      * @param {TypeReferenceModel | TypeDefinitionModel } type
@@ -199,9 +349,18 @@ function ImportMetadata(metadata)
                 {
                     operands[i] = getGlobalMethodIndex( /** @type {number} */ operands[i] );
                 }
+                if (instruction === 120 || instruction === 121 || instruction === 122)
+                {
+                    operands[i] = getGlobalFieldIndex( /** @type {number} */ operands[i] );
+                }
             }
         }
         
+    }
+
+    function recalculateIndexesOfField(field)
+    {
+        field.DeclaringType = getGlobalTypeIndex(field.DeclaringType);
     }
     
     function importTypeDefinitions()
@@ -216,7 +375,7 @@ function ImportMetadata(metadata)
         {
             const type = types[i];
             
-            if (!type.IsDefinition)
+            if (type.ValueTypeId !== TypeDefinition)
             {
                 continue;
             }
@@ -245,7 +404,7 @@ function ImportMetadata(metadata)
         {
             const method = methods[i];
 
-            if (!method.IsDefinition)
+            if (!method.IsMethodDefinition)
             {
                 continue;
             }
@@ -320,56 +479,144 @@ function ImportMetadata(metadata)
         const cache = {};
 
         /**
-         * @param {TypeReferenceModel} globalType
-         * @param {TypeReferenceModel} type
+         * @param {TypeReferenceModel | TypeDefinitionModel | GenericInstanceTypeModel | ArrayTypeModel | GenericParameterModel} globalType
+         * @param {TypeReferenceModel | TypeDefinitionModel | GenericInstanceTypeModel | ArrayTypeModel | GenericParameterModel} type
          */
         const isSameType = function(globalType, type)
-        {            
-            if ( globalType.Name !== type.Name )
+        {
+            switch (globalType.ValueTypeId)
             {
-                return false;
-            }
-
-            if ( globalType.Namespace !== type.Namespace )
-            {
-                return false;
-            }
-
-            if (globalType.IsGenericInstance)
-            {
-                if (!type.IsGenericInstance)
+                case TypeDefinition:
+                case TypeReference:
                 {
-                    return false;
-                }
-
-                if (globalType.GenericArguments.length  !== type.GenericArguments.length)
-                {
-                    return false;
-                }
-
-                if (globalType.ElementType !== getGlobalTypeIndex(type.ElementType))
-                {
-                    return false;
-                }
-
-                // is GenericArguments Full Same
-                let isGenericArgumentsFullSame = 1;
-                {
-                    const length = type.GenericArguments.length;
-                    for ( let i = 0; i < length; i++ )
+                    if (!(type.ValueTypeId === TypeDefinition || type.ValueTypeId === TypeReference))
                     {
-                        if (globalType.GenericArguments[i] !== getGlobalTypeIndex(type.GenericArguments[i]))
+                        return false;
+                    }
+
+                    if ( globalType.Name !== type.Name )
+                    {
+                        return false;
+                    }
+
+                    if ( namespacesAreNotSame(globalType.Namespace, type.Namespace) )
+                    {
+                        return false;
+                    }
+
+                    if (globalType.DeclaringType != null)
+                    {
+                        if (type.DeclaringType == null)
                         {
-                            isGenericArgumentsFullSame = 0;
-                            break;
+                            return false;
+                        }
+
+                        if (globalType.DeclaringType !== getGlobalTypeIndex(type.DeclaringType))
+                        {
+                            return false;
                         }
                     }
+                    
+                    return true;
                 }
 
-                return isGenericArgumentsFullSame === 1;
-            }
+                case ArrayType:
+                {
+                    if (type.ValueTypeId !== ArrayType)
+                    {
+                        return false;
+                    }
 
-            return true;
+                    if (globalType.Rank  !== type.Rank)
+                    {
+                        return false;
+                    }
+
+                    if (globalType.ElementType !== getGlobalTypeIndex(type.ElementType))
+                    {
+                        return false;
+                    }
+
+                    return true;
+                }
+                
+                case GenericInstanceType:
+                {
+                    if (type.ValueTypeId !== GenericInstanceType)
+                    {
+                        return false;
+                    }
+
+                    if (globalType.GenericArguments.length  !== type.GenericArguments.length)
+                    {
+                        return false;
+                    }
+
+                    if (globalType.ElementType !== getGlobalTypeIndex(type.ElementType))
+                    {
+                        return false;
+                    }
+
+                    // is GenericArguments Full Same
+                    let isGenericArgumentsFullSame = 1;
+                    {
+                        const length = type.GenericArguments.length;
+                        for ( let i = 0; i < length; i++ )
+                        {
+                            if (globalType.GenericArguments[i] !== getGlobalTypeIndex(type.GenericArguments[i]))
+                            {
+                                isGenericArgumentsFullSame = 0;
+                                break;
+                            }
+                        }
+                    }
+
+                    return isGenericArgumentsFullSame === 1;
+                }
+
+                case GenericParameter:
+                {
+                    if (type.ValueTypeId !== GenericParameter)
+                    {
+                        return false;
+                    }
+
+                    if (globalType.Position  !== type.Position)
+                    {
+                        return false;
+                    }
+
+                    if (globalType.DeclaringType != null)
+                    {
+                        if (type.DeclaringType == null)
+                        {
+                            return false;
+                        }
+                        
+                        if (globalType.DeclaringType !== getGlobalTypeIndex(type.DeclaringType))
+                        {
+                            return false;
+                        }    
+                    }
+
+                    if (globalType.DeclaringMethod != null)
+                    {
+                        if (type.DeclaringMethod == null)
+                        {
+                            return false;
+                        }
+
+                        if (globalType.DeclaringMethod !== getGlobalMethodIndex(type.DeclaringMethod))
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+            }
+           
+            throw 'ValueTypeId not resolved';
         }
 
         const getGlobalTypeIndex = function(index)
@@ -415,54 +662,86 @@ function ImportMetadata(metadata)
         const cache = {};
 
         /**
-         * @param {MethodReferenceModel} globalMethod
-         * @param {MethodReferenceModel} method
+         * @param {MethodDefinitionModel | MethodReferenceModel | GenericInstanceMethodModel} globalMethod
+         * @param {MethodDefinitionModel | MethodReferenceModel | GenericInstanceMethodModel} method
          */
         const isSameMethod = function(globalMethod, method)
         {
-            if ( globalMethod.Name && globalMethod.Name !== method.Name )
+            if (globalMethod.IsMethodReference || globalMethod.IsMethodDefinition)
             {
-                return false;
-            }
-
-            if ( globalMethod.DeclaringType != null && method.DeclaringType == null )
-            {
-                return false;
-            }
-
-            if ( method.DeclaringType != null && globalMethod.DeclaringType == null )
-            {
-                return false;
-            }
-
-            if ( globalMethod.DeclaringType != null && globalMethod.DeclaringType !== getGlobalTypeIndex(method.DeclaringType))
-            {
-                return false;
-            }
-
-            // Is method parameters full match
-            {
-                const parametersA = globalMethod.Parameters;
-                const parametersB = method.Parameters;
-
-                let lengthA = parametersA.length;
-                let lengthB = parametersB.length;
-
-                if (lengthA !== lengthB)
+                if (!(method.IsMethodReference || method.IsMethodDefinition))
                 {
                     return false;
                 }
 
-                for (let i = 0; i < lengthA; i++)
+                if ( globalMethod.Name !== method.Name )
                 {
-                    if (parametersA[i].ParameterType !== getGlobalTypeIndex(parametersB[i].ParameterType))
+                    return false;
+                }
+
+                if ( globalMethod.DeclaringType !== getGlobalTypeIndex(method.DeclaringType) )
+                {
+                    return false;
+                }
+
+                // Is method parameters full match
+                {
+                    const parametersA = globalMethod.Parameters;
+                    const parametersB = method.Parameters;
+
+                    let lengthA = parametersA.length;
+                    let lengthB = parametersB.length;
+
+                    if (lengthA !== lengthB)
+                    {
+                        return false;
+                    }
+
+                    for (let i = 0; i < lengthA; i++)
+                    {
+                        if (parametersA[i].ParameterType !== getGlobalTypeIndex(parametersB[i].ParameterType))
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+                return true;                
+            }
+            
+            if (globalMethod.IsGenericInstanceMethod)
+            {
+                if (!method.IsGenericInstanceMethod)
+                {
+                    return false;
+                }
+
+                if ( globalMethod.ElementMethod !== getGlobalMethodIndex(method.ElementMethod))
+                {
+                    return false;
+                }
+
+                const genericArgumentsA = globalMethod.GenericArguments;
+                const genericArgumentsB = method.GenericArguments;
+                
+                const length = genericArgumentsA.length;
+                if (length !== genericArgumentsB.length)
+                {
+                    return false;
+                }
+                
+                for (let i = 0; i < length; i++)
+                {
+                    if ( genericArgumentsA[i] !== getGlobalMethodIndex(genericArgumentsB[i]))
                     {
                         return false;
                     }
                 }
+                
+                return true;                
             }
-
-            return true;
+            
+            throw 'method type not resolved';
         }
 
         return function(index)
@@ -495,6 +774,83 @@ function ImportMetadata(metadata)
         }
     }
 
+    /**
+     * @param {Metadata} metadata
+     * @returns {(index: number) => number}
+     */
+    function CreateFunction_GetGlobalFieldIndex(metadata)
+    {
+        const globalFields = GlobalMetadata.Fields;
+
+        const cache = {};
+
+        /**
+         * @param {FieldDefinitionModel | FieldReferenceModel} globalField
+         * @param {FieldDefinitionModel | FieldReferenceModel} field
+         */
+        const isSameField = function(globalField, field)
+        {
+            if ( globalField.Name !== field.Name )
+            {
+                return false;
+            }
+
+            return globalField.DeclaringType === getGlobalTypeIndex(field.DeclaringType);
+        }
+
+        return function(index)
+        {
+            const globalIndex = cache[index];
+            if ( globalIndex !== undefined )
+            {
+                return globalIndex;
+            }
+
+            const searchValue = metadata.Fields[index];
+
+            const length = globalFields.length;
+
+            for (let i = 0; i < length; i++)
+            {
+                if (isSameField(globalFields[i], searchValue))
+                {
+                    return cache[index] = i;
+                }
+            }
+
+            cache[index] = globalFields.length;
+
+            globalFields.push(searchValue);
+
+            recalculateIndexesOfField(searchValue);
+
+            return cache[index];
+        }
+    }
+
+    /**
+     * @param {string} namespaceA
+     * @param {string} namespaceB
+     */
+    function namespacesAreNotSame(namespaceA, namespaceB)
+    {
+        if (namespaceA === namespaceB)
+        {
+            return false;
+        }
+
+        if (namespaceA === '_System_' && namespaceB === 'System')
+        {
+            return false;
+        }
+
+        if (namespaceA === 'System' && namespaceB === '_System_')
+        {
+            return false;
+        }
+
+        return true;
+    }
 
     importTypeDefinitions();
     importMethodDefinitions();
@@ -589,7 +945,7 @@ function GetGlobalTypeIndex(metadata, index)
                 continue;
             }
 
-            if ( globalType.Namespace !== type.Namespace )
+            if ( namespacesAreNotSame(globalType.Namespace, type.Namespace) )
             {
                 continue;
             }
@@ -704,7 +1060,7 @@ function TryInitialize_InterpreterBridge(metadataTable)
 {
     for (let i = 0; i < metadataTable.Methods.length; i++)
     {
-        if (metadataTable.Methods[i].IsDefinition === true)
+        if (metadataTable.Methods[i].IsMethodDefinition)
         {
             if (metadataTable.Types[metadataTable.Methods[i].DeclaringType].Name === 'InterpreterBridge' &&
                 metadataTable.Types[metadataTable.Methods[i].DeclaringType].Namespace === 'ReactWithDotNet')
@@ -726,6 +1082,7 @@ function Interpret(thread)
 {
     const AllTypes = GlobalMetadata.Types;
     const AllMethods = GlobalMetadata.Methods;
+    const AllFields = GlobalMetadata.Fields;
     
     let currentStackFrame = thread.LastFrame;
     
@@ -1085,7 +1442,7 @@ function Interpret(thread)
                         }
                     }
 
-                    if (!method.IsDefinition)
+                    if (!method.IsMethodDefinition)
                     {
                         // Load method at runtime
                         evaluationStack.push(method);
@@ -2111,7 +2468,7 @@ function Interpret(thread)
                         {
                             let methodTemp = GetMethod(elementType.Metadata, elementType.Methods[i]);
 
-                            if (methodTemp.IsDefinition)
+                            if (methodTemp.IsMethodDefinition)
                             {
                                 if (methodTemp.Name === method.Name)
                                 {
@@ -2123,7 +2480,7 @@ function Interpret(thread)
                         }
                     }
 
-                    if (!method.IsDefinition)
+                    if (!method.IsMethodDefinition)
                     {
                         // Load method at runtime
                         evaluationStack.push(declaringType);
@@ -2221,7 +2578,7 @@ function Interpret(thread)
 
                 case 120: // Ldfld
                 {
-                    let fieldReference = GetMetadataOfThread(thread).Fields[operands[currentStackFrame.Line]];
+                    let fieldReference = AllFields[operands[currentStackFrame.Line]];
                                 
                     let instance = evaluationStack.pop();
 
@@ -2253,7 +2610,7 @@ function Interpret(thread)
                 }
                 case 121: // Ldflda
                 {
-                    let fieldReference = GetMetadataOfThread(thread).Fields[operands[currentStackFrame.Line]];
+                    let fieldReference = AllFields[operands[currentStackFrame.Line]];
                     
                     let instance = evaluationStack.pop();
 
@@ -2267,7 +2624,7 @@ function Interpret(thread)
                 }
                 case 122: // Stfld
                 {    
-                    let fieldReference = GetMetadataOfThread(thread).Fields[operands[currentStackFrame.Line]];
+                    let fieldReference = AllFields[operands[currentStackFrame.Line]];
                                     
                     let value    = evaluationStack.pop();
                     let instance = evaluationStack.pop();
@@ -3691,17 +4048,12 @@ setTimeout(function ()
         {
             const table = metadataTable.Types[i];
 
-            if (!table.IsDefinition)
-            {
-                continue;
-            }
-
-            for (let j = 0; j < table.Methods.length; j++)
+            for (let j = 0; j < table.Methods?.length; j++)
             {
 
                 const method = metadataTable.Methods[table.Methods[j]];
 
-                if (method.IsDefinition)
+                if (method.IsMethodDefinition)
                 {
                     if (method.Name === "Abc5")
                     {
