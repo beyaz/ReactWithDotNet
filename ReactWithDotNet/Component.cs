@@ -108,6 +108,11 @@ public abstract class ReactComponentBase : Element, IReactComponent
     {
         return Task.CompletedTask;
     }
+    
+    protected virtual Task componentWillUnmount()
+    {
+        return Task.CompletedTask;
+    }
 
     protected abstract Task constructor();
     

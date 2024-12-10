@@ -7,6 +7,8 @@ namespace ReactWithDotNet;
 public interface IFunctionalComponent : IReactComponent
 {
     public Func<Task> ComponentDidMount { set; }
+    
+    public Func<Task> ComponentWillUnmount { set; }
 
     public Func<Task> Constructor { set; }
 
@@ -199,6 +201,8 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
     public Type CompilerGeneratedType { get; init; }
 
     public Func<Task> ComponentDidMount { internal get; set; }
+    
+    public Func<Task> ComponentWillUnmount{ internal get; set; }
 
     public Func<Task> Constructor { internal get; set; }
 

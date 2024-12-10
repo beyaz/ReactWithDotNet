@@ -95,6 +95,7 @@ partial class Mixin
             GetPropertyValueForSerializeToClient = getPropertyValueForSerializeToClientFunc,
 
             ComponentDidMountMethod = GetComponentDidMountMethod(type),
+            ComponentWillUnmountMethod = GetComponentWillUnmountMethod(type),
 
             IsAnonymousType = isAnonymousType,
 
@@ -107,12 +108,26 @@ partial class Mixin
 
         static string GetComponentDidMountMethod(Type componentType)
         {
-            var didMountMethodInfo = componentType.FindMethod("componentDidMount", BindingFlags.NonPublic | BindingFlags.Instance);
-            if (didMountMethodInfo != null)
+            var methodInfo = componentType.FindMethod("componentDidMount", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (methodInfo != null)
             {
-                if (didMountMethodInfo.DeclaringType != typeof(ReactComponentBase))
+                if (methodInfo.DeclaringType != typeof(ReactComponentBase))
                 {
-                    return didMountMethodInfo.GetAccessKey();
+                    return methodInfo.GetAccessKey();
+                }
+            }
+
+            return null;
+        }
+        
+        static string GetComponentWillUnmountMethod(Type componentType)
+        {
+            var methodInfo = componentType.FindMethod("componentWillUnmount", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (methodInfo != null)
+            {
+                if (methodInfo.DeclaringType != typeof(ReactComponentBase))
+                {
+                    return methodInfo.GetAccessKey();
                 }
             }
 
@@ -263,6 +278,7 @@ sealed class TypeInfoCalculated
 {
     public IReadOnlyList<MethodInfo> CacheableMethodInfoList { get; init; }
     public string ComponentDidMountMethod { get; init; }
+    public string ComponentWillUnmountMethod { get; init; }
     public IReadOnlyList<PropertyInfoCalculated> CustomEventPropertiesOfType { get; init; }
     public IReadOnlyList<PropertyInfoCalculated> DotNetPropertiesOfType { get; init; }
     public string FullNameWithAssembly { get; init; }

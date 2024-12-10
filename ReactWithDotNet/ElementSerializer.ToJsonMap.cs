@@ -516,12 +516,22 @@ partial class ElementSerializer
                 {
                     map.Add(___ComponentDidMountMethod___, typeInfo.ComponentDidMountMethod);
                 }
+                
+                if (typeInfo.ComponentWillUnmountMethod is not null)
+                {
+                    map.Add(___ComponentWillUnmountMethod___, typeInfo.ComponentWillUnmountMethod);
+                }
 
                 if (node.IsFunctionalComponent == true)
                 {
                     if (node.FunctionalComponent.ComponentDidMount is not null)
                     {
                         map.Add(___ComponentDidMountMethod___, node.FunctionalComponent.ComponentDidMount.Method.GetAccessKey());
+                    }
+                    
+                    if (node.FunctionalComponent.ComponentWillUnmount is not null)
+                    {
+                        map.Add(___ComponentWillUnmountMethod___, node.FunctionalComponent.ComponentWillUnmount.Method.GetAccessKey());
                     }
                 }
 

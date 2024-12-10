@@ -16,6 +16,7 @@ const ClientTasks = '$ClientTasks';
 const SyncId = '$SyncId';
 const DotNetState = '$State';
 const ComponentDidMountMethod = '$ComponentDidMountMethod';
+const ComponentWillUnmountMethod = '$ComponentWillUnmountMethod';
 const DotNetComponentUniqueIdentifier = '$DotNetComponentUniqueIdentifier';
 const DotNetComponentUniqueIdentifiers = '$DotNetComponentUniqueIdentifiers';
 const ON_COMPONENT_DESTROY = '$ON_COMPONENT_DESTROY';
@@ -873,6 +874,11 @@ function tryToFindCachedMethodInfo(component, remoteMethodName, eventArguments)
             return cachedMethodInfo;
         }
 
+        if (remoteMethodName === 'componentWillUnmount' && cachedMethodInfo.MethodName.endsWith('|componentWillUnmount'))
+        {
+            return cachedMethodInfo;
+        }
+
         if (cachedMethodInfo.MethodName === remoteMethodName && eventArguments.length === 1)
         {
             if (isEquals(eventArguments[0], cachedMethodInfo.Parameter))
@@ -1558,6 +1564,9 @@ function ArrangeRemoteMethodArguments(remoteMethodArguments)
 function HandleAction(actionArguments)
 {
     const remoteMethodName = actionArguments.remoteMethodName;
+
+    const isComponentWillUnmount = actionArguments.isComponentWillUnmount;
+
     let component = NotNull(actionArguments.component);
 
     if (component.ComponentWillUnmountIsCalled)
@@ -1666,6 +1675,13 @@ function HandleAction(actionArguments)
         const partialState = CalculateNewStateFromJsonElement(component.state, response.ElementAsJson);
 
         SetState(component, partialState, stateCallback);
+
+        if (isComponentWillUnmount)
+        {
+            ProcessClientTasks(partialState[ClientTasks], component);
+
+            stateCallback();
+        }
     }
 
     function onFail(error)
@@ -1918,9 +1934,71 @@ function DefineComponent(componentDeclaration)
                 throw 'componentWillUnmount -> ComponentWillUnmountIsCalled called twice';
             }
 
-            this.ComponentWillUnmountIsCalled = true;
+            const component = this;          
 
-            DestroyDotNetComponentInstance(this);
+            const componentWillUnmountMethod = component.state[ComponentWillUnmountMethod];
+            if (componentWillUnmountMethod == null)
+            {
+                // u n r e g i s t e r
+                component.ComponentWillUnmountIsCalled = true;
+                DestroyDotNetComponentInstance(component);
+
+                return;
+            }
+            
+            // try call from cache
+            {
+                const cachedMethodInfo = tryToFindCachedMethodInfo(component, 'componentWillUnmount', []);
+                if (cachedMethodInfo)
+                {
+                    const newState = CalculateNewStateFromJsonElement(component.state, cachedMethodInfo.ElementAsJson);
+
+                    const clientTasks = newState[ClientTasks];
+
+                    newState[ComponentDidMountMethod] = null;
+                    newState[ClientTasks] = null;
+
+                    function stateCallback()
+                    {
+                        ProcessClientTasks(clientTasks, component);
+
+                        OnReactStateReady();
+
+                        // u n r e g i s t e r
+                        component.ComponentWillUnmountIsCalled = true;
+                        DestroyDotNetComponentInstance(component);
+                    }
+
+                    SetState(component, newState, stateCallback);
+
+                    return;
+                }
+            }
+
+            {
+                // step: 1 start remote call
+                {
+                    const actionArguments = 
+                    {
+                        component: component,
+                        remoteMethodName: componentWillUnmountMethod,
+                        remoteMethodArguments: [],
+                        isComponentWillUnmount: 1
+                    };
+                    StartAction(actionArguments);
+                }
+                
+                // step: 2
+                PushToFunctionExecutionQueue(()=>
+                {
+                    // u n r e g i s t e r
+                    component.ComponentWillUnmountIsCalled = true;
+                    DestroyDotNetComponentInstance(component);
+
+                    OnReactStateReady();
+
+                });
+            }
         }
 
         static getDerivedStateFromProps(nextProps, prevState)
