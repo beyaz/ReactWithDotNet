@@ -286,7 +286,7 @@ function EmitNextFunctionInFunctionExecutionQueue()
 
         FunctionExecutionQueueCurrentEntry = item;
 
-        item.fn(item);
+        setTimeout(()=>item.fn(item), 1);
     }
 }
 
@@ -1587,19 +1587,28 @@ function HandleAction(actionArguments)
 
     const isComponentPreview = component[DotNetTypeOfReactComponent] === 'ReactWithDotNet.UIDesigner.ReactWithDotNetDesignerComponentPreview,ReactWithDotNet';
 
-    const capturedStateTreeResponse = SafeExecute(() => CaptureStateTreeFromFiberNode(component._reactInternals));
-    if (capturedStateTreeResponse.fail)
+    let capturedStateTree,capturedStateTreeRootNodeKey;
+    if (isComponentWillUnmount)
     {
-        if (isComponentPreview)
+        capturedStateTree = actionArguments.capturedStateTree;
+        capturedStateTreeRootNodeKey = actionArguments.capturedStateTreeRootNodeKey;
+    }
+    else
+    {
+        const capturedStateTreeResponse = SafeExecute(() => CaptureStateTreeFromFiberNode(component._reactInternals));
+        if (capturedStateTreeResponse.fail)
         {
-            location.reload();
+            if (isComponentPreview)
+            {
+                location.reload();
+            }
+
+            throw capturedStateTreeResponse.exception;
         }
 
-        throw capturedStateTreeResponse.exception;
-    }
-
-    const capturedStateTree = capturedStateTreeResponse.value.stateTree;
-    const capturedStateTreeRootNodeKey = capturedStateTreeResponse.value.rootNodeKey;
+        capturedStateTree = capturedStateTreeResponse.value.stateTree;
+        capturedStateTreeRootNodeKey = capturedStateTreeResponse.value.rootNodeKey;
+    }    
     
     const request =
     {
@@ -1978,12 +1987,25 @@ function DefineComponent(componentDeclaration)
             {
                 // step: 1 start remote call
                 {
+                    const capturedStateTreeResponse = SafeExecute(() => CaptureStateTreeFromFiberNode(component._reactInternals));
+                    if (capturedStateTreeResponse.fail)
+                    {
+                        throw capturedStateTreeResponse.exception;
+                    }
+
+                    const capturedStateTree = capturedStateTreeResponse.value.stateTree;
+                    const capturedStateTreeRootNodeKey = capturedStateTreeResponse.value.rootNodeKey;
+
                     const actionArguments = 
                     {
                         component: component,
                         remoteMethodName: componentWillUnmountMethod,
                         remoteMethodArguments: [],
-                        isComponentWillUnmount: 1
+                        isComponentWillUnmount: 1,
+
+                        capturedStateTree: capturedStateTree,
+                        capturedStateTreeRootNodeKey: capturedStateTreeRootNodeKey
+
                     };
                     StartAction(actionArguments);
                 }
