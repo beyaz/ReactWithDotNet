@@ -65,10 +65,12 @@ public sealed class ReactWithDotNetJavaScriptFiles
 
         string resourceName = null;
 
+        var isLocalMaintainer = Environment.UserName == "beyaz";
+
         // for my development
         if (requestPath.EndsWith(ReactWithDotNetDesignerComponentPreview.HelperJsFileResourceName))
         {
-            if (Environment.UserName == "beyaz")
+            if (isLocalMaintainer)
             {
                 return new()
                 {
@@ -80,24 +82,19 @@ public sealed class ReactWithDotNetJavaScriptFiles
             resourceName = requestPath;
         }
 
-        if (requestPath.StartsWith("/ReactWithDotNet/", StringComparison.OrdinalIgnoreCase))
+        if (isLocalMaintainer && requestPath.StartsWith("/ReactWithDotNet/", StringComparison.OrdinalIgnoreCase))
         {
-            if (Environment.UserName == "beyaz")
+            return new()
             {
-                return new()
-                {
-                    Type = ContentTypeApplication_Javascript,
-                    Data = File.ReadAllBytes($@"C:\github\ReactWithDotNet\ReactWithDotNet\JsClientEngine\dist\{requestPath.Split('/').Last()}")
-                };
-            }
-
-            resourceName = requestPath;
+                Type = ContentTypeApplication_Javascript,
+                Data = File.ReadAllBytes($@"C:\github\ReactWithDotNet\ReactWithDotNet\JsClientEngine\dist\{requestPath.Split('/').Last()}")
+            };
         }
         
         if (requestPath.EndsWith("/clr.js", StringComparison.OrdinalIgnoreCase) || 
             requestPath.EndsWith("/long.js", StringComparison.OrdinalIgnoreCase))
         {
-            if (Environment.UserName == "beyaz")
+            if (isLocalMaintainer)
             {
                 return new()
                 {
