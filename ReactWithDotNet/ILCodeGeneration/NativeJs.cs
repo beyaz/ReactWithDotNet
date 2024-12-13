@@ -1,8 +1,9 @@
-﻿using static ReactWithDotNet.NativeJsHelper;
+﻿using ReactWithDotNet;
+using static ReactWithDotNet.NativeJsHelper;
+
 
 
 namespace ReactWithDotNet;
-
 
 sealed class StackFrame
 {
