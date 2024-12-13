@@ -322,6 +322,7 @@ function ImportMetadata(metadata)
             method.DeclaringType = getGlobalTypeIndex(method.DeclaringType);
         }
 
+        if (method.CustomAttributes)
         {
             const customAttributes = method.CustomAttributes;
             
@@ -2150,7 +2151,7 @@ function Interpret(thread)
                     if (instance == null)
                     {
                         // NullReferenceException
-                        evaluationStack.push(method.Name);
+                        evaluationStack.push( GetMethodFullName(method));
                         evaluationStack.push(InterpreterBridge_NullReferenceException);
                         nextInstruction = InterpreterBridge_Jump;
                         break;
@@ -3921,4 +3922,14 @@ function IsTwoMethodParametersFullMatch(methodA, methodB)
     return true;
 }
 
-
+/**
+ * @param {MethodReferenceModel} method
+ */
+function GetMethodFullName(method)
+{
+    const AllTypes = GlobalMetadata.Types;
+    
+    const declaringType = AllTypes[method.DeclaringType];
+    
+    return declaringType.Namespace + '.' + declaringType.Name + '::' + method.Name;    
+}
