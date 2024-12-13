@@ -882,7 +882,7 @@ const InterpreterBridge_Jump = 219;
 
 let InterpreterBridge_Jump_MethodDefinition;
 
-let DotNetJsOverrides;
+let TypeDefinitionOfDotNetJsOverrides;
 
 function Detect_SpecificMembers(metadataTable) 
 {
@@ -897,18 +897,28 @@ function Detect_SpecificMembers(metadataTable)
         {
             const declaringType = types[method.DeclaringType];
             
-            if (declaringType.Namespace === 'ReactWithDotNet')
+            if (declaringType.Namespace === 'ReactWithDotNet' && declaringType.Name === 'InterpreterBridge')
             {
-                if (declaringType.Name === 'InterpreterBridge' )
+                if (method.Name === "Jump")
                 {
-                    if (method.Name === "Jump")
-                    {
-                        InterpreterBridge_Jump_MethodDefinition = method;
-                    }
+                    InterpreterBridge_Jump_MethodDefinition = method;
                 }
             }
         }
         
+    }
+
+    for (let i = 0; i < types.length; i++)
+    {
+        const type = types[i];
+
+        if (type.ValueTypeId === TypeDefinition)
+        {
+            if (type.Namespace === 'ReactWithDotNet' && type.Name === 'DotNetJsOverrides')
+            {
+                TypeDefinitionOfDotNetJsOverrides = type;
+            }
+        }
     }
 }
 
@@ -2150,15 +2160,14 @@ function Interpret(thread)
                 }
                 case 110: // Callvirt
                 {
+                    
                     let method = AllMethods[operands[currentStackFrame.Line]];
                 
                     let methodParameterCount = method.Parameters.length;
+    
+                    const thisArgumentIndex = evaluationStack.length - methodParameterCount - 1;
 
-                    // arrange arguments
-                    methodArguments      = evaluationStack;
-                    methodArgumentsOffset = evaluationStack.length - methodParameterCount - 1;
-
-                    let instance = methodArguments[methodArgumentsOffset];
+                    let instance = methodArguments[thisArgumentIndex];
 
                     if (instance == null)
                     {
@@ -2168,6 +2177,10 @@ function Interpret(thread)
                         nextInstruction = InterpreterBridge_Jump;
                         break;
                     }
+                    
+                    // arrange arguments
+                    methodArguments      = evaluationStack;
+                    methodArgumentsOffset = thisArgumentIndex;
                     
                     AssertNotNull(instance.$typeIndex);
 
@@ -3935,7 +3948,7 @@ function IsTwoMethodParametersFullMatch(methodA, methodB)
 }
 
 /**
- * @param {MethodReferenceModel} method
+ * @param {MethodDefinitionModel | MethodReferenceModel | GenericInstanceMethodModel} method
  */
 function GetMethodFullName(method)
 {
