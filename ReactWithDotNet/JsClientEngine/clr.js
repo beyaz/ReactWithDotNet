@@ -882,22 +882,34 @@ const InterpreterBridge_Jump = 219;
 
 let InterpreterBridge_Jump_MethodDefinition;
 
-function TryInitialize_InterpreterBridge(metadataTable) 
+let DotNetJsOverrides;
+
+function Detect_SpecificMembers(metadataTable) 
 {
-    for (let i = 0; i < metadataTable.Methods.length; i++)
+    const types = metadataTable.Types;
+    const methods = metadataTable.Methods;
+    
+    for (let i = 0; i < methods.length; i++)
     {
-        if (metadataTable.Methods[i].IsMethodDefinition)
+        const method = methods[i];
+        
+        if (method.IsMethodDefinition)
         {
-            if (metadataTable.Types[metadataTable.Methods[i].DeclaringType].Name === 'InterpreterBridge' &&
-                metadataTable.Types[metadataTable.Methods[i].DeclaringType].Namespace === 'ReactWithDotNet')
+            const declaringType = types[method.DeclaringType];
+            
+            if (declaringType.Namespace === 'ReactWithDotNet')
             {
-                if (metadataTable.Methods[i].Name === "Jump")
+                if (declaringType.Name === 'InterpreterBridge' )
                 {
-                    InterpreterBridge_Jump_MethodDefinition = metadataTable.Methods[i];
+                    if (method.Name === "Jump")
+                    {
+                        InterpreterBridge_Jump_MethodDefinition = method;
+                    }
                 }
             }
         }
-    }    
+        
+    }
 }
 
 function NotImplementedOpCode()
@@ -3857,7 +3869,7 @@ setTimeout(function ()
 
         let metadataTable = response.Metadata;
 
-        TryInitialize_InterpreterBridge(metadataTable);
+        Detect_SpecificMembers(metadataTable);
 
         ImportMetadata(metadataTable);
 

@@ -86,6 +86,7 @@ static class MetadataHelper
             request.RequestedTypes.Add(typeof(console));
             request.RequestedTypes.Add(typeof(Math));
             request.RequestedTypes.Add(typeof(_System_.Int64));
+            request.RequestedTypes.Add(typeof(DotNetJsOverrides));
             request.RequestedTypes.Add(typeof(Exception));
             request.RequestedTypes.Add(typeof(SystemException));
             request.RequestedTypes.Add(typeof(NullReferenceException));
