@@ -206,8 +206,6 @@ sealed class MethodReferenceModel
     public required int DeclaringType { get; init; }
     
     public required int ReturnType { get; init; }
-    
-    
 }
 
 sealed class MethodBodyModel

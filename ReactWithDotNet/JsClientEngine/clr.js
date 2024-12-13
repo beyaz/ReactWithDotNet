@@ -322,6 +322,17 @@ function ImportMetadata(metadata)
             method.DeclaringType = getGlobalTypeIndex(method.DeclaringType);
         }
 
+        // parameter types
+        {
+            const parameters = method.Parameters;
+            const length = parameters.length;
+            
+            for (let i = 0; i < length; i++)
+            {
+                parameters[i].ParameterType = getGlobalTypeIndex(parameters[i].ParameterType);
+            }
+        }
+
         if (method.CustomAttributes)
         {
             const customAttributes = method.CustomAttributes;
@@ -1260,6 +1271,30 @@ function Interpret(thread)
 
                     if (method.IsMethodReference)
                     {
+                        const methods = TypeDefinitionOfDotNetJsOverrides.Methods;
+                        const length = methods.length;
+
+                        for (let i = 0; i < length; i++)
+                        {
+                            const targetMethod = AllMethods[methods[i]];
+
+                            if (targetMethod.Name !== method.Name)
+                            {
+                                continue;
+                            }
+
+                            if (IsTwoMethodParametersFullMatch(method, targetMethod) === false)
+                            {
+                                continue;
+                            }
+
+                            method = targetMethod;
+                            break;
+                        }
+                    }
+                    
+                    if (method.IsMethodReference)
+                    {
                         // Load method at runtime
                         evaluationStack.push(method);
                         nextInstruction = 222;
@@ -2159,16 +2194,20 @@ function Interpret(thread)
                     NotImplementedOpCode(); break;
                 }
                 case 110: // Callvirt
-                {
-                    
+                {                    
                     let method = AllMethods[operands[currentStackFrame.Line]];
                 
                     let methodParameterCount = method.Parameters.length;
     
                     const thisArgumentIndex = evaluationStack.length - methodParameterCount - 1;
 
-                    let instance = methodArguments[thisArgumentIndex];
+                    let instance = evaluationStack[thisArgumentIndex];
 
+                    if (instance != null && instance.$isAddress)
+                    {
+                        instance = instance.$object[instance.$key];
+                    }
+                    
                     if (instance == null)
                     {
                         // NullReferenceException
@@ -2182,27 +2221,27 @@ function Interpret(thread)
                     methodArguments      = evaluationStack;
                     methodArgumentsOffset = thisArgumentIndex;
                     
-                    AssertNotNull(instance.$typeIndex);
+                    // AssertNotNull(instance.$typeIndex);
 
                     // find target method
 
                     let targetMethod = null;
                     {
-                        let type = GlobalMetadata.Types[instance.$typeIndex];
-                        while (type)
+                        let type = AllTypes[instance.$typeIndex];
+                        while (type && type.Methods)
                         {
                             let typeMethods = type.Methods;
                             let typeMethodsLength = typeMethods.length;
 
                             for (let i = 0; i < typeMethodsLength; i++)
                             {
-                                targetMethod = GetMethod(type.Metadata, typeMethods[i]);
+                                targetMethod = AllMethods[typeMethods[i]];
 
                                 if (targetMethod.Name !== method.Name)
                                 {
                                     continue;
                                 }
-
+                                
                                 if (IsTwoMethodParametersFullMatch(method, targetMethod) === false)
                                 {
                                     continue;
@@ -2219,15 +2258,72 @@ function Interpret(thread)
                             
                             if (type.BaseType >= 0)
                             {
-                                type = GetType(type.Metadata, type.BaseType);
+                                type = AllTypes[type.BaseType];
                             }
                             else
                             {
                                 break;
                             }
                         }
-                    }
 
+                        // try to find in DotNetJsOverrides
+                        if (method !== targetMethod)
+                        {
+                            const methods = TypeDefinitionOfDotNetJsOverrides.Methods;
+                            const length = methods.length;
+
+                            for (let i = 0; i < length; i++)
+                            {
+                                targetMethod = AllMethods[methods[i]];
+
+                                if (targetMethod.Name !== method.Name)
+                                {
+                                    continue;
+                                }
+
+                                // compare parameters
+                                {
+                                    const parametersA = method.Parameters;
+                                    const parametersB = targetMethod.Parameters;
+                                    
+                                    const lenA = parametersA.length;
+                                    const lenB = parametersB.length;
+                                    
+                                    if (lenA + 1 !== lenB)
+                                    {
+                                        continue;
+                                    }
+
+                                    if (method.DeclaringType !== parametersB[0].ParameterType)
+                                    {
+                                        continue;
+                                    }
+                                    
+                                    let parametersFullMatched = 1;
+                                    {
+                                        for (let j = 1; j < lenB; j++)
+                                        {
+                                            if (parametersA[j-1].ParameterType !== parametersB[j].ParameterType)
+                                            {
+                                                parametersFullMatched = 0;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    
+                                    if (!parametersFullMatched)
+                                    {
+                                        continue;
+                                    }
+                                }
+
+                                method = targetMethod;
+                                break;
+                            }
+                        }
+                    
+                    }
+                    
                     if (method !== targetMethod)
                     {
                         evaluationStack.push(method);
@@ -3938,12 +4034,12 @@ function IsTwoMethodParametersFullMatch(methodA, methodB)
 
     for (let i = 0; i < lengthA; i++)
     {
-        if (GetType(methodA.Metadata, parametersA[i].ParameterType) !== GetType(methodB.Metadata, parametersB[i].ParameterType))
+        if (parametersA[i].ParameterType !== parametersB[i].ParameterType)
         {
             return false;
         }
     }
-
+    
     return true;
 }
 

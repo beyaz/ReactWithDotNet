@@ -18,12 +18,6 @@ sealed class StackFrame
     public MethodDefinitionModel GenericInstanceMethod;
 }
 
-sealed class Address
-{
-    public Array Array;
-    public int Index;
-}
-
 sealed class ThreadModel
 {
     public StackFrame LastFrame;
