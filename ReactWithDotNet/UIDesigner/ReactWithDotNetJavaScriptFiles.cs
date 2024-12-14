@@ -86,7 +86,7 @@ public sealed class ReactWithDotNetJavaScriptFiles
         {
             return new()
             {
-                Type = ContentTypeApplication_Javascript,
+                Type = isJsFile ? ContentTypeApplication_Javascript : ContentTypeText_Css,
                 Data = File.ReadAllBytes($@"C:\github\ReactWithDotNet\ReactWithDotNet\JsClientEngine\dist\{requestPath.Split('/').Last()}")
             };
         }

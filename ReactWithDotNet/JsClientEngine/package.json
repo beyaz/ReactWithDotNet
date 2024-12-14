@@ -8,30 +8,30 @@
     },
     "dependencies": {
 
-        "esbuild": "^0.23.1",
+        "esbuild": "^0.24.0",
         "install": "^0.13.0",
-        "npm": "^10.8.3",
+        "npm": "^10.9.2",
 
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "react-transition-group": "^4.4.5",
 
-        "@mui/material": "^6.1.0",
-        "@emotion/react": "^11.13.3",
-        "@emotion/styled": "^11.13.0",
+        "@mui/material": "^6.2.0",
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.0",
 
-        "@nextui-org/react": "^2.4.7",
+        "@nextui-org/react": "^2.6.8",
 
         "primeicons": "^7.0.0",
-        "primereact": "^10.8.2",
+        "primereact": "^10.8.5",
 
         "react-awesome-reveal": "^4.2.14",
 
-        "rsuite": "^5.70.2",
+        "rsuite": "^5.75.0",
 
         "react-xarrows": "^2.0.2",
 
-        "swiper": "^11.1.14",
+        "swiper": "^11.1.15",
 
         "google-map-react": "^2.2.1",
 
@@ -42,13 +42,13 @@
 
         "react-player": "^2.16.0",
 
-        "framer-motion": "^11.5.4",
+        "framer-motion": "^11.14.4",
 
         "@monaco-editor/react": "^4.6.0",
 
         "react-split": "^2.0.14",
 
-        "@rpldy/uploady": "^1.8.3",
-        "@rpldy/upload-button": "^1.8.3"
+        "@rpldy/uploady": "^1.9.0",
+        "@rpldy/upload-button": "^1.9.0"
     }
 }
