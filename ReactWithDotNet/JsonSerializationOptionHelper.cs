@@ -334,8 +334,10 @@ static partial class JsonSerializationOptionHelper
 {
     public static JsonSerializerOptions Modify(JsonSerializerOptions options)
     {
-        options.WriteIndented  = false;
-        options.NumberHandling = JsonNumberHandling.AllowReadingFromString;
+        options.WriteIndented = false;
+
+        options.NumberHandling = JsonNumberHandling.AllowReadingFromString|
+                                 JsonNumberHandling.AllowNamedFloatingPointLiterals;
 
         options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 
