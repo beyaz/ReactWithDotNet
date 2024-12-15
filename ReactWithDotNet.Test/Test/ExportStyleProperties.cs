@@ -599,6 +599,7 @@ public class ExportStyleProperties
                             WebkitAppRegion
                             WebkitAppearance
                             WebkitBackfaceVisibility
+                            WebkitBackdropFilter
                             WebkitBackgroundClip
                             WebkitBackgroundOrigin
                             WebkitBackgroundSize

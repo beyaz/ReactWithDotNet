@@ -468,6 +468,7 @@ partial class Style
         public static readonly StyleAttributeNameInfo WebkitAppRegion = new ("WebkitAppRegion", "-webkit-app-region");
         public static readonly StyleAttributeNameInfo WebkitAppearance = new ("WebkitAppearance", "-webkit-appearance");
         public static readonly StyleAttributeNameInfo WebkitBackfaceVisibility = new ("WebkitBackfaceVisibility", "-webkit-backface-visibility");
+        public static readonly StyleAttributeNameInfo WebkitBackdropFilter = new ("WebkitBackdropFilter", "-webkit-backdrop-filter");
         public static readonly StyleAttributeNameInfo WebkitBackgroundClip = new ("WebkitBackgroundClip", "-webkit-background-clip");
         public static readonly StyleAttributeNameInfo WebkitBackgroundOrigin = new ("WebkitBackgroundOrigin", "-webkit-background-origin");
         public static readonly StyleAttributeNameInfo WebkitBackgroundSize = new ("WebkitBackgroundSize", "-webkit-background-size");
@@ -1102,6 +1103,7 @@ partial class Style
             WebkitAppRegion,
             WebkitAppearance,
             WebkitBackfaceVisibility,
+            WebkitBackdropFilter,
             WebkitBackgroundClip,
             WebkitBackgroundOrigin,
             WebkitBackgroundSize,
@@ -1736,6 +1738,7 @@ partial class Style
     public string WebkitAppRegion { get => Get(Names.WebkitAppRegion); set => Set(Names.WebkitAppRegion, value); }
     public string WebkitAppearance { get => Get(Names.WebkitAppearance); set => Set(Names.WebkitAppearance, value); }
     public string WebkitBackfaceVisibility { get => Get(Names.WebkitBackfaceVisibility); set => Set(Names.WebkitBackfaceVisibility, value); }
+    public string WebkitBackdropFilter { get => Get(Names.WebkitBackdropFilter); set => Set(Names.WebkitBackdropFilter, value); }
     public string WebkitBackgroundClip { get => Get(Names.WebkitBackgroundClip); set => Set(Names.WebkitBackgroundClip, value); }
     public string WebkitBackgroundOrigin { get => Get(Names.WebkitBackgroundOrigin); set => Set(Names.WebkitBackgroundOrigin, value); }
     public string WebkitBackgroundSize { get => Get(Names.WebkitBackgroundSize); set => Set(Names.WebkitBackgroundSize, value); }
@@ -4242,6 +4245,11 @@ partial class Mixin
     ///     style.WebkitBackfaceVisibility = <paramref name="value" />
     /// </summary>
     public static StyleModifier WebkitBackfaceVisibility(string value) => new(style => style.WebkitBackfaceVisibility = value);
+
+    /// <summary>
+    ///     style.WebkitBackdropFilter = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBackdropFilter(string value) => new(style => style.WebkitBackdropFilter = value);
 
     /// <summary>
     ///     style.WebkitBackgroundClip = <paramref name="value" />
