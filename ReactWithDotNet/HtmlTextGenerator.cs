@@ -246,7 +246,11 @@ static class HtmlTextGenerator
                 valueType == TypeOfBoolean ||
                 (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == TypeOfUnionProp))
             {
-                AddAttribute(htmlNode, new() { Name = PascalToKebabCaseHelper.PascalToKebabCase(name), Value = value.ToString() });
+                AddAttribute(htmlNode, new()
+                {
+                    Name = PascalToKebabCaseHelper.PascalToKebabCase(name),
+                    Value = value.ToString()
+                });
                 return;
             }
         }

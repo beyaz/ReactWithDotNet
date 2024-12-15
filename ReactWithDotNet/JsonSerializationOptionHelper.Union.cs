@@ -12,6 +12,11 @@ public abstract class UnionPropBase
     {
         this.value = value;
     }
+    
+    public override string ToString()
+    {
+        return value?.ToString();
+    }
 }
 
 [Serializable]
@@ -37,11 +42,6 @@ public sealed class UnionProp<A, B> : UnionPropBase
     public static implicit operator B(UnionProp<A, B> union)
     {
         return (B)Convert.ChangeType(union.value, typeof(B));
-    }
-
-    public override string ToString()
-    {
-        return value?.ToString();
     }
 }
 
@@ -78,11 +78,6 @@ public sealed class UnionProp<A, B, C> : UnionPropBase
     public static implicit operator C(UnionProp<A, B, C> union)
     {
         return (C)Convert.ChangeType(union.value, typeof(C));
-    }
-
-    public override string ToString()
-    {
-        return value?.ToString();
     }
 }
 
@@ -129,11 +124,6 @@ public sealed class UnionProp<A, B, C, D>: UnionPropBase
     public static implicit operator D(UnionProp<A, B, C, D> union)
     {
         return (D)Convert.ChangeType(union.value, typeof(D));
-    }
-
-    public override string ToString()
-    {
-        return value?.ToString();
     }
 }
 
