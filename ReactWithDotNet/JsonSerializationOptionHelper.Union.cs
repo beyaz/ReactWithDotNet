@@ -15,6 +15,11 @@ public abstract class UnionPropBase
     
     public override string ToString()
     {
+        if (value is string valueAsString)
+        {
+            return valueAsString;
+        }
+
         return value?.ToString();
     }
 }
