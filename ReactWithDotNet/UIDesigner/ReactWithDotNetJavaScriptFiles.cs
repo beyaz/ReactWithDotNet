@@ -84,10 +84,11 @@ public sealed class ReactWithDotNetJavaScriptFiles
 
         if (isLocalMaintainer && requestPath.StartsWith("/ReactWithDotNet/", StringComparison.OrdinalIgnoreCase))
         {
+            const string distFolderPath = @"C:\github\ReactWithDotNet\ReactWithDotNet\JsClientEngine\dist\";
             return new()
             {
                 Type = isJsFile ? ContentTypeApplication_Javascript : ContentTypeText_Css,
-                Data = File.ReadAllBytes($@"C:\github\ReactWithDotNet\ReactWithDotNet\JsClientEngine\dist\{requestPath.Split('/').Last()}")
+                Data = File.ReadAllBytes($"{distFolderPath}{requestPath.Split('/').Last()}")
             };
         }
         
