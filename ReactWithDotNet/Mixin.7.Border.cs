@@ -24,25 +24,25 @@ partial class Mixin
         => BorderLeft($"{width} {borderStyle} {color}");
     
     public static StyleModifier BorderLeft(double width, string borderStyle, string color)
-        => BorderLeft($"{width}px {borderStyle} {color}");
+        => BorderLeft($"{width.AsString()}px {borderStyle} {color}");
     
     public static StyleModifier BorderRight(string width, string borderStyle, string color)
         => BorderRight($"{width} {borderStyle} {color}");
     
     public static StyleModifier BorderRight(double width, string borderStyle, string color)
-        => BorderRight($"{width}px {borderStyle} {color}");
+        => BorderRight($"{width.AsString()}px {borderStyle} {color}");
    
     public static StyleModifier BorderTop(string width, string borderStyle, string color)
         => BorderTop($"{width} {borderStyle} {color}");
     
     public static StyleModifier BorderTop(double width, string borderStyle, string color)
-        => BorderTop($"{width}px {borderStyle} {color}");
+        => BorderTop($"{width.AsString()}px {borderStyle} {color}");
     
     public static StyleModifier BorderBottom(string width, string borderStyle, string color)
         => BorderBottom($"{width} {borderStyle} {color}");
     
     public static StyleModifier BorderBottom(double width, string borderStyle, string color)
-        => BorderBottom($"{width}px {borderStyle} {color}");
+        => BorderBottom($"{width.AsString()}px {borderStyle} {color}");
 
     public static StyleModifier BorderRadius(double borderRadius)
         => BorderRadius(borderRadius.AsPixel());
@@ -74,7 +74,7 @@ partial class Mixin
 
   
     public static StyleModifier BorderRadius(double borderTopLeftRadius, double borderTopRightRadius,double borderBottomRightRadius,double borderBottomLeftRadius)
-        => BorderRadius($"{borderTopLeftRadius}px {borderTopRightRadius}px {borderBottomRightRadius}px {borderBottomLeftRadius}px");
+        => BorderRadius($"{borderTopLeftRadius.AsString()}px {borderTopRightRadius.AsString()}px {borderBottomRightRadius.AsString()}px {borderBottomLeftRadius.AsString()}px");
    
     
     

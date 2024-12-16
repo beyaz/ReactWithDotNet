@@ -138,7 +138,7 @@ public sealed class CssUnit
 
     public static CssUnit operator *(double value, CssUnit cssUnit)
     {
-        return new CssUnit(cssUnit._type, value.ToString(CultureInfo_en_US) + cssUnit._type);
+        return new CssUnit(cssUnit._type, value.AsString() + cssUnit._type);
     }
 
     public static implicit operator CssUnit(double valueInPx)

@@ -48,7 +48,7 @@ partial class svg
     /// <summary>
     ///     svg.viewBox = '<paramref name="minX" /> <paramref name="minY" /> <paramref name="width" /> <paramref name="height" />'
     /// </summary>
-    public static HtmlElementModifier ViewBox(double  minX, double minY, double width, double height) => ViewBox($"{minX} {minY} {width} {height}");
+    public static HtmlElementModifier ViewBox(double  minX, double minY, double width, double height) => ViewBox($"{minX.AsString()} {minY.AsString()} {width.AsString()} {height.AsString()}");
     
     /// <summary>
     ///     svg.focusable = false

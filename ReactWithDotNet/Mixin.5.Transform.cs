@@ -50,7 +50,7 @@ partial class Mixin
     /// <summary>
     ///     style.opacity = <paramref name="opacity" />
     /// </summary>
-    public static StyleModifier Opacity(double opacity) => new(style => style.opacity = opacity.ToString(CultureInfo.InvariantCulture));
+    public static StyleModifier Opacity(double opacity) => new(style => style.opacity = opacity.AsString());
 
   
 
@@ -61,21 +61,21 @@ partial class Mixin
     ///     style.transition = {<paramref name="propertyName" />} {<paramref name="durationAsMilliseconds" />}ms
     /// </summary>
     public static StyleModifier Transition(string propertyName, double durationAsMilliseconds)
-        => Transition($"{propertyName} {durationAsMilliseconds}ms");
+        => Transition($"{propertyName} {durationAsMilliseconds.AsString()}ms");
 
     /// <summary>
     ///     style.transition = {<paramref name="propertyName" />} {<paramref name="durationAsMilliseconds" />}ms {
     ///     <paramref name="delayAsMilliseconds" />}ms
     /// </summary>
     public static StyleModifier Transition(string propertyName, double durationAsMilliseconds, double delayAsMilliseconds)
-        => Transition($"{propertyName} {durationAsMilliseconds}ms {delayAsMilliseconds}ms");
+        => Transition($"{propertyName} {durationAsMilliseconds.AsString()}ms {delayAsMilliseconds.AsString()}ms");
 
     /// <summary>
     ///     style.transition = {<paramref name="propertyName" />} {<paramref name="durationAsMilliseconds" />}ms {
     ///     <paramref name="easingFunction" />}
     /// </summary>
     public static StyleModifier Transition(string propertyName, double durationAsMilliseconds, string easingFunction)
-        => Transition($"{propertyName} {durationAsMilliseconds}ms {easingFunction}");
+        => Transition($"{propertyName} {durationAsMilliseconds.AsString()}ms {easingFunction}");
     
     /// <summary>
     ///     style.transition = {<paramref name="propertyName" />} {<paramref name="durationAsMilliseconds" />}ms {
@@ -89,7 +89,7 @@ partial class Mixin
     ///     <paramref name="easingFunction" />} {<paramref name="delayAsMilliseconds" />}ms
     /// </summary>
     public static StyleModifier Transition(string propertyName, double durationAsMilliseconds, string easingFunction, double delayAsMilliseconds)
-        => Transition($"{propertyName} {durationAsMilliseconds}ms {easingFunction} {delayAsMilliseconds}ms");
+        => Transition($"{propertyName} {durationAsMilliseconds.AsString()}ms {easingFunction} {delayAsMilliseconds.AsString()}ms");
 
 
     public static StyleModifier Transition(Func<string, StyleModifier> propertyName, double durationAsMilliseconds, string easingFunction, double delayAsMilliseconds)

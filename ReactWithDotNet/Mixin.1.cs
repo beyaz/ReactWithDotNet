@@ -383,7 +383,7 @@ public static partial class Mixin
     ///     style.flexGrow = <paramref name="growValue" />
     /// </summary>
     public static StyleModifier FlexGrow(double growValue) 
-        => new(style => style.flexGrow = growValue + "");
+        => new(style => style.flexGrow = growValue.AsString());
 
     /// <summary>
     ///     Specifies how the item will shrink relative to the rest of the flexible items inside the same container.
@@ -393,7 +393,7 @@ public static partial class Mixin
     ///     Note: If the element is not a flexible item, the flex-shrink property has no effect.
     /// </summary>
     public static StyleModifier FlexShrink(double value)
-        => new(style => style.flexShrink = value + "");
+        => new(style => style.flexShrink = value.AsString());
 
    
 
