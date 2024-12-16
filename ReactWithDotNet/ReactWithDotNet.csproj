@@ -31,7 +31,7 @@
 
 	<PropertyGroup>
 		<PackageId>ReactWithDotNet</PackageId>
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 		<Authors>ReactWithDotNet</Authors>
 		<Company>ReactWithDotNet</Company>
 		<Description>Write react app in c# language on .net core server</Description>
