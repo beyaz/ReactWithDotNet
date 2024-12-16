@@ -65,14 +65,14 @@ partial class Mixin
     ///     Return new string as 'rgb(<paramref name="red" />, <paramref name="green" />, <paramref name="blue" />)'
     /// </summary>
     public static string rgb(double red, double green, double blue)
-        => $"rgb({red}, {green}, {blue})";
+        => $"rgb({red.AsString()}, {green.AsString()}, {blue.AsString()})";
 
     /// <summary>
     ///     Return new string as 'rgb(<paramref name="red" />, <paramref name="green" />, <paramref name="blue" />,
     ///     <paramref name="alpha" />)'
     /// </summary>
     public static string rgba(double red, double green, double blue, double alpha)
-        => $"rgba({red},{green},{blue},{alpha})";
+        => $"rgba({red.AsString()},{green.AsString()},{blue.AsString()},{alpha.AsString()})";
 
 
     
@@ -85,7 +85,7 @@ partial class Mixin
     /// <param name="lightness">Defines the lightness; 0% is black, 50% is normal, and 100% is white</param>
     /// <param name="alpha">Defines the opacity as a number between 0.0 (fully transparent) and 1.0 (fully opaque)</param>
     public static string hsl(int hue, int saturation, int lightness, double alpha)
-        => $"hsl({hue},{saturation},{lightness},{alpha})";
+        => $"hsl({hue},{saturation},{lightness},{alpha.AsString()})";
     
     /// <summary>
     ///     Return new string as 'hsl(<paramref name="hue" />, <paramref name="saturation" />, <paramref name="lightness" />,
@@ -96,13 +96,13 @@ partial class Mixin
     /// <param name="lightness">Defines the lightness; 0% is black, 50% is normal, and 100% is white</param>
     /// <param name="alpha">Defines the opacity as a number between 0.0 (fully transparent) and 1.0 (fully opaque)</param>
     public static string hsla(int hue, int saturation, int lightness, double alpha)
-        => $"hsla({hue},{saturation},{lightness},{alpha})";
+        => $"hsla({hue},{saturation},{lightness},{alpha.AsString()})";
 
     /// <summary>
     ///     cubic-bezier(<paramref name="x1"/>, <paramref name="y1"/>, <paramref name="x2"/>, <paramref name="y2"/>)
     /// </summary>
     public static string cubic_bezier(double x1, double y1, double x2, double y2)
-        => $"cubic-bezier({x1}, {y1}, {x2}, {y2})";
+        => $"cubic-bezier({x1.AsString()}, {y1.AsString()}, {x2.AsString()}, {y2.AsString()})";
 
     public static StyleModifier Width(CssUnit width) => Width(width.ToString());
     

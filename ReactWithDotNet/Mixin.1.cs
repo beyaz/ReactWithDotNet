@@ -785,7 +785,7 @@ public static partial class Mixin
     
     internal static readonly CultureInfo CultureInfo_en_US = new ("en-US");
 
-    internal static string AsPixel(this double value) => value.ToString(CultureInfo_en_US) + "px";
+    internal static string AsPixel(this double value) => value.AsString() + "px";
 
     // todo: think better solution write to output stream or maybe span
     internal static ReadOnlySpan<char> ToJson(this ComponentResponse value)

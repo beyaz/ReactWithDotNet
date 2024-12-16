@@ -6,6 +6,11 @@ namespace ReactWithDotNet;
 
 static class Extensions
 {
+    public static string AsString(this double value)
+    {
+        return value.ToString(CultureInfo_en_US);
+    }
+    
     public static (IReadOnlyList<string> path, bool isConnectedToState) AsBindingPath(this LambdaExpression propertyAccessor)
     {
         var path = AsPath(propertyAccessor.Body);
