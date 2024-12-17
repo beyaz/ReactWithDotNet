@@ -325,6 +325,7 @@ function ImportMetadata(metadata)
         if (method.IsGenericInstanceMethod)
         {
             method.ElementMethod = getGlobalMethodIndex(method.ElementMethod);
+            
             const genericArguments = method.GenericArguments;
             
             const length = genericArguments.length;
@@ -792,6 +793,12 @@ function ImportMetadata(metadata)
             {
                 if (isSameMethod(globalMethods[i], searchValue))
                 {
+                    if (searchValue.IsMethodDefinition)
+                    {
+                        globalMethods[i] = searchValue;
+
+                        recalculateIndexesOfMethod(searchValue);
+                    }
                     return cache[index] = i;
                 }
             }
