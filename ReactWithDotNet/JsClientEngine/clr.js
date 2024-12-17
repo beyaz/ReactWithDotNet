@@ -2577,11 +2577,12 @@ function Interpret(thread)
                         nextInstruction = InterpreterBridge_Jump;
                         break;
                     }
-                    
+
                     if (instance.$isAddress)
                     {
                         instance = instance.$object[instance.$key];
                     }
+                    
 
                     instance[fieldReference.Name] = value;
 
