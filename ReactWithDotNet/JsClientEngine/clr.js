@@ -322,6 +322,21 @@ function ImportMetadata(metadata)
             method.DeclaringType = getGlobalTypeIndex(method.DeclaringType);
         }
 
+        if (method.IsGenericInstanceMethod)
+        {
+            method.ElementMethod = getGlobalMethodIndex(method.ElementMethod);
+            const genericArguments = method.GenericArguments;
+            
+            const length = genericArguments.length;
+
+            for (let i = 0; i < length; i++)
+            {
+                genericArguments[i] = getGlobalTypeIndex(genericArguments[i]);
+            }
+            
+            return;
+        }
+        
         // parameter types
         {
             const parameters = method.Parameters;
@@ -3253,7 +3268,7 @@ function Interpret(thread)
                     
                     let typeIndex = operands[currentStackFrame.Line];
                     
-                    let typeReference = GetType(GetMetadataOfThread(thread), typeIndex);
+                    let typeReference = AllTypes[typeIndex];
 
                     let address = evaluationStack.pop();
                     
