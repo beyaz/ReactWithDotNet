@@ -947,6 +947,11 @@ static class MonoCecilToJsonModelMapper
                 {
                     return false;
                 }
+
+                if (reference is GenericInstanceType)
+                {
+                    return false;
+                }
                 
                 return true;
             }),
