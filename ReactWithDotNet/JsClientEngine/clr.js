@@ -3688,7 +3688,7 @@ function Interpret(thread)
 
                             if ( exceptionHandler.CatchType >= 0 )
                             {
-                                const catchType = GetType(currentStackFrame.Method.Metadata, exceptionHandler.CatchType);
+                                const catchType = AllTypes[exceptionHandler.CatchType];
                                 
                                 let catchTypeIsDotNetRootException = catchType.Namespace === 'System' && catchType.Name === 'Exception';
                                 
