@@ -1265,6 +1265,12 @@ function Interpret(thread)
                 case 39: // Call
                 {
                     let method = AllMethods[operands[currentStackFrame.Line]];
+                    
+                    const isCtor = method.Name === '.ctor';
+
+                    const declaringType = method.DeclaringType >= 0 ? AllTypes[method.DeclaringType] : null;
+                    
+                    const declaringTypeIsGenericInstanceType = declaringType && declaringType.ValueTypeId === GenericInstanceType;
 
                     let genericInstanceMethod= null;
                     
@@ -1274,9 +1280,56 @@ function Interpret(thread)
                         
                         method = AllMethods[method.ElementMethod];
                     }
+
+                    // System.Nullable`1<int32>::.ctor(!0)
+                    if (isCtor && declaringTypeIsGenericInstanceType && declaringType.IsValueType)
+                    {
+                        let instanceIndex = evaluationStack.length - method.Parameters.length - 1;
+
+                        let address = evaluationStack[instanceIndex];
+
+                        address.$object[address.$key] = {
+                            $typeIndex: method.DeclaringType
+                        };
+                    }
+                    
+                    // System.Nullable`1<int32>::.ctor(!0)
+                    // System.Nullable`1<int32>::get_HasValue()
+                    if (declaringTypeIsGenericInstanceType && declaringType.IsValueType)
+                    {   
+                        const elementType = AllTypes[declaringType.ElementType];
+
+                        if (elementType.ValueTypeId === TypeDefinition)
+                        {
+                            // find real method
+                            {
+                                const methods = elementType.Methods;
+                                const length = methods.length;
+
+                                for (let i = 0; i < length; i++)
+                                {
+                                    const targetMethod = AllMethods[methods[i]];
+
+                                    if (targetMethod.Name !== method.Name)
+                                    {
+                                        continue;
+                                    }
+
+                                    if (IsTwoMethodParametersFullMatch(method, targetMethod) === false)
+                                    {
+                                        continue;
+                                    }
+
+                                    method = targetMethod;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                    }
                     
                     // call instance bool value type [System.Runtime]System.Nullable`1<int32>::get_HasValue()
-                    if (method.Name === '.ctor' && genericInstanceMethod)
+                    if (isCtor && genericInstanceMethod)
                     {
                         let elementType = AllTypes[method.DeclaringType];
                         if (elementType.IsValueType)
