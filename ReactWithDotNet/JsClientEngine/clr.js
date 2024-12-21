@@ -547,7 +547,7 @@ function ImportMetadata(metadata)
                         return false;
                     }
 
-                    if ( namespacesAreNotSame(globalType.Namespace, type.Namespace) )
+                    if (!namespacesAreSame(globalType.Namespace, type.Namespace))
                     {
                         return false;
                     }
@@ -881,24 +881,11 @@ function ImportMetadata(metadata)
      * @param {string} namespaceA
      * @param {string} namespaceB
      */
-    function namespacesAreNotSame(namespaceA, namespaceB)
+    function namespacesAreSame(namespaceA, namespaceB)
     {
-        if (namespaceA === namespaceB)
-        {
-            return false;
-        }
-
-        if (namespaceA === '_System_' && namespaceB === 'System')
-        {
-            return false;
-        }
-
-        if (namespaceA === 'System' && namespaceB === '_System_')
-        {
-            return false;
-        }
-
-        return true;
+        return namespaceA === namespaceB 
+            || namespaceA === '_System_' && namespaceB === 'System'
+            || namespaceA === 'System' && namespaceB === '_System_';
     }
 
     importTypeDefinitions();
