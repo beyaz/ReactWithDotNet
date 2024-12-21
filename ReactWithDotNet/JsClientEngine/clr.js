@@ -917,15 +917,6 @@ const InterpreterBridge_DivideByZeroException = 3;
 const InterpreterBridge_IndexOutOfRangeException = 4;
 const InterpreterBridge_MissingMethodException = 5;
 
-function AssertNotNull(value)
-{
-    if (value == null)
-    {
-        throw 'AssertNotNull';
-    }
-}
-
-
 const InterpreterBridge_Jump = 219;
 
 let InterpreterBridge_Jump_MethodDefinition;
@@ -2311,8 +2302,6 @@ function Interpret(thread)
                     methodArguments      = evaluationStack;
                     methodArgumentsOffset = thisArgumentIndex;
                     
-                    // AssertNotNull(instance.$typeIndex);
-
                     // find target method
 
                     let targetMethod = null;
