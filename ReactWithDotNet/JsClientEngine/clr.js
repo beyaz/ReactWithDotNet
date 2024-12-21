@@ -580,12 +580,7 @@ function ImportMetadata(metadata)
                         return false;
                     }
 
-                    if (globalType.ElementType !== getGlobalTypeIndex(type.ElementType))
-                    {
-                        return false;
-                    }
-
-                    return true;
+                    return globalType.ElementType === getGlobalTypeIndex(type.ElementType);                    
                 }
                 
                 case GenericInstanceType:
