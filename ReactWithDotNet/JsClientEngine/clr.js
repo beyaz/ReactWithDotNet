@@ -310,6 +310,9 @@ function ImportMetadata(metadata)
         
     }
 
+    /**
+     * @param {MethodDefinitionModel} method
+     */
     function recalculateIndexesOfMethod(method)
     {
         if (method.ReturnType != null)
@@ -374,7 +377,7 @@ function ImportMetadata(metadata)
             {
                 const instruction = instructions[i];
                 
-                if (instruction === 39 || instruction === 110)
+                if (instruction === 39 || instruction === 110 || instruction === 114)
                 {
                     operands[i] = getGlobalMethodIndex( /** @type {number} */ operands[i] );
                 }
@@ -385,6 +388,18 @@ function ImportMetadata(metadata)
                 if (instruction === 210 || instruction === 174)
                 {
                     operands[i] = getGlobalTypeIndex( /** @type {number} */ operands[i] );
+                }
+            }
+
+            const exceptionHandlers = body.ExceptionHandlers;
+            const exceptionHandlersLength = exceptionHandlers.length;
+            for (let i = 0; i < exceptionHandlersLength; i++)
+            {
+                const handler = exceptionHandlers[i];
+                
+                if (handler.CatchType != null)
+                {
+                    handler.CatchType = getGlobalTypeIndex(handler.CatchType);   
                 }
             }
         }
