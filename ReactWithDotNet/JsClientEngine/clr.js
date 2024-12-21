@@ -311,7 +311,7 @@ function ImportMetadata(metadata)
     }
 
     /**
-     * @param {MethodDefinitionModel} method
+     * @param {MethodDefinitionModel | MethodReferenceModel | GenericInstanceMethodModel} method
      */
     function recalculateIndexesOfMethod(method)
     {
