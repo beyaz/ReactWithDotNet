@@ -2468,26 +2468,6 @@ function Interpret(thread)
 
                     let declaringType = AllTypes[method.DeclaringType];
 
-                    if (declaringType.IsGenericInstance)
-                    {
-                        let elementType = GetElementType(declaringType);
-
-                        for (let i = 0; i < elementType.Methods.length; i++)
-                        {
-                            let methodTemp = GetMethod(elementType.Metadata, elementType.Methods[i]);
-
-                            if (methodTemp.IsMethodDefinition)
-                            {
-                                if (methodTemp.Name === method.Name)
-                                {
-                                    method.Body       = methodTemp.Body;
-                                    method.Parameters = methodTemp.Parameters;
-                                    method.IsStatic   = methodTemp.IsStatic;
-                                }
-                            }
-                        }
-                    }
-
                     if (!method.IsMethodDefinition)
                     {
                         // Load method at runtime
