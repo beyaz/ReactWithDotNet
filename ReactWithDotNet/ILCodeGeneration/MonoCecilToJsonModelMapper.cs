@@ -1,5 +1,6 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
+using System.Runtime.CompilerServices;
 
 namespace ReactWithDotNet;
 
@@ -347,6 +348,12 @@ static class MonoCecilToJsonModelMapper
                         continue;
                     }
                     
+                }
+                
+                if (methodReference.DeclaringType?.FullName == typeof(Unsafe).FullName && methodReference.Parameters.Count == 1)
+                {
+                    instructions[^1] = (int)OpCodes.Nop.Code;
+                    continue;
                 }
                 
                 if (methodReference.DeclaringType?.FullName == typeof(AsExtensions).FullName)
