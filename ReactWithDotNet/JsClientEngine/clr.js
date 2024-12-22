@@ -1211,7 +1211,7 @@ function Interpret(thread)
 
                 case 33: // Ldc_I8: Load 4-byte floating-point constant onto the stack
                 {
-                    evaluationStack.push(operands[currentStackFrame.Line]);
+                    evaluationStack.push(Long.fromString(operands[currentStackFrame.Line]));
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
                 }    
@@ -2227,6 +2227,13 @@ function Interpret(thread)
                         break;
                     }
 
+                    if (Long.isLong(value))
+                    {
+                        evaluationStack.push(value.toInt());
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
                     NotImplementedOpCode(); break;                   
                 }
                 
