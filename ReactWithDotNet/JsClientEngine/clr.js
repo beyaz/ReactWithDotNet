@@ -485,7 +485,7 @@ function ImportMetadata(metadata)
          */
         const isSameScope = function(scopeA, scopeB)
         {
-            return scopeA.Name !== scopeB.Name;
+            return scopeA.Name === scopeB.Name;
         }
 
         return function(index)
@@ -898,6 +898,7 @@ const InterpreterBridge_ArgumentNullException = 2;
 const InterpreterBridge_DivideByZeroException = 3;
 const InterpreterBridge_IndexOutOfRangeException = 4;
 const InterpreterBridge_MissingMethodException = 5;
+const InterpreterBridge_OverflowException = 6;
 
 const InterpreterBridge_Jump = 219;
 
@@ -2897,6 +2898,44 @@ function Interpret(thread)
 
                 case 167: // Conv_Ovf_I4
                 {
+                    let value = evaluationStack.pop();
+
+                    if (Long.isLong(value))
+                    {
+                        if (value.greaterThanOrEqual(Long.ZERO))
+                        {
+                            if (value.greaterThan( /*Int32.MaxValue*/Long.fromString("2147483647")))
+                            {
+                                evaluationStack.push('@value:' + value + ' cannot be greater than Int32.MaxValue(2147483647)');
+                                evaluationStack.push(InterpreterBridge_OverflowException);
+                                nextInstruction = InterpreterBridge_Jump;
+                                break;
+                            }
+                            else
+                            {
+                                value = value.toInt();
+                            }
+                        }
+                        else
+                        {
+                            if (value.lessThan( /*Int32.MinValue*/Long.fromString("-2147483648")))
+                            {
+                                evaluationStack.push('@value:' + value + ' cannot be less than Int32.MinValue(-2147483648)');
+                                evaluationStack.push(InterpreterBridge_OverflowException);
+                                nextInstruction = InterpreterBridge_Jump;
+                                break;
+                            }
+                            else
+                            {
+                                value = value.toInt();
+                            }
+                        }
+
+                        evaluationStack.push(value);
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
                     NotImplementedOpCode(); break;
                 }
 
