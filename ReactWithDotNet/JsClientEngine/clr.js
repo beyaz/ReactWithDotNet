@@ -3021,6 +3021,48 @@ function Interpret(thread)
 
                 case 180: // Add_Ovf
                 {
+                    let valueB = evaluationStack.pop();
+                    let valueA = evaluationStack.pop();
+                    
+                    if (typeof(valueB) === "number" && typeof(valueA) === "number")
+                    {
+                        const result = valueA + valueB;
+                        
+                        if (result > /*Int32.MaxValue*/2147483647 || result < /*Int32.MinValue*/-2147483648)
+                        {
+                            evaluationStack.push('@valueA: ' + valueA + ' + @valueB: ' + valueB + ' result is not in integer range.');
+                            evaluationStack.push(InterpreterBridge_OverflowException);
+                            nextInstruction = InterpreterBridge_Jump;
+                            break;
+                        }
+                        
+                        evaluationStack.push(result);
+                        
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        
+                        break;
+                    }
+
+                    if (Long.isLong(valueA) && Long.isLong(valueB))
+                    {
+                        const result = valueA.add(valueA);
+                        
+                        if (result.greaterThan( /*Int32.MaxValue*/Long.fromString("2147483647")) ||
+                            result.lessThan(    /*Int32.MinValue*/Long.fromString("-2147483648")))
+                        {
+                            evaluationStack.push('@valueA: ' + valueA + ' + @valueB: ' + valueB + ' result is not in integer range.');
+                            evaluationStack.push(InterpreterBridge_OverflowException);
+                            nextInstruction = InterpreterBridge_Jump;
+                            break;
+                        }
+
+                        evaluationStack.push(result);
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+
+                        break;
+                    }
+                    
                     NotImplementedOpCode(); break;
                 }
 
