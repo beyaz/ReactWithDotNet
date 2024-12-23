@@ -263,12 +263,13 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier HeightFitContent => Height("fit-content");
 
-    public static TParent appendChild<TParent, TChild>(this TParent element, TChild child) where TParent : Element where TChild : Element
-    {
-        element.children.Add(child);
+    // todo: check and remove
+    //public static TParent appendChild<TParent, TChild>(this TParent element, TChild child) where TParent : Element where TChild : Element
+    //{
+    //    element.children.Add(child);
 
-        return element;
-    }
+    //    return element;
+    //}
 
     public static void Apply(this Element element, params Modifier[] modifiers)
     {
