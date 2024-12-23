@@ -267,6 +267,7 @@ const ExceptionHandlerType =
  */
 let GlobalMetadata;
 
+const StaticFields = { };
 
 /**
  * @param {Metadata} metadata
@@ -2618,7 +2619,19 @@ function Interpret(thread)
                 }
                 case 123: // Ldsfld
                 {
-                    NotImplementedOpCode(); break;
+                    let fieldReference = AllFields[operands[currentStackFrame.Line]];
+
+                    let map = StaticFields[fieldReference.DeclaringType];
+                    if (map == null)
+                    {
+                        // todo: load type call static constructor
+                        map = StaticFields[fieldReference.DeclaringType] = {};
+                    }
+                    
+                    evaluationStack.push(map[fieldReference.Name] ?? null);
+                    
+                    nextInstruction = instructions[++currentStackFrame.Line];
+                    break;
                 }
                 case 124: // Ldsflda
                 {
@@ -2626,7 +2639,21 @@ function Interpret(thread)
                 }
                 case 125: // Stsfld
                 {
-                    NotImplementedOpCode(); break;
+                    let fieldReference = AllFields[operands[currentStackFrame.Line]];
+
+                    const value = evaluationStack.pop();
+
+                    let map = StaticFields[fieldReference.DeclaringType];
+                    if (map == null)
+                    {
+                        // todo: load type call static constructor
+                        map = StaticFields[fieldReference.DeclaringType] = {};
+                    }
+
+                    map[fieldReference.Name] = value;
+
+                    nextInstruction = instructions[++currentStackFrame.Line];
+                    break;
                 }
                 case 126: // Stobj
                 {
