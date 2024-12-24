@@ -247,6 +247,7 @@ function applyHoverEffect(targetElement)
         targetElement.backgroundImageReal = targetElement.style.backgroundImage
         targetElement.backgroundSizeReal = targetElement.style.backgroundSize;
         targetElement.backgroundReal = targetElement.style.background;
+        targetElement.backgroundColorReal = computedStyle.backgroundColor;
         
         targetElement.style.outline = '1px dashed #bfdbfe';
         
@@ -938,7 +939,8 @@ function removeHoverEffect(element)
     element.style.outline = element.outlineReal
     element.style.backgroundImage = element.backgroundImageReal;
     element.style.backgroundSize = element.backgroundSizeReal;
-    element.style.background = element.backgroundReal;    
+    element.style.background = element.backgroundReal;
+    element.style.backgroundColor = element.backgroundColorReal;    
     
     function displayNone(element)
     {
