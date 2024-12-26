@@ -382,7 +382,7 @@ function ImportMetadata(metadata)
                 {
                     operands[i] = getGlobalMethodIndex( /** @type {number} */ operands[i] );
                 }
-                if (instruction === 120 || instruction === 121 || instruction === 122)
+                if (instruction === 120 || instruction === 121 || instruction === 122 || instruction === 123 || instruction === 125)
                 {
                     operands[i] = getGlobalFieldIndex( /** @type {number} */ operands[i] );
                 }
@@ -2624,8 +2624,9 @@ function Interpret(thread)
                     let map = StaticFields[fieldReference.DeclaringType];
                     if (map == null)
                     {
-                        // todo: load type call static constructor
-                        map = StaticFields[fieldReference.DeclaringType] = {};
+                        evaluationStack.push(fieldReference.DeclaringType);
+                        nextInstruction = 228;
+                        break;
                     }
                     
                     evaluationStack.push(map[fieldReference.Name] ?? null);
@@ -2633,6 +2634,7 @@ function Interpret(thread)
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
                 }
+                
                 case 124: // Ldsflda
                 {
                     NotImplementedOpCode(); break;
@@ -2646,8 +2648,10 @@ function Interpret(thread)
                     let map = StaticFields[fieldReference.DeclaringType];
                     if (map == null)
                     {
-                        // todo: load type call static constructor
-                        map = StaticFields[fieldReference.DeclaringType] = {};
+                        evaluationStack.push(value);
+                        evaluationStack.push(fieldReference.DeclaringType);
+                        nextInstruction = 228;
+                        break;
                     }
 
                     map[fieldReference.Name] = value;
@@ -3247,13 +3251,13 @@ function Interpret(thread)
                     {
                         result = value0.compare( value1 ) === 0 ? 1 : 0;
                     }
-                    else if ( value0 === undefined )
+                    else if ( value0 == null )
                     {
                         result = value1 == null ? 1 : 0;
                     }
-                    else if ( value1 === undefined )
+                    else if ( value1 == null )
                     {
-                        result = value0 == null ? 1 : 0;
+                        result = 0;
                     }
                     
                     if (result !== null)
@@ -3995,6 +3999,94 @@ function Interpret(thread)
 
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
+                }
+                
+                case 227: // open next frame
+                {
+                    /**{MethodDefinitionModel}*/ const method = evaluationStack.pop();
+
+                    methodArguments = evaluationStack;
+                    
+                    methodArgumentsOffset = evaluationStack.length - method.Parameters.length;
+                    if (!method.IsStatic)
+                    {
+                        // 0: this
+                        methodArgumentsOffset--;
+                    }
+
+                    // arrange opcodes
+                    instructions = method.Body.Instructions;
+                    operands = method.Body.Operands;
+
+                    // arrange calculation stacks
+                    evaluationStack = [];
+                    localVariables = [];
+
+                    // connect frame
+                    currentStackFrame = thread.LastFrame =
+                    {
+                        Prev: thread.LastFrame,
+
+                        Method: method,
+                        
+                        Line: 0,
+
+                        MethodArguments: methodArguments,
+                        MethodArgumentsOffset: methodArgumentsOffset,
+
+                        EvaluationStack: evaluationStack,
+                        LocalVariables: localVariables,
+
+                        GenericInstanceMethod: null
+                    };
+
+                    nextInstruction = instructions[0];
+                    break;
+                }
+                
+                case 228: // try call static constructor of type 
+                {
+                    const typeIndex = evaluationStack.pop();
+
+                    // try search .cctor method
+                    let cctorMethod = null;
+                    {
+                        let length = AllMethods.length;
+                        while(length--)
+                        {
+                            const method = AllMethods[length];
+                            if (method.Name === '.cctor' && method.DeclaringType === typeIndex)
+                            {
+                                cctorMethod = method;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (cctorMethod != null)
+                    {
+                        // mark as loaded
+                        StaticFields[typeIndex] = {};
+
+                        // open next frame
+                        evaluationStack.push(cctorMethod);
+                        nextInstruction = 227;
+
+                        currentStackFrame.Line--;
+                        break;
+                    }
+
+                    /**{MethodReferenceModel}*/const method =
+                    {
+                        DeclaringType: typeIndex,
+                        Name: '.cctor'
+                    };
+
+                    // Load method at runtime
+                    evaluationStack.push(method);
+                    nextInstruction = 222;
+                    break;
+                    
                 }
             }
         }
