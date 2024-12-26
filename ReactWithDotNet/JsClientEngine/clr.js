@@ -1507,7 +1507,7 @@ function Interpret(thread)
                     }
 
                     // remove instance
-                    if (previousStackFrame.Method.IsStatic === false)
+                    if (!previousStackFrame.Method.IsStatic)
                     {
                         evaluationStack.pop();
                     }
