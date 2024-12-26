@@ -3430,25 +3430,8 @@ function Interpret(thread)
 
                 case 219: // Jump
                 {
-                    instructions = InterpreterBridge_Jump_MethodDefinition.Body.Instructions;
-                    operands     = InterpreterBridge_Jump_MethodDefinition.Body.Operands;
-
-                    evaluationStack = [];
-                    localVariables  = [];
-
-                    currentStackFrame = thread.LastFrame =
-                    {
-                        Prev: thread.LastFrame,
-
-                        Method: InterpreterBridge_Jump_MethodDefinition,
-                        Line: 0,
-
-                        EvaluationStack: evaluationStack,
-                        LocalVariables: localVariables
-                    };
-
-                    nextInstruction = instructions[currentStackFrame.Line];
-
+                    evaluationStack.push(InterpreterBridge_Jump_MethodDefinition);
+                    nextInstruction = OpCode_Open_Next_Frame;
                     break;
                 }                    
 
