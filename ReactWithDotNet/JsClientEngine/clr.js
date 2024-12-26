@@ -1,4 +1,7 @@
 
+const OpCode_Open_Next_Frame = 227;
+
+
 const TypeDefinition = 0;
 const TypeReference = 1;
 const ArrayType = 2;
@@ -4001,7 +4004,7 @@ function Interpret(thread)
                     break;
                 }
                 
-                case 227: // open next frame
+                case OpCode_Open_Next_Frame:
                 {
                     /**{MethodDefinitionModel}*/ const method = evaluationStack.pop();
 
@@ -4068,9 +4071,8 @@ function Interpret(thread)
                         // mark as loaded
                         StaticFields[typeIndex] = {};
 
-                        // open next frame
                         evaluationStack.push(cctorMethod);
-                        nextInstruction = 227;
+                        nextInstruction = OpCode_Open_Next_Frame;
 
                         currentStackFrame.Line--;
                         break;
