@@ -2292,12 +2292,7 @@ function Interpret(thread)
                         break;
                     }
                     
-                    // arrange arguments
-                    methodArguments      = evaluationStack;
-                    methodArgumentsOffset = thisArgumentIndex;
-                    
                     // find target method
-
                     let targetMethod = null;
                     {
                         let type = AllTypes[instance.$typeIndex];
@@ -2405,29 +2400,8 @@ function Interpret(thread)
                         break;
                     }
 
-                    // arrange opcodes
-                    instructions = method.Body.Instructions;
-                    operands     = method.Body.Operands;
-                                
-                    // arrange calculation stacks
-                    evaluationStack = [];
-                    localVariables  = [];
-                              
-                    // connect frame
-                    currentStackFrame = thread.LastFrame =
-                    {
-                        Prev: thread.LastFrame,
-
-                        Method: method,
-                        Line: 0,
-
-                        MethodArguments: methodArguments,
-                        MethodArgumentsOffset: methodArgumentsOffset,
-
-                        EvaluationStack: evaluationStack,
-                        LocalVariables: localVariables                    
-                    };
-                    nextInstruction = instructions[0];
+                    evaluationStack.push(method);
+                    nextInstruction = OpCode_Open_Next_Frame;
                     break;
                 }   
                 case 111: // Cpobj
@@ -2477,30 +2451,8 @@ function Interpret(thread)
                         evaluationStack.push(tempArray.pop());
                     }
 
-                    instructions = method.Body.Instructions;
-                    operands     = method.Body.Operands;
-
-                    evaluationStack = [];
-                    methodArguments = currentStackFrame.EvaluationStack;
-                    methodArgumentsOffset = methodArguments.length - method.Parameters.length;
-                    methodArgumentsOffset--;
-                    localVariables  = [];
-
-                    currentStackFrame = thread.LastFrame =
-                    {
-                        Prev: thread.LastFrame,
-
-                        Method: method,
-                        Line: 0,
-
-                        EvaluationStack: evaluationStack,
-                        LocalVariables: localVariables,
-                        MethodArguments: methodArguments,
-                        MethodArgumentsOffset: methodArgumentsOffset
-                    };
-
-                    nextInstruction = instructions[0];
-
+                    evaluationStack.push(method);
+                    nextInstruction = OpCode_Open_Next_Frame;
                     break;
                 }
                     
