@@ -14,6 +14,9 @@ public sealed class ExternalAttribute : Attribute
 public static class console
 {
     public static extern void log(object data);
+    public static extern void time(string label);
+    public static extern void timeEnd(string label);
+    
 }
 
 [External]
