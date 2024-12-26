@@ -1374,21 +1374,8 @@ function Interpret(thread)
                         NotImplementedOpCode();
                     }
                     
-                    // arrange arguments
-                    methodArguments = evaluationStack;
-                    methodArgumentsOffset = evaluationStack.length - method.Parameters.length;
-                    if (!method.IsStatic)
-                    {
-                        // 0: this
-                        methodArgumentsOffset--;
-                    }
-
-                    // arrange opcodes
-                    instructions = method.Body.Instructions;
-                    operands = method.Body.Operands;
-                    
                     // maybe external method
-                    if (instructions.length === 0)
+                    if (method.Body.Instructions.length === 0)
                     {
                         const declaringType = AllTypes[method.DeclaringType];
                         
@@ -1467,41 +1454,14 @@ function Interpret(thread)
                                 evaluationStack.push(fnResult);
                             }
                             
-                            // arrange fast access variables
-                            instructions = currentStackFrame.Method.Body.Instructions;
-                            operands = currentStackFrame.Method.Body.Operands;
-
-                            // arrange fast access variables
-                            methodArguments = currentStackFrame.MethodArguments;
-                            methodArgumentsOffset = currentStackFrame.MethodArgumentsOffset;
-
                             nextInstruction = instructions[++currentStackFrame.Line];
                             break;
                         }                                          
                     }
 
-                    // arrange calculation stacks
-                    evaluationStack = [];
-                    localVariables = [];
-
-                    // connect frame
-                    currentStackFrame = thread.LastFrame =
-                    {
-                        Prev: thread.LastFrame,
-
-                        Method: method,
-                        Line: 0,
-
-                        MethodArguments: methodArguments,
-                        MethodArgumentsOffset: methodArgumentsOffset,
-
-                        EvaluationStack: evaluationStack,
-                        LocalVariables: localVariables,
-
-                        GenericInstanceMethod: genericInstanceMethod
-                    };
-
-                    nextInstruction = instructions[0];                    
+                    evaluationStack.push(method);
+                    evaluationStack.push(genericInstanceMethod);
+                    nextInstruction = OpCode_Open_Next_Frame;
                     break;
                 }                  
 
@@ -2401,6 +2361,7 @@ function Interpret(thread)
                     }
 
                     evaluationStack.push(method);
+                    evaluationStack.push(/*genericInstanceMethod*/null);
                     nextInstruction = OpCode_Open_Next_Frame;
                     break;
                 }   
@@ -2452,6 +2413,7 @@ function Interpret(thread)
                     }
 
                     evaluationStack.push(method);
+                    evaluationStack.push(/*genericInstanceMethod*/null);
                     nextInstruction = OpCode_Open_Next_Frame;
                     break;
                 }
@@ -3431,6 +3393,7 @@ function Interpret(thread)
                 case 219: // Jump
                 {
                     evaluationStack.push(InterpreterBridge_Jump_MethodDefinition);
+                    evaluationStack.push(/*genericInstanceMethod*/null);
                     nextInstruction = OpCode_Open_Next_Frame;
                     break;
                 }                    
@@ -3941,7 +3904,9 @@ function Interpret(thread)
                 
                 case OpCode_Open_Next_Frame:
                 {
+                    /**{GenericInstanceMethodModel}*/ const genericInstanceMethod = evaluationStack.pop();
                     /**{MethodDefinitionModel}*/ const method = evaluationStack.pop();
+                    
 
                     methodArguments = evaluationStack;
                     
@@ -3975,7 +3940,7 @@ function Interpret(thread)
                         EvaluationStack: evaluationStack,
                         LocalVariables: localVariables,
 
-                        GenericInstanceMethod: null
+                        GenericInstanceMethod: genericInstanceMethod
                     };
 
                     nextInstruction = instructions[0];
@@ -4007,6 +3972,7 @@ function Interpret(thread)
                         StaticFields[typeIndex] = {};
 
                         evaluationStack.push(cctorMethod);
+                        evaluationStack.push(/*genericInstanceMethod*/null);
                         nextInstruction = OpCode_Open_Next_Frame;
 
                         currentStackFrame.Line--;
