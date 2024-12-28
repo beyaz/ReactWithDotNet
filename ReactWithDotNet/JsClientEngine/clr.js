@@ -2876,7 +2876,17 @@ function Interpret(thread)
                     
                 case 140: // Ldelema
                 {
-                    NotImplementedOpCode(); break;
+                    let index = evaluationStack.pop();
+                    let array = evaluationStack.pop();
+
+                    evaluationStack.push({
+                        $isAddress: 1,
+                        $object: array,
+                        $key: index
+                    });
+
+                    nextInstruction = instructions[++currentStackFrame.Line];
+                    break;
                 }
                 case 141: // Ldelem_I1
                 {
@@ -3020,12 +3030,14 @@ function Interpret(thread)
 
                 case 160: // Ldelem_Any
                 {
-                    NotImplementedOpCode(); break;
+                    instructions[currentStackFrame.Line] = nextInstruction = 151;
+                    break;
                 }
 
                 case 161: // Stelem_Any
                 {
-                    NotImplementedOpCode(); break;
+                    instructions[currentStackFrame.Line] = nextInstruction = 159;
+                    break;
                 }
 
                 case 162: // Unbox_Any
