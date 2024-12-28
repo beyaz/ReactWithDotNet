@@ -104,11 +104,21 @@ static class MetadataHelper
 
             request.RequestedTypes.Reverse();
         }
-        
-        
-        
 
-        await httpContext.Response.WriteAsJsonAsync(GetMetadata(request.RequestedTypes, isTypeForbiddenToSendClient), JsonSerializerOptions);
+        MetadataResponse metadataResponse;
+        try
+        {
+            metadataResponse = GetMetadata(request.RequestedTypes, isTypeForbiddenToSendClient);
+        }
+        catch (Exception exception)
+        {
+            metadataResponse = new MetadataResponse
+            {
+                ErrorMessage = exception.ToString()
+            };
+        }
+        
+        await httpContext.Response.WriteAsJsonAsync(metadataResponse, JsonSerializerOptions);
     }
 
     static TypeDefinition FindType(this AssemblyDefinition assemblyDefinition, MetadataRequest.Item request)

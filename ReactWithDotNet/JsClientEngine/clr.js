@@ -2558,9 +2558,21 @@ function Interpret(thread)
                         }
                         
                         const array = new Array(length);
+
+                        const elementType = AllTypes[declaringType.ElementType];
+                        
+                        if (elementType.Name === 'Byte' || elementType.Name === 'Int16' || elementType.Name === 'Int32' || elementType.Name === 'Double' || elementType.Name === 'Single' )
+                        {
+                            for (let i = 0; i < length; i++)
+                            {
+                                array[i] = 0;
+                            }
+                        }
                         
                         array.$type = declaringType;
                         array.$dimensions = dimensions;
+                        
+                        
                         
                         evaluationStack.push(array);
                         
