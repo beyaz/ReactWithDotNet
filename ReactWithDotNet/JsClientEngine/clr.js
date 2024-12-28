@@ -2513,6 +2513,8 @@ function Interpret(thread)
                 case 114: // Newobj
                 {
                     let method = AllMethods[ operands[currentStackFrame.Line] ];
+                    
+                    const parameterCount = method.Parameters.length;
 
                     const declaringTypeIndex = method.DeclaringType;
                     
@@ -2619,7 +2621,7 @@ function Interpret(thread)
                     
                     let tempArray = [];
 
-                    for (let i = 0; i < method.Parameters.length; i++)
+                    for (let i = 0; i < parameterCount; i++)
                     {
                         tempArray.push(evaluationStack.pop());
                     }
