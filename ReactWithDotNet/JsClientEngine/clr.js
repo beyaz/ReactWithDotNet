@@ -2514,8 +2514,6 @@ function Interpret(thread)
                 {
                     let method = AllMethods[ operands[currentStackFrame.Line] ];
                     
-                    const parameterCount = method.Parameters.length;
-
                     const declaringTypeIndex = method.DeclaringType;
                     
                     let declaringType = AllTypes[declaringTypeIndex];
@@ -2616,22 +2614,27 @@ function Interpret(thread)
                         break;
                     }
                     
-                    let newObj = {};
-                    newObj.$typeIndex = declaringTypeIndex;
+                    let newObj = {
+                        $typeIndex: declaringTypeIndex
+                    };
                     
-                    let tempArray = [];
-
-                    for (let i = 0; i < parameterCount; i++)
+                    // insert this instance to specific index
                     {
-                        tempArray.push(evaluationStack.pop());
-                    }
+                        let tempArray = [];
 
-                    tempArray.push(newObj);
-                    tempArray.push(newObj);
+                        const parameterCount = method.Parameters.length;
+                        for (let i = 0; i < parameterCount; i++)
+                        {
+                            tempArray.push(evaluationStack.pop());
+                        }
 
-                    while(tempArray.length > 0)
-                    {
-                        evaluationStack.push(tempArray.pop());
+                        tempArray.push(newObj);
+                        tempArray.push(newObj);
+
+                        while (tempArray.length > 0)
+                        {
+                            evaluationStack.push(tempArray.pop());
+                        }
                     }
 
                     evaluationStack.push(method);
