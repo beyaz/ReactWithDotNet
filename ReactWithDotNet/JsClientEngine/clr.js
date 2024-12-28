@@ -2830,7 +2830,24 @@ function Interpret(thread)
                 
                 case 124: // Ldsflda
                 {
-                    NotImplementedOpCode(); break;
+                    let fieldReference = AllFields[operands[currentStackFrame.Line]];
+
+                    let map = StaticFields[fieldReference.DeclaringType];
+                    if (map == null)
+                    {
+                        evaluationStack.push(fieldReference.DeclaringType);
+                        nextInstruction = 228;
+                        break;
+                    }
+
+                    evaluationStack.push({
+                        $isAddress: 1,
+                        $object: map,
+                        $key: fieldReference.Name
+                    });
+
+                    nextInstruction = instructions[++currentStackFrame.Line];
+                    break;
                 }
                 case 125: // Stsfld
                 {
@@ -2951,12 +2968,6 @@ function Interpret(thread)
                     evaluationStack.push(array);
 
                     nextInstruction = instructions[++currentStackFrame.Line];
-                    break;
-                    
-                    
-                    evaluationStack.push(operands[currentStackFrame.Line]);
-                    evaluationStack.push(InterpreterBridge_NewArr);
-                    nextInstruction = InterpreterBridge_Jump;
                     break;
                 }
                 case 139: // Ldlen
