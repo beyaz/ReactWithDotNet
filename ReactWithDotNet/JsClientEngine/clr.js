@@ -1570,11 +1570,17 @@ function Interpret(thread)
                             
                             let fn = null;
                             
+                            let caller = null;
                             if (method.IsStatic)
                             {
                                 let externalType = window[declaringType.Name];
 
-                                fn = externalType[method.Name];                                
+                                fn = externalType[method.Name];
+                                
+                                if (declaringType.Name === 'document')
+                                {
+                                    caller = document;
+                                }
                             }
                             
                             if (fn == null)
@@ -1585,7 +1591,7 @@ function Interpret(thread)
                                 break;
                             }
 
-                            let fnResult = fn.apply(null, fnArguments);
+                            let fnResult = fn.apply(caller, fnArguments);
 
                             if (isVoid === false)
                             {
