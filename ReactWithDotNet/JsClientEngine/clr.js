@@ -2514,7 +2514,9 @@ function Interpret(thread)
                 {
                     let method = AllMethods[ operands[currentStackFrame.Line] ];
 
-                    let declaringType = AllTypes[method.DeclaringType];
+                    const declaringTypeIndex = method.DeclaringType;
+                    
+                    let declaringType = AllTypes[declaringTypeIndex];
 
                     // is creating multidimensional array
                     if (declaringType.ValueTypeId === ArrayType)
@@ -2550,6 +2552,60 @@ function Interpret(thread)
                         break;
                     }
 
+                    if (declaringType.ValueTypeId === GenericInstanceType)
+                    {
+                        const elementType = AllTypes[declaringType.ElementType];
+                        if (elementType.ValueTypeId === TypeReference && elementType.IsValueType)
+                        {
+                            evaluationStack.push(elementType);
+                            nextInstruction = 223;
+                            break;    
+                        }
+                        
+                        // find target method
+                        let targetMethod = null;
+                        {
+                            let type = elementType;
+                            while (type && type.Methods)
+                            {
+                                let typeMethods = type.Methods;
+                                let typeMethodsLength = typeMethods.length;
+
+                                for (let i = 0; i < typeMethodsLength; i++)
+                                {
+                                    targetMethod = AllMethods[typeMethods[i]];
+
+                                    if (targetMethod.Name !== method.Name)
+                                    {
+                                        continue;
+                                    }
+
+                                    if (IsTwoMethodParametersFullMatch(method, targetMethod) === false)
+                                    {
+                                        continue;
+                                    }
+
+                                    method = targetMethod;
+                                    break;
+                                }
+
+                                if (method === targetMethod)
+                                {
+                                    break;
+                                }
+
+                                if (type.BaseType >= 0)
+                                {
+                                    type = AllTypes[type.BaseType];
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
                     if (!method.IsMethodDefinition)
                     {
                         // Load method at runtime
@@ -2559,7 +2615,7 @@ function Interpret(thread)
                     }
                     
                     let newObj = {};
-                    newObj.$typeIndex = method.DeclaringType;
+                    newObj.$typeIndex = declaringTypeIndex;
                     
                     let tempArray = [];
 
