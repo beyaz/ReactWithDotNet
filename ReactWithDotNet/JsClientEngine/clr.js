@@ -415,7 +415,7 @@ function ImportMetadata(metadata)
                 {
                     operands[i] = getGlobalFieldIndex( /** @type {number} */ operands[i] );
                 }
-                if (instruction === 210 || instruction === 174)
+                if (instruction === 210 || instruction === 174 || instruction === 138)
                 {
                     operands[i] = getGlobalTypeIndex( /** @type {number} */ operands[i] );
                 }
@@ -2339,7 +2339,23 @@ function Interpret(thread)
                 }
                 case 107: // Conv_R8
                 {
-                    NotImplementedOpCode(); break;
+                    let value = evaluationStack.pop();
+
+                    if (typeof value === 'number')
+                    {
+                        evaluationStack.push(value % /*DoubleMaxValue*/1.79769e+308);
+                    }
+                    else if(Long.isLong(value))
+                    {
+                        evaluationStack.push(value.toNumber() % /*DoubleMaxValue*/1.79769e+308);
+                    }
+                    else
+                    {
+                        NotImplementedOpCode(); break;
+                    }
+
+                    nextInstruction = instructions[++currentStackFrame.Line];
+                    break;
                 }
                 case 108: // Conv_U4
                 {
@@ -2860,6 +2876,50 @@ function Interpret(thread)
                 }
                 case 138: // Newarr
                 {
+                    let length = evaluationStack.pop();
+                    
+                    const elementTypeIndex = operands[currentStackFrame.Line];
+                    
+                    const elementType = AllTypes[elementTypeIndex];
+                    
+                    const array = [];
+                    array.$type = elementTypeIndex;
+                    array.length = length;
+
+                    if (elementType.IsValueType)
+                    {
+                        
+                        if (elementType.Name === 'Byte' || elementType.Name === 'Int16' || elementType.Name === 'Int32' || elementType.Name === 'Double' || elementType.Name === 'Single' )
+                        {
+                            for (let i = 0; i < length; i++)
+                            {
+                                array[i] = 0;
+                            }    
+                        }
+                        else
+                        {
+                            for (let i = 0; i < length; i++)
+                            {
+                                array[i] = { $type: elementTypeIndex };
+                            }
+                        }                        
+                    }
+                    else
+                    {
+                        for (let i = 0; i < length; i++)
+                        {
+                            array[i] = null;
+                        }
+                    }
+                    
+
+                    evaluationStack.push(array);
+
+                    nextInstruction = instructions[++currentStackFrame.Line];
+                    break;
+                    
+                    
+                    evaluationStack.push(operands[currentStackFrame.Line]);
                     evaluationStack.push(InterpreterBridge_NewArr);
                     nextInstruction = InterpreterBridge_Jump;
                     break;

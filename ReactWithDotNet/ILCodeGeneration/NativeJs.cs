@@ -75,7 +75,7 @@ static class InterpreterBridge
    
     public static void Jump()
     {
-        const int InterpreterBridge_NewArr = 0;
+        const int InterpreterBridge_NewArr = 0; // todo: free
         const int InterpreterBridge_NullReferenceException = 1;
         const int InterpreterBridge_ArgumentNullException = 2;
         const int InterpreterBridge_DivideByZeroException = 3;
@@ -96,13 +96,24 @@ static class InterpreterBridge
 
         if (InterpreterBridge_NewArr == instruction)
         {
-            var length = evaluationStack.pop().As<int>();
+            //var length = evaluationStack.pop().As<int>();
+            
+            //var typeIndex = evaluationStack.pop().As<int>();
 
-            var array = CreateNewArray();
+            //var array = CreateNewArray();
 
-            array.Set("length", length.AsObject());
+            //array.Set("length", length.AsObject());
+            //array.Set("$type", typeIndex.AsObject());
 
-            evaluationStack.push(array);
+            //for (int i = 0; i < length; i++)
+            //{
+            //    //array.Set(i,);
+            //}
+            
+            
+            
+
+            //evaluationStack.push(array);
 
             return;
         }
