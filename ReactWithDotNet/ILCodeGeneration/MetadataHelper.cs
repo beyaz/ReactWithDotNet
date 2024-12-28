@@ -19,11 +19,17 @@ public static class console
     
 }
 
+
 [External]
 public static class Math
 {
-    public static extern double max(double a, double b);
+    public static extern double random();
+
+    public static extern double floor(double value);
+
     public static extern int max(int a, int b);
+    
+    public static extern double max(double a, double b);
 }
 
 sealed class MetadataRequest
