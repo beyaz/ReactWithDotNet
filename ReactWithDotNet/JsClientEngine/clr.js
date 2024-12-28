@@ -1263,6 +1263,94 @@ function Interpret(thread)
 
                     const declaringType = method.DeclaringType >= 0 ? AllTypes[method.DeclaringType] : null;
                     
+                    if (declaringType && declaringType.ValueTypeId === ArrayType && method.Name === 'Set')
+                    {
+                        const value = evaluationStack.pop();                        
+                        
+                        const rank = declaringType.Rank;
+                        
+                        const indexList = [];
+                        {
+                            for (let i = 0; i < rank; i++)
+                            {
+                                indexList.push(evaluationStack.pop());
+                            }
+                            indexList.reverse();
+                        }
+
+                        /**
+                         * @type {any[]}
+                         */
+                        const array = evaluationStack.pop();
+                        
+                        /**
+                         * @type {number[]}
+                         */
+                        const dimensions = array.$dimensions;
+                        
+                        let flatIndex = 0;
+                        {
+                            for (let i = 0; i < rank; i++)
+                            {
+                                let multiplier = 1;
+                                for (let j = i + 1; j < rank; j++)
+                                {
+                                    multiplier *= dimensions[j];
+                                }
+
+                                flatIndex += indexList[i] * multiplier;
+                            }
+                        }
+                        
+                        array[flatIndex] = value;
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+
+                    if (declaringType && declaringType.ValueTypeId === ArrayType && method.Name === 'Get')
+                    {
+                        const rank = declaringType.Rank;
+
+                        const indexList = [];
+                        {
+                            for (let i = 0; i < rank; i++)
+                            {
+                                indexList.push(evaluationStack.pop());
+                            }
+                            indexList.reverse();
+                        }
+
+                        /**
+                         * @type {any[]}
+                         */
+                        const array = evaluationStack.pop();
+
+                        /**
+                         * @type {number[]}
+                         */
+                        const dimensions = array.$dimensions;
+
+                        let flatIndex = 0;
+                        {
+                            for (let i = 0; i < rank; i++)
+                            {
+                                let multiplier = 1;
+                                for (let j = i + 1; j < rank; j++)
+                                {
+                                    multiplier *= dimensions[j];
+                                }
+
+                                flatIndex += indexList[i] * multiplier;
+                            }
+                        }
+
+                        evaluationStack.push(array[flatIndex]);
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    
                     const declaringTypeIsGenericInstanceType = declaringType && declaringType.ValueTypeId === GenericInstanceType;
 
                     let genericInstanceMethod= null;
@@ -2252,6 +2340,15 @@ function Interpret(thread)
                         break;
                     }
                     
+                    if (instance instanceof Array && method.Name === 'get_Length' && methodParameterCount === 0)
+                    {
+                        evaluationStack.pop();
+                        
+                        evaluationStack.push(instance.length);
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    
                     // find target method
                     let targetMethod = null;
                     {
@@ -2385,6 +2482,40 @@ function Interpret(thread)
                     let method = AllMethods[ operands[currentStackFrame.Line] ];
 
                     let declaringType = AllTypes[method.DeclaringType];
+
+                    // is creating multidimensional array
+                    if (declaringType.ValueTypeId === ArrayType)
+                    {
+                        const rank = declaringType.Rank;
+                        
+                        const dimensions = [];
+                        {
+                            for (let i = 0; i < rank; i++)
+                            {
+                                dimensions.push(evaluationStack.pop());
+                            }
+                            
+                            dimensions.reverse();
+                        }
+                        
+                        let length = 1;
+                        {
+                            for (let i = 0; i < rank; i++)
+                            {
+                                length *= dimensions[i];
+                            }
+                        }
+                        
+                        const array = new Array(length);
+                        
+                        array.$type = declaringType;
+                        array.$dimensions = dimensions;
+                        
+                        evaluationStack.push(array);
+                        
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
 
                     if (!method.IsMethodDefinition)
                     {
@@ -4067,7 +4198,7 @@ function CallManagedStaticMethod(methodDefinition, args, success, fail)
             Method: methodDefinition,
             EvaluationStack:[],
             LocalVariables:[],
-            MethodArguments: args,
+            MethodArguments: args.slice(),
             MethodArgumentsOffset: 0,
             Line: 0,
             Prev: null
