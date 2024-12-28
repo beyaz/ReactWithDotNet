@@ -291,7 +291,7 @@ function ImportMetadata(metadata)
     const getGlobalFieldIndex = CreateFunction_GetGlobalFieldIndex(metadata);
 
     /**
-     * @param {TypeReferenceModel | TypeDefinitionModel } type
+     * @param {TypeReferenceModel | TypeDefinitionModel | GenericInstanceTypeModel } type
      */
     function recalculateIndexesOfType(type)
     {
@@ -309,8 +309,34 @@ function ImportMetadata(metadata)
         {
             type.ElementType = getGlobalTypeIndex(type.ElementType);
         }
+
+        if (type.DeclaringType != null)
+        {
+            type.DeclaringType = getGlobalTypeIndex(type.DeclaringType);
+        }
         
+        const genericArguments = type.GenericArguments;
         
+        if (genericArguments)
+        {
+            const length = genericArguments.length;
+
+            for (let i = 0; i < length; i++)
+            {
+                genericArguments[i] = getGlobalTypeIndex(genericArguments[i]);
+            }
+        }
+
+        const methods = type.Methods;
+        if (methods)
+        {
+            const length = methods.length;
+            
+            for (let i = 0; i < length; i++)
+            {
+                methods[i] = getGlobalMethodIndex(methods[i]);
+            }            
+        }
         
     }
 
@@ -1451,6 +1477,13 @@ function Interpret(thread)
                     
                     if (method.IsMethodReference)
                     {
+                        if (isCtor && declaringTypeIsGenericInstanceType && declaringType.IsValueType)
+                        {
+                            evaluationStack.push(AllTypes[declaringType.ElementType]);
+                            nextInstruction = 223;
+                            break;
+                        }
+                        
                         // Load method at runtime
                         evaluationStack.push(method);
                         nextInstruction = 222;
@@ -3920,6 +3953,11 @@ function Interpret(thread)
                     
                     let declaringType = AllTypes[methodReference.DeclaringType];
 
+                    if (declaringType.ValueTypeId === GenericInstanceType)
+                    {
+                        declaringType = AllTypes[declaringType.ElementType];
+                    }
+                    
                     let declaringTypeAsJson = SerializeTypeReference(declaringType);
 
                     let query = Object.assign({},declaringTypeAsJson);
@@ -3990,10 +4028,15 @@ function Interpret(thread)
                         throw e;
                     };
                     
-                    GetMetadata(request, onSuccess, onFail);
-
+                    const fetchOperation = ()=>
+                    {
+                        GetMetadata(request, onSuccess, onFail);
+                    };
+                    
                     thread.IsSuspended = 1;
 
+                    setTimeout(fetchOperation, 1);
+                    
                     return;
                 }
                 

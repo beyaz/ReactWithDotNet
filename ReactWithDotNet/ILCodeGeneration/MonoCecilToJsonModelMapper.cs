@@ -11,9 +11,17 @@ static class MonoCecilToJsonModelMapper
     static readonly string[] NotExportableAttributes =
     [
         "System.Runtime.CompilerServices.AsyncStateMachineAttribute",
+        "System.Runtime.CompilerServices.NullableContextAttribute",
+        "System.Runtime.CompilerServices.NullableAttribute",
+        "System.Runtime.CompilerServices.TypeForwardedFromAttribute",
+        "System.ObsoleteAttribute",
+        "System.ComponentModel.EditorBrowsableAttribute",
         "System.Diagnostics.DebuggerStepThroughAttribute",
         "System.Diagnostics.DebuggerBrowsableState",
-        "System.Runtime.CompilerServices.ExtensionAttribute"
+        "System.Runtime.CompilerServices.ExtensionAttribute",
+        "System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute",
+        "System.Runtime.InteropServices.LibraryImportAttribute",
+        "System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessageAttribute"
     ];
 
     public static void Import(this MetadataTable metadataTable, TypeDefinition value)
@@ -100,7 +108,7 @@ static class MonoCecilToJsonModelMapper
         return new()
         {
             InterfaceType    = value.InterfaceType.IndexAt(metadataTable),
-            CustomAttributes = value.CustomAttributes.ToListOf(AsModel, metadataTable)
+            CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel, metadataTable)
         };
     }
 
@@ -1103,12 +1111,14 @@ static class MonoCecilToJsonModelMapper
                         return false;
                     }
                     
-                    if (model.DeclaringType.HasValue && model.DeclaringType != genericParameter.DeclaringType.IndexAt(metadataTable))
+                    if (model.DeclaringType.HasValue && genericParameter.DeclaringType != null && 
+                        model.DeclaringType != genericParameter.DeclaringType.IndexAt(metadataTable))
                     {
                         return false;
                     }
                     
-                    if (model.DeclaringMethod.HasValue && model.DeclaringMethod != genericParameter.DeclaringMethod.IndexAt(metadataTable))
+                    if (model.DeclaringMethod.HasValue && genericParameter.DeclaringMethod != null &&
+                        model.DeclaringMethod != genericParameter.DeclaringMethod.IndexAt(metadataTable))
                     {
                         return false;
                     }
