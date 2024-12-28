@@ -337,6 +337,17 @@ function ImportMetadata(metadata)
                 methods[i] = getGlobalMethodIndex(methods[i]);
             }            
         }
+
+        const customAttributes = type.CustomAttributes;
+        if (customAttributes)
+        {
+            const length = customAttributes.length;
+
+            for (let i = 0; i < length; i++)
+            {
+                customAttributes[i].Constructor = getGlobalMethodIndex(customAttributes[i].Constructor);
+            }
+        }
         
     }
 
@@ -1499,6 +1510,12 @@ function Interpret(thread)
                     if (method.Body.Instructions.length === 0)
                     {
                         const declaringType = AllTypes[method.DeclaringType];
+                        if (declaringType.ValueTypeId === TypeReference)
+                        {
+                            evaluationStack.push(declaringType);
+                            nextInstruction = 223;
+                            break;
+                        }
                         
                         let isDeclaringTypeExternal = false;
                         {
