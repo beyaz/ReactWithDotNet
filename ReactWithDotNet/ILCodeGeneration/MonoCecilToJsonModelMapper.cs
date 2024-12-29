@@ -897,6 +897,40 @@ static class MonoCecilToJsonModelMapper
                return true;
            }
        }
+       
+       public static class Event
+       {
+           public static bool IsSame(MetadataTable metadataTable, EventReference reference, EventReferenceModel model)
+           {
+               if (reference.Name != model.Name)
+               {
+                   return false;
+               }
+
+               if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
+               {
+                   return false;
+               }
+
+               return true;
+           }
+           
+           public static bool IsSame(MetadataTable metadataTable, EventReferenceModel modelA, EventReferenceModel modelB)
+           {
+               if (modelA.Name != modelB.Name)
+               {
+                   return false;
+               }
+
+               if (modelA.DeclaringType != modelB.DeclaringType)
+               {
+                   return false;
+               }
+
+               return true;
+           }
+           
+       }
     }
     
    
@@ -905,85 +939,57 @@ static class MonoCecilToJsonModelMapper
     
     static bool IsSame(object a, object b, MetadataTable metadataTable)
     {
-        List<Func<bool?>> funcs = 
+        List<Func<bool?>> funcs =
         [
             // f i e l d
-            isSame<FieldReference, FieldReferenceModel>((reference, model)=>Compare.Field.IsSame(metadataTable, reference, model)),
-            isSame<FieldReference, FieldDefinitionModel>((reference, model)=>Compare.Field.IsSame(metadataTable, reference, model)),
-            isSame<FieldReferenceModel, FieldReferenceModel>((modelA, modelB)=>Compare.Field.IsSame(metadataTable, modelA, modelB)),
-            isSame<FieldReferenceModel, FieldDefinitionModel>((modelA, modelB)=>Compare.Field.IsSame(metadataTable, modelA, modelB)),
-            isSame<FieldDefinitionModel, FieldDefinitionModel>((modelA, modelB)=>Compare.Field.IsSame(metadataTable, modelA, modelB)),
-            
+            isSame<FieldReference, FieldReferenceModel>((reference, model) => Compare.Field.IsSame(metadataTable, reference, model)),
+            isSame<FieldReference, FieldDefinitionModel>((reference, model) => Compare.Field.IsSame(metadataTable, reference, model)),
+            isSame<FieldReferenceModel, FieldReferenceModel>((modelA, modelB) => Compare.Field.IsSame(metadataTable, modelA, modelB)),
+            isSame<FieldReferenceModel, FieldDefinitionModel>((modelA, modelB) => Compare.Field.IsSame(metadataTable, modelA, modelB)),
+            isSame<FieldDefinitionModel, FieldDefinitionModel>((modelA, modelB) => Compare.Field.IsSame(metadataTable, modelA, modelB)),
+
             // p r o p e r t y
-            isSame<PropertyReference, PropertyReferenceModel>((reference, model) =>Compare.Property.IsSame(metadataTable, reference, model)),
-            isSame<PropertyReferenceModel, PropertyReferenceModel>(( modelA,  modelB)=>Compare.Property.IsSame(metadataTable, modelA, modelB)),
-            isSame<PropertyDefinitionModel, PropertyDefinitionModel>(( modelA,  modelB)=>Compare.Property.IsSame(metadataTable, modelA, modelB)),
-            isSame<PropertyReferenceModel, PropertyDefinitionModel>(( modelA,  modelB)=>Compare.Property.IsSame(metadataTable, modelA, modelB)),
+            isSame<PropertyReference, PropertyReferenceModel>((reference, model) => Compare.Property.IsSame(metadataTable, reference, model)),
+            isSame<PropertyReferenceModel, PropertyReferenceModel>((modelA, modelB) => Compare.Property.IsSame(metadataTable, modelA, modelB)),
+            isSame<PropertyDefinitionModel, PropertyDefinitionModel>((modelA, modelB) => Compare.Property.IsSame(metadataTable, modelA, modelB)),
+            isSame<PropertyReferenceModel, PropertyDefinitionModel>((modelA, modelB) => Compare.Property.IsSame(metadataTable, modelA, modelB)),
 
-            
             // e v e n t
-            isSame<EventReference, EventReferenceModel>((reference, model)=>
-            {
-                if (reference.Name != model.Name)
-                {
-                    return false;
-                }
+            isSame<EventReference, EventReferenceModel>((reference, model) => Compare.Event.IsSame(metadataTable, reference, model)),
+            isSame<EventReferenceModel, EventReferenceModel>((modelA, modelB) => Compare.Event.IsSame(metadataTable, modelA, modelB)),
 
-                if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
-                {
-                    return false;
-                }
-                
-                return true;
-            }),
-            
-            isSame<EventReferenceModel, EventReferenceModel>(( modelA,  modelB)=>
-            {
-                if (modelA.Name != modelB.Name)
-                {
-                    return false;
-                }
-
-                if (modelA.DeclaringType != modelB.DeclaringType)
-                {
-                    return false;
-                }
-
-                return true;
-            }),
-            
             // t y p e
-            isSame<TypeReference, TypeDefinitionModel>(( reference,  model)=>
+            isSame<TypeReference, TypeDefinitionModel>((reference, model) =>
             {
                 if (model.Name != reference.Name)
                 {
                     return false;
                 }
 
-                if (namespacesAreNotSame(reference.Namespace,model.Namespace ))
+                if (namespacesAreNotSame(reference.Namespace, model.Namespace))
                 {
                     return false;
                 }
-                
+
                 return true;
             }),
-            
-            isSame<TypeReferenceModel, TypeDefinitionModel>(( referenceModel,  definitionModel)=>
+
+            isSame<TypeReferenceModel, TypeDefinitionModel>((referenceModel, definitionModel) =>
             {
                 if (definitionModel.Name != referenceModel.Name)
                 {
                     return false;
                 }
 
-                if (namespacesAreNotSame(referenceModel.Namespace , definitionModel.Namespace ))
+                if (namespacesAreNotSame(referenceModel.Namespace, definitionModel.Namespace))
                 {
                     return false;
                 }
-                
+
                 return true;
             }),
-            
-            isSame<TypeReference, TypeReferenceModel>(( reference,  model)=>
+
+            isSame<TypeReference, TypeReferenceModel>((reference, model) =>
             {
                 if (model.Name != reference.Name)
                 {
@@ -999,41 +1005,41 @@ static class MonoCecilToJsonModelMapper
                 {
                     return false;
                 }
-                
+
                 return true;
             }),
-            
-            isSame<TypeDefinitionModel, TypeDefinitionModel>(( modelA,  modelB)=>
+
+            isSame<TypeDefinitionModel, TypeDefinitionModel>((modelA, modelB) =>
             {
                 if (modelA.Name != modelB.Name)
                 {
                     return false;
                 }
-                    
+
                 if (namespacesAreNotSame(modelA.Namespace, modelB.Namespace))
                 {
                     return false;
                 }
-                
+
                 return true;
             }),
-            
-            isSame<TypeReferenceModel, TypeReferenceModel>(( modelA,  modelB)=>
+
+            isSame<TypeReferenceModel, TypeReferenceModel>((modelA, modelB) =>
             {
                 if (modelA.Name != modelB.Name)
                 {
                     return false;
                 }
-                    
+
                 if (namespacesAreNotSame(modelA.Namespace, modelB.Namespace))
                 {
                     return false;
                 }
-                
+
                 return true;
             }),
-            
-            isSame<ArrayTypeModel, object>(( arrayModel,  item)=>
+
+            isSame<ArrayTypeModel, object>((arrayModel, item) =>
             {
                 if (item is ArrayTypeModel arrayTypeModel)
                 {
@@ -1041,34 +1047,34 @@ static class MonoCecilToJsonModelMapper
                     {
                         return false;
                     }
-                    
+
                     if (arrayModel.ElementType != arrayTypeModel.ElementType)
                     {
                         return false;
                     }
-                    
+
                     return true;
                 }
-                
+
                 if (item is ArrayType arrayType)
                 {
                     if (arrayModel.Rank != arrayType.Rank)
                     {
                         return false;
                     }
-                    
+
                     if (arrayModel.ElementType != arrayType.ElementType.IndexAt(metadataTable))
                     {
                         return false;
                     }
-                    
+
                     return true;
                 }
-                
+
                 return false;
             }),
-            
-            isSame<GenericInstanceTypeModel, object>((model, item)=>
+
+            isSame<GenericInstanceTypeModel, object>((model, item) =>
             {
                 if (item is GenericInstanceType reference)
                 {
@@ -1076,7 +1082,7 @@ static class MonoCecilToJsonModelMapper
                     {
                         return false;
                     }
-                    
+
                     if (reference.GenericArguments.Count != model.GenericArguments.Count)
                     {
                         return false;
@@ -1092,17 +1098,17 @@ static class MonoCecilToJsonModelMapper
                         }
                     }
 
-                
+
                     return true;
                 }
-                
+
                 if (item is GenericInstanceTypeModel model2)
                 {
                     if (model.ElementType != model2.ElementType)
                     {
                         return false;
                     }
-                    
+
                     if (model.GenericArguments.Count != model2.GenericArguments.Count)
                     {
                         return false;
@@ -1116,14 +1122,14 @@ static class MonoCecilToJsonModelMapper
                         }
                     }
 
-                
+
                     return true;
                 }
 
                 return false;
             }),
-            
-            isSame<GenericParameterModel, object>((model, item)=>
+
+            isSame<GenericParameterModel, object>((model, item) =>
             {
                 if (item is GenericParameter genericParameter)
                 {
@@ -1131,69 +1137,69 @@ static class MonoCecilToJsonModelMapper
                     {
                         return false;
                     }
-                    
+
                     if (model.Name != genericParameter.Name)
                     {
                         return false;
                     }
-                    
-                    if (model.DeclaringType.HasValue && genericParameter.DeclaringType != null && 
+
+                    if (model.DeclaringType.HasValue && genericParameter.DeclaringType != null &&
                         model.DeclaringType != genericParameter.DeclaringType.IndexAt(metadataTable))
                     {
                         return false;
                     }
-                    
+
                     if (model.DeclaringMethod.HasValue && genericParameter.DeclaringMethod != null &&
                         model.DeclaringMethod != genericParameter.DeclaringMethod.IndexAt(metadataTable))
                     {
                         return false;
                     }
-                    
+
                     return true;
                 }
-                
+
                 if (item is GenericParameterModel model2)
                 {
                     if (model.Position != model2.Position)
                     {
                         return false;
                     }
-                    
+
                     if (model.Name != model2.Name)
                     {
                         return false;
                     }
-                    
+
                     if (model.DeclaringType.HasValue && model.DeclaringType != model2.DeclaringType)
                     {
                         return false;
                     }
-                    
+
                     if (model.DeclaringMethod.HasValue && model.DeclaringMethod != model2.DeclaringMethod)
                     {
                         return false;
                     }
-                    
+
                     return true;
                 }
 
                 return false;
             }),
-            
-            
+
+
             // m e t h o d
-            isSame<MethodReferenceModel,MethodDefinitionModel>(( modelA, modelB)=>
+            isSame<MethodReferenceModel, MethodDefinitionModel>((modelA, modelB) =>
             {
                 if (modelA.Name != modelB.Name)
                 {
                     return false;
                 }
-            
+
                 if (modelA.DeclaringType != modelB.DeclaringType)
                 {
                     return false;
                 }
-            
+
                 if (modelA.Parameters.Count != modelB.Parameters.Count)
                 {
                     return false;
@@ -1207,22 +1213,22 @@ static class MonoCecilToJsonModelMapper
                     }
                 }
 
-                
+
                 return true;
             }),
-            
-            isSame<MethodReferenceModel,MethodReferenceModel>(( modelA, modelB)=>
+
+            isSame<MethodReferenceModel, MethodReferenceModel>((modelA, modelB) =>
             {
                 if (modelA.Name != modelB.Name)
                 {
                     return false;
                 }
-            
+
                 if (modelA.DeclaringType != modelB.DeclaringType)
                 {
                     return false;
                 }
-            
+
                 if (modelA.Parameters.Count != modelB.Parameters.Count)
                 {
                     return false;
@@ -1235,22 +1241,22 @@ static class MonoCecilToJsonModelMapper
                         return false;
                     }
                 }
-                
+
                 return true;
             }),
-            
-            isSame<MethodDefinitionModel,MethodDefinitionModel>(( modelA, modelB)=>
+
+            isSame<MethodDefinitionModel, MethodDefinitionModel>((modelA, modelB) =>
             {
                 if (modelA.Name != modelB.Name)
                 {
                     return false;
                 }
-            
+
                 if (modelA.DeclaringType != modelB.DeclaringType)
                 {
                     return false;
                 }
-            
+
                 if (modelA.Parameters.Count != modelB.Parameters.Count)
                 {
                     return false;
@@ -1263,11 +1269,11 @@ static class MonoCecilToJsonModelMapper
                         return false;
                     }
                 }
-                
+
                 return true;
             }),
-             
-            isSame<MethodReferenceModel,MethodReference>(( model, reference)=>
+
+            isSame<MethodReferenceModel, MethodReference>((model, reference) =>
             {
                 if (reference.Name != model.Name)
                 {
@@ -1283,11 +1289,11 @@ static class MonoCecilToJsonModelMapper
                 {
                     return false;
                 }
-                
+
                 return true;
             }),
-            
-            isSame<MethodDefinitionModel,MethodReference>(( model, reference)=>
+
+            isSame<MethodDefinitionModel, MethodReference>((model, reference) =>
             {
                 if (reference.Name != model.Name)
                 {
@@ -1303,11 +1309,11 @@ static class MonoCecilToJsonModelMapper
                 {
                     return false;
                 }
-                
+
                 return true;
             }),
-            
-            isSame<GenericInstanceMethodModel,GenericInstanceMethodModel>(( modelA, modelB)=>
+
+            isSame<GenericInstanceMethodModel, GenericInstanceMethodModel>((modelA, modelB) =>
             {
                 if (modelA.ElementMethod != modelB.ElementMethod)
                 {
@@ -1316,7 +1322,7 @@ static class MonoCecilToJsonModelMapper
 
                 return isSameValues(modelA.GenericArguments, modelB.GenericArguments);
             }),
-            isSame<GenericInstanceMethodModel,GenericInstanceMethod>(( modelA, reference)=>
+            isSame<GenericInstanceMethodModel, GenericInstanceMethod>((modelA, reference) =>
             {
                 if (modelA.ElementMethod != reference.ElementMethod.IndexAt(metadataTable))
                 {
@@ -1327,7 +1333,7 @@ static class MonoCecilToJsonModelMapper
                 {
                     return false;
                 }
-                
+
                 for (var i = 0; i < modelA.GenericArguments.Count; i++)
                 {
                     if (modelA.GenericArguments[i] != reference.GenericArguments[i].IndexAt(metadataTable))
@@ -1338,9 +1344,9 @@ static class MonoCecilToJsonModelMapper
 
                 return true;
             }),
-            
-            isSame<GenericInstanceMethodModel,object>(( _, _)=> false)
-            
+
+            isSame<GenericInstanceMethodModel, object>((_, _) => false)
+
         ];
 
         
