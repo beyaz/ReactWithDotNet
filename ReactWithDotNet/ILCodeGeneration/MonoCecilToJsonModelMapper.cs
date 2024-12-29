@@ -2,6 +2,7 @@
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.Xml;
 
 namespace ReactWithDotNet;
 
@@ -988,14 +989,14 @@ static class MonoCecilToJsonModelMapper
                return true;
            }
            
-           public static bool IsSame(MetadataTable metadataTable, EventReferenceModel modelA, EventReferenceModel modelB)
+           public static bool IsSame(MetadataTable metadataTable,TypeReferenceModel referenceModel, TypeDefinitionModel definitionModel)
            {
-               if (modelA.Name != modelB.Name)
+               if (definitionModel.Name != referenceModel.Name)
                {
                    return false;
                }
 
-               if (modelA.DeclaringType != modelB.DeclaringType)
+               if (namespacesAreNotSame(referenceModel.Namespace, definitionModel.Namespace))
                {
                    return false;
                }
@@ -1012,6 +1013,8 @@ static class MonoCecilToJsonModelMapper
     
     static bool IsSame(object a, object b, MetadataTable metadataTable)
     {
+        
+
         List<Func<bool?>> funcs =
         [
             // f i e l d
@@ -1033,21 +1036,7 @@ static class MonoCecilToJsonModelMapper
 
             // t y p e
             isSame<TypeReference, TypeDefinitionModel>((reference, model) => Compare.Type.IsSame(metadataTable, reference, model)),
-
-            isSame<TypeReferenceModel, TypeDefinitionModel>((referenceModel, definitionModel) =>
-            {
-                if (definitionModel.Name != referenceModel.Name)
-                {
-                    return false;
-                }
-
-                if (namespacesAreNotSame(referenceModel.Namespace, definitionModel.Namespace))
-                {
-                    return false;
-                }
-
-                return true;
-            }),
+            isSame<TypeReferenceModel, TypeDefinitionModel>((referenceModel, definitionModel) => Compare.Type.IsSame(metadataTable, referenceModel, definitionModel)),
 
             isSame<TypeReference, TypeReferenceModel>((reference, model) =>
             {
