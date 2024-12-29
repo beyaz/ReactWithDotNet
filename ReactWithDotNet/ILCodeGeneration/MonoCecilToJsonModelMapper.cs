@@ -2,7 +2,6 @@
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using System.Runtime.CompilerServices;
-using System.Security.Cryptography.Xml;
 
 namespace ReactWithDotNet;
 
@@ -758,6 +757,46 @@ static class MonoCecilToJsonModelMapper
     [SuppressMessage("ReSharper", "UnusedParameter.Local")]
     static class Compare
     {
+        static bool namespacesAreNotSame(string namespaceA, string namespaceB)
+        {
+            if (namespaceA == namespaceB)
+            {
+                return false;
+            }
+                        
+            if (namespaceA == nameof(_System_) && namespaceB == nameof(System))
+            {
+                return false;
+            }
+                        
+            if (namespaceA == nameof(System) && namespaceB == nameof(_System_))
+            {
+                return false;
+            }
+                        
+            return true;
+        }
+
+        static bool isSameValues(IReadOnlyList<int> listA, IReadOnlyList<int> listB)
+        {
+            if (listA.Count != listB.Count)
+            {
+                return false;
+            }
+
+            var count = listA.Count;
+            
+            for (int i = 0; i < count; i++)
+            {
+                if (listA[i] != listB[i])
+                {
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+        
        public static class Field
        {
            public static bool IsSame(MetadataTable metadataTable, FieldReference reference, FieldReferenceModel model)
@@ -931,6 +970,40 @@ static class MonoCecilToJsonModelMapper
            }
            
        }
+       
+       public static class Type
+       {
+           public static bool IsSame(MetadataTable metadataTable, TypeReference reference, TypeDefinitionModel model)
+           {
+               if (model.Name != reference.Name)
+               {
+                   return false;
+               }
+
+               if (namespacesAreNotSame(reference.Namespace, model.Namespace))
+               {
+                   return false;
+               }
+               
+               return true;
+           }
+           
+           public static bool IsSame(MetadataTable metadataTable, EventReferenceModel modelA, EventReferenceModel modelB)
+           {
+               if (modelA.Name != modelB.Name)
+               {
+                   return false;
+               }
+
+               if (modelA.DeclaringType != modelB.DeclaringType)
+               {
+                   return false;
+               }
+
+               return true;
+           }
+           
+       }
     }
     
    
@@ -959,20 +1032,7 @@ static class MonoCecilToJsonModelMapper
             isSame<EventReferenceModel, EventReferenceModel>((modelA, modelB) => Compare.Event.IsSame(metadataTable, modelA, modelB)),
 
             // t y p e
-            isSame<TypeReference, TypeDefinitionModel>((reference, model) =>
-            {
-                if (model.Name != reference.Name)
-                {
-                    return false;
-                }
-
-                if (namespacesAreNotSame(reference.Namespace, model.Namespace))
-                {
-                    return false;
-                }
-
-                return true;
-            }),
+            isSame<TypeReference, TypeDefinitionModel>((reference, model) => Compare.Type.IsSame(metadataTable, reference, model)),
 
             isSame<TypeReferenceModel, TypeDefinitionModel>((referenceModel, definitionModel) =>
             {
