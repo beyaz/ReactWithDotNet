@@ -1316,7 +1316,7 @@ function Interpret(thread)
                         }
 
                         /**
-                         * @type {any[]}
+                         * @type {any[] | {$dimensions: number[]}}
                          */
                         const array = evaluationStack.pop();
                         
@@ -1359,7 +1359,7 @@ function Interpret(thread)
                         }
 
                         /**
-                         * @type {any[]}
+                         * @type {any[] | {$dimensions: number[]}}
                          */
                         const array = evaluationStack.pop();
 
@@ -1464,26 +1464,7 @@ function Interpret(thread)
 
                     if (method.IsMethodReference)
                     {
-                        const methods = TypeDefinitionOfDotNetJsOverrides.Methods;
-                        const length = methods.length;
-
-                        for (let i = 0; i < length; i++)
-                        {
-                            const targetMethod = AllMethods[methods[i]];
-
-                            if (targetMethod.Name !== method.Name)
-                            {
-                                continue;
-                            }
-
-                            if (IsTwoMethodParametersFullMatch(method, targetMethod) === false)
-                            {
-                                continue;
-                            }
-
-                            method = targetMethod;
-                            break;
-                        }
+                        method = TryFindDotNetJsOverrides(method);
                     }
                     
                     if (method.IsMethodReference)
@@ -2466,59 +2447,8 @@ function Interpret(thread)
                         // try to find in DotNetJsOverrides
                         if (method !== targetMethod)
                         {
-                            const methods = TypeDefinitionOfDotNetJsOverrides.Methods;
-                            const length = methods.length;
-
-                            for (let i = 0; i < length; i++)
-                            {
-                                targetMethod = AllMethods[methods[i]];
-
-                                if (targetMethod.Name !== method.Name)
-                                {
-                                    continue;
-                                }
-
-                                // compare parameters
-                                {
-                                    const parametersA = method.Parameters;
-                                    const parametersB = targetMethod.Parameters;
-                                    
-                                    const lenA = parametersA.length;
-                                    const lenB = parametersB.length;
-                                    
-                                    if (lenA + 1 !== lenB)
-                                    {
-                                        continue;
-                                    }
-
-                                    if (method.DeclaringType !== parametersB[0].ParameterType)
-                                    {
-                                        continue;
-                                    }
-                                    
-                                    let parametersFullMatched = 1;
-                                    {
-                                        for (let j = 1; j < lenB; j++)
-                                        {
-                                            if (parametersA[j-1].ParameterType !== parametersB[j].ParameterType)
-                                            {
-                                                parametersFullMatched = 0;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    
-                                    if (!parametersFullMatched)
-                                    {
-                                        continue;
-                                    }
-                                }
-
-                                method = targetMethod;
-                                break;
-                            }
-                        }
-                    
+                            method = TryFindDotNetJsOverrides(method);
+                        }                    
                     }
                     
                     if (method !== targetMethod)
@@ -4546,6 +4476,90 @@ function IsTwoMethodParametersFullMatch(methodA, methodB)
     }
     
     return true;
+}
+
+/**
+ *   @method {MethodReferenceModel}
+ *   @returns {MethodDefinitionModel | MethodReferenceModel | GenericInstanceMethodModel}
+ */
+function TryFindDotNetJsOverrides(method)
+{
+    const AllMethods = GlobalMetadata.Methods;
+    
+    const methods = TypeDefinitionOfDotNetJsOverrides.Methods;
+    const length = methods.length;
+
+    if (method.IsStatic)
+    {
+        for (let i = 0; i < length; i++)
+        {
+            const targetMethod = AllMethods[methods[i]];
+
+            if (targetMethod.Name !== method.Name)
+            {
+                continue;
+            }
+
+            if (!IsTwoMethodParametersFullMatch(method, targetMethod))
+            {
+                continue;
+            }
+
+            return targetMethod;
+        }
+    }
+    else
+    {
+        for (let i = 0; i < length; i++)
+        {
+            const targetMethod = AllMethods[methods[i]];
+
+            if (targetMethod.Name !== method.Name)
+            {
+                continue;
+            }
+
+            // compare parameters
+            {
+                const parametersA = method.Parameters;
+                const parametersB = targetMethod.Parameters;
+
+                const lenA = parametersA.length;
+                const lenB = parametersB.length;
+
+                if (lenA + 1 !== lenB)
+                {
+                    continue;
+                }
+
+                if (method.DeclaringType !== parametersB[0].ParameterType)
+                {
+                    continue;
+                }
+
+                let parametersFullMatched = 1;
+                {
+                    for (let j = 1; j < lenB; j++)
+                    {
+                        if (parametersA[j - 1].ParameterType !== parametersB[j].ParameterType)
+                        {
+                            parametersFullMatched = 0;
+                            break;
+                        }
+                    }
+                }
+
+                if (!parametersFullMatched)
+                {
+                    continue;
+                }
+            }
+
+            return targetMethod;
+        }
+    }
+    
+    return method;
 }
 
 /**
