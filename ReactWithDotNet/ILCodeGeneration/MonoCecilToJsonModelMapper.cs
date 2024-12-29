@@ -1,4 +1,5 @@
-﻿using Mono.Cecil;
+﻿using System.Diagnostics.CodeAnalysis;
+using Mono.Cecil;
 using Mono.Cecil.Cil;
 using System.Runtime.CompilerServices;
 
@@ -744,16 +745,114 @@ static class MonoCecilToJsonModelMapper
     }
 
     #region IsSame
-    
 
-    
-    
-    
-    
-    
-    
-    
-   
+
+
+
+
+
+
+
+
+    [SuppressMessage("ReSharper", "UnusedParameter.Local")]
+    static class Compare
+    {
+       public static class Field
+       {
+           public static bool IsSame(MetadataTable metadataTable, FieldReference reference, FieldReferenceModel model)
+           {
+               if (reference.Name != model.Name)
+               {
+                   return false;
+               }
+
+               if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
+               {
+                   return false;
+               }
+
+               return true;
+           }
+        
+           public static bool IsSame(MetadataTable metadataTable, FieldReference reference, FieldDefinitionModel model)
+           {
+               if (reference.Name != model.Name)
+               {
+                   return false;
+               }
+
+               if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
+               {
+                   return false;
+               }
+                
+               return true;
+           }
+        
+           public static bool IsSame(MetadataTable metadataTable, FieldReferenceModel modelA, FieldReferenceModel modelB)
+           {
+               if (modelA.Name != modelB.Name)
+               {
+                   return false;
+               }
+
+               if (modelA.DeclaringType != modelB.DeclaringType)
+               {
+                   return false;
+               }
+
+               return true;
+           }
+           
+           public static bool IsSame(MetadataTable metadataTable, FieldReferenceModel modelA, FieldDefinitionModel modelB)
+           {
+               if (modelA.Name != modelB.Name)
+               {
+                   return false;
+               }
+
+               if (modelA.DeclaringType != modelB.DeclaringType)
+               {
+                   return false;
+               }
+
+               return true;
+           }
+           
+           public static bool IsSame(MetadataTable metadataTable, FieldDefinitionModel modelA, FieldDefinitionModel modelB)
+           {
+               if (modelA.Name != modelB.Name)
+               {
+                   return false;
+               }
+
+               if (modelA.DeclaringType != modelB.DeclaringType)
+               {
+                   return false;
+               }
+
+               return true;
+           }
+       }
+       
+       public static class Property
+       {
+           public static bool IsSame(MetadataTable metadataTable, PropertyReference reference, PropertyReferenceModel model)
+           {
+               if (reference.Name != model.Name)
+               {
+                   return false;
+               }
+
+               if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
+               {
+                   return false;
+               }
+                
+               return true;
+           }
+       }
+    }
     
    
 
@@ -763,95 +862,15 @@ static class MonoCecilToJsonModelMapper
     {
         List<Func<bool?>> funcs = 
         [
-            
             // f i e l d
-            isSame<FieldReference, FieldReferenceModel>((reference, model)=>
-            {
-                if (reference.Name != model.Name)
-                {
-                    return false;
-                }
-
-                if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
-                {
-                    return false;
-                }
-                
-                return true;
-            }),
-            isSame<FieldReference, FieldDefinitionModel>((reference, model)=>
-            {
-                if (reference.Name != model.Name)
-                {
-                    return false;
-                }
-
-                if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
-                {
-                    return false;
-                }
-                
-                return true;
-            }),
-            
-            isSame<FieldReferenceModel, FieldReferenceModel>(( modelA,  modelB)=>
-            {
-                if (modelA.Name != modelB.Name)
-                {
-                    return false;
-                }
-
-                if (modelA.DeclaringType != modelB.DeclaringType)
-                {
-                    return false;
-                }
-
-                return true;
-            }),
-            isSame<FieldReferenceModel, FieldDefinitionModel>(( modelA,  modelB)=>
-            {
-                if (modelA.Name != modelB.Name)
-                {
-                    return false;
-                }
-
-                if (modelA.DeclaringType != modelB.DeclaringType)
-                {
-                    return false;
-                }
-
-                return true;
-            }),
-            isSame<FieldDefinitionModel, FieldDefinitionModel>(( modelA,  modelB)=>
-            {
-                if (modelA.Name != modelB.Name)
-                {
-                    return false;
-                }
-
-                if (modelA.DeclaringType != modelB.DeclaringType)
-                {
-                    return false;
-                }
-
-                return true;
-            }),
+            isSame<FieldReference, FieldReferenceModel>((reference, model)=>Compare.Field.IsSame(metadataTable, reference, model)),
+            isSame<FieldReference, FieldDefinitionModel>((reference, model)=>Compare.Field.IsSame(metadataTable, reference, model)),
+            isSame<FieldReferenceModel, FieldReferenceModel>((modelA, modelB)=>Compare.Field.IsSame(metadataTable, modelA, modelB)),
+            isSame<FieldReferenceModel, FieldDefinitionModel>((modelA, modelB)=>Compare.Field.IsSame(metadataTable, modelA, modelB)),
+            isSame<FieldDefinitionModel, FieldDefinitionModel>((modelA, modelB)=>Compare.Field.IsSame(metadataTable, modelA, modelB)),
             
             // p r o p e r t y
-            isSame<PropertyReference, PropertyReferenceModel>((reference, model)=>
-            {
-                if (reference.Name != model.Name)
-                {
-                    return false;
-                }
-
-                if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
-                {
-                    return false;
-                }
-                
-                return true;
-            }),
+            isSame<PropertyReference, PropertyReferenceModel>((reference, model)=>Compare.Property.IsSame(metadataTable, reference, model)),
             
             isSame<PropertyReferenceModel, PropertyReferenceModel>(( modelA,  modelB)=>
             {
