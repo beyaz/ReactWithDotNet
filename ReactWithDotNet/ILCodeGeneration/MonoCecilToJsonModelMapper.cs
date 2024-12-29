@@ -1004,6 +1004,26 @@ static class MonoCecilToJsonModelMapper
                return true;
            }
            
+           public static bool IsSame(MetadataTable metadataTable, TypeReference reference, TypeReferenceModel model)
+           {
+               if (model.Name != reference.Name)
+               {
+                   return false;
+               }
+
+               if (namespacesAreNotSame(reference.Namespace, model.Namespace))
+               {
+                   return false;
+               }
+
+               if (reference is GenericInstanceType)
+               {
+                   return false;
+               }
+
+               return true;
+           }
+           
        }
     }
     
@@ -1037,26 +1057,7 @@ static class MonoCecilToJsonModelMapper
             // t y p e
             isSame<TypeReference, TypeDefinitionModel>((reference, model) => Compare.Type.IsSame(metadataTable, reference, model)),
             isSame<TypeReferenceModel, TypeDefinitionModel>((referenceModel, definitionModel) => Compare.Type.IsSame(metadataTable, referenceModel, definitionModel)),
-
-            isSame<TypeReference, TypeReferenceModel>((reference, model) =>
-            {
-                if (model.Name != reference.Name)
-                {
-                    return false;
-                }
-
-                if (namespacesAreNotSame(reference.Namespace, model.Namespace))
-                {
-                    return false;
-                }
-
-                if (reference is GenericInstanceType)
-                {
-                    return false;
-                }
-
-                return true;
-            }),
+            isSame<TypeReference, TypeReferenceModel>((reference, model) => Compare.Type.IsSame(metadataTable, reference, model)),
 
             isSame<TypeDefinitionModel, TypeDefinitionModel>((modelA, modelB) =>
             {
