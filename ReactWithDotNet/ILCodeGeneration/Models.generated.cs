@@ -211,6 +211,8 @@ sealed class MethodReferenceModel
     public required int DeclaringType { get; init; }
     
     public required int ReturnType { get; init; }
+    
+    public required uint RID { get; init; }
 }
 
 sealed class MethodBodyModel
@@ -305,4 +307,6 @@ sealed class GenericInstanceMethodModel
     public required IReadOnlyList<int> GenericArguments { get; init; }
     
     public required int IsGenericInstanceMethod { get; init; }
+    
+    public required uint RID { get; init; }
 }

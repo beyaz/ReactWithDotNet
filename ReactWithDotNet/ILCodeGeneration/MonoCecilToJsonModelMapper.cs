@@ -511,15 +511,18 @@ static class MonoCecilToJsonModelMapper
         {
             return new GenericInstanceMethodModel
             {
+                RID = methodReference.MetadataToken.RID,
+                
                 IsGenericInstanceMethod = 1,
-                ElementMethod    = genericInstanceMethod.ElementMethod.IndexAt(metadataTable),
-                GenericArguments = genericInstanceMethod.GenericArguments.ToListOf(x => x.IndexAt(metadataTable))
+                ElementMethod           = genericInstanceMethod.ElementMethod.IndexAt(metadataTable),
+                GenericArguments        = genericInstanceMethod.GenericArguments.ToListOf(x => x.IndexAt(metadataTable))
             };
         }
 
         
         return new MethodReferenceModel
         {
+            RID               = methodReference.MetadataToken.RID,
             IsMethodReference = 1,
             ReturnType        = methodReference.ReturnType.IndexAt(metadataTable),
             Name              = methodReference.Name,
