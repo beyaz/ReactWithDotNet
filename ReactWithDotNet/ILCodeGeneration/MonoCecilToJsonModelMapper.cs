@@ -867,6 +867,35 @@ static class MonoCecilToJsonModelMapper
 
                return true;
            }
+           public static bool IsSame(MetadataTable metadataTable, PropertyDefinitionModel modelA, PropertyDefinitionModel modelB)
+           {
+               if (modelA.Name != modelB.Name)
+               {
+                   return false;
+               }
+
+               if (modelA.DeclaringType != modelB.DeclaringType)
+               {
+                   return false;
+               }
+
+               return true;
+           }
+           
+           public static bool IsSame(MetadataTable metadataTable, PropertyReferenceModel modelA, PropertyDefinitionModel modelB)
+           {
+               if (modelA.Name != modelB.Name)
+               {
+                   return false;
+               }
+
+               if (modelA.DeclaringType != modelB.DeclaringType)
+               {
+                   return false;
+               }
+
+               return true;
+           }
        }
     }
     
@@ -888,35 +917,8 @@ static class MonoCecilToJsonModelMapper
             // p r o p e r t y
             isSame<PropertyReference, PropertyReferenceModel>((reference, model) =>Compare.Property.IsSame(metadataTable, reference, model)),
             isSame<PropertyReferenceModel, PropertyReferenceModel>(( modelA,  modelB)=>Compare.Property.IsSame(metadataTable, modelA, modelB)),
-            
-            isSame<PropertyDefinitionModel, PropertyDefinitionModel>(( modelA,  modelB)=>
-            {
-                if (modelA.Name != modelB.Name)
-                {
-                    return false;
-                }
-
-                if (modelA.DeclaringType != modelB.DeclaringType)
-                {
-                    return false;
-                }
-
-                return true;
-            }),
-            isSame<PropertyReferenceModel, PropertyDefinitionModel>(( modelA,  modelB)=>
-            {
-                if (modelA.Name != modelB.Name)
-                {
-                    return false;
-                }
-
-                if (modelA.DeclaringType != modelB.DeclaringType)
-                {
-                    return false;
-                }
-
-                return true;
-            }),
+            isSame<PropertyDefinitionModel, PropertyDefinitionModel>(( modelA,  modelB)=>Compare.Property.IsSame(metadataTable, modelA, modelB)),
+            isSame<PropertyReferenceModel, PropertyDefinitionModel>(( modelA,  modelB)=>Compare.Property.IsSame(metadataTable, modelA, modelB)),
 
             
             // e v e n t
