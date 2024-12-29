@@ -61,6 +61,8 @@ static class NativeJsHelper
     
     public static extern void push(this Array array, object value);
     
+    public static extern string join(this Array array, string separator);
+    
     public static extern void Dump(object value);
     
     public static extern StackFrame CurrentStackFrame { get; }

@@ -1,11 +1,7 @@
 ﻿using ReactWithDotNet;
-using static ReactWithDotNet.NativeJsHelper;
-
 
 namespace _System_
 {
-    
-    
     class Object
     {
         public Object()
