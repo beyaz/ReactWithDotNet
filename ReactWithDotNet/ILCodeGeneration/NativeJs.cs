@@ -26,13 +26,16 @@ sealed class ThreadModel
 static class AsExtensions
 {
     public static extern object AsObject<T>(this T value);
-    
+
     public static extern T As<T>(this object value);
 }
 
 
 static class NativeJsHelper
 {
+    
+    public static extern object RefStructToObject<T>(this T value) where T :  allows ref struct;
+    
     public static extern void Set(this object instance, string key, object value);
     public static extern void Set(this object instance, int key, object value);
     

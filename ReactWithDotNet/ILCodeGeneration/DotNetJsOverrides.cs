@@ -1,12 +1,12 @@
 ﻿using System.Reflection;
-using System;
+using System.Runtime.CompilerServices;
 using static ReactWithDotNet.NativeJsHelper;
 
 namespace ReactWithDotNet;
 
 static class DotNetJsOverrides
 {
-    public static System.Type GetTypeFromHandle(System.RuntimeTypeHandle value)
+    public static Type GetTypeFromHandle(RuntimeTypeHandle value)
     {
         return value.AsObject().As<Type>();
     }
@@ -15,34 +15,36 @@ static class DotNetJsOverrides
     {
         return memberInfo.Get("Name").As<string>();
     }
-}
 
-class DefaultInterpolatedStringHandler
-{
-    readonly Array parts;
-        
-    public DefaultInterpolatedStringHandler(int literalLength, int formattedCount)
+
+    #region DefaultInterpolatedStringHandler
+    
+    public static DefaultInterpolatedStringHandler ctor(DefaultInterpolatedStringHandler instance, int literalLength, int formattedCount)
     {
-        parts = CreateNewArray();
-    }
-        
-    public void AppendLiteral(string value) 
-    {
-        parts.push(value);
+        instance.RefStructToObject().Set("parts", CreateNewArray());
+
+        return instance;
     }
 
-    public void AppendFormatted(string formattedString) 
+    static string[] GetParts(this DefaultInterpolatedStringHandler instance)
     {
-        parts.push(formattedString);
+        return instance.RefStructToObject().Get("parts").As<string[]>();
     }
-
-    public override string ToString()
+    
+    public static void AppendLiteral(DefaultInterpolatedStringHandler instance, string value)
     {
-        return parts.join("");
+        instance.GetParts().push(value);
     }
-
-    public string ToStringAndClear()
+    
+    public static void AppendFormatted<T>(DefaultInterpolatedStringHandler instance, T value) 
     {
-        return ToString();
+        instance.GetParts().push(value.ToString());
     }
+    
+    public static void AppendFormatted(DefaultInterpolatedStringHandler instance, string formattedString) 
+    {
+        instance.GetParts().push(formattedString);
+    }
+    
+    #endregion
 }
