@@ -2,6 +2,7 @@
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.Xml;
 
 namespace ReactWithDotNet;
 
@@ -851,6 +852,21 @@ static class MonoCecilToJsonModelMapper
                 
                return true;
            }
+           
+           public static bool IsSame(MetadataTable metadataTable, PropertyReferenceModel modelA, PropertyReferenceModel modelB)
+           {
+               if (modelA.Name != modelB.Name)
+               {
+                   return false;
+               }
+
+               if (modelA.DeclaringType != modelB.DeclaringType)
+               {
+                   return false;
+               }
+
+               return true;
+           }
        }
     }
     
@@ -870,22 +886,8 @@ static class MonoCecilToJsonModelMapper
             isSame<FieldDefinitionModel, FieldDefinitionModel>((modelA, modelB)=>Compare.Field.IsSame(metadataTable, modelA, modelB)),
             
             // p r o p e r t y
-            isSame<PropertyReference, PropertyReferenceModel>((reference, model)=>Compare.Property.IsSame(metadataTable, reference, model)),
-            
-            isSame<PropertyReferenceModel, PropertyReferenceModel>(( modelA,  modelB)=>
-            {
-                if (modelA.Name != modelB.Name)
-                {
-                    return false;
-                }
-
-                if (modelA.DeclaringType != modelB.DeclaringType)
-                {
-                    return false;
-                }
-
-                return true;
-            }),
+            isSame<PropertyReference, PropertyReferenceModel>((reference, model) =>Compare.Property.IsSame(metadataTable, reference, model)),
+            isSame<PropertyReferenceModel, PropertyReferenceModel>(( modelA,  modelB)=>Compare.Property.IsSame(metadataTable, modelA, modelB)),
             
             isSame<PropertyDefinitionModel, PropertyDefinitionModel>(( modelA,  modelB)=>
             {
