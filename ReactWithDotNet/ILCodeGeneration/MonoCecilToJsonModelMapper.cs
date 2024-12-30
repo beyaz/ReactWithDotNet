@@ -1039,6 +1039,56 @@ static class MonoCecilToJsonModelMapper
                return true;
            }
            
+           public static bool IsSame(MetadataTable metadataTable, TypeReferenceModel modelA, TypeReferenceModel modelB)
+           {
+               if (modelA.Name != modelB.Name)
+               {
+                   return false;
+               }
+
+               if (namespacesAreNotSame(modelA.Namespace, modelB.Namespace))
+               {
+                   return false;
+               }
+
+               return true;
+           }
+           
+           public static bool IsSame(MetadataTable metadataTable, ArrayTypeModel arrayModel, object item)
+           {
+               if (item is ArrayTypeModel arrayTypeModel)
+               {
+                   if (arrayModel.Rank != arrayTypeModel.Rank)
+                   {
+                       return false;
+                   }
+
+                   if (arrayModel.ElementType != arrayTypeModel.ElementType)
+                   {
+                       return false;
+                   }
+
+                   return true;
+               }
+
+               if (item is ArrayType arrayType)
+               {
+                   if (arrayModel.Rank != arrayType.Rank)
+                   {
+                       return false;
+                   }
+
+                   if (arrayModel.ElementType != arrayType.ElementType.IndexAt(metadataTable))
+                   {
+                       return false;
+                   }
+
+                   return true;
+               }
+
+               return false;
+           }
+           
        }
     }
     
@@ -1074,56 +1124,8 @@ static class MonoCecilToJsonModelMapper
             isSame<TypeReferenceModel, TypeDefinitionModel>((referenceModel, definitionModel) => Compare.Type.IsSame(metadataTable, referenceModel, definitionModel)),
             isSame<TypeReference, TypeReferenceModel>((reference, model) => Compare.Type.IsSame(metadataTable, reference, model)),
             isSame<TypeDefinitionModel, TypeDefinitionModel>((modelA, modelB) => Compare.Type.IsSame(metadataTable, modelA, modelB)),
-
-            isSame<TypeReferenceModel, TypeReferenceModel>((modelA, modelB) =>
-            {
-                if (modelA.Name != modelB.Name)
-                {
-                    return false;
-                }
-
-                if (namespacesAreNotSame(modelA.Namespace, modelB.Namespace))
-                {
-                    return false;
-                }
-
-                return true;
-            }),
-
-            isSame<ArrayTypeModel, object>((arrayModel, item) =>
-            {
-                if (item is ArrayTypeModel arrayTypeModel)
-                {
-                    if (arrayModel.Rank != arrayTypeModel.Rank)
-                    {
-                        return false;
-                    }
-
-                    if (arrayModel.ElementType != arrayTypeModel.ElementType)
-                    {
-                        return false;
-                    }
-
-                    return true;
-                }
-
-                if (item is ArrayType arrayType)
-                {
-                    if (arrayModel.Rank != arrayType.Rank)
-                    {
-                        return false;
-                    }
-
-                    if (arrayModel.ElementType != arrayType.ElementType.IndexAt(metadataTable))
-                    {
-                        return false;
-                    }
-
-                    return true;
-                }
-
-                return false;
-            }),
+            isSame<TypeReferenceModel, TypeReferenceModel>((modelA, modelB) => Compare.Type.IsSame(metadataTable, modelA, modelB)),
+            isSame<ArrayTypeModel, object>((arrayModel, item) => Compare.Type.IsSame(metadataTable, arrayModel, item)),
 
             isSame<GenericInstanceTypeModel, object>((model, item) =>
             {
