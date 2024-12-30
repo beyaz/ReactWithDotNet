@@ -755,6 +755,7 @@ static class MonoCecilToJsonModelMapper
 
 
     [SuppressMessage("ReSharper", "UnusedParameter.Local")]
+    [SuppressMessage("ReSharper", "ParameterOnlyUsedForPreconditionCheck.Local")]
     static class Compare
     {
         static bool namespacesAreNotSame(string namespaceA, string namespaceB)
@@ -1364,9 +1365,9 @@ static class MonoCecilToJsonModelMapper
 
             public static bool IsSame(MetadataTable metadataTable, GenericInstanceMethodModel model, MethodReference methodReference)
             {
-                if (methodReference is GenericInstanceMethod genericInstanceMethod)
+                if (methodReference is GenericInstanceMethod)
                 {
-                    return IsSame(metadataTable, model, genericInstanceMethod);
+                    throw DeveloperException(nameof(Compare));
                 }
 
                 return false;
@@ -1374,9 +1375,9 @@ static class MonoCecilToJsonModelMapper
 
             public static bool IsSame(MetadataTable metadataTable, GenericInstanceMethodModel model, object item)
             {
-                if (item is GenericInstanceMethod genericInstanceMethod)
+                if (item is GenericInstanceMethod)
                 {
-                    return IsSame(metadataTable, model, genericInstanceMethod);
+                    throw DeveloperException(nameof(Compare));
                 }
 
                 return false;
