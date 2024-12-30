@@ -1143,17 +1143,68 @@ static class MonoCecilToJsonModelMapper
 
                return false;
            }
+           
+           public static bool IsSame(MetadataTable metadataTable, GenericParameterModel model, object item)
+           {
+               if (item is GenericParameter genericParameter)
+               {
+                   if (model.Position != genericParameter.Position)
+                   {
+                       return false;
+                   }
+
+                   if (model.Name != genericParameter.Name)
+                   {
+                       return false;
+                   }
+
+                   if (model.DeclaringType.HasValue && genericParameter.DeclaringType != null &&
+                       model.DeclaringType != genericParameter.DeclaringType.IndexAt(metadataTable))
+                   {
+                       return false;
+                   }
+
+                   if (model.DeclaringMethod.HasValue && genericParameter.DeclaringMethod != null &&
+                       model.DeclaringMethod != genericParameter.DeclaringMethod.IndexAt(metadataTable))
+                   {
+                       return false;
+                   }
+
+                   return true;
+               }
+
+               if (item is GenericParameterModel model2)
+               {
+                   if (model.Position != model2.Position)
+                   {
+                       return false;
+                   }
+
+                   if (model.Name != model2.Name)
+                   {
+                       return false;
+                   }
+
+                   if (model.DeclaringType.HasValue && model.DeclaringType != model2.DeclaringType)
+                   {
+                       return false;
+                   }
+
+                   if (model.DeclaringMethod.HasValue && model.DeclaringMethod != model2.DeclaringMethod)
+                   {
+                       return false;
+                   }
+
+                   return true;
+               }
+
+               return false;
+           }
        }
     }
     
-   
-
-    
-    
     static bool IsSame(object a, object b, MetadataTable metadataTable)
     {
-        
-
         List<Func<bool?>> funcs =
         [
             // f i e l d
@@ -1181,65 +1232,8 @@ static class MonoCecilToJsonModelMapper
             isSame<TypeReferenceModel, TypeReferenceModel>((modelA, modelB) => Compare.Type.IsSame(metadataTable, modelA, modelB)),
             isSame<ArrayTypeModel, object>((arrayModel, item) => Compare.Type.IsSame(metadataTable, arrayModel, item)),
             isSame<GenericInstanceTypeModel, object>((model, item) => Compare.Type.IsSame(metadataTable, model, item)),
-
-            isSame<GenericParameterModel, object>((model, item) =>
-            {
-                if (item is GenericParameter genericParameter)
-                {
-                    if (model.Position != genericParameter.Position)
-                    {
-                        return false;
-                    }
-
-                    if (model.Name != genericParameter.Name)
-                    {
-                        return false;
-                    }
-
-                    if (model.DeclaringType.HasValue && genericParameter.DeclaringType != null &&
-                        model.DeclaringType != genericParameter.DeclaringType.IndexAt(metadataTable))
-                    {
-                        return false;
-                    }
-
-                    if (model.DeclaringMethod.HasValue && genericParameter.DeclaringMethod != null &&
-                        model.DeclaringMethod != genericParameter.DeclaringMethod.IndexAt(metadataTable))
-                    {
-                        return false;
-                    }
-
-                    return true;
-                }
-
-                if (item is GenericParameterModel model2)
-                {
-                    if (model.Position != model2.Position)
-                    {
-                        return false;
-                    }
-
-                    if (model.Name != model2.Name)
-                    {
-                        return false;
-                    }
-
-                    if (model.DeclaringType.HasValue && model.DeclaringType != model2.DeclaringType)
-                    {
-                        return false;
-                    }
-
-                    if (model.DeclaringMethod.HasValue && model.DeclaringMethod != model2.DeclaringMethod)
-                    {
-                        return false;
-                    }
-
-                    return true;
-                }
-
-                return false;
-            }),
-
-
+            isSame<GenericParameterModel, object>((model, item) => Compare.Type.IsSame(metadataTable, model, item)),
+            
             // m e t h o d
             isSame<MethodReferenceModel, MethodDefinitionModel>((modelA, modelB) =>
             {
