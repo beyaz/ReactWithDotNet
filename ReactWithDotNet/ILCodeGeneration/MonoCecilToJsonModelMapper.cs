@@ -1420,8 +1420,6 @@ static class MonoCecilToJsonModelMapper
         
         return result.Value;
 
-        
-
         Func<bool?> isSame<A,B>(Func<A,B, bool> compareFunc)
         {
             {
@@ -1454,49 +1452,7 @@ static class MonoCecilToJsonModelMapper
 
             return null;
         }
-
-        static bool namespacesAreNotSame(string namespaceA, string namespaceB)
-        {
-            if (namespaceA == namespaceB)
-            {
-                return false;
-            }
-                        
-            if (namespaceA == nameof(_System_) && namespaceB == nameof(System))
-            {
-                return false;
-            }
-                        
-            if (namespaceA == nameof(System) && namespaceB == nameof(_System_))
-            {
-                return false;
-            }
-                        
-            return true;
-        }
-
-        static bool isSameValues(IReadOnlyList<int> listA, IReadOnlyList<int> listB)
-        {
-            if (listA.Count != listB.Count)
-            {
-                return false;
-            }
-
-            var count = listA.Count;
-            
-            for (int i = 0; i < count; i++)
-            {
-                if (listA[i] != listB[i])
-                {
-                    return false;
-                }
-            }
-            
-            return true;
-        }
     }
-    
-  
             
     #endregion
 
