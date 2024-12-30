@@ -1328,6 +1328,16 @@ static class MonoCecilToJsonModelMapper
 
                return true;
            }
+           
+           public static bool IsSame(MetadataTable metadataTable, GenericInstanceMethodModel modelA, GenericInstanceMethodModel modelB)
+           {
+               if (modelA.ElementMethod != modelB.ElementMethod)
+               {
+                   return false;
+               }
+
+               return isSameValues(modelA.GenericArguments, modelB.GenericArguments);
+           }
        }
     }
     
@@ -1367,17 +1377,9 @@ static class MonoCecilToJsonModelMapper
             isSame<MethodReferenceModel, MethodReferenceModel>((modelA, modelB) => Compare.Method.IsSame(metadataTable, modelA, modelB)),
             isSame<MethodDefinitionModel, MethodDefinitionModel>((modelA, modelB) => Compare.Method.IsSame(metadataTable, modelA, modelB)),
             isSame<MethodReferenceModel, MethodReference>((model, reference) => Compare.Method.IsSame(metadataTable, model, reference)),
-            isSame<MethodDefinitionModel, MethodReference>((model, reference) =>Compare.Method.IsSame(metadataTable, model, reference)),
-
-            isSame<GenericInstanceMethodModel, GenericInstanceMethodModel>((modelA, modelB) =>
-            {
-                if (modelA.ElementMethod != modelB.ElementMethod)
-                {
-                    return false;
-                }
-
-                return isSameValues(modelA.GenericArguments, modelB.GenericArguments);
-            }),
+            isSame<MethodDefinitionModel, MethodReference>((model, reference) => Compare.Method.IsSame(metadataTable, model, reference)),
+            isSame<GenericInstanceMethodModel, GenericInstanceMethodModel>((modelA, modelB) => Compare.Method.IsSame(metadataTable, modelA, modelB)),
+            
             isSame<GenericInstanceMethodModel, GenericInstanceMethod>((modelA, reference) =>
             {
                 if (modelA.ElementMethod != reference.ElementMethod.IndexAt(metadataTable))
