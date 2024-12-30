@@ -2,7 +2,6 @@
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using System.Runtime.CompilerServices;
-using System.Security.Cryptography.Xml;
 
 namespace ReactWithDotNet;
 
