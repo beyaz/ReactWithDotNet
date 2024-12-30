@@ -1089,6 +1089,60 @@ static class MonoCecilToJsonModelMapper
                return false;
            }
            
+           public static bool IsSame(MetadataTable metadataTable, GenericInstanceTypeModel model, object item)
+           {
+               if (item is GenericInstanceType reference)
+               {
+                   if (model.ElementType != reference.ElementType.IndexAt(metadataTable))
+                   {
+                       return false;
+                   }
+
+                   if (reference.GenericArguments.Count != model.GenericArguments.Count)
+                   {
+                       return false;
+                   }
+
+                   for (var i = 0; i < reference.GenericArguments.Count; i++)
+                   {
+                       var genericArgument = reference.GenericArguments[i];
+
+                       if (!MonoCecilToJsonModelMapper.IsSame(genericArgument, metadataTable.Types[model.GenericArguments[i]], metadataTable))
+                       {
+                           return false;
+                       }
+                   }
+
+
+                   return true;
+               }
+
+               if (item is GenericInstanceTypeModel model2)
+               {
+                   if (model.ElementType != model2.ElementType)
+                   {
+                       return false;
+                   }
+
+                   if (model.GenericArguments.Count != model2.GenericArguments.Count)
+                   {
+                       return false;
+                   }
+
+                   for (var i = 0; i < model.GenericArguments.Count; i++)
+                   {
+                       if (model.GenericArguments[i] != model2.GenericArguments[i])
+                       {
+                           return false;
+                       }
+                   }
+
+
+                   return true;
+               }
+
+               return false;
+           }
        }
     }
     
@@ -1126,61 +1180,7 @@ static class MonoCecilToJsonModelMapper
             isSame<TypeDefinitionModel, TypeDefinitionModel>((modelA, modelB) => Compare.Type.IsSame(metadataTable, modelA, modelB)),
             isSame<TypeReferenceModel, TypeReferenceModel>((modelA, modelB) => Compare.Type.IsSame(metadataTable, modelA, modelB)),
             isSame<ArrayTypeModel, object>((arrayModel, item) => Compare.Type.IsSame(metadataTable, arrayModel, item)),
-
-            isSame<GenericInstanceTypeModel, object>((model, item) =>
-            {
-                if (item is GenericInstanceType reference)
-                {
-                    if (model.ElementType != reference.ElementType.IndexAt(metadataTable))
-                    {
-                        return false;
-                    }
-
-                    if (reference.GenericArguments.Count != model.GenericArguments.Count)
-                    {
-                        return false;
-                    }
-
-                    for (var i = 0; i < reference.GenericArguments.Count; i++)
-                    {
-                        var genericArgument = reference.GenericArguments[i];
-
-                        if (!IsSame(genericArgument, metadataTable.Types[model.GenericArguments[i]], metadataTable))
-                        {
-                            return false;
-                        }
-                    }
-
-
-                    return true;
-                }
-
-                if (item is GenericInstanceTypeModel model2)
-                {
-                    if (model.ElementType != model2.ElementType)
-                    {
-                        return false;
-                    }
-
-                    if (model.GenericArguments.Count != model2.GenericArguments.Count)
-                    {
-                        return false;
-                    }
-
-                    for (var i = 0; i < model.GenericArguments.Count; i++)
-                    {
-                        if (model.GenericArguments[i] != model2.GenericArguments[i])
-                        {
-                            return false;
-                        }
-                    }
-
-
-                    return true;
-                }
-
-                return false;
-            }),
+            isSame<GenericInstanceTypeModel, object>((model, item) => Compare.Type.IsSame(metadataTable, model, item)),
 
             isSame<GenericParameterModel, object>((model, item) =>
             {
