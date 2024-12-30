@@ -763,17 +763,17 @@ static class MonoCecilToJsonModelMapper
             {
                 return false;
             }
-                        
+
             if (namespaceA == nameof(_System_) && namespaceB == nameof(System))
             {
                 return false;
             }
-                        
+
             if (namespaceA == nameof(System) && namespaceB == nameof(_System_))
             {
                 return false;
             }
-                        
+
             return true;
         }
 
@@ -785,7 +785,7 @@ static class MonoCecilToJsonModelMapper
             }
 
             var count = listA.Count;
-            
+
             for (int i = 0; i < count; i++)
             {
                 if (listA[i] != listB[i])
@@ -793,581 +793,597 @@ static class MonoCecilToJsonModelMapper
                     return false;
                 }
             }
-            
+
             return true;
         }
-        
-       public static class Field
-       {
-           public static bool IsSame(MetadataTable metadataTable, FieldReference reference, FieldReferenceModel model)
-           {
-               if (reference.Name != model.Name)
-               {
-                   return false;
-               }
-
-               if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
-               {
-                   return false;
-               }
-
-               return true;
-           }
-        
-           public static bool IsSame(MetadataTable metadataTable, FieldReference reference, FieldDefinitionModel model)
-           {
-               if (reference.Name != model.Name)
-               {
-                   return false;
-               }
-
-               if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
-               {
-                   return false;
-               }
-                
-               return true;
-           }
-        
-           public static bool IsSame(MetadataTable metadataTable, FieldReferenceModel modelA, FieldReferenceModel modelB)
-           {
-               if (modelA.Name != modelB.Name)
-               {
-                   return false;
-               }
-
-               if (modelA.DeclaringType != modelB.DeclaringType)
-               {
-                   return false;
-               }
-
-               return true;
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable, FieldReferenceModel modelA, FieldDefinitionModel modelB)
-           {
-               if (modelA.Name != modelB.Name)
-               {
-                   return false;
-               }
-
-               if (modelA.DeclaringType != modelB.DeclaringType)
-               {
-                   return false;
-               }
-
-               return true;
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable, FieldDefinitionModel modelA, FieldDefinitionModel modelB)
-           {
-               if (modelA.Name != modelB.Name)
-               {
-                   return false;
-               }
-
-               if (modelA.DeclaringType != modelB.DeclaringType)
-               {
-                   return false;
-               }
-
-               return true;
-           }
-       }
-       
-       public static class Property
-       {
-           public static bool IsSame(MetadataTable metadataTable, PropertyReference reference, PropertyReferenceModel model)
-           {
-               if (reference.Name != model.Name)
-               {
-                   return false;
-               }
-
-               if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
-               {
-                   return false;
-               }
-                
-               return true;
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable, PropertyReferenceModel modelA, PropertyReferenceModel modelB)
-           {
-               if (modelA.Name != modelB.Name)
-               {
-                   return false;
-               }
-
-               if (modelA.DeclaringType != modelB.DeclaringType)
-               {
-                   return false;
-               }
-
-               return true;
-           }
-           public static bool IsSame(MetadataTable metadataTable, PropertyDefinitionModel modelA, PropertyDefinitionModel modelB)
-           {
-               if (modelA.Name != modelB.Name)
-               {
-                   return false;
-               }
-
-               if (modelA.DeclaringType != modelB.DeclaringType)
-               {
-                   return false;
-               }
-
-               return true;
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable, PropertyReferenceModel modelA, PropertyDefinitionModel modelB)
-           {
-               if (modelA.Name != modelB.Name)
-               {
-                   return false;
-               }
-
-               if (modelA.DeclaringType != modelB.DeclaringType)
-               {
-                   return false;
-               }
-
-               return true;
-           }
-       }
-       
-       public static class Event
-       {
-           public static bool IsSame(MetadataTable metadataTable, EventReference reference, EventReferenceModel model)
-           {
-               if (reference.Name != model.Name)
-               {
-                   return false;
-               }
-
-               if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
-               {
-                   return false;
-               }
-
-               return true;
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable, EventReferenceModel modelA, EventReferenceModel modelB)
-           {
-               if (modelA.Name != modelB.Name)
-               {
-                   return false;
-               }
-
-               if (modelA.DeclaringType != modelB.DeclaringType)
-               {
-                   return false;
-               }
-
-               return true;
-           }
-           
-       }
-       
-       public static class Type
-       {
-           public static bool IsSame(MetadataTable metadataTable, TypeReference reference, TypeDefinitionModel model)
-           {
-               if (model.Name != reference.Name)
-               {
-                   return false;
-               }
-
-               if (namespacesAreNotSame(reference.Namespace, model.Namespace))
-               {
-                   return false;
-               }
-               
-               return true;
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable,TypeReferenceModel referenceModel, TypeDefinitionModel definitionModel)
-           {
-               if (definitionModel.Name != referenceModel.Name)
-               {
-                   return false;
-               }
-
-               if (namespacesAreNotSame(referenceModel.Namespace, definitionModel.Namespace))
-               {
-                   return false;
-               }
-
-               return true;
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable, TypeReference reference, TypeReferenceModel model)
-           {
-               if (model.Name != reference.Name)
-               {
-                   return false;
-               }
-
-               if (namespacesAreNotSame(reference.Namespace, model.Namespace))
-               {
-                   return false;
-               }
-
-               if (reference is GenericInstanceType)
-               {
-                   return false;
-               }
-
-               return true;
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable, TypeDefinitionModel modelA, TypeDefinitionModel modelB)
-           {
-               if (modelA.Name != modelB.Name)
-               {
-                   return false;
-               }
-
-               if (namespacesAreNotSame(modelA.Namespace, modelB.Namespace))
-               {
-                   return false;
-               }
-
-               return true;
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable, TypeReferenceModel modelA, TypeReferenceModel modelB)
-           {
-               if (modelA.Name != modelB.Name)
-               {
-                   return false;
-               }
-
-               if (namespacesAreNotSame(modelA.Namespace, modelB.Namespace))
-               {
-                   return false;
-               }
-
-               return true;
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable, ArrayTypeModel arrayModel, object item)
-           {
-               if (item is ArrayTypeModel arrayTypeModel)
-               {
-                   if (arrayModel.Rank != arrayTypeModel.Rank)
-                   {
-                       return false;
-                   }
-
-                   if (arrayModel.ElementType != arrayTypeModel.ElementType)
-                   {
-                       return false;
-                   }
-
-                   return true;
-               }
-
-               if (item is ArrayType arrayType)
-               {
-                   if (arrayModel.Rank != arrayType.Rank)
-                   {
-                       return false;
-                   }
-
-                   if (arrayModel.ElementType != arrayType.ElementType.IndexAt(metadataTable))
-                   {
-                       return false;
-                   }
-
-                   return true;
-               }
-
-               return false;
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable, GenericInstanceTypeModel model, object item)
-           {
-               if (item is GenericInstanceType reference)
-               {
-                   if (model.ElementType != reference.ElementType.IndexAt(metadataTable))
-                   {
-                       return false;
-                   }
-
-                   if (reference.GenericArguments.Count != model.GenericArguments.Count)
-                   {
-                       return false;
-                   }
-
-                   for (var i = 0; i < reference.GenericArguments.Count; i++)
-                   {
-                       var genericArgument = reference.GenericArguments[i];
-
-                       if (!MonoCecilToJsonModelMapper.IsSame(genericArgument, metadataTable.Types[model.GenericArguments[i]], metadataTable))
-                       {
-                           return false;
-                       }
-                   }
-
-
-                   return true;
-               }
-
-               if (item is GenericInstanceTypeModel model2)
-               {
-                   if (model.ElementType != model2.ElementType)
-                   {
-                       return false;
-                   }
-
-                   if (model.GenericArguments.Count != model2.GenericArguments.Count)
-                   {
-                       return false;
-                   }
-
-                   for (var i = 0; i < model.GenericArguments.Count; i++)
-                   {
-                       if (model.GenericArguments[i] != model2.GenericArguments[i])
-                       {
-                           return false;
-                       }
-                   }
-
-
-                   return true;
-               }
-
-               return false;
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable, GenericParameterModel model, object item)
-           {
-               if (item is GenericParameter genericParameter)
-               {
-                   if (model.Position != genericParameter.Position)
-                   {
-                       return false;
-                   }
-
-                   if (model.Name != genericParameter.Name)
-                   {
-                       return false;
-                   }
-
-                   if (model.DeclaringType.HasValue && genericParameter.DeclaringType != null &&
-                       model.DeclaringType != genericParameter.DeclaringType.IndexAt(metadataTable))
-                   {
-                       return false;
-                   }
-
-                   if (model.DeclaringMethod.HasValue && genericParameter.DeclaringMethod != null &&
-                       model.DeclaringMethod != genericParameter.DeclaringMethod.IndexAt(metadataTable))
-                   {
-                       return false;
-                   }
-
-                   return true;
-               }
-
-               if (item is GenericParameterModel model2)
-               {
-                   if (model.Position != model2.Position)
-                   {
-                       return false;
-                   }
-
-                   if (model.Name != model2.Name)
-                   {
-                       return false;
-                   }
-
-                   if (model.DeclaringType.HasValue && model.DeclaringType != model2.DeclaringType)
-                   {
-                       return false;
-                   }
-
-                   if (model.DeclaringMethod.HasValue && model.DeclaringMethod != model2.DeclaringMethod)
-                   {
-                       return false;
-                   }
-
-                   return true;
-               }
-
-               return false;
-           }
-       }
-       
-       public static class Method
-       {
-           public static bool IsSame(MetadataTable metadataTable, MethodReferenceModel modelA, MethodDefinitionModel modelB)
-           {
-               if (modelA.Name != modelB.Name)
-               {
-                   return false;
-               }
-
-               if (modelA.DeclaringType != modelB.DeclaringType)
-               {
-                   return false;
-               }
-
-               if (modelA.Parameters.Count != modelB.Parameters.Count)
-               {
-                   return false;
-               }
-
-               for (var i = 0; i < modelA.Parameters.Count; i++)
-               {
-                   if (modelA.Parameters[i].ParameterType != modelB.Parameters[i].ParameterType)
-                   {
-                       return false;
-                   }
-               }
-
-
-               return true;
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable, MethodReferenceModel modelA, MethodReferenceModel modelB)
-           {
-               if (modelA.Name != modelB.Name)
-               {
-                   return false;
-               }
-
-               if (modelA.DeclaringType != modelB.DeclaringType)
-               {
-                   return false;
-               }
-
-               if (modelA.Parameters.Count != modelB.Parameters.Count)
-               {
-                   return false;
-               }
-
-               for (var i = 0; i < modelA.Parameters.Count; i++)
-               {
-                   if (modelA.Parameters[i].ParameterType != modelB.Parameters[i].ParameterType)
-                   {
-                       return false;
-                   }
-               }
-
-               return true;
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable, MethodDefinitionModel modelA, MethodDefinitionModel modelB)
-           {
-               if (modelA.Name != modelB.Name)
-               {
-                   return false;
-               }
-
-               if (modelA.DeclaringType != modelB.DeclaringType)
-               {
-                   return false;
-               }
-
-               if (modelA.Parameters.Count != modelB.Parameters.Count)
-               {
-                   return false;
-               }
-
-               for (var i = 0; i < modelA.Parameters.Count; i++)
-               {
-                   if (modelA.Parameters[i].ParameterType != modelB.Parameters[i].ParameterType)
-                   {
-                       return false;
-                   }
-               }
-
-               return true;
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable, MethodReferenceModel model, MethodReference reference)
-           {
-               if (reference.Name != model.Name)
-               {
-                   return false;
-               }
-
-               if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
-               {
-                   return false;
-               }
-
-               if (!reference.Parameters.IsFullMatchWith(model.Parameters, metadataTable))
-               {
-                   return false;
-               }
-
-               return true;
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable, MethodDefinitionModel model, MethodReference reference)
-           {
-               if (reference.Name != model.Name)
-               {
-                   return false;
-               }
-
-               if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
-               {
-                   return false;
-               }
-
-               if (!reference.Parameters.IsFullMatchWith(model.Parameters, metadataTable))
-               {
-                   return false;
-               }
-
-               return true;
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable, GenericInstanceMethodModel modelA, GenericInstanceMethodModel modelB)
-           {
-               if (modelA.ElementMethod != modelB.ElementMethod)
-               {
-                   return false;
-               }
-
-               return isSameValues(modelA.GenericArguments, modelB.GenericArguments);
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable, GenericInstanceMethodModel modelA, GenericInstanceMethod reference)
-           {
-               if (modelA.ElementMethod != reference.ElementMethod.IndexAt(metadataTable))
-               {
-                   return false;
-               }
-
-               if (modelA.GenericArguments.Count != reference.GenericArguments.Count)
-               {
-                   return false;
-               }
-
-               for (var i = 0; i < modelA.GenericArguments.Count; i++)
-               {
-                   if (modelA.GenericArguments[i] != reference.GenericArguments[i].IndexAt(metadataTable))
-                   {
-                       return false;
-                   }
-               }
-
-               return true;
-           }
-           
-           public static bool IsSame(MetadataTable metadataTable, GenericInstanceMethodModel model, object item)
-           {
-               return false;
-           }
-       }
+
+        public static class Field
+        {
+            public static bool IsSame(MetadataTable metadataTable, FieldReference reference, FieldReferenceModel model)
+            {
+                if (reference.Name != model.Name)
+                {
+                    return false;
+                }
+
+                if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, FieldReference reference, FieldDefinitionModel model)
+            {
+                if (reference.Name != model.Name)
+                {
+                    return false;
+                }
+
+                if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, FieldReferenceModel modelA, FieldReferenceModel modelB)
+            {
+                if (modelA.Name != modelB.Name)
+                {
+                    return false;
+                }
+
+                if (modelA.DeclaringType != modelB.DeclaringType)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, FieldReferenceModel modelA, FieldDefinitionModel modelB)
+            {
+                if (modelA.Name != modelB.Name)
+                {
+                    return false;
+                }
+
+                if (modelA.DeclaringType != modelB.DeclaringType)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, FieldDefinitionModel modelA, FieldDefinitionModel modelB)
+            {
+                if (modelA.Name != modelB.Name)
+                {
+                    return false;
+                }
+
+                if (modelA.DeclaringType != modelB.DeclaringType)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        public static class Property
+        {
+            public static bool IsSame(MetadataTable metadataTable, PropertyReference reference, PropertyReferenceModel model)
+            {
+                if (reference.Name != model.Name)
+                {
+                    return false;
+                }
+
+                if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, PropertyReferenceModel modelA, PropertyReferenceModel modelB)
+            {
+                if (modelA.Name != modelB.Name)
+                {
+                    return false;
+                }
+
+                if (modelA.DeclaringType != modelB.DeclaringType)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, PropertyDefinitionModel modelA, PropertyDefinitionModel modelB)
+            {
+                if (modelA.Name != modelB.Name)
+                {
+                    return false;
+                }
+
+                if (modelA.DeclaringType != modelB.DeclaringType)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, PropertyReferenceModel modelA, PropertyDefinitionModel modelB)
+            {
+                if (modelA.Name != modelB.Name)
+                {
+                    return false;
+                }
+
+                if (modelA.DeclaringType != modelB.DeclaringType)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        public static class Event
+        {
+            public static bool IsSame(MetadataTable metadataTable, EventReference reference, EventReferenceModel model)
+            {
+                if (reference.Name != model.Name)
+                {
+                    return false;
+                }
+
+                if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, EventReferenceModel modelA, EventReferenceModel modelB)
+            {
+                if (modelA.Name != modelB.Name)
+                {
+                    return false;
+                }
+
+                if (modelA.DeclaringType != modelB.DeclaringType)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+        }
+
+        public static class Type
+        {
+            public static bool IsSame(MetadataTable metadataTable, TypeReference reference, TypeDefinitionModel model)
+            {
+                if (model.Name != reference.Name)
+                {
+                    return false;
+                }
+
+                if (namespacesAreNotSame(reference.Namespace, model.Namespace))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, TypeReferenceModel referenceModel, TypeDefinitionModel definitionModel)
+            {
+                if (definitionModel.Name != referenceModel.Name)
+                {
+                    return false;
+                }
+
+                if (namespacesAreNotSame(referenceModel.Namespace, definitionModel.Namespace))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, TypeReference reference, TypeReferenceModel model)
+            {
+                if (model.Name != reference.Name)
+                {
+                    return false;
+                }
+
+                if (namespacesAreNotSame(reference.Namespace, model.Namespace))
+                {
+                    return false;
+                }
+
+                if (reference is GenericInstanceType)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, TypeDefinitionModel modelA, TypeDefinitionModel modelB)
+            {
+                if (modelA.Name != modelB.Name)
+                {
+                    return false;
+                }
+
+                if (namespacesAreNotSame(modelA.Namespace, modelB.Namespace))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, TypeReferenceModel modelA, TypeReferenceModel modelB)
+            {
+                if (modelA.Name != modelB.Name)
+                {
+                    return false;
+                }
+
+                if (namespacesAreNotSame(modelA.Namespace, modelB.Namespace))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, ArrayTypeModel arrayModel, object item)
+            {
+                if (item is ArrayTypeModel arrayTypeModel)
+                {
+                    if (arrayModel.Rank != arrayTypeModel.Rank)
+                    {
+                        return false;
+                    }
+
+                    if (arrayModel.ElementType != arrayTypeModel.ElementType)
+                    {
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                if (item is ArrayType arrayType)
+                {
+                    if (arrayModel.Rank != arrayType.Rank)
+                    {
+                        return false;
+                    }
+
+                    if (arrayModel.ElementType != arrayType.ElementType.IndexAt(metadataTable))
+                    {
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, GenericInstanceTypeModel model, object item)
+            {
+                if (item is GenericInstanceType reference)
+                {
+                    if (model.ElementType != reference.ElementType.IndexAt(metadataTable))
+                    {
+                        return false;
+                    }
+
+                    if (reference.GenericArguments.Count != model.GenericArguments.Count)
+                    {
+                        return false;
+                    }
+
+                    for (var i = 0; i < reference.GenericArguments.Count; i++)
+                    {
+                        var genericArgument = reference.GenericArguments[i];
+
+                        if (!MonoCecilToJsonModelMapper.IsSame(genericArgument, metadataTable.Types[model.GenericArguments[i]], metadataTable))
+                        {
+                            return false;
+                        }
+                    }
+
+
+                    return true;
+                }
+
+                if (item is GenericInstanceTypeModel model2)
+                {
+                    if (model.ElementType != model2.ElementType)
+                    {
+                        return false;
+                    }
+
+                    if (model.GenericArguments.Count != model2.GenericArguments.Count)
+                    {
+                        return false;
+                    }
+
+                    for (var i = 0; i < model.GenericArguments.Count; i++)
+                    {
+                        if (model.GenericArguments[i] != model2.GenericArguments[i])
+                        {
+                            return false;
+                        }
+                    }
+
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, GenericParameterModel model, object item)
+            {
+                if (item is GenericParameter genericParameter)
+                {
+                    if (model.Position != genericParameter.Position)
+                    {
+                        return false;
+                    }
+
+                    if (model.Name != genericParameter.Name)
+                    {
+                        return false;
+                    }
+
+                    if (model.DeclaringType.HasValue && genericParameter.DeclaringType != null &&
+                        model.DeclaringType != genericParameter.DeclaringType.IndexAt(metadataTable))
+                    {
+                        return false;
+                    }
+
+                    if (model.DeclaringMethod.HasValue && genericParameter.DeclaringMethod != null &&
+                        model.DeclaringMethod != genericParameter.DeclaringMethod.IndexAt(metadataTable))
+                    {
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                if (item is GenericParameterModel model2)
+                {
+                    if (model.Position != model2.Position)
+                    {
+                        return false;
+                    }
+
+                    if (model.Name != model2.Name)
+                    {
+                        return false;
+                    }
+
+                    if (model.DeclaringType.HasValue && model.DeclaringType != model2.DeclaringType)
+                    {
+                        return false;
+                    }
+
+                    if (model.DeclaringMethod.HasValue && model.DeclaringMethod != model2.DeclaringMethod)
+                    {
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        public static class Method
+        {
+            public static bool IsSame(MetadataTable metadataTable, MethodReferenceModel modelA, MethodDefinitionModel modelB)
+            {
+                if (modelA.Name != modelB.Name)
+                {
+                    return false;
+                }
+
+                if (modelA.DeclaringType != modelB.DeclaringType)
+                {
+                    return false;
+                }
+
+                if (modelA.Parameters.Count != modelB.Parameters.Count)
+                {
+                    return false;
+                }
+
+                for (var i = 0; i < modelA.Parameters.Count; i++)
+                {
+                    if (modelA.Parameters[i].ParameterType != modelB.Parameters[i].ParameterType)
+                    {
+                        return false;
+                    }
+                }
+
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, MethodReferenceModel modelA, MethodReferenceModel modelB)
+            {
+                if (modelA.Name != modelB.Name)
+                {
+                    return false;
+                }
+
+                if (modelA.DeclaringType != modelB.DeclaringType)
+                {
+                    return false;
+                }
+
+                if (modelA.Parameters.Count != modelB.Parameters.Count)
+                {
+                    return false;
+                }
+
+                for (var i = 0; i < modelA.Parameters.Count; i++)
+                {
+                    if (modelA.Parameters[i].ParameterType != modelB.Parameters[i].ParameterType)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, MethodDefinitionModel modelA, MethodDefinitionModel modelB)
+            {
+                if (modelA.Name != modelB.Name)
+                {
+                    return false;
+                }
+
+                if (modelA.DeclaringType != modelB.DeclaringType)
+                {
+                    return false;
+                }
+
+                if (modelA.Parameters.Count != modelB.Parameters.Count)
+                {
+                    return false;
+                }
+
+                for (var i = 0; i < modelA.Parameters.Count; i++)
+                {
+                    if (modelA.Parameters[i].ParameterType != modelB.Parameters[i].ParameterType)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, MethodReferenceModel model, MethodReference reference)
+            {
+                if (reference.Name != model.Name)
+                {
+                    return false;
+                }
+
+                if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
+                {
+                    return false;
+                }
+
+                if (!reference.Parameters.IsFullMatchWith(model.Parameters, metadataTable))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, MethodDefinitionModel model, MethodReference reference)
+            {
+                if (reference.Name != model.Name)
+                {
+                    return false;
+                }
+
+                if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
+                {
+                    return false;
+                }
+
+                if (!reference.Parameters.IsFullMatchWith(model.Parameters, metadataTable))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, GenericInstanceMethodModel modelA, GenericInstanceMethodModel modelB)
+            {
+                if (modelA.ElementMethod != modelB.ElementMethod)
+                {
+                    return false;
+                }
+
+                return isSameValues(modelA.GenericArguments, modelB.GenericArguments);
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, GenericInstanceMethodModel modelA, GenericInstanceMethod reference)
+            {
+                if (modelA.ElementMethod != reference.ElementMethod.IndexAt(metadataTable))
+                {
+                    return false;
+                }
+
+                if (modelA.GenericArguments.Count != reference.GenericArguments.Count)
+                {
+                    return false;
+                }
+
+                for (var i = 0; i < modelA.GenericArguments.Count; i++)
+                {
+                    if (modelA.GenericArguments[i] != reference.GenericArguments[i].IndexAt(metadataTable))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, GenericInstanceMethodModel model, MethodReference methodReference)
+            {
+                if (methodReference is GenericInstanceMethod genericInstanceMethod)
+                {
+                    return IsSame(metadataTable, model, genericInstanceMethod);
+                }
+
+                return false;
+            }
+
+            public static bool IsSame(MetadataTable metadataTable, GenericInstanceMethodModel model, object item)
+            {
+                if (item is GenericInstanceMethod genericInstanceMethod)
+                {
+                    return IsSame(metadataTable, model, genericInstanceMethod);
+                }
+
+                return false;
+            }
+        }
     }
-    
+
     static bool IsSame(object a, object b, MetadataTable metadataTable)
     {
         List<Func<bool?>> funcs =
@@ -1407,6 +1423,7 @@ static class MonoCecilToJsonModelMapper
             isSame<MethodDefinitionModel, MethodReference>((model, reference) => Compare.Method.IsSame(metadataTable, model, reference)),
             isSame<GenericInstanceMethodModel, GenericInstanceMethodModel>((modelA, modelB) => Compare.Method.IsSame(metadataTable, modelA, modelB)),
             isSame<GenericInstanceMethodModel, GenericInstanceMethod>((modelA, reference) => Compare.Method.IsSame(metadataTable, modelA, reference)),
+            isSame<GenericInstanceMethodModel, MethodReference>((model, reference) => Compare.Method.IsSame(metadataTable, model, reference)),
             isSame<GenericInstanceMethodModel, object>((model, item) => Compare.Method.IsSame(metadataTable, model, item))
         ];
        
