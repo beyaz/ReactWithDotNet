@@ -278,6 +278,11 @@ sealed class TypeDefinitionModel
     
     public required IReadOnlyList<InterfaceImplementationModel> Interfaces { get; init; }
     
+    public override string ToString()
+    {
+        return Namespace + "." + Name;
+    }
+    
 }
 
 sealed class MetadataScopeModel
