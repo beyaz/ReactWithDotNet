@@ -4485,7 +4485,7 @@ function IsTwoMethodParametersFullMatch(methodA, methodB)
 
 /**
  *   @method {MethodReferenceModel}
- *   @returns {MethodDefinitionModel | MethodReferenceModel | GenericInstanceMethodModel}
+ *   @returns { null | MethodDefinitionModel | MethodReferenceModel | GenericInstanceMethodModel}
  */
 function TryFindDotNetJsOverrides(method)
 {
