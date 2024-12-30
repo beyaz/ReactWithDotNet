@@ -1260,6 +1260,54 @@ static class MonoCecilToJsonModelMapper
 
                return true;
            }
+           
+           public static bool IsSame(MetadataTable metadataTable, MethodDefinitionModel modelA, MethodDefinitionModel modelB)
+           {
+               if (modelA.Name != modelB.Name)
+               {
+                   return false;
+               }
+
+               if (modelA.DeclaringType != modelB.DeclaringType)
+               {
+                   return false;
+               }
+
+               if (modelA.Parameters.Count != modelB.Parameters.Count)
+               {
+                   return false;
+               }
+
+               for (var i = 0; i < modelA.Parameters.Count; i++)
+               {
+                   if (modelA.Parameters[i].ParameterType != modelB.Parameters[i].ParameterType)
+                   {
+                       return false;
+                   }
+               }
+
+               return true;
+           }
+           
+           public static bool IsSame(MetadataTable metadataTable, MethodReferenceModel model, MethodReference reference)
+           {
+               if (reference.Name != model.Name)
+               {
+                   return false;
+               }
+
+               if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
+               {
+                   return false;
+               }
+
+               if (!reference.Parameters.IsFullMatchWith(model.Parameters, metadataTable))
+               {
+                   return false;
+               }
+
+               return true;
+           }
        }
     }
     
@@ -1297,54 +1345,8 @@ static class MonoCecilToJsonModelMapper
             // m e t h o d
             isSame<MethodReferenceModel, MethodDefinitionModel>((modelA, modelB) => Compare.Method.IsSame(metadataTable, modelA, modelB)),
             isSame<MethodReferenceModel, MethodReferenceModel>((modelA, modelB) => Compare.Method.IsSame(metadataTable, modelA, modelB)),
-
-            isSame<MethodDefinitionModel, MethodDefinitionModel>((modelA, modelB) =>
-            {
-                if (modelA.Name != modelB.Name)
-                {
-                    return false;
-                }
-
-                if (modelA.DeclaringType != modelB.DeclaringType)
-                {
-                    return false;
-                }
-
-                if (modelA.Parameters.Count != modelB.Parameters.Count)
-                {
-                    return false;
-                }
-
-                for (var i = 0; i < modelA.Parameters.Count; i++)
-                {
-                    if (modelA.Parameters[i].ParameterType != modelB.Parameters[i].ParameterType)
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-            }),
-
-            isSame<MethodReferenceModel, MethodReference>((model, reference) =>
-            {
-                if (reference.Name != model.Name)
-                {
-                    return false;
-                }
-
-                if (reference.DeclaringType.IndexAt(metadataTable) != model.DeclaringType)
-                {
-                    return false;
-                }
-
-                if (!reference.Parameters.IsFullMatchWith(model.Parameters, metadataTable))
-                {
-                    return false;
-                }
-
-                return true;
-            }),
+            isSame<MethodDefinitionModel, MethodDefinitionModel>((modelA, modelB) => Compare.Method.IsSame(metadataTable, modelA, modelB)),
+            isSame<MethodReferenceModel, MethodReference>((model, reference) => Compare.Method.IsSame(metadataTable, model, reference)),
 
             isSame<MethodDefinitionModel, MethodReference>((model, reference) =>
             {
