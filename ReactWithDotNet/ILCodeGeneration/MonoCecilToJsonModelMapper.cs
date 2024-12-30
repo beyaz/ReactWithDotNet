@@ -1338,6 +1338,34 @@ static class MonoCecilToJsonModelMapper
 
                return isSameValues(modelA.GenericArguments, modelB.GenericArguments);
            }
+           
+           public static bool IsSame(MetadataTable metadataTable, GenericInstanceMethodModel modelA, GenericInstanceMethod reference)
+           {
+               if (modelA.ElementMethod != reference.ElementMethod.IndexAt(metadataTable))
+               {
+                   return false;
+               }
+
+               if (modelA.GenericArguments.Count != reference.GenericArguments.Count)
+               {
+                   return false;
+               }
+
+               for (var i = 0; i < modelA.GenericArguments.Count; i++)
+               {
+                   if (modelA.GenericArguments[i] != reference.GenericArguments[i].IndexAt(metadataTable))
+                   {
+                       return false;
+                   }
+               }
+
+               return true;
+           }
+           
+           public static bool IsSame(MetadataTable metadataTable, GenericInstanceMethodModel model, object item)
+           {
+               return false;
+           }
        }
     }
     
@@ -1379,46 +1407,20 @@ static class MonoCecilToJsonModelMapper
             isSame<MethodReferenceModel, MethodReference>((model, reference) => Compare.Method.IsSame(metadataTable, model, reference)),
             isSame<MethodDefinitionModel, MethodReference>((model, reference) => Compare.Method.IsSame(metadataTable, model, reference)),
             isSame<GenericInstanceMethodModel, GenericInstanceMethodModel>((modelA, modelB) => Compare.Method.IsSame(metadataTable, modelA, modelB)),
-            
-            isSame<GenericInstanceMethodModel, GenericInstanceMethod>((modelA, reference) =>
-            {
-                if (modelA.ElementMethod != reference.ElementMethod.IndexAt(metadataTable))
-                {
-                    return false;
-                }
-
-                if (modelA.GenericArguments.Count != reference.GenericArguments.Count)
-                {
-                    return false;
-                }
-
-                for (var i = 0; i < modelA.GenericArguments.Count; i++)
-                {
-                    if (modelA.GenericArguments[i] != reference.GenericArguments[i].IndexAt(metadataTable))
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-            }),
-
-            isSame<GenericInstanceMethodModel, object>((_, _) => false)
-
+            isSame<GenericInstanceMethodModel, GenericInstanceMethod>((modelA, reference) => Compare.Method.IsSame(metadataTable, modelA, reference)),
+            isSame<GenericInstanceMethodModel, object>((model, item) => Compare.Method.IsSame(metadataTable, model, item))
         ];
-
-        
-
-      
        
         
-        bool? result = run(funcs);
-        if (result is not null)
+        var result = run(funcs);
+        if (result is null)
         {
-            return result.Value;
+            throw new NotImplementedException();
         }
+        
+        return result.Value;
 
-        throw new NotImplementedException();
+        
 
         Func<bool?> isSame<A,B>(Func<A,B, bool> compareFunc)
         {
