@@ -213,6 +213,8 @@ sealed class MethodReferenceModel
     public required int ReturnType { get; init; }
     
     public required uint RID { get; init; }
+    
+    public required int IsStatic { get; init; }
 }
 
 sealed class MethodBodyModel

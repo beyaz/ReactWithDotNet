@@ -528,7 +528,8 @@ static class MonoCecilToJsonModelMapper
             ReturnType        = methodReference.ReturnType.IndexAt(metadataTable),
             Name              = methodReference.Name,
             Parameters        = methodReference.Parameters.ToListOf(AsModel, metadataTable),
-            DeclaringType     = methodReference.DeclaringType.IndexAt(metadataTable)
+            DeclaringType     = methodReference.DeclaringType.IndexAt(metadataTable),
+            IsStatic = methodReference.HasThis ?  0 :1
         };
     }
 

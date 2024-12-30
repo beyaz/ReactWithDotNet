@@ -157,6 +157,7 @@ const GenericParameter = 4;
  * @property {ParameterDefinitionModel[]} Parameters - The parameters of the method.
  * @property {number} DeclaringType - The declaring type of the method.
  * @property {number} ReturnType - The return type of the method.
+ * @property {number} IsStatic - Indicates if the method is static.
  */
 
 /**
@@ -1464,7 +1465,7 @@ function Interpret(thread)
 
                     if (method.IsMethodReference)
                     {
-                        method = TryFindDotNetJsOverrides(method);
+                        method = TryFindDotNetJsOverrides(method) ?? method;
                     }
                     
                     if (method.IsMethodReference)
@@ -2447,8 +2448,12 @@ function Interpret(thread)
                         // try to find in DotNetJsOverrides
                         if (method !== targetMethod)
                         {
-                            method = TryFindDotNetJsOverrides(method);
-                        }                    
+                            targetMethod = TryFindDotNetJsOverrides(method);
+                            if (targetMethod)
+                            {
+                                method = targetMethod;
+                            }
+                        }
                     }
                     
                     if (method !== targetMethod)
@@ -4559,7 +4564,7 @@ function TryFindDotNetJsOverrides(method)
         }
     }
     
-    return method;
+    return null;
 }
 
 /**
