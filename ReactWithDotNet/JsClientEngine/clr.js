@@ -934,7 +934,6 @@ function ImportMetadata(metadata)
     importMethodDefinitions();
 }
 
-const InterpreterBridge_NewArr = 0;
 const InterpreterBridge_NullReferenceException = 1;
 const InterpreterBridge_ArgumentNullException = 2;
 const InterpreterBridge_DivideByZeroException = 3;
@@ -1300,95 +1299,7 @@ function Interpret(thread)
                     const isCtor = method.Name === '.ctor';
 
                     const declaringType = method.DeclaringType >= 0 ? AllTypes[method.DeclaringType] : null;
-                    
-                    if (declaringType && declaringType.ValueTypeId === ArrayType && method.Name === 'Set')
-                    {
-                        const value = evaluationStack.pop();                       
-                        
-                        const rank = declaringType.Rank;
-                        
-                        const indexList = [];
-                        {
-                            for (let i = 0; i < rank; i++)
-                            {
-                                indexList.push(evaluationStack.pop());
-                            }
-                            indexList.reverse();
-                        }
 
-                        /**
-                         * @type {any[] | {$dimensions: number[]}}
-                         */
-                        const array = evaluationStack.pop();
-                        
-                        /**
-                         * @type {number[]}
-                         */
-                        const dimensions = array.$dimensions;
-                        
-                        let flatIndex = 0;
-                        {
-                            for (let i = 0; i < rank; i++)
-                            {
-                                let multiplier = 1;
-                                for (let j = i + 1; j < rank; j++)
-                                {
-                                    multiplier *= dimensions[j];
-                                }
-
-                                flatIndex += indexList[i] * multiplier;
-                            }
-                        }
-                        
-                        array[flatIndex] = value;
-
-                        nextInstruction = instructions[++currentStackFrame.Line];
-                        break;
-                    }
-
-                    if (declaringType && declaringType.ValueTypeId === ArrayType && method.Name === 'Get')
-                    {
-                        const rank = declaringType.Rank;
-
-                        const indexList = [];
-                        {
-                            for (let i = 0; i < rank; i++)
-                            {
-                                indexList.push(evaluationStack.pop());
-                            }
-                            indexList.reverse();
-                        }
-
-                        /**
-                         * @type {any[] | {$dimensions: number[]}}
-                         */
-                        const array = evaluationStack.pop();
-
-                        /**
-                         * @type {number[]}
-                         */
-                        const dimensions = array.$dimensions;
-
-                        let flatIndex = 0;
-                        {
-                            for (let i = 0; i < rank; i++)
-                            {
-                                let multiplier = 1;
-                                for (let j = i + 1; j < rank; j++)
-                                {
-                                    multiplier *= dimensions[j];
-                                }
-
-                                flatIndex += indexList[i] * multiplier;
-                            }
-                        }
-
-                        evaluationStack.push(array[flatIndex]);
-
-                        nextInstruction = instructions[++currentStackFrame.Line];
-                        break;
-                    }
-                    
                     const declaringTypeIsGenericInstanceType = declaringType && declaringType.ValueTypeId === GenericInstanceType;
 
                     let genericInstanceMethod= null;

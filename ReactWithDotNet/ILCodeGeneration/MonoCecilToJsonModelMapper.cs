@@ -253,14 +253,23 @@ static class MonoCecilToJsonModelMapper
 
             if (operand is MethodReference methodReference)
             {
-                if (methodReference.Name =="Set" && methodReference.DeclaringType is ArrayType arrayType)
+                if ( methodReference.DeclaringType is ArrayType arrayType)
                 {
-                   instructions[^1] = 229;
-                   
-                   
-                   operands.Add(i,OpCodeManaged.MultiDimensionalArray_Set);
-                   continue;
+                    if (methodReference.Name =="Set")
+                    {
+                        instructions[^1] = 229;
+                        operands.Add(i,OpCodeManaged.MultiDimensionalArray_Set);
+                        continue;
+                    }
+                    if (methodReference.Name == "Get")
+                    {
+                        instructions[^1] = 229;
+                        operands.Add(i, OpCodeManaged.MultiDimensionalArray_Get);
+                        continue;
+                    }
                 }
+                
+                
                 if (methodReference.FullName == "System.Void System.Object::.ctor()")
                 {
                     instructions[^1] = (int)OpCodes.Pop.Code;
