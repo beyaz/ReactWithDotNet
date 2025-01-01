@@ -253,6 +253,11 @@ static class MonoCecilToJsonModelMapper
 
             if (operand is MethodReference methodReference)
             {
+                if (methodReference.Name =="Set" && methodReference.DeclaringType.IsArray)
+                {
+                   // instructions[^1] = 219;
+                   // continue;
+                }
                 if (methodReference.FullName == "System.Void System.Object::.ctor()")
                 {
                     instructions[^1] = (int)OpCodes.Pop.Code;
