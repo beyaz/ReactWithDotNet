@@ -1,7 +1,6 @@
 ﻿using ReactWithDotNet;
 using static ReactWithDotNet.NativeJsHelper;
-
-
+using static ReactWithDotNet.OpCodeManaged;
 
 namespace ReactWithDotNet;
 
@@ -42,6 +41,10 @@ static class NativeJsHelper
     public static extern object Get(this object instance, string key);
     public static extern object Get(this object instance, int key);
     
+    public static extern string TypeOf(this object instance);
+    
+    public static extern bool TypeOfIsNumber(this object instance);
+    
     public static extern object CreateNewPlainObject();
 
     public static extern Array CreateNewArray();
@@ -73,20 +76,25 @@ static class NativeJsHelper
 
 
 
-
+static class OpCodeManaged
+{
+    public const int MultiDimensionalArray_Set = 0;
+    
+    public const int InterpreterBridge_NewArr = 0; // todo: free
+    public const int InterpreterBridge_NullReferenceException = 1;
+    public const int InterpreterBridge_ArgumentNullException = 2;
+    public const int InterpreterBridge_DivideByZeroException = 3;
+    public const int InterpreterBridge_IndexOutOfRangeException = 4;
+    public const int InterpreterBridge_MissingMethodException = 5;
+    public const int InterpreterBridge_OverflowException = 6;
+}
 
 static class InterpreterBridge
 {
    
     public static void Jump()
     {
-        const int InterpreterBridge_NewArr = 0; // todo: free
-        const int InterpreterBridge_NullReferenceException = 1;
-        const int InterpreterBridge_ArgumentNullException = 2;
-        const int InterpreterBridge_DivideByZeroException = 3;
-        const int InterpreterBridge_IndexOutOfRangeException = 4;
-        const int InterpreterBridge_MissingMethodException = 5;
-        const int InterpreterBridge_OverflowException = 6;
+        
         
         
         var previousStackFrame = PreviousStackFrame;
@@ -96,73 +104,98 @@ static class InterpreterBridge
         
         var instruction = evaluationStack.pop().As<int>();
 
-        
-
-
-        if (InterpreterBridge_NewArr == instruction)
+        switch (instruction)
         {
-            //var length = evaluationStack.pop().As<int>();
+            case MultiDimensionalArray_Set:
+            {
+                var rank = 0;
+                
+                var value = evaluationStack.pop();
+
+                object[] array;
+                var indexList = CreateNewArray().As<int[]>();
+                {
+                    while (true)
+                    {
+                        var item = evaluationStack.pop();
+                        if (item.TypeOfIsNumber())
+                        {
+                            indexList.push(item);
+                            rank++;
+                        }
+                        else
+                        {
+                            array = item.As<object[]>();
+                            break;
+                        }
+                    }
+                    indexList.Call("reverse");
+                }
+                
+                
+
+                var dimensions = array.Get("$dimensions").As<int[]>();
+                var flatIndex = 0;
+                {
+                    for (var i = 0; i < rank; i++)
+                    {
+                        var multiplier = 1;
+                        for (var j = i + 1; j < rank; j++)
+                        {
+                            multiplier *= dimensions[j];
+                        }
+
+                        flatIndex += indexList[i] * multiplier;
+                    }
+                }
+                
+                array[flatIndex] = value;
+                
+                return;
+            }
+
+            case InterpreterBridge_NullReferenceException:
+            {
+                var message = evaluationStack.pop().As<string>();
+
+                throw new NullReferenceException(message);
+            }
             
-            //var typeIndex = evaluationStack.pop().As<int>();
+            case InterpreterBridge_ArgumentNullException:
+            {
+                var message = evaluationStack.pop().As<string>();
 
-            //var array = CreateNewArray();
-
-            //array.Set("length", length.AsObject());
-            //array.Set("$type", typeIndex.AsObject());
-
-            //for (int i = 0; i < length; i++)
-            //{
-            //    //array.Set(i,);
-            //}
+                throw new ArgumentNullException(message);
+            }
             
+            case InterpreterBridge_DivideByZeroException:
+            {
+                var message = evaluationStack.pop().As<string>();
+
+                throw new DivideByZeroException(message);
+            }
             
+            case InterpreterBridge_IndexOutOfRangeException:
+            {
+                var message = evaluationStack.pop().As<string>();
+
+                throw new IndexOutOfRangeException(message);
+            }
             
+            case InterpreterBridge_MissingMethodException:
+            {
+                
+                var methodReferenceModel = evaluationStack.pop().As<MethodReferenceModel>();
 
-            //evaluationStack.push(array);
+                throw new MissingMethodException(methodReferenceModel.Name);
+            }
+            
+            case InterpreterBridge_OverflowException:
+            {
+                var message = evaluationStack.pop().As<string>();
 
-            return;
-        }
-
-        if (InterpreterBridge_NullReferenceException == instruction)
-        {
-            var message = evaluationStack.pop().As<string>();
-
-            throw new NullReferenceException(message);
-        }
-
-        if (InterpreterBridge_ArgumentNullException == instruction)
-        {
-            var message = evaluationStack.pop().As<string>();
-
-            throw new ArgumentNullException(message);
-        }
-        
-        if (InterpreterBridge_DivideByZeroException == instruction)
-        {
-            var message = evaluationStack.pop().As<string>();
-
-            throw new DivideByZeroException(message);
-        }
-        
-        if (InterpreterBridge_IndexOutOfRangeException == instruction)
-        {
-            var message = evaluationStack.pop().As<string>();
-
-            throw new IndexOutOfRangeException(message);
-        }
-        
-        if (InterpreterBridge_MissingMethodException == instruction)
-        {
-            var methodReferenceModel = evaluationStack.pop().As<MethodReferenceModel>();
-
-            throw new MissingMethodException(methodReferenceModel.Name);
-        }
-        
-        if (InterpreterBridge_OverflowException == instruction)
-        {
-            var message = evaluationStack.pop().As<string>();
-
-            throw new OverflowException(message);
+                throw new OverflowException(message);
+            }
         }
 
         throw new Exception();

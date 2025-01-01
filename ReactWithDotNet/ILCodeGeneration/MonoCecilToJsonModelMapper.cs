@@ -253,11 +253,13 @@ static class MonoCecilToJsonModelMapper
 
             if (operand is MethodReference methodReference)
             {
-                if (methodReference.Name =="Set" && methodReference.DeclaringType.IsArray)
+                if (methodReference.Name =="Set" && methodReference.DeclaringType is ArrayType arrayType)
                 {
-                    // todo: fixme
-                   // instructions[^1] = 219;
-                   // continue;
+                   instructions[^1] = 229;
+                   
+                   
+                   operands.Add(i,OpCodeManaged.MultiDimensionalArray_Set);
+                   continue;
                 }
                 if (methodReference.FullName == "System.Void System.Object::.ctor()")
                 {
@@ -267,6 +269,20 @@ static class MonoCecilToJsonModelMapper
                 
                 if (methodReference.DeclaringType?.FullName == typeof(NativeJsHelper).FullName)
                 {
+                    if (methodReference.Name == nameof(NativeJsHelper.TypeOf))
+                    {
+                        instructions[^1] = 230;
+                        continue;
+                    }
+                    if (methodReference.Name == nameof(NativeJsHelper.TypeOfIsNumber))
+                    {
+                        instructions[^1] = 231;
+                        continue;
+                    }
+                    
+                    
+                    
+                    
                     instructions[^1] = 220;
 
                     if (methodReference.Name == nameof(NativeJsHelper.Set))

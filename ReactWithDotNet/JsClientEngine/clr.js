@@ -1303,7 +1303,7 @@ function Interpret(thread)
                     
                     if (declaringType && declaringType.ValueTypeId === ArrayType && method.Name === 'Set')
                     {
-                        const value = evaluationStack.pop();                        
+                        const value = evaluationStack.pop();                       
                         
                         const rank = declaringType.Rank;
                         
@@ -1925,7 +1925,7 @@ function Interpret(thread)
                     
                     let caseIndex = evaluationStack.pop();
                     
-                    if ( caseIndex > 0 && jumpTable.length > caseIndex)
+                    if ( caseIndex >= 0 && jumpTable.length > caseIndex)
                     {
                         currentStackFrame.Line = jumpTable[caseIndex];
 
@@ -4278,6 +4278,26 @@ function Interpret(thread)
                     nextInstruction = 222;
                     break;
                     
+                }
+                
+                case 229: // swap managed OpCode
+                {
+                    evaluationStack.push(operands[currentStackFrame.Line]);
+                    nextInstruction = InterpreterBridge_Jump;
+                    break;
+                }
+
+                case 230:
+                {
+                    evaluationStack.push( typeof evaluationStack.pop() );
+                    nextInstruction = instructions[++currentStackFrame.Line];
+                    break;
+                }
+                case 231:
+                {
+                    evaluationStack.push( typeof evaluationStack.pop() === 'number' ? 1 : 0 );
+                    nextInstruction = instructions[++currentStackFrame.Line];
+                    break;
                 }
             }
         }
