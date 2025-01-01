@@ -92,19 +92,14 @@ static class OpCodeManaged
 
 static class InterpreterBridge
 {
-   
     public static void Jump()
     {
-        var previousStackFrame = PreviousStackFrame;
-        
-        var evaluationStack = previousStackFrame.EvaluationStack;
+        var evaluationStack = PreviousStackFrame.Get(nameof(StackFrame.EvaluationStack)).As<Array>();
         
         var instruction = evaluationStack.pop().As<int>();
 
         switch (instruction)
         {
-            
-
             case InterpreterBridge_NullReferenceException:
             {
                 var message = evaluationStack.pop().As<string>();
