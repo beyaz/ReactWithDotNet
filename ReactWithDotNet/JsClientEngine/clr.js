@@ -1399,103 +1399,6 @@ function Interpret(thread)
                         NotImplementedOpCode();
                     }
                     
-                    // maybe external method
-                    if (method.Body.Instructions.length === 0)
-                    {
-                        const declaringType = AllTypes[method.DeclaringType];
-                        if (declaringType.ValueTypeId === TypeReference)
-                        {
-                            evaluationStack.push(declaringType);
-                            nextInstruction = 223;
-                            break;
-                        }
-                        
-                        let isDeclaringTypeExternal = false;
-                        {
-                            let customAttributes = declaringType.CustomAttributes;
-
-                            let length = customAttributes.length;
-
-                            for (let i= 0; i < length; i++)
-                            {
-                                let attribute = customAttributes[i];
-
-                                let constructor = AllMethods[attribute.Constructor]
-                                
-                                let declaringTypeOfConstructor = AllTypes[constructor.DeclaringType];
-                                if (declaringTypeOfConstructor.Name === 'ExternalAttribute' &&
-                                    declaringTypeOfConstructor.Namespace === 'ReactWithDotNet')
-                                {
-                                    isDeclaringTypeExternal = true;
-                                    break;
-                                }
-                            }
-                        }
-                        
-                        if (isDeclaringTypeExternal === true)
-                        {
-                            let instance = null;
-                            
-                            let fnArguments = [];
-                            
-                            // move arguments to fnArguments
-                            {
-                                let length = method.Parameters.length;
-                                while (length-- > 0)
-                                {
-                                    fnArguments.push(evaluationStack.pop());
-                                }
-
-                                fnArguments.reverse();
-                            }
-
-                            let isVoid = false;
-                            {
-                                let returnType = AllTypes[method.ReturnType];
-                                
-                                isVoid = returnType.Namespace === 'System' && returnType.Name === 'Void';
-                            }
-
-                            if (!method.IsStatic)
-                            {
-                                instance = evaluationStack.pop();
-                            }
-                            
-                            let fn = null;
-                            
-                            let caller = null;
-                            if (method.IsStatic)
-                            {
-                                let externalType = window[declaringType.Name];
-
-                                fn = externalType[method.Name];
-                                
-                                if (declaringType.Name === 'document')
-                                {
-                                    caller = document;
-                                }
-                            }
-                            
-                            if (fn == null)
-                            {
-                                evaluationStack.push(method);
-                                evaluationStack.push(InterpreterBridge_MissingMethodException);
-                                nextInstruction = InterpreterBridge_Jump;
-                                break;
-                            }
-
-                            let fnResult = fn.apply(caller, fnArguments);
-
-                            if (isVoid === false)
-                            {
-                                evaluationStack.push(fnResult);
-                            }
-                            
-                            nextInstruction = instructions[++currentStackFrame.Line];
-                            break;
-                        }                                          
-                    }
-
                     evaluationStack.push(method);
                     evaluationStack.push(genericInstanceMethod);
                     nextInstruction = OpCode_Open_Next_Frame;
@@ -4207,6 +4110,104 @@ function Interpret(thread)
                 case 231:
                 {
                     evaluationStack.push( typeof evaluationStack.pop() === 'number' ? 1 : 0 );
+                    nextInstruction = instructions[++currentStackFrame.Line];
+                    break;
+                }
+
+                case 232: // external call
+                {
+                    const prop = operands[currentStackFrame.Line];
+                    
+                    const isStatic = prop[0];
+                    const isVoid = prop[1];
+                    const parameterCount = prop[2];
+                    const functionName = prop[3];
+                    const isField = prop[4];
+
+
+                    let instance = null;
+                    
+                    // load field
+                    if (isField && parameterCount === 0)
+                    {
+                        if (isStatic)
+                        {
+                            evaluationStack.push(window[functionName]);                            
+                        }
+                        else
+                        {
+                            instance = evaluationStack.pop();
+
+                            if (instance == null)
+                            {
+                                // NullReferenceException
+                                evaluationStack.push(functionName);
+                                evaluationStack.push(InterpreterBridge_NullReferenceException);
+                                nextInstruction = InterpreterBridge_Jump;
+                                break;
+                            }
+
+                            evaluationStack.push(instance[functionName]);
+                        }
+
+                        nextInstruction = instructions[++currentStackFrame.Line];
+                        break;
+                    }
+                    
+                    
+
+                    let fnArguments = [];
+
+                    // move arguments to fnArguments
+                    {
+                        let length = parameterCount;
+                        while (length-- > 0)
+                        {
+                            fnArguments.push(evaluationStack.pop());
+                        }
+
+                        fnArguments.reverse();
+                    }
+
+                    let fn = null;
+                    {
+                        if (isStatic)
+                        {
+                            fn = window[functionName];
+                        }
+                        else
+                        {
+                            instance = evaluationStack.pop();
+
+                            if (instance == null)
+                            {
+                                // NullReferenceException
+                                evaluationStack.push(functionName);
+                                evaluationStack.push(InterpreterBridge_NullReferenceException);
+                                nextInstruction = InterpreterBridge_Jump;
+                                break;
+                            }
+
+                            fn = instance[functionName];
+                        }
+
+                        if (!fn)
+                        {
+                            evaluationStack.push(functionName);
+                            evaluationStack.push(InterpreterBridge_MissingMethodException);
+                            nextInstruction = InterpreterBridge_Jump;
+                            break;
+                        }
+                    }
+                    
+
+                    let fnResult = fn.apply(instance, fnArguments);
+
+                    if (isVoid  === 0)
+                    {
+                        evaluationStack.push(fnResult);
+                    }
+
                     nextInstruction = instructions[++currentStackFrame.Line];
                     break;
                 }

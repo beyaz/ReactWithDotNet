@@ -270,15 +270,22 @@ static class MonoCecilToJsonModelMapper
                         var isExternal = methodDefinition.DeclaringType.CustomAttributes.Any(x => x.Constructor.DeclaringType.Namespace == typeof(ExternalAttribute).Namespace && x.Constructor.DeclaringType.Name == nameof(ExternalAttribute));
                         if (isExternal && methodDefinition.Body.Instructions.Count == 0)
                         {
+                            //var isWindowInstance = methodDefinition.DeclaringType.Name == nameof(window) &&
+                            //                       methodDefinition.DeclaringType.Namespace == typeof(window).Namespace;
+                            
                             var isVoid = methodDefinition.ReturnType.Name == "Void" &&
                                          methodDefinition.ReturnType.Namespace == nameof(System);
+
+                            var isField = methodDefinition.Name.StartsWith("get_") || methodDefinition.Name.StartsWith("set_") ? 1 : 0;
                             
                             instructions[^1] = 232;
-                            operands.Add(i,new object[]
+                            operands.Add(i, new object[]
                             {
-                                methodDefinition.IsStatic ? 1:0,
-                                isVoid ? 1:0,
-                                methodDefinition.Parameters.Count
+                                methodDefinition.IsStatic ? 1 : 0,
+                                isVoid ? 1 : 0,
+                                methodDefinition.Parameters.Count,
+                                methodDefinition.Name.RemoveFromStart("get_").RemoveFromStart("set_"),
+                                isField
                             });
                             continue;    
                         }
