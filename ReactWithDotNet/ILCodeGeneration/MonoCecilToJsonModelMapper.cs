@@ -253,6 +253,38 @@ static class MonoCecilToJsonModelMapper
 
             if (operand is MethodReference methodReference)
             {
+                // E x t e r n a l   C a l l
+                {
+                    MethodDefinition methodDefinition = null;
+                    try
+                    {
+                        methodDefinition = methodReference.Resolve();
+                    }
+                    catch (Exception)
+                    {
+                        // ignored
+                    }
+
+                    if (methodDefinition is not null)
+                    {
+                        var isExternal = methodDefinition.DeclaringType.CustomAttributes.Any(x => x.Constructor.DeclaringType.Namespace == typeof(ExternalAttribute).Namespace && x.Constructor.DeclaringType.Name == nameof(ExternalAttribute));
+                        if (isExternal && methodDefinition.Body.Instructions.Count == 0)
+                        {
+                            var isVoid = methodDefinition.ReturnType.Name == "Void" &&
+                                         methodDefinition.ReturnType.Namespace == nameof(System);
+                            
+                            instructions[^1] = 232;
+                            operands.Add(i,new object[]
+                            {
+                                methodDefinition.IsStatic ? 1:0,
+                                isVoid ? 1:0,
+                                methodDefinition.Parameters.Count
+                            });
+                            continue;    
+                        }
+                    }
+                }
+
                 if ( methodReference.DeclaringType is ArrayType arrayType)
                 {
                     if (methodReference.Name =="Set")
