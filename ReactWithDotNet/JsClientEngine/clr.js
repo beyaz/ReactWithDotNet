@@ -2221,6 +2221,11 @@ function Interpret(thread)
                     let targetMethod = null;
                     {
                         let type = AllTypes[instance.$typeIndex];
+                        if (type.ValueTypeId === GenericInstanceType)
+                        {
+                            type = AllTypes[type.ElementType];
+                        }
+                        
                         while (type && type.Methods)
                         {
                             let typeMethods = type.Methods;
@@ -3015,16 +3020,22 @@ function Interpret(thread)
                     
                     if (type.ValueTypeId === GenericParameter)
                     {
-                        if (type.DeclaringType != null)
+                        if (type.DeclaringType)
                         {
-                            
-                        }
+                            const declaringType = AllTypes[type.DeclaringType];
 
-                        if (type.DeclaringMethod != null)
+                            type = AllTypes[declaringType.GenericArguments[type.Position]];
+                        }
+                        else if (type.DeclaringMethod)
                         {
                             /** GenericInstanceMethodModel */ const genericInstanceMethod = currentStackFrame.GenericInstanceMethod;
 
                             type = AllTypes[genericInstanceMethod.GenericArguments[type.Position]];
+                        }
+                        else
+                        {
+                            NotImplementedOpCode(); 
+                            break;
                         }
                     }
                     
