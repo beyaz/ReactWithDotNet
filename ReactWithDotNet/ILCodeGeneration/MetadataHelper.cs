@@ -10,27 +10,8 @@ public sealed class ExternalAttribute : Attribute
 {
 }
 
-[External]
-public static class console
-{
-    public static extern void log(object data);
-    public static extern void time(string label);
-    public static extern void timeEnd(string label);
-    
-}
 
 
-[External]
-public static class Math
-{
-    public static extern double random();
-
-    public static extern double floor(double value);
-
-    public static extern int max(int a, int b);
-    
-    public static extern double max(double a, double b);
-}
 
 sealed class MetadataRequest
 {
@@ -92,7 +73,6 @@ static class MetadataHelper
             request.RequestedTypes.Add(typeof(Nullable<>));
             request.RequestedTypes.Add(typeof(InterpreterBridge));
             request.RequestedTypes.Add(typeof(ExternalAttribute));
-            request.RequestedTypes.Add(typeof(console));
             request.RequestedTypes.Add(typeof(Math));
             request.RequestedTypes.Add(typeof(_System_.Int64));
             request.RequestedTypes.Add(typeof(DotNetJsOverrides));
