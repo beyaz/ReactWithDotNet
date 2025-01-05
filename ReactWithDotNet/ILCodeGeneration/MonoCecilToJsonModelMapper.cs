@@ -66,12 +66,12 @@ static class MonoCecilToJsonModelMapper
     {
         return new()
         {
-            ValueTypeId = ValueTypeId.TypeDefinition,
-            
             Name          = value.Name,
             Namespace     = value.Namespace,
             Scope         = value.Scope.IndexAt(metadataTable),
             DeclaringType = value.DeclaringType?.IndexAt(metadataTable),
+            
+            ValueTypeId   = ValueTypeId.TypeDefinition,
             IsValueType   = value.IsValueType ? 1: 0,
 
             CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel, metadataTable),
@@ -292,7 +292,7 @@ static class MonoCecilToJsonModelMapper
                     }
                 }
 
-                if ( methodReference.DeclaringType is ArrayType arrayType)
+                if ( methodReference.DeclaringType is ArrayType)
                 {
                     if (methodReference.Name =="Set")
                     {

@@ -248,35 +248,35 @@ sealed class MethodDefinitionModel
     public bool IsConstructor { get; init; }
 }
 
-sealed class TypeDefinitionModel
+sealed record TypeDefinitionModel
 {
-    public required int BaseType { get; init; }
+    public int BaseType { get; init; }
     
-    public required int ValueTypeId { get; init; }
+    public int ValueTypeId { get; init; }
     
-    public required  string Name{ get; init; }
+    public  string Name{ get; init; }
     
-    public required string Namespace{ get; init; }
+    public string Namespace{ get; init; }
     
-    public required int Scope{ get; init; }
+    public int Scope{ get; init; }
     
-    public required int? DeclaringType{ get; init; }
+    public int? DeclaringType{ get; init; }
     
-    public required int IsValueType{ get; init; }
+    public int IsValueType{ get; init; }
     
-    public required IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
+    public IReadOnlyList<CustomAttributeModel> CustomAttributes { get; init; }
     
-    public required IReadOnlyList<int> Methods { get; init; }
+    public IReadOnlyList<int> Methods { get; init; }
     
-    public required IReadOnlyList<int> Fields { get; init; }
+    public IReadOnlyList<int> Fields { get; init; }
     
-    public required IReadOnlyList<int> Properties { get; init; }
+    public IReadOnlyList<int> Properties { get; init; }
     
-    public required IReadOnlyList<int> NestedTypes { get; init; }
+    public IReadOnlyList<int> NestedTypes { get; init; }
     
-    public required IReadOnlyList<int> Events { get; init; }
+    public IReadOnlyList<int> Events { get; init; }
     
-    public required IReadOnlyList<InterfaceImplementationModel> Interfaces { get; init; }
+    public IReadOnlyList<InterfaceImplementationModel> Interfaces { get; init; }
     
     public override string ToString()
     {
