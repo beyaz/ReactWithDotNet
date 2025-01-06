@@ -30,13 +30,18 @@ static class MonoCecilToJsonModelMapper
         var model = AsModel(value, metadataTable);
 
         var index = metadataTable.Types.FindIndex(x => IsSame(x, model, metadataTable));
-        if (index >= 0)
+        if (index == -1)
+        {
+            index = metadataTable.Types.Count;
+            
+            metadataTable.Types.Add(model);
+        }
+        else
         {
             metadataTable.Types[index] = model;
-            return;
         }
 
-        metadataTable.Types.Add(model);
+        metadataTable.Types[index] = Load(model, metadataTable);
     }
 
     public static void Import(this MetadataTable metadataTable, MethodDefinition value)
@@ -71,15 +76,30 @@ static class MonoCecilToJsonModelMapper
             Scope         = value.Scope.IndexAt(metadataTable),
             DeclaringType = value.DeclaringType?.IndexAt(metadataTable),
             
-            ValueTypeId   = ValueTypeId.TypeDefinition,
-            IsValueType   = value.IsValueType ? 1: 0,
+            _rawValue = value
+        };
+    }
+    
+    static TypeDefinitionModel Load(TypeDefinitionModel model, MetadataTable metadataTable)
+    {
+        var value = model._rawValue;
+
+         
+        
+        
+        return model with
+        {
+            _rawValue = null,
+            
+            ValueTypeId = ValueTypeId.TypeDefinition,
+            IsValueType = value.IsValueType ? 1: 0,
 
             CustomAttributes = value.CustomAttributes.Where(IsExportableAttribute).ToListOf(AsModel, metadataTable),
             BaseType         = value.BaseType.IndexAt(metadataTable),
             Methods          = metadataTable.Methods.ForceReplaceThenGetIndexes(value.Methods.ToListOf(AsModel, metadataTable), metadataTable),
             Fields           = metadataTable.Fields.ForceReplaceThenGetIndexes(value.Fields.ToListOf(AsModel, metadataTable),metadataTable),
             Properties       = metadataTable.Properties.ForceReplaceThenGetIndexes(value.Properties.ToListOf(AsModel, metadataTable),metadataTable),
-            NestedTypes      = metadataTable.Types.ForceReplaceThenGetIndexes(value.NestedTypes.ToListOf(AsModel, metadataTable),metadataTable),
+            NestedTypes      = metadataTable.Types.ForceReplaceThenGetIndexes(value.NestedTypes.ToListOf(AsModel, metadataTable).Select(x=>Load(x,metadataTable)), metadataTable),
             Events           = metadataTable.Events.ForceReplaceThenGetIndexes(value.Events.ToListOf(AsModel, metadataTable),metadataTable),
             Interfaces       = value.Interfaces.ToListOf(AsModel, metadataTable)
         };

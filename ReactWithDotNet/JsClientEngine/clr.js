@@ -315,6 +315,11 @@ function ImportMetadata(metadata)
         {
             type.DeclaringType = getGlobalTypeIndex(type.DeclaringType);
         }
+
+        if (type.DeclaringMethod != null)
+        {
+            type.DeclaringMethod = getGlobalMethodIndex(type.DeclaringMethod);
+        }
         
         const genericArguments = type.GenericArguments;
         
@@ -2216,61 +2221,60 @@ function Interpret(thread)
                         nextInstruction = instructions[++currentStackFrame.Line];
                         break;
                     }
-                    
+
                     // find target method
                     let targetMethod = null;
                     {
-                        let type = AllTypes[instance.$typeIndex];
-                        if (type.ValueTypeId === GenericInstanceType)
-                        {
-                            type = AllTypes[type.ElementType];
-                        }
-                        
-                        while (type && type.Methods)
-                        {
-                            let typeMethods = type.Methods;
-                            let typeMethodsLength = typeMethods.length;
-
-                            for (let i = 0; i < typeMethodsLength; i++)
-                            {
-                                targetMethod = AllMethods[typeMethods[i]];
-
-                                if (targetMethod.Name !== method.Name)
-                                {
-                                    continue;
-                                }
-                                
-                                if (IsTwoMethodParametersFullMatch(method, targetMethod) === false)
-                                {
-                                    continue;
-                                }
-
-                                method = targetMethod;
-                                break;
-                            }
-
-                            if (method === targetMethod)
-                            {
-                                break;
-                            }
-                            
-                            if (type.BaseType >= 0)
-                            {
-                                type = AllTypes[type.BaseType];
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-
                         // try to find in DotNetJsOverrides
-                        if (method !== targetMethod)
+                        targetMethod = TryFindDotNetJsOverrides(method);
+                        if (targetMethod)
                         {
-                            targetMethod = TryFindDotNetJsOverrides(method);
-                            if (targetMethod)
+                            method = targetMethod;
+                        }
+                        else
+                        {
+                            let type = AllTypes[instance.$typeIndex];
+                            if (type.ValueTypeId === GenericInstanceType)
                             {
-                                method = targetMethod;
+                                type = AllTypes[type.ElementType];
+                            }
+
+                            while (type && type.Methods)
+                            {
+                                let typeMethods = type.Methods;
+                                let typeMethodsLength = typeMethods.length;
+
+                                for (let i = 0; i < typeMethodsLength; i++)
+                                {
+                                    targetMethod = AllMethods[typeMethods[i]];
+
+                                    if (targetMethod.Name !== method.Name)
+                                    {
+                                        continue;
+                                    }
+
+                                    if (IsTwoMethodParametersFullMatch(method, targetMethod) === false)
+                                    {
+                                        continue;
+                                    }
+
+                                    method = targetMethod;
+                                    break;
+                                }
+
+                                if (method === targetMethod)
+                                {
+                                    break;
+                                }
+
+                                if (type.BaseType >= 0)
+                                {
+                                    type = AllTypes[type.BaseType];
+                                }
+                                else
+                                {
+                                    break;
+                                }
                             }
                         }
                     }

@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet;
+﻿using Mono.Cecil;
+
+namespace ReactWithDotNet;
 
 static class ValueTypeId
 {
@@ -250,6 +252,8 @@ sealed class MethodDefinitionModel
 
 sealed record TypeDefinitionModel
 {
+    internal TypeDefinition _rawValue;
+    
     public int BaseType { get; init; }
     
     public int ValueTypeId { get; init; }
