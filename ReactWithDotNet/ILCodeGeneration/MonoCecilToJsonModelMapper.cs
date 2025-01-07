@@ -1498,11 +1498,11 @@ static class MonoCecilToJsonModelMapper
             isSame<EventReferenceModel, EventReferenceModel>((modelA, modelB) => Compare.Event.IsSame(metadataTable, modelA, modelB)),
 
             // t y p e
-            isSame<TypeReference, TypeDefinitionModel>((reference, model) => Compare.Type.IsSame(metadataTable, reference, model)),
-            isSame<TypeReferenceModel, TypeDefinitionModel>((referenceModel, definitionModel) => Compare.Type.IsSame(metadataTable, referenceModel, definitionModel)),
-            isSame<TypeReference, TypeReferenceModel>((reference, model) => Compare.Type.IsSame(metadataTable, reference, model)),
-            isSame<TypeDefinitionModel, TypeDefinitionModel>((modelA, modelB) => Compare.Type.IsSame(metadataTable, modelA, modelB)),
             isSame<TypeReferenceModel, TypeReferenceModel>((modelA, modelB) => Compare.Type.IsSame(metadataTable, modelA, modelB)),
+            isSame<TypeDefinitionModel, TypeDefinitionModel>((modelA, modelB) => Compare.Type.IsSame(metadataTable, modelA, modelB)),
+            isSame<TypeReferenceModel, TypeDefinitionModel>((referenceModel, definitionModel) => Compare.Type.IsSame(metadataTable, referenceModel, definitionModel)),
+            isSame<TypeReference, TypeDefinitionModel>((reference, model) => Compare.Type.IsSame(metadataTable, reference, model)),
+            isSame<TypeReference, TypeReferenceModel>((reference, model) => Compare.Type.IsSame(metadataTable, reference, model)),
             isSame<ArrayTypeModel, object>((arrayModel, item) => Compare.Type.IsSame(metadataTable, arrayModel, item)),
             isSame<GenericInstanceTypeModel, object>((model, item) => Compare.Type.IsSame(metadataTable, model, item)),
             isSame<GenericParameterModel, object>((model, item) => Compare.Type.IsSame(metadataTable, model, item)),
