@@ -4351,7 +4351,7 @@ setTimeout(function ()
             {
                 AssemblyName: "ReactWithDotNet.WebSite.dll",
                 NamespaceName: "ReactWithDotNet.WebSite",
-                TypeName: "Test45"
+                TypeName: "Test50"
             }
         ]
     };
@@ -4380,7 +4380,7 @@ setTimeout(function ()
 
                 if (method.IsMethodDefinition)
                 {
-                    if (method.Name === "Abc5")
+                    if (method.Name === "RunAll")
                     {
                         CallManagedStaticMethod(method,[],console.log,console.log);
                     }
