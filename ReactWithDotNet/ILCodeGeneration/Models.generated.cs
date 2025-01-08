@@ -296,6 +296,15 @@ sealed class MetadataScopeModel
     public required string Name { get; init; }
 }
 
+
+sealed class AssemblyDefinitionModel
+{
+   public string Name { get; init; }
+
+
+}
+
+// todo: rename MetadataResponse
 sealed class MetadataTable
 {
     public readonly List<MetadataScopeModel> MetadataScopes = [];
@@ -304,7 +313,12 @@ sealed class MetadataTable
     public readonly List<object> Methods = [];
     public readonly List<object> Properties = [];
     public readonly List<object> Events = [];
+    
+    
+    public List<AssemblyDefinitionModel> Assemblies { get; init; }
 }
+
+
 
 sealed class ArrayTypeModel
 {

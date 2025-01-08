@@ -21,14 +21,15 @@ static class DotNetJsOverrides
     
     public static DefaultInterpolatedStringHandler ctor(DefaultInterpolatedStringHandler instance, int literalLength, int formattedCount)
     {
-        instance.RefStructToObject().Set("parts", CreateNewArray());
+        //instance.RefStructToObject().Set("parts", CreateNewArray());
 
         return instance;
     }
 
     static string[] GetParts(this DefaultInterpolatedStringHandler instance)
     {
-        return instance.RefStructToObject().Get("parts").As<string[]>();
+        // return instance.RefStructToObject().Get("parts").As<string[]>();
+        return [];
     }
     
     public static void AppendLiteral(DefaultInterpolatedStringHandler instance, string value)

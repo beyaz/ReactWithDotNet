@@ -33,7 +33,7 @@ static class AsExtensions
 static class NativeJsHelper
 {
     
-    public static extern object RefStructToObject<T>(this T value) where T :  allows ref struct;
+    //public static extern object RefStructToObject<T>(this T value) where T :  allows ref struct;
     
     public static extern void Set(this object instance, string key, object value);
     public static extern void Set(this object instance, int key, object value);
