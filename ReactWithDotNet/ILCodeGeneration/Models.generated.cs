@@ -24,6 +24,8 @@ sealed class TypeReferenceModel
     public required int? DeclaringType { get; init; }
     
     public required int IsValueType { get; init; }
+    
+    public uint Token { get; init; }
 
     public override string ToString()
     {

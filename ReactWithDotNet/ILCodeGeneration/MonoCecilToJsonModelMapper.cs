@@ -699,12 +699,14 @@ static class MonoCecilToJsonModelMapper
 
         return new TypeReferenceModel
         {
-            ValueTypeId = ValueTypeId.TypeReference,
+            Token       = value.MetadataToken.ToUInt32(),
+            
+            ValueTypeId   = ValueTypeId.TypeReference,
             Name          = value.Name,
             Namespace     = value.Namespace,
             Scope         = value.Scope.IndexAt(metadataTable),
             DeclaringType = value.DeclaringType?.IndexAt(metadataTable),
-            IsValueType = value.IsValueType ? 1: 0
+            IsValueType   = value.IsValueType ? 1: 0
         };
     }
 
