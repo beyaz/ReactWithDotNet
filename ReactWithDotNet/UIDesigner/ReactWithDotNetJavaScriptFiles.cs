@@ -92,21 +92,6 @@ public sealed class ReactWithDotNetJavaScriptFiles
             };
         }
         
-        if (requestPath.EndsWith("/clr.js", StringComparison.OrdinalIgnoreCase) || 
-            requestPath.EndsWith("/long.js", StringComparison.OrdinalIgnoreCase))
-        {
-            if (isLocalMaintainer)
-            {
-                return new()
-                {
-                    Type = ContentTypeApplication_Javascript,
-                    Data = File.ReadAllBytes($@"C:\github\ReactWithDotNet\ReactWithDotNet\JsClientEngine\{requestPath.Split('/').Last()}")
-                };
-            }
-
-            resourceName = requestPath;
-        }
-
         if (resourceName is null)
         {
             if (requestPath.StartsWith("/ReactWithDotNet/", StringComparison.OrdinalIgnoreCase))

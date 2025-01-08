@@ -19,13 +19,10 @@
       <EmbeddedResource Include="UIDesigner\Resources\ComponentIndicator.js" />
 
       <EmbeddedResource Include="JsClientEngine\dist\*" />
-      <EmbeddedResource Include="JsClientEngine\clr.js" />
-      <EmbeddedResource Include="JsClientEngine\long.js" />
     </ItemGroup>
 
     <ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-		<PackageReference Include="Mono.Cecil" Version="0.11.6" />
 		<ProjectReference Include="..\ReactWithDotNet.SourceGenerator\ReactWithDotNet.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>
 
