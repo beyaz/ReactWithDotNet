@@ -91,7 +91,7 @@ sealed class CssPseudoCodeInfo
 sealed class CssClassInfo
 {
     public string Body; //  { get; init; }
-    public int? ComponentUniqueIdentifier; //  { get; init; }
+    public int ComponentUniqueIdentifier; //  { get; init; }
     public IReadOnlyList<(string mediaRule, string cssBody)> MediaQueries; //  { get; init; }
     public string Name; //  { get; init; }
     public IReadOnlyList<CssPseudoCodeInfo> Pseudos; //  { get; init; }
