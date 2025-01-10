@@ -204,9 +204,41 @@ sealed class CssClassInfo
         return true;
     }
 
-    public void WriteTo(JsonMap jsonMap)
+    public void WriteTo2(JsonMap jsonMap)
     {
         jsonMap.Add(ComponentUniqueIdentifier.ToString(), ToArray());
+    }
+    
+    public void WriteTo(JsonMap jsonMap)
+    {
+        if (Body is not null)
+        {
+            var cssSelector = $".{Name}";
+
+            jsonMap.Add(cssSelector, Body);
+        }
+
+        if (Pseudos is not null)
+        {
+            foreach (var pseudoCodeInfo in Pseudos)
+            {
+                var cssSelector = $".{Name}:{pseudoCodeInfo.Name}";
+                var cssBody = pseudoCodeInfo.BodyOfCss;
+
+                jsonMap.Add(cssSelector, cssBody);
+                jsonMap.Add(ComponentUniqueIdentifier.ToString(), ToArray());
+            }
+        }
+
+        if (MediaQueries != null)
+        {
+            foreach (var (mediaRule, cssBody) in MediaQueries)
+            {
+                var cssSelector = $"@media {mediaRule} {{ .{Name}";
+
+                jsonMap.Add(cssSelector, cssBody);
+            }
+        }
     }
     
     public object[] ToArray()
