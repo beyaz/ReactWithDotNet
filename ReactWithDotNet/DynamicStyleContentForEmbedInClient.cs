@@ -90,24 +90,24 @@ sealed class CssPseudoCodeInfo
 
 sealed class CssClassInfo
 {
-    public string Body; //  { get; init; }
-    public int ComponentUniqueIdentifier; //  { get; init; }
-    public IReadOnlyList<(string mediaRule, string cssBody)> MediaQueries; //  { get; init; }
-    public string Name; //  { get; init; }
-    public IReadOnlyList<CssPseudoCodeInfo> Pseudos; //  { get; init; }
+    public required string Body  { get; init; }
+    public required int ComponentUniqueIdentifier  { get; init; }
+    public required IReadOnlyList<(string mediaRule, string cssBody)> MediaQueries  { get; init; }
+    public required string Name  { get; init; }
+    public required IReadOnlyList<CssPseudoCodeInfo> Pseudos  { get; init; }
 
     public static bool IsEquals(CssClassInfo a, CssClassInfo b)
     {
-        if (a.Name != b.Name)
-        {
-            return false;
-        }
-
         if (a.ComponentUniqueIdentifier != b.ComponentUniqueIdentifier)
         {
             return false;
         }
-
+        
+        if (a.Name != b.Name)
+        {
+            return false;
+        }
+        
         if (a.Body != b.Body)
         {
             return false;
