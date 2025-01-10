@@ -206,33 +206,7 @@ sealed class CssClassInfo
 
     public void WriteTo(JsonMap jsonMap)
     {
-        if (Body is not null)
-        {
-            var cssSelector = $".{Name}";
-
-            jsonMap.Add(cssSelector, Body);
-        }
-
-        if (Pseudos is not null)
-        {
-            foreach (var pseudoCodeInfo in Pseudos)
-            {
-                var cssSelector = $".{Name}:{pseudoCodeInfo.Name}";
-                var cssBody = pseudoCodeInfo.BodyOfCss;
-
-                jsonMap.Add(cssSelector, cssBody);
-            }
-        }
-
-        if (MediaQueries != null)
-        {
-            foreach (var (mediaRule, cssBody) in MediaQueries)
-            {
-                var cssSelector = $"@media {mediaRule} {{ .{Name}";
-
-                jsonMap.Add(cssSelector, cssBody);
-            }
-        }
+        jsonMap.Add(ComponentUniqueIdentifier.ToString(), ToArray());
     }
     
     public object[] ToArray()
@@ -241,8 +215,8 @@ sealed class CssClassInfo
         [
             /*0*/Name,
             /*1*/Body,
-            /*2*/Pseudos?.Select(x => new[] { x.Name, x.BodyOfCss }),
-            /*3*/MediaQueries?.Select(x => new[] { x.mediaRule, x.cssBody })
+            /*2*/MediaQueries?.Select(x => new[] { x.mediaRule, x.cssBody }),
+            /*3*/Pseudos?.Select(x => new[] { x.Name, x.BodyOfCss })
         ];
     }
 }
