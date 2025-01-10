@@ -234,4 +234,15 @@ sealed class CssClassInfo
             }
         }
     }
+    
+    public object[] ToArray()
+    {
+        return
+        [
+            /*0*/Name,
+            /*1*/Body,
+            /*2*/Pseudos?.Select(x => new[] { x.Name, x.BodyOfCss }),
+            /*3*/MediaQueries?.Select(x => new[] { x.mediaRule, x.cssBody })
+        ];
+    }
 }
