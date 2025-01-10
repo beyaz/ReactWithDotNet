@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace ReactWithDotNet;
 
@@ -93,6 +94,36 @@ class DynamicStyleContentForEmbedInClient
         ListOfClasses.Add(cssClassInfo);
 
         return cssClassInfo.Name;
+    }
+
+    public static void WriteAsHtmlStyleNodeContent(StringBuilder sb, JsonMap dynamicStylesMap)
+    {
+        dynamicStylesMap?.Foreach((cssSelector, cssBody) =>
+        {
+            const string padding = "    ";
+
+            sb.Append(padding);
+            sb.Append(cssSelector);
+            sb.Append(padding);
+            sb.AppendLine("{");
+
+            sb.Append(padding);
+            sb.Append(padding);
+            sb.Append(cssBody);
+
+            if (cssSelector.IndexOf("@media ", StringComparison.OrdinalIgnoreCase) == 0)
+            {
+                sb.AppendLine();
+
+                sb.Append(padding);
+                sb.AppendLine("}");
+            }
+
+            sb.AppendLine();
+
+            sb.Append(padding);
+            sb.AppendLine("}");
+        });
     }
 }
 
@@ -204,11 +235,6 @@ sealed class CssClassInfo
         return true;
     }
 
-    public void WriteTo2(JsonMap jsonMap)
-    {
-        jsonMap.Add(ComponentUniqueIdentifier.ToString(), ToArray());
-    }
-    
     public void WriteTo(JsonMap jsonMap)
     {
         if (Body is not null)
