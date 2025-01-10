@@ -2,8 +2,21 @@ using System.Runtime.InteropServices;
 
 namespace ReactWithDotNet;
 
+static partial class Mixin
+{
+    internal static void AddRange(this Dictionary<int, List<CssClassInfo>> map, Dictionary<int, List<CssClassInfo>> insertValues)
+    {
+        foreach (var (key, value) in insertValues)
+        {
+            map.Add(key, value);
+        }
+    }
+}
+
 class DynamicStyleContentForEmbedInClient
 {
+    internal readonly Dictionary<int,List<CssClassInfo>> Map = [];
+    
     internal readonly List<CssClassInfo> ListOfClasses = [];
 
     public JsonMap CalculateCssClassList()
