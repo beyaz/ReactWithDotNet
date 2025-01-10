@@ -57,13 +57,14 @@ class DynamicStyleContentForEmbedInClient
 
                 // check has already same name give another name
                 var hasAlreadyExistsSameName = false;
-
-                for (var i = 0; i < length; i++)
                 {
-                    if (cursor[i].Name == cssClassInfo.Name)
+                    for (var i = 0; i < length; i++)
                     {
-                        hasAlreadyExistsSameName = true;
-                        break;
+                        if (cursor[i].Name == cssClassInfo.Name)
+                        {
+                            hasAlreadyExistsSameName = true;
+                            break;
+                        }
                     }
                 }
 
