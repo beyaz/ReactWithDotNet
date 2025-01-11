@@ -8,6 +8,23 @@ class DynamicStyleContentForEmbedInClient
     internal readonly List<CssClassInfo> ListOfClasses = [];
     internal readonly Dictionary<int, List<CssClassInfo>> Map = [];
 
+    public static JsonMap CalculateCssClassList(Dictionary<int, List<CssClassInfo>> map)
+    {
+        if (map.Count == 0)
+        {
+            return null;
+        }
+
+        var jsonMap = new JsonMap();
+
+        foreach (var kvp in map)
+        {
+            jsonMap.Add(kvp.Key.ToString(), kvp.Value.Select(ToArray));
+        }
+
+        return jsonMap;
+    }
+
     public static bool IsEquals(CssClassInfo a, CssClassInfo b)
     {
         if (a.ComponentUniqueIdentifier != b.ComponentUniqueIdentifier)
