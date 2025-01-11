@@ -2836,24 +2836,7 @@ function CreateNewDeveloperError(message)
 let DynamicStyles = {};
 let ReactWithDotNetDynamicCssElement = null;
 
-/**
- * 
- * @param {String} cssSelector
- * @returns {Number} ComponentUniqueIdentifier
- */
-function GetComponentUniqueIdentifierFromCssSelector(cssSelector)
-{
-    let startIndex = cssSelector.indexOf('._rwd_');
-    let endIndex = cssSelector.indexOf('_', startIndex + 6);
 
-    const componentUniqueIdentifier = parseInt(cssSelector.substring(startIndex + 6, endIndex));
-    if (isNaN(componentUniqueIdentifier))
-    {
-        throw CreateNewDeveloperError('componentUniqueIdentifier cannot calculated from ' + cssSelector);
-    }
-
-    return componentUniqueIdentifier;
-}
 
 function ProcessDynamicCssClasses(dynamicStyles)
 {
@@ -2903,9 +2886,9 @@ function ApplyDynamicStylesToDom()
             }
 
             const length = values.length;
-            for (var i = 0; i < length; i++)
+            for (let i = 0; i < length; i++)
             {
-                var items = values[i];
+                const items = values[i];
 
                 const name = items[0];
                 const body = items[1];
@@ -2959,6 +2942,31 @@ function ApplyDynamicStylesToDom()
         ReactWithDotNetDynamicCssElement.innerHTML = newStyle;
     }
 }
+
+function CloneObjectWithoutNullValues(obj)
+{
+    const clone = {};
+
+    for (let key in obj) 
+    {
+        if (obj.hasOwnProperty(key))
+        {
+            const value = obj[key];
+            if ( value != null)
+            {
+                clone[key] = obj[key];
+            }
+        }
+    }
+
+    return clone;
+}
+
+// protect for too many empty keys
+setInterval(() =>
+{
+    DynamicStyles = CloneObjectWithoutNullValues(DynamicStyles);
+}, 3000);
 
 /**
  * @param {number[]} componentUniqueIdentifiers
