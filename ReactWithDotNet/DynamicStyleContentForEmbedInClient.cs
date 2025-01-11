@@ -343,15 +343,19 @@ class DynamicStyleContentForEmbedInClient
 
 sealed class CssPseudoCodeInfo
 {
+    // @formatter:off
     public string BodyOfCss; //  { get; init; }
     public string Name; //  { get; init; }
+    // @formatter:on
 }
 
 sealed class CssClassInfo
 {
+    // @formatter:off
     public required string Body  { get; init; }
     public required int ComponentUniqueIdentifier  { get; init; }
     public required IReadOnlyList<(string mediaRule, string cssBody)> MediaQueries  { get; init; }
     public required string Name  { get; init; }
     public required IReadOnlyList<CssPseudoCodeInfo> Pseudos  { get; init; }
+    // @formatter:on
 }
