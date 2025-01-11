@@ -32,10 +32,41 @@ class DynamicStyleContentForEmbedInClient
 
         foreach (var cssClassInfo in cssClassInfoList)
         {
-            CssClassInfo.WriteTo(cssClassInfo, jsonMap);
+            WriteTo(cssClassInfo, jsonMap);
         }
 
         return jsonMap;
+        
+        static void WriteTo(CssClassInfo cssClassInfo, JsonMap jsonMap)
+        {
+            if (cssClassInfo.Body is not null)
+            {
+                var cssSelector = $".{cssClassInfo.Name}";
+
+                jsonMap.Add(cssSelector, cssClassInfo.Body);
+            }
+
+            if (cssClassInfo.Pseudos is not null)
+            {
+                foreach (var pseudoCodeInfo in cssClassInfo.Pseudos)
+                {
+                    var cssSelector = $".{cssClassInfo.Name}:{pseudoCodeInfo.Name}";
+                    var cssBody = pseudoCodeInfo.BodyOfCss;
+
+                    jsonMap.Add(cssSelector, cssBody);
+                }
+            }
+
+            if (cssClassInfo.MediaQueries != null)
+            {
+                foreach (var (mediaRule, cssBody) in cssClassInfo.MediaQueries)
+                {
+                    var cssSelector = $"@media {mediaRule} {{ .{cssClassInfo.Name}";
+
+                    jsonMap.Add(cssSelector, cssBody);
+                }
+            }
+        }
     }
 
     public string GetClassName(CssClassInfo cssClassInfo)
@@ -63,7 +94,7 @@ class DynamicStyleContentForEmbedInClient
                 // if everything is equal then no need to reExport return existing record
                 for (var i = 0; i < length; i++)
                 {
-                    if (CssClassInfo.IsEquals(cssClassInfo, cursor[i]))
+                    if (IsEquals(cssClassInfo, cursor[i]))
                     {
                         return cssClassInfo.Name;
                     }
@@ -139,7 +170,7 @@ class DynamicStyleContentForEmbedInClient
                 string[] mediaQueries = null;
                 string[] pseudos = null;
 
-                CssClassInfo.ReadFrom(arr, ref name, ref body, ref mediaQueries, ref pseudos);
+                ReadFrom(arr, ref name, ref body, ref mediaQueries, ref pseudos);
 
                 const string padding = "    ";
 
@@ -195,22 +226,26 @@ class DynamicStyleContentForEmbedInClient
             }
         });
     }
-}
-
-sealed class CssPseudoCodeInfo
-{
-    public string BodyOfCss; //  { get; init; }
-    public string Name; //  { get; init; }
-}
-
-sealed class CssClassInfo
-{
-    public required string Body  { get; init; }
-    public required int ComponentUniqueIdentifier  { get; init; }
-    public required IReadOnlyList<(string mediaRule, string cssBody)> MediaQueries  { get; init; }
-    public required string Name  { get; init; }
-    public required IReadOnlyList<CssPseudoCodeInfo> Pseudos  { get; init; }
-
+    
+    public static object[] ToArray(CssClassInfo cssClassInfo)
+    {
+        return
+        [
+            /*0*/cssClassInfo.Name,
+            /*1*/cssClassInfo.Body,
+            /*2*/cssClassInfo.MediaQueries?.Select(x => new[] { x.mediaRule, x.cssBody }),
+            /*3*/cssClassInfo.Pseudos?.Select(x => new[] { x.Name, x.BodyOfCss })
+        ];
+    }
+    
+    public static void ReadFrom(object[] arr, ref string name, ref string body, ref string[] mediaQueries, ref string[]pseudos)
+    {
+        name         = (string)arr[0];
+        body         = (string)arr[1];
+        mediaQueries = (string[])arr[2];
+        pseudos      = (string[])arr[3];
+    }
+    
     public static bool IsEquals(CssClassInfo a, CssClassInfo b)
     {
         if (a.ComponentUniqueIdentifier != b.ComponentUniqueIdentifier)
@@ -304,54 +339,19 @@ sealed class CssClassInfo
 
         return true;
     }
+}
 
-    public static void WriteTo(CssClassInfo cssClassInfo, JsonMap jsonMap)
-    {
-        if (cssClassInfo.Body is not null)
-        {
-            var cssSelector = $".{cssClassInfo.Name}";
+sealed class CssPseudoCodeInfo
+{
+    public string BodyOfCss; //  { get; init; }
+    public string Name; //  { get; init; }
+}
 
-            jsonMap.Add(cssSelector, cssClassInfo.Body);
-        }
-
-        if (cssClassInfo.Pseudos is not null)
-        {
-            foreach (var pseudoCodeInfo in cssClassInfo.Pseudos)
-            {
-                var cssSelector = $".{cssClassInfo.Name}:{pseudoCodeInfo.Name}";
-                var cssBody = pseudoCodeInfo.BodyOfCss;
-
-                jsonMap.Add(cssSelector, cssBody);
-            }
-        }
-
-        if (cssClassInfo.MediaQueries != null)
-        {
-            foreach (var (mediaRule, cssBody) in cssClassInfo.MediaQueries)
-            {
-                var cssSelector = $"@media {mediaRule} {{ .{cssClassInfo.Name}";
-
-                jsonMap.Add(cssSelector, cssBody);
-            }
-        }
-    }
-    
-    public static object[] ToArray(CssClassInfo cssClassInfo)
-    {
-        return
-        [
-            /*0*/cssClassInfo.Name,
-            /*1*/cssClassInfo.Body,
-            /*2*/cssClassInfo.MediaQueries?.Select(x => new[] { x.mediaRule, x.cssBody }),
-            /*3*/cssClassInfo.Pseudos?.Select(x => new[] { x.Name, x.BodyOfCss })
-        ];
-    }
-    
-    public static void ReadFrom(object[] arr, ref string name, ref string body, ref string[] mediaQueries, ref string[]pseudos)
-    {
-        name = (string)arr[0];
-        body = (string)arr[1];
-        mediaQueries = (string[])arr[2];
-        pseudos = (string[])arr[3];
-    }
+sealed class CssClassInfo
+{
+    public required string Body  { get; init; }
+    public required int ComponentUniqueIdentifier  { get; init; }
+    public required IReadOnlyList<(string mediaRule, string cssBody)> MediaQueries  { get; init; }
+    public required string Name  { get; init; }
+    public required IReadOnlyList<CssPseudoCodeInfo> Pseudos  { get; init; }
 }
