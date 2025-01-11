@@ -125,6 +125,76 @@ class DynamicStyleContentForEmbedInClient
             sb.AppendLine("}");
         });
     }
+    
+    public static void WriteAsHtmlStyleNodeContent_2(StringBuilder sb, JsonMap dynamicStylesMap)
+    {
+        dynamicStylesMap?.Foreach((_, value) =>
+        {
+            var items = (object[][])value;
+            
+            foreach (var arr in items)
+            {
+                string name = null;
+                string body = null;
+                string[] mediaQueries = null;
+                string[] pseudos = null;
+
+                CssClassInfo.ReadFrom(arr, ref name, ref body, ref mediaQueries, ref pseudos);
+
+                const string padding = "    ";
+
+                sb.Append(padding);
+                sb.Append(".");
+                sb.Append(name);
+                sb.AppendLine(" {");
+
+                sb.Append(padding);
+                sb.AppendLine(body);
+
+                if (mediaQueries is not null)
+                {
+                    var length = mediaQueries.Length;
+                    for (var i = 0; i < length; i++)
+                    {
+                        var mediaRule = mediaQueries[0];
+                        var cssBody = mediaQueries[1];
+
+                        sb.AppendLine();
+                        sb.Append("@media");
+                        sb.Append(mediaRule);
+                        sb.Append("{");
+                        sb.Append(".");
+                        sb.Append(name);
+                        sb.Append(" ");
+                        sb.Append(cssBody);
+                        sb.Append("}");
+                    }
+                }
+                
+                if (pseudos is not null)
+                {
+                    foreach (var item in pseudos)
+                    {
+                        var pseudoName = item[0];
+                        var pseudoBody = item[1];
+
+                        sb.AppendLine();
+                        sb.Append(padding);
+                        sb.Append(".");
+                        sb.Append(name);
+                        sb.Append(":");
+                        sb.Append(pseudoName);
+                        sb.Append(" {");
+                        sb.Append(pseudoBody);
+                        sb.Append("}");
+                    }
+                }
+                
+                sb.AppendLine();
+                sb.AppendLine("}");
+            }
+        });
+    }
 }
 
 sealed class CssPseudoCodeInfo
@@ -252,7 +322,6 @@ sealed class CssClassInfo
                 var cssBody = pseudoCodeInfo.BodyOfCss;
 
                 jsonMap.Add(cssSelector, cssBody);
-                jsonMap.Add(ComponentUniqueIdentifier.ToString(), ToArray());
             }
         }
 
@@ -276,5 +345,13 @@ sealed class CssClassInfo
             /*2*/MediaQueries?.Select(x => new[] { x.mediaRule, x.cssBody }),
             /*3*/Pseudos?.Select(x => new[] { x.Name, x.BodyOfCss })
         ];
+    }
+    
+    public static void ReadFrom(object[] arr, ref string name, ref string body, ref string[] mediaQueries, ref string[]pseudos)
+    {
+        name = (string)arr[0];
+        body = (string)arr[1];
+        mediaQueries = (string[])arr[2];
+        pseudos = (string[])arr[3];
     }
 }
