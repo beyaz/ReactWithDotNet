@@ -23,6 +23,27 @@ const ON_COMPONENT_DESTROY = '$ON_COMPONENT_DESTROY';
 const CUSTOM_EVENT_LISTENER_MAP = '$CUSTOM_EVENT_LISTENER_MAP';
 const DotNetProperties = 'DotNetProperties';
 
+/**
+ * @typedef {Object} RemoteMethodInfo
+ * @property {string} remoteMethodName
+ * @property {number} HandlerComponentUniqueIdentifier
+ * @property {string} FunctionNameOfGrabEventArguments
+ * @property {number} StopPropagation
+ * @property {string[]} KeyboardEventCallOnly
+ * @property {?number} DebounceTimeout
+ */
+
+/**
+ * @typedef {Object} JsonNode
+ * @property {JsonNode[]} $children
+ * @property {?number} $FakeChild
+ * @property {string} FunctionNameOfGrabEventArguments
+ * @property {number} StopPropagation
+ * @property {string[]} KeyboardEventCallOnly
+ * @property {?number} DebounceTimeout
+ */
+
+
 function SafeExecute(fn)
 {
     try
@@ -885,6 +906,11 @@ function tryToFindCachedMethodInfo(component, remoteMethodName, eventArguments)
     return null;
 }
 
+/**
+ * @param parentJsonNode
+ * @param {RemoteMethodInfo} remoteMethodInfo
+ * @returns {(function(): void)|*}
+ */
 function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
 {
     const remoteMethodName   = remoteMethodInfo.remoteMethodName;
@@ -1003,6 +1029,13 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
     }
 }
 
+/**
+ * @param {number} fakeChildIndex
+ * @param {JsonNode} rootNodeInState
+ * @param {JsonNode} jsonNodeInProps
+ * @returns {*|null}
+ * @constructor
+ */
 function FindRealNodeByFakeChild(fakeChildIndex, rootNodeInState, jsonNodeInProps)
 {
     if (rootNodeInState && rootNodeInState.$FakeChild === fakeChildIndex)
@@ -1167,7 +1200,7 @@ function ConvertToReactElement(jsonNode, component)
         if (propValue != null)
         {
             // tryProcessAsEventHandler
-            if (propValue.$isRemoteMethod === true)
+            if (propValue.$isRemoteMethod)
             {
                 props[propName] = ConvertToEventHandlerFunction(jsonNode, propValue);
 
@@ -1184,7 +1217,7 @@ function ConvertToReactElement(jsonNode, component)
                     "targetProp": "value"
                   }
                  */
-            if (propValue.$isBinding === true)
+            if (propValue.$isBinding)
             {
                 const targetProp    = propValue.targetProp;
                 const eventName     = propValue.eventName;
