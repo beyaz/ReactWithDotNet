@@ -37,7 +37,7 @@ import "./chunk-EHPEYKPY.js";
 import "./chunk-AYGLMMKX.js";
 import {
   react_with_dotnet_default
-} from "./chunk-ZDOVNB2S.js";
+} from "./chunk-372XOKZ5.js";
 import {
   useSlot
 } from "./chunk-E74I5C76.js";
@@ -474,7 +474,7 @@ function register(name, value) {
   react_with_dotnet_default.RegisterExternalJsObject("ReactWithDotNet.ThirdPartyLibraries.MUI.Material." + name, value);
 }
 register("Accordion", import_react.default.lazy(() => import("./Accordion-VDMWSSXP.js")));
-register("Autocomplete", import_react.default.lazy(() => import("./Autocomplete-ADPJJ7WC.js")));
+register("Autocomplete", import_react.default.lazy(() => import("./Autocomplete-GUBUQUCG.js")));
 register("Switch", import_react.default.lazy(() => import("./Switch-PDB7JZMM.js")));
 register("Tooltip", import_react.default.lazy(() => import("./Tooltip-5EX57QEN.js")));
 register("Button", import_react.default.lazy(() => import("./Button-TJLTASDD.js")));
@@ -490,7 +490,7 @@ register("CardContent", import_react.default.lazy(() => import("./CardContent-SL
 register("CardActions", import_react.default.lazy(() => import("./CardActions-QHOMFMO3.js")));
 register("Typography", import_react.default.lazy(() => import("./Typography-LHMCU527.js")));
 register("CircularProgress", import_react.default.lazy(() => import("./CircularProgress-ADTGV5HI.js")));
-register("Slider", import_react.default.lazy(() => import("./Slider-M2ZDU5BI.js")));
+register("Slider", import_react.default.lazy(() => import("./Slider-TKIJ5XR6.js")));
 register("FormGroup", FormGroup_default);
 register("FormControlLabel", FormControlLabel_default);
 
@@ -1397,7 +1397,7 @@ var import_react8 = __toESM(require_react());
 function register4(name, value) {
   react_with_dotnet_default.RegisterExternalJsObject("ReactWithDotNet.ThirdPartyLibraries._Swiper_." + name, value);
 }
-register4("Swiper", import_react8.default.lazy(() => import("./Swiper-NV6DW2LE.js")));
+register4("Swiper", import_react8.default.lazy(() => import("./Swiper-NKOEMB2W.js")));
 register4("SwiperSlide", SwiperSlide);
 react_with_dotnet_default.RegisterExternalJsObject("ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance", function(args) {
   return [{

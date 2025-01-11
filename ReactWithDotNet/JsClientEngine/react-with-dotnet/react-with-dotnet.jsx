@@ -1063,7 +1063,8 @@ function ConvertToReactElement(jsonNode, component)
         const cmpProps =
         {
             key: cmpKey,
-            $jsonNode: jsonNode
+            $jsonNode: jsonNode,
+            $styles: DynamicStyles[jsonNode[DotNetComponentUniqueIdentifier]]
         };
 
         if (jsonNode.$props)
@@ -1084,7 +1085,8 @@ function ConvertToReactElement(jsonNode, component)
         const cmpProps =
         {
             key: cmpKey,
-            $jsonNode: jsonNode
+            $jsonNode: jsonNode,
+            $styles: DynamicStyles[jsonNode[DotNetComponentUniqueIdentifier]]
         };
 
         const reactAttributeNames = jsonNode.$ReactAttributeNames;
@@ -1830,6 +1832,24 @@ function DefineComponent(componentDeclaration)
 
         render()
         {
+            const props = this.props;
+
+            // move styles to dom if not exists
+            {
+                const styles = props.$styles;
+                if (styles)
+                {
+                    const cuid = props.$jsonNode[DotNetComponentUniqueIdentifier];
+
+                    if (DynamicStyles[cuid] !== styles)
+                    {
+                        DynamicStyles[cuid] = styles;
+
+                        ApplyDynamicStylesToDom();
+                    }
+                }
+            }            
+
             return ConvertToReactElement(this.state[RootNode], this);
         }
 
@@ -2079,7 +2099,25 @@ function DefinePureComponent(componentDeclaration)
     {
         render()
         {
-            return ConvertToReactElement(this.props.$jsonNode[RootNode], this);
+            const props = this.props;
+
+            // move styles to dom if not exists
+            {
+                const styles = props.$styles;
+                if (styles)
+                {
+                    const cuid = props.$jsonNode[DotNetComponentUniqueIdentifier];
+
+                    if (DynamicStyles[cuid] !== styles)
+                    {
+                        DynamicStyles[cuid] = styles;
+
+                        ApplyDynamicStylesToDom();
+                    }
+                }
+            }            
+
+            return ConvertToReactElement(props.$jsonNode[RootNode], this);
         }
         componentWillUnmount()
         {
