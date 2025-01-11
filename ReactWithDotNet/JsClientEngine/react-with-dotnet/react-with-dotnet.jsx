@@ -1737,31 +1737,6 @@ function CalculateNewStateFromJsonElement(componentState, jsonElement)
 
 const ComponentDefinitions = {};
 
-
-/**
- * @param {Int32Array} componentUniqueIdentifiers
- */
-function RemoveComponentDynamicStyles(componentUniqueIdentifiers)
-{
-    let hasChange = false;
-
-    for (let i = 0; i < DynamicStyles.length; i++)
-    {
-        if (componentUniqueIdentifiers.indexOf(DynamicStyles[i].componentUniqueIdentifier) >= 0)
-        {
-            DynamicStyles.splice(i, 1);
-            i--;
-
-            hasChange = true;
-        }
-    }
-
-    if (hasChange)
-    {
-        ApplyDynamicStylesToDom();
-    }
-}
-
 // DESTROY UTILITY
 function InvokeComponentDestroyListeners(componentInstance)
 {
@@ -2817,7 +2792,10 @@ function CreateNewDeveloperError(message)
     return new Error('\nReactWithDotNet developer error occured.\n' + message);
 }
 
-const DynamicStyles = [];
+/*
+  {  cuid: [[cssClassInfo]]], ...  }
+*/
+let DynamicStyles = {};
 let ReactWithDotNetDynamicCssElement = null;
 
 /**
@@ -2841,44 +2819,17 @@ function GetComponentUniqueIdentifierFromCssSelector(cssSelector)
 
 function ProcessDynamicCssClasses(dynamicStyles)
 {
-    if (dynamicStyles == null || dynamicStyles.length === 0)
+    if (dynamicStyles == null)
     {
         return;
     }
 
-    let cssSelector;
-
-    // remove all related css of component
-    for (cssSelector in dynamicStyles)
+    // import    
+    for (let cuid in dynamicStyles)
     {
-        if (dynamicStyles.hasOwnProperty(cssSelector))
+        if (dynamicStyles.hasOwnProperty(cuid))
         {
-            const componentUniqueIdentifier = GetComponentUniqueIdentifierFromCssSelector(cssSelector);
-
-            // remove all related css of component
-            for (let i = 0; i < DynamicStyles.length; i++)
-            {
-                if (DynamicStyles[i].componentUniqueIdentifier === componentUniqueIdentifier)
-                {
-                    DynamicStyles.splice(i, 1);
-                    i--;
-                }
-            }
-        }
-    }
-
-    // Add new records
-    for (cssSelector in dynamicStyles)
-    {
-        if (dynamicStyles.hasOwnProperty(cssSelector))
-        {
-            const cssBody = dynamicStyles[cssSelector];
-
-            DynamicStyles.push({
-                cssSelector: cssSelector,
-                cssBody: cssBody,
-                componentUniqueIdentifier: GetComponentUniqueIdentifierFromCssSelector(cssSelector)
-            });
+            DynamicStyles[cuid] = dynamicStyles[cuid];
         }
     }
 
@@ -2902,19 +2853,64 @@ function ApplyDynamicStylesToDom()
     }
 
     const arr = [];
-    for (let i = 0; i < DynamicStyles.length; i++)
-    {
-        const cssSelector = DynamicStyles[i].cssSelector;
-        const cssBody = DynamicStyles[i].cssBody;
 
-        arr.push("");
-        arr.push(cssSelector);
-        arr.push("{");
-        arr.push(cssBody);
-        arr.push("}");
-        if (cssSelector.indexOf('@media ') === 0)
+    for (let cuid in DynamicStyles)
+    {
+        if (DynamicStyles.hasOwnProperty(cuid))
         {
-            arr.push("}"); // for closing media rule bracket
+            const values = DynamicStyles[cuid];
+            if (values == null)
+            {
+                continue;
+            }
+
+            const length = values.length;
+            for (var i = 0; i < length; i++)
+            {
+                var items = values[i];
+
+                const name = items[0];
+                const body = items[1];
+                const mediaQueries = items[2];
+                const pseudos = items[3];
+
+                arr.push("." + name);
+                arr.push("{");
+                arr.push(body);
+                arr.push("}");
+
+                if (mediaQueries)
+                {
+                    const count = mediaQueries.length;
+
+                    for (let j = 0; j < count; j++)
+                    {
+                        const mediaRule = mediaQueries[j][0];
+                        const cssBody = mediaQueries[j][1];
+
+                        arr.push("@media " + mediaRule + " {")
+                        arr.push("  ." + name + " {");
+                        arr.push(cssBody);
+                        arr.push("  }");
+                        arr.push("}");
+                    }
+                }
+
+                if (pseudos)
+                {
+                    const count = pseudos.length;
+
+                    for (let j = 0; j < count; j++)
+                    {
+                        const pseudoName = pseudos[j][0];
+                        const pseudoBody = pseudos[j][1];
+
+                        arr.push("." + name + ":" + pseudoName + "{");
+                        arr.push(pseudoBody);
+                        arr.push("}");
+                    }
+                }
+            }
         }
     }
 
@@ -2923,6 +2919,33 @@ function ApplyDynamicStylesToDom()
     if (!IsTwoStringHasValueAndSame(ReactWithDotNetDynamicCssElement.innerHTML, newStyle))
     {
         ReactWithDotNetDynamicCssElement.innerHTML = newStyle;
+    }
+}
+
+/**
+ * @param {number[]} componentUniqueIdentifiers
+ */
+function RemoveComponentDynamicStyles(componentUniqueIdentifiers)
+{
+    let hasChange = false;
+
+    const length = componentUniqueIdentifiers.length;
+
+    for (let i = 0; i < length; i++)
+    {
+        const cuid = componentUniqueIdentifiers[i];
+
+        if (DynamicStyles[cuid] != null)
+        {
+            hasChange = true;
+
+            DynamicStyles[cuid] = null;
+        }
+    }
+
+    if (hasChange)
+    {
+        ApplyDynamicStylesToDom();
     }
 }
 

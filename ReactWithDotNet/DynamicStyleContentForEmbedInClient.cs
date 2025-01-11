@@ -5,7 +5,6 @@ namespace ReactWithDotNet;
 
 class DynamicStyleContentForEmbedInClient
 {
-    internal readonly List<CssClassInfo> ListOfClasses = [];
     internal readonly Dictionary<int, List<CssClassInfo>> Map = [];
 
     public static JsonMap CalculateCssClassList(Dictionary<int, List<CssClassInfo>> map)
@@ -19,13 +18,163 @@ class DynamicStyleContentForEmbedInClient
 
         foreach (var kvp in map)
         {
-            jsonMap.Add(kvp.Key.ToString(), kvp.Value.Select(ToArray));
+            jsonMap.Add(kvp.Key.ToString(), kvp.Value.Select(ToArray).ToArray());
         }
 
         return jsonMap;
     }
 
-    public static bool IsEquals(CssClassInfo a, CssClassInfo b)
+    public static void WriteAsHtmlStyleNodeContent(StringBuilder sb, JsonMap dynamicStylesMap)
+    {
+        dynamicStylesMap?.Foreach((_, value) =>
+        {
+            var items = (object[][])value;
+
+            foreach (var arr in items)
+            {
+                string name = null;
+                string body = null;
+                string[][] mediaQueries = null;
+                string[][] pseudos = null;
+
+                ReadFrom(arr, ref name, ref body, ref mediaQueries, ref pseudos);
+
+                const string padding = "    ";
+
+                sb.Append(padding);
+                sb.Append(".");
+                sb.Append(name);
+                sb.AppendLine(" {");
+                sb.AppendLine(body);
+                sb.AppendLine();
+                sb.AppendLine("}");
+                
+                if (mediaQueries != null)
+                {
+                    var length = mediaQueries.Length;
+                    for (var i = 0; i < length; i++)
+                    {
+                        var mediaRule = mediaQueries[i][0];
+                        var cssBody = mediaQueries[i][1];
+
+                        sb.AppendLine();
+                        sb.Append("@media");
+                        sb.Append(mediaRule);
+                        sb.Append("{");
+                        sb.Append(".");
+                        sb.Append(name);
+                        sb.Append("{");
+                        sb.Append(cssBody);
+                        sb.Append("}");
+                        sb.Append("}");
+                    }
+                }
+
+                if (pseudos is not null)
+                {
+                    foreach (var item in pseudos)
+                    {
+                        var pseudoName = item[0];
+                        var pseudoBody = item[1];
+
+                        sb.AppendLine();
+                        sb.Append(padding);
+                        sb.Append(".");
+                        sb.Append(name);
+                        sb.Append(":");
+                        sb.Append(pseudoName);
+                        sb.Append(" {");
+                        sb.Append(pseudoBody);
+                        sb.Append("}");
+                    }
+                }
+
+               
+            }
+        });
+    }
+
+    public string GetClassName(CssClassInfo cssClassInfo)
+    {
+        return GetClassName(cssClassInfo, Map);
+    }
+
+    internal static void ReadFrom(object[] arr, ref string name, ref string body, ref string[][] mediaQueries, ref string[][] pseudos)
+    {
+        name         = (string)arr[0];
+        body         = (string)arr[1];
+        mediaQueries = (string[][])arr[2];
+        pseudos      = (string[][])arr[3];
+    }
+
+    static string GetClassName(CssClassInfo cssClassInfo, Dictionary<int, List<CssClassInfo>> Map)
+    {
+        List<CssClassInfo> list;
+
+        // change name until is unique
+        {
+            var firstName = cssClassInfo.Name;
+
+            var suffix = 0;
+
+            while (true)
+            {
+                cssClassInfo = new()
+                {
+                    Name                      = firstName + suffix++,
+                    Pseudos                   = cssClassInfo.Pseudos,
+                    MediaQueries              = cssClassInfo.MediaQueries,
+                    ComponentUniqueIdentifier = cssClassInfo.ComponentUniqueIdentifier,
+                    Body                      = cssClassInfo.Body
+                };
+
+                // first 
+                if (!Map.TryGetValue(cssClassInfo.ComponentUniqueIdentifier, out list))
+                {
+                    Map.Add(cssClassInfo.ComponentUniqueIdentifier, [cssClassInfo]);
+                    return cssClassInfo.Name;
+                }
+
+                var cursor = CollectionsMarshal.AsSpan(list);
+                var length = cursor.Length;
+
+                // if everything is equal then no need to reExport return existing record
+                for (var i = 0; i < length; i++)
+                {
+                    if (IsEquals(cssClassInfo, cursor[i]))
+                    {
+                        return cssClassInfo.Name;
+                    }
+                }
+
+                // check has already same name give another name
+                var hasAlreadyExistsSameName = false;
+                {
+                    for (var i = 0; i < length; i++)
+                    {
+                        if (cursor[i].Name == cssClassInfo.Name)
+                        {
+                            hasAlreadyExistsSameName = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (hasAlreadyExistsSameName)
+                {
+                    continue;
+                }
+
+                break;
+            }
+        }
+
+        list.Add(cssClassInfo);
+
+        return cssClassInfo.Name;
+    }
+
+    static bool IsEquals(CssClassInfo a, CssClassInfo b)
     {
         if (a.ComponentUniqueIdentifier != b.ComponentUniqueIdentifier)
         {
@@ -119,300 +268,15 @@ class DynamicStyleContentForEmbedInClient
         return true;
     }
 
-    public static void ReadFrom(object[] arr, ref string name, ref string body, ref string[] mediaQueries, ref string[] pseudos)
-    {
-        name         = (string)arr[0];
-        body         = (string)arr[1];
-        mediaQueries = (string[])arr[2];
-        pseudos      = (string[])arr[3];
-    }
-
-    public static object[] ToArray(CssClassInfo cssClassInfo)
+    static object[] ToArray(CssClassInfo cssClassInfo)
     {
         return
         [
             /*0*/cssClassInfo.Name,
             /*1*/cssClassInfo.Body,
-            /*2*/cssClassInfo.MediaQueries?.Select(x => new[] { x.mediaRule, x.cssBody }),
-            /*3*/cssClassInfo.Pseudos?.Select(x => new[] { x.Name, x.BodyOfCss })
+            /*2*/cssClassInfo.MediaQueries?.Select(x => new[] { x.mediaRule, x.cssBody }).ToArray(),
+            /*3*/cssClassInfo.Pseudos?.Select(x => new[] { x.Name, x.BodyOfCss }).ToArray()
         ];
-    }
-
-    public static void WriteAsHtmlStyleNodeContent(StringBuilder sb, JsonMap dynamicStylesMap)
-    {
-        dynamicStylesMap?.Foreach((cssSelector, cssBody) =>
-        {
-            const string padding = "    ";
-
-            sb.Append(padding);
-            sb.Append(cssSelector);
-            sb.Append(padding);
-            sb.AppendLine("{");
-
-            sb.Append(padding);
-            sb.Append(padding);
-            sb.Append(cssBody);
-
-            if (cssSelector.IndexOf("@media ", StringComparison.OrdinalIgnoreCase) == 0)
-            {
-                sb.AppendLine();
-
-                sb.Append(padding);
-                sb.AppendLine("}");
-            }
-
-            sb.AppendLine();
-
-            sb.Append(padding);
-            sb.AppendLine("}");
-        });
-    }
-
-    public static void WriteAsHtmlStyleNodeContent_2(StringBuilder sb, JsonMap dynamicStylesMap)
-    {
-        dynamicStylesMap?.Foreach((_, value) =>
-        {
-            var items = (object[][])value;
-
-            foreach (var arr in items)
-            {
-                string name = null;
-                string body = null;
-                string[] mediaQueries = null;
-                string[] pseudos = null;
-
-                ReadFrom(arr, ref name, ref body, ref mediaQueries, ref pseudos);
-
-                const string padding = "    ";
-
-                sb.Append(padding);
-                sb.Append(".");
-                sb.Append(name);
-                sb.AppendLine(" {");
-
-                sb.Append(padding);
-                sb.AppendLine(body);
-
-                if (mediaQueries is not null)
-                {
-                    var length = mediaQueries.Length;
-                    for (var i = 0; i < length; i++)
-                    {
-                        var mediaRule = mediaQueries[0];
-                        var cssBody = mediaQueries[1];
-
-                        sb.AppendLine();
-                        sb.Append("@media");
-                        sb.Append(mediaRule);
-                        sb.Append("{");
-                        sb.Append(".");
-                        sb.Append(name);
-                        sb.Append(" ");
-                        sb.Append(cssBody);
-                        sb.Append("}");
-                    }
-                }
-
-                if (pseudos is not null)
-                {
-                    foreach (var item in pseudos)
-                    {
-                        var pseudoName = item[0];
-                        var pseudoBody = item[1];
-
-                        sb.AppendLine();
-                        sb.Append(padding);
-                        sb.Append(".");
-                        sb.Append(name);
-                        sb.Append(":");
-                        sb.Append(pseudoName);
-                        sb.Append(" {");
-                        sb.Append(pseudoBody);
-                        sb.Append("}");
-                    }
-                }
-
-                sb.AppendLine();
-                sb.AppendLine("}");
-            }
-        });
-    }
-
-    public static JsonMap CalculateCssClassList(List<CssClassInfo> ListOfClasses)
-    {
-        var cssClassInfoList = CollectionsMarshal.AsSpan(ListOfClasses);
-        if (cssClassInfoList.Length == 0)
-        {
-            return null;
-        }
-
-        var jsonMap = new JsonMap();
-
-        foreach (var cssClassInfo in cssClassInfoList)
-        {
-            WriteTo(cssClassInfo, jsonMap);
-        }
-
-        return jsonMap;
-
-        static void WriteTo(CssClassInfo cssClassInfo, JsonMap jsonMap)
-        {
-            if (cssClassInfo.Body is not null)
-            {
-                var cssSelector = $".{cssClassInfo.Name}";
-
-                jsonMap.Add(cssSelector, cssClassInfo.Body);
-            }
-
-            if (cssClassInfo.Pseudos is not null)
-            {
-                foreach (var pseudoCodeInfo in cssClassInfo.Pseudos)
-                {
-                    var cssSelector = $".{cssClassInfo.Name}:{pseudoCodeInfo.Name}";
-                    var cssBody = pseudoCodeInfo.BodyOfCss;
-
-                    jsonMap.Add(cssSelector, cssBody);
-                }
-            }
-
-            if (cssClassInfo.MediaQueries != null)
-            {
-                foreach (var (mediaRule, cssBody) in cssClassInfo.MediaQueries)
-                {
-                    var cssSelector = $"@media {mediaRule} {{ .{cssClassInfo.Name}";
-
-                    jsonMap.Add(cssSelector, cssBody);
-                }
-            }
-        }
-    }
-
-    public string GetClassName(CssClassInfo cssClassInfo) => GetClassName(cssClassInfo, ListOfClasses);
-    
-    static string GetClassName(CssClassInfo cssClassInfo, List<CssClassInfo> ListOfClasses)
-    {
-        // change name until is unique
-        {
-            var firstName = cssClassInfo.Name;
-
-            var suffix = 0;
-
-            while (true)
-            {
-                cssClassInfo = new()
-                {
-                    Name                      = firstName + suffix++,
-                    Pseudos                   = cssClassInfo.Pseudos,
-                    MediaQueries              = cssClassInfo.MediaQueries,
-                    ComponentUniqueIdentifier = cssClassInfo.ComponentUniqueIdentifier,
-                    Body                      = cssClassInfo.Body
-                };
-
-                var cursor = CollectionsMarshal.AsSpan(ListOfClasses);
-                var length = cursor.Length;
-
-                // if everything is equal then no need to reExport return existing record
-                for (var i = 0; i < length; i++)
-                {
-                    if (IsEquals(cssClassInfo, cursor[i]))
-                    {
-                        return cssClassInfo.Name;
-                    }
-                }
-
-                // check has already same name give another name
-                var hasAlreadyExistsSameName = false;
-                {
-                    for (var i = 0; i < length; i++)
-                    {
-                        if (cursor[i].Name == cssClassInfo.Name)
-                        {
-                            hasAlreadyExistsSameName = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (hasAlreadyExistsSameName)
-                {
-                    continue;
-                }
-
-                break;
-            }
-        }
-
-        ListOfClasses.Add(cssClassInfo);
-
-        return cssClassInfo.Name;
-    }
-    
-    static string GetClassName(CssClassInfo cssClassInfo,  Dictionary<int, List<CssClassInfo>> Map)
-    {
-        List<CssClassInfo> list;
-            
-        // change name until is unique
-        {
-            var firstName = cssClassInfo.Name;
-
-            var suffix = 0;
-
-            while (true)
-            {
-                cssClassInfo = new()
-                {
-                    Name                      = firstName + suffix++,
-                    Pseudos                   = cssClassInfo.Pseudos,
-                    MediaQueries              = cssClassInfo.MediaQueries,
-                    ComponentUniqueIdentifier = cssClassInfo.ComponentUniqueIdentifier,
-                    Body                      = cssClassInfo.Body
-                };
-                
-                // first 
-                if (!Map.TryGetValue(cssClassInfo.ComponentUniqueIdentifier, out list))
-                {
-                    Map.Add(cssClassInfo.ComponentUniqueIdentifier,[cssClassInfo]);
-                    return cssClassInfo.Name;
-                }
-                
-
-                var cursor = CollectionsMarshal.AsSpan(list);
-                var length = cursor.Length;
-
-                // if everything is equal then no need to reExport return existing record
-                for (var i = 0; i < length; i++)
-                {
-                    if (IsEquals(cssClassInfo, cursor[i]))
-                    {
-                        return cssClassInfo.Name;
-                    }
-                }
-
-                // check has already same name give another name
-                var hasAlreadyExistsSameName = false;
-                {
-                    for (var i = 0; i < length; i++)
-                    {
-                        if (cursor[i].Name == cssClassInfo.Name)
-                        {
-                            hasAlreadyExistsSameName = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (hasAlreadyExistsSameName)
-                {
-                    continue;
-                }
-
-                break;
-            }
-        }
-
-        list.Add(cssClassInfo);
-
-        return cssClassInfo.Name;
     }
 }
 

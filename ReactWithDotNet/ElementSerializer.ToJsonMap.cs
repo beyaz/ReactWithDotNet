@@ -568,7 +568,7 @@ partial class ElementSerializer
                             }
                         };
 
-                        elementSerializerContext.DynamicStyles.ListOfClasses.AddRange(context.DynamicStyles.ListOfClasses);
+                        elementSerializerContext.DynamicStyles.Map.AddRange(context.DynamicStyles.Map);
 
                         return elementSerializerContext;
                     }
@@ -592,8 +592,8 @@ partial class ElementSerializer
                             var cachedVersion = await ToJsonMap(component, newElementSerializerContext);
 
                             // take back dynamic styles
-                            context.DynamicStyles.ListOfClasses.Clear();
-                            context.DynamicStyles.ListOfClasses.AddRange(newElementSerializerContext.DynamicStyles.ListOfClasses);
+                            context.DynamicStyles.Map.Clear();
+                            context.DynamicStyles.Map.AddRange(newElementSerializerContext.DynamicStyles.Map);
                             context.ComponentUniqueIdentifierNextValue = newElementSerializerContext.ComponentUniqueIdentifierNextValue;
 
                             cacheableMethodInfo = new()
@@ -688,8 +688,8 @@ partial class ElementSerializer
                                 var cachedVersion = await ToJsonMap(component, newElementSerializerContext);
 
                                 // take back dynamic styles
-                                context.DynamicStyles.ListOfClasses.Clear();
-                                context.DynamicStyles.ListOfClasses.AddRange(newElementSerializerContext.DynamicStyles.ListOfClasses);
+                                context.DynamicStyles.Map.Clear();
+                                context.DynamicStyles.Map.AddRange(newElementSerializerContext.DynamicStyles.Map);
                                 context.ComponentUniqueIdentifierNextValue = newElementSerializerContext.ComponentUniqueIdentifierNextValue;
 
                                 cacheableMethodInfo = new()
