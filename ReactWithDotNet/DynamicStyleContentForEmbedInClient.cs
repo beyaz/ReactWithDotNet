@@ -32,7 +32,7 @@ class DynamicStyleContentForEmbedInClient
 
         foreach (var cssClassInfo in cssClassInfoList)
         {
-            cssClassInfo.WriteTo(jsonMap);
+            CssClassInfo.WriteTo(cssClassInfo, jsonMap);
         }
 
         return jsonMap;
@@ -305,45 +305,45 @@ sealed class CssClassInfo
         return true;
     }
 
-    public void WriteTo(JsonMap jsonMap)
+    public static void WriteTo(CssClassInfo cssClassInfo, JsonMap jsonMap)
     {
-        if (Body is not null)
+        if (cssClassInfo.Body is not null)
         {
-            var cssSelector = $".{Name}";
+            var cssSelector = $".{cssClassInfo.Name}";
 
-            jsonMap.Add(cssSelector, Body);
+            jsonMap.Add(cssSelector, cssClassInfo.Body);
         }
 
-        if (Pseudos is not null)
+        if (cssClassInfo.Pseudos is not null)
         {
-            foreach (var pseudoCodeInfo in Pseudos)
+            foreach (var pseudoCodeInfo in cssClassInfo.Pseudos)
             {
-                var cssSelector = $".{Name}:{pseudoCodeInfo.Name}";
+                var cssSelector = $".{cssClassInfo.Name}:{pseudoCodeInfo.Name}";
                 var cssBody = pseudoCodeInfo.BodyOfCss;
 
                 jsonMap.Add(cssSelector, cssBody);
             }
         }
 
-        if (MediaQueries != null)
+        if (cssClassInfo.MediaQueries != null)
         {
-            foreach (var (mediaRule, cssBody) in MediaQueries)
+            foreach (var (mediaRule, cssBody) in cssClassInfo.MediaQueries)
             {
-                var cssSelector = $"@media {mediaRule} {{ .{Name}";
+                var cssSelector = $"@media {mediaRule} {{ .{cssClassInfo.Name}";
 
                 jsonMap.Add(cssSelector, cssBody);
             }
         }
     }
     
-    public object[] ToArray()
+    public static object[] ToArray(CssClassInfo cssClassInfo)
     {
         return
         [
-            /*0*/Name,
-            /*1*/Body,
-            /*2*/MediaQueries?.Select(x => new[] { x.mediaRule, x.cssBody }),
-            /*3*/Pseudos?.Select(x => new[] { x.Name, x.BodyOfCss })
+            /*0*/cssClassInfo.Name,
+            /*1*/cssClassInfo.Body,
+            /*2*/cssClassInfo.MediaQueries?.Select(x => new[] { x.mediaRule, x.cssBody }),
+            /*3*/cssClassInfo.Pseudos?.Select(x => new[] { x.Name, x.BodyOfCss })
         ];
     }
     
