@@ -346,6 +346,74 @@ class DynamicStyleContentForEmbedInClient
 
         return cssClassInfo.Name;
     }
+    
+    static string GetClassName(CssClassInfo cssClassInfo,  Dictionary<int, List<CssClassInfo>> Map)
+    {
+        List<CssClassInfo> list;
+            
+        // change name until is unique
+        {
+            var firstName = cssClassInfo.Name;
+
+            var suffix = 0;
+
+            while (true)
+            {
+                cssClassInfo = new()
+                {
+                    Name                      = firstName + suffix++,
+                    Pseudos                   = cssClassInfo.Pseudos,
+                    MediaQueries              = cssClassInfo.MediaQueries,
+                    ComponentUniqueIdentifier = cssClassInfo.ComponentUniqueIdentifier,
+                    Body                      = cssClassInfo.Body
+                };
+                
+                // first 
+                if (!Map.TryGetValue(cssClassInfo.ComponentUniqueIdentifier, out list))
+                {
+                    Map.Add(cssClassInfo.ComponentUniqueIdentifier,[cssClassInfo]);
+                    return cssClassInfo.Name;
+                }
+                
+
+                var cursor = CollectionsMarshal.AsSpan(list);
+                var length = cursor.Length;
+
+                // if everything is equal then no need to reExport return existing record
+                for (var i = 0; i < length; i++)
+                {
+                    if (IsEquals(cssClassInfo, cursor[i]))
+                    {
+                        return cssClassInfo.Name;
+                    }
+                }
+
+                // check has already same name give another name
+                var hasAlreadyExistsSameName = false;
+                {
+                    for (var i = 0; i < length; i++)
+                    {
+                        if (cursor[i].Name == cssClassInfo.Name)
+                        {
+                            hasAlreadyExistsSameName = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (hasAlreadyExistsSameName)
+                {
+                    continue;
+                }
+
+                break;
+            }
+        }
+
+        list.Add(cssClassInfo);
+
+        return cssClassInfo.Name;
+    }
 }
 
 sealed class CssPseudoCodeInfo
