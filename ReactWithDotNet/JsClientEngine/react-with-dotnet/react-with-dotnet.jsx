@@ -207,12 +207,6 @@ function TryLoadCssByHref(href)
     return { loadStarted: true };
 }
 
-
-function HasId(htmlElement)
-{
-    return htmlElement.id !== "";
-}
-
 function OnDocumentReady(callback)
 {
     const stateCheck = setInterval(function ()
@@ -1697,7 +1691,7 @@ function HandleAction(actionArguments)
 
     function onFail(error)
     {
-        // Maybe has network error on hotreload mode is active. We should retry. 
+        // Maybe has network error on hot reload mode is active. We should retry. 
         if (isComponentPreview)
         {
             setTimeout(() => SendRequest(request, onSuccess, onFail), 1000);
@@ -1721,7 +1715,7 @@ function HandleAction(actionArguments)
 
 function CalculateNewStateFromJsonElement(componentState, jsonElement)
 {
-    // connect unique idendifiers
+    // connect unique identifiers
     if (NotNull(componentState[DotNetComponentUniqueIdentifier]) !== NotNull(jsonElement[DotNetComponentUniqueIdentifier]))
     {
         const component = COMPONENT_CACHE.FindComponentByDotNetComponentUniqueIdentifier(componentState[DotNetComponentUniqueIdentifier]);
@@ -2470,7 +2464,7 @@ function CalculateRemoteMethodArguments(args)
 
     const newArgs = [];
 
-    for (var i = 0; i < args.length; i++)
+    for (let i = 0; i < args.length; i++)
     {
         newArgs.push(CalculateRemoteMethodArgument(args[i]));
     }
@@ -2935,7 +2929,7 @@ function ApplyDynamicStylesToDom()
         }
     }
 
-    // try update if has change
+    // try update if it has changed
     const newStyle = arr.join("\n");
     if (!IsTwoStringHasValueAndSame(ReactWithDotNetDynamicCssElement.innerHTML, newStyle))
     {
