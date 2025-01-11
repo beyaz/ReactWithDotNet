@@ -287,7 +287,9 @@ class DynamicStyleContentForEmbedInClient
         }
     }
 
-    public string GetClassName(CssClassInfo cssClassInfo)
+    public string GetClassName(CssClassInfo cssClassInfo) => GetClassName(cssClassInfo, ListOfClasses);
+    
+    static string GetClassName(CssClassInfo cssClassInfo, List<CssClassInfo> ListOfClasses)
     {
         // change name until is unique
         {
