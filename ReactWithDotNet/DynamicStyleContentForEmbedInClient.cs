@@ -238,7 +238,7 @@ class DynamicStyleContentForEmbedInClient
         });
     }
 
-    public JsonMap CalculateCssClassList()
+    public static JsonMap CalculateCssClassList(List<CssClassInfo> ListOfClasses)
     {
         var cssClassInfoList = CollectionsMarshal.AsSpan(ListOfClasses);
         if (cssClassInfoList.Length == 0)

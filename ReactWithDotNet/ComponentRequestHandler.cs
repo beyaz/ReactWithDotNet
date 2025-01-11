@@ -211,7 +211,7 @@ static class ComponentRequestHandler
                 CallFunctionId                    = request.CallFunctionId,
                 ElementAsJson                     = map,
                 Trace                             = tracer.Messages,
-                DynamicStyles                     = serializerContext.DynamicStyles.CalculateCssClassList(),
+                DynamicStyles                     = DynamicStyleContentForEmbedInClient.CalculateCssClassList(serializerContext.DynamicStyles.ListOfClasses),
                 LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue - 1,
                 ReactContext                      = context
             };
@@ -400,7 +400,7 @@ static class ComponentRequestHandler
                 CallFunctionId                    = request.CallFunctionId,
                 ElementAsJson                     = map,
                 Trace                             = tracer.Messages,
-                DynamicStyles                     = serializerContext.DynamicStyles.CalculateCssClassList(),
+                DynamicStyles                     = DynamicStyleContentForEmbedInClient.CalculateCssClassList(serializerContext.DynamicStyles.ListOfClasses),
                 LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue - 1,
                 ReactContext                      = context
             };
