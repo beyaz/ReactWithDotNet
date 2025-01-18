@@ -82,6 +82,8 @@ const DotNetProperties = 'DotNetProperties';
  * @property {JsonNode} ElementAsJson
  * @property {Object} NewState
  * @property {Object} NewDotNetProperties
+ * @property {number} LastUsedComponentUniqueIdentifier
+ * @property {Object} DynamicStyles
  */
 
 /**
@@ -1615,9 +1617,9 @@ function ConvertToShadowHtmlElement(htmlElement)
 
 /**
  * @param {ClientTask[]} clientTasks
- * @param {Component} component
+ * @param {Object} callerInstance
  */
-function ProcessClientTasks(clientTasks, component)
+function ProcessClientTasks(clientTasks, callerInstance)
 {
     if (clientTasks == null)
     {
@@ -1631,7 +1633,7 @@ function ProcessClientTasks(clientTasks, component)
         const jsFunctionPath      = clientTasks[i].JsFunctionPath;
         const jsFunctionArguments = clientTasks[i].JsFunctionArguments;
 
-        InvokeJsFunctionInPath(jsFunctionPath, /*callerInstance*/component, jsFunctionArguments);
+        InvokeJsFunctionInPath(jsFunctionPath, callerInstance, jsFunctionArguments);
     }
 }
 
@@ -1930,7 +1932,7 @@ function DefineComponent(componentDeclaration)
 
     if (cacheKeyForComponentDefinitions === 'ReactWithDotNet.FunctionalComponent,ReactWithDotNet')
     {
-        cacheKeyForComponentDefinitions = componentDeclaration[DotNetProperties].RenderMethodNameWithToken;
+        cacheKeyForComponentDefinitions = componentDeclaration[DotNetProperties]['RenderMethodNameWithToken'];
     }
     const component = ComponentDefinitions[cacheKeyForComponentDefinitions];
     if (component)
@@ -1993,6 +1995,9 @@ function DefineComponent(componentDeclaration)
 
         componentDidMount()
         {
+            /**
+             * @type {Component | NewComponent}
+             */
             const component = this;
 
             function HandleHasComponentDidMount(isDirectCall)
@@ -2955,7 +2960,7 @@ function CreateNewDeveloperError(message)
 }
 
 /*
-  {  cuid: [[cssClassInfo]]], ...  }
+  {  "cuid": [[cssClassInfo]]], ...  }
 */
 let DynamicStyles = {};
 let ReactWithDotNetDynamicCssElement = null;
