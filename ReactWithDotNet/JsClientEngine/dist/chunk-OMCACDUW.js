@@ -1071,11 +1071,7 @@ function HandleAction(actionArguments) {
     if (response.LastUsedComponentUniqueIdentifier > LastUsedComponentUniqueIdentifier) {
       LastUsedComponentUniqueIdentifier = response.LastUsedComponentUniqueIdentifier;
     }
-    const incomingDynamicStyles = response.DynamicStyles;
-    function stateCallback() {
-      ProcessDynamicCssClasses(incomingDynamicStyles);
-      OnReactStateReady();
-    }
+    ProcessDynamicCssClasses(response.DynamicStyles);
     if (response.SkipRender) {
       component.state[DotNetState] = response.NewState;
       component.state[DotNetProperties] = response.NewDotNetProperties;
@@ -1083,14 +1079,14 @@ function HandleAction(actionArguments) {
         component.state[ClientTasks] = response.ClientTaskList;
         HandleComponentClientTasks(component);
       }
-      stateCallback();
+      OnReactStateReady();
       return;
     }
     const partialState = CalculateNewStateFromJsonElement(component.state, response.ElementAsJson);
-    SetState(component, partialState, stateCallback);
+    SetState(component, partialState, OnReactStateReady);
     if (isComponentWillUnmount) {
       ProcessClientTasks(partialState[ClientTasks], component);
-      stateCallback();
+      OnReactStateReady();
     }
   }
   function onFail(error) {

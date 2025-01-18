@@ -1802,15 +1802,8 @@ function HandleAction(actionArguments)
             LastUsedComponentUniqueIdentifier = response.LastUsedComponentUniqueIdentifier;
         }
 
-        const incomingDynamicStyles = response.DynamicStyles;
+        ProcessDynamicCssClasses(response.DynamicStyles);        
         
-        function stateCallback()
-        {
-            ProcessDynamicCssClasses(incomingDynamicStyles);
-
-            OnReactStateReady();
-        }
-
         if (response.SkipRender)
         {
             // note: setState not used here because this is special case. we don't want to trigger render.
@@ -1822,21 +1815,21 @@ function HandleAction(actionArguments)
 
                 HandleComponentClientTasks(component);
             }
-            
-            stateCallback();
+
+            OnReactStateReady();
 
             return;
         }
 
         const partialState = CalculateNewStateFromJsonElement(component.state, response.ElementAsJson);
 
-        SetState(component, partialState, stateCallback);
+        SetState(component, partialState, OnReactStateReady);
 
         if (isComponentWillUnmount)
         {
             ProcessClientTasks(partialState[ClientTasks], component);
 
-            stateCallback();
+            OnReactStateReady();
         }
     }
 
