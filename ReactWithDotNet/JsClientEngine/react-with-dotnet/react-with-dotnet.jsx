@@ -2069,7 +2069,7 @@ function DefineComponent(componentDeclaration)
             }
         }
 
-        componentDidUpdate(previousProps, previousState)
+        componentDidUpdate(prevProps, prevState, snapshot)
         {
             HandleComponentClientTasks(this);
         }
