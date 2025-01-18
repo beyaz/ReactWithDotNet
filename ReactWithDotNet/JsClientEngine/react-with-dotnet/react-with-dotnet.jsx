@@ -1111,8 +1111,7 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
 
             return;
         }
-
-
+        
         const actionArguments = {
             component: targetComponent,
             remoteMethodName: remoteMethodName,
