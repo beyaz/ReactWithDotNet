@@ -122,6 +122,12 @@ const DotNetProperties = 'DotNetProperties';
  * @property {JsonNode} ___TemplateForNull___
  */
 
+/**
+ * @typedef {Object} EventSenderInfo
+ * @property {number} SenderComponentUniqueIdentifier
+ * @property {string} SenderPropertyFullName
+ */
+
 function SafeExecute(fn)
 {
     try
@@ -2351,6 +2357,10 @@ function ConnectComponentFirstResponseToReactSystem(containerHtmlElementId, resp
     
 }
 
+/**
+ * @param {{renderInfo: RemoteExecutionResponse, idOfContainerHtmlElement: String, fullTypeNameOfReactComponent: string, containerHtmlElementId: string}} input
+ * @constructor
+ */
 function RenderComponentIn(input)
 {
     if (input.renderInfo)
@@ -2428,7 +2438,7 @@ function GetExternalJsObject(key)
     const findResponse = TryFindExternalObject(key);
     if (findResponse != null)
     {
-        if (findResponse.isCacheEnabled === true)
+        if (findResponse['isCacheEnabled'] === true)
         {
             if (findResponse.value == null)
             {
@@ -2722,7 +2732,7 @@ function GetRealNameOfDotNetEvent(senderPropertyFullName, senderComponentUniqueI
     ].join(',');
 }
 
-RegisterCoreFunction("DispatchDotNetCustomEvent", function(eventSenderInfo, eventArguments)
+RegisterCoreFunction("DispatchDotNetCustomEvent", function(/*{EventSenderInfo}*/eventSenderInfo, eventArguments)
 {
     const senderPropertyFullName = eventSenderInfo.SenderPropertyFullName;
     const senderComponentUniqueIdentifier = GetFirstAssignedUniqueIdentifierValueOfComponent(eventSenderInfo.SenderComponentUniqueIdentifier);
