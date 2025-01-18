@@ -455,6 +455,68 @@ function InvalidateQueuedFunctionsByName(name)
     }
 }
 
+const OperationStatusInitial = 1;
+const OperationStatusReadyToSendServer = 2;
+const OperationStatusWaitingRemoteResponse = 3;
+const OperationStatusWaitingReactStateReady = 4;
+const OperationStatusReactStateReady = 5;
+const OperationStatusInvalidated = 6;
+
+/**
+ * @typedef {Object} Operation
+ * @property {number} status
+ * @property {Component} component
+ * @property {string} remoteMethodName
+ * @property {Object[]} remoteMethodArguments
+ */
+
+/**
+ * @type {{timer: number, array: Operation[]}}
+ */
+const Operations = {
+    array:[],
+    timer:0
+};
+
+function StartOperations()
+{
+    if (Operations.timer)
+    {
+        return;
+    }
+
+    Operations.timer = setInterval(Operate, 5);
+}
+
+function StopOperations()
+{
+    clearInterval(Operations.timer);
+    Operations.timer = 0;
+}
+
+/**
+ * @param {Operation} operation
+ */
+function AddOperation(operation)
+{
+    Operations.array.push(operation);
+    StartOperations();
+}
+
+function Operate()
+{
+    if (Operations.array.length === 0)
+    {
+        StopOperations();
+        return;
+    }
+    
+    
+}
+
+
+
+
 function SetState(component, partialState, stateCallback)
 {
     ReactIsBusy = true;
@@ -1653,7 +1715,7 @@ function StartAction(actionArguments)
         HandleAction(actionArguments);
     }
     return PushToFunctionExecutionQueue(execute);
-}
+} 
 
 function IsSyntheticBaseEvent(e)
 {
