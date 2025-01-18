@@ -70,6 +70,10 @@ const DotNetProperties = 'DotNetProperties';
  * @property {ComponentState} state
  */
 
+/**
+ * @typedef {Object} RemoteExecutionResponse
+ * @property {number} SkipRender
+ */
 
 function SafeExecute(fn)
 {
@@ -1698,6 +1702,9 @@ function HandleAction(actionArguments)
 
     request.EventArgumentsAsJsonArray = actionArguments.remoteMethodArguments.map(JSON.stringify);
 
+    /**
+     * @param {RemoteExecutionResponse} response
+     */
     function onSuccess(response)
     {
         IsWaitingRemoteResponse = false;
