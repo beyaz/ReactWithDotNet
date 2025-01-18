@@ -18,7 +18,7 @@ import {
 } from "./chunk-E4SL5VQW.js";
 import {
   react_with_dotnet_default
-} from "./chunk-5WTXQDBG.js";
+} from "./chunk-H6FDMXAI.js";
 import "./chunk-QNQS7X5M.js";
 import "./chunk-XDFXK7K5.js";
 import "./chunk-QRPWKJ4C.js";

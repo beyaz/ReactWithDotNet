@@ -90,7 +90,7 @@ var EventBusImp = class {
   }
   publish(eventName, eventArgumentsAsArray) {
     if (eventArgumentsAsArray == null) {
-      throw CreateNewDeveloperError("Publish event arguments should be given in array. @Example: ReactWithDotNet.DispatchEvent('MovieNameChanged', ['The Shawshank Redemption']);");
+      throw CreateNewDeveloperError("Publish event arguments should be given in array. @Example: ReactWithDotNet.DispatchEvent('MovieActorNameChanged', ['Tom Hanks']);");
     }
     const listenerFunctions = this.map[eventName];
     if (listenerFunctions == null || listenerFunctions.length === 0) {
@@ -565,7 +565,8 @@ function tryToFindCachedMethodInfo(component, remoteMethodName, eventArguments) 
   if (cachedMethods == null) {
     return null;
   }
-  for (let i = 0; i < cachedMethods.length; i++) {
+  const length = cachedMethods.length;
+  for (let i = 0; i < length; i++) {
     const cachedMethodInfo = cachedMethods[i];
     if (cachedMethodInfo.MethodName === remoteMethodName && cachedMethodInfo.IgnoreParameters) {
       return cachedMethodInfo;
@@ -607,8 +608,8 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo) {
       if (arguments.length === 0) {
         throw CreateNewDeveloperError("There is no event argument for applying StopPropagation");
       }
-      if (arguments[0] == null || arguments[0].constructor.prototype.stopPropagation == null) {
-        throw CreateNewDeveloperError("Event argument not support StopPropagation");
+      if (arguments[0] == null) {
+        throw CreateNewDeveloperError("Trying to call StopPropagation method bu event argument is null.");
       }
       arguments[0].stopPropagation();
     }
@@ -687,7 +688,7 @@ function ConvertToReactElement(jsonNode, component) {
   if (jsonNode.$FakeChild != null) {
     jsonNode = FindRealNodeByFakeChild(jsonNode.$FakeChild, component.state[RootNode], component.props.$jsonNode[RootNode]);
   }
-  if (jsonNode.$isPureComponent === 1) {
+  if (jsonNode.$isPureComponent) {
     const cmp = DefinePureComponent(jsonNode);
     const cmpKey = NotNull(jsonNode.key);
     const cmpProps = {
@@ -805,7 +806,7 @@ function ConvertToReactElement(jsonNode, component) {
         };
         continue;
       }
-      if (propValue.$isElement === true) {
+      if (propValue.$isElement) {
         props[propName] = ConvertToReactElement(propValue.Element, component);
         continue;
       }
@@ -967,14 +968,15 @@ function ConvertToShadowHtmlElement(htmlElement) {
     scrollWidth: htmlElement.scrollWidth
   };
 }
-function ProcessClientTasks(clientTasks, component) {
+function ProcessClientTasks(clientTasks, callerInstance) {
   if (clientTasks == null) {
     return;
   }
-  for (let i = 0; i < clientTasks.length; i++) {
+  const length = clientTasks.length;
+  for (let i = 0; i < length; i++) {
     const jsFunctionPath = clientTasks[i].JsFunctionPath;
     const jsFunctionArguments = clientTasks[i].JsFunctionArguments;
-    InvokeJsFunctionInPath(jsFunctionPath, component, jsFunctionArguments);
+    InvokeJsFunctionInPath(jsFunctionPath, callerInstance, jsFunctionArguments);
   }
 }
 function StartAction(actionArguments) {
@@ -1049,7 +1051,14 @@ function HandleAction(actionArguments) {
     CallFunctionId: actionArguments.executionQueueEntry.id
   };
   ArrangeRemoteMethodArguments(actionArguments.remoteMethodArguments);
-  request.EventArgumentsAsJsonArray = actionArguments.remoteMethodArguments.map(JSON.stringify);
+  {
+    const remoteMethodArguments = Array.from(actionArguments.remoteMethodArguments);
+    const length = remoteMethodArguments.length;
+    for (let i = 0; i < length; i++) {
+      remoteMethodArguments[i] = JSON.stringify(remoteMethodArguments[i]);
+    }
+    request.EventArgumentsAsJsonArray = remoteMethodArguments;
+  }
   function onSuccess(response) {
     IsWaitingRemoteResponse = false;
     if (response.CallFunctionId > 0 && FunctionExecutionQueueCurrentEntry && FunctionExecutionQueueCurrentEntry.id === response.CallFunctionId && FunctionExecutionQueueCurrentEntry.isValid === false) {
@@ -1097,7 +1106,6 @@ function HandleAction(actionArguments) {
     actionArguments.onPreviewHandler();
   }
   SendRequest(request, onSuccess, onFail);
-  OnReactStateReady();
 }
 function CalculateNewStateFromJsonElement(componentState, jsonElement) {
   if (NotNull(componentState[DotNetComponentUniqueIdentifier]) !== NotNull(jsonElement[DotNetComponentUniqueIdentifier])) {
@@ -1140,7 +1148,7 @@ function HandleComponentClientTasks(component) {
 function DefineComponent(componentDeclaration) {
   let cacheKeyForComponentDefinitions = componentDeclaration[DotNetTypeOfReactComponent];
   if (cacheKeyForComponentDefinitions === "ReactWithDotNet.FunctionalComponent,ReactWithDotNet") {
-    cacheKeyForComponentDefinitions = componentDeclaration[DotNetProperties].RenderMethodNameWithToken;
+    cacheKeyForComponentDefinitions = componentDeclaration[DotNetProperties]["RenderMethodNameWithToken"];
   }
   const component = ComponentDefinitions[cacheKeyForComponentDefinitions];
   if (component) {
@@ -1228,7 +1236,7 @@ function DefineComponent(componentDeclaration) {
         );
       }
     }
-    componentDidUpdate(previousProps, previousState) {
+    componentDidUpdate(prevProps, prevState, snapshot) {
       HandleComponentClientTasks(this);
     }
     componentWillUnmount() {
@@ -1336,19 +1344,19 @@ function DefinePureComponent(componentDeclaration) {
     render() {
       const props = this.props;
       {
-        const styles = props.$styles;
+        const styles = props["$styles"];
         if (styles) {
-          const cuid = props.$jsonNode[DotNetComponentUniqueIdentifier];
+          const cuid = props["$jsonNode"][DotNetComponentUniqueIdentifier];
           if (DynamicStyles[cuid] !== styles) {
             DynamicStyles[cuid] = styles;
             ApplyDynamicStylesToDom();
           }
         }
       }
-      return ConvertToReactElement(props.$jsonNode[RootNode], this);
+      return ConvertToReactElement(props["$jsonNode"][RootNode], this);
     }
     componentWillUnmount() {
-      const uid = NotNull(this.props.$jsonNode[DotNetComponentUniqueIdentifier]);
+      const uid = NotNull(this.props["$jsonNode"][DotNetComponentUniqueIdentifier]);
       RemoveComponentDynamicStyles([uid]);
     }
   }
@@ -1382,7 +1390,7 @@ function ConnectComponentFirstResponseToReactSystem(containerHtmlElementId, resp
   }
   ProcessDynamicCssClasses(response.DynamicStyles);
   const element = response.ElementAsJson;
-  const component = element.$isPureComponent === 1 ? DefinePureComponent(element) : DefineComponent(element);
+  const component = element.$isPureComponent ? DefinePureComponent(element) : DefineComponent(element);
   LastUsedComponentUniqueIdentifier = response.LastUsedComponentUniqueIdentifier;
   function renderCallback(component2) {
     if (component2) {
@@ -1442,7 +1450,7 @@ function RegisterExternalJsObject(key, value) {
 function GetExternalJsObject(key) {
   const findResponse = TryFindExternalObject(key);
   if (findResponse != null) {
-    if (findResponse.isCacheEnabled === true) {
+    if (findResponse["isCacheEnabled"] === true) {
       if (findResponse.value == null) {
         throw CreateNewDeveloperError(key + " ==> isCacheEnabled is true but value property is null.");
       }
@@ -1480,26 +1488,12 @@ RegisterCoreFunction("RegExp", (x) => new RegExp(x));
 RegisterCoreFunction("IsTwoObjectEquals", isEquals);
 RegisterCoreFunction("CopyToClipboard", function(text) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text);
+    navigator.clipboard.writeText(text).then(() => {
+    });
     return;
   }
   if (window.clipboardData && window.clipboardData.setData) {
-    return clipboardData.setData("Text", text);
-  }
-  if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
-    const textarea = document.createElement("textarea");
-    textarea.textContent = text;
-    textarea.style.position = "fixed";
-    document.body.appendChild(textarea);
-    textarea.select();
-    try {
-      return document.execCommand("copy");
-    } catch (ex) {
-      console.warn("Copy to clipboard failed.", ex);
-      return false;
-    } finally {
-      document.body.removeChild(textarea);
-    }
+    return window.clipboardData.setData("Text", text);
   }
 });
 RegisterCoreFunction("RunJavascript", (javascriptCode) => {
@@ -1570,23 +1564,13 @@ function CalculateRemoteMethodArguments(args) {
 }
 RegisterCoreFunction("CalculateRemoteMethodArguments", CalculateRemoteMethodArguments);
 function SetCookie(cookieName_StringNotNull, cookieValue_StringNotNull, expireDays_NumberNotNull) {
-  const exdate = /* @__PURE__ */ new Date();
-  exdate.setDate(exdate.getDate() + expireDays_NumberNotNull);
+  const expireDate = /* @__PURE__ */ new Date();
+  expireDate.setDate(expireDate.getDate() + expireDays_NumberNotNull);
   document.cookie = [
     cookieName_StringNotNull + "=" + encodeURI(cookieValue_StringNotNull),
-    "expires=" + exdate.toUTCString(),
+    "expires=" + expireDate.toUTCString(),
     "path=/"
   ].join(";");
-}
-function GetCookie(cookieName) {
-  const cookieArr = document.cookie.split(";");
-  for (let i = 0; i < cookieArr.length; i++) {
-    const cookiePair = cookieArr[i].split("=");
-    if (cookieName === cookiePair[0].trim()) {
-      return decodeURIComponent(cookiePair[1]);
-    }
-  }
-  return null;
 }
 RegisterCoreFunction("SetCookie", SetCookie);
 RegisterCoreFunction("HistoryBack", function() {
@@ -1901,10 +1885,10 @@ function IsDesktop() {
 var ReactWithDotNet = {
   StrictMode: false,
   RequestHandlerPath: "DeveloperError: missing RequestHandlerPath",
-  OnDocumentReady,
-  StartAction,
+  "OnDocumentReady": OnDocumentReady,
+  "StartAction": StartAction,
   DispatchEvent,
-  RenderComponentIn,
+  "RenderComponentIn": RenderComponentIn,
   BeforeSendRequest: (x) => x,
   RegisterExternalJsObject,
   GetExternalJsObject,
@@ -1917,8 +1901,7 @@ var ReactWithDotNet = {
   IsMediaDesktop: IsDesktop,
   Call: InvokeJsFunctionInPath,
   Util: {
-    SetCookie,
-    GetCookie
+    SetCookie
   }
 };
 window.ReactWithDotNet = ReactWithDotNet;
