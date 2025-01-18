@@ -990,9 +990,9 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
                 throw CreateNewDeveloperError("There is no event argument for applying StopPropagation");
             }
 
-            if (arguments[0] == null || arguments[0].constructor.prototype.stopPropagation == null)
+            if (arguments[0] == null)
             {
-                throw CreateNewDeveloperError("Event argument not support StopPropagation");
+                throw CreateNewDeveloperError("Trying to call StopPropagation method bu event argument is null.");
             }
 
             arguments[0].stopPropagation();
@@ -3099,8 +3099,8 @@ const ReactWithDotNet =
 {
     StrictMode: false,
     RequestHandlerPath: 'DeveloperError: missing RequestHandlerPath',
-    // OnDocumentReady: OnDocumentReady,
-    // StartAction: StartAction,
+    OnDocumentReady: OnDocumentReady,
+    StartAction: StartAction,
     DispatchEvent: DispatchEvent,
     RenderComponentIn: RenderComponentIn,
     BeforeSendRequest: x=>x,
