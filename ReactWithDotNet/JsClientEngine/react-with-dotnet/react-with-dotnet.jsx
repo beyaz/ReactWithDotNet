@@ -394,11 +394,15 @@ FunctionExecutionQueueCurrentEntry = null;
 
 function PushToFunctionExecutionQueue(fn, forceWait)
 {
-    const entry = { fn: fn, isValid: true, id: FunctionExecutionQueueEntryUniqueIdentifier++ };
+    const entry = { 
+        fn: fn,
+        isValid: true,
+        id: FunctionExecutionQueueEntryUniqueIdentifier++ 
+    };
 
     FunctionExecutionQueue.push(entry);
 
-    if (forceWait === true)
+    if (forceWait)
     {
         return entry;
     }
@@ -407,7 +411,7 @@ function PushToFunctionExecutionQueue(fn, forceWait)
     {
         EmitNextFunctionInFunctionExecutionQueue();
     }
-
+    
     return entry;
 }
 
