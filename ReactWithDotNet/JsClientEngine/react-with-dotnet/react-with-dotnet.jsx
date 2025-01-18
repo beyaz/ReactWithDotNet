@@ -31,6 +31,7 @@ const DotNetProperties = 'DotNetProperties';
  * @property {number} StopPropagation
  * @property {string[]} KeyboardEventCallOnly
  * @property {?number} DebounceTimeout
+ * @property {number} $isRemoteMethod
  */
 
 /**
@@ -40,11 +41,13 @@ const DotNetProperties = 'DotNetProperties';
  * @property {number} $isPureComponent
  * @property {string} $text
  * @property {JsonNode[]} $children
+ * @property {JsonNode} $onClickPreview
  * @property {?number} $FakeChild
  * @property {string} FunctionNameOfGrabEventArguments
  * @property {number} StopPropagation
  * @property {string[]} KeyboardEventCallOnly
  * @property {?number} DebounceTimeout
+ * @property {string[]} $ReactAttributeNames
  */
 
 /**
@@ -79,6 +82,42 @@ const DotNetProperties = 'DotNetProperties';
  * @property {JsonNode} ElementAsJson
  * @property {Object} NewState
  * @property {Object} NewDotNetProperties
+ */
+
+/**
+ * @typedef {Object} PropValue
+ */
+
+/**
+ * @typedef {Object} BindInfo
+ * @property {string} DebounceHandler
+ * @property {number?} DebounceTimeout
+ * @property {string} eventName
+ * @property {number?} HandlerComponentUniqueIdentifier
+ * @property {number?} $isBinding
+ * @property {string[]} jsValueAccess
+ * @property {number} sourceIsState
+ * @property {string[]} sourcePath
+ * @property {string} targetProp
+ * @property {string} transformFunction
+ */
+
+/**
+ * @typedef {Object} InnerElementInfo
+ * @property {JsonNode} Element
+ * @property {number?} $isElement
+ */
+
+/**
+ * @typedef {Object} ItemTemplateInfo
+ * @property {JsonNode} ElementAsJson
+ * @property {Object} Item
+ */
+
+/**
+ * @typedef {Object} ItemTemplate
+ * @property {ItemTemplateInfo[]} ___ItemTemplates___
+ * @property {JsonNode} ___TemplateForNull___
  */
 
 function SafeExecute(fn)
@@ -650,6 +689,9 @@ class LinkedList
     {
         const node = new LinkedListNode(data);
 
+        /**
+         * @type {LinkedListNode}
+         */
         let current;
 
         if (this.head == null)
@@ -951,7 +993,7 @@ function tryToFindCachedMethodInfo(component, remoteMethodName, eventArguments)
 }
 
 /**
- * @param parentJsonNode
+ * @param {JsonNode} parentJsonNode
  * @param {RemoteMethodInfo} remoteMethodInfo
  * @returns {(function(): void)|*}
  */
@@ -1239,6 +1281,9 @@ function ConvertToReactElement(jsonNode, component)
             props = {};
         }
 
+        /**
+         * @type {PropValue | RemoteMethodInfo | BindInfo | InnerElementInfo | ItemTemplate | {$transformValueFunction: string, RawValue: Object}}
+         */
         const propValue = jsonNode[propName];
 
         if (propValue != null)
@@ -1327,7 +1372,7 @@ function ConvertToReactElement(jsonNode, component)
             }
 
             // tryProcessAsElement
-            if (propValue.$isElement === true)
+            if (propValue.$isElement)
             {
                 props[propName] = ConvertToReactElement(propValue.Element, component);
 
