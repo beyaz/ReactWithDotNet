@@ -352,7 +352,7 @@ function OnReactStateReady()
 {
     ReactIsBusy = false;
 
-    if (IsWaitingRemoteResponse === true)
+    if (IsWaitingRemoteResponse)
     {
         return;
     }
@@ -364,7 +364,7 @@ let FunctionExecutionQueueCurrentEntry = null;
 
 function EmitNextFunctionInFunctionExecutionQueue()
 {
-    if (ReactIsBusy === true)
+    if (ReactIsBusy)
     {
         throw CreateNewDeveloperError("ReactWithDotNet event queue problem occured.");
     }
@@ -390,7 +390,6 @@ function EmitNextFunctionInFunctionExecutionQueue()
 }
 
 let FunctionExecutionQueueEntryUniqueIdentifier = 1;
-FunctionExecutionQueueCurrentEntry = null;
 
 function PushToFunctionExecutionQueue(fn, forceWait)
 {
@@ -407,7 +406,7 @@ function PushToFunctionExecutionQueue(fn, forceWait)
         return entry;
     }
 
-    if (ReactIsBusy === false && IsWaitingRemoteResponse === false)
+    if (!ReactIsBusy && !IsWaitingRemoteResponse)
     {
         EmitNextFunctionInFunctionExecutionQueue();
     }

@@ -214,11 +214,14 @@ function EmitNextFunctionInFunctionExecutionQueue() {
   }
 }
 var FunctionExecutionQueueEntryUniqueIdentifier = 1;
-FunctionExecutionQueueCurrentEntry = null;
 function PushToFunctionExecutionQueue(fn, forceWait) {
-  const entry = { fn, isValid: true, id: FunctionExecutionQueueEntryUniqueIdentifier++ };
+  const entry = {
+    fn,
+    isValid: true,
+    id: FunctionExecutionQueueEntryUniqueIdentifier++
+  };
   FunctionExecutionQueue.push(entry);
-  if (forceWait === true) {
+  if (forceWait) {
     return entry;
   }
   if (ReactIsBusy === false && IsWaitingRemoteResponse === false) {
