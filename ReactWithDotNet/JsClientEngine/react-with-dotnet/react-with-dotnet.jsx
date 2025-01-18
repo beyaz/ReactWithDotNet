@@ -73,6 +73,12 @@ const DotNetProperties = 'DotNetProperties';
 /**
  * @typedef {Object} RemoteExecutionResponse
  * @property {number} SkipRender
+ * @property {number} CallFunctionId
+ * @property {string} ErrorMessage
+ * @property {ClientTask[]} ClientTaskList
+ * @property {JsonNode} ElementAsJson
+ * @property {Object} NewState
+ * @property {Object} NewDotNetProperties
  */
 
 function SafeExecute(fn)
@@ -2573,26 +2579,6 @@ function SetCookie(cookieName_StringNotNull, cookieValue_StringNotNull, expireDa
     ].join(";");
 }
 
-function GetCookie(cookieName)
-{
-    // Split cookie string and get all individual name=value pairs in an array
-    const cookieArr = document.cookie.split(";");
-    // Loop through the array elements
-    for (let i = 0; i < cookieArr.length; i++)
-    {
-        const cookiePair = cookieArr[i].split("=");
-        /* Removing whitespace at the beginning of the cookie name
-        and compare it with the given string */
-        if (cookieName === cookiePair[0].trim())
-        {
-            // Decode the cookie value and return
-            return decodeURIComponent(cookiePair[1]);
-        }
-    }
-    // Return null if not found
-    return null;
-}
-
 RegisterCoreFunction("SetCookie", SetCookie);
 
 RegisterCoreFunction("HistoryBack", function ()
@@ -3113,8 +3099,8 @@ const ReactWithDotNet =
 {
     StrictMode: false,
     RequestHandlerPath: 'DeveloperError: missing RequestHandlerPath',
-    OnDocumentReady: OnDocumentReady,
-    StartAction: StartAction,
+    // OnDocumentReady: OnDocumentReady,
+    // StartAction: StartAction,
     DispatchEvent: DispatchEvent,
     RenderComponentIn: RenderComponentIn,
     BeforeSendRequest: x=>x,
@@ -3132,8 +3118,7 @@ const ReactWithDotNet =
     Call: InvokeJsFunctionInPath,
     Util:
     {
-        SetCookie: SetCookie,
-        GetCookie: GetCookie
+        SetCookie: SetCookie
     }
 };
 
