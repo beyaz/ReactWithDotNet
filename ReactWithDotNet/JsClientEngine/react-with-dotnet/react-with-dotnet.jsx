@@ -35,6 +35,10 @@ const DotNetProperties = 'DotNetProperties';
 
 /**
  * @typedef {Object} JsonNode
+ * @property {string} $tag
+ * @property {Object} $props
+ * @property {number} $isPureComponent
+ * @property {string} $text
  * @property {JsonNode[]} $children
  * @property {?number} $FakeChild
  * @property {string} FunctionNameOfGrabEventArguments
@@ -47,6 +51,23 @@ const DotNetProperties = 'DotNetProperties';
  * @typedef {Object} ClientTask
  * @property {string} JsFunctionPath
  * @property {object[]} JsFunctionArguments
+ */
+
+/**
+ * @typedef {Object} CacheableMethodInfo
+ * @property {string} MethodName
+ * @property {boolean} IgnoreParameters
+ * @property {object[]} Parameter
+ * @property {JsonNode} ElementAsJson
+ */
+
+/**
+ * @typedef {Object} ComponentState
+ * @property {CacheableMethodInfo[]} $CachedMethods
+ */
+/**
+ * @typedef {Object} Component
+ * @property {ComponentState} state
  */
 
 
@@ -868,6 +889,11 @@ function isTwoLiteralObjectEquals(o1, o2)
     return true;
 }
 
+
+/**
+ * @param {Component} component
+ * @returns {CacheableMethodInfo[]}
+ */
 function GetAllCachedMethodsOfComponent(component)
 {
     return component.state.$CachedMethods;
@@ -881,7 +907,9 @@ function tryToFindCachedMethodInfo(component, remoteMethodName, eventArguments)
         return null;
     }
 
-    for (let i = 0; i < cachedMethods.length; i++)
+    const length = cachedMethods.length;
+    
+    for (let i = 0; i < length; i++)
     {
         const cachedMethodInfo = cachedMethods[i];
 
@@ -1087,7 +1115,7 @@ function ConvertToReactElement(jsonNode, component)
         jsonNode = FindRealNodeByFakeChild(jsonNode.$FakeChild, component.state[RootNode], component.props.$jsonNode[RootNode]);
     }
 
-    if (jsonNode.$isPureComponent === 1)
+    if (jsonNode.$isPureComponent)
     {
         const cmp = DefinePureComponent(jsonNode);
 
@@ -1532,7 +1560,7 @@ function ConvertToShadowHtmlElement(htmlElement)
 
 /**
  * @param {ClientTask[]} clientTasks
- * @param component
+ * @param {Component} component
  */
 function ProcessClientTasks(clientTasks, component)
 {
@@ -2215,7 +2243,7 @@ function ConnectComponentFirstResponseToReactSystem(containerHtmlElementId, resp
 
     const element = response.ElementAsJson;
 
-    const component = element.$isPureComponent === 1 ? DefinePureComponent(element) : DefineComponent(element);
+    const component = element.$isPureComponent ? DefinePureComponent(element) : DefineComponent(element);
 
     LastUsedComponentUniqueIdentifier = response.LastUsedComponentUniqueIdentifier;
 
@@ -2295,7 +2323,6 @@ function RenderComponentIn(input)
  * @param {Object} callerInstance
  * @param {Object[]} jsFunctionArguments
  * @returns {*}
- * @constructor
  */
 function InvokeJsFunctionInPath(jsFunctionPath, callerInstance, jsFunctionArguments)
 {
