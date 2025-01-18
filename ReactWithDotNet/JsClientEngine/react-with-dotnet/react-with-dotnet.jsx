@@ -1751,7 +1751,20 @@ function HandleAction(actionArguments)
 
     ArrangeRemoteMethodArguments(actionArguments.remoteMethodArguments);
 
-    request.EventArgumentsAsJsonArray = actionArguments.remoteMethodArguments.map(JSON.stringify);
+    // prepare arguments
+    {
+        const remoteMethodArguments = Array.from(actionArguments.remoteMethodArguments);
+        
+        const length = remoteMethodArguments.length;
+        
+        for (let i = 0; i < length; i++)
+        {
+            remoteMethodArguments[i] = JSON.stringify(remoteMethodArguments[i]);
+        }
+        
+        request.EventArgumentsAsJsonArray = remoteMethodArguments;
+    }
+    
 
     /**
      * @param {RemoteExecutionResponse} response
