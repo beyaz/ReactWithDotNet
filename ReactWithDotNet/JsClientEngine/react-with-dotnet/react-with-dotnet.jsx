@@ -3099,10 +3099,10 @@ const ReactWithDotNet =
 {
     StrictMode: false,
     RequestHandlerPath: 'DeveloperError: missing RequestHandlerPath',
-    OnDocumentReady: OnDocumentReady,
-    StartAction: StartAction,
+    "OnDocumentReady": OnDocumentReady,
+    "StartAction": StartAction,
     DispatchEvent: DispatchEvent,
-    RenderComponentIn: RenderComponentIn,
+    "RenderComponentIn": RenderComponentIn,
     BeforeSendRequest: x=>x,
     RegisterExternalJsObject: RegisterExternalJsObject,
     GetExternalJsObject: GetExternalJsObject,
