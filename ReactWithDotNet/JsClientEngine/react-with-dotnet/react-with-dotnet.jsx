@@ -43,6 +43,12 @@ const DotNetProperties = 'DotNetProperties';
  * @property {?number} DebounceTimeout
  */
 
+/**
+ * @typedef {Object} ClientTask
+ * @property {string} JsFunctionPath
+ * @property {object[]} JsFunctionArguments
+ */
+
 
 function SafeExecute(fn)
 {
@@ -1524,6 +1530,10 @@ function ConvertToShadowHtmlElement(htmlElement)
     };
 }
 
+/**
+ * @param {ClientTask[]} clientTasks
+ * @param component
+ */
 function ProcessClientTasks(clientTasks, component)
 {
     if (clientTasks == null)
@@ -1531,12 +1541,14 @@ function ProcessClientTasks(clientTasks, component)
         return;
     }
 
-    for (let i = 0; i < clientTasks.length; i++)
+    const length = clientTasks.length;
+    
+    for (let i = 0; i < length; i++)
     {
         const jsFunctionPath      = clientTasks[i].JsFunctionPath;
         const jsFunctionArguments = clientTasks[i].JsFunctionArguments;
 
-        InvokeJsFunctionInPath(jsFunctionPath, component, jsFunctionArguments);
+        InvokeJsFunctionInPath(jsFunctionPath, /*callerInstance*/component, jsFunctionArguments);
     }
 }
 
@@ -2278,6 +2290,13 @@ function RenderComponentIn(input)
     });
 }
 
+/**
+ * @param {string} jsFunctionPath
+ * @param {Object} callerInstance
+ * @param {Object[]} jsFunctionArguments
+ * @returns {*}
+ * @constructor
+ */
 function InvokeJsFunctionInPath(jsFunctionPath, callerInstance, jsFunctionArguments)
 {
     const fn = GetExternalJsObject(jsFunctionPath);
