@@ -186,7 +186,7 @@ class EventBusImp
     {
         if (eventArgumentsAsArray == null)
         {
-            throw CreateNewDeveloperError("Publish event arguments should be given in array. @Example: ReactWithDotNet.DispatchEvent('MovieNameChanged', ['The Shawshank Redemption']);");
+            throw CreateNewDeveloperError("Publish event arguments should be given in array. @Example: ReactWithDotNet.DispatchEvent('MovieActorNameChanged', ['Tom Hanks']);");
         }
 
         const listenerFunctions = this.map[eventName];
@@ -2501,37 +2501,14 @@ RegisterCoreFunction('CopyToClipboard', function (text)
 {
     if (navigator.clipboard && navigator.clipboard.writeText)
     {
-        navigator.clipboard.writeText(text);
+        navigator.clipboard.writeText(text).then(() => {});
         return;
     }
 
     if (window.clipboardData && window.clipboardData.setData)
     {
         // IE specific code path to prevent textarea being shown while dialog is visible.
-        return clipboardData.setData("Text", text);
-
-    }
-
-    if (document.queryCommandSupported && document.queryCommandSupported("copy"))
-    {
-        const textarea = document.createElement("textarea");
-        textarea.textContent = text;
-        textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
-        document.body.appendChild(textarea);
-        textarea.select();
-        try
-        {
-            return document.execCommand("copy");  // Security exception may be thrown by some browsers.
-        }
-        catch (ex)
-        {
-            console.warn("Copy to clipboard failed.", ex);
-            return false;
-        }
-        finally
-        {
-            document.body.removeChild(textarea);
-        }
+        return window.clipboardData.setData("Text", text);
     }
 });
 
@@ -2641,13 +2618,13 @@ RegisterCoreFunction('CalculateRemoteMethodArguments', CalculateRemoteMethodArgu
 
 function SetCookie(cookieName_StringNotNull, cookieValue_StringNotNull, expireDays_NumberNotNull)
 {
-    const exdate = new Date();
+    const expireDate = new Date();
 
-    exdate.setDate(exdate.getDate() + expireDays_NumberNotNull);
+    expireDate.setDate(expireDate.getDate() + expireDays_NumberNotNull);
 
     document.cookie = [
         cookieName_StringNotNull + "=" + encodeURI(cookieValue_StringNotNull),
-        "expires" + "=" + exdate.toUTCString(),
+        "expires" + "=" + expireDate.toUTCString(),
         "path=/"
     ].join(";");
 }
