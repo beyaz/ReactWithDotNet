@@ -343,131 +343,40 @@ function IsEmptyObject(obj)
     return true;
 }
 
-const FunctionExecutionQueue = [];
-
-let ReactIsBusy = false;
-let IsWaitingRemoteResponse = false;
-
-function OnReactStateReady()
-{
-    ReactIsBusy = false;
-
-    if (IsWaitingRemoteResponse)
-    {
-        return;
-    }
-
-    EmitNextFunctionInFunctionExecutionQueue();
-}
-
-let FunctionExecutionQueueCurrentEntry = null;
-
-function EmitNextFunctionInFunctionExecutionQueue()
-{
-    if (ReactIsBusy)
-    {
-        throw CreateNewDeveloperError("ReactWithDotNet event queue problem occured.");
-    }
-
-    if (FunctionExecutionQueue.length > 0)
-    {
-        const item = FunctionExecutionQueue.shift();
-
-        if (item.isValid === false)
-        {
-            EmitNextFunctionInFunctionExecutionQueue();
-            return;
-        }
-
-        ReactIsBusy = true;
-
-        item.prev = FunctionExecutionQueueCurrentEntry;
-
-        FunctionExecutionQueueCurrentEntry = item;
-
-        setTimeout(()=>item.fn(item), 1);
-    }
-}
-
-let FunctionExecutionQueueEntryUniqueIdentifier = 1;
-
-function PushToFunctionExecutionQueue(fn, forceWait)
-{
-    const entry = { 
-        fn: fn,
-        isValid: true,
-        id: FunctionExecutionQueueEntryUniqueIdentifier++ 
-    };
-
-    FunctionExecutionQueue.push(entry);
-
-    if (forceWait)
-    {
-        return entry;
-    }
-
-    if (!ReactIsBusy && !IsWaitingRemoteResponse)
-    {
-        EmitNextFunctionInFunctionExecutionQueue();
-    }
-    
-    return entry;
-}
-
 function InvalidateQueuedFunctionsByName(name)
 {
-    const current = FunctionExecutionQueueCurrentEntry;
+    const operations = Operations.array;
 
-    const queue = FunctionExecutionQueue;
-
-    let invalidateAll = false;
-
-    if (current)
+    for (let i = 0; i < operations.length; i++)
     {
-        if (current.name === name || (current.prev && current.prev.name === name))
+        const operation = operations[i];
+        if (operation.uniqueName === name)
         {
-            current.isValid = false;
-
-            invalidateAll = true;
-        }
-    }
-
-    if (invalidateAll)
-    {
-        for (let i = 0; i < queue.length; i++)
-        {
-            queue[i].isValid = false;
-        }
-        return;
-    }
-
-    for (let i = 0; i < queue.length; i++)
-    {
-        if (queue[i].name === name)
-        {
-             // skip rest of functions
-            for (let j = i; j < queue.length; j++)
-            {
-                queue[j].isValid = false;
-            }
-            break;
+            operation.status = OperationStatusInvalidated;
         }
     }
 }
 
 const OperationStatusInitial = 1;
-const OperationStatusReadyToSendServer = 2;
-const OperationStatusWaitingRemoteResponse = 3;
-const OperationStatusWaitingReactStateReady = 4;
-const OperationStatusReactStateReady = 5;
-const OperationStatusInvalidated = 6;
+const OperationStatusWaitingRemoteResponse = 2;
+const OperationStatusReactStateReady = 3;
+const OperationStatusInvalidated = 4;
+const OperationStatusRemoteFail = 5;
 
 /**
  * @typedef {Object} Operation
- * @property {number} status
+ * @property {number?} status
+ * @property {number?} id
  * @property {Component} component
- * @property {string} remoteMethodName
+ * @property {string?} remoteMethodName
  * @property {Object[]} remoteMethodArguments
+ * @property {number?} isComponentWillUnmount
+ * @property {string?} capturedStateTreeRootNodeKey
+ * @property {Object?} capturedStateTree
+ * @property {Function?} onPreviewHandler
+ * @property {string?} uniqueName
+ * @property {Function?} onCompleted
+ * @property {number?} priorityIsMore
  */
 
 /**
@@ -499,27 +408,149 @@ function StopOperations()
  */
 function AddOperation(operation)
 {
-    Operations.array.push(operation);
+    const operations = Operations.array;
+    
+    if (operation.priorityIsMore)
+    {
+        operations.splice(0, 0, operation);
+    }
+    else 
+    {
+        operations.push(operation);
+    }
     StartOperations();
 }
 
-function Operate()
+function isDescendantFiberNode(rootFiberNode, targetFiberNode) 
 {
-    if (Operations.array.length === 0)
+    let child = rootFiberNode.child;
+
+    // Iterate over all children
+    while (child) 
+    {
+        // Check if this child is the target
+        if (child === targetFiberNode) 
+        {
+            return true;
+        }
+
+        // Recursively check the child tree
+        if (isDescendantFiberNode(child, targetFiberNode)) 
+        {
+            return true;
+        }
+
+        // Move to the next sibling
+        child = child.sibling;
+    }
+
+    // If no match is found, return false
+    return false;
+}
+
+const isDescendantComponent = (parent, child) => 
+{
+    return isDescendantFiberNode(parent._reactInternals, child._reactInternals);
+};
+
+function Operate()
+{    
+    const operations = Operations.array;
+        
+    // try clear
+    for (let i = 0; i < operations.length; i++)
+    {
+        const operation = operations[i];
+
+        if (operation.status === OperationStatusInvalidated ||
+            operation.status === OperationStatusReactStateReady ||
+            operation.status === OperationStatusRemoteFail)
+        {
+            if (operation.onCompleted)
+            {
+                operation.onCompleted();
+            }
+            
+            operations.splice(i, 1);
+            i--;
+        }
+    }
+
+    if (operations.length === 0)
     {
         StopOperations();
         return;
     }
     
-    
+    for (let i = 0; i < operations.length; i++)
+    {
+        const operation = operations[i];
+
+        if (operation.status === OperationStatusWaitingRemoteResponse)
+        {
+            return;
+        }
+        
+        if (operation.status === OperationStatusInitial)
+        {
+            /*let hasSameComponent = false;
+            {
+                for (let j = i - 1; j >= 0 ; j--)
+                {
+                    
+                    
+                    if (operations[j].status === OperationStatusInvalidated ||
+                        operations[j].status === OperationStatusReactStateReady ||
+                        operations[j].status === OperationStatusRemoteFail)
+                    {
+                        continue
+                    }                    
+                    
+                    if (operation.component === operations[j].component)
+                    {
+                        hasSameComponent = true;
+                        break;
+                    }
+
+                    if(isDescendantComponent(operation.component, operations[j].component))
+                    {
+                        hasSameComponent = true;
+                        break;
+                    }
+
+                    if(isDescendantComponent(operations[j].component, operation.component))
+                    {
+                        hasSameComponent = true;
+                        break;
+                    }
+                }
+            }
+            
+            if (hasSameComponent)
+            {
+                continue;    
+            }*/
+            
+            CallRemote(operation);
+        }
+    }    
 }
 
+let OperationUniqueId = 1;
 
+/**
+ * @param {Operation} operation
+ */
+function StartNewOperation(operation)
+{
+    operation.status = OperationStatusInitial;
+    operation.id = OperationUniqueId++;
 
+    AddOperation(operation);
+}
 
 function SetState(component, partialState, stateCallback)
 {
-    ReactIsBusy = true;
     component.setState(partialState, stateCallback);
 }
 
@@ -604,6 +635,7 @@ function SetValueInPath(obj, steps, value)
         }
     }
 }
+
 
 function NotNull(value)
 {
@@ -889,7 +921,13 @@ class ComponentCache
             {
                 MergeDotNetComponentUniqueIdentifiers(existingItem.component[DotNetComponentUniqueIdentifiers], component[DotNetComponentUniqueIdentifiers]);
 
+                // todo: hold previous versions and give real one
+                // existingItem.alternatives = existingItem.alternatives || [];
+                // existingItem.alternatives.push(existingItem.component);
+                
                 existingItem.component = component;
+                
+                
                 return;
             }
         }
@@ -1149,9 +1187,9 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
         {
             const eventName = eventArguments[0]._reactName;
 
-            const executionQueueItemName = eventName + '-debounce-' + GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
+            const operationUniqueName = eventName + '-debounce-' + GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
 
-            InvalidateQueuedFunctionsByName(executionQueueItemName);
+            InvalidateQueuedFunctionsByName(operationUniqueName);
 
             const timeoutKey = eventName + '-debounceTimeoutId';
 
@@ -1160,13 +1198,14 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
             const newState = {};
             newState[timeoutKey] = setTimeout(() =>
             {
-                const actionArguments = {
+                const operation = 
+                {
                     component: targetComponent,
                     remoteMethodName: remoteMethodName,
-                    remoteMethodArguments: eventArguments
+                    remoteMethodArguments: eventArguments,
+                    uniqueName: operationUniqueName
                 };
-                const executionEntry = StartAction(actionArguments);
-                executionEntry.name = executionQueueItemName;
+                StartNewOperation(operation);
 
             }, debounceTimeout);
 
@@ -1176,14 +1215,17 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
 
             return;
         }
-        
-        const actionArguments = {
-            component: targetComponent,
-            remoteMethodName: remoteMethodName,
-            remoteMethodArguments: eventArguments,
-            onPreviewHandler: onPreviewHandler
-        };
-        StartAction(actionArguments);
+
+        {
+            const operation = 
+            {
+                component: targetComponent,
+                remoteMethodName: remoteMethodName,
+                remoteMethodArguments: eventArguments,
+                onPreviewHandler: onPreviewHandler
+            };
+            StartNewOperation(operation);
+        }
     }
 }
 
@@ -1291,6 +1333,10 @@ function ConvertToReactElement(jsonNode, component)
             const syncIdInProp = ShouldBeNumber(currentComponent.props[SyncId]);
 
             cmpProps[SyncId] = Math.max(syncIdInProp, syncIdInState);
+
+            cmpProps.ref = currentComponent.myRef;
+            
+            GetFreeSpaceOfComponent(currentComponent).ref = currentComponent.myRef;
         }
         else
         {
@@ -1413,9 +1459,9 @@ function ConvertToReactElement(jsonNode, component)
 
                     if (debounceTimeout > 0)
                     {
-                        const executionQueueItemName = eventName + '-debounce-' + GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
+                        const operationUniqueName = eventName + '-debounce-' + GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
 
-                        InvalidateQueuedFunctionsByName(executionQueueItemName);
+                        InvalidateQueuedFunctionsByName(operationUniqueName);
 
                         const timeoutKey = eventName + '-debounceTimeoutId';
 
@@ -1426,10 +1472,11 @@ function ConvertToReactElement(jsonNode, component)
                             const actionArguments = {
                                 component: targetComponent,
                                 remoteMethodName: debounceHandler,
-                                remoteMethodArguments: []
+                                remoteMethodArguments: [],
+                                uniqueName: operationUniqueName
                             };
-                            const executionEntry = StartAction(actionArguments);
-                            executionEntry.name = executionQueueItemName;
+                            StartNewOperation(actionArguments);
+                            
 
                         }, debounceTimeout);
                     }
@@ -1707,16 +1754,6 @@ function ProcessClientTasks(clientTasks, callerInstance)
     }
 }
 
-function StartAction(actionArguments)
-{
-    function execute(executionQueueEntry)
-    {
-        actionArguments.executionQueueEntry = executionQueueEntry;
-        HandleAction(actionArguments);
-    }
-    return PushToFunctionExecutionQueue(execute);
-} 
-
 function IsSyntheticBaseEvent(e)
 {
     try
@@ -1757,20 +1794,20 @@ function ArrangeRemoteMethodArguments(remoteMethodArguments)
     }    
 }
 
-function HandleAction(actionArguments)
+/**
+ * @param {Operation} operation
+ */
+function CallRemote(operation)
 {
-    const remoteMethodName = actionArguments.remoteMethodName;
+    const remoteMethodName = operation.remoteMethodName;
 
-    const isComponentWillUnmount = actionArguments.isComponentWillUnmount;
+    const isComponentWillUnmount = operation.isComponentWillUnmount;
 
-    let component = NotNull(actionArguments.component);
+    let component = NotNull(operation.component);
 
     if (component.ComponentWillUnmountIsCalled)
     {
-        IsWaitingRemoteResponse = false;
-
-        OnReactStateReady();
-
+        operation.status = OperationStatusReactStateReady;
         return;
     }
 
@@ -1786,8 +1823,8 @@ function HandleAction(actionArguments)
     let capturedStateTree,capturedStateTreeRootNodeKey;
     if (isComponentWillUnmount)
     {
-        capturedStateTree = actionArguments.capturedStateTree;
-        capturedStateTreeRootNodeKey = actionArguments.capturedStateTreeRootNodeKey;
+        capturedStateTree = operation.capturedStateTree;
+        capturedStateTreeRootNodeKey = operation.capturedStateTreeRootNodeKey;
     }
     else
     {
@@ -1804,8 +1841,8 @@ function HandleAction(actionArguments)
 
         capturedStateTree = capturedStateTreeResponse.value.stateTree;
         capturedStateTreeRootNodeKey = capturedStateTreeResponse.value.rootNodeKey;
-    }    
-    
+    }
+
     const request =
     {
         MethodName: "HandleComponentEvent",
@@ -1818,42 +1855,35 @@ function HandleAction(actionArguments)
         LastUsedComponentUniqueIdentifier: LastUsedComponentUniqueIdentifier,
         ComponentUniqueIdentifier: NotNull(component.state[DotNetComponentUniqueIdentifier]),
 
-        CallFunctionId: actionArguments.executionQueueEntry.id
+        CallFunctionId: operation.id
     };
 
-    ArrangeRemoteMethodArguments(actionArguments.remoteMethodArguments);
+    ArrangeRemoteMethodArguments(operation.remoteMethodArguments);
 
     // prepare arguments
     {
-        const remoteMethodArguments = Array.from(actionArguments.remoteMethodArguments);
-        
+        const remoteMethodArguments = Array.from(operation.remoteMethodArguments);
+
         const length = remoteMethodArguments.length;
-        
+
         for (let i = 0; i < length; i++)
         {
             remoteMethodArguments[i] = JSON.stringify(remoteMethodArguments[i]);
         }
-        
+
         request.EventArgumentsAsJsonArray = remoteMethodArguments;
     }
-    
+
 
     /**
      * @param {RemoteExecutionResponse} response
      */
     function onSuccess(response)
     {
-        IsWaitingRemoteResponse = false;
-
-        if (response.CallFunctionId > 0 &&
-            FunctionExecutionQueueCurrentEntry &&
-            FunctionExecutionQueueCurrentEntry.id === response.CallFunctionId &&
-            FunctionExecutionQueueCurrentEntry.isValid === false)
+        if (operation.status === OperationStatusInvalidated)
         {
             // this function is not valid.
             // maybe expired by debounce mechanism.
-
-            OnReactStateReady();
             return;
         }
 
@@ -1867,8 +1897,8 @@ function HandleAction(actionArguments)
             LastUsedComponentUniqueIdentifier = response.LastUsedComponentUniqueIdentifier;
         }
 
-        ProcessDynamicCssClasses(response.DynamicStyles);        
-        
+        ProcessDynamicCssClasses(response.DynamicStyles);
+
         if (response.SkipRender)
         {
             // note: setState not used here because this is special case. we don't want to trigger render.
@@ -1881,20 +1911,23 @@ function HandleAction(actionArguments)
                 HandleComponentClientTasks(component);
             }
 
-            OnReactStateReady();
+            operation.status = OperationStatusReactStateReady;
 
             return;
         }
 
         const partialState = CalculateNewStateFromJsonElement(component.state, response.ElementAsJson);
 
-        SetState(component, partialState, OnReactStateReady);
+        SetState(component, partialState, ()=>
+        {
+            operation.status = OperationStatusReactStateReady;
+        });
 
         if (isComponentWillUnmount)
         {
             ProcessClientTasks(partialState[ClientTasks], component);
 
-            OnReactStateReady();
+            operation.status = OperationStatusReactStateReady;
         }
     }
 
@@ -1909,15 +1942,15 @@ function HandleAction(actionArguments)
 
         console.error(error);
 
-        IsWaitingRemoteResponse = false;
-
-        OnReactStateReady();
+        operation.status = OperationStatusRemoteFail;
     }
 
-    if (actionArguments.onPreviewHandler)
+    if (operation.onPreviewHandler)
     {
-        actionArguments.onPreviewHandler();
+        operation.onPreviewHandler();
     }
+
+    operation.status = OperationStatusWaitingRemoteResponse;
 
     SendRequest(request, onSuccess, onFail);
 }
@@ -2011,6 +2044,8 @@ function DefineComponent(componentDeclaration)
         {
             super(props||{});
 
+            this.myRef = React.createRef();
+            
             const instance = this;
 
             // new way
@@ -2058,27 +2093,97 @@ function DefineComponent(componentDeclaration)
 
         componentDidMount()
         {
+            this.state['$didMount'] = 1;
+            
             /**
              * @type {Component | NewComponent}
              */
             const component = this;
 
-            function HandleHasComponentDidMount(isDirectCall)
+            HandleComponentClientTasks(this);
+
+            const componentDidMountMethod = component.state[ComponentDidMountMethod];
+            if (componentDidMountMethod == null)
             {
-                const componentDidMountMethod = component.state[ComponentDidMountMethod];
-                if (componentDidMountMethod === undefined || componentDidMountMethod === null)
+                return;
+            }
+
+            // try call from cache
+            {
+                const cachedMethodInfo = tryToFindCachedMethodInfo(component, 'componentDidMount', []);
+                if (cachedMethodInfo)
                 {
-                    if (isDirectCall !== true)
+                    const newState = CalculateNewStateFromJsonElement(component.state, cachedMethodInfo.ElementAsJson);
+
+                    const clientTasks = newState[ClientTasks];
+
+                    newState[ComponentDidMountMethod] = null;
+                    newState[ClientTasks] = null;
+
+                    SetState(component, newState, ()=>
                     {
-                        OnReactStateReady();
-                    }
+                        ProcessClientTasks(clientTasks, component);
+                    });
+
+                    return;
+                }
+            }
+
+            const partialState = {};
+
+            partialState[ComponentDidMountMethod] = null;
+
+            SetState(component, partialState, ()=>
+            {
+                /**
+                 * @type {Operation}
+                 */
+                const operation =
+                {
+                    component: /** @type {Component}*/component,
+                    remoteMethodName: componentDidMountMethod,
+                    remoteMethodArguments: []
+                };
+                StartNewOperation(operation);
+            });            
+        }
+
+        componentDidUpdate(prevProps, prevState, snapshot)
+        {
+            HandleComponentClientTasks(this);
+        }
+
+        componentWillUnmount()
+        {
+            if (!this.state['$isUnmounting'])
+            {
+                this.setState({$isUnmounting: 1});
+
+                if (!this.state['$didMount'])
+                {
+                    return;
+                }
+
+                if (this.ComponentWillUnmountIsCalled === true)
+                {
+                    throw 'componentWillUnmount -> ComponentWillUnmountIsCalled called twice';
+                }
+
+                const component = this;
+
+                const componentWillUnmountMethod = component.state[ComponentWillUnmountMethod];
+                if (componentWillUnmountMethod == null)
+                {
+                    // u n r e g i s t e r
+                    component.ComponentWillUnmountIsCalled = true;
+                    DestroyDotNetComponentInstance(component);
 
                     return;
                 }
 
                 // try call from cache
                 {
-                    const cachedMethodInfo = tryToFindCachedMethodInfo(component, 'componentDidMount', []);
+                    const cachedMethodInfo = tryToFindCachedMethodInfo(component, 'componentWillUnmount', []);
                     if (cachedMethodInfo)
                     {
                         const newState = CalculateNewStateFromJsonElement(component.state, cachedMethodInfo.ElementAsJson);
@@ -2092,7 +2197,9 @@ function DefineComponent(componentDeclaration)
                         {
                             ProcessClientTasks(clientTasks, component);
 
-                            OnReactStateReady();
+                            // u n r e g i s t e r
+                            component.ComponentWillUnmountIsCalled = true;
+                            DestroyDotNetComponentInstance(component);
                         }
 
                         SetState(component, newState, stateCallback);
@@ -2101,126 +2208,41 @@ function DefineComponent(componentDeclaration)
                     }
                 }
 
-                const partialState = {};
-
-                partialState[ComponentDidMountMethod] = null;
-
-                function stateCallBack()
                 {
-                    const actionArguments = {
-                        component: component,
-                        remoteMethodName: componentDidMountMethod,
-                        remoteMethodArguments: []
-                    };
-                    StartAction(actionArguments);
-
-                    OnReactStateReady();
-                }
-
-                SetState(component, partialState, stateCallBack);
-            }
-
-
-            const hasAnyAction = HandleComponentClientTasks(this);
-            if (hasAnyAction)
-            {
-                PushToFunctionExecutionQueue(HandleHasComponentDidMount, /*forceWait*/true);
-            }
-            else
-            {
-                HandleHasComponentDidMount(/*isDirectCall*/true);
-            }
-        }
-
-        componentDidUpdate(prevProps, prevState, snapshot)
-        {
-            HandleComponentClientTasks(this);
-        }
-
-        componentWillUnmount()
-        {
-            if (this.ComponentWillUnmountIsCalled === true)
-            {
-                throw 'componentWillUnmount -> ComponentWillUnmountIsCalled called twice';
-            }
-
-            const component = this;          
-
-            const componentWillUnmountMethod = component.state[ComponentWillUnmountMethod];
-            if (componentWillUnmountMethod == null)
-            {
-                // u n r e g i s t e r
-                component.ComponentWillUnmountIsCalled = true;
-                DestroyDotNetComponentInstance(component);
-
-                return;
-            }
-            
-            // try call from cache
-            {
-                const cachedMethodInfo = tryToFindCachedMethodInfo(component, 'componentWillUnmount', []);
-                if (cachedMethodInfo)
-                {
-                    const newState = CalculateNewStateFromJsonElement(component.state, cachedMethodInfo.ElementAsJson);
-
-                    const clientTasks = newState[ClientTasks];
-
-                    newState[ComponentDidMountMethod] = null;
-                    newState[ClientTasks] = null;
-
-                    function stateCallback()
+                    // step: 1 start remote call
                     {
-                        ProcessClientTasks(clientTasks, component);
+                        const capturedStateTreeResponse = SafeExecute(() => CaptureStateTreeFromFiberNode(component._reactInternals));
+                        if (capturedStateTreeResponse.fail)
+                        {
+                            throw capturedStateTreeResponse.exception;
+                        }
 
-                        OnReactStateReady();
+                        const capturedStateTree = capturedStateTreeResponse.value.stateTree;
+                        const capturedStateTreeRootNodeKey = capturedStateTreeResponse.value.rootNodeKey;
 
-                        // u n r e g i s t e r
-                        component.ComponentWillUnmountIsCalled = true;
-                        DestroyDotNetComponentInstance(component);
+                        /**
+                         * @type {Operation}
+                         */
+                        const operation =
+                        {
+                            component: /** @type {Component}*/component,
+                            remoteMethodName: componentWillUnmountMethod,
+                            remoteMethodArguments: [],
+                            isComponentWillUnmount: 1,
+
+                            capturedStateTree: capturedStateTree,
+                            capturedStateTreeRootNodeKey: capturedStateTreeRootNodeKey,
+                            onCompleted: () =>
+                            {
+                                // u n r e g i s t e r
+                                component.ComponentWillUnmountIsCalled = true;
+                                DestroyDotNetComponentInstance(component);
+                            }
+                        };
+                        StartNewOperation(operation);
                     }
-
-                    SetState(component, newState, stateCallback);
-
-                    return;
                 }
-            }
 
-            {
-                // step: 1 start remote call
-                {
-                    const capturedStateTreeResponse = SafeExecute(() => CaptureStateTreeFromFiberNode(component._reactInternals));
-                    if (capturedStateTreeResponse.fail)
-                    {
-                        throw capturedStateTreeResponse.exception;
-                    }
-
-                    const capturedStateTree = capturedStateTreeResponse.value.stateTree;
-                    const capturedStateTreeRootNodeKey = capturedStateTreeResponse.value.rootNodeKey;
-
-                    const actionArguments = 
-                    {
-                        component: component,
-                        remoteMethodName: componentWillUnmountMethod,
-                        remoteMethodArguments: [],
-                        isComponentWillUnmount: 1,
-
-                        capturedStateTree: capturedStateTree,
-                        capturedStateTreeRootNodeKey: capturedStateTreeRootNodeKey
-
-                    };
-                    StartAction(actionArguments);
-                }
-                
-                // step: 2
-                PushToFunctionExecutionQueue(()=>
-                {
-                    // u n r e g i s t e r
-                    component.ComponentWillUnmountIsCalled = true;
-                    DestroyDotNetComponentInstance(component);
-
-                    OnReactStateReady();
-
-                });
             }
         }
 
@@ -2342,8 +2364,6 @@ function DefinePureComponent(componentDeclaration)
 
 function SendRequest(request, onSuccess, onFail)
 {
-    IsWaitingRemoteResponse = true;
-
     request.ClientWidth  = document.documentElement.clientWidth;
     request.ClientHeight = document.documentElement.clientHeight;
     request.QueryString = window.location.search;
@@ -2386,16 +2406,7 @@ function ConnectComponentFirstResponseToReactSystem(containerHtmlElementId, resp
 
     LastUsedComponentUniqueIdentifier = response.LastUsedComponentUniqueIdentifier;
 
-
-    function renderCallback(component)
-    {
-        if (component)
-        {
-            OnReactStateReady();
-        }
-    }
-
-    const props = { key: '0', $jsonNode: element, ref: renderCallback };
+    const props = { key: '0', $jsonNode: element };
 
     props[SyncId] = GetNextSequence();
 
@@ -2447,8 +2458,6 @@ function RenderComponentIn(input)
 
         function onSuccess(response)
         {
-            IsWaitingRemoteResponse = false;
-
             ConnectComponentFirstResponseToReactSystem(containerHtmlElementId, response);
         }
 
@@ -2732,13 +2741,13 @@ RegisterCoreFunction("GotoMethod", function (timeout, remoteMethodName, remoteMe
             return;
         }
 
-        const actionArguments = {
+        const operation = 
+        {
             component: component,
             remoteMethodName: remoteMethodName,
             remoteMethodArguments: remoteMethodArguments
         };
-
-        StartAction(actionArguments);
+        StartNewOperation(operation);
 
     }, timeout);
 });
@@ -2787,18 +2796,22 @@ RegisterCoreFunction("ListenEvent", function (eventName, remoteMethodName)
             return;
         }
 
-        const actionArguments = {
+        /**
+         * @type {Operation}
+         */
+        const operation = 
+        {
             component: component,
             remoteMethodName: remoteMethodName,
-            remoteMethodArguments: eventArgumentsAsArray
+            remoteMethodArguments: eventArgumentsAsArray,
+            priorityIsMore: 1
         };
-
-        const entry = StartAction(actionArguments);
+        StartNewOperation(operation);
 
         // guard for removed node before send to server
         OnComponentDestroy(component, () =>
         {
-            entry.isValid = false;
+            operation.status = OperationStatusInvalidated;
         });
     };
 
@@ -2818,18 +2831,22 @@ RegisterCoreFunction("ListenEventOnlyOnce", function (eventName, remoteMethodNam
     {
         EventBus.Remove(eventName, onEventFired);
 
-        const actionArguments = {
+        /**
+         * @type {Operation}
+         */
+        const operation = 
+        {
             component: component,
             remoteMethodName: remoteMethodName,
-            remoteMethodArguments: eventArgumentsAsArray
+            remoteMethodArguments: eventArgumentsAsArray,
+            priorityIsMore: 1
         };
-
-        const entry = StartAction(actionArguments);
+        StartNewOperation(operation);
 
         // guard for removed node before send to server
         OnComponentDestroy(component, () =>
         {
-            entry.isValid = false;
+            operation.status = OperationStatusInvalidated;
         });
     };
     
@@ -2861,19 +2878,22 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSe
     {
         const handlerComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
 
-        const actionArguments =
+        /**
+         * @type {Operation}
+         */
+        const operation =
         {
             component: handlerComponent,
             remoteMethodName: remoteMethodName,
-            remoteMethodArguments: eventArgumentsAsArray
+            remoteMethodArguments: eventArgumentsAsArray,
+            priorityIsMore: 1
         };
-
-        const entry = StartAction(actionArguments);
+        StartNewOperation(operation);
 
         // guard for removed node before send to server
         OnComponentDestroy(handlerComponent, () =>
         {
-            entry.isValid = false;
+            operation.status = OperationStatusInvalidated;
         });
     };
 
@@ -2932,13 +2952,16 @@ function OnOutsideClicked(component, operationType, idOfElement, remoteMethodNam
         {
             const handlerComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
 
-            const actionArguments =
+            /**
+             * @type {Operation}
+             */
+            const operation =
             {
                 component: handlerComponent,
                 remoteMethodName: remoteMethodName,
                 remoteMethodArguments: [ConvertToSyntheticMouseEvent(e)]
             };
-            StartAction(actionArguments);
+            StartNewOperation(operation);
         }
     }
 
@@ -3207,7 +3230,7 @@ const ReactWithDotNet =
     StrictMode: false,
     RequestHandlerPath: 'DeveloperError: missing RequestHandlerPath',
     "OnDocumentReady": OnDocumentReady,
-    "StartAction": StartAction,
+    "StartAction": StartNewOperation,
     DispatchEvent: DispatchEvent,
     "RenderComponentIn": RenderComponentIn,
     BeforeSendRequest: x=>x,
