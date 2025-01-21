@@ -1181,6 +1181,7 @@ function DefineComponent(componentDeclaration) {
       return ConvertToReactElement(this.state[RootNode], this);
     }
     componentDidMount() {
+      COMPONENT_CACHE.Register(this);
       this.state["$didMount"] = 1;
       const component2 = this;
       HandleComponentClientTasks(this);

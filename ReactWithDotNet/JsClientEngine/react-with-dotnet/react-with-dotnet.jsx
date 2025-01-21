@@ -882,11 +882,21 @@ class ComponentCacheItem
 {
     constructor()
     {
+        this.instanceArray = [];
         this.component = null;
         this.freeSpace = {};
         this.freeSpace[CUSTOM_EVENT_LISTENER_MAP] = {};
         this.freeSpace[ON_COMPONENT_DESTROY] = [];
     }
+}
+
+/**
+ * @param {ComponentCacheItem} componentCacheItem
+ * @param {Object} componentInstance
+ */
+function ComponentCacheItemContainsComponent(componentCacheItem, componentInstance)
+{
+    return componentCacheItem.instanceArray.indexOf(componentInstance) >= 0;
 }
 
 class ComponentCache
@@ -2093,6 +2103,8 @@ function DefineComponent(componentDeclaration)
 
         componentDidMount()
         {
+            COMPONENT_CACHE.Register(this);
+            
             this.state['$didMount'] = 1;
             
             /**

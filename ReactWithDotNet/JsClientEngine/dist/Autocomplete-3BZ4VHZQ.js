@@ -8,7 +8,7 @@ import {
 } from "./chunk-7XUKMRPN.js";
 import {
   react_with_dotnet_default
-} from "./chunk-32T3UJEZ.js";
+} from "./chunk-W6RW3UGS.js";
 import {
   createSvgIcon,
   unsupportedProp_default

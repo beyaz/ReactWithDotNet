@@ -1,6 +1,6 @@
 import {
   react_with_dotnet_default
-} from "./chunk-32T3UJEZ.js";
+} from "./chunk-W6RW3UGS.js";
 import "./chunk-QNQS7X5M.js";
 import {
   createSimplePaletteValueFilter
