@@ -123,6 +123,8 @@ static class ComponentRequestHandler
                 {
                     return await handleComponentEvent();
                 }
+                
+                return new() { ErrorMessage = $"Not implemented method. {request.MethodName}" };
             }
             catch(Exception e)
             {
@@ -137,7 +139,7 @@ static class ComponentRequestHandler
                 }
             }
 
-            return new() { ErrorMessage = $"Not implemented method. {request.MethodName}" };
+            return new() { ErrorMessage = exception.ToString() };
         }
         catch (Exception exception)
         {

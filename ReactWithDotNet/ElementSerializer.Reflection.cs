@@ -19,7 +19,7 @@ static partial class ElementSerializer
 
         errorMessage.Add("How to fix: Inherit handler class from ReactComponent");
 
-        var handlerDetail = handlerTarget.GetType().FullName;
+        var handlerDetail = handlerTarget.GetType().FullName + Environment.NewLine;
 
         var target = handlerTarget.GetType();
 
