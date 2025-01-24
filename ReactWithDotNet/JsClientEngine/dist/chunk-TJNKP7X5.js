@@ -1,0 +1,1 @@
+import{e as a}from"./chunk-OM6PLX6R.js";var l=a;var m=t=>t.scrollTop;function p(t,i){var r,s;let{timeout:o,easing:e,style:n={}}=t;return{duration:(r=n.transitionDuration)!=null?r:typeof o=="number"?o:o[i.mode]||0,easing:(s=n.transitionTimingFunction)!=null?s:typeof e=="object"?e[i.mode]:e,delay:n.transitionDelay}}export{m as a,p as b,l as c};
