@@ -421,38 +421,6 @@ function AddOperation(operation)
     StartOperations();
 }
 
-function isDescendantFiberNode(rootFiberNode, targetFiberNode) 
-{
-    let child = rootFiberNode.child;
-
-    // Iterate over all children
-    while (child) 
-    {
-        // Check if this child is the target
-        if (child === targetFiberNode) 
-        {
-            return true;
-        }
-
-        // Recursively check the child tree
-        if (isDescendantFiberNode(child, targetFiberNode)) 
-        {
-            return true;
-        }
-
-        // Move to the next sibling
-        child = child.sibling;
-    }
-
-    // If no match is found, return false
-    return false;
-}
-
-const isDescendantComponent = (parent, child) => 
-{
-    return isDescendantFiberNode(parent._reactInternals, child._reactInternals);
-};
-
 function Operate()
 {    
     const operations = Operations.array;
@@ -492,45 +460,7 @@ function Operate()
         }
         
         if (operation.status === OperationStatusInitial)
-        {
-            /*let hasSameComponent = false;
-            {
-                for (let j = i - 1; j >= 0 ; j--)
-                {
-                    
-                    
-                    if (operations[j].status === OperationStatusInvalidated ||
-                        operations[j].status === OperationStatusReactStateReady ||
-                        operations[j].status === OperationStatusRemoteFail)
-                    {
-                        continue
-                    }                    
-                    
-                    if (operation.component === operations[j].component)
-                    {
-                        hasSameComponent = true;
-                        break;
-                    }
-
-                    if(isDescendantComponent(operation.component, operations[j].component))
-                    {
-                        hasSameComponent = true;
-                        break;
-                    }
-
-                    if(isDescendantComponent(operations[j].component, operation.component))
-                    {
-                        hasSameComponent = true;
-                        break;
-                    }
-                }
-            }
-            
-            if (hasSameComponent)
-            {
-                continue;    
-            }*/
-            
+        {            
             CallRemote(operation);
         }
     }    
