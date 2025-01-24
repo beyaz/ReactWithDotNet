@@ -863,40 +863,15 @@ class LinkedList
     }
 }
 
-function MergeDotNetComponentUniqueIdentifiers(sourceIdList, targetIdList)
-{
-    for (let i = 0; i < sourceIdList.length; i++)
-    {
-        const value = sourceIdList[i];
-
-        if (targetIdList.indexOf(value) >= 0)
-        {
-            continue;
-        }
-
-        targetIdList.push(value);
-    }
-}
-
 class ComponentCacheItem
 {
     constructor()
     {
         this.instanceArray = [];
-        this.component = null;
         this.freeSpace = {};
         this.freeSpace[CUSTOM_EVENT_LISTENER_MAP] = {};
         this.freeSpace[ON_COMPONENT_DESTROY] = [];
     }
-}
-
-/**
- * @param {ComponentCacheItem} componentCacheItem
- * @param {Object} componentInstance
- */
-function ComponentCacheItemContainsComponent(componentCacheItem, componentInstance)
-{
-    return componentCacheItem.instanceArray.indexOf(componentInstance) >= 0;
 }
 
 class ComponentCache
@@ -912,40 +887,82 @@ class ComponentCache
 
         // skip reference equal components
         {
-            const isReferenceEquals = item => item.component === component;
-
-            const existingItem = this.linkedList.first(isReferenceEquals);
+            const hasMatch = componentCacheItem =>
+            {
+                return componentCacheItem.instanceArray.indexOf(component) >= 0;
+            };
+            const existingItem = this.linkedList.first(hasMatch);
             if (existingItem)
             {
                 return;
             }
         }
 
-        // remove twice rendered components
-        // occurs when lazy components scenarios
+        // has same unique identifier
         {
-            const isTwiceRendered = item => item.component[DotNetComponentUniqueIdentifiers][0] === component[DotNetComponentUniqueIdentifiers][0];
+            const hasMatch = item =>
+            {
+                const instanceArray = item.instanceArray;
 
-            const existingItem = this.linkedList.first(isTwiceRendered);
+                const componentIdArray = component[DotNetComponentUniqueIdentifiers];
+
+                for (let i = 0; i < instanceArray.length; i++)
+                {
+                    const idArray = instanceArray[i][DotNetComponentUniqueIdentifiers];
+
+                    for (let j = 0; j < componentIdArray.length; j++)
+                    {
+                        if (idArray.indexOf(componentIdArray[j]) >= 0)
+                        {
+                            return true;
+                        }
+                    }                    
+                }
+
+                return false;
+            };
+            
+            const existingItem = this.linkedList.first(hasMatch);
             if (existingItem)
             {
-                MergeDotNetComponentUniqueIdentifiers(existingItem.component[DotNetComponentUniqueIdentifiers], component[DotNetComponentUniqueIdentifiers]);
+                // merge id list
+                {
+                    const instanceArray = existingItem.instanceArray;
+                    const instanceArrayLength = instanceArray.length;
+                    
+                    const targetIdArray = component[DotNetComponentUniqueIdentifiers];
 
-                // todo: hold previous versions and give real one
-                // existingItem.alternatives = existingItem.alternatives || [];
-                // existingItem.alternatives.push(existingItem.component);
+                    for (let i = 0; i < instanceArrayLength; i++)
+                    {
+                        const sourceIdArray = instanceArray[i][DotNetComponentUniqueIdentifiers];
+
+                        for (let j = 0; j < sourceIdArray.length; j++)
+                        {
+                            const id = sourceIdArray[j];
+                            
+                            if (targetIdArray.indexOf(id) < 0)
+                            {
+                                targetIdArray.push(id);
+                            }
+                        }
+                    }
+                }
                 
-                existingItem.component = component;
-                
+                existingItem.instanceArray.push(component);
                 
                 return;
             }
         }
 
-        const newItem = new ComponentCacheItem();
-        newItem.component = component;
+        // add new item
+        {
+            const newItem = new ComponentCacheItem();
 
-        this.linkedList.add(newItem);
+            newItem.instanceArray.push(component);
+
+            this.linkedList.add(newItem);
+        }
+       
     }
 
     FindComponentByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier)
@@ -953,7 +970,7 @@ class ComponentCache
         const firstItem = this.FindFirstCacheItemByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier);
         if (firstItem)
         {
-            return firstItem.component;
+            return firstItem.freeSpace.ref?.current ?? firstItem.instanceArray[firstItem.instanceArray.length - 1];
         }
 
         return null;
@@ -974,9 +991,17 @@ class ComponentCache
     {
         const hasMatch = item =>
         {
-            if (item.component && item.component[DotNetComponentUniqueIdentifiers])
+            const instanceArray = item.instanceArray;
+            
+            const instanceArrayLength = instanceArray.length;
+            
+            for (let i = 0; i < instanceArrayLength; i++)
             {
-                return item.component[DotNetComponentUniqueIdentifiers].indexOf(dotNetComponentUniqueIdentifier) >= 0;
+                const idArray = instanceArray[i][DotNetComponentUniqueIdentifiers];
+                if (idArray.indexOf(dotNetComponentUniqueIdentifier) >= 0)
+                {
+                    return true;
+                }
             }
 
             return false;
@@ -987,7 +1012,7 @@ class ComponentCache
 
     Unregister(component)
     {
-        this.linkedList.removeFirst(item => item.component === component);
+        this.linkedList.removeFirst(item => item.instanceArray.indexOf(component) >= 0);
     }
 }
 
@@ -2167,6 +2192,11 @@ function DefineComponent(componentDeclaration)
 
         componentWillUnmount()
         {
+            if (ReactWithDotNet.StrictMode)
+            {
+                return;    
+            }
+            
             if (!this.state['$isUnmounting'])
             {
                 this.setState({$isUnmounting: 1});

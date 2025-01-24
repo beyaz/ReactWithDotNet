@@ -447,18 +447,9 @@ var LinkedList = class {
     return null;
   }
 };
-function MergeDotNetComponentUniqueIdentifiers(sourceIdList, targetIdList) {
-  for (let i = 0; i < sourceIdList.length; i++) {
-    const value = sourceIdList[i];
-    if (targetIdList.indexOf(value) >= 0) {
-      continue;
-    }
-    targetIdList.push(value);
-  }
-}
 var ComponentCacheItem = class {
   constructor() {
-    this.component = null;
+    this.instanceArray = [];
     this.freeSpace = {};
     this.freeSpace[CUSTOM_EVENT_LISTENER_MAP] = {};
     this.freeSpace[ON_COMPONENT_DESTROY] = [];
@@ -471,29 +462,58 @@ var ComponentCache = class {
   Register(component) {
     NotNull(component);
     {
-      const isReferenceEquals = (item) => item.component === component;
-      const existingItem = this.linkedList.first(isReferenceEquals);
+      const hasMatch = (componentCacheItem) => {
+        return componentCacheItem.instanceArray.indexOf(component) >= 0;
+      };
+      const existingItem = this.linkedList.first(hasMatch);
       if (existingItem) {
         return;
       }
     }
     {
-      const isTwiceRendered = (item) => item.component[DotNetComponentUniqueIdentifiers][0] === component[DotNetComponentUniqueIdentifiers][0];
-      const existingItem = this.linkedList.first(isTwiceRendered);
+      const hasMatch = (item) => {
+        const instanceArray = item.instanceArray;
+        const componentIdArray = component[DotNetComponentUniqueIdentifiers];
+        for (let i = 0; i < instanceArray.length; i++) {
+          const idArray = instanceArray[i][DotNetComponentUniqueIdentifiers];
+          for (let j = 0; j < componentIdArray.length; j++) {
+            if (idArray.indexOf(componentIdArray[j]) >= 0) {
+              return true;
+            }
+          }
+        }
+        return false;
+      };
+      const existingItem = this.linkedList.first(hasMatch);
       if (existingItem) {
-        MergeDotNetComponentUniqueIdentifiers(existingItem.component[DotNetComponentUniqueIdentifiers], component[DotNetComponentUniqueIdentifiers]);
-        existingItem.component = component;
+        {
+          const instanceArray = existingItem.instanceArray;
+          const instanceArrayLength = instanceArray.length;
+          const targetIdArray = component[DotNetComponentUniqueIdentifiers];
+          for (let i = 0; i < instanceArrayLength; i++) {
+            const sourceIdArray = instanceArray[i][DotNetComponentUniqueIdentifiers];
+            for (let j = 0; j < sourceIdArray.length; j++) {
+              const id = sourceIdArray[j];
+              if (targetIdArray.indexOf(id) < 0) {
+                targetIdArray.push(id);
+              }
+            }
+          }
+        }
+        existingItem.instanceArray.push(component);
         return;
       }
     }
-    const newItem = new ComponentCacheItem();
-    newItem.component = component;
-    this.linkedList.add(newItem);
+    {
+      const newItem = new ComponentCacheItem();
+      newItem.instanceArray.push(component);
+      this.linkedList.add(newItem);
+    }
   }
   FindComponentByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier) {
     const firstItem = this.FindFirstCacheItemByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier);
     if (firstItem) {
-      return firstItem.component;
+      return firstItem.freeSpace.ref?.current ?? firstItem.instanceArray[firstItem.instanceArray.length - 1];
     }
     return null;
   }
@@ -506,15 +526,20 @@ var ComponentCache = class {
   }
   FindFirstCacheItemByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier) {
     const hasMatch = (item) => {
-      if (item.component && item.component[DotNetComponentUniqueIdentifiers]) {
-        return item.component[DotNetComponentUniqueIdentifiers].indexOf(dotNetComponentUniqueIdentifier) >= 0;
+      const instanceArray = item.instanceArray;
+      const instanceArrayLength = instanceArray.length;
+      for (let i = 0; i < instanceArrayLength; i++) {
+        const idArray = instanceArray[i][DotNetComponentUniqueIdentifiers];
+        if (idArray.indexOf(dotNetComponentUniqueIdentifier) >= 0) {
+          return true;
+        }
       }
       return false;
     };
     return this.linkedList.first(hasMatch);
   }
   Unregister(component) {
-    this.linkedList.removeFirst((item) => item.component === component);
+    this.linkedList.removeFirst((item) => item.instanceArray.indexOf(component) >= 0);
   }
 };
 var COMPONENT_CACHE = new ComponentCache();
@@ -1220,6 +1245,9 @@ function DefineComponent(componentDeclaration) {
       HandleComponentClientTasks(this);
     }
     componentWillUnmount() {
+      if (ReactWithDotNet.StrictMode) {
+        return;
+      }
       if (!this.state["$isUnmounting"]) {
         this.setState({ $isUnmounting: 1 });
         if (!this.state["$didMount"]) {
