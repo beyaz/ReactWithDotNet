@@ -2648,15 +2648,28 @@ RegisterCoreFunction('ReplaceEmptyStringWhenIsNull', function(value)
 
 RegisterCoreFunction('ListenWindowResizeEvent', function (resizeTimeout)
 {
+    let previousWidth = window.innerWidth;
+    let previousHeight = window.innerHeight;
+    
     let timeout = null;
     window.addEventListener('resize', function ()
     {
-        clearTimeout(timeout);
-
-        timeout = setTimeout(function ()
+        const currentWidth = window.innerWidth;
+        const currentHeight = window.innerHeight;
+        
+        if (Math.abs(previousWidth - currentWidth) > 50 || Math.abs(previousHeight - currentHeight) > 50) 
         {
-            DispatchEvent('ReactWithDotNet::Core::OnWindowResize', [], 0);
-        }, resizeTimeout);
+            clearTimeout(timeout);
+
+            timeout = setTimeout(function ()
+            {
+                DispatchEvent('ReactWithDotNet::Core::OnWindowResize', [], 0);
+            }, resizeTimeout);
+        }
+
+        previousWidth = currentWidth;
+        previousHeight = currentHeight;
+       
     });
 });
 
