@@ -1,1 +1,0 @@
-import{a as d}from"./chunk-2W22VGCX.js";import{h as u}from"./chunk-GYULANB4.js";var e=u(d());function l({controlled:t,default:r,name:f,state:m="value"}){let{current:o}=e.useRef(t!==void 0),[a,s]=e.useState(r),c=o?t:a,i=e.useCallback(n=>{o||s(n)},[]);return[c,i]}export{l as a};

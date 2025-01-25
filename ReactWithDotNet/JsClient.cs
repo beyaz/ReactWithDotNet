@@ -117,7 +117,7 @@ partial class Mixin
         ListenEventOnlyOnce(client, GetEventName<TDelegate>(), handler.Method.GetAccessKey());
     }
     
-    public static void ListenWindowResizeEvent(this Client client, int resizeTimeout)
+    public static void ListenWindowResizeEvent(this Client client, int resizeTimeout, int thresholdLength = 50)
     {
         client.CallJsFunction(Core + nameof(ListenWindowResizeEvent), resizeTimeout);
     }

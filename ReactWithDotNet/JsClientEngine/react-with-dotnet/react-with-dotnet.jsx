@@ -2646,7 +2646,7 @@ RegisterCoreFunction('ReplaceEmptyStringWhenIsNull', function(value)
     return value;
 });
 
-RegisterCoreFunction('ListenWindowResizeEvent', function (resizeTimeout)
+RegisterCoreFunction('ListenWindowResizeEvent', function (resizeTimeout, thresholdLength)
 {
     let previousWidth = window.innerWidth;
     let previousHeight = window.innerHeight;
@@ -2657,7 +2657,7 @@ RegisterCoreFunction('ListenWindowResizeEvent', function (resizeTimeout)
         const currentWidth = window.innerWidth;
         const currentHeight = window.innerHeight;
         
-        if (Math.abs(previousWidth - currentWidth) > 50 || Math.abs(previousHeight - currentHeight) > 50) 
+        if (Math.abs(previousWidth - currentWidth) > thresholdLength || Math.abs(previousHeight - currentHeight) > thresholdLength) 
         {
             clearTimeout(timeout);
 
@@ -2668,8 +2668,7 @@ RegisterCoreFunction('ListenWindowResizeEvent', function (resizeTimeout)
         }
 
         previousWidth = currentWidth;
-        previousHeight = currentHeight;
-       
+        previousHeight = currentHeight;       
     });
 });
 

@@ -1,1 +1,0 @@
-import{a as i}from"./chunk-2W22VGCX.js";import{h as n}from"./chunk-GYULANB4.js";function o(e,t){typeof e=="function"?e(t):e&&(e.current=t)}var r=n(i());function u(...e){return r.useMemo(()=>e.every(t=>t==null)?null:t=>{e.forEach(f=>{o(f,t)})},e)}export{o as a,u as b};
