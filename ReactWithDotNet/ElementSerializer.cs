@@ -347,7 +347,8 @@ static partial class ElementSerializer
                 FunctionNameOfGrabEventArguments = property.FunctionNameOfGrabEventArguments,
                 StopPropagation                  = handlerMethod.HasStopPropagation,
                 KeyboardEventCallOnly            = handlerMethod.KeyboardEventCallOnly,
-                DebounceTimeout                  = handlerMethod.DebounceTimeout
+                DebounceTimeout                  = handlerMethod.DebounceTimeout,
+                Cacheable = handlerMethod.Cacheable ? 1: null
             };
         }
 
@@ -559,7 +560,8 @@ static partial class ElementSerializer
                 FunctionNameOfGrabEventArguments = propertyDefinition.GrabEventArgumentsByUsingFunction,
                 StopPropagation                  = handlerMethod.HasStopPropagation,
                 KeyboardEventCallOnly            = handlerMethod.KeyboardEventCallOnly,
-                DebounceTimeout                  = handlerMethod.DebounceTimeout
+                DebounceTimeout                  = handlerMethod.DebounceTimeout,
+                Cacheable                        = handlerMethod.Cacheable ? 1 : null
             };
         }
 

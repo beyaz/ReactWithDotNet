@@ -32,6 +32,7 @@ const DotNetProperties = 'DotNetProperties';
  * @property {string[]} KeyboardEventCallOnly
  * @property {?number} DebounceTimeout
  * @property {number} $isRemoteMethod
+ * @property {Boolean?} Cacheable
  */
 
 /**
@@ -377,6 +378,8 @@ const OperationStatusRemoteFail = 5;
  * @property {string?} uniqueName
  * @property {Function?} onCompleted
  * @property {number?} priorityIsMore
+ * @property {Boolean?} isCacheable
+ * @property {Function?} onRemoteSuccess
  */
 
 /**
@@ -1137,7 +1140,7 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
         {
             eventArguments = GetExternalJsObject(functionNameOfGrabEventArguments)(eventArguments);
         }
-
+        
         const cachedMethodInfo = tryToFindCachedMethodInfo(targetComponent, remoteMethodName, eventArguments);
         if (cachedMethodInfo)
         {
@@ -1187,7 +1190,8 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
                 component: targetComponent,
                 remoteMethodName: remoteMethodName,
                 remoteMethodArguments: eventArguments,
-                onPreviewHandler: onPreviewHandler
+                onPreviewHandler: onPreviewHandler,
+                isCacheable: remoteMethodInfo.Cacheable
             };
             StartNewOperation(operation);
         }
@@ -1825,6 +1829,63 @@ function CallRemote(operation)
 
     ArrangeRemoteMethodArguments(operation.remoteMethodArguments);
 
+    if (operation.isCacheable)
+    {
+        const freeSpace = GetFreeSpaceOfComponent(component);
+
+        const cachedMethods = freeSpace.$CachedMethods = freeSpace.$CachedMethods || [];
+
+        for (let i = 0; i < cachedMethods.length; i++)
+        {
+            const cachedMethod = cachedMethods[i];
+
+            if (cachedMethod.MethodName !== remoteMethodName)
+            {
+                continue;
+            }
+            if (cachedMethod.MethodArguments.length !== operation.remoteMethodArguments.length)
+            {
+                continue
+            }
+
+            // compare parameters
+            {
+                let hasSameParameters = true;
+
+                for (let i = 0; i < operation.remoteMethodArguments.length; i++)
+                {
+                    if (!isEquals(operation.remoteMethodArguments[i], cachedMethod.MethodArguments[i]))
+                    {
+                        hasSameParameters = false;
+                        break;
+                    }
+                }
+
+                if (!hasSameParameters)
+                {
+                    continue;
+                }
+            }
+
+            const newState = CalculateNewStateFromJsonElement(component.state, cachedMethod.ElementAsJson);
+
+            operation.status = OperationStatusReactStateReady;
+            
+            component.setState(newState);
+
+            return;
+        }
+
+        operation.onRemoteSuccess = function (remoteResponse)
+        {
+            freeSpace.$CachedMethods.push({
+                MethodName: remoteMethodName,
+                MethodArguments: Array.from(operation.remoteMethodArguments),
+                ElementAsJson: remoteResponse.ElementAsJson
+            });
+        }
+    }
+
     // prepare arguments
     {
         const remoteMethodArguments = Array.from(operation.remoteMethodArguments);
@@ -1881,6 +1942,11 @@ function CallRemote(operation)
             return;
         }
 
+        if (operation.onRemoteSuccess)
+        {
+            operation.onRemoteSuccess(response);
+        }
+        
         const partialState = CalculateNewStateFromJsonElement(component.state, response.ElementAsJson);
 
         SetState(component, partialState, ()=>

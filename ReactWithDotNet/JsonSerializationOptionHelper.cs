@@ -794,6 +794,8 @@ sealed class RemoteMethodInfo
     public bool? StopPropagation { get; set; }
     
     public int? DebounceTimeout { get; init; }
+    
+    public int? Cacheable { get; init; }
 }
 
 [Serializable]

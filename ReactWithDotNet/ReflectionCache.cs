@@ -233,7 +233,11 @@ partial class Mixin
         public required MethodInfo MethodInfo { get; init; }
 
         public required string NameWithToken { get; init; }
+        
         public bool SkipRender { get; init; }
+        
+        public bool Cacheable { get; init; }
+        
 
         public static MethodInfoCalculated From(MethodInfo methodInfo)
         {
@@ -244,6 +248,7 @@ partial class Mixin
                 KeyboardEventCallOnly = methodInfo.GetCustomAttributes<KeyboardEventCallOnlyAttribute>().FirstOrDefault()?.Keys,
                 DebounceTimeout       = methodInfo.GetCustomAttributes<DebounceTimeoutAttribute>().FirstOrDefault()?.Millisecond,
                 SkipRender            = methodInfo.GetCustomAttribute<SkipRenderAttribute>() is not null,
+                Cacheable             = methodInfo.GetCustomAttribute<CacheableAttribute>() is not null,
                 NameWithToken         = methodInfo.GetAccessKey()
             };
         }

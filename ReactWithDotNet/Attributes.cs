@@ -133,3 +133,7 @@ sealed class FastSerializeAttribute: Attribute;
 
 [AttributeUsage(AttributeTargets.Property)]
 sealed class SerializeAsNullWhenEmpty: Attribute;
+
+
+[AttributeUsage(AttributeTargets.Method)]
+public sealed class CacheableAttribute : Attribute;
