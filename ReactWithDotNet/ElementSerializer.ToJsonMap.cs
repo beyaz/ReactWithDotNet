@@ -267,9 +267,10 @@ partial class ElementSerializer
 
                 node.End ??= tracer.ElapsedMilliseconds;
 
-                if (node.End - node.Begin >= 3)
+                var duration = node.End - node.Begin;
+                if ( duration >= 5)
                 {
-                    tracer.Trace($"{reactPureComponent.GetType()} rendered in {node.End - node.Begin} milliseconds");
+                    tracer.Trace(reactPureComponent.GetType().Name, duration.Value);
                 }
 
                 continue;
@@ -284,11 +285,7 @@ partial class ElementSerializer
             {
                 var reactStatefulComponent = node.ElementAsDotNetReactComponent;
 
-                if (node.Stopwatch is null)
-                {
-                    node.Stopwatch = new();
-                    node.Stopwatch.Start();
-                }
+                node.Begin ??= tracer.ElapsedMilliseconds;
 
                 if (node.IsFunctionalComponent is null)
                 {
@@ -399,16 +396,17 @@ partial class ElementSerializer
                     var getDerivedStateFromPropsMethodShouldInvoke = true;
                     if (getDerivedStateFromPropsMethodShouldInvoke)
                     {
-                        var stopwatch = new Stopwatch();
-
-                        stopwatch.Start();
+                        var begin = tracer.ElapsedMilliseconds;
 
                         await reactStatefulComponent.OverrideStateFromPropsBeforeRender();
 
-                        stopwatch.Stop();
-                        if (stopwatch.ElapsedMilliseconds > 10)
+                        var end = tracer.ElapsedMilliseconds;
+                        
+                        var duration = end - begin;
+
+                        if (duration > 10)
                         {
-                            tracer.Trace($"{dotNetTypeOfReactComponent.FullName}::OverrideStateFromPropsBeforeRender  invoked in {stopwatch.ElapsedMilliseconds} milliseconds");
+                            tracer.Trace($"{dotNetTypeOfReactComponent.Name}::OverrideStateFromPropsBeforeRender", duration);
                         }
                     }
 
@@ -717,13 +715,15 @@ partial class ElementSerializer
                     context.FunctionalComponentStack.Pop();
                 }
 
-                if (node.Stopwatch is not null)
+                if (node.Begin is not null)
                 {
-                    node.Stopwatch.Stop();
+                    node.End = tracer.ElapsedMilliseconds;
 
-                    if (node.Stopwatch.ElapsedMilliseconds >= 3)
+                    var duration = node.End - node.Begin;
+
+                    if (duration >= 5)
                     {
-                        tracer.Trace($"{(node.IsFunctionalComponent is true ? node.FunctionalComponent.Name: dotNetTypeOfReactComponent.FullName)} rendered in {node.Stopwatch.ElapsedMilliseconds} milliseconds");
+                        tracer.Trace(node.IsFunctionalComponent is true ? node.FunctionalComponent.Name: dotNetTypeOfReactComponent.Name, duration.Value);
                     }
                 }
             }
@@ -1338,7 +1338,6 @@ partial class ElementSerializer
         public Node NextSibling;
 
         public Node Parent;
-        public Stopwatch Stopwatch;
         public bool SkipProcessChildren;
     }
 }

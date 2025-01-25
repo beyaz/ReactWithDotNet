@@ -216,7 +216,6 @@ partial class Mixin
                     componentResponse.DynamicStyles                     = mainLayout.RenderInfo.ComponentResponse.DynamicStyles;
                     componentResponse.CallFunctionId                    = mainLayout.RenderInfo.ComponentResponse.CallFunctionId;
                     componentResponse.LastUsedComponentUniqueIdentifier = mainLayout.RenderInfo.ComponentResponse.LastUsedComponentUniqueIdentifier;
-                    componentResponse.Trace                             = mainLayout.RenderInfo.ComponentResponse.Trace;
 
                     context.isUpdated = true;
                 }

@@ -1,28 +1,8 @@
 using System.Collections;
-using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace ReactWithDotNet;
-
-sealed class Tracer
-{
-    internal readonly LinkedList<string> Messages = [];
-
-    readonly Stopwatch stopwatch = new();
-
-    public Tracer()
-    {
-        stopwatch.Start();
-    }
-
-    public long ElapsedMilliseconds => stopwatch.ElapsedMilliseconds;
-
-    public void Trace(string message)
-    {
-        Messages.AddLast(message);
-    }
-}
 
 sealed class ElementSerializerContext
 {

@@ -61,8 +61,6 @@ class ComponentResponse
     public object NewState { get; init; }
 
     public bool? SkipRender { get; init; }
-
-    public IReadOnlyCollection<string> Trace { get; set; }
 }
 
 static class ComponentRequestHandler
@@ -105,9 +103,9 @@ static class ComponentRequestHandler
                     await task;
                 }
 
-                if (tracer.ElapsedMilliseconds >= 3 && input.OnReactContextCreated is not null)
+                if (input.OnReactContextCreated is not null && tracer.ElapsedMilliseconds >= 5)
                 {
-                    tracer.Trace($"{input.OnReactContextCreated.Method.DeclaringType}::{input.OnReactContextCreated.Method.Name} invoked in {tracer.ElapsedMilliseconds} milliseconds");
+                    tracer.Trace($"{input.OnReactContextCreated.Method.DeclaringType?.Name}::{input.OnReactContextCreated.Method.Name}",tracer.ElapsedMilliseconds);
                 }
             }
 
@@ -206,13 +204,12 @@ static class ComponentRequestHandler
 
             var map = await instance.ToJsonMap(serializerContext);
 
-            tracer.Trace($"Total time in ReactWithDotnet is {tracer.ElapsedMilliseconds} milliseconds.");
-
+            tracer.WriteToResponseHeader(input.HttpContext);
+            
             return new()
             {
                 CallFunctionId                    = request.CallFunctionId,
                 ElementAsJson                     = map,
-                Trace                             = tracer.Messages,
                 DynamicStyles                     = DynamicStyleContentForEmbedInClient.CalculateCssClassList(serializerContext.DynamicStyles.Map),
                 LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue - 1,
                 ReactContext                      = context
@@ -330,9 +327,9 @@ static class ComponentRequestHandler
                 }
 
                 var end = tracer.ElapsedMilliseconds;
-                if (end - begin >= 3)
+                if (end - begin >= 5)
                 {
-                    tracer.Trace($"Method '{methodInfo.DeclaringType}::{methodInfo.Name}' invocation finished in {end - begin} milliseconds");
+                    tracer.Trace($"{methodInfo.DeclaringType?.Name}::{methodInfo.Name}",end - begin);
                 }
             }
             catch (Exception exception)
@@ -375,7 +372,6 @@ static class ComponentRequestHandler
                     NewState            = newState,
                     NewDotNetProperties = dotNetProperties,
                     ClientTaskList      = instance._client is not null && instance._client.TaskList.Count > 0 ? instance._client.TaskList : null,
-                    Trace               = tracer.Messages
                 };
             }
 
@@ -394,14 +390,13 @@ static class ComponentRequestHandler
             };
 
             var map = await instance.ToJsonMap(serializerContext);
-
-            tracer.Trace($"Total time in ReactWithDotnet is {tracer.ElapsedMilliseconds} milliseconds.");
+            
+            tracer.WriteToResponseHeader(input.HttpContext);
 
             return new()
             {
                 CallFunctionId                    = request.CallFunctionId,
                 ElementAsJson                     = map,
-                Trace                             = tracer.Messages,
                 DynamicStyles                     = DynamicStyleContentForEmbedInClient.CalculateCssClassList(serializerContext.DynamicStyles.Map),
                 LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue - 1,
                 ReactContext                      = context
