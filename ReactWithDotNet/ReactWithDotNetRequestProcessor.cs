@@ -198,7 +198,6 @@ partial class Mixin
 
     static void Inject(ComponentResponse componentResponse, Element component)
     {
-        // ReSharper disable once SuspiciousTypeConversion.Global
         if (component is IPageLayout mainLayout)
         {
             var app = mainLayout.RenderInfo.ComponentResponse.ElementAsJson;
