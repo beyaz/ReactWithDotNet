@@ -219,6 +219,13 @@ partial class Mixin
                 }
             }
 
+            {
+                if (componentResponse.ElementAsJson is JsonMap jsonMap)
+                {
+                    tryUpdate(new InjectContext(), jsonMap);
+                }
+            }
+
             void tryReplace(InjectContext context, string key, object value)
             {
                 if (context.isUpdated)
@@ -251,13 +258,6 @@ partial class Mixin
                             }
                         }
                     }
-                }
-            }
-
-            {
-                if (componentResponse.ElementAsJson is JsonMap jsonMap)
-                {
-                    tryUpdate(new InjectContext(), jsonMap);
                 }
             }
         }
