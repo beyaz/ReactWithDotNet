@@ -54,8 +54,7 @@ partial class Mixin
         
         var instance = ReflectionHelper.CreateNewInstance(layoutType);
 
-        var layoutInstance = instance as IPageLayout;
-        if (layoutInstance == null)
+        if (instance is not IPageLayout layoutInstance)
         {
             throw DeveloperException($"{layoutType} should be support interface: {typeof(IPageLayout)}");
         }
@@ -64,7 +63,7 @@ partial class Mixin
 
         var httpContext = input.HttpContext;
         
-        layoutInstance.RenderInfo = await CalculateComponentRenderInfo(new CalculateComponentRenderInfoInput
+        layoutInstance.RenderInfo = await CalculateComponentRenderInfo(new()
         {
             Component                      = component,
             HttpContext                    = httpContext,
@@ -78,7 +77,6 @@ partial class Mixin
         var sb = await CalculateComponentHtmlText(new()
         {
             HttpContext                    = httpContext,
-            // ReSharper disable once SuspiciousTypeConversion.Global
             Component                      = (Element)layoutInstance,
             QueryString                    = httpContext.Request.QueryString.ToString(),
             OnReactContextCreated          = input.OnReactContextCreated,
