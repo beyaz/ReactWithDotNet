@@ -202,6 +202,13 @@ partial class Mixin
         {
             var app = mainLayout.RenderInfo.ComponentResponse.ElementAsJson;
 
+            {
+                if (componentResponse.ElementAsJson is JsonMap jsonMap)
+                {
+                    tryUpdate(new(), jsonMap);
+                }
+            }
+
             void tryUpdate(InjectContext context, JsonMap jsonMap)
             {
                 jsonMap.Foreach(context, tryReplace);
@@ -215,13 +222,6 @@ partial class Mixin
                     componentResponse.LastUsedComponentUniqueIdentifier = mainLayout.RenderInfo.ComponentResponse.LastUsedComponentUniqueIdentifier;
 
                     context.isUpdated = true;
-                }
-            }
-
-            {
-                if (componentResponse.ElementAsJson is JsonMap jsonMap)
-                {
-                    tryUpdate(new(), jsonMap);
                 }
             }
 
