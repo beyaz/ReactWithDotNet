@@ -29,7 +29,9 @@ public sealed class ReactWithDotNetJavaScriptFiles
         {
             context.Response.ContentType = content.Type;
 
-            context.Response.Headers.Append("Cache-Control", $"public, max-age={Timeout.TotalSeconds}");
+            context.Response.Headers.Append("Cache-Control", $"max-age={Timeout.TotalSeconds},public,immutable");
+            context.Response.Headers.Remove(HeaderNames.LastModified);
+            context.Response.Headers.Remove(HeaderNames.ETag);
 
             await context.Response.Body.WriteAsync(content.Data);
 
@@ -49,9 +51,9 @@ public sealed class ReactWithDotNetJavaScriptFiles
 
         var requestPath = httpRequest.Path.Value ?? string.Empty;
 
-        var isJsFile = requestPath.EndsWith(".js");
+        var isJsFile = requestPath.EndsWith(".js",StringComparison.OrdinalIgnoreCase);
 
-        var isCssFile = requestPath.EndsWith(".css");
+        var isCssFile = requestPath.EndsWith(".css", StringComparison.OrdinalIgnoreCase);
 
         if (!(isJsFile || isCssFile))
         {
