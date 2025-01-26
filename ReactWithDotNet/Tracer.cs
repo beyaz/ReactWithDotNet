@@ -24,6 +24,11 @@ sealed class Tracer
 
     public void WriteToResponseHeader(HttpContext httpContext)
     {
+        if (httpContext is null)
+        {
+            return;
+        }
+
         var sb = new StringBuilder();
 
         foreach (var (message, duration) in _items)
