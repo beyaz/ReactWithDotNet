@@ -222,7 +222,7 @@ partial class Mixin
             {
                 if (componentResponse.ElementAsJson is JsonMap jsonMap)
                 {
-                    tryUpdate(new InjectContext(), jsonMap);
+                    tryUpdate(new(), jsonMap);
                 }
             }
 
