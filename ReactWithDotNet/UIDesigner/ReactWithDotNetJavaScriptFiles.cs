@@ -18,9 +18,9 @@ public sealed class ReactWithDotNetJavaScriptFiles
     }
 
     /// <summary>
-    ///     Default value is 1 day
+    ///     Default value is 365 day
     /// </summary>
-    public static TimeSpan Timeout { get; set; } = TimeSpan.FromDays(1);
+    public static TimeSpan Timeout { get; set; } = TimeSpan.FromDays(365);
 
     public async Task InvokeAsync(HttpContext context)
     {
