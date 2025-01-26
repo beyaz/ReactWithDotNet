@@ -51,7 +51,7 @@ public sealed class ReactWithDotNetJavaScriptFiles
 
         var requestPath = httpRequest.Path.Value ?? string.Empty;
 
-        var isJsFile = requestPath.EndsWith(".js",StringComparison.OrdinalIgnoreCase);
+        var isJsFile = requestPath.EndsWith(".js", StringComparison.OrdinalIgnoreCase);
 
         var isCssFile = requestPath.EndsWith(".css", StringComparison.OrdinalIgnoreCase);
 
@@ -84,7 +84,9 @@ public sealed class ReactWithDotNetJavaScriptFiles
             resourceName = requestPath;
         }
 
-        if (isLocalMaintainer && requestPath.StartsWith("/ReactWithDotNet/", StringComparison.OrdinalIgnoreCase))
+        const string folderName = "/ReactWithDotNet/" + Mixin.Version + "/";
+
+        if (isLocalMaintainer && requestPath.StartsWith(folderName, StringComparison.OrdinalIgnoreCase))
         {
             const string distFolderPath = @"C:\github\ReactWithDotNet\ReactWithDotNet\JsClientEngine\dist\";
             return new()
@@ -93,12 +95,12 @@ public sealed class ReactWithDotNetJavaScriptFiles
                 Data = File.ReadAllBytes($"{distFolderPath}{requestPath.Split('/').Last()}")
             };
         }
-        
+
         if (resourceName is null)
         {
-            if (requestPath.StartsWith("/ReactWithDotNet/", StringComparison.OrdinalIgnoreCase))
+            if (requestPath.StartsWith(folderName, StringComparison.OrdinalIgnoreCase))
             {
-                resourceName = "ReactWithDotNet.JsClientEngine.dist." + requestPath.RemoveFromStart("/ReactWithDotNet/");
+                resourceName = "ReactWithDotNet.JsClientEngine.dist." + requestPath.RemoveFromStart(folderName);
             }
 
             if (resourceName is null)
@@ -111,9 +113,9 @@ public sealed class ReactWithDotNetJavaScriptFiles
                 {
                     var path = referer[0][referer[0].IndexOf(host[0], StringComparison.OrdinalIgnoreCase)..];
 
-                    if (path.Contains("/ReactWithDotNet/", StringComparison.OrdinalIgnoreCase))
+                    if (path.Contains(folderName, StringComparison.OrdinalIgnoreCase))
                     {
-                        resourceName = "ReactWithDotNet.JsClientEngine.dist." + requestPath.RemoveFromStart("/ReactWithDotNet/");
+                        resourceName = "ReactWithDotNet.JsClientEngine.dist." + requestPath.RemoveFromStart(folderName);
                     }
                 }
             }
@@ -160,7 +162,7 @@ public sealed class ReactWithDotNetJavaScriptFiles
 
 partial class Mixin
 {
-    const string Version = "1.0.8";
-    public static readonly string IndexJsFilePath = $"/ReactWithDotNet/index.js?v={Version}";
-    public static readonly string IndexCssFilePath = $"/ReactWithDotNet/index.css?v={Version}";
+    internal const string Version = "1.0.8";
+    public static readonly string IndexJsFilePath = $"/ReactWithDotNet/{Version}/index.js";
+    public static readonly string IndexCssFilePath = $"/ReactWithDotNet/{Version}/index.css";
 }
