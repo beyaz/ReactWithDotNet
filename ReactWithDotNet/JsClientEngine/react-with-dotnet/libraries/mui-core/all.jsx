@@ -29,6 +29,8 @@ register("Card",        React.lazy(() => import('./Card')));
 register("CardContent", React.lazy(() => import('./CardContent')));
 register("CardActions", React.lazy(() => import('./CardActions')));
 register("Typography", React.lazy(() => import('./Typography')));
+register("ExpandMoreIcon", React.lazy(() => import('./ExpandMoreIcon')));
+
 
 register("CircularProgress", React.lazy(() => import('./CircularProgress'))); 
 
