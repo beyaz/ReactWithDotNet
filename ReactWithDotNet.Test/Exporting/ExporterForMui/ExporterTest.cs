@@ -213,7 +213,7 @@ public class ExporterTest
         Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(CircularProgress)),
-            StartFrom        = "<HTMLSpanElement>, 'children'> {",
+            StartFrom        = "'children'> {",
             ClassName        = "CircularProgress",
             SkipMembers      = ["children", "classes", "sx"]
         });
