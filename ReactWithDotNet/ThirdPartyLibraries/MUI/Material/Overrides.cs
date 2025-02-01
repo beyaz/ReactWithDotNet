@@ -11,6 +11,9 @@ public sealed partial class Switch : SwitchBase
     public ChangeEventHandler onChange { get; set; }
 }
 
+
+public sealed class ExpandMoreIcon : ElementBase;
+
 public sealed partial class TextField : ElementBase
 {
     [ReactProp]
