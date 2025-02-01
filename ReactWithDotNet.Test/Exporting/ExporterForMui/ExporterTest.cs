@@ -25,7 +25,7 @@ public class ExporterTest
         Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(Paper)),
-            StartFrom        = "props: P & {",
+            StartFrom        = "PaperOwnProps {",
             ClassName        = "Paper",
             ClassModifier    = " ",
             SkipMembers      = ["children"],
