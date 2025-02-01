@@ -153,6 +153,10 @@ static class Lexer
             {
                 i = endIndex;
 
+                if (tokens.Count == 222)
+                {
+                    ;
+                }
                 tokens.Add(token);
 
                 continue;
@@ -297,7 +301,7 @@ static class Lexer
 
         static bool isStringStartOrEnd(char chr)
         {
-            return chr == '"' || chr == "'"[0];
+            return chr == '"' || chr == "'"[0] || chr == '`';
         }
     }
 
