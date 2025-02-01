@@ -1,4 +1,4 @@
-// auto generated code (do not edit manually)
+﻿// auto generated code (do not edit manually)
 
 namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
@@ -31,9 +31,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     <br/>
     ///     <br/>
-    ///     This prop is an alias for the `slots` prop.
-    ///     <br/>
-    ///     It's recommended to use the `slots` prop instead.
+    ///     @deprecated use the `slots` prop instead. This prop will be removed in v7. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
     ///     <br/>
     ///     <br/>
     ///     <br/>
@@ -50,9 +48,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     <br/>
     ///     <br/>
-    ///     This prop is an alias for the `slotProps` prop.
-    ///     <br/>
-    ///     It's recommended to use the `slotProps` prop instead, as `componentsProps` will be deprecated in the future.
+    ///     @deprecated use the `slotProps` prop instead. This prop will be removed in v7. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
     ///     <br/>
     ///     <br/>
     ///     <br/>
@@ -305,45 +301,15 @@ public sealed class Tooltip : ElementBase
     public static Modifier Placement(string value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.placement = value);
     
     /// <summary>
-    ///     Props applied to the [`Popper`](/material-ui/api/popper/) element.
+    ///     Props applied to the [`Popper`](https://mui.com/material-ui/api/popper/) element.
+    ///     <br/>
+    ///     @deprecated use the `slotProps.popper` prop instead. This prop will be removed in v7. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
     ///     <br/>
     ///     @default {}
     /// </summary>
     [ReactProp]
     [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic PopperProps { get; } = new ExpandoObject();
-    
-    /// <summary>
-    ///     The extra props for the slot components.
-    ///     <br/>
-    ///     You can override the existing props or add new ones.
-    ///     <br/>
-    ///     <br/>
-    ///     <br/>
-    ///     This prop is an alias for the `componentsProps` prop, which will be deprecated in the future.
-    ///     <br/>
-    ///     <br/>
-    ///     <br/>
-    ///     @default {}
-    /// </summary>
-    [ReactProp]
-    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
-    public dynamic slotProps { get; } = new ExpandoObject();
-    
-    /// <summary>
-    ///     The components used for each slot inside.
-    ///     <br/>
-    ///     <br/>
-    ///     <br/>
-    ///     This prop is an alias for the `components` prop, which will be deprecated in the future.
-    ///     <br/>
-    ///     <br/>
-    ///     <br/>
-    ///     @default {}
-    /// </summary>
-    [ReactProp]
-    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
-    public dynamic slots { get; } = new ExpandoObject();
     
     /// <summary>
     ///     The system prop that allows defining system overrides as well as additional CSS styles.

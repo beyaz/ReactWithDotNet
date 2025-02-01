@@ -52,7 +52,7 @@ public class ExporterTest
         Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(Tooltip)),
-            StartFrom        = "'title'> {",
+            StartFrom        = "  TooltipSlotsAndSlotProps {",
             ClassName        = "Tooltip",
             SkipMembers      = ["children", "TransitionComponent", "TransitionProps", "PopperComponent"],
             IsContainer      = true
