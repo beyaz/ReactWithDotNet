@@ -1,5 +1,4 @@
 using ReactWithDotNet.TypeScriptCodeAnalyzer;
-using System.Collections.Generic;
 using System.Globalization;
 using ReactWithDotNet.Tokenizing;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.TokenMatch;
@@ -141,7 +140,7 @@ static class Exporter
 
         foreach (var parameter in parameters)
         {
-            var response = ResolveDotNetTypeName(parameter.TypeReference.Tokens, parameter.TypeReference.StartIndex, parameter.TypeReference.EndIndex);
+            var response = resolveDotNetTypeName(parameter.TypeReference);
             if (response.Fail)
             {
                 return response.FailInfo;
@@ -152,6 +151,15 @@ static class Exporter
 
         return items;
 
+        static Result<string> resolveDotNetTypeName(TsTypeReference reference)
+        {
+            if (reference.Name == "React.ChangeEvent")
+            {
+                return nameof(ChangeEvent);
+            }
+            
+            return ResolveDotNetTypeName(reference.Tokens, reference.StartIndex, reference.EndIndex);
+        }
     }
     static IReadOnlyList<string> AsCSharpMember(ExportInput input, TsMemberInfo memberInfo)
     {
