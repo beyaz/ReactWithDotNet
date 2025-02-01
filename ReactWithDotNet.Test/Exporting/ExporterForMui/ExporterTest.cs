@@ -103,7 +103,7 @@ public class ExporterTest
         Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(Typography)),
-            StartFrom        = "SystemProps<Theme> & {",
+            StartFrom        = "'color'> {",
             ClassName        = "Typography",
             SkipMembers      = ["children"],
             ExtraProps       = ["string color", "string component"]
