@@ -237,7 +237,7 @@ public class ExporterTest
             StartFrom        = "'color'> {",
             ClassName        = "Typography",
             SkipMembers      = ["children"],
-            ExtraProps       = ["string color", "string component"]
+            ExtraProps       = ["string component"]
         });
     }
 
