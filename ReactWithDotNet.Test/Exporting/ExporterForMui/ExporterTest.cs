@@ -77,7 +77,7 @@ public class ExporterTest
         Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(CardMedia)),
-            StartFrom        = "props: P & {",
+            StartFrom        = "interface CardMediaOwnProps {",
             ClassName        = "CardMedia",
             SkipMembers      = ["children"],
             ExtraProps       = ["string title"]
