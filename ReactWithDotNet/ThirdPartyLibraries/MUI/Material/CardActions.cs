@@ -1,4 +1,4 @@
-// auto generated code (do not edit manually)
+﻿// auto generated code (do not edit manually)
 
 namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
@@ -25,4 +25,11 @@ public sealed class CardActions : ElementBase
     /// </summary>
     [ReactProp]
     public bool? disableSpacing { get; set; }
+    
+    /// <summary>
+    ///     If `true`, the actions do not have additional margin.
+    ///     <br/>
+    ///     @default false
+    /// </summary>
+    public static Modifier DisableSpacing(bool? value) => CreateThirdPartyReactComponentModifier<CardActions>(x => x.disableSpacing = value);
 }
