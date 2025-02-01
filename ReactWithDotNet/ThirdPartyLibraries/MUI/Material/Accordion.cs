@@ -70,7 +70,7 @@ public sealed class Accordion : ElementBase
     ///     Setting this prop enables control over the accordion.
     /// </summary>
     public static Modifier Expanded(bool? value) => CreateThirdPartyReactComponentModifier<Accordion>(x => x.expanded = value);
-
+    
     /// <summary>
     ///     Callback fired when the expand/collapse state is changed.
     ///     <br/>
@@ -81,8 +81,8 @@ public sealed class Accordion : ElementBase
     ///     @param {boolean} expanded The `expanded` state of the accordion.
     /// </summary>
     [ReactProp]
-    public Func<MouseEvent, bool?, Task> onChange { get; set; }
-
+    public Func<MouseEvent, bool?, Task> onChange {get;set;}
+    
     /// <summary>
     ///     The system prop that allows defining system overrides as well as additional CSS styles.
     /// </summary>

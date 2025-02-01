@@ -180,69 +180,79 @@ static class Exporter
                 {
                     lines.Add("[ReactProp]");
                     
-                    lines.Add($"public Func<{string.Join(", ",prm.Value.Select(p=>$"{p.dotNetType}"))}, Task> {memberInfo.Name} {{get;set;}}");
+                    var dotNetType = $"Func<{string.Join(", ",prm.Value.Select(p=>$"{p.dotNetType}"))}, Task>";
+
+                    var memberName = memberInfo.Name;
+                    
+                    lines.Add($"public {dotNetType} {memberName} {{ get; set; }}");
+                    
+                    lines.Add($"public static Modifier {UpperCaseFirstChar(memberName.RemoveFromStart("@"))}({dotNetType} value) => CreateThirdPartyReactComponentModifier<{input.ClassName}>(x => x.{memberName} = value);");
+                    
                     return lines;
                 }
             }
         }
-        
-        if (!input.PropToDotNetTypeMap.TryGetValue($"{input.NamespaceName} > {input.ClassName} > {memberInfo.Name}", out var dotNetType))
+
         {
-            if (!input.PropToDotNetTypeMap.TryGetValue($"{input.NamespaceName} > * > {memberInfo.Name}", out dotNetType))
+            if (!input.PropToDotNetTypeMap.TryGetValue($"{input.NamespaceName} > {input.ClassName} > {memberInfo.Name}", out var dotNetType))
             {
-                var matchResponse = ResolveDotNetTypeName(memberInfo);
-                if (matchResponse.hasMatch)
+                if (!input.PropToDotNetTypeMap.TryGetValue($"{input.NamespaceName} > * > {memberInfo.Name}", out dotNetType))
                 {
-                    dotNetType = matchResponse.dotNetType;
+                    var matchResponse = ResolveDotNetTypeName(memberInfo);
+                    if (matchResponse.hasMatch)
+                    {
+                        dotNetType = matchResponse.dotNetType;
+                    }
                 }
             }
-        }
 
-        if (dotNetType is null)
-        {
-            return lines;
-        }
+            if (dotNetType is null)
+            {
+                return lines;
+            }
         
         
-        var memberName = memberInfo.Name;
-        if (memberName == "checked")
-        {
-            memberName = "@" + memberName;
-        }
+            var memberName = memberInfo.Name;
+            if (memberName == "checked")
+            {
+                memberName = "@" + memberName;
+            }
 
-        lines.Add("[ReactProp]");
+            lines.Add("[ReactProp]");
 
-        if (dotNetType == "dynamic")
-        {
-            lines.Add("[ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]");
-            lines.Add($"public dynamic {memberInfo.Name} {{ get; }} = new ExpandoObject();");
-            return lines;
-        }
+            if (dotNetType == "dynamic")
+            {
+                lines.Add("[ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]");
+                lines.Add($"public dynamic {memberInfo.Name} {{ get; }} = new ExpandoObject();");
+                return lines;
+            }
 
-        if (dotNetType == "init_only_style_map")
-        {
-            lines.Add("[ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]");
-            lines.Add($"public Dictionary<string, Style> {memberInfo.Name} {{ get; }} = new ();");
-            return lines;
-        }
+            if (dotNetType == "init_only_style_map")
+            {
+                lines.Add("[ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]");
+                lines.Add($"public Dictionary<string, Style> {memberInfo.Name} {{ get; }} = new ();");
+                return lines;
+            }
 
-        if (dotNetType == "Style")
-        {
-            lines.Add("[ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenStyleEmpty))]");
-            lines.Add($"public Style {memberInfo.Name} {{ get; }} = new ();");
-            return lines;
-        }
+            if (dotNetType == "Style")
+            {
+                lines.Add("[ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenStyleEmpty))]");
+                lines.Add($"public Style {memberInfo.Name} {{ get; }} = new ();");
+                return lines;
+            }
 
-        lines.Add($"public {dotNetType} {memberName} {{ get; set; }}");
+            lines.Add($"public {dotNetType} {memberName} {{ get; set; }}");
         
-        lines.Add(string.Empty);
+            lines.Add(string.Empty);
         
-        if (memberInfo.Comment is not null)
-        {
-            lines.AddRange(AsCSharpComment(memberInfo.Comment));
-        }
-        lines.Add($"public {(memberName == "type" ? "new ": "")}static Modifier {UpperCaseFirstChar(memberName.RemoveFromStart("@"))}({dotNetType} value) => CreateThirdPartyReactComponentModifier<{input.ClassName}>(x => x.{memberName} = value);");
+            if (memberInfo.Comment is not null)
+            {
+                lines.AddRange(AsCSharpComment(memberInfo.Comment));
+            }
+            lines.Add($"public {(memberName == "type" ? "new ": "")}static Modifier {UpperCaseFirstChar(memberName.RemoveFromStart("@"))}({dotNetType} value) => CreateThirdPartyReactComponentModifier<{input.ClassName}>(x => x.{memberName} = value);");
 
+        }
+        
         return lines;
 
         bool isVoidFunction()
