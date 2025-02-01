@@ -225,9 +225,9 @@ public class ExporterTest
         Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(Autocomplete)),
-            StartFrom        = " | 'children'> {",
+            StartFrom        = " ChipComponent> {",
             ClassName        = "Autocomplete",
-            SkipMembers      = new[] { "children", "classes" },
+            SkipMembers      = ["children", "classes"],
             ClassModifier    = "partial"
         });
     }
