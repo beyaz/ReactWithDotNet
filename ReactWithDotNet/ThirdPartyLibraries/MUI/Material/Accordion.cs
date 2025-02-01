@@ -1,4 +1,4 @@
-// auto generated code (do not edit manually)
+﻿// auto generated code (do not edit manually)
 
 namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
@@ -93,9 +93,9 @@ public sealed class Accordion : ElementBase
     /// <summary>
     ///     The component used for the transition.
     ///     <br/>
-    ///     [Follow this guide](/material-ui/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.
+    ///     [Follow this guide](https://mui.com/material-ui/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.
     ///     <br/>
-    ///     @default Collapse
+    ///     @deprecated Use `slots.transition` instead. This prop will be removed in v7. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
     /// </summary>
     
     protected override Element GetSuspenseFallbackElement()

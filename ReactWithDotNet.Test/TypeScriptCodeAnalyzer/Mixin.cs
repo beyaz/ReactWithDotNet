@@ -261,7 +261,7 @@ static class Mixin
             }
         }
 
-        File.WriteAllText(path, contents);
+        File.WriteAllText(path, contents, Encoding.UTF8);
     }
 
     public static void WriteLines(this IReadOnlyList<string> lines, Action<string> appendLine)
