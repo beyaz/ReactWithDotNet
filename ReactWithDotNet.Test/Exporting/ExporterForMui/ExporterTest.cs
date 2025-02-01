@@ -24,12 +24,12 @@ public class ExporterTest
     {
         Exporter.ExportToCSharpFile(new ExportInput
         {
-            DefinitionTsCode     = GetTsCode(nameof(Paper)),
-            StartFrom            = "props: P & {",
-            ClassName            = "Paper",
-            ClassModifier = " ",
-            SkipMembers          = new[] { "children" },
-            ExtraProps           = new[] { "string component" }
+            DefinitionTsCode = GetTsCode(nameof(Paper)),
+            StartFrom        = "props: P & {",
+            ClassName        = "Paper",
+            ClassModifier    = " ",
+            SkipMembers      = ["children"],
+            ExtraProps       = ["string component"]
         });
     }
 
@@ -41,7 +41,7 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode(nameof(Card)),
             StartFrom        = "DistributiveOmit<PaperProps, 'classes'> & {",
             ClassName        = "Card",
-            SkipMembers      = new[] { "children", "classes", "sx" },
+            SkipMembers      = ["children", "classes", "sx"],
             BaseClassName    = "Paper"
         });
     }
@@ -79,8 +79,8 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode(nameof(CardMedia)),
             StartFrom        = "props: P & {",
             ClassName        = "CardMedia",
-            SkipMembers      = new[] { "children" },
-            ExtraProps = new[]{ "string title" }
+            SkipMembers      = ["children"],
+            ExtraProps       = ["string title"]
         });
     }
 
@@ -93,7 +93,7 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode(nameof(Divider)),
             StartFrom        = "props: P & {",
             ClassName        = "Divider",
-            SkipMembers      = new[] { "children" }
+            SkipMembers      = ["children"]
         });
     }
 
@@ -105,8 +105,8 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode(nameof(Typography)),
             StartFrom        = "SystemProps<Theme> & {",
             ClassName        = "Typography",
-            SkipMembers      = new[] { "children" },
-            ExtraProps       = new[] { "string color", "string component" }
+            SkipMembers      = ["children"],
+            ExtraProps       = ["string color", "string component"]
         });
     }
 
@@ -118,7 +118,7 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode(nameof(CardContent)),
             StartFrom        = "props: P & {",
             ClassName        = "CardContent",
-            SkipMembers      = new[] { "children" }
+            SkipMembers      = ["children"]
         });
     }
 
@@ -130,7 +130,7 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode(nameof(CardActions)),
             StartFrom        = "<HTMLDivElement>> {",
             ClassName        = "CardActions",
-            SkipMembers      = new[] { "children" }
+            SkipMembers      = ["children"]
         });
     }
 
@@ -143,7 +143,7 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode(nameof(TextField)),
             StartFrom        = "> {",
             ClassName        = "TextField",
-            SkipMembers      = new[] { "children", "inputRef", "onClick" },
+            SkipMembers      = ["children", "inputRef", "onClick"],
             ClassModifier    = "partial"
         });
     }
@@ -153,11 +153,11 @@ public class ExporterTest
     {
         Exporter.ExportToCSharpFile(new ExportInput
         {
-            DefinitionTsCode     = GetTsCode(nameof(ButtonBase)),
-            StartFrom            = "props: P & {",
-            ClassName            = "ButtonBase",
-            SkipMembers          = new[] { "children", "action", "touchRippleRef", "LinkComponent", "onFocusVisible", "tabIndex" },
-            ClassModifier = string.Empty
+            DefinitionTsCode = GetTsCode(nameof(ButtonBase)),
+            StartFrom        = "props: P & {",
+            ClassName        = "ButtonBase",
+            SkipMembers      = ["children", "action", "touchRippleRef", "LinkComponent", "onFocusVisible", "tabIndex"],
+            ClassModifier    = string.Empty
             
         });
     }
@@ -170,9 +170,9 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode(nameof(IconButton)),
             StartFrom        = "props: P & {",
             ClassName        = "IconButton",
-            SkipMembers      = new[] { "children", "classes", "disabled","sx" },
-            BaseClassName = nameof(ButtonBase),
-            ExtraProps = new []{ "string type" }
+            SkipMembers      = ["children", "classes", "disabled","sx"],
+            BaseClassName    = nameof(ButtonBase),
+            ExtraProps       = ["string type"]
 
         });
     }
@@ -215,7 +215,7 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode(nameof(CircularProgress)),
             StartFrom        = "<HTMLSpanElement>, 'children'> {",
             ClassName        = "CircularProgress",
-            SkipMembers      = new[] { "children", "classes", "sx" }
+            SkipMembers      = ["children", "classes", "sx"]
         });
     }
     
@@ -240,7 +240,7 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode(nameof(Slider)),
             StartFrom        = " | 'children'> {",
             ClassName        = "Slider",
-            SkipMembers      = new[] { "children", "classes" },
+            SkipMembers      = ["children", "classes"],
             ClassModifier    = "partial"
         });
     }
