@@ -280,6 +280,11 @@ static class Exporter
             i++;
         }
 
+        while (tokens[i].tokenType == TokenType.Comment)
+        {
+            i++;
+        }
+
         if (tokens[i].tokenType == TokenType.AlfaNumeric)
         {
             var name = tokens[i].value;
