@@ -8,7 +8,9 @@ public class ExporterTest
 {
     static string GetTsCode(string className)
     {
-        var rawUrlInGithub = $"https://raw.githubusercontent.com/mui/material-ui/master/packages/mui-material/src/{className}/{className}.d.ts";
+        // main directory: https://github.com/mui/material-ui/blob/master/packages/mui-material/src/
+        
+        var rawUrlInGithub = $"https://raw.githubusercontent.com/mui/material-ui/refs/heads/master/packages/mui-material/src/{className}/{className}.d.ts";
 
         if (className == "SwitchBase")
         {
