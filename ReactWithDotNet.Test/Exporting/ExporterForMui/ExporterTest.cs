@@ -240,8 +240,8 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode(nameof(Slider)),
             StartFrom        = "number[]> {",
             ClassName        = "Slider",
-            SkipMembers      = ["children", "classes"],
-            ClassModifier    = "partial"
+            SkipMembers      = ["children", "classes","className"],
+            //ClassModifier    = "partial"
         });
     }
     
