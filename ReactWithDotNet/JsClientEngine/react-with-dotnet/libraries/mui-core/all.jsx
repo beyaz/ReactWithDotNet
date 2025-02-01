@@ -13,6 +13,7 @@ function register(name, value)
 
 // Connect components as Lazy
 register("Accordion", React.lazy(() => import('./Accordion')));
+register("AccordionSummary", React.lazy(() => import('./AccordionSummary')));
 register("Autocomplete", React.lazy(() => import('./Autocomplete')));
 register("Switch", React.lazy(() => import('./Switch')));
 register("Tooltip",     React.lazy(() => import('./Tooltip')));
