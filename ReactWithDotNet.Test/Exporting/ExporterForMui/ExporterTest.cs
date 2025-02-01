@@ -39,7 +39,7 @@ public class ExporterTest
         Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(Card)),
-            StartFrom        = "DistributiveOmit<PaperProps, 'classes'> & {",
+            StartFrom        = "'classes'> {",
             ClassName        = "Card",
             SkipMembers      = ["children", "classes", "sx"],
             BaseClassName    = "Paper"
