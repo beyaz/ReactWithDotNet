@@ -186,6 +186,9 @@ static class Exporter
                     
                     lines.Add($"public {dotNetType} {memberName} {{ get; set; }}");
                     
+                    
+                    lines.Add(string.Empty);
+                    lines.AddRange(AsCSharpComment(memberInfo.Comment));
                     lines.Add($"public static Modifier {UpperCaseFirstChar(memberName.RemoveFromStart("@"))}({dotNetType} value) => CreateThirdPartyReactComponentModifier<{input.ClassName}>(x => x.{memberName} = value);");
                     
                     return lines;

@@ -81,7 +81,18 @@ public sealed class Accordion : ElementBase
     ///     @param {boolean} expanded The `expanded` state of the accordion.
     /// </summary>
     [ReactProp]
-    public Func<MouseEvent, bool?, Task> onChange {get;set;}
+    public Func<MouseEvent, bool?, Task> onChange { get; set; }
+    
+    /// <summary>
+    ///     Callback fired when the expand/collapse state is changed.
+    ///     <br/>
+    ///     <br/>
+    ///     <br/>
+    ///     @param {React.SyntheticEvent} event The event source of the callback. **Warning**: This is a generic event not a change event.
+    ///     <br/>
+    ///     @param {boolean} expanded The `expanded` state of the accordion.
+    /// </summary>
+    public static Modifier OnChange(Func<MouseEvent, bool?, Task> value) => CreateThirdPartyReactComponentModifier<Accordion>(x => x.onChange = value);
     
     /// <summary>
     ///     The system prop that allows defining system overrides as well as additional CSS styles.
