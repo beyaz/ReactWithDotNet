@@ -1,4 +1,4 @@
-// auto generated code (do not edit manually)
+﻿// auto generated code (do not edit manually)
 
 namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 

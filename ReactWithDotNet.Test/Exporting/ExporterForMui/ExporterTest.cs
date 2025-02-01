@@ -116,7 +116,7 @@ public class ExporterTest
         Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(CardContent)),
-            StartFrom        = "props: P & {",
+            StartFrom        = "interface CardContentOwnProps {",
             ClassName        = "CardContent",
             SkipMembers      = ["children"]
         });
