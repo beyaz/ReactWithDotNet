@@ -106,7 +106,12 @@ static class Ast
                 var response = ParseToMemberTokens(tokens, i+1, indexOfPair-1);
                 if (response.Success)
                 {
-                    return (true, response.Select(Exporter.ParseMemberTokens).Value, indexOfPair + 1);
+                    var result = response.Select(Exporter.ParseMemberTokens);
+                    if (!result.Success)
+                    {
+                        return default;
+                    }
+                    return (true, result.Value, indexOfPair + 1);
                 }
               
             }
