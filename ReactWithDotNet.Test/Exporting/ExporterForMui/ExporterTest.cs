@@ -91,7 +91,7 @@ public class ExporterTest
         Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(Divider)),
-            StartFrom        = "props: P & {",
+            StartFrom        = " DividerOwnProps {",
             ClassName        = "Divider",
             SkipMembers      = ["children"]
         });
