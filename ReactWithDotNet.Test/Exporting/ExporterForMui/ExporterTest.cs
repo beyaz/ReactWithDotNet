@@ -14,7 +14,7 @@ public class ExporterTest
 
         if (className == "SwitchBase")
         {
-            rawUrlInGithub = $"https://raw.githubusercontent.com/mui/material-ui/master/packages/mui-material/src/internal/{className}.d.ts";
+            rawUrlInGithub = $"https://raw.githubusercontent.com/mui/material-ui/refs/heads/master/packages/mui-material/src/internal/{className}.d.ts";
         }
 
         return new HttpClient().GetStringAsync(rawUrlInGithub).GetAwaiter().GetResult();
@@ -184,9 +184,9 @@ public class ExporterTest
         Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(SwitchBase)),
-            StartFrom        = "> {",
+            StartFrom        = "SwitchBaseSlotsAndSlotProps {",
             ClassName        = "SwitchBase",
-            SkipMembers      = new[] { "-", "classes", "disabled", "disableRipple" },
+            SkipMembers      = ["-", "classes", "disabled", "disableRipple"],
             ClassModifier    = string.Empty,
             BaseClassName    = "ButtonBase"
 
