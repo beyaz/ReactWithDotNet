@@ -199,11 +199,11 @@ public class ExporterTest
         Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(Switch)),
-            StartFrom = "> {",
-            ClassName = "Switch",
-            SkipMembers = new[] { "children", "inputRef","checkedIcon", "disabled", "icon", "sx","value", "classes" },
-            BaseClassName = "SwitchBase",
-            ClassModifier = "partial"
+            StartFrom        = "> {",
+            ClassName        = "Switch",
+            SkipMembers      = ["children", "inputRef","checkedIcon", "disabled", "icon", "sx","value", "classes"],
+            BaseClassName    = "SwitchBase",
+            ClassModifier    = "partial"
         });
     }
     
