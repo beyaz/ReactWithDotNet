@@ -32,6 +32,20 @@ public class ExporterTest
         });
     }
     
+    [TestMethod]
+    public void AccordionDetails()
+    {
+        Exporter.ExportToCSharpFile(new ExportInput
+        {
+            DefinitionTsCode = GetTsCode(nameof(AccordionDetails)),
+            StartFrom        = "> {",
+            ClassName        = "AccordionDetails",
+            SkipMembers      = ["children"],
+            IsContainer      = true
+        });
+    }
+    
+    
 
     [TestMethod]
     public void Autocomplete()
