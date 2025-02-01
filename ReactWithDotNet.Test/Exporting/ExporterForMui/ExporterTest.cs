@@ -238,7 +238,7 @@ public class ExporterTest
         Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(Slider)),
-            StartFrom        = " | 'children'> {",
+            StartFrom        = "number[]> {",
             ClassName        = "Slider",
             SkipMembers      = ["children", "classes"],
             ClassModifier    = "partial"
