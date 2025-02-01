@@ -293,8 +293,35 @@ static class Exporter
 
             return new TsMemberInfo { Comment = comment, Name = name, RemainingPart = tokens.ToList().GetRange(i, tokens.Count - i) };
         }
+        
+        if (tokens[i].tokenType == TokenType.QuotedString)
+        {
+            var name = tokens[i].value;
+
+            i++;
+
+            if (tokens[i].tokenType == TokenType.QuestionMark)
+            {
+                i++;
+            }
+            
+            return new TsMemberInfo { Comment = comment, Name = KebabToCamelCase(name), RemainingPart = tokens.ToList().GetRange(i, tokens.Count - i) };
+        }
 
         return Fail("Member not resolved.");
+        
+        static string KebabToCamelCase(string kebab)
+        {
+            if (string.IsNullOrEmpty(kebab))
+                return kebab;
+
+            return string.Concat(kebab
+                                     .Split('-')
+                                     .Select((word, index) => index == 0 
+                                                 ? word.ToLower() 
+                                                 : char.ToUpper(word[0]) + word.Substring(1).ToLower()));
+        }
+
     }
 
     static (Exception exception, IReadOnlyList<string> lines) CalculateCSharpFileContentLines(ExportInput input)
