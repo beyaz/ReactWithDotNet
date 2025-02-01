@@ -168,7 +168,7 @@ public class ExporterTest
         Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(IconButton)),
-            StartFrom        = "props: P & {",
+            StartFrom        = "IconButtonOwnProps {",
             ClassName        = "IconButton",
             SkipMembers      = ["children", "classes", "disabled","sx"],
             BaseClassName    = nameof(ButtonBase),
