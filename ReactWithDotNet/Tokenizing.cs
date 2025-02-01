@@ -153,10 +153,6 @@ static class Lexer
             {
                 i = endIndex;
 
-                if (tokens.Count == 222)
-                {
-                    ;
-                }
                 tokens.Add(token);
 
                 continue;
