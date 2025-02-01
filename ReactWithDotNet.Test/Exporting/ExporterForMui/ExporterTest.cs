@@ -52,8 +52,8 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode(nameof(Tooltip)),
             StartFrom        = "'title'> {",
             ClassName        = "Tooltip",
-            SkipMembers      = new[] { "children", "TransitionComponent", "TransitionProps", "PopperComponent" },
-            IsContainer = true
+            SkipMembers      = ["children", "TransitionComponent", "TransitionProps", "PopperComponent"],
+            IsContainer      = true
         });
     }
     [TestMethod]
@@ -64,7 +64,7 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode(nameof(Accordion)),
             StartFrom        = "AdditionalProps & {",
             ClassName        = "Accordion",
-            SkipMembers      = new[] { "children","TransitionProps" },
+            SkipMembers      = ["children","TransitionProps"],
             IsContainer      = true
         });
     }
