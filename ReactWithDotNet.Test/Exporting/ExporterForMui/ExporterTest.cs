@@ -154,7 +154,7 @@ public class ExporterTest
         Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(ButtonBase)),
-            StartFrom        = "props: P & {",
+            StartFrom        = " ButtonBaseOwnProps {",
             ClassName        = "ButtonBase",
             SkipMembers      = ["children", "action", "touchRippleRef", "LinkComponent", "onFocusVisible", "tabIndex"],
             ClassModifier    = string.Empty

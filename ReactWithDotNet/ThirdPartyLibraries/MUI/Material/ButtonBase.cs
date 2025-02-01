@@ -1,4 +1,4 @@
-// auto generated code (do not edit manually)
+﻿// auto generated code (do not edit manually)
 
 namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
@@ -13,6 +13,15 @@ public class ButtonBase : ElementBase
     /// </summary>
     [ReactProp]
     public bool? centerRipple { get; set; }
+    
+    /// <summary>
+    ///     If `true`, the ripples are centered.
+    ///     <br/>
+    ///     They won't start at the cursor interaction position.
+    ///     <br/>
+    ///     @default false
+    /// </summary>
+    public static Modifier CenterRipple(bool? value) => CreateThirdPartyReactComponentModifier<ButtonBase>(x => x.centerRipple = value);
     
     /// <summary>
     ///     Override or extend the styles applied to the component.
@@ -30,6 +39,13 @@ public class ButtonBase : ElementBase
     public bool? disabled { get; set; }
     
     /// <summary>
+    ///     If `true`, the component is disabled.
+    ///     <br/>
+    ///     @default false
+    /// </summary>
+    public static Modifier Disabled(bool? value) => CreateThirdPartyReactComponentModifier<ButtonBase>(x => x.disabled = value);
+    
+    /// <summary>
     ///     If `true`, the ripple effect is disabled.
     ///     <br/>
     ///     <br/>
@@ -44,6 +60,19 @@ public class ButtonBase : ElementBase
     public bool? disableRipple { get; set; }
     
     /// <summary>
+    ///     If `true`, the ripple effect is disabled.
+    ///     <br/>
+    ///     <br/>
+    ///     <br/>
+    ///     ⚠️ Without a ripple there is no styling for :focus-visible by default. Be sure
+    ///     <br/>
+    ///     to highlight the element by applying separate styles with the `.Mui-focusVisible` class.
+    ///     <br/>
+    ///     @default false
+    /// </summary>
+    public static Modifier DisableRipple(bool? value) => CreateThirdPartyReactComponentModifier<ButtonBase>(x => x.disableRipple = value);
+    
+    /// <summary>
     ///     If `true`, the touch ripple effect is disabled.
     ///     <br/>
     ///     @default false
@@ -52,12 +81,26 @@ public class ButtonBase : ElementBase
     public bool? disableTouchRipple { get; set; }
     
     /// <summary>
+    ///     If `true`, the touch ripple effect is disabled.
+    ///     <br/>
+    ///     @default false
+    /// </summary>
+    public static Modifier DisableTouchRipple(bool? value) => CreateThirdPartyReactComponentModifier<ButtonBase>(x => x.disableTouchRipple = value);
+    
+    /// <summary>
     ///     If `true`, the base button will have a keyboard focus ripple.
     ///     <br/>
     ///     @default false
     /// </summary>
     [ReactProp]
     public bool? focusRipple { get; set; }
+    
+    /// <summary>
+    ///     If `true`, the base button will have a keyboard focus ripple.
+    ///     <br/>
+    ///     @default false
+    /// </summary>
+    public static Modifier FocusRipple(bool? value) => CreateThirdPartyReactComponentModifier<ButtonBase>(x => x.focusRipple = value);
     
     /// <summary>
     ///     This prop can help identify which element has keyboard focus.
@@ -74,6 +117,21 @@ public class ButtonBase : ElementBase
     /// </summary>
     [ReactProp]
     public string focusVisibleClassName { get; set; }
+    
+    /// <summary>
+    ///     This prop can help identify which element has keyboard focus.
+    ///     <br/>
+    ///     The class name will be applied when the element gains the focus through keyboard interaction.
+    ///     <br/>
+    ///     It's a polyfill for the [CSS :focus-visible selector](https://drafts.csswg.org/selectors-4/#the-focus-visible-pseudo).
+    ///     <br/>
+    ///     The rationale for using this feature [is explained here](https://github.com/WICG/focus-visible/blob/HEAD/explainer.md).
+    ///     <br/>
+    ///     A [polyfill can be used](https://github.com/WICG/focus-visible) to apply a `focus-visible` class to other components
+    ///     <br/>
+    ///     if needed.
+    /// </summary>
+    public static Modifier FocusVisibleClassName(string value) => CreateThirdPartyReactComponentModifier<ButtonBase>(x => x.focusVisibleClassName = value);
     
     /// <summary>
     ///     The system prop that allows defining system overrides as well as additional CSS styles.
