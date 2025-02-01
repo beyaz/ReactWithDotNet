@@ -1749,13 +1749,17 @@ function ArrangeRemoteMethodArguments(remoteMethodArguments)
 
                 if (reactName)
                 {
-                    if (reactName.indexOf('Mouse') > 0)
+                    if (reactName.indexOf('Mouse') > 0 || reactName.indexOf('onClick') >= 0)
                     {
                         remoteMethodArguments[i] = ConvertToSyntheticMouseEvent(prm);
                     }
                     else if (reactName === 'onScroll')
                     {
                         remoteMethodArguments[i] = ConvertToSyntheticScrollEvent(prm);
+                    }
+                    else
+                    {
+                        throw new Error("FatalError: " + reactName);
                     }
                 }
             }
