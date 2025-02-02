@@ -381,41 +381,8 @@ public partial class Autocomplete
     /// </summary>
     public static Modifier RenderInput(Element value) => CreateThirdPartyReactComponentModifier<Autocomplete>(x => x.renderInput = value);
     
-    /// <summary>
-    ///     Render the option, use `getOptionLabel` by default.
-    ///     <br/>
-    ///     <br/>
-    ///     <br/>
-    ///     @param {object} props The props to apply on the li element.
-    ///     <br/>
-    ///     @param {Value} option The option to render.
-    ///     <br/>
-    ///     @param {object} state The state of each option.
-    ///     <br/>
-    ///     @param {object} ownerState The state of the Autocomplete component.
-    ///     <br/>
-    ///     @returns {ReactNode}
-    /// </summary>
-    [ReactProp]
-    public Element renderOption { get; set; }
     
-    /// <summary>
-    ///     Render the option, use `getOptionLabel` by default.
-    ///     <br/>
-    ///     <br/>
-    ///     <br/>
-    ///     @param {object} props The props to apply on the li element.
-    ///     <br/>
-    ///     @param {Value} option The option to render.
-    ///     <br/>
-    ///     @param {object} state The state of each option.
-    ///     <br/>
-    ///     @param {object} ownerState The state of the Autocomplete component.
-    ///     <br/>
-    ///     @returns {ReactNode}
-    /// </summary>
-    public static Modifier RenderOption(Element value) => CreateThirdPartyReactComponentModifier<Autocomplete>(x => x.renderOption = value);
-    
+     
     /// <summary>
     ///     Render the selected value.
     ///     <br/>
