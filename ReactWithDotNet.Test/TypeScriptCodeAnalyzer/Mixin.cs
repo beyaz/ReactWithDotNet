@@ -35,8 +35,9 @@ static class Mixin
         }
 
         var valueAsTokens = reactNode.tokens;
-        
-        if (Lexer.FindMatch(tokens, startIndex, valueAsTokens).isFound)
+
+        var match = Lexer.FindMatch(tokens, startIndex, valueAsTokens);
+        if (match.isFound)
         {
             return true;
         }
