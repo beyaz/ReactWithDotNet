@@ -151,8 +151,10 @@ public partial class Autocomplete
     ///     <br/>
     ///     @default (more) =&gt; `+${more}`
     /// </summary>
+    public delegate Element getLimitTagsTextDelegate(double? more);
+    
     [ReactProp]
-    public Element getLimitTagsText { get; set; }
+    public getLimitTagsTextDelegate getLimitTagsText { get; set; }
     
     /// <summary>
     ///     The label to display when the tags are truncated (`limitTags`).
@@ -165,7 +167,7 @@ public partial class Autocomplete
     ///     <br/>
     ///     @default (more) =&gt; `+${more}`
     /// </summary>
-    public static Modifier GetLimitTagsText(Element value) => CreateThirdPartyReactComponentModifier<Autocomplete>(x => x.getLimitTagsText = value);
+    public static Modifier GetLimitTagsText(getLimitTagsTextDelegate value) => CreateThirdPartyReactComponentModifier<Autocomplete>(x => x.getLimitTagsText = value);
     
     /// <summary>
     ///     The component used to render the listbox.
@@ -336,27 +338,18 @@ public partial class Autocomplete
     public static Modifier ReadOnly(bool? value) => CreateThirdPartyReactComponentModifier<Autocomplete>(x => x.readOnly = value);
     
     /// <summary>
-    ///     Render the group.
+    ///     Render the input.
     ///     <br/>
     ///     <br/>
     ///     <br/>
-    ///     @param {AutocompleteRenderGroupParams} params The group to render.
+    ///     @param {object} params
     ///     <br/>
     ///     @returns {ReactNode}
     /// </summary>
-    [ReactProp]
-    public Element renderGroup { get; set; }
+    public delegate Element renderInputDelegate(Element @params);
     
-    /// <summary>
-    ///     Render the group.
-    ///     <br/>
-    ///     <br/>
-    ///     <br/>
-    ///     @param {AutocompleteRenderGroupParams} params The group to render.
-    ///     <br/>
-    ///     @returns {ReactNode}
-    /// </summary>
-    public static Modifier RenderGroup(Element value) => CreateThirdPartyReactComponentModifier<Autocomplete>(x => x.renderGroup = value);
+    [ReactProp]
+    public renderInputDelegate renderInput { get; set; }
     
     /// <summary>
     ///     Render the input.
@@ -367,37 +360,23 @@ public partial class Autocomplete
     ///     <br/>
     ///     @returns {ReactNode}
     /// </summary>
-    [ReactProp]
-    public Element renderInput { get; set; }
+    public static Modifier RenderInput(renderInputDelegate value) => CreateThirdPartyReactComponentModifier<Autocomplete>(x => x.renderInput = value);
     
     /// <summary>
-    ///     Render the input.
+    ///     Render the option, use `getOptionLabel` by default.
     ///     <br/>
     ///     <br/>
     ///     <br/>
-    ///     @param {object} params
+    ///     @param {object} props The props to apply on the li element.
     ///     <br/>
-    ///     @returns {ReactNode}
-    /// </summary>
-    public static Modifier RenderInput(Element value) => CreateThirdPartyReactComponentModifier<Autocomplete>(x => x.renderInput = value);
-    
-    
-     
-    /// <summary>
-    ///     Render the selected value.
+    ///     @param {Value} option The option to render.
     ///     <br/>
-    ///     <br/>
-    ///     <br/>
-    ///     @param {Value[]} value The `value` provided to the component.
-    ///     <br/>
-    ///     @param {function} getTagProps A tag props getter.
+    ///     @param {object} state The state of each option.
     ///     <br/>
     ///     @param {object} ownerState The state of the Autocomplete component.
     ///     <br/>
     ///     @returns {ReactNode}
     /// </summary>
-    [ReactProp]
-    public Element renderTags { get; set; }
     
     /// <summary>
     ///     Render the selected value.
@@ -412,7 +391,6 @@ public partial class Autocomplete
     ///     <br/>
     ///     @returns {ReactNode}
     /// </summary>
-    public static Modifier RenderTags(Element value) => CreateThirdPartyReactComponentModifier<Autocomplete>(x => x.renderTags = value);
     
     /// <summary>
     ///     The size of the component.

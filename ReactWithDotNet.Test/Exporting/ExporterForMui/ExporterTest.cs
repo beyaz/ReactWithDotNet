@@ -55,7 +55,7 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode(nameof(Autocomplete)),
             StartFrom        = " ChipComponent> {",
             ClassName        = "Autocomplete",
-            SkipMembers      = ["children", "classes"],
+            SkipMembers      = ["children", "classes","renderGroup"],
             ClassModifier    = "partial"
         });
     }

@@ -195,6 +195,40 @@ static class Exporter
                 }
             }
         }
+        
+        if (isReturnsReactNodeFunction())
+        {
+            var functionParameters = Ast.TryReadFunctionParameters(memberInfo.RemainingPart, 1).To(x=>x.parameters);
+            if (!functionParameters.Success)
+            {
+                return lines;
+            }
+            
+            var prm = ResolveDotNetTypeNames(functionParameters.Value);
+            if (!prm.Success)
+            {
+                return lines;
+            }
+            
+            
+
+            var memberName = memberInfo.Name;
+            
+            var dotNetType = $"{memberName}Delegate";
+            
+            lines.Add($"public delegate Element {dotNetType}({string.Join(", ", prm.Value.Select(p=>$"{p.dotNetType} {getParameterName(p.parameterName)}"))});");
+            lines.Add(string.Empty);
+            
+            lines.Add("[ReactProp]");
+            lines.Add($"public {dotNetType} {memberName} {{ get; set; }}");
+                    
+                    
+            lines.Add(string.Empty);
+            lines.AddRange(AsCSharpComment(memberInfo.Comment));
+            lines.Add($"public static Modifier {UpperCaseFirstChar(memberName.RemoveFromStart("@"))}({dotNetType} value) => CreateThirdPartyReactComponentModifier<{input.ClassName}>(x => x.{memberName} = value);");
+                    
+            return lines;
+        }
 
         {
             if (!input.PropToDotNetTypeMap.TryGetValue($"{input.NamespaceName} > {input.ClassName} > {memberInfo.Name}", out var dotNetType))
@@ -271,10 +305,33 @@ static class Exporter
             
             return false;
         }
+        
+        bool isReturnsReactNodeFunction()
+        {
+            if (memberInfo.RemainingPart.StartsWith(0,":("))
+            {
+                if (memberInfo.RemainingPart.EndsWith("=> React.ReactNode"))
+                {
+                    
+                    return true;
+                }
+            }
+            
+            return false;
+        }
 
         static string UpperCaseFirstChar(string str)
         {
             return char.ToUpper(str[0], new CultureInfo("en-US")) + str.Substring(1);
+        }
+        static string getParameterName(string name)
+        {
+            if (name == "params")
+            {
+                return "@params";
+            }
+
+            return name;
         }
     }
 
