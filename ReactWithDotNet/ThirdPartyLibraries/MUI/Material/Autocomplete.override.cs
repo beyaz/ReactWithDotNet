@@ -8,6 +8,7 @@ public class Autocomplete<TOption> : Autocomplete where TOption : class
     [ReactProp]
     public Func<TOption, string> getOptionLabel { get; set; }
     
+    [ReactProp]
     public Func<Autocomplete<TOption>, TOption, Element>  renderOption { get; set; }
 
     [ReactProp]
@@ -31,6 +32,11 @@ public class Autocomplete<TOption> : Autocomplete where TOption : class
         if (propertyName == nameof(getOptionLabel))
         {
             return (true, instance.options.Select(x => new { option = x, label = instance.getOptionLabel(x) }).ToList());
+        }
+        
+        if (propertyName == nameof(renderOption))
+        {
+            return (true, instance.options.Select(x => new { option = x, label = instance.renderOption(instance,x) }).ToList());
         }
 
         return default;
