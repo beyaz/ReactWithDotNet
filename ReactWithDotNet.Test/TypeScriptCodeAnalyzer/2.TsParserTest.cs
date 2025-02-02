@@ -60,6 +60,20 @@ public class TsParserTests
     }
     
     [TestMethod]
+    public void ParseTypeReference_1()
+    {
+        var tokens = ParseTokens("(abc: XyZ)", 0).tokens;
+        
+        var response = TryReadFunctionParameters(tokens, 0);
+
+        response.Success.Should().BeTrue();
+        
+        response.Value.parameters[0].ParameterName.Should().Be("abc");
+        
+        response.Value.parameters[0].TypeReference.Name.Should().Be("XyZ");
+    }
+    
+    [TestMethod]
     public void ParseTypeReference()
     {
         var tokens = ParseTokens("Partial<AlertClasses>;", 0).tokens;
