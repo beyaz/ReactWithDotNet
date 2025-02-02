@@ -28,7 +28,7 @@ static class Mixin
             return false;
         }
         
-        var reactNode = Lexer.ParseTokens(value, 0);
+        var reactNode = Lexer.ParseTokens(value.Trim(), 0);
         if (!reactNode.hasRead)
         {
             return false;
@@ -36,11 +36,17 @@ static class Mixin
 
         var valueAsTokens = reactNode.tokens;
 
-        var match = Lexer.FindMatch(tokens, startIndex, valueAsTokens);
-        if (match.isFound)
+        var (isFound, firstMatchedTokenIndex, indexOfLastMatchedToken) = Lexer.FindMatch(tokens, startIndex, valueAsTokens);
+        if (!isFound)
+        {
+            return false;
+        }
+
+        if (tokens.First(t=>t.tokenType != TokenType.Space) == tokens[firstMatchedTokenIndex])
         {
             return true;
         }
+        
 
         return false;
     }

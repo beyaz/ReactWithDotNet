@@ -346,7 +346,7 @@ public partial class Autocomplete
     ///     <br/>
     ///     @returns {ReactNode}
     /// </summary>
-    public delegate Element renderInputDelegate(Element @params);
+    public delegate Element renderInputDelegate(object @params);
     
     [ReactProp]
     public renderInputDelegate renderInput { get; set; }

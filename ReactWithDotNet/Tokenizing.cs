@@ -89,8 +89,10 @@ static class Lexer
         return (false, -1);
     }
     
-    public static (bool isFound, int indexOfLastMatchedToken) FindMatch(IReadOnlyList<Token> tokens, int startIndex, IReadOnlyList<Token> searchTokens)
+    public static (bool isFound, int firstMatchedTokenIndex, int indexOfLastMatchedToken) FindMatch(IReadOnlyList<Token> tokens, int startIndex, IReadOnlyList<Token> searchTokens)
     {
+        var firstMatchedTokenIndex = -1;
+        
         var i = startIndex;
 
         while (tokens.Count > i)
@@ -122,18 +124,23 @@ static class Lexer
                     break;
                 }
 
+                if (firstMatchedTokenIndex == -1)
+                {
+                    firstMatchedTokenIndex = j;
+                }
+
                 j++;
             }
 
             if (isFound)
             {
-                return (isFound: true, j - 1);
+                return (isFound: true, firstMatchedTokenIndex, j - 1);
             }
 
             i++;
         }
 
-        return (false, -1);
+        return default;
     }
     
     public static bool IsEquals(Token a, Token b) => a.tokenType == b.tokenType && a.value == b.value;
