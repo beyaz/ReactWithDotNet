@@ -337,30 +337,8 @@ public partial class Autocomplete
     /// </summary>
     public static Modifier ReadOnly(bool? value) => CreateThirdPartyReactComponentModifier<Autocomplete>(x => x.readOnly = value);
     
-    /// <summary>
-    ///     Render the input.
-    ///     <br/>
-    ///     <br/>
-    ///     <br/>
-    ///     @param {object} params
-    ///     <br/>
-    ///     @returns {ReactNode}
-    /// </summary>
-    public delegate Element renderInputDelegate(object @params);
     
-    [ReactProp]
-    public renderInputDelegate renderInput { get; set; }
     
-    /// <summary>
-    ///     Render the input.
-    ///     <br/>
-    ///     <br/>
-    ///     <br/>
-    ///     @param {object} params
-    ///     <br/>
-    ///     @returns {ReactNode}
-    /// </summary>
-    public static Modifier RenderInput(renderInputDelegate value) => CreateThirdPartyReactComponentModifier<Autocomplete>(x => x.renderInput = value);
     
     /// <summary>
     ///     Render the option, use `getOptionLabel` by default.
