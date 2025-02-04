@@ -18,8 +18,6 @@ sealed class ElementSerializerContext
 
     public ReactContext ReactContext { get; init; }
 
-    public bool SkipHandleCacheableMethods { get; set; }
-
     public StateTree StateTree { get; init; }
     public Tracer Tracer { get; init; }
 }
@@ -740,14 +738,6 @@ static partial class ElementSerializer
 
             return componentUniqueIdentifier;
         }
-    }
-
-    class CacheableMethodInfo
-    {
-        public IReadOnlyJsonMap ElementAsJson { get; set; }
-        public bool IgnoreParameters { get; set; }
-        public string MethodName { get; set; }
-        public object Parameter { get; set; }
     }
 
     sealed class ValueExportInfo<TValue> where TValue : class

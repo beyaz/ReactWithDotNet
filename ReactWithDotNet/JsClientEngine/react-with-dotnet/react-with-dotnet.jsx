@@ -60,14 +60,12 @@ const DotNetProperties = 'DotNetProperties';
 /**
  * @typedef {Object} CacheableMethodInfo
  * @property {string} MethodName
- * @property {boolean} IgnoreParameters
- * @property {object[]} Parameter
+ * @property {object[]} MethodArguments
  * @property {JsonNode} ElementAsJson
  */
 
 /**
  * @typedef {Object} ComponentState
- * @property {CacheableMethodInfo[]} $CachedMethods
  */
 /**
  * @typedef {Object} Component
@@ -1020,57 +1018,6 @@ function isTwoLiteralObjectEquals(o1, o2)
     return true;
 }
 
-
-/**
- * @param {Component} component
- * @returns {CacheableMethodInfo[]}
- */
-function GetAllCachedMethodsOfComponent(component)
-{
-    return component.state.$CachedMethods;
-}
-
-function tryToFindCachedMethodInfo(component, remoteMethodName, eventArguments)
-{
-    const cachedMethods = GetAllCachedMethodsOfComponent(component);
-    if (cachedMethods == null)
-    {
-        return null;
-    }
-
-    const length = cachedMethods.length;
-    
-    for (let i = 0; i < length; i++)
-    {
-        const cachedMethodInfo = cachedMethods[i];
-
-        if (cachedMethodInfo.MethodName === remoteMethodName && cachedMethodInfo.IgnoreParameters)
-        {
-            return cachedMethodInfo;
-        }
-
-        if (remoteMethodName === 'componentDidMount' && cachedMethodInfo.MethodName.endsWith('|componentDidMount'))
-        {
-            return cachedMethodInfo;
-        }
-
-        if (remoteMethodName === 'componentWillUnmount' && cachedMethodInfo.MethodName.endsWith('|componentWillUnmount'))
-        {
-            return cachedMethodInfo;
-        }
-
-        if (cachedMethodInfo.MethodName === remoteMethodName && eventArguments.length === 1)
-        {
-            if (isEquals(eventArguments[0], cachedMethodInfo.Parameter))
-            {
-                return cachedMethodInfo;
-            }
-        }
-    }
-
-    return null;
-}
-
 /**
  * @param {JsonNode} parentJsonNode
  * @param {RemoteMethodInfo} remoteMethodInfo
@@ -1141,16 +1088,6 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
             eventArguments = GetExternalJsObject(functionNameOfGrabEventArguments)(eventArguments);
         }
         
-        const cachedMethodInfo = tryToFindCachedMethodInfo(targetComponent, remoteMethodName, eventArguments);
-        if (cachedMethodInfo)
-        {
-            const newState = CalculateNewStateFromJsonElement(targetComponent.state, cachedMethodInfo.ElementAsJson);
-
-            targetComponent.setState(newState);
-
-            return;
-        }
-
         if (debounceTimeout > 0)
         {
             const eventName = eventArguments[0]._reactName;
@@ -1837,6 +1774,9 @@ function CallRemote(operation)
     {
         const freeSpace = GetFreeSpaceOfComponent(component);
 
+        /**
+         * @type {CacheableMethodInfo[]} 
+         */
         const cachedMethods = freeSpace.$CachedMethods = freeSpace.$CachedMethods || [];
 
         for (let i = 0; i < cachedMethods.length; i++)
@@ -2145,27 +2085,6 @@ function DefineComponent(componentDeclaration)
                 return;
             }
 
-            // try call from cache
-            {
-                const cachedMethodInfo = tryToFindCachedMethodInfo(component, 'componentDidMount', []);
-                if (cachedMethodInfo)
-                {
-                    const newState = CalculateNewStateFromJsonElement(component.state, cachedMethodInfo.ElementAsJson);
-
-                    const clientTasks = newState[ClientTasks];
-
-                    newState[ComponentDidMountMethod] = null;
-                    newState[ClientTasks] = null;
-
-                    SetState(component, newState, ()=>
-                    {
-                        ProcessClientTasks(clientTasks, component);
-                    });
-
-                    return;
-                }
-            }
-
             const partialState = {};
 
             partialState[ComponentDidMountMethod] = null;
@@ -2221,33 +2140,6 @@ function DefineComponent(componentDeclaration)
                     DestroyDotNetComponentInstance(component);
 
                     return;
-                }
-
-                // try call from cache
-                {
-                    const cachedMethodInfo = tryToFindCachedMethodInfo(component, 'componentWillUnmount', []);
-                    if (cachedMethodInfo)
-                    {
-                        const newState = CalculateNewStateFromJsonElement(component.state, cachedMethodInfo.ElementAsJson);
-
-                        const clientTasks = newState[ClientTasks];
-
-                        newState[ComponentDidMountMethod] = null;
-                        newState[ClientTasks] = null;
-
-                        function stateCallback()
-                        {
-                            ProcessClientTasks(clientTasks, component);
-
-                            // u n r e g i s t e r
-                            component.ComponentWillUnmountIsCalled = true;
-                            DestroyDotNetComponentInstance(component);
-                        }
-
-                        SetState(component, newState, stateCallback);
-
-                        return;
-                    }
                 }
 
                 {
@@ -2782,16 +2674,6 @@ RegisterCoreFunction("GotoMethod", function (timeout, remoteMethodName, remoteMe
     {
         if (component.ComponentWillUnmountIsCalled)
         {
-            return;
-        }
-
-        const cachedMethodInfo = tryToFindCachedMethodInfo(component, remoteMethodName, remoteMethodArguments);
-        if (cachedMethodInfo)
-        {
-            const newState = CalculateNewStateFromJsonElement(component.state, cachedMethodInfo.ElementAsJson);
-
-            component.setState(newState);
-
             return;
         }
 

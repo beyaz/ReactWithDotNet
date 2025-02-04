@@ -88,7 +88,6 @@ partial class Mixin
             CustomEventPropertiesOfType          = reactCustomEventProperties,
             DotNetPropertiesOfType               = dotNetPropertiesOfType,
             ReactAttributedPropertiesOfType      = reactProperties,
-            CacheableMethodInfoList              = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray(),
             StateProperty                        = type.GetProperty("state", BindingFlags.NonPublic | BindingFlags.Instance)?.Calculate(),
 
             GetPropertyValueForSerializeToClient = getPropertyValueForSerializeToClientFunc,
@@ -280,7 +279,6 @@ sealed class PropertyInfoCalculated
 
 sealed class TypeInfoCalculated
 {
-    public IReadOnlyList<MethodInfo> CacheableMethodInfoList { get; init; }
     public string ComponentDidMountMethod { get; init; }
     public string ComponentWillUnmountMethod { get; init; }
     public IReadOnlyList<PropertyInfoCalculated> CustomEventPropertiesOfType { get; init; }
