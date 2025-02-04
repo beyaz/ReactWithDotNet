@@ -86,6 +86,12 @@ partial class Mixin
         });
 
         await httpContext.Response.WriteAsync(sb.ToString());
+        
+        await httpContext.Response.BodyWriter.FlushAsync();
+
+        await httpContext.Response.WriteAsync("<script type='module'>");
+        await httpContext.Response.WriteAsync(layoutInstance.InitialScript);
+        await httpContext.Response.WriteAsync("</script>");
     }
     
     public static async Task ProcessReactWithDotNetComponentRequest(ProcessReactWithDotNetComponentRequestInput processReactWithDotNetComponentRequestInput)
@@ -336,4 +342,5 @@ public interface IPageLayout
 {
     string ContainerDomElementId { get; }
     ComponentRenderInfo RenderInfo { get; set; }
+    string InitialScript { get; }
 }
