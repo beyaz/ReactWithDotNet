@@ -62,19 +62,6 @@ public sealed class ReactGrabEventArgumentsByUsingFunctionAttribute : Attribute
     public string TransformFunction { get; }
 }
 
-
-
-[AttributeUsage(AttributeTargets.Method)]
-public sealed class CacheThisMethodByTheseParametersAttribute : Attribute
-{
-    public CacheThisMethodByTheseParametersAttribute(string nameofMethodForGettingParameters)
-    {
-        NameofMethodForGettingParameters = nameofMethodForGettingParameters;
-    }
-
-    public string NameofMethodForGettingParameters { get; }
-}
-
 [AttributeUsage(AttributeTargets.Method)]
 public sealed class CacheThisMethodAttribute : Attribute;
 

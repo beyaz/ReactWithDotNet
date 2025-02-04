@@ -89,7 +89,6 @@ partial class Mixin
             DotNetPropertiesOfType               = dotNetPropertiesOfType,
             ReactAttributedPropertiesOfType      = reactProperties,
             CacheableMethodInfoList              = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray(),
-            ParameterizedCacheableMethodInfoList = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null).ToArray(),
             StateProperty                        = type.GetProperty("state", BindingFlags.NonPublic | BindingFlags.Instance)?.Calculate(),
 
             GetPropertyValueForSerializeToClient = getPropertyValueForSerializeToClientFunc,
@@ -289,7 +288,6 @@ sealed class TypeInfoCalculated
     public string FullNameWithAssembly { get; init; }
     public Func<object, string, (bool needToExport, object value)> GetPropertyValueForSerializeToClient { get; init; }
     public bool IsAnonymousType { get; init; }
-    public IReadOnlyList<MethodInfo> ParameterizedCacheableMethodInfoList { get; init; }
     public IReadOnlyList<PropertyInfoCalculated> ReactAttributedPropertiesOfType { get; init; }
     public PropertyInfoCalculated StateProperty { get; init; }
 }

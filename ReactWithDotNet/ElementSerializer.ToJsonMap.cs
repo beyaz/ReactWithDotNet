@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Diagnostics;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -637,70 +635,6 @@ partial class ElementSerializer
                             }
 
                             dotNetPropertyInfo.SetValue(component, ReflectionHelper.DeepCopy(dotNetPropertyValue));
-                        }
-                    }
-
-                    foreach (var cacheableMethod in typeInfo.ParameterizedCacheableMethodInfoList)
-                    {
-                        IEnumerable parameters;
-                        {
-                            var nameofMethodForGettingParameters = cacheableMethod.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>()?.NameofMethodForGettingParameters;
-
-                            var methodInfoForGettingParameters = dotNetTypeOfReactComponent.FindMethodOrGetProperty(nameofMethodForGettingParameters, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-                            if (methodInfoForGettingParameters is null)
-                            {
-                                throw new InvalidOperationException($"Method not found method name is {nameofMethodForGettingParameters}");
-                            }
-
-                            parameters = (IEnumerable)methodInfoForGettingParameters.Invoke(reactStatefulComponent, []);
-                            if (parameters == null)
-                            {
-                                throw new InvalidOperationException($"Method should return IEnumerable<{cacheableMethod.GetParameters().FirstOrDefault()}>");
-                            }
-                        }
-
-                        foreach (var parameter in parameters)
-                        {
-                            CacheableMethodInfo cacheableMethodInfo;
-                            {
-                                var component = cloneComponent();
-
-                                // invoke method
-                                {
-                                    try
-                                    {
-                                        var invocationResponse = cacheableMethod.Invoke(component, [parameter]);
-                                        if (invocationResponse is Task invocationResponseAsTask)
-                                        {
-                                            await invocationResponseAsTask;
-                                        }
-                                    }
-                                    catch (Exception exception)
-                                    {
-                                        throw new InvalidOperationException("Error occurred when calculating cache method", exception);
-                                    }
-                                }
-
-                                var newElementSerializerContext = createNewElementSerializerContext();
-
-                                var cachedVersion = await ToJsonMap(component, newElementSerializerContext);
-
-                                // take back dynamic styles
-                                context.DynamicStyles.Map.Clear();
-                                context.DynamicStyles.Map.AddRange(newElementSerializerContext.DynamicStyles.Map);
-                                context.ComponentUniqueIdentifierNextValue = newElementSerializerContext.ComponentUniqueIdentifierNextValue;
-
-                                cacheableMethodInfo = new()
-                                {
-                                    MethodName    = cacheableMethod.GetAccessKey(),
-                                    Parameter     = parameter,
-                                    ElementAsJson = cachedVersion
-                                };
-                            }
-
-                            cachedMethods ??= [];
-
-                            cachedMethods.Add(cacheableMethodInfo);
                         }
                     }
 
