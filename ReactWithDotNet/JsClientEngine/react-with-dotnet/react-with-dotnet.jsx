@@ -463,6 +463,7 @@ function Operate()
         if (operation.status === OperationStatusInitial)
         {            
             CallRemote(operation);
+            return;
         }
     }    
 }
