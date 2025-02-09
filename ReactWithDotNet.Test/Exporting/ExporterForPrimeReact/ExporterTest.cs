@@ -21,11 +21,11 @@ public class ExporterTest
     {
         Exporter.ExportToCSharpFile(new ExportInput
         {
-            DefinitionTsCode     = GetTsCode("splitter"),
-            StartFrom            = "'ref'> {",
-            ClassName            = "Splitter",
-            SkipMembers          = new[] { "children", "onResizeEnd","pt" },
-            IsContainer = true
+            DefinitionTsCode = GetTsCode("splitter"),
+            StartFrom        = "'ref'> {",
+            ClassName        = "Splitter",
+            SkipMembers      = ["children", "onResizeEnd","pt"],
+            IsContainer      = true
         });
     }
 
@@ -37,7 +37,7 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode("splitter"),
             StartFrom        = "interface SplitterPanelProps {",
             ClassName        = "SplitterPanel",
-            SkipMembers      = new[] { "children", "style","pt" },
+            SkipMembers      = ["children", "style","pt"],
             IsContainer      = true
         });
     }
@@ -63,9 +63,9 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode("tabview"),
             StartFrom        = "'ref'> {",
             ClassName        = "TabView",
-            SkipMembers      = new[] { "children", "pt", "onBeforeTabChange", "onBeforeTabClose" },
+            SkipMembers      = ["children", "pt", "onBeforeTabChange", "onBeforeTabClose"],
             IsContainer      = true,
-            ClassModifier = "partial"
+            ClassModifier    = "partial"
         });
     }
 
@@ -79,8 +79,8 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode("avatar"),
             StartFrom        = "'ref'> {",
             ClassName        = "Avatar",
-            SkipMembers      = new[] { "children", "pt", "onImageError", "onClick" },
-            ExtraProps = new []{"string className"}
+            SkipMembers      = ["children", "pt", "onImageError", "onClick"],
+            ExtraProps       = ["string className"]
         });
     }
 

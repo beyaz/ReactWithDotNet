@@ -187,9 +187,9 @@ static class Exporter
                     lines.Add($"public {dotNetType} {memberName} {{ get; set; }}");
                     
                     
-                    lines.Add(string.Empty);
-                    lines.AddRange(AsCSharpComment(memberInfo.Comment));
-                    lines.Add($"public static Modifier {UpperCaseFirstChar(memberName.RemoveFromStart("@"))}({dotNetType} value) => CreateThirdPartyReactComponentModifier<{input.ClassName}>(x => x.{memberName} = value);");
+                    //lines.Add(string.Empty);
+                    //lines.AddRange(AsCSharpComment(memberInfo.Comment));
+                    //lines.Add($"public static Modifier {UpperCaseFirstChar(memberName.RemoveFromStart("@"))}({dotNetType} value) => CreateThirdPartyReactComponentModifier<{input.ClassName}>(x => x.{memberName} = value);");
                     
                     return lines;
                 }
@@ -223,9 +223,9 @@ static class Exporter
             lines.Add($"public {dotNetType} {memberName} {{ get; set; }}");
                     
                     
-            lines.Add(string.Empty);
-            lines.AddRange(AsCSharpComment(memberInfo.Comment));
-            lines.Add($"public static Modifier {UpperCaseFirstChar(memberName.RemoveFromStart("@"))}({dotNetType} value) => CreateThirdPartyReactComponentModifier<{input.ClassName}>(x => x.{memberName} = value);");
+            //lines.Add(string.Empty);
+            //lines.AddRange(AsCSharpComment(memberInfo.Comment));
+            //lines.Add($"public static Modifier {UpperCaseFirstChar(memberName.RemoveFromStart("@"))}({dotNetType} value) => CreateThirdPartyReactComponentModifier<{input.ClassName}>(x => x.{memberName} = value);");
                     
             return lines;
         }
@@ -280,13 +280,13 @@ static class Exporter
 
             lines.Add($"public {dotNetType} {memberName} {{ get; set; }}");
         
-            lines.Add(string.Empty);
+            //lines.Add(string.Empty);
         
-            if (memberInfo.Comment is not null)
-            {
-                lines.AddRange(AsCSharpComment(memberInfo.Comment));
-            }
-            lines.Add($"public {(memberName == "type" ? "new ": "")}static Modifier {UpperCaseFirstChar(memberName.RemoveFromStart("@"))}({dotNetType} value) => CreateThirdPartyReactComponentModifier<{input.ClassName}>(x => x.{memberName} = value);");
+            //if (memberInfo.Comment is not null)
+            //{
+            //    lines.AddRange(AsCSharpComment(memberInfo.Comment));
+            //}
+            //lines.Add($"public {(memberName == "type" ? "new ": "")}static Modifier {UpperCaseFirstChar(memberName.RemoveFromStart("@"))}({dotNetType} value) => CreateThirdPartyReactComponentModifier<{input.ClassName}>(x => x.{memberName} = value);");
 
         }
         

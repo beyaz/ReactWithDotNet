@@ -1,4 +1,4 @@
-// auto generated code (do not edit manually)
+﻿// auto generated code (do not edit manually)
 
 namespace ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 
@@ -59,6 +59,22 @@ public sealed class Avatar : ElementBase
     /// </summary>
     [ReactProp]
     public Element template { get; set; }
+    
+    /// <summary>
+    ///     Used to configure passthrough(pt) options of the component.
+    ///     <br/>
+    ///     @type {PassThroughOptions}
+    /// </summary>
+    [ReactProp]
+    public object ptOptions { get; set; }
+    
+    /// <summary>
+    ///     When enabled, it removes component related styles in the core.
+    ///     <br/>
+    ///     @defaultValue false
+    /// </summary>
+    [ReactProp]
+    public bool? unstyled { get; set; }
     
     [ReactProp]
     public string className { get; set; }
