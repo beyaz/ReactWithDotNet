@@ -16,38 +16,38 @@
         "react-dom": "^18.3.1",
         "react-transition-group": "^4.4.5",
 
-        "@mui/material": "^6.2.0",
-        "@mui/icons-material": "^6.4.2",
+        "@mui/material": "6.4.3",
+        "@mui/icons-material": "6.4.3",
         "@emotion/react": "^11.14.0",
         "@emotion/styled": "^11.14.0",
 
         "primeicons": "^7.0.0",
         "primereact": "^10.8.5",
 
-        "react-awesome-reveal": "^4.2.14",
+        "react-awesome-reveal": "4.3.1",
 
-        "rsuite": "^5.75.0",
+        "rsuite": "5.77.1",
 
         "react-xarrows": "^2.0.2",
 
-        "swiper": "^11.1.15",
+        "swiper": "11.2.2",
 
         "google-map-react": "^2.2.1",
 
-        "react-free-scrollbar": "^0.3.4",
+        "react-free-scrollbar": "0.3.4",
 
-        "react-quill": "^2.0.0",
-        "quill-image-resize-module-react": "^3.0.0",
+        "react-quill": "2.0.0",
+        "quill-image-resize-module-react": "3.0.0",
 
         "react-player": "^2.16.0",
 
-        "framer-motion": "^11.14.4",
+        "framer-motion": "12.4.1",
 
         "@monaco-editor/react": "^4.6.0",
 
         "react-split": "^2.0.14",
 
-        "@rpldy/uploady": "^1.9.0",
-        "@rpldy/upload-button": "^1.9.0"
+        "@rpldy/uploady": "1.9.1",
+        "@rpldy/upload-button": "1.9.1"
     }
 }
