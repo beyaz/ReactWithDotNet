@@ -50,7 +50,7 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode("tabview"),
             StartFrom        = "interface TabPanelProps {",
             ClassName        = "TabPanel",
-            SkipMembers      = new[] { "children", "style", "pt" },
+            SkipMembers      = ["children", "style", "pt"],
             IsContainer      = true
         });
     }
