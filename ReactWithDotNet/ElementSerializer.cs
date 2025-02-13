@@ -110,8 +110,11 @@ static partial class ElementSerializer
         return pseudos;
     }
 
-    internal static void InitializeKeyIfNotExists(Element element)
+    static void InitializeKeyIfNotExists(Node node)
     {
+        node.IsChildrenKeysInitialized = true;
+        
+        var element = node.Element;
         if (element.key == null)
         {
             throw new DeveloperException("key of react component cannot be null");

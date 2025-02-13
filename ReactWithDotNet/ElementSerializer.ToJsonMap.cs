@@ -112,8 +112,12 @@ partial class ElementSerializer
                 node.ElementAsJsonMap = jsMap;
                 continue;
             }
-
-            InitializeKeyIfNotExists(node.Element);
+            
+            if (!node.IsChildrenKeysInitialized)
+            {
+                InitializeKeyIfNotExists(node);    
+            }
+            
 
             if (node.ElementIsHtmlTextElement)
             {
@@ -1174,6 +1178,7 @@ partial class ElementSerializer
 
         public Node Parent;
         public bool SkipProcessChildren;
+        public bool IsChildrenKeysInitialized;
     }
 }
 
