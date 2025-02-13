@@ -17,13 +17,13 @@ partial class ElementSerializer
         {
             if (node.IsCompleted)
             {
-                if (node.HasNextSibling)
+                if (node.NextSibling is not null)
                 {
                     node = node.NextSibling;
                     continue;
                 }
 
-                if (node.HasParent)
+                if (node.Parent is not null)
                 {
                     node.Parent.IsAllChildrenCompleted = true;
 
@@ -92,7 +92,7 @@ partial class ElementSerializer
                 continue;
             }
 
-            if (node.HasFirstChild)
+            if (node.FirstChild is not null)
             {
                 node = node.FirstChild;
                 continue;
@@ -134,7 +134,7 @@ partial class ElementSerializer
                     node.ElementAsFragment.ArrangeChildren();
                 }
 
-                if (node.HasFirstChild)
+                if (node.FirstChild is not null)
                 {
                     continue;
                 }
@@ -1035,7 +1035,7 @@ partial class ElementSerializer
         var child = node.FirstChild;
         if (child is not null)
         {
-            while (child.HasNextSibling)
+            while (child.NextSibling is not null)
             {
                 child = child.NextSibling;
             }
@@ -1160,11 +1160,9 @@ partial class ElementSerializer
 
         public Node FirstChildTemp;
 
-        public bool HasFirstChild => FirstChild is not null;
+        
 
-        public bool HasNextSibling => NextSibling is not null;
-
-        public bool HasParent => Parent is not null;
+        
         public bool IsAllChildrenCompleted;
 
         public bool IsChildrenOpened;
