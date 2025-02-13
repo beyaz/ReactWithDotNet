@@ -1,5 +1,15 @@
 ﻿function canApplyHoverEffect(targetElement)
 {
+    if (targetElement === document.body)
+    {
+        return false;
+    }
+
+    if (targetElement.parentElement === document.body)
+    {
+        return false;
+    }
+
     return !(
 
         targetElement === sizeIndicatorBoxElement ||
