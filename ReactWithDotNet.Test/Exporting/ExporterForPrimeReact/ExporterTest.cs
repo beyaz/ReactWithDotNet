@@ -63,7 +63,7 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode("tabview"),
             StartFrom        = "'ref'> {",
             ClassName        = "TabView",
-            SkipMembers      = ["children", "pt", "onBeforeTabChange", "onBeforeTabClose"],
+            SkipMembers      = ["children","className", "pt", "onBeforeTabChange", "onBeforeTabClose"],
             IsContainer      = true,
             ClassModifier    = "partial"
         });
