@@ -1665,7 +1665,7 @@ function IsSyntheticBaseEvent(e)
 {
     try
     {
-        return e.constructor.prototype.constructor.name === 'SyntheticBaseEvent';
+        return e.nativeEvent && typeof e.persist === 'function';
     }
     catch (exception)
     {

@@ -29,7 +29,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<Modifier>
     /// <summary>
     ///     Gets or sets the key.
     /// </summary>
-    internal string key { get; set; }
+    internal string key;
 
     public static Element operator +(Element element, StyleModifier styleModifier)
     {
