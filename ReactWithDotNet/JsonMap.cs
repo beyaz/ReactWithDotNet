@@ -4,7 +4,6 @@ namespace ReactWithDotNet;
 
 interface IReadOnlyJsonMap
 {
-    int Count { get; }
     void Foreach(Action<string, object> action);
     void Write(Utf8JsonWriter writer, JsonSerializerOptions options);
 }
@@ -14,12 +13,8 @@ sealed class JsonMap : IReadOnlyJsonMap
     internal Node Head;
     internal Node Tail;
 
-    public int Count { get; private set; }
-
     public void Add(string key, object value)
     {
-        Count++;
-
         var node = new Node(key, value);
 
         if (Head == null)
