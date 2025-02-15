@@ -6,7 +6,18 @@ namespace ReactWithDotNet;
 
 sealed class ElementSerializerContext
 {
-    internal readonly DynamicStyleContentForEmbedInClient DynamicStyles = new();
+    public readonly DynamicStyleContentForEmbedInClient DynamicStyles = new();
+    
+    public readonly StateTree StateTree;
+
+    public readonly ReactContext ReactContext;
+
+    public ElementSerializerContext(ReactContext reactContext, StateTree stateTree)
+    {
+        ReactContext = reactContext;
+        
+        StateTree = stateTree;
+    }
 
     public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; init; }
 
@@ -16,9 +27,10 @@ sealed class ElementSerializerContext
     public Stack<FunctionalComponent> FunctionalComponentStack { get; set; }
     public bool IsCapturingPreview { get; set; }
 
-    public ReactContext ReactContext { get; init; }
+    
 
-    public StateTree StateTree { get; init; }
+    
+
     public Tracer Tracer { get; init; }
 }
 
