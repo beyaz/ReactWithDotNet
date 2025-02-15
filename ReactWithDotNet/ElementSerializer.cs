@@ -22,7 +22,7 @@ static partial class ElementSerializer
 
         List<CssPseudoCodeInfo> pseudos = null;
 
-        if (style._hover is not null)
+        if (style._hover?.IsEmpty == false)
         {
             pseudos =
             [
@@ -34,7 +34,7 @@ static partial class ElementSerializer
             ];
         }
 
-        if (style._before is not null)
+        if (style._before?.IsEmpty == false)
         {
             pseudos ??= [];
 
@@ -45,7 +45,7 @@ static partial class ElementSerializer
             });
         }
 
-        if (style._after is not null)
+        if (style._after?.IsEmpty == false)
         {
             pseudos ??= [];
 
@@ -56,7 +56,7 @@ static partial class ElementSerializer
             });
         }
 
-        if (style._active is not null)
+        if (style._active?.IsEmpty == false)
         {
             pseudos ??= [];
 
@@ -67,7 +67,7 @@ static partial class ElementSerializer
             });
         }
 
-        if (style._focus is not null)
+        if (style._focus?.IsEmpty == false)
         {
             pseudos ??= [];
 
@@ -78,7 +78,7 @@ static partial class ElementSerializer
             });
         }
 
-        if (style._focusVisible is not null)
+        if (style._focusVisible?.IsEmpty == false)
         {
             pseudos ??= [];
 
