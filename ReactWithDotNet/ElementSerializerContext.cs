@@ -8,6 +8,8 @@ sealed class ElementSerializerContext
 
     public readonly StateTree StateTree;
 
+    public int ComponentUniqueIdentifierNextValue;
+
     public ElementSerializerContext(ReactContext reactContext, StateTree stateTree)
     {
         ReactContext = reactContext;
@@ -19,7 +21,6 @@ sealed class ElementSerializerContext
 
     public bool CalculateSuspenseFallbackForThirdPartyReactComponents { get; set; }
 
-    public int ComponentUniqueIdentifierNextValue { get; set; }
     public Stack<FunctionalComponent> FunctionalComponentStack { get; set; }
     public bool IsCapturingPreview { get; set; }
 
