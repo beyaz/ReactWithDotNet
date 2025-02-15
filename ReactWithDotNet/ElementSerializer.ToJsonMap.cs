@@ -294,8 +294,6 @@ partial class ElementSerializer
                     node.FunctionalComponent = reactStatefulComponent as FunctionalComponent;
                     if (node.FunctionalComponent is not null)
                     {
-                        context.FunctionalComponentStack ??= new();
-
                         context.FunctionalComponentStack.Push(node.FunctionalComponent);
 
                         node.IsFunctionalComponent = true;
@@ -748,7 +746,7 @@ partial class ElementSerializer
                 return;
             }
 
-            if (context.FunctionalComponentStack?.Count > 0 && handlerDelegateTarget.GetType().IsCompilerGenerated())
+            if (context.FunctionalComponentStack.Count > 0 && handlerDelegateTarget.GetType().IsCompilerGenerated())
             {
                 var handlerComponent = context.FunctionalComponentStack.Peek();
 

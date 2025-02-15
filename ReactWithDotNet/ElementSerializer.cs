@@ -127,7 +127,7 @@ static partial class ElementSerializer
             return target.ComponentUniqueIdentifier;
         }
 
-        if (context.FunctionalComponentStack?.Count > 0)
+        if (context.FunctionalComponentStack.Count > 0)
         {
             foreach (var item in context.FunctionalComponentStack)
             {
