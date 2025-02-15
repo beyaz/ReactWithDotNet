@@ -24,29 +24,10 @@ public class Autocomplete<TOption> : Autocomplete where TOption : class
     [ReactProp]
     public bool? freeSolo { get; set; }
     
-    
-    /// <summary>
-    ///     Render the input.
-    ///     <br/>
-    ///     <br/>
-    ///     <br/>
-    ///     @param {object} params
-    ///     <br/>
-    ///     @returns {ReactNode}
-    /// </summary>
-    public delegate Element renderInputDelegate(AutocompleteRenderInputParams @params);
-    
-    public class AutocompleteRenderInputParams
-    {
-        
-    }
-    
     [ReactProp]
-    public renderInputDelegate renderInput { get; set; }
-    
+    public Element renderInput { get; set; }
 
-    internal static (bool needToExport, object value)
-        GetPropertyValueForSerializeToClient(object component, string propertyName)
+    internal static (bool needToExport, object value) GetPropertyValueForSerializeToClient(object component, string propertyName)
     {
         var instance = (Autocomplete<TOption>)component;
 
