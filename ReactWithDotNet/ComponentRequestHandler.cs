@@ -192,11 +192,10 @@ static class ComponentRequestHandler
                 ChildStates = request.CapturedStateTree
             };
 
-            var serializerContext = new ElementSerializerContext(context, stateTree)
+            var serializerContext = new ElementSerializerContext(context, stateTree, beforeSerializeElementToClient)
             {
                 Tracer                                                = tracer,
                 ComponentUniqueIdentifierNextValue                    = request.ComponentUniqueIdentifier,
-                BeforeSerializeElementToClient                        = beforeSerializeElementToClient,
                 CalculateSuspenseFallbackForThirdPartyReactComponents = input.CalculateSuspenseFallbackForThirdPartyReactComponents
             };
 
@@ -378,11 +377,10 @@ static class ComponentRequestHandler
                 ChildStates = request.CapturedStateTree
             };
 
-            var serializerContext = new ElementSerializerContext(context, stateTree)
+            var serializerContext = new ElementSerializerContext(context, stateTree, beforeSerializeElementToClient)
             {
                 Tracer                             = tracer,
-                ComponentUniqueIdentifierNextValue = request.LastUsedComponentUniqueIdentifier + 1,
-                BeforeSerializeElementToClient     = beforeSerializeElementToClient,
+                ComponentUniqueIdentifierNextValue = request.LastUsedComponentUniqueIdentifier + 1
             };
 
             var map = await instance.ToJsonMap(serializerContext);

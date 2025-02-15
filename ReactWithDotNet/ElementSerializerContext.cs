@@ -12,14 +12,16 @@ sealed class ElementSerializerContext
 
     public int ComponentUniqueIdentifierNextValue;
 
-    public ElementSerializerContext(ReactContext reactContext, StateTree stateTree)
+    public ElementSerializerContext(ReactContext reactContext, StateTree stateTree, BeforeSerializeElementToClient beforeSerializeElementToClient)
     {
         ReactContext = reactContext;
 
-        StateTree = stateTree;
+        StateTree                           = stateTree;
+        
+        BeforeSerializeElementToClient = beforeSerializeElementToClient;
     }
 
-    public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; init; }
+    public readonly BeforeSerializeElementToClient BeforeSerializeElementToClient;
 
     public bool CalculateSuspenseFallbackForThirdPartyReactComponents { get; set; }
 
