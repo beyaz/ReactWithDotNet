@@ -9,8 +9,6 @@ abstract partial class HtmlElement : Element
     internal Dictionary<string, string> _aria;
     internal Dictionary<string, string> _data;
 
-    internal Style _style;
-
     internal List<Style> classNameList;
 
     protected HtmlElement()
@@ -118,16 +116,7 @@ abstract partial class HtmlElement : Element
     /// <summary>
     ///     Gets the style.
     /// </summary>
-    [JsonIgnore]
-    public Style style
-    {
-        get
-        {
-            _style ??= new();
-
-            return _style;
-        }
-    }
+    public readonly Style style = new();
 
     /// <summary>
     ///     Imports filled values given style

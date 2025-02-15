@@ -893,14 +893,33 @@ partial class ElementSerializer
         map.Add("$tag", tag);
         map.Add("key", htmlElement.key);
 
-        if (htmlElement._style is not null)
+        // export style
         {
-            var valueExportInfo = GetStylePropertyValueOfHtmlElementForSerialize(context, node, htmlElement, htmlElement._style);
-            if (valueExportInfo.NeedToExport)
+            var style = htmlElement.style;
+            
+            var hasStyle = style.IsEmpty == false ||
+                        
+                       // hasAnyPseudo
+                       style._hover?.IsEmpty == false ||
+                       style._active?.IsEmpty == false ||
+                       style._after?.IsEmpty == false ||
+                       style._before?.IsEmpty == false ||
+                       style._focus?.IsEmpty == false ||
+                       style._focusVisible?.IsEmpty == false||
+
+                       // hasMediaQueries
+                       style._mediaQueries?.Count > 0;
+            
+            if (hasStyle)
             {
-                map.Add("style", valueExportInfo.Value);
+                var valueExportInfo = GetStylePropertyValueOfHtmlElementForSerialize(context, node, htmlElement, style);
+                if (valueExportInfo.NeedToExport)
+                {
+                    map.Add("style", valueExportInfo.Value);
+                }
             }
         }
+        
 
         if (htmlElement.classNameList is not null)
         {
