@@ -2,6 +2,8 @@ namespace ReactWithDotNet;
 
 sealed class ElementSerializerContext
 {
+    public readonly BeforeSerializeElementToClient BeforeSerializeElementToClient;
+    
     public readonly DynamicStyleContentForEmbedInClient DynamicStyles = new();
 
     public readonly Stack<FunctionalComponent> FunctionalComponentStack = new();
@@ -17,11 +19,9 @@ sealed class ElementSerializerContext
         ReactContext = reactContext;
 
         StateTree = stateTree;
-        
+
         BeforeSerializeElementToClient = beforeSerializeElementToClient;
     }
-
-    public readonly BeforeSerializeElementToClient BeforeSerializeElementToClient;
 
     public bool CalculateSuspenseFallbackForThirdPartyReactComponents { get; set; }
 
