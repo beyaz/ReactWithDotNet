@@ -12,7 +12,6 @@ public class Autocomplete<TOption> : Autocomplete where TOption : class
     public Func<Autocomplete<TOption>, TOption, Element>  renderOption { get; set; }
 
     [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries.MUI.Material.Autocomplete::calculate_onChange_arguments")]
     public Func<ChangeEvent, TOption,Task> onChange { get; set; }
 
     [ReactProp]

@@ -44,12 +44,4 @@ ReactWithDotNet.OnThirdPartyComponentPropsCalculated('ReactWithDotNet.ThirdParty
     return props;
 });
 
-
-ReactWithDotNet.RegisterExternalJsObject('ReactWithDotNet.ThirdPartyLibraries.MUI.Material.Autocomplete::calculate_onChange_arguments', function (args)
-{
-    const calculateSyntheticMouseEventArguments = ReactWithDotNet.GetExternalJsObject('ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments');
-
-    return [calculateSyntheticMouseEventArguments([args[0]])[0], args[1]];
-});
-
 export default Autocomplete;
