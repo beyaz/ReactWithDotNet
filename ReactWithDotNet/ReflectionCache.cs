@@ -255,37 +255,37 @@ partial class Mixin
 
 sealed class PropertyInfoCalculated
 {
-    public Func<object, object> DebounceHandlerGetFunc;
-    public Func<object, object> DebounceTimeoutGetFunc;
+    public Func<object, object> DebounceHandlerGetFunc; // { get; init; }
+    public Func<object, object> DebounceTimeoutGetFunc; // { get; init; }
 
-    public bool IsBindingExpression;
+    public bool IsBindingExpression; // { get; init; }
 
-    public bool IsEnum;
-    public object DefaultValue { get; init; }
-    public string FunctionNameOfGrabEventArguments { get; init; }
-    public Func<object, object> GetValueFunc { get; init; }
-    public bool HasReactAttribute { get; init; }
-    public JsonPropertyNameAttribute JsonPropertyName { get; init; }
-    public string NameOfTransformValueInClient { get; init; }
-    public PropertyInfo PropertyInfo { get; init; }
-    public bool PropertyTypeIsIsVoidTaskDelegate { get; init; }
-    public ReactBindAttribute ReactBindAttribute { get; init; }
-    public Action<object, object> SetValueFunc { get; init; }
-    public ReactTemplateAttribute TemplateAttribute { get; init; }
-    public string TransformValueInClientFunction { get; init; }
-    public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
-    public bool IsUnionProperty;
+    public bool IsEnum; // { get; init; }
+    public object DefaultValue; // { get; init; }
+    public string FunctionNameOfGrabEventArguments; // { get; init; }
+    public Func<object, object> GetValueFunc; // { get; init; }
+    public bool HasReactAttribute; // { get; init; }
+    public JsonPropertyNameAttribute JsonPropertyName; // { get; init; }
+    public string NameOfTransformValueInClient; // { get; init; }
+    public PropertyInfo PropertyInfo; // { get; init; }
+    public bool PropertyTypeIsIsVoidTaskDelegate; // { get; init; }
+    public ReactBindAttribute ReactBindAttribute; // { get; init; }
+    public Action<object, object> SetValueFunc; // { get; init; }
+    public ReactTemplateAttribute TemplateAttribute; // { get; init; }
+    public string TransformValueInClientFunction; // { get; init; }
+    public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide; // { get; init; }
+    public bool IsUnionProperty; // { get; init; }
 }
 
 sealed class TypeInfoCalculated
 {
-    public string ComponentDidMountMethod { get; init; }
-    public string ComponentWillUnmountMethod { get; init; }
-    public IReadOnlyList<PropertyInfoCalculated> CustomEventPropertiesOfType { get; init; }
-    public IReadOnlyList<PropertyInfoCalculated> DotNetPropertiesOfType { get; init; }
-    public string FullNameWithAssembly { get; init; }
-    public Func<object, string, (bool needToExport, object value)> GetPropertyValueForSerializeToClient { get; init; }
-    public bool IsAnonymousType { get; init; }
-    public IReadOnlyList<PropertyInfoCalculated> ReactAttributedPropertiesOfType { get; init; }
-    public PropertyInfoCalculated StateProperty { get; init; }
+    public string ComponentDidMountMethod; // { get; init; }
+    public string ComponentWillUnmountMethod; // { get; init; }
+    public IReadOnlyList<PropertyInfoCalculated> CustomEventPropertiesOfType; // { get; init; }
+    public IReadOnlyList<PropertyInfoCalculated> DotNetPropertiesOfType; // { get; init; }
+    public string FullNameWithAssembly; // { get; init; }
+    public Func<object, string, (bool needToExport, object value)> GetPropertyValueForSerializeToClient; // { get; init; }
+    public bool IsAnonymousType; // { get; init; }
+    public IReadOnlyList<PropertyInfoCalculated> ReactAttributedPropertiesOfType; // { get; init; }
+    public PropertyInfoCalculated StateProperty; // { get; init; }
 }
