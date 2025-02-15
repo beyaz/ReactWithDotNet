@@ -16,7 +16,7 @@ sealed class ElementSerializerContext
     {
         ReactContext = reactContext;
 
-        StateTree                           = stateTree;
+        StateTree = stateTree;
         
         BeforeSerializeElementToClient = beforeSerializeElementToClient;
     }
