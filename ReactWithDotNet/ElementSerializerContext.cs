@@ -22,6 +22,7 @@ sealed class ElementSerializerContext
     public bool CalculateSuspenseFallbackForThirdPartyReactComponents { get; set; }
 
     public Stack<FunctionalComponent> FunctionalComponentStack { get; set; }
+    
     public bool IsCapturingPreview { get; set; }
 
     public Tracer Tracer { get; init; }
