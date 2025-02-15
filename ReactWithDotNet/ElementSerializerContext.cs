@@ -23,6 +23,7 @@ sealed class ElementSerializerContext
         BeforeSerializeElementToClient = beforeSerializeElementToClient;
     }
 
+    // todo: check this usage and make readonly field
     public bool CalculateSuspenseFallbackForThirdPartyReactComponents { get; set; }
 
     public bool IsCapturingPreview { get; set; }
