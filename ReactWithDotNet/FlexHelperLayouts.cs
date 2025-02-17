@@ -34,6 +34,17 @@ public sealed class FlexRow : HtmlElement
     ///     <br />
     ///     flexDirection  = "row"
     /// </summary>
+    public FlexRow(string className, params Modifier[] modifiers) : this()
+    {
+        this.className = className;
+        this.Apply(modifiers);
+    }
+    
+    /// <summary>
+    ///     display = "flex"
+    ///     <br />
+    ///     flexDirection  = "row"
+    /// </summary>
     public FlexRow()
     {
         ProcessModifier(this, DisplayFlexRow);
