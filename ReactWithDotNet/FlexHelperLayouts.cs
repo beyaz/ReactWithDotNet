@@ -90,6 +90,17 @@ public sealed class InlineFlexRow : HtmlElement
         this.className = className;
     }
     
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "row"
+    /// </summary>
+    public InlineFlexRow(string className, params Modifier[] modifiers) : this()
+    {
+        this.className = className;
+        this.Apply(modifiers);
+    }
+    
     public override string __type__ => nameof(div);
 }
 
@@ -128,6 +139,17 @@ public sealed class FlexColumn : HtmlElement
     public FlexColumn(string className) : this()
     {
         this.className = className;
+    }
+    
+    /// <summary>
+    ///     display = "flex"
+    ///     <br />
+    ///     flexDirection  = "column"
+    /// </summary>
+    public FlexColumn(string className, params Modifier[] modifiers) : this()
+    {
+        this.className = className;
+        this.Apply(modifiers);
     }
 
     public override string __type__ => nameof(div);
@@ -168,6 +190,17 @@ public sealed class InlineFlexColumn : HtmlElement
     public InlineFlexColumn(string className) : this()
     {
         this.className = className;
+    }
+    
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "inline-column"
+    /// </summary>
+    public InlineFlexColumn(string className, params Modifier[] modifiers) : this()
+    {
+        this.className = className;
+        this.Apply(modifiers);
     }
 
     public override string __type__ => nameof(div);
@@ -223,6 +256,21 @@ public sealed class FlexRowCentered : HtmlElement
     /// </summary>
     public FlexRowCentered(params Modifier[] modifiers) : this()
     {
+        this.Apply(modifiers);
+    }
+    
+    /// <summary>
+    ///     display = "flex"
+    ///     <br />
+    ///     flexDirection  = "row"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
+    /// </summary>
+    public FlexRowCentered(string className, params Modifier[] modifiers) : this()
+    {
+        this.className = className;
         this.Apply(modifiers);
     }
 
@@ -282,6 +330,21 @@ public sealed class InlineFlexRowCentered : HtmlElement
     {
         this.Apply(modifiers);
     }
+    
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "row"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
+    /// </summary>
+    public InlineFlexRowCentered(string className, params Modifier[] modifiers) : this()
+    {
+        this.className = className;
+        this.Apply(modifiers);
+    }
 
     public override string __type__ => nameof(div);
 }
@@ -336,6 +399,21 @@ public sealed class FlexColumnCentered : HtmlElement
     /// </summary>
     public FlexColumnCentered(params Modifier[] modifiers) : this()
     {
+        this.Apply(modifiers);
+    }
+    
+    /// <summary>
+    ///     display = "flex"
+    ///     <br />
+    ///     flexDirection  = "column"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
+    /// </summary>
+    public FlexColumnCentered(string className, params Modifier[] modifiers) : this()
+    {
+        this.className = className;
         this.Apply(modifiers);
     }
 
@@ -395,6 +473,21 @@ public sealed class InlineFlexColumnCentered : HtmlElement
         this.Apply(modifiers);
     }
 
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "column"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
+    /// </summary>
+    public InlineFlexColumnCentered(string className, params Modifier[] modifiers) : this()
+    {
+        this.className = className;
+        this.Apply(modifiers);
+    }
+    
     public override string __type__ => nameof(div);
 }
 
