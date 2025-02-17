@@ -74,8 +74,12 @@ partial class Mixin
 
   
     public static StyleModifier BorderRadius(double borderTopLeftRadius, double borderTopRightRadius,double borderBottomRightRadius,double borderBottomLeftRadius)
-        => BorderRadius($"{borderTopLeftRadius.AsString()}px {borderTopRightRadius.AsString()}px {borderBottomRightRadius.AsString()}px {borderBottomLeftRadius.AsString()}px");
-   
+        => BorderRadius($"{borderTopLeftRadius.AsPixel()} {borderTopRightRadius.AsPixel()} {borderBottomRightRadius.AsPixel()} {borderBottomLeftRadius.AsPixel()}");
+  
+    
+    public static StyleModifier BorderRadius(double borderTopLeftRadius, double borderTopRightAndBottomLeftRadius,double borderBottomRightRadius)
+        => BorderRadius($"{borderTopLeftRadius.AsPixel()} {borderTopRightAndBottomLeftRadius.AsPixel()} {borderBottomRightRadius.AsPixel()}");
+
     
     
  
