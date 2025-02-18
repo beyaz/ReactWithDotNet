@@ -208,6 +208,11 @@ public static partial class Mixin
     public static StyleModifier OverflowYVisible=> new(style => style.overflowY = "visible");
     
     /// <summary>
+    ///     overflowY: hidden
+    /// </summary>
+    public static StyleModifier OverflowYHidden => new(style => style.overflowY = "hidden");
+    
+    /// <summary>
     ///     overflowY: scroll
     /// </summary>
     public static StyleModifier OverflowYScroll=> new(style => style.overflowY = "scroll");
@@ -216,6 +221,11 @@ public static partial class Mixin
     ///     overflowX: scroll
     /// </summary>
     public static StyleModifier OverflowXScroll=> new(style => style.overflowX = "scroll");
+    
+    /// <summary>
+    ///     overflowX: hidden
+    /// </summary>
+    public static StyleModifier OverflowXHidden => new(style => style.overflowX = "hidden");
 
     public static StyleModifier TextAlignCenter => TextAlign("center");
     public static StyleModifier TextAlignLeft => TextAlign("left");

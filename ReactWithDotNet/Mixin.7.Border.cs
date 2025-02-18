@@ -207,6 +207,12 @@ partial class Mixin
     ///     style.borderWidth = <paramref name="widthAsPx" /> + 'px'
     /// </summary>
     public static StyleModifier BorderWidth(double widthAsPx) => BorderWidth(widthAsPx.AsPixel());
+    
+    public static StyleModifier BorderWidth(double topAsPx, double rightAsPx, double bottomAsPx, double leftAsPx) 
+        => BorderWidth($"{topAsPx.AsPixel()} {rightAsPx.AsPixel()} {bottomAsPx.AsPixel()} {leftAsPx.AsPixel()}");
+    
+    public static StyleModifier BorderWidth(double topBottomAsPx, double rightLeftAsPx) 
+        => BorderWidth($"{topBottomAsPx.AsPixel()} {rightLeftAsPx.AsPixel()}");
 
     /// <summary>
     /// "url(urlValue)
