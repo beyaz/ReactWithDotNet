@@ -1729,7 +1729,8 @@ function CallRemote(operation)
         throw CreateNewDeveloperError('Component is not ready to send server.');
     }
 
-    const isComponentPreview = component[DotNetTypeOfReactComponent] === 'ReactWithDotNet.UIDesigner.ReactWithDotNetDesignerComponentPreview,ReactWithDotNet';
+    const isComponentPreview = component[DotNetTypeOfReactComponent] === 'ReactWithDotNet.UIDesigner.ReactWithDotNetDesignerComponentPreview,ReactWithDotNet' ||
+                               component[DotNetTypeOfReactComponent] === "ReactWithDotNet.UIDesigner.HotReloadListener,ReactWithDotNet";
 
     let capturedStateTree,capturedStateTreeRootNodeKey;
     if (isComponentWillUnmount)
