@@ -141,7 +141,6 @@ function getMediaQueryStyle(element, propertyName)
     return null;
 }
 
-
 function GetStyleValue(element, propertyName)
 {
     let value = element.style[propertyName] + '';
@@ -260,8 +259,6 @@ function applyHoverEffect(targetElement)
         targetElement.backgroundColorReal = computedStyle.backgroundColor;
         
         targetElement.style.outline = '1px dashed #bfdbfe';
-        
-        
         
         const hasNoBackgroundImage = 
             targetElement.style.backgroundImage === 'none' || 
