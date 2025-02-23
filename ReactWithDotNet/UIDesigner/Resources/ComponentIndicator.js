@@ -1038,15 +1038,12 @@ document.addEventListener("mousemove", (event) =>
     // Check if the mouse has entered a new element
     if (currentElement && currentElement !== lastIndicatedElement) 
     {
-        if (lastIndicatedElement) 
-        {
-            // Trigger a "mouseleave" effect for the previous element
-            tryRemoveHoverEffectFromLastIndicatedElement();
-        }
+        // Trigger a "mouseleave" effect for the previous element
+        tryRemoveHoverEffectFromLastIndicatedElement();
 
         // Trigger a "mouseenter" effect for the new element
         if (canApplyHoverEffect(event.target))
-          {
+        {
             lastIndicatedElement = currentElement;
             
             applyHoverEffect(lastIndicatedElement);
