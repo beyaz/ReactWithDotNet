@@ -282,7 +282,7 @@ function applyHoverEffect(targetElement)
             {
                 targetElement.style.background = linearGradientValueForOverlayBackground + "," + computedStyle.background;
                 targetElement.style.backgroundSize = backgroundSizeValueForOverlayBackground;
-            }            
+            }
         }
     }
     
