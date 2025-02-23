@@ -941,6 +941,16 @@ function applyHoverEffect(targetElement)
     }
 }
 
+function tryRemoveHoverEffectFromLastIndicatedElement()
+{
+    if (lastIndicatedElement)
+    {
+        removeHoverEffect(lastIndicatedElement);
+
+        lastIndicatedElement = null;
+    }
+    
+}
 function removeHoverEffect(element)
 {
     element.style.outline = element.outlineReal
@@ -1031,7 +1041,7 @@ document.addEventListener("mousemove", (event) =>
         if (lastIndicatedElement) 
         {
             // Trigger a "mouseleave" effect for the previous element
-            removeHoverEffect(lastIndicatedElement);
+            tryRemoveHoverEffectFromLastIndicatedElement();
         }
 
         // Trigger a "mouseenter" effect for the new element
@@ -1046,5 +1056,5 @@ document.addEventListener("mousemove", (event) =>
 
 document.addEventListener("scroll", () =>
 {
-    removeHoverEffect(lastIndicatedElement);
+    tryRemoveHoverEffectFromLastIndicatedElement();
 });
