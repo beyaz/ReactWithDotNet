@@ -261,7 +261,7 @@ function applyHoverEffect(targetElement)
         targetElement.backgroundImageReal = targetElement.style.backgroundImage
         targetElement.backgroundSizeReal = targetElement.style.backgroundSize;
         targetElement.backgroundReal = targetElement.style.background;
-        targetElement.backgroundColorReal = computedStyle.backgroundColor;
+        targetElement.backgroundColorReal = targetElement.style.backgroundColor;
         
         targetElement.style.outline = '1px dashed #bfdbfe';
         
