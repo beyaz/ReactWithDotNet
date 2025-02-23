@@ -1036,6 +1036,7 @@ document.addEventListener("mousemove", (event) =>
 
         if (hasFound === false)
         {
+            tryRemoveHoverEffectFromLastIndicatedElement();
             return;
         }
     }
@@ -1043,7 +1044,6 @@ document.addEventListener("mousemove", (event) =>
     // Check if the mouse has entered a new element
     if (currentElement !== lastIndicatedElement) 
     {
-        // Trigger a "mouseleave" effect for the previous element
         tryRemoveHoverEffectFromLastIndicatedElement();
 
         lastIndicatedElement = currentElement;
