@@ -103,6 +103,8 @@ partial class Mixin
    
     
     public static StyleModifier Zindex(int zIndex) => new(style => style.zIndex = zIndex.ToString());
+    
+    public static StyleModifier ZIndex(int zIndex) => new(style => style.zIndex = zIndex.ToString());
 
 
     public static StyleModifier Zindex0 => Zindex(0);
