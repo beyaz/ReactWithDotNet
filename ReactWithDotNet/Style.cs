@@ -6,7 +6,7 @@ namespace ReactWithDotNet;
 [Serializable]
 public sealed partial class Style
 {
-    StyleAttributeValue headNode;
+    internal StyleAttributeValue headNode;
 
     [JsonIgnore]
     public bool IsEmpty => headNode is null;
@@ -235,7 +235,7 @@ public sealed partial class Style
         }
     }
 
-    sealed class StyleAttributeValue
+    internal sealed class StyleAttributeValue
     {
         public readonly StyleAttributeNameInfo NameInfo;
         public StyleAttributeValue Next;

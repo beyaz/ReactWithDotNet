@@ -22,7 +22,7 @@ static partial class ElementSerializer
 
         List<CssPseudoCodeInfo> pseudos = null;
 
-        if (style._hover?.IsEmpty == false)
+        if (style._hover?.headNode is not null)
         {
             pseudos =
             [
@@ -34,7 +34,7 @@ static partial class ElementSerializer
             ];
         }
 
-        if (style._before?.IsEmpty == false)
+        if (style._before?.headNode is not null)
         {
             pseudos ??= [];
 
@@ -45,7 +45,7 @@ static partial class ElementSerializer
             });
         }
 
-        if (style._after?.IsEmpty == false)
+        if (style._after?.headNode is not null)
         {
             pseudos ??= [];
 
@@ -56,7 +56,7 @@ static partial class ElementSerializer
             });
         }
 
-        if (style._active?.IsEmpty == false)
+        if (style._active?.headNode is not null)
         {
             pseudos ??= [];
 
@@ -67,7 +67,7 @@ static partial class ElementSerializer
             });
         }
 
-        if (style._focus?.IsEmpty == false)
+        if (style._focus?.headNode is not null)
         {
             pseudos ??= [];
 
@@ -78,7 +78,7 @@ static partial class ElementSerializer
             });
         }
 
-        if (style._focusVisible?.IsEmpty == false)
+        if (style._focusVisible?.headNode is not null)
         {
             pseudos ??= [];
 
@@ -158,7 +158,7 @@ static partial class ElementSerializer
 
         if (fullExport)
         {
-            if (style.IsEmpty && pseudos is null && style._mediaQueries is null)
+            if (style.headNode is null && pseudos is null && style._mediaQueries is null)
             {
                 return (false, null);
             }
@@ -616,7 +616,7 @@ static partial class ElementSerializer
         var response = ConvertStyleToCssClass(context, node, style, false, context.DynamicStyles.GetClassName);
         if (response.needToExport is false)
         {
-            if (style.IsEmpty == false)
+            if (style.headNode is not null)
             {
                 return style;
             }
@@ -644,7 +644,7 @@ static partial class ElementSerializer
             }
         }
 
-        if (style.IsEmpty)
+        if (style.headNode is null)
         {
             return NotExportableObject;
         }

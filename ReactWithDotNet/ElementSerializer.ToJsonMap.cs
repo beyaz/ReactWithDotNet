@@ -896,20 +896,20 @@ partial class ElementSerializer
         // export style
         {
             var style = htmlElement.style;
-            
-            var hasStyle = style.IsEmpty == false ||
-                        
-                       // hasAnyPseudo
-                       style._hover?.IsEmpty == false ||
-                       style._active?.IsEmpty == false ||
-                       style._after?.IsEmpty == false ||
-                       style._before?.IsEmpty == false ||
-                       style._focus?.IsEmpty == false ||
-                       style._focusVisible?.IsEmpty == false||
 
-                       // hasMediaQueries
-                       style._mediaQueries?.Count > 0;
-            
+            var hasStyle = style.headNode is not null ||
+
+                           // hasAnyPseudo
+                           style._hover?.headNode is not null ||
+                           style._active?.headNode is not null ||
+                           style._after?.headNode is not null ||
+                           style._before?.headNode is not null ||
+                           style._focus?.headNode is not null ||
+                           style._focusVisible?.headNode is not null ||
+
+                           // hasMediaQueries
+                           style._mediaQueries?.Count > 0;
+
             if (hasStyle)
             {
                 var valueExportInfo = GetStylePropertyValueOfHtmlElementForSerialize(context, node, htmlElement, style);
@@ -919,7 +919,7 @@ partial class ElementSerializer
                 }
             }
         }
-        
+
 
         if (htmlElement.classNameList is not null)
         {
@@ -1209,7 +1209,7 @@ static class DoNotSendToClientWhenStyleEmpty
     {
         var style = value as Style;
 
-        if (style == null || style.IsEmpty)
+        if (style == null || style.headNode is null)
         {
             return new(false);
         }
