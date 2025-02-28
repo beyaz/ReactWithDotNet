@@ -923,6 +923,18 @@ public static partial class Mixin
     public static StyleModifier PaddingX(string leftRight)=>PaddingLeftRight(leftRight);
     public static StyleModifier PaddingY(string topBottom)=>PaddingTopBottom(topBottom);
     
+    public static StyleModifier PaddingTopBottom(double topPixel, double bottomPixel) => new(style =>
+    {
+        style.paddingTop = topPixel.AsPixel();
+        style.paddingBottom = bottomPixel.AsPixel();
+    });
+    
+    public static StyleModifier PaddingLeftRight(double leftPixel, double rightPixel) => new(style =>
+    {
+        style.paddingLeft    = leftPixel.AsPixel();
+        style.paddingRight = rightPixel.AsPixel();
+    });
+    
     #endregion
 
     #region VerticalAlign

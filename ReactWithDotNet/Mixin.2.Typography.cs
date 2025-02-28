@@ -279,8 +279,8 @@ partial class Mixin
     ///     <br/>
     ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
     /// </summary>
-    public static StyleModifier Font(string fontWeight, int fontSizeAsPixel, double lineHeight, string fontFamily)
-        => new(style => style.font = $"{fontWeight} {fontSizeAsPixel}px/{lineHeight}{(lineHeight > 5 ? "px": "")} \"{fontFamily.Replace('"', '\'')}\"");
+    public static StyleModifier Font(string fontWeight, double fontSizeAsPixel, double lineHeight, string fontFamily)
+        => new(style => style.font = $"{fontWeight} {fontSizeAsPixel.AsPixel()}/{lineHeight}{(lineHeight > 5 ? "px": "")} \"{fontFamily.Replace('"', '\'')}\"");
     
     /// <summary>
     ///     [font-weight] normal, bold, lighter, bolder, 100-900
@@ -289,8 +289,8 @@ partial class Mixin
     ///     <br/>
     ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
     /// </summary>
-    public static StyleModifier Font(string fontWeight, int fontSizeAsPixel, string fontFamily)
-        => new(style => style.font = $"{fontWeight} {fontSizeAsPixel}px \"{fontFamily.Replace('"','\'')}\"");
+    public static StyleModifier Font(string fontWeight, double fontSizeAsPixel, string fontFamily)
+        => new(style => style.font = $"{fontWeight} {fontSizeAsPixel.AsPixel()} \"{fontFamily.Replace('"','\'')}\"");
     
     /// <summary>
     ///     [font-weight] normal, bold, lighter, bolder, 100-900
@@ -299,21 +299,8 @@ partial class Mixin
     ///     <br/>
     ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
     /// </summary>
-    public static StyleModifier Font(int fontWeight, int fontSizeAsPixel, string fontFamily)
-        => new(style => style.font = $"{fontWeight} {fontSizeAsPixel}px \"{fontFamily.Replace('"','\'')}\"");
-    
-    /// <summary>
-    ///     [font-weight] normal, bold, lighter, bolder, 100-900
-    ///     <br/>
-    ///     [font-size] px, em, %, rem ...
-    ///     <br/>
-    ///     [line-height] normal, 1.5, 120%
-    ///     <br/>
-    ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
-    /// </summary>
-    public static StyleModifier Font(int fontWeight, int fontSizeAsPixel, double lineHeight, string fontFamily)
-        => new(style => style.font = $"{fontWeight} {fontSizeAsPixel}px/{lineHeight}{(lineHeight > 5 ? "px": "")} \"{fontFamily.Replace('"', '\'')}\"");
-    
+    public static StyleModifier Font(int fontWeight, double fontSizeAsPixel, string fontFamily)
+        => new(style => style.font = $"{fontWeight} {fontSizeAsPixel.AsPixel()} \"{fontFamily.Replace('"','\'')}\"");
     
     /// <summary>
     ///     [font-weight] normal, bold, lighter, bolder, 100-900
@@ -324,10 +311,23 @@ partial class Mixin
     ///     <br/>
     ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
     /// </summary>
-    public static StyleModifier Font(int fontWeight, int fontSizeAsPixel, double lineHeight, string fontFamily, string color)
+    public static StyleModifier Font(int fontWeight, double fontSizeAsPixel, double lineHeight, string fontFamily)
+        => new(style => style.font = $"{fontWeight} {fontSizeAsPixel.AsPixel()}/{lineHeight}{(lineHeight > 5 ? "px": "")} \"{fontFamily.Replace('"', '\'')}\"");
+    
+    
+    /// <summary>
+    ///     [font-weight] normal, bold, lighter, bolder, 100-900
+    ///     <br/>
+    ///     [font-size] px, em, %, rem ...
+    ///     <br/>
+    ///     [line-height] normal, 1.5, 120%
+    ///     <br/>
+    ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
+    /// </summary>
+    public static StyleModifier Font(int fontWeight, double fontSizeAsPixel, double lineHeight, string fontFamily, string color)
         => new(style =>
         {
-            style.font = $"{fontWeight} {fontSizeAsPixel}px/{lineHeight}{(lineHeight > 5 ? "px" : "")} \"{fontFamily.Replace('"', '\'')}\"";
+            style.font = $"{fontWeight} {fontSizeAsPixel.AsPixel()}/{lineHeight}{(lineHeight > 5 ? "px" : "")} \"{fontFamily.Replace('"', '\'')}\"";
             
             style.color = color;
         });
@@ -339,10 +339,10 @@ partial class Mixin
     ///     <br/>
     ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
     /// </summary>
-    public static StyleModifier Font(int fontWeight, int fontSizeAsPixel, string fontFamily, string color)
+    public static StyleModifier Font(int fontWeight, double fontSizeAsPixel, string fontFamily, string color)
         => new(style =>
         {
-            style.font = $"{fontWeight} {fontSizeAsPixel}px \"{fontFamily.Replace('"', '\'')}\"";
+            style.font = $"{fontWeight} {fontSizeAsPixel.AsPixel()} \"{fontFamily.Replace('"', '\'')}\"";
             
             style.color = color;
         });
@@ -354,10 +354,10 @@ partial class Mixin
     ///     <br/>
     ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
     /// </summary>
-    public static StyleModifier Font(string fontWeight, int fontSizeAsPixel, string fontFamily, string color)
+    public static StyleModifier Font(string fontWeight, double fontSizeAsPixel, string fontFamily, string color)
         => new(style =>
         {
-            style.font = $"{fontWeight} {fontSizeAsPixel}px \"{fontFamily.Replace('"', '\'')}\"";
+            style.font = $"{fontWeight} {fontSizeAsPixel.AsPixel()} \"{fontFamily.Replace('"', '\'')}\"";
             
             style.color = color;
         });
