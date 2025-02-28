@@ -17,6 +17,18 @@ partial class Mixin
     public static StyleModifier Border(double widthAsPixel, string borderStyle, string color)
         => new(style => style.border = $"{widthAsPixel.AsPixel()} {borderStyle} {color}");
 
+    /// <summary>
+    ///    style.border = <paramref name="widthAsPixel"/>+px <paramref name="borderStyle"/> <paramref name="color"/>
+    ///    <br/>
+    ///    style.borderRadius = <paramref name="borderRadiusAsPixel"/>+px
+    /// </summary>
+    public static StyleModifier Border(double widthAsPixel, string borderStyle, string color, double borderRadiusAsPixel)
+        => new(style =>
+        {
+            style.border = $"{widthAsPixel.AsPixel()} {borderStyle} {color}";
+            style.borderRadius = borderRadiusAsPixel.AsPixel();
+        });
+
     public static StyleModifier Border(CssUnit width, string borderStyle, string color)
         => new(style => style.border = $"{width} {borderStyle} {color}");
 
