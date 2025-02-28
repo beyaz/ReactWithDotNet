@@ -364,7 +364,17 @@ partial class ElementSerializer
                 var state = stateProperty.GetValueFunc(reactStatefulComponent);
                 if (state == null)
                 {
-                    await reactStatefulComponent.InvokeConstructor();
+
+                    // invoke constructor
+                    {
+                        var construnctorTask = reactStatefulComponent.InvokeConstructor();
+                        if (construnctorTask is null)
+                        {
+                            throw new DeveloperException($"{reactStatefulComponent.GetType().FullName} constructor should return task but null value returned.");
+                        }
+
+                        await construnctorTask;
+                    }
 
                     if (reactStatefulComponent.IsStateNull)
                     {

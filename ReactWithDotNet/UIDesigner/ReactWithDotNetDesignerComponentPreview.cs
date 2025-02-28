@@ -226,7 +226,17 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                         if (component.IsStateNull)
                         {
-                            component.InvokeConstructor().GetAwaiter().GetResult();
+                            
+                            // invoke constructor
+                            {
+                                var construnctorTask = component.InvokeConstructor();
+                                if (construnctorTask is null)
+                                {
+                                    throw new DeveloperException($"{component.GetType().FullName} constructor should return task but null value returned.");
+                                }
+
+                                await construnctorTask;
+                            }
                         }
 
                         resultElement = component;
