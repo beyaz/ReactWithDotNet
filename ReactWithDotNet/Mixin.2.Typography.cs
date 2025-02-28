@@ -241,7 +241,7 @@ partial class Mixin
     {
         if (lineHeightPx < 5)
         {
-           return LineHeight(lineHeightPx.ToString(CultureInfo_en_US));
+           return LineHeight(lineHeightPx.AsString());
         }
         
         return LineHeight(lineHeightPx.AsPixel());
@@ -251,4 +251,62 @@ partial class Mixin
     {
         return LineHeight(cssUnit.ToString());
     }
+    
+    /// <summary>
+    ///     [font-style] normal, italic, oblique
+    ///     <br/>
+    ///     [font-variant] normal, small-caps
+    ///     <br/>
+    ///     [font-weight] normal, bold, lighter, bolder, 100-900
+    ///     <br/>
+    ///     [font-size] px, em, %, rem ...
+    ///     <br/>
+    ///     [line-height] normal, 1.5, 120%
+    ///     <br/>
+    ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
+    /// </summary>
+    public static StyleModifier Font(string fontStyle, string fontVariant, string fontWeight, int fontSizeAsPixel, double lineHeight, string fontFamily)
+        => new(style => style.font = $"{fontStyle} {fontVariant} {fontWeight} {fontSizeAsPixel}px/{lineHeight}{(lineHeight > 5 ? "px": "")} \"{fontFamily}\"");
+    
+    /// <summary>
+    ///     [font-weight] normal, bold, lighter, bolder, 100-900
+    ///     <br/>
+    ///     [font-size] px, em, %, rem ...
+    ///     <br/>
+    ///     [line-height] normal, 1.5, 120%
+    ///     <br/>
+    ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
+    /// </summary>
+    public static StyleModifier Font(string fontWeight, int fontSizeAsPixel, double lineHeight, string fontFamily)
+        => new(style => style.font = $"{fontWeight} {fontSizeAsPixel}px/{lineHeight}{(lineHeight > 5 ? "px": "")} \"{fontFamily}\"");
+    
+    /// <summary>
+    ///     [font-weight] normal, bold, lighter, bolder, 100-900
+    ///     <br/>
+    ///     [font-size] px, em, %, rem ...
+    ///     <br/>
+    ///     [line-height] normal, 1.5, 120%
+    ///     <br/>
+    ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
+    /// </summary>
+    public static StyleModifier Font(int fontWeight, int fontSizeAsPixel, double lineHeight, string fontFamily)
+        => new(style => style.font = $"{fontWeight} {fontSizeAsPixel}px/{lineHeight}{(lineHeight > 5 ? "px": "")} \"{fontFamily}\"");
+    
+    
+    /// <summary>
+    ///     [font-weight] normal, bold, lighter, bolder, 100-900
+    ///     <br/>
+    ///     [font-size] px, em, %, rem ...
+    ///     <br/>
+    ///     [line-height] normal, 1.5, 120%
+    ///     <br/>
+    ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
+    /// </summary>
+    public static StyleModifier Font(int fontWeight, int fontSizeAsPixel, double lineHeight, string fontFamily, string color)
+        => new(style =>
+        {
+            style.font = $"{fontWeight} {fontSizeAsPixel}px/{lineHeight}{(lineHeight > 5 ? "px" : "")} \"{fontFamily}\"";
+            
+            style.color = color;
+        });
 }
