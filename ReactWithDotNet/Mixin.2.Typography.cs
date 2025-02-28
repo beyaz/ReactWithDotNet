@@ -251,6 +251,8 @@ partial class Mixin
     {
         return LineHeight(cssUnit.ToString());
     }
+
+    #region FONT
     
     /// <summary>
     ///     [font-style] normal, italic, oblique
@@ -266,7 +268,7 @@ partial class Mixin
     ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
     /// </summary>
     public static StyleModifier Font(string fontStyle, string fontVariant, string fontWeight, int fontSizeAsPixel, double lineHeight, string fontFamily)
-        => new(style => style.font = $"{fontStyle} {fontVariant} {fontWeight} {fontSizeAsPixel}px/{lineHeight}{(lineHeight > 5 ? "px": "")} \"{fontFamily}\"");
+        => new(style => style.font = $"{fontStyle} {fontVariant} {fontWeight} {fontSizeAsPixel}px/{lineHeight}{(lineHeight > 5 ? "px": "")} \"{fontFamily.Replace('"', '\'')}\"");
     
     /// <summary>
     ///     [font-weight] normal, bold, lighter, bolder, 100-900
@@ -278,7 +280,27 @@ partial class Mixin
     ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
     /// </summary>
     public static StyleModifier Font(string fontWeight, int fontSizeAsPixel, double lineHeight, string fontFamily)
-        => new(style => style.font = $"{fontWeight} {fontSizeAsPixel}px/{lineHeight}{(lineHeight > 5 ? "px": "")} \"{fontFamily}\"");
+        => new(style => style.font = $"{fontWeight} {fontSizeAsPixel}px/{lineHeight}{(lineHeight > 5 ? "px": "")} \"{fontFamily.Replace('"', '\'')}\"");
+    
+    /// <summary>
+    ///     [font-weight] normal, bold, lighter, bolder, 100-900
+    ///     <br/>
+    ///     [font-size] px, em, %, rem ...
+    ///     <br/>
+    ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
+    /// </summary>
+    public static StyleModifier Font(string fontWeight, int fontSizeAsPixel, string fontFamily)
+        => new(style => style.font = $"{fontWeight} {fontSizeAsPixel}px \"{fontFamily.Replace('"','\'')}\"");
+    
+    /// <summary>
+    ///     [font-weight] normal, bold, lighter, bolder, 100-900
+    ///     <br/>
+    ///     [font-size] px, em, %, rem ...
+    ///     <br/>
+    ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
+    /// </summary>
+    public static StyleModifier Font(int fontWeight, int fontSizeAsPixel, string fontFamily)
+        => new(style => style.font = $"{fontWeight} {fontSizeAsPixel}px \"{fontFamily.Replace('"','\'')}\"");
     
     /// <summary>
     ///     [font-weight] normal, bold, lighter, bolder, 100-900
@@ -290,7 +312,7 @@ partial class Mixin
     ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
     /// </summary>
     public static StyleModifier Font(int fontWeight, int fontSizeAsPixel, double lineHeight, string fontFamily)
-        => new(style => style.font = $"{fontWeight} {fontSizeAsPixel}px/{lineHeight}{(lineHeight > 5 ? "px": "")} \"{fontFamily}\"");
+        => new(style => style.font = $"{fontWeight} {fontSizeAsPixel}px/{lineHeight}{(lineHeight > 5 ? "px": "")} \"{fontFamily.Replace('"', '\'')}\"");
     
     
     /// <summary>
@@ -305,8 +327,40 @@ partial class Mixin
     public static StyleModifier Font(int fontWeight, int fontSizeAsPixel, double lineHeight, string fontFamily, string color)
         => new(style =>
         {
-            style.font = $"{fontWeight} {fontSizeAsPixel}px/{lineHeight}{(lineHeight > 5 ? "px" : "")} \"{fontFamily}\"";
+            style.font = $"{fontWeight} {fontSizeAsPixel}px/{lineHeight}{(lineHeight > 5 ? "px" : "")} \"{fontFamily.Replace('"', '\'')}\"";
             
             style.color = color;
         });
+    
+    /// <summary>
+    ///     [font-weight] normal, bold, lighter, bolder, 100-900
+    ///     <br/>
+    ///     [font-size] px, em, %, rem ...
+    ///     <br/>
+    ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
+    /// </summary>
+    public static StyleModifier Font(int fontWeight, int fontSizeAsPixel, string fontFamily, string color)
+        => new(style =>
+        {
+            style.font = $"{fontWeight} {fontSizeAsPixel}px \"{fontFamily.Replace('"', '\'')}\"";
+            
+            style.color = color;
+        });
+    
+    /// <summary>
+    ///     [font-weight] normal, bold, lighter, bolder, 100-900
+    ///     <br/>
+    ///     [font-size] px, em, %, rem ...
+    ///     <br/>
+    ///     [font-family] "Arial", sans-serif, "Times New Roman", serif
+    /// </summary>
+    public static StyleModifier Font(string fontWeight, int fontSizeAsPixel, string fontFamily, string color)
+        => new(style =>
+        {
+            style.font = $"{fontWeight} {fontSizeAsPixel}px \"{fontFamily.Replace('"', '\'')}\"";
+            
+            style.color = color;
+        });
+    
+    #endregion
 }
