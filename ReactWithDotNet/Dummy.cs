@@ -39,4 +39,9 @@ partial class Mixin
     {
         return $"https://picsum.photos/{size}";
     }
+    
+    public static string DummySrc(int width, int height)
+    {
+        return $"https://picsum.photos/{width}/{height}";
+    }
 }
