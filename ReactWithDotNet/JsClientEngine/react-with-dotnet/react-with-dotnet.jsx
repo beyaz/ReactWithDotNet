@@ -1695,6 +1695,10 @@ function ArrangeRemoteMethodArguments(remoteMethodArguments)
                     {
                         remoteMethodArguments[i] = ConvertToSyntheticScrollEvent(prm);
                     }
+                    else if (reactName === 'onChange')
+                    {
+                        remoteMethodArguments[i] = ConvertToSyntheticChangeEvent(prm);
+                    }
                     else
                     {
                         throw new Error("FatalError: " + reactName);
