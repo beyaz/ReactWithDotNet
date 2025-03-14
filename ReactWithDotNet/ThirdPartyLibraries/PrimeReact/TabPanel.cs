@@ -62,11 +62,6 @@ public sealed class TabPanel : ElementBase
     [ReactProp]
     public bool? closable { get; set; }
     
-    /// <summary>
-    ///     Style class of the tab header and content.
-    /// </summary>
-    [ReactProp]
-    public string className { get; set; }
     
     /// <summary>
     ///     Inline style of the tab header.

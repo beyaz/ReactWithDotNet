@@ -16,11 +16,6 @@ public sealed class SplitterPanel : ElementBase
     [ReactProp]
     public double? minSize { get; set; }
     
-    /// <summary>
-    ///     ClassName of the component.
-    /// </summary>
-    [ReactProp]
-    public string className { get; set; }
     
     protected override Element GetSuspenseFallbackElement()
     {

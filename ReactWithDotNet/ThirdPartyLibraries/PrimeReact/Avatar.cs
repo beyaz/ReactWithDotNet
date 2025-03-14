@@ -76,6 +76,4 @@ public sealed class Avatar : ElementBase
     [ReactProp]
     public bool? unstyled { get; set; }
     
-    [ReactProp]
-    public string className { get; set; }
 }
