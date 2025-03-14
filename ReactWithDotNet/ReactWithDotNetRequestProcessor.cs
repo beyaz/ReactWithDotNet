@@ -209,9 +209,9 @@ partial class Mixin
 
     static void Inject(ComponentResponse componentResponse, Element component)
     {
-        if (component is IPageLayout mainLayout)
+        if (component is IPageLayout pageLayout)
         {
-            var app = mainLayout.RenderInfo.ComponentResponse.ElementAsJson;
+            var app = pageLayout.RenderInfo.ComponentResponse.ElementAsJson;
 
             {
                 if (componentResponse.ElementAsJson is JsonMap jsonMap)
@@ -228,9 +228,9 @@ partial class Mixin
                     context.isCurrent = false;
 
                     jsonMap.Add("$children", new[] { app });
-                    componentResponse.DynamicStyles                     = mainLayout.RenderInfo.ComponentResponse.DynamicStyles;
-                    componentResponse.CallFunctionId                    = mainLayout.RenderInfo.ComponentResponse.CallFunctionId;
-                    componentResponse.LastUsedComponentUniqueIdentifier = mainLayout.RenderInfo.ComponentResponse.LastUsedComponentUniqueIdentifier;
+                    componentResponse.DynamicStyles                     = pageLayout.RenderInfo.ComponentResponse.DynamicStyles;
+                    componentResponse.CallFunctionId                    = pageLayout.RenderInfo.ComponentResponse.CallFunctionId;
+                    componentResponse.LastUsedComponentUniqueIdentifier = pageLayout.RenderInfo.ComponentResponse.LastUsedComponentUniqueIdentifier;
 
                     context.isUpdated = true;
                 }
@@ -243,7 +243,7 @@ partial class Mixin
                     return;
                 }
 
-                if (key == "id" && value is string stringValue && stringValue == mainLayout.ContainerDomElementId)
+                if (key == "id" && value is string stringValue && stringValue == pageLayout.ContainerDomElementId)
                 {
                     context.isCurrent = true;
                     return;
