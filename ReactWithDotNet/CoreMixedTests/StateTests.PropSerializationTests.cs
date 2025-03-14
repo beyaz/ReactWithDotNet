@@ -180,7 +180,7 @@
 //}
 
 
-///*
+
 // https://jsfiddle.net/boilerplate/react-jsx
 
 //class ComponentA extends React.Component
