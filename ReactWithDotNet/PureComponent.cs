@@ -25,13 +25,11 @@ public abstract class PureComponent : Element
     internal List<Modifier> Modifiers;
 
     internal Style StyleForRootElement;
-    
-    ClientForPureComponent _client;
 
     [JsonIgnore]
     public ClientForPureComponent Client
     {
-        get { return _client ??= new(Context); }
+        get { return field ??= new(Context); }
     }
 
     [JsonIgnore]
