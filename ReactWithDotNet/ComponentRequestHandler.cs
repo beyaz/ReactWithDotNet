@@ -417,7 +417,7 @@ static class ComponentRequestHandler
             var parameterInfoList = methodInfo.GetParameters();
             if (parameterInfoList.Length == 0)
             {
-                return (default, default, []);
+                return (false, null, []);
             }
 
             var eventArguments = new object[parameterInfoList.Length];
@@ -450,7 +450,7 @@ static class ComponentRequestHandler
                 }
             }
 
-            return (default, default, eventArguments);
+            return (false, null, eventArguments);
         }
 
         static string GetwwwrootFolder(HttpContext httpContext)

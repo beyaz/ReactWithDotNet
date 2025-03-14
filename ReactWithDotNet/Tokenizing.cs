@@ -165,7 +165,7 @@ static class Lexer
                 continue;
             }
 
-            return (hasRead: false, default, default);
+            return (hasRead: false, 0, null);
         }
 
         return (hasRead: true, i, tokens);
@@ -270,7 +270,7 @@ static class Lexer
             }
         }
 
-        return (hasRead: false, default, default);
+        return (hasRead: false, 0, null);
     }
 
     static (bool hasRead, int newIndex, string value) ReadQuotedString(string content, int startIndex)

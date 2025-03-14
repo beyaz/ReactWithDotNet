@@ -407,7 +407,7 @@ sealed class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                     }
                 }
 
-                return default;
+                return null;
             }
         }
 

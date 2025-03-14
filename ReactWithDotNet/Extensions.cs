@@ -147,23 +147,23 @@ static class Extensions
         {
             if (value == null)
             {
-                return (null, default);
+                return (null, null);
             }
 
             targetType = Nullable.GetUnderlyingType(targetType);
             if (targetType is null)
             {
-                return (default, new InvalidCastException($"{value}"));
+                return (null, new InvalidCastException($"{value}"));
             }
         }
 
         try
         {
-            return (Convert.ChangeType(value, targetType), default);
+            return (Convert.ChangeType(value, targetType), null);
         }
         catch (Exception exception)
         {
-            return (default, exception);
+            return (null, exception);
         }
     }
 

@@ -739,7 +739,7 @@ static partial class ElementSerializer
 
         ValueExportInfo()
         {
-            Value        = default;
+            Value        = null;
             NeedToExport = false;
         }
 
