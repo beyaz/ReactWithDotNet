@@ -58,6 +58,11 @@ partial class Mixin
         {
             throw DeveloperException($"{layoutType} should be support interface: {typeof(IPageLayout)}");
         }
+        
+        if (instance is not PureComponent layoutInstanceAsPureComponent)
+        {
+            throw DeveloperException($"{layoutType} should be inherit from {typeof(PureComponent)}");
+        }
 
         var component = (Element)ReflectionHelper.CreateNewInstance(input.MainContentType);
 
@@ -77,7 +82,7 @@ partial class Mixin
         var sb = await CalculateComponentHtmlText(new()
         {
             HttpContext                    = httpContext,
-            Component                      = (Element)layoutInstance,
+            Component                      = layoutInstanceAsPureComponent,
             QueryString                    = httpContext.Request.QueryString.ToString(),
             OnReactContextCreated          = input.OnReactContextCreated,
             OnReactContextDisposed         = input.OnReactContextDisposed,
