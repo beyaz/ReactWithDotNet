@@ -151,7 +151,7 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
         lines.Add("  }"); // close method
         lines.Add("}"); // close class
 
-        return (lines, default);
+        return (lines, null);
     }
 
     class SyntaxReceiver : ISyntaxReceiver

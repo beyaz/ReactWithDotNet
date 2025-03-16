@@ -1,7 +1,4 @@
-﻿global using static ReactWithDotNet.Extensions;
-
-using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace ReactWithDotNet;
 

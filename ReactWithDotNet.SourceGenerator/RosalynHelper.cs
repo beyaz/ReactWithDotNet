@@ -21,7 +21,7 @@ static class RoslynHelper
 
         if (namespaceDeclaration is not null)
         {
-            return namespaceDeclaration?.Name.ToString();
+            return namespaceDeclaration.Name.ToString();
         }
 
         return "global";
