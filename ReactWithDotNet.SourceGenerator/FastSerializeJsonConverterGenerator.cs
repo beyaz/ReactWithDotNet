@@ -3,25 +3,51 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using static ReactWithDotNet.RoslynHelper;
+using System.Collections.Immutable;
 
 namespace ReactWithDotNet;
 
-[Generator]
-public class FastSerializeJsonConverterGenerator : ISourceGenerator
+[Generator(LanguageNames.CSharp)]
+public class FastSerializeJsonConverterGenerator : IIncrementalGenerator
 {
-    public void Execute(GeneratorExecutionContext context)
+    public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        if (context.SyntaxReceiver is not SyntaxReceiver receiver)
+        var classDeclarations = context.SyntaxProvider
+            .CreateSyntaxProvider(
+                predicate: static (s, _) => IsSyntaxTargetForGeneration(s),
+                transform: static (ctx, _) => GetSemanticTargetForGeneration(ctx))
+            .Where(static m => m is not null);
+
+        var compilationAndClasses = context.CompilationProvider.Combine(classDeclarations.Collect());
+
+        context.RegisterSourceOutput(compilationAndClasses, static (spc, source) => Execute(source.Left, source.Right, spc));
+    }
+
+    static bool IsSyntaxTargetForGeneration(SyntaxNode node)
+    {
+        return node is ClassDeclarationSyntax classDeclaration &&
+               classDeclaration.AttributeLists
+                   .SelectMany(al => al.Attributes)
+                   .Any(ad => ad.Name.ToString() == "FastSerialize");
+    }
+
+    static ClassDeclarationSyntax GetSemanticTargetForGeneration(GeneratorSyntaxContext context)
+    {
+        var classDeclaration = (ClassDeclarationSyntax)context.Node;
+        return classDeclaration;
+    }
+
+    static void Execute(Compilation compilation, ImmutableArray<ClassDeclarationSyntax> classes, SourceProductionContext context)
+    {
+        if (classes.IsDefaultOrEmpty)
         {
             return;
         }
 
         Dictionary<string, IReadOnlyList<string>> cache = new();
 
-        // Loop through collected classes
-        foreach (var classDeclaration in receiver.CandidateClasses)
+        foreach (var classDeclaration in classes)
         {
-            // Get the class name
             var className = classDeclaration.Identifier.Text;
 
             var lines = new List<string>
@@ -68,7 +94,7 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
                         continue;
                     }
 
-                    var found = FindClassByNameAndNamespace(context.Compilation, propertyTypeName, GetNamespace(classDeclaration));
+                    var found = FindClassByNameAndNamespace(compilation, propertyTypeName, GetNamespace(classDeclaration));
                     if (found is not null && cache.ContainsKey(propertyTypeName) is false)
                     {
                         cache[propertyTypeName] = GetSourceTextOfHasValueChecker(found).value;
@@ -107,17 +133,8 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
         }
     }
 
-    public void Initialize(GeneratorInitializationContext context)
-    {
-        //AttachToDebugger();
-
-        // Register a syntax receiver to collect classes with the custom attribute
-        context.RegisterForSyntaxNotifications(() => new SyntaxReceiver());
-    }
-
     static (IReadOnlyList<string> value, Exception exception) GetSourceTextOfHasValueChecker(ClassDeclarationSyntax classDeclaration)
     {
-        // Get the class name
         var className = classDeclaration.Identifier.Text;
 
         var lines = new List<string>
@@ -152,23 +169,5 @@ public class FastSerializeJsonConverterGenerator : ISourceGenerator
         lines.Add("}"); // close class
 
         return (lines, null);
-    }
-
-    class SyntaxReceiver : ISyntaxReceiver
-    {
-        public List<ClassDeclarationSyntax> CandidateClasses { get; } = new();
-
-        // Called for every syntax node in the compilation, we gather candidates here
-        public void OnVisitSyntaxNode(SyntaxNode syntaxNode)
-        {
-            // Check if the node is a class declaration with the [AddExtraProperties] attribute
-            if (syntaxNode is ClassDeclarationSyntax classDeclaration &&
-                classDeclaration.AttributeLists
-                    .SelectMany(al => al.Attributes)
-                    .Any(ad => ad.Name.ToString() == "FastSerialize"))
-            {
-                CandidateClasses.Add(classDeclaration);
-            }
-        }
     }
 }

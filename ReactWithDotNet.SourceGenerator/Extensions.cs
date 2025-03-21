@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.Diagnostics;
+﻿global using static ReactWithDotNet.Extensions;
+using Microsoft.CodeAnalysis.Diagnostics;
 using System.Diagnostics;
 
 namespace ReactWithDotNet;
