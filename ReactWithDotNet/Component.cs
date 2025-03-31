@@ -194,7 +194,7 @@ public abstract class ReactComponentBase : Element, IReactComponent
     }
 }
 
-public abstract class Component<TState> : ReactComponentBase where TState : class, new()
+public abstract class Component<TState> : ReactComponentBase where TState : class
 {
     protected internal TState state { get; set; }
 
@@ -202,14 +202,14 @@ public abstract class Component<TState> : ReactComponentBase where TState : clas
 
     internal override bool IsStateNull => state == null;
 
+    static readonly Func<TState> newState = Expression.Lambda<Func<TState>>(Expression.New(typeof(TState))).Compile();
+    
     protected override Task constructor()
     {
-        state ??= new TState();
+        state ??= newState();
 
         return Task.CompletedTask;
     }
-
-    
 }
 
 public abstract class Component : Component<EmptyState>
