@@ -142,3 +142,33 @@ public sealed class FocusEvent
 }
 
 public delegate Task FocusEventHandler(FocusEvent e);
+
+
+
+public sealed class DragEvent
+{
+    public bool bubbles { get; init; }
+
+    public bool cancelable { get; init; }
+
+    public ShadowHtmlElement currentTarget { get; init; }
+
+    public bool defaultPrevented { get; init; }
+
+    public int detail { get; init; }
+
+    public int eventPhase { get; init; }
+
+    public bool isTrusted { get; init; }
+    
+    public ShadowHtmlElement target { get; init; }
+    
+    public ShadowHtmlElement relatedTarget { get; init; }
+
+    public double timeStamp { get; init; }
+
+    public string type { get; init; }
+}
+
+public delegate Task DragEventHandler(DragEvent e);
+
