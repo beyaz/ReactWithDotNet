@@ -14,7 +14,7 @@ public class ExportingCommonHtmlElements
     public void ExportCommonHtmlElements()
     {
         TagInfo[] map =
-        {
+        [
             new()
             {
                 Tag                  = "article",
@@ -2222,8 +2222,8 @@ public class ExportingCommonHtmlElements
                     
 
                 ]
-            },
-        };
+            }
+        ];
 
         var list = new List<string>
         {
