@@ -664,11 +664,17 @@ public static partial class Mixin
     public static HtmlElementModifier OnDragStart(DragEventHandler dragEventHandler)
         => CreateHtmlElementModifier<HtmlElement>(element => element.onDragStart = dragEventHandler);
     
-    public static HtmlElementModifier OnDragOver(DragEventHandler dragEventHandler)
-        => CreateHtmlElementModifier<HtmlElement>(element => element.onDragOver = dragEventHandler);
+    public static HtmlElementModifier OnDragEnter(DragEventHandler dragEventHandler)
+        => CreateHtmlElementModifier<HtmlElement>(element => element.onDragEnter = dragEventHandler);
+    
+    public static HtmlElementModifier OnDragLeave(DragEventHandler dragEventHandler)
+        => CreateHtmlElementModifier<HtmlElement>(element => element.onDragLeave = dragEventHandler);
     
     public static HtmlElementModifier OnDrop(DragEventHandler dragEventHandler)
         => CreateHtmlElementModifier<HtmlElement>(element => element.onDrop = dragEventHandler);
+    
+    public static HtmlElementModifier OnDragEnd(DragEventHandler dragEventHandler)
+        => CreateHtmlElementModifier<HtmlElement>(element => element.onDragEnd = dragEventHandler);
 
     /// <summary>
     ///     style.right = right + 'px'

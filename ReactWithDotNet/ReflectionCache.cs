@@ -225,6 +225,8 @@ partial class Mixin
         public int? DebounceTimeout { get; init; }
 
         public required bool HasStopPropagation { get; init; }
+        
+        public required bool HasPreventDefault { get; init; }
 
         public required IReadOnlyList<string> KeyboardEventCallOnly { get; init; }
 
@@ -243,6 +245,7 @@ partial class Mixin
             {
                 MethodInfo            = methodInfo,
                 HasStopPropagation    = methodInfo.GetCustomAttributes<StopPropagationAttribute>().Any(),
+                HasPreventDefault     = methodInfo.GetCustomAttributes<PreventDefaultAttribute>().Any(),
                 KeyboardEventCallOnly = methodInfo.GetCustomAttributes<KeyboardEventCallOnlyAttribute>().FirstOrDefault()?.Keys,
                 DebounceTimeout       = methodInfo.GetCustomAttributes<DebounceTimeoutAttribute>().FirstOrDefault()?.Millisecond,
                 SkipRender            = methodInfo.GetCustomAttribute<SkipRenderAttribute>() is not null,

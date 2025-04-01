@@ -29,6 +29,7 @@ const DotNetProperties = 'DotNetProperties';
  * @property {number} HandlerComponentUniqueIdentifier
  * @property {string} FunctionNameOfGrabEventArguments
  * @property {number} StopPropagation
+ * @property {number} PreventDefault
  * @property {string[]} KeyboardEventCallOnly
  * @property {?number} DebounceTimeout
  * @property {number} $isRemoteMethod
@@ -46,6 +47,7 @@ const DotNetProperties = 'DotNetProperties';
  * @property {?number} $FakeChild
  * @property {string} FunctionNameOfGrabEventArguments
  * @property {number} StopPropagation
+ * @property {number} PreventDefault
  * @property {string[]} KeyboardEventCallOnly
  * @property {?number} DebounceTimeout
  * @property {string[]} $ReactAttributeNames
@@ -1030,6 +1032,7 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
     const handlerComponentUniqueIdentifier = remoteMethodInfo.HandlerComponentUniqueIdentifier;
     const functionNameOfGrabEventArguments = remoteMethodInfo.FunctionNameOfGrabEventArguments;
     const stopPropagation = remoteMethodInfo.StopPropagation;
+    const preventDefault = remoteMethodInfo.PreventDefault;    
     const keyboardEventCallOnly = remoteMethodInfo.KeyboardEventCallOnly;
     const debounceTimeout = remoteMethodInfo.DebounceTimeout;
 
@@ -1067,6 +1070,21 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
             arguments[0].stopPropagation();
         }
 
+        if (preventDefault)
+        {
+            if (arguments.length === 0)
+            {
+                throw CreateNewDeveloperError("There is no event argument for applying PreventDefault");
+            }
+
+            if (arguments[0] == null)
+            {
+                throw CreateNewDeveloperError("Trying to call PreventDefault method bu event argument is null.");
+            }
+
+            arguments[0].preventDefault();
+        }
+
         let eventArguments = Array.prototype.slice.call(arguments);
 
         if (keyboardEventCallOnly)
@@ -1091,7 +1109,7 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
         
         if (debounceTimeout > 0)
         {
-            const eventName = eventArguments[0]._reactName;
+            const eventName = eventArguments[0]._reactName ?? eventArguments[0].type;
 
             const operationUniqueName = eventName + '-debounce-' + GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
 

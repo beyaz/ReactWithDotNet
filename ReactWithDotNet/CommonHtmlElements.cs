@@ -9145,18 +9145,34 @@ public  partial class HtmlElement
     #endregion
 
 
-    #region string onDragOver
-    PropertyValueNode<DragEventHandler> _onDragOver;
-    static readonly PropertyValueDefinition _onDragOver_ = new()
+    #region string onDragEnter
+    PropertyValueNode<DragEventHandler> _onDragEnter;
+    static readonly PropertyValueDefinition _onDragEnter_ = new()
     {
-        name = nameof(onDragOver),
+        name = nameof(onDragEnter),
         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
         isIsVoidTaskDelegate = true
     };
-    public DragEventHandler onDragOver
+    public DragEventHandler onDragEnter
     {
-        get => _onDragOver?.value;
-        set => SetValue(_onDragOver_, ref _onDragOver, value);
+        get => _onDragEnter?.value;
+        set => SetValue(_onDragEnter_, ref _onDragEnter, value);
+    }
+    #endregion
+
+
+    #region string onDragLeave
+    PropertyValueNode<DragEventHandler> _onDragLeave;
+    static readonly PropertyValueDefinition _onDragLeave_ = new()
+    {
+        name = nameof(onDragLeave),
+        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+        isIsVoidTaskDelegate = true
+    };
+    public DragEventHandler onDragLeave
+    {
+        get => _onDragLeave?.value;
+        set => SetValue(_onDragLeave_, ref _onDragLeave, value);
     }
     #endregion
 
@@ -9173,6 +9189,22 @@ public  partial class HtmlElement
     {
         get => _onDrop?.value;
         set => SetValue(_onDrop_, ref _onDrop, value);
+    }
+    #endregion
+
+
+    #region string onDragEnd
+    PropertyValueNode<DragEventHandler> _onDragEnd;
+    static readonly PropertyValueDefinition _onDragEnd_ = new()
+    {
+        name = nameof(onDragEnd),
+        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+        isIsVoidTaskDelegate = true
+    };
+    public DragEventHandler onDragEnd
+    {
+        get => _onDragEnd?.value;
+        set => SetValue(_onDragEnd_, ref _onDragEnd, value);
     }
     #endregion
 
@@ -9223,9 +9255,13 @@ public  partial class HtmlElement
 
     public static HtmlElementModifier OnDragStart(DragEventHandler value) => Modify(x => x.onDragStart = value);
 
-    public static HtmlElementModifier OnDragOver(DragEventHandler value) => Modify(x => x.onDragOver = value);
+    public static HtmlElementModifier OnDragEnter(DragEventHandler value) => Modify(x => x.onDragEnter = value);
+
+    public static HtmlElementModifier OnDragLeave(DragEventHandler value) => Modify(x => x.onDragLeave = value);
 
     public static HtmlElementModifier OnDrop(DragEventHandler value) => Modify(x => x.onDrop = value);
+
+    public static HtmlElementModifier OnDragEnd(DragEventHandler value) => Modify(x => x.onDragEnd = value);
 
 }
 

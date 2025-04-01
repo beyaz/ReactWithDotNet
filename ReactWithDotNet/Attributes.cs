@@ -88,6 +88,10 @@ public sealed class KeyboardEventCallOnlyAttribute : Attribute
 [AttributeUsage(AttributeTargets.Method)]
 public sealed class StopPropagationAttribute : Attribute;
 
+[Serializable]
+[AttributeUsage(AttributeTargets.Method)]
+public sealed class PreventDefaultAttribute : Attribute;
+
 [AttributeUsage(AttributeTargets.Property)]
 public sealed class CustomEventAttribute : Attribute;
 

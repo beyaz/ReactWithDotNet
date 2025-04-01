@@ -329,6 +329,8 @@ static partial class ElementSerializer
                 HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier,
                 FunctionNameOfGrabEventArguments = property.FunctionNameOfGrabEventArguments,
                 StopPropagation                  = handlerMethod.HasStopPropagation,
+                PreventDefault                = handlerMethod.HasPreventDefault,
+                
                 KeyboardEventCallOnly            = handlerMethod.KeyboardEventCallOnly,
                 DebounceTimeout                  = handlerMethod.DebounceTimeout,
                 Cacheable = handlerMethod.Cacheable ? 1: null
@@ -542,6 +544,7 @@ static partial class ElementSerializer
                 HandlerComponentUniqueIdentifier = handlerComponentUniqueIdentifier,
                 FunctionNameOfGrabEventArguments = propertyDefinition.GrabEventArgumentsByUsingFunction,
                 StopPropagation                  = handlerMethod.HasStopPropagation,
+                PreventDefault                  = handlerMethod.HasPreventDefault,
                 KeyboardEventCallOnly            = handlerMethod.KeyboardEventCallOnly,
                 DebounceTimeout                  = handlerMethod.DebounceTimeout,
                 Cacheable                        = handlerMethod.Cacheable ? 1 : null
