@@ -9129,6 +9129,54 @@ public  partial class HtmlElement
     #endregion
 
 
+    #region string onDragStart
+    PropertyValueNode<DragEventHandler> _onDragStart;
+    static readonly PropertyValueDefinition _onDragStart_ = new()
+    {
+        name = nameof(onDragStart),
+        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+        isIsVoidTaskDelegate = true
+    };
+    public DragEventHandler onDragStart
+    {
+        get => _onDragStart?.value;
+        set => SetValue(_onDragStart_, ref _onDragStart, value);
+    }
+    #endregion
+
+
+    #region string onDragOver
+    PropertyValueNode<DragEventHandler> _onDragOver;
+    static readonly PropertyValueDefinition _onDragOver_ = new()
+    {
+        name = nameof(onDragOver),
+        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+        isIsVoidTaskDelegate = true
+    };
+    public DragEventHandler onDragOver
+    {
+        get => _onDragOver?.value;
+        set => SetValue(_onDragOver_, ref _onDragOver, value);
+    }
+    #endregion
+
+
+    #region string onDrop
+    PropertyValueNode<DragEventHandler> _onDrop;
+    static readonly PropertyValueDefinition _onDrop_ = new()
+    {
+        name = nameof(onDrop),
+        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+        isIsVoidTaskDelegate = true
+    };
+    public DragEventHandler onDrop
+    {
+        get => _onDrop?.value;
+        set => SetValue(_onDrop_, ref _onDrop, value);
+    }
+    #endregion
+
+
 
     public static HtmlElementModifier Modify(Action<HtmlElement> modifyAction) => CreateHtmlElementModifier(modifyAction);
     public static HtmlElementModifier Accesskey(string value) => Modify(x => x.accesskey = value);
@@ -9172,6 +9220,12 @@ public  partial class HtmlElement
     public static HtmlElementModifier OnKeyDown(KeyboardEventHandler value) => Modify(x => x.onKeyDown = value);
 
     public static HtmlElementModifier OnInput(ChangeEventHandler value) => Modify(x => x.onInput = value);
+
+    public static HtmlElementModifier OnDragStart(DragEventHandler value) => Modify(x => x.onDragStart = value);
+
+    public static HtmlElementModifier OnDragOver(DragEventHandler value) => Modify(x => x.onDragOver = value);
+
+    public static HtmlElementModifier OnDrop(DragEventHandler value) => Modify(x => x.onDrop = value);
 
 }
 
