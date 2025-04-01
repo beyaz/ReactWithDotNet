@@ -2174,7 +2174,29 @@ public class ExportingCommonHtmlElements
                         Type                              = "ChangeEventHandler",
                         IsIsVoidTaskDelegate              = true,
                         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments"
-                    }
+                    },
+                    
+                    new ()
+                    {
+                        Name                              = "onDragStart",
+                        Type                              = "DragEventHandler",
+                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+                        IsIsVoidTaskDelegate              = true,
+                    },
+                    new ()
+                    {
+                        Name                              = "onDragOver",
+                        Type                              = "DragEventHandler",
+                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+                        IsIsVoidTaskDelegate              = true,
+                    },
+                    new ()
+                    {
+                        Name                              = "onDrop",
+                        Type                              = "DragEventHandler",
+                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+                        IsIsVoidTaskDelegate              = true,
+                    },
                 ],
                 EnableCastFromString = false
             },
