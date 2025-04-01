@@ -1336,6 +1336,11 @@ function ConvertToReactElement(jsonNode, component)
             {
                 props[propName] = ConvertToEventHandlerFunction(jsonNode, propValue);
 
+                if(propName === 'onDragEnter')
+                {
+                    props['onDragOver'] = (e)=>{ e.preventDefault(); }
+                }
+
                 continue;
             }
 
