@@ -1089,8 +1089,28 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
 
         if (keyboardEventCallOnly)
         {
-            const key = arguments[0].key;
-            if (keyboardEventCallOnly.indexOf(key) < 0)
+            const e = arguments[0];
+            
+            let hasMatch = false;
+            {
+                for(const i in keyboardEventCallOnly)
+                {
+                    const targetKey = keyboardEventCallOnly[i];
+                    if (targetKey === e.key)
+                    {
+                        hasMatch = true;
+                        break;
+                    }
+
+                    if (e.ctrlKey && targetKey === "CTRL+" + e.key)
+                    {
+                        hasMatch = true;
+                        break;
+                    }
+                }
+            }            
+
+            if (!hasMatch)
             {
                 return;
             }
