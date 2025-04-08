@@ -77,7 +77,7 @@ abstract partial class HtmlElement : Element
     {
         get
         {
-            _data ??= new();
+            _data ??= new(StringComparer.OrdinalIgnoreCase);
 
             return _data;
         }
