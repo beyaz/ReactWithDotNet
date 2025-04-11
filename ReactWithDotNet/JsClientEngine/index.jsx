@@ -22,6 +22,7 @@ import "./react-with-dotnet/libraries/react-split/all";
 import "./react-with-dotnet/libraries/_uploady_/all";
 
 import "./react-with-dotnet/libraries/heroui-popover/all";
+import "./react-with-dotnet/libraries/heroui-checkbox/all";
 
 
 

@@ -17,6 +17,7 @@
         "react-transition-group": "^4.4.5",
 
         "@heroui/popover": "^2.3.17",
+        "@heroui/checkbox": "^2.3.17",
 
         "@mui/material": "6.4.3",
         "@mui/icons-material": "6.4.3",
