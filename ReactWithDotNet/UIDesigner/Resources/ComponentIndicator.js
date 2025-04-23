@@ -219,7 +219,7 @@ let marginTopIndicatorBoxElement = null;
 let marginBottomIndicatorLineElement = null;
 let marginBottomIndicatorBoxElement = null;
 
-function applyHoverEffect(targetElement)
+function applyBackgroundEffect(targetElement)
 {
     const computedStyle = getComputedStyle(targetElement);
 
@@ -227,7 +227,7 @@ function applyHoverEffect(targetElement)
 
     const linearGradientValueForOverlayBackground = 'repeating-linear-gradient(45deg, #fde047 0, #fde047 1px, transparent 0, transparent 50%)';
     const backgroundSizeValueForOverlayBackground = '5px 5px';
-    
+
     if(targetElement.tagName.toUpperCase() === 'IMG' || targetElement.tagName.toUpperCase() === 'SVG')
     {
         // overlay on element
@@ -290,7 +290,16 @@ function applyHoverEffect(targetElement)
             }
         }
     }
-    
+}
+
+function applyHoverEffect(targetElement)
+{
+    const computedStyle = getComputedStyle(targetElement);
+
+    const rect = targetElement.getBoundingClientRect();
+
+    applyBackgroundEffect(targetElement);
+        
     // Size indicator box
     {
         if (sizeIndicatorBoxElement === null)
