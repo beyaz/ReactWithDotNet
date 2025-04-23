@@ -1059,6 +1059,14 @@ document.addEventListener("scroll", () =>
     tryRemoveHoverEffectFromLastIndicatedElement();
 });
 
+document.addEventListener("DOMContentLoaded", () => 
+{
+    document.body.addEventListener("mouseout", () => 
+    {
+        tryRemoveHoverEffectFromLastIndicatedElement();
+    });
+});
+
 function GetZoom()
 {
     if (window.parent)
