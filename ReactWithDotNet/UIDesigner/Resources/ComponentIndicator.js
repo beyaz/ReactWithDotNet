@@ -462,6 +462,8 @@ function applyHoverEffect(targetElement)
         }
     }
 
+    const zoom = GetZoom() / 100;
+
     // P A D D I N G
     {
         // left
@@ -484,7 +486,7 @@ function applyHoverEffect(targetElement)
                     applySharedLineStyles(lineElement.style, 'paddingLeft');
 
                     lineElement.style.height = '1px';
-                    lineElement.style.width = computedValueAsNumber + 'px';
+                    lineElement.style.width = computedValueAsNumber * zoom + 'px';
                     lineElement.style.left = rect.left + 'px';
                     lineElement.style.top = rect.bottom - rect.height / 2 + 'px';
                 }
@@ -510,7 +512,7 @@ function applyHoverEffect(targetElement)
                     // align
                     {
                         const boxRect = boxElement.getBoundingClientRect();
-                        let positionLeftAsNumber = rect.left + computedValueAsNumber / 2 - boxRect.width / 2;
+                        let positionLeftAsNumber = rect.left + computedValueAsNumber * zoom / 2 - boxRect.width / 2;
                         if (positionLeftAsNumber < 0)
                         {
                             positionLeftAsNumber = 0;
@@ -542,8 +544,8 @@ function applyHoverEffect(targetElement)
                     applySharedLineStyles(lineElement.style, 'paddingRight');
 
                     lineElement.style.height = '1px';
-                    lineElement.style.width = computedValueAsNumber + 'px';
-                    lineElement.style.left = rect.left + rect.width - computedValueAsNumber + 'px';
+                    lineElement.style.width = computedValueAsNumber * zoom + 'px';
+                    lineElement.style.left = rect.left + rect.width - computedValueAsNumber * zoom + 'px';
                     lineElement.style.top = rect.top + rect.height / 2 + 'px';
                 }
 
@@ -568,7 +570,7 @@ function applyHoverEffect(targetElement)
                     // align
                     {
                         const boxRect = boxElement.getBoundingClientRect();
-                        boxElement.style.left = rect.left + rect.width - computedValueAsNumber / 2 - boxRect.width / 2 + 'px';
+                        boxElement.style.left = rect.left + rect.width - computedValueAsNumber * zoom / 2 - boxRect.width / 2 + 'px';
                         boxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2 + 'px';
                     }
                 }
@@ -612,7 +614,7 @@ function applyHoverEffect(targetElement)
                     {
                         const boxRect = boxElement.getBoundingClientRect();
                         boxElement.style.left = rect.left + rect.width / 2 - boxRect.width / 2 + 'px';
-                        boxElement.style.top = rect.top + computedValueAsNumber / 2 - boxRect.height / 2 + 'px';
+                        boxElement.style.top = rect.top + computedValueAsNumber * zoom / 2 - boxRect.height / 2 + 'px';
                     }
                 }
 
@@ -621,7 +623,7 @@ function applyHoverEffect(targetElement)
                     applySharedLineStyles(lineElement.style, 'paddingTop');
 
                     lineElement.style.width = '1px';
-                    lineElement.style.height = computedValueAsNumber + 'px';
+                    lineElement.style.height = computedValueAsNumber * zoom + 'px';
                     lineElement.style.top = rect.top + 'px';
                     lineElement.style.left = rect.left + rect.width / 2 + 'px';
                 }
@@ -665,7 +667,7 @@ function applyHoverEffect(targetElement)
                     {
                         const boxRect = boxElement.getBoundingClientRect();
                         boxElement.style.left = rect.left + rect.width / 2 - boxRect.width / 2 + 'px';
-                        boxElement.style.top = rect.top + rect.height - computedValueAsNumber / 2 - boxRect.height / 2 + 'px';
+                        boxElement.style.top = rect.top + rect.height - computedValueAsNumber * zoom / 2 - boxRect.height / 2 + 'px';
                     }
                 }
 
@@ -674,9 +676,9 @@ function applyHoverEffect(targetElement)
                     applySharedLineStyles(lineElement.style, 'paddingBottom');
 
                     lineElement.style.width = '1px';
-                    lineElement.style.height = computedValueAsNumber + 'px';
+                    lineElement.style.height = computedValueAsNumber * zoom + 'px';
                     lineElement.style.left = rect.left + rect.width / 2 + 'px';
-                    lineElement.style.top = rect.top + rect.height - computedValueAsNumber + 'px';
+                    lineElement.style.top = rect.top + rect.height - computedValueAsNumber * zoom + 'px';
                 }
             }
         }
@@ -704,8 +706,8 @@ function applyHoverEffect(targetElement)
                     applySharedLineStyles(lineElement.style, 'marginLeft');
 
                     lineElement.style.height = '1px';
-                    lineElement.style.width = computedValueAsNumber + 'px';
-                    lineElement.style.left = rect.left - computedValueAsNumber + 'px';
+                    lineElement.style.width = computedValueAsNumber * zoom + 'px';
+                    lineElement.style.left = rect.left - computedValueAsNumber * zoom + 'px';
                     lineElement.style.top = rect.bottom - rect.height / 2 + 'px';
                 }
 
@@ -730,7 +732,7 @@ function applyHoverEffect(targetElement)
                     // align
                     {
                         const boxRect = boxElement.getBoundingClientRect();
-                        let positionLeftAsNumber = rect.left - computedValueAsNumber / 2 - boxRect.width / 2;
+                        let positionLeftAsNumber = rect.left - computedValueAsNumber * zoom / 2 - boxRect.width / 2;
                         if (positionLeftAsNumber < 0)
                         {
                             positionLeftAsNumber = 0;
@@ -762,7 +764,7 @@ function applyHoverEffect(targetElement)
                     applySharedLineStyles(lineElement.style, 'marginRight');
 
                     lineElement.style.height = '1px';
-                    lineElement.style.width = computedValueAsNumber + 'px';
+                    lineElement.style.width = computedValueAsNumber * zoom + 'px';
                     lineElement.style.left = rect.left + rect.width + 'px';
                     lineElement.style.top = rect.bottom - rect.height / 2 + 'px';
                 }
@@ -788,7 +790,7 @@ function applyHoverEffect(targetElement)
                     // align
                     {
                         const boxRect = boxElement.getBoundingClientRect();
-                        let positionLeftAsNumber = rect.left + rect.width + computedValueAsNumber / 2 - boxRect.width / 2;
+                        let positionLeftAsNumber = rect.left + rect.width + computedValueAsNumber * zoom / 2 - boxRect.width / 2;
                         if (positionLeftAsNumber < 0)
                         {
                             positionLeftAsNumber = 0;
@@ -837,7 +839,7 @@ function applyHoverEffect(targetElement)
                     {
                         const boxRect = boxElement.getBoundingClientRect();
                         boxElement.style.left = rect.left + rect.width / 2 - boxRect.width / 2 + 'px';
-                        boxElement.style.top = rect.top - computedValueAsNumber / 2 - boxRect.height / 2 + 'px';
+                        boxElement.style.top = rect.top - computedValueAsNumber * zoom / 2 - boxRect.height / 2 + 'px';
                     }
                 }
 
@@ -846,8 +848,8 @@ function applyHoverEffect(targetElement)
                     applySharedLineStyles(lineElement.style, 'marginTop');
 
                     lineElement.style.width = '1px';
-                    lineElement.style.height = computedValueAsNumber + 'px';
-                    lineElement.style.top = rect.top - computedValueAsNumber + 'px';
+                    lineElement.style.height = computedValueAsNumber * zoom + 'px';
+                    lineElement.style.top = rect.top - computedValueAsNumber * zoom + 'px';
                     lineElement.style.left = rect.left + rect.width / 2 + 'px';
                 }
             }
@@ -890,7 +892,7 @@ function applyHoverEffect(targetElement)
                     {
                         const boxRect = boxElement.getBoundingClientRect();
                         boxElement.style.left = rect.left + rect.width / 2 - boxRect.width / 2 + 'px';
-                        boxElement.style.top = rect.top + rect.height + computedValueAsNumber / 2 - boxRect.height / 2 + 'px';
+                        boxElement.style.top = rect.top + rect.height + computedValueAsNumber * zoom / 2 - boxRect.height / 2 + 'px';
                     }
                 }
 
@@ -899,7 +901,7 @@ function applyHoverEffect(targetElement)
                     applySharedLineStyles(lineElement.style, 'marginBottom');
 
                     lineElement.style.width = '1px';
-                    lineElement.style.height = computedValueAsNumber + 'px';
+                    lineElement.style.height = computedValueAsNumber * zoom + 'px';
                     lineElement.style.left = rect.left + rect.width / 2 + 'px';
                     lineElement.style.top = rect.top + rect.height + 'px';
                 }
@@ -1009,7 +1011,6 @@ function removeHoverEffect(element)
 }
 
 
-
 let lastIndicatedElement = null;
 
 document.addEventListener("mousemove", (event) => 
@@ -1057,3 +1058,16 @@ document.addEventListener("scroll", () =>
 {
     tryRemoveHoverEffectFromLastIndicatedElement();
 });
+
+function GetZoom()
+{
+    if (window.parent)
+    {
+        if (window.parent.ComponentIndicatorZoom)
+        {
+            return window.parent.ComponentIndicatorZoom;
+        }
+    }
+
+    return 100;
+}
