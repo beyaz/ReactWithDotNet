@@ -219,13 +219,17 @@ let marginTopIndicatorBoxElement = null;
 let marginBottomIndicatorLineElement = null;
 let marginBottomIndicatorBoxElement = null;
 
-function applyBackgroundEffect(targetElement)
+function applyBackgroundEffect(targetElement, level)
 {
     const computedStyle = getComputedStyle(targetElement);
 
     const rect = targetElement.getBoundingClientRect();
 
-    const linearGradientValueForOverlayBackground = 'repeating-linear-gradient(45deg, #fde047 0, #fde047 1px, transparent 0, transparent 50%)';
+    const lineColor = level === 1 ? '#fde047' : '#47fdf5';
+
+    const lineDegree = level === 1 ? 45 : -45;
+
+    const linearGradientValueForOverlayBackground = `repeating-linear-gradient(${lineDegree}deg, ${lineColor} 0, ${lineColor} 1px, transparent 0, transparent 50%)`;
     const backgroundSizeValueForOverlayBackground = '5px 5px';
 
     if(targetElement.tagName.toUpperCase() === 'IMG' || targetElement.tagName.toUpperCase() === 'SVG')
@@ -289,6 +293,17 @@ function applyBackgroundEffect(targetElement)
                 targetElement.style.backgroundSize = backgroundSizeValueForOverlayBackground;
             }
         }
+
+       
+        if (level === 1)
+        {        
+            for (var i = 0; i < targetElement.children.length; i++)
+            {
+                const child = targetElement.children[i];
+
+                applyBackgroundEffect(child, 2);
+            }
+        }
     }
 }
 
@@ -298,7 +313,7 @@ function applyHoverEffect(targetElement)
 
     const rect = targetElement.getBoundingClientRect();
 
-    applyBackgroundEffect(targetElement);
+    applyBackgroundEffect(targetElement, 1);
         
     // Size indicator box
     {
@@ -962,19 +977,30 @@ function tryRemoveHoverEffectFromLastIndicatedElement()
 {
     if (lastIndicatedElement)
     {
-        removeHoverEffect(lastIndicatedElement);
+        removeHoverEffect(lastIndicatedElement, 1);
 
         lastIndicatedElement = null;
     }
     
 }
-function removeHoverEffect(element)
+function removeHoverEffect(element, level)
 {
     element.style.outline = element.outlineReal
     element.style.backgroundImage = element.backgroundImageReal;
     element.style.backgroundSize = element.backgroundSizeReal;
     element.style.background = element.backgroundReal;
-    element.style.backgroundColor = element.backgroundColorReal;    
+    element.style.backgroundColor = element.backgroundColorReal;
+
+    if (level === 1)
+    {
+        for (var i = 0; i < element.children.length; i++)
+        {
+            const child = element.children[i];
+
+            removeHoverEffect(child, 2);
+        }
+    }
+    
     
     function displayNone(element)
     {
