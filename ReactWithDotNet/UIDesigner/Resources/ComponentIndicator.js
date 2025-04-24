@@ -315,26 +315,38 @@ const SpacingDivs =
                     continue;
                 }
 
-                const line = SpacingDivs.getNewSpacingDiv();
+                // line
+                {
+                    const line = SpacingDivs.getNewSpacingDiv();
 
-                line.style.left = `${firstRect.x + firstRect.width}px`;
-                line.style.top = `${containerRect.top + containerRect.height/2}px`;
-                line.style.height = '0.5px';
-                line.style.width = `${NumberToString(spacing)}px`;
+                    const style = line.style;
 
-                const label = SpacingDivs.getNewSpacingDiv();
-                label.textContent = `${Math.round(spacing)}`;
-                label.style.fontSize = '8px';
-                label.style.fontWeight = '600';
-                label.style.width='fit-content';
-                label.style.height='fit-content';
-                label.style.lineHeight ='12px';
-                label.style.textAlign ='center';
-                label.style.background = 'aliceblue';
-                label.style.borderRadius = '4px';
+                    style.left   = `${firstRect.x + firstRect.width}px`;
+                    style.top    = `${containerRect.top + containerRect.height/2}px`;
+                    style.height = '0.5px';
+                    style.width  = `${NumberToString(spacing)}px`;
+                }
 
-                label.style.left = `${firstRect.x + firstRect.width + spacing / 2 - (label.getBoundingClientRect().width / 2) }px`;
-                label.style.top = `${containerRect.top + containerRect.height/2 - (label.getBoundingClientRect().height / 2)}px`;
+                // label
+                {
+                    const label = SpacingDivs.getNewSpacingDiv();
+                
+                    label.textContent = `${Math.round(spacing)}`;
+
+                    const style = label.style;
+
+                    style.fontSize = '8px';
+                    style.fontWeight = '600';
+                    style.width='fit-content';
+                    style.height='fit-content';
+                    style.lineHeight ='12px';
+                    style.textAlign ='center';
+                    style.background = 'aliceblue';
+                    style.borderRadius = '4px';
+
+                    style.left = `${firstRect.x + firstRect.width + spacing / 2 - (label.getBoundingClientRect().width / 2) }px`;
+                    style.top  = `${containerRect.top + containerRect.height/2 - (label.getBoundingClientRect().height / 2)}px`;
+                }
             }
 
             if (containerIsFlexColumn)
@@ -345,24 +357,36 @@ const SpacingDivs =
                     continue;
                 }
 
-                const line = SpacingDivs.getNewSpacingDiv();
+                // line
+                {
+                    const line = SpacingDivs.getNewSpacingDiv();
 
-                line.style.top = `${firstRect.y + firstRect.height}px`;
-                line.style.left = `${containerRect.x + containerRect.width / 2}px`;
-                line.style.width = '0.5px';
-                line.style.height = `${NumberToString(spacing)}px`;
+                    const style = line.style;
 
-                const label = SpacingDivs.getNewSpacingDiv();
-                label.textContent = `${NumberToString(spacing)}`;
-                label.style.fontSize = '6px';
-                label.style.width = 'fit-content';
-                label.style.height = 'fit-content';
-                label.style.lineHeight = '8px';
-                label.style.textAlign = 'center';
-                label.style.background = 'none';            
+                    style.top = `${firstRect.y + firstRect.height}px`;
+                    style.left = `${containerRect.x + containerRect.width / 2}px`;
+                    style.width = '0.5px';
+                    style.height = `${NumberToString(spacing)}px`;
+                }
 
-                label.style.left = `${containerRect.x + containerRect.width / 2  - (label.getBoundingClientRect().width / 2) }px`;
-                label.style.top =  `${firstRect.y + firstRect.height + spacing / 2 - (label.getBoundingClientRect().height / 2)}px`;
+                // label
+                {
+                    const label = SpacingDivs.getNewSpacingDiv();
+
+                    label.textContent = `${NumberToString(spacing)}`;
+
+                    const style = label.style;
+
+                    style.fontSize = '6px';
+                    style.width = 'fit-content';
+                    style.height = 'fit-content';
+                    style.lineHeight = '8px';
+                    style.textAlign = 'center';
+                    style.background = 'none';            
+
+                    style.left = `${containerRect.x + containerRect.width / 2  - (label.getBoundingClientRect().width / 2) }px`;
+                    style.top =  `${firstRect.y + firstRect.height + spacing / 2 - (label.getBoundingClientRect().height / 2)}px`;
+                }
             }
         }
     }
