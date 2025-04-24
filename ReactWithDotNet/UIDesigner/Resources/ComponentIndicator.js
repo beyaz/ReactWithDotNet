@@ -335,13 +335,14 @@ const SpacingDivs =
 
                     const style = label.style;
 
-                    style.fontSize = '8px';
-                    style.fontWeight = '600';
-                    style.width='fit-content';
-                    style.height='fit-content';
-                    style.lineHeight ='12px';
-                    style.textAlign ='center';
-                    style.background = 'aliceblue';
+                    // text style
+                    style.fontSize     = '8px';
+                    style.fontWeight   = '600';
+                    style.width        = 'fit-content';
+                    style.height       = 'fit-content';
+                    style.lineHeight   = '12px';
+                    style.textAlign    = 'center';
+                    style.background   = 'aliceblue';
                     style.borderRadius = '4px';
 
                     style.left = `${firstRect.x + firstRect.width + spacing / 2 - (label.getBoundingClientRect().width / 2) }px`;
@@ -377,14 +378,15 @@ const SpacingDivs =
 
                     const style = label.style;
 
-                    style.fontSize = '8px';
-                    style.fontWeight = '600';
-                    style.width = 'fit-content';
-                    style.height = 'fit-content';
-                    style.lineHeight = '12px';
-                    style.textAlign = 'center';
-                    style.background = 'aliceblue';
-                    style.borderRadius = '4px';          
+                    // text style
+                    style.fontSize     = '8px';
+                    style.fontWeight   = '600';
+                    style.width        = 'fit-content';
+                    style.height       = 'fit-content';
+                    style.lineHeight   = '12px';
+                    style.textAlign    = 'center';
+                    style.background   = 'aliceblue';
+                    style.borderRadius = '4px';        
 
                     style.left = `${containerRect.x + containerRect.width / 2  - (label.getBoundingClientRect().width / 2) }px`;
                     style.top =  `${firstRect.y + firstRect.height + spacing / 2 - (label.getBoundingClientRect().height / 2)}px`;
@@ -393,8 +395,6 @@ const SpacingDivs =
         }
     }
 }
-
-
 
 function applyBackgroundEffect(targetElement, level)
 {
