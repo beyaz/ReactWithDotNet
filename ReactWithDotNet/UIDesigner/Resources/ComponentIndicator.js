@@ -373,16 +373,18 @@ const SpacingDivs =
                 {
                     const label = SpacingDivs.getNewSpacingDiv();
 
-                    label.textContent = `${NumberToString(spacing)}`;
+                    label.textContent = `${Math.round(spacing)}`;
 
                     const style = label.style;
 
-                    style.fontSize = '6px';
+                    style.fontSize = '8px';
+                    style.fontWeight = '600';
                     style.width = 'fit-content';
                     style.height = 'fit-content';
-                    style.lineHeight = '8px';
+                    style.lineHeight = '12px';
                     style.textAlign = 'center';
-                    style.background = 'none';            
+                    style.background = 'aliceblue';
+                    style.borderRadius = '4px';          
 
                     style.left = `${containerRect.x + containerRect.width / 2  - (label.getBoundingClientRect().width / 2) }px`;
                     style.top =  `${firstRect.y + firstRect.height + spacing / 2 - (label.getBoundingClientRect().height / 2)}px`;
