@@ -56,8 +56,18 @@ function NumberToString(number)
     } 
     else 
     {
-        return number.toFixed(2);
+        return removeFromEnd( removeFromEnd(number.toFixed(2), '.00'), '0');
     }
+}
+
+function removeFromEnd(str, suffix) 
+{
+  if (str.endsWith(suffix)) 
+  {
+    return str.slice(0, -suffix.length);
+  }
+  
+  return str;
 }
 
 function getMediaQueryStyle(element, propertyName)
@@ -219,6 +229,147 @@ let marginTopIndicatorBoxElement = null;
 let marginBottomIndicatorLineElement = null;
 let marginBottomIndicatorBoxElement = null;
 
+const SpacingDivs =
+{
+    clear: [],
+
+    dirty: [],
+
+    clearSpacingDivs: function ()
+    {
+        while(SpacingDivs.dirty.length > 0)
+        {
+            const div = SpacingDivs.dirty.pop();
+
+            div.style.display = 'none';
+
+            SpacingDivs.clear.push(div);
+        }
+    },
+    
+    getNewSpacingDiv: function()
+    {
+        if (SpacingDivs.clear.length > 0)
+        {
+            const div = SpacingDivs.clear.pop();
+
+            SpacingDivs.dirty.push(div);
+
+            div.style.display = 'block';
+
+            return div;
+        }
+
+        // create new div
+        {
+            const div = document.createElement('div');
+            div.style.display = 'block';
+            div.style.position = 'fixed';
+            div.style.zIndex = 999;
+            div.style.color = div.style.background = '#538fe3';
+            div.style.pointerEvents = 'none';  
+            document.body.appendChild(div);
+
+            SpacingDivs.dirty.push(div);
+
+            return div;
+        }
+    },
+
+    showAllSpacings: function (container) 
+    {
+        const containerComputedStyle = getComputedStyle(container);
+
+        const containerIsFlexRow = containerComputedStyle.display === 'flex' && (containerComputedStyle.flexDirection === 'row' || containerComputedStyle.flexDirection === 'row-reverse');
+
+        const containerIsFlexColumn = containerComputedStyle.display === 'flex' && (containerComputedStyle.flexDirection === 'column' || containerComputedStyle.flexDirection === 'column-reverse');
+
+        if (!(containerIsFlexRow || containerIsFlexColumn))
+        {
+            return;
+        }
+
+        const children = container.children;
+
+        const containerRect = container.getBoundingClientRect();
+
+        let length = children.length - 1;
+        if (length > 50)
+        {
+            length = 50;
+        }
+
+        for (let i = 0; i < length; i++) 
+        {
+            const first = children[i];
+            const second = children[i + 1];
+
+            const firstRect = first.getBoundingClientRect();
+            const secondRect = second.getBoundingClientRect();
+
+            if (containerIsFlexRow)
+            {
+                const spacing = secondRect.x - firstRect.x - firstRect.width;
+                if (spacing <= 0) 
+                {
+                    continue;
+                }
+
+                const line = SpacingDivs.getNewSpacingDiv();
+
+                line.style.left = `${firstRect.x + firstRect.width}px`;
+                line.style.top = `${containerRect.top + containerRect.height/2}px`;
+                line.style.height = '0.5px';
+                line.style.width = `${NumberToString(spacing)}px`;
+
+                const label = SpacingDivs.getNewSpacingDiv();
+                label.textContent = `${Math.round(spacing)}`;
+                label.style.fontSize = '8px';
+                label.style.fontWeight = '600';
+                label.style.width='fit-content';
+                label.style.height='fit-content';
+                label.style.lineHeight ='12px';
+                label.style.textAlign ='center';
+                label.style.background = 'aliceblue';
+                label.style.borderRadius = '4px';
+
+                label.style.left = `${firstRect.x + firstRect.width + spacing / 2 - (label.getBoundingClientRect().width / 2) }px`;
+                label.style.top = `${containerRect.top + containerRect.height/2 - (label.getBoundingClientRect().height / 2)}px`;
+            }
+
+            if (containerIsFlexColumn)
+            {
+                const spacing = secondRect.y - firstRect.y - firstRect.height;
+                if (spacing <= 0) 
+                {
+                    continue;
+                }
+
+                const line = SpacingDivs.getNewSpacingDiv();
+
+                line.style.top = `${firstRect.y + firstRect.height}px`;
+                line.style.left = `${containerRect.x + containerRect.width / 2}px`;
+                line.style.width = '0.5px';
+                line.style.height = `${NumberToString(spacing)}px`;
+
+                const label = SpacingDivs.getNewSpacingDiv();
+                label.textContent = `${NumberToString(spacing)}`;
+                label.style.fontSize = '6px';
+                label.style.width = 'fit-content';
+                label.style.height = 'fit-content';
+                label.style.lineHeight = '8px';
+                label.style.textAlign = 'center';
+                label.style.background = 'none';            
+
+                label.style.left = `${containerRect.x + containerRect.width / 2  - (label.getBoundingClientRect().width / 2) }px`;
+                label.style.top =  `${firstRect.y + firstRect.height + spacing / 2 - (label.getBoundingClientRect().height / 2)}px`;
+            }
+        }
+    }
+}
+
+
+
 function applyBackgroundEffect(targetElement, level)
 {
     const computedStyle = getComputedStyle(targetElement);
@@ -303,6 +454,8 @@ function applyBackgroundEffect(targetElement, level)
 
                 applyBackgroundEffect(child, 2);
             }
+
+            SpacingDivs.showAllSpacings(targetElement);
         }
     }
 }
@@ -999,6 +1152,8 @@ function removeHoverEffect(element, level)
 
             removeHoverEffect(child, 2);
         }
+
+        SpacingDivs.clearSpacingDivs();
     }
     
     
