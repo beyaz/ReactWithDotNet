@@ -85,6 +85,25 @@ partial class Style
             this[key] = value;
         }
     }
+    
+    public Exception TryImport(IReadOnlyDictionary<string, string> map)
+    {
+        if (map == null)
+        {
+            return null;
+        }
+
+        foreach (var (key, value) in map)
+        {
+            var exception = TrySet(key, value);
+            if (exception is not null)
+            {
+                return exception;
+            }
+        }
+        
+        return null;
+    }
 
     public string ToCss()
     {
