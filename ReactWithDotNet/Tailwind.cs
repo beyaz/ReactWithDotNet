@@ -15,10 +15,7 @@ public static class Tailwind
     ///     style.paddingRight = <paramref name="value" />
     /// </summary>
     public static StyleModifier px(string value) => PaddingLeftRight(value);
-}
 
-partial class Mixin
-{
     // SLATE
     public const string Slate50 = "#f8fafc";
     public const string Slate100 = "#f1f5f9";
