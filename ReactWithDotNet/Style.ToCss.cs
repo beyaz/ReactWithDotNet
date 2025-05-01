@@ -20,6 +20,27 @@ partial class Style
             return;
         }
 
+        var (map, exception) = ParseCssAsDictionary(css);
+        if (exception is not null)
+        {
+            throw exception;
+        }
+        
+        foreach (var (key, value) in map)
+        {
+            this[key] = value;
+        }
+    }
+    
+    public static (IReadOnlyDictionary<string,string> value, Exception exception) ParseCssAsDictionary(string css)
+    {
+        if (css == null)
+        {
+            return (null, new ArgumentNullException(nameof(css)));
+        }
+
+        var map = new Dictionary<string, string>();
+        
         foreach (var line in css.Trim().Split(";").Select(v => v.Trim()).Where(v => !string.IsNullOrWhiteSpace(v)))
         {
             // Skip css variables
@@ -31,7 +52,7 @@ partial class Style
             var array = line.Trim().Split(":").Select(v => v.Trim()).Where(v => !string.IsNullOrWhiteSpace(v)).ToArray();
             if (array.Length != 2)
             {
-                throw CssParseException(line);
+                return (null, CssParseException(line));
             }
 
             var cssAttributeName = array[0].Trim();
@@ -40,14 +61,16 @@ partial class Style
                 var endCommentIndex = cssAttributeName.LastIndexOf("*/", StringComparison.OrdinalIgnoreCase);
                 if (endCommentIndex < 0)
                 {
-                    throw CssParseException(line);
+                    return (null, CssParseException(line));
                 }
 
                 cssAttributeName = cssAttributeName.Substring(endCommentIndex + 2).Trim();
             }
 
-            this[cssAttributeName] = array[1];
+            map[cssAttributeName] = array[1];
         }
+
+        return (map, null);
     }
     
     public void Import(IReadOnlyDictionary<string, string> map)
