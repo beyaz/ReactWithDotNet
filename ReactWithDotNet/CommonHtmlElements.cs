@@ -6136,7 +6136,7 @@ public sealed partial class svg : HtmlElement
 
 
     #region string width
-    PropertyValueNode<string> _width;
+    PropertyValueNode<UnionProp<string, double>> _width;
     static readonly PropertyValueDefinition _width_ = new()
     {
         name = nameof(width)
@@ -6144,7 +6144,7 @@ public sealed partial class svg : HtmlElement
     /// <summary>
     ///     The width of the SVG element in pixels.
     /// </summary>
-    public string width
+    public UnionProp<string, double> width
     {
         get => _width?.value;
         set => SetValue(_width_, ref _width, value);
@@ -6153,7 +6153,7 @@ public sealed partial class svg : HtmlElement
 
 
     #region string height
-    PropertyValueNode<string> _height;
+    PropertyValueNode<UnionProp<string, double>> _height;
     static readonly PropertyValueDefinition _height_ = new()
     {
         name = nameof(height)
@@ -6161,7 +6161,7 @@ public sealed partial class svg : HtmlElement
     /// <summary>
     ///     The height of the SVG element in pixels.
     /// </summary>
-    public string height
+    public UnionProp<string, double> height
     {
         get => _height?.value;
         set => SetValue(_height_, ref _height, value);
@@ -6266,14 +6266,14 @@ public sealed partial class svg : HtmlElement
     /// <br/>
     ///     The width of the SVG element in pixels.
     /// </summary>
-    public static HtmlElementModifier Width(string value) => Modify(x => x.width = value);
+    public static HtmlElementModifier Width(UnionProp<string, double> value) => Modify(x => x.width = value);
 
     /// <summary>
     ///     height = <paramref name="value"/>
     /// <br/>
     ///     The height of the SVG element in pixels.
     /// </summary>
-    public static HtmlElementModifier Height(string value) => Modify(x => x.height = value);
+    public static HtmlElementModifier Height(UnionProp<string, double> value) => Modify(x => x.height = value);
 
     /// <summary>
     ///     xmlns = <paramref name="value"/>

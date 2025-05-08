@@ -1301,13 +1301,15 @@ public class ExportingCommonHtmlElements
                     new ()
                     {
                         Name    = "width",
-                        Comment = "The width of the SVG element in pixels."
+                        Comment = "The width of the SVG element in pixels.",
+                        Type = "UnionProp<string, double>"
                     },
 
                     new ()
                     {
                         Name    = "height",
-                        Comment = "The height of the SVG element in pixels."
+                        Comment = "The height of the SVG element in pixels.",
+                        Type = "UnionProp<string, double>"
                     },
 
                     new ()
