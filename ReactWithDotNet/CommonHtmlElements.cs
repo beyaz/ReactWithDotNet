@@ -8732,6 +8732,21 @@ public sealed class input : HtmlElement
     #endregion
 
 
+    #region string onPaste
+    PropertyValueNode<ClipboardEventHandler> _onPaste;
+    static readonly PropertyValueDefinition _onPaste_ = new()
+    {
+        name = nameof(onPaste),
+        isIsVoidTaskDelegate = true
+    };
+    public ClipboardEventHandler onPaste
+    {
+        get => _onPaste?.value;
+        set => SetValue(_onPaste_, ref _onPaste, value);
+    }
+    #endregion
+
+
 
     public input(string className) : base(className) {  }
 
@@ -8820,6 +8835,8 @@ public sealed class input : HtmlElement
     public static HtmlElementModifier OnChange(ChangeEventHandler value) => Modify(x => x.onChange = value);
 
     public static HtmlElementModifier OnFocus(FocusEventHandler value) => Modify(x => x.onFocus = value);
+
+    public static HtmlElementModifier OnPaste(ClipboardEventHandler value) => Modify(x => x.onPaste = value);
 
 }
 

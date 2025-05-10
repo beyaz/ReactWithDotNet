@@ -172,3 +172,14 @@ public sealed class DragEvent
 
 public delegate Task DragEventHandler(DragEvent e);
 
+
+public sealed class ClipboardEvent : UIEvent
+{
+    public bool bubbles { get; init; }
+
+    public double timeStamp { get; init; }
+
+    public string type { get; init; }
+}
+
+public delegate Task ClipboardEventHandler(ClipboardEvent e);

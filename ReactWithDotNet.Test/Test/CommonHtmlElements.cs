@@ -2061,7 +2061,14 @@ public class ExportingCommonHtmlElements
                         Type                              = "FocusEventHandler",
                         IsIsVoidTaskDelegate              = true,
                         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments"
+                    },
+                    new ()
+                    {
+                        Name                              = "onPaste",
+                        Type                              = "ClipboardEventHandler",
+                        IsIsVoidTaskDelegate              = true
                     }
+                    
                 ],
                 EnableCastFromString = false
             },

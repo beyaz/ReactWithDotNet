@@ -1626,7 +1626,17 @@ function ConvertToSyntheticChangeEvent(e)
     };
 }
 
+function ConvertToSyntheticClipboardEvent(e)
+{
+    return {
+        currentTarget: ConvertToShadowHtmlElement(e.currentTarget),
+        target: ConvertToShadowHtmlElement(e.target),
 
+        bubbles:   e.bubbles,
+        timeStamp: e.timeStamp,
+        type:      e.type
+    };
+}
 
 function ConvertToShadowHtmlElement(htmlElement)
 {
@@ -1741,6 +1751,10 @@ function ArrangeRemoteMethodArguments(remoteMethodArguments)
                     else if (reactName === 'onChange')
                     {
                         remoteMethodArguments[i] = ConvertToSyntheticChangeEvent(prm);
+                    }
+                    else if (reactName === 'onPaste')
+                    {
+                        remoteMethodArguments[i] = ConvertToSyntheticClipboardEvent(prm);
                     }
                     else
                     {
