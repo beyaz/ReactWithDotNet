@@ -8996,16 +8996,16 @@ public  partial class HtmlElement
     #endregion
 
 
-    #region string spellcheck
-    PropertyValueNode<string> _spellcheck;
-    static readonly PropertyValueDefinition _spellcheck_ = new()
+    #region string spellCheck
+    PropertyValueNode<string> _spellCheck;
+    static readonly PropertyValueDefinition _spellCheck_ = new()
     {
-        name = nameof(spellcheck)
+        name = nameof(spellCheck)
     };
-    public string spellcheck
+    public string spellCheck
     {
-        get => _spellcheck?.value;
-        set => SetValue(_spellcheck_, ref _spellcheck, value);
+        get => _spellCheck?.value;
+        set => SetValue(_spellCheck_, ref _spellCheck, value);
     }
     #endregion
 
@@ -9250,7 +9250,7 @@ public  partial class HtmlElement
 
     public static HtmlElementModifier Role(string value) => Modify(x => x.role = value);
 
-    public static HtmlElementModifier Spellcheck(string value) => Modify(x => x.spellcheck = value);
+    public static HtmlElementModifier SpellCheck(string value) => Modify(x => x.spellCheck = value);
 
     public static HtmlElementModifier TabIndex(string value) => Modify(x => x.tabIndex = value);
 
