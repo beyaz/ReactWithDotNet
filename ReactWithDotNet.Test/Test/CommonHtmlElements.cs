@@ -2130,7 +2130,7 @@ public class ExportingCommonHtmlElements
                     },
                     new ()
                     {
-                        Name = "spellcheck"
+                        Name = "spellCheck"
                     },
                     new ()
                     {
