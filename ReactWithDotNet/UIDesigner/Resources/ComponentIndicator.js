@@ -444,7 +444,7 @@ function applyBackgroundEffect(targetElement, level)
         targetElement.backgroundReal = targetElement.style.background;
         targetElement.backgroundColorReal = targetElement.style.backgroundColor;
         
-        targetElement.style.outline = '1px dashed #bfdbfe';
+        targetElement.style.outline = '1px dashed #4597F7';
         
         const hasNoBackgroundImage = 
             targetElement.style.backgroundImage === 'none' || 
