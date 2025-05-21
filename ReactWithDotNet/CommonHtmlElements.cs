@@ -9051,6 +9051,22 @@ public  partial class HtmlElement
     #endregion
 
 
+    #region string onDoubleClick
+    PropertyValueNode<MouseEventHandler> _onDoubleClick;
+    static readonly PropertyValueDefinition _onDoubleClick_ = new()
+    {
+        name = nameof(onDoubleClick),
+        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+        isIsVoidTaskDelegate = true
+    };
+    public MouseEventHandler onDoubleClick
+    {
+        get => _onDoubleClick?.value;
+        set => SetValue(_onDoubleClick_, ref _onDoubleClick, value);
+    }
+    #endregion
+
+
     #region string onMouseEnter
     PropertyValueNode<MouseEventHandler> _onMouseEnter;
     static readonly PropertyValueDefinition _onMouseEnter_ = new()
@@ -9287,6 +9303,8 @@ public  partial class HtmlElement
     public static HtmlElementModifier Translate(string value) => Modify(x => x.translate = value);
 
     public static HtmlElementModifier OnClick(MouseEventHandler value) => Modify(x => x.onClick = value);
+
+    public static HtmlElementModifier OnDoubleClick(MouseEventHandler value) => Modify(x => x.onDoubleClick = value);
 
     public static HtmlElementModifier OnMouseEnter(MouseEventHandler value) => Modify(x => x.onMouseEnter = value);
 

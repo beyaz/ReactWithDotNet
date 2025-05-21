@@ -2147,6 +2147,13 @@ public class ExportingCommonHtmlElements
                     },
                     new ()
                     {
+                        Name                              = "onDoubleClick",
+                        Type                              = "MouseEventHandler",
+                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+                        IsIsVoidTaskDelegate              = true,
+                    },
+                    new ()
+                    {
                         Name                              = "onMouseEnter",
                         Type                              = "MouseEventHandler",
                         GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
