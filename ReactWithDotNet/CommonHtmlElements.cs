@@ -8732,21 +8732,6 @@ public sealed class input : HtmlElement
     #endregion
 
 
-    #region string onPaste
-    PropertyValueNode<ClipboardEventHandler> _onPaste;
-    static readonly PropertyValueDefinition _onPaste_ = new()
-    {
-        name = nameof(onPaste),
-        isIsVoidTaskDelegate = true
-    };
-    public ClipboardEventHandler onPaste
-    {
-        get => _onPaste?.value;
-        set => SetValue(_onPaste_, ref _onPaste, value);
-    }
-    #endregion
-
-
 
     public input(string className) : base(className) {  }
 
@@ -8835,8 +8820,6 @@ public sealed class input : HtmlElement
     public static HtmlElementModifier OnChange(ChangeEventHandler value) => Modify(x => x.onChange = value);
 
     public static HtmlElementModifier OnFocus(FocusEventHandler value) => Modify(x => x.onFocus = value);
-
-    public static HtmlElementModifier OnPaste(ClipboardEventHandler value) => Modify(x => x.onPaste = value);
 
 }
 
@@ -9226,6 +9209,51 @@ public  partial class HtmlElement
     #endregion
 
 
+    #region string onCopy
+    PropertyValueNode<ClipboardEventHandler> _onCopy;
+    static readonly PropertyValueDefinition _onCopy_ = new()
+    {
+        name = nameof(onCopy),
+        isIsVoidTaskDelegate = true
+    };
+    public ClipboardEventHandler onCopy
+    {
+        get => _onCopy?.value;
+        set => SetValue(_onCopy_, ref _onCopy, value);
+    }
+    #endregion
+
+
+    #region string onCut
+    PropertyValueNode<ClipboardEventHandler> _onCut;
+    static readonly PropertyValueDefinition _onCut_ = new()
+    {
+        name = nameof(onCut),
+        isIsVoidTaskDelegate = true
+    };
+    public ClipboardEventHandler onCut
+    {
+        get => _onCut?.value;
+        set => SetValue(_onCut_, ref _onCut, value);
+    }
+    #endregion
+
+
+    #region string onPaste
+    PropertyValueNode<ClipboardEventHandler> _onPaste;
+    static readonly PropertyValueDefinition _onPaste_ = new()
+    {
+        name = nameof(onPaste),
+        isIsVoidTaskDelegate = true
+    };
+    public ClipboardEventHandler onPaste
+    {
+        get => _onPaste?.value;
+        set => SetValue(_onPaste_, ref _onPaste, value);
+    }
+    #endregion
+
+
 
     public static HtmlElementModifier Modify(Action<HtmlElement> modifyAction) => CreateHtmlElementModifier(modifyAction);
     public static HtmlElementModifier Accesskey(string value) => Modify(x => x.accesskey = value);
@@ -9279,6 +9307,12 @@ public  partial class HtmlElement
     public static HtmlElementModifier OnDrop(DragEventHandler value) => Modify(x => x.onDrop = value);
 
     public static HtmlElementModifier OnDragEnd(DragEventHandler value) => Modify(x => x.onDragEnd = value);
+
+    public static HtmlElementModifier OnCopy(ClipboardEventHandler value) => Modify(x => x.onCopy = value);
+
+    public static HtmlElementModifier OnCut(ClipboardEventHandler value) => Modify(x => x.onCut = value);
+
+    public static HtmlElementModifier OnPaste(ClipboardEventHandler value) => Modify(x => x.onPaste = value);
 
 }
 
