@@ -655,7 +655,15 @@ public static partial class Mixin
     
     public static HtmlElementModifier OnKeyDown(KeyboardEventHandler onKeyDownHandler)
         => CreateHtmlElementModifier<HtmlElement>(element => element.onKeyDown = onKeyDownHandler);
-
+    
+    public static HtmlElementModifier OnPaste(ClipboardEventHandler handler)
+        => CreateHtmlElementModifier<HtmlElement>(element => element.onPaste = handler);
+    
+    public static HtmlElementModifier OnCut(ClipboardEventHandler handler)
+        => CreateHtmlElementModifier<HtmlElement>(element => element.onCut = handler);
+    
+    public static HtmlElementModifier OnCopy(ClipboardEventHandler handler)
+        => CreateHtmlElementModifier<HtmlElement>(element => element.onCopy = handler);
     
     
     public static HtmlElementModifier DraggableTrue
