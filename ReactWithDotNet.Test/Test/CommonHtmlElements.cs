@@ -2061,12 +2061,6 @@ public class ExportingCommonHtmlElements
                         Type                              = "FocusEventHandler",
                         IsIsVoidTaskDelegate              = true,
                         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments"
-                    },
-                    new ()
-                    {
-                        Name                              = "onPaste",
-                        Type                              = "ClipboardEventHandler",
-                        IsIsVoidTaskDelegate              = true
                     }
                     
                 ],
@@ -2219,6 +2213,24 @@ public class ExportingCommonHtmlElements
                         Type                              = "DragEventHandler",
                         GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
                         IsIsVoidTaskDelegate              = true,
+                    },
+                    new ()
+                    {
+                        Name                 = "onCopy",
+                        Type                 = "ClipboardEventHandler",
+                        IsIsVoidTaskDelegate = true
+                    },
+                    new ()
+                    {
+                        Name                 = "onCut",
+                        Type                 = "ClipboardEventHandler",
+                        IsIsVoidTaskDelegate = true
+                    },
+                    new ()
+                    {
+                        Name                 = "onPaste",
+                        Type                 = "ClipboardEventHandler",
+                        IsIsVoidTaskDelegate = true
                     }
                 ],
                 EnableCastFromString = false
