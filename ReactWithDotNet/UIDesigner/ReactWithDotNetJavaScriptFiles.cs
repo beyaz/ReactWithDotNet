@@ -162,7 +162,7 @@ public sealed class ReactWithDotNetJavaScriptFiles
 
 partial class Mixin
 {
-    internal const string Version = "1.0.18";
+    internal const string Version = "1.0.19";
     public static readonly string IndexJsFilePath = $"/ReactWithDotNet/{Version}/index.js";
     public static readonly string IndexCssFilePath = $"/ReactWithDotNet/{Version}/index.css";
 }
