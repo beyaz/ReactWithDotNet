@@ -487,6 +487,9 @@ function applyBackgroundEffect(targetElement, level)
 }
 
 let topLeftCircle = null;
+let topRightCircle = null;
+let bottomLeftCircle = null;
+let bottomRightCircle = null;
 
 /**
  * @param {HTMLElement} targetElement
@@ -497,13 +500,34 @@ function applyCirclesOnCorners(targetElement)
 
     const rect = targetElement.getBoundingClientRect();
 
-    arrangeLeftTop((topLeftCircle = topLeftCircle ?? createCircle()));
+    arrangeTopLeft((topLeftCircle = topLeftCircle ?? createCircle()));
+    arrangeTopRight((topRightCircle = topRightCircle ?? createCircle()));
+    arrangeBottomLeft((bottomLeftCircle = bottomLeftCircle ?? createCircle()));
+    arrangeBottomRight((bottomRightCircle = bottomRightCircle ?? createCircle()));
     
 
-    function arrangeLeftTop(circleElement)
+    function arrangeTopLeft(circleElement)
     {
         circleElement.style.left = rect.left - circleSize/2 + 'px';
         circleElement.style.top = rect.top - circleSize/2 + 'px';
+    }
+
+    function arrangeTopRight(circleElement)
+    {
+        circleElement.style.left = rect.right - circleSize/2 + 'px';
+        circleElement.style.top = rect.top - circleSize/2 + 'px';
+    }
+
+    function arrangeBottomLeft(circleElement)
+    {
+        circleElement.style.left = rect.left - circleSize/2 + 'px';
+        circleElement.style.top = rect.top + rect.height - circleSize/2 + 'px';
+    }
+
+    function arrangeBottomRight(circleElement)
+    {
+        circleElement.style.left = rect.right - circleSize/2 + 'px';
+        circleElement.style.top = rect.top + rect.height - circleSize/2 + 'px';
     }
 
     function createCircle()
@@ -532,7 +556,9 @@ function applyHoverEffect(targetElement)
 
     const rect = targetElement.getBoundingClientRect();    
 
-    applyBackgroundEffect(targetElement, 1);
+    applyCirclesOnCorners(targetElement);
+
+    // applyBackgroundEffect(targetElement, 1);
         
     // Size indicator box
     {
