@@ -486,11 +486,51 @@ function applyBackgroundEffect(targetElement, level)
     }
 }
 
+let topLeftCircle = null;
+
+/**
+ * @param {HTMLElement} targetElement
+ */
+function applyCirclesOnCorners(targetElement)
+{
+    const circleSize = 4;
+
+    const rect = targetElement.getBoundingClientRect();
+
+    arrangeLeftTop((topLeftCircle = topLeftCircle ?? createCircle()));
+    
+
+    function arrangeLeftTop(circleElement)
+    {
+        circleElement.style.left = rect.left - circleSize/2 + 'px';
+        circleElement.style.top = rect.top - circleSize/2 + 'px';
+    }
+
+    function createCircle()
+    {
+        var circleElement = document.createElement('div');
+
+        document.body.appendChild(circleElement);
+
+        circleElement.style.display = 'block';
+        circleElement.style.position = 'fixed';
+        circleElement.style.zIndex = '999999';
+        circleElement.style.borderRadius = '8px';
+        circleElement.style.background = 'white';
+        circleElement.style.border = '0.5px solid #4597F7';
+        circleElement.style.width = circleSize + 'px';
+        circleElement.style.height = circleSize + 'px';
+
+        return circleElement;
+    }
+}
+
+
 function applyHoverEffect(targetElement)
 {
     const computedStyle = getComputedStyle(targetElement);
 
-    const rect = targetElement.getBoundingClientRect();
+    const rect = targetElement.getBoundingClientRect();    
 
     applyBackgroundEffect(targetElement, 1);
         
