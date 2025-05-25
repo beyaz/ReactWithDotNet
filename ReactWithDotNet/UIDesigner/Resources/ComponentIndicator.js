@@ -558,7 +558,7 @@ function applyHoverEffect(targetElement)
 
     applyCirclesOnCorners(targetElement);
 
-    // applyBackgroundEffect(targetElement, 1);
+    applyBackgroundEffect(targetElement, 1);
         
     // Size indicator box
     {
