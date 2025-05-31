@@ -56,9 +56,22 @@ partial class Mixin
                     continue;
                 }
 
-                if (propertyInfo.GetCustomAttribute<CustomEventAttribute>() is not null)
+                var isSubclassOfThirdPartyReactComponent = propertyInfo.DeclaringType?.IsSubclassOf(typeof(ThirdPartyReactComponent)) == true;
+
+
+                if (propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate)))
                 {
-                    continue;
+                    if (propertyInfo.GetCustomAttribute<CustomEventAttribute>() is not null)
+                    {
+                        continue;
+                    }
+                    
+                    if (isSubclassOfThirdPartyReactComponent || propertyInfo.DeclaringType == typeof(FunctionalComponent))
+                    {
+                        continue;
+                    }
+                    
+                    // certainly user defined delegate
                 }
 
                 if (propertyInfo.PropertyType == typeof(Element) || propertyInfo.PropertyType.IsSubclassOf(typeof(Element)))
@@ -66,7 +79,7 @@ partial class Mixin
                     continue;
                 }
 
-                if (propertyInfo.CanWrite == false && !propertyInfo.DeclaringType?.IsSubclassOf(typeof(ThirdPartyReactComponent)) == true)
+                if (propertyInfo.CanWrite == false && !isSubclassOfThirdPartyReactComponent)
                 {
                     continue;
                 }
