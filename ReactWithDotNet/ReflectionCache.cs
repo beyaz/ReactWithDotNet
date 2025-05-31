@@ -48,10 +48,15 @@ partial class Mixin
                     || propertyInfo.Name == nameof(ReactComponentBase.key)
                     || propertyInfo.Name == nameof(ReactComponentBase.Client)
                     || propertyInfo.Name == "state"
-                    || propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
+                    // || propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
                     || propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>() is not null
                     || (propertyInfo.Name == "Item" && propertyInfo.GetIndexParameters().Length > 0)
                    )
+                {
+                    continue;
+                }
+
+                if (propertyInfo.GetCustomAttribute<CustomEventAttribute>() is not null)
                 {
                     continue;
                 }

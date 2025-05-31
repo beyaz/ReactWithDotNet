@@ -619,7 +619,18 @@ static partial class JsonSerializationOptionHelper
                 {
                     if (reader.TokenType == JsonTokenType.EndObject)
                     {
-                        return obj;
+                        if (obj is not null)
+                        {
+                            return obj;    
+                        }
+
+                        if (delegateType is not null && methodInfo is not null)
+                        {
+                            return Delegate.CreateDelegate(delegateType, null, methodInfo);
+                        }
+
+                        // todo: maybe error
+                        return null;
                     }
 
                     if (reader.TokenType != JsonTokenType.PropertyName)
