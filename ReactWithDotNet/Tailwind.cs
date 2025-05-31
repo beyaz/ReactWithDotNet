@@ -2,20 +2,6 @@
 
 public static class Tailwind
 {
-    /// <summary>
-    ///     style.paddingLeft = <paramref name="value" /> + 'px'
-    ///     <br />
-    ///     style.paddingRight = <paramref name="value" /> + 'px'
-    /// </summary>
-    public static StyleModifier px(double value) => PaddingLeftRight(value);
-
-    /// <summary>
-    ///     style.paddingLeft = <paramref name="value" />
-    ///     <br />
-    ///     style.paddingRight = <paramref name="value" />
-    /// </summary>
-    public static StyleModifier px(string value) => PaddingLeftRight(value);
-
     // SLATE
     public const string Slate50 = "#f8fafc";
     public const string Slate100 = "#f1f5f9";

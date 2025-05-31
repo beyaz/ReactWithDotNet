@@ -4,16 +4,6 @@ partial class svg
 {
     /// <summary>
     ///     svg.width = <paramref name="width" /> + 'px'
-    /// </summary>
-    public static HtmlElementModifier Width(double width) => Width(width.AsPixel());
-
-    /// <summary>
-    ///     svg.height = <paramref name="height" /> + 'px'
-    /// </summary>
-    public static HtmlElementModifier Height(double height) => Height(height.AsPixel());
-    
-    /// <summary>
-    ///     svg.width = <paramref name="width" /> + 'px'
     ///     <br/>
     ///     svg.height = <paramref name="height" /> + 'px'
     /// </summary>
