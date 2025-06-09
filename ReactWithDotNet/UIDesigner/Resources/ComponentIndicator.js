@@ -1331,6 +1331,11 @@ document.addEventListener("mousemove", (event) =>
 
 function HighlightElement(htmlElement)
 {
+    if (htmlElement == null)
+    {
+        return;
+    }
+
     if (canApplyHoverEffect(htmlElement) === false)
     {
         return;
