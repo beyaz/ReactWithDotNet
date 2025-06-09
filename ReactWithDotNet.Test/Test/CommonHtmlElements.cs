@@ -510,7 +510,15 @@ public class ExportingCommonHtmlElements
                         Name    = "stroke-width",
                         Comment = "The width of the stroke of the circle.",
                         Type = "UnionProp<string,double>"
-                    }
+                    },
+                    new ()
+                    {
+                        Name    = "stroke-linecap"
+                    },
+                    new ()
+                    {
+                        Name    = "stroke-linejoin"
+                    },
                 ],
                 EnableCastFromString = false
             },
