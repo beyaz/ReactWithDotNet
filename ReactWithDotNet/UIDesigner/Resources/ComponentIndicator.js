@@ -1331,11 +1331,6 @@ document.addEventListener("mousemove", (event) =>
 
 function HighlightElement(htmlElement)
 {
-    if (htmlElement === lastIndicatedElement)
-    {
-        return;
-    }
-    
     if (canApplyHoverEffect(htmlElement) === false)
     {
         return;
