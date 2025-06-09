@@ -2988,6 +2988,34 @@ public sealed class circle : HtmlElement
     #endregion
 
 
+    #region string strokeLinecap
+    PropertyValueNode<string> _strokeLinecap;
+    static readonly PropertyValueDefinition _strokeLinecap_ = new()
+    {
+        name = nameof(strokeLinecap)
+    };
+    public string strokeLinecap
+    {
+        get => _strokeLinecap?.value;
+        set => SetValue(_strokeLinecap_, ref _strokeLinecap, value);
+    }
+    #endregion
+
+
+    #region string strokeLinejoin
+    PropertyValueNode<string> _strokeLinejoin;
+    static readonly PropertyValueDefinition _strokeLinejoin_ = new()
+    {
+        name = nameof(strokeLinejoin)
+    };
+    public string strokeLinejoin
+    {
+        get => _strokeLinejoin?.value;
+        set => SetValue(_strokeLinejoin_, ref _strokeLinejoin, value);
+    }
+    #endregion
+
+
 
     public circle(string className) : base(className) {  }
 
@@ -3046,6 +3074,10 @@ public sealed class circle : HtmlElement
     ///     The width of the stroke of the circle.
     /// </summary>
     public static HtmlElementModifier StrokeWidth(UnionProp<string,double> value) => Modify(x => x.strokeWidth = value);
+
+    public static HtmlElementModifier StrokeLinecap(string value) => Modify(x => x.strokeLinecap = value);
+
+    public static HtmlElementModifier StrokeLinejoin(string value) => Modify(x => x.strokeLinejoin = value);
 
 }
 
