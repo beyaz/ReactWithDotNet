@@ -1325,16 +1325,30 @@ document.addEventListener("mousemove", (event) =>
         }
     }
 
-    // Check if the mouse has entered a new element
-    if (currentElement !== lastIndicatedElement) 
-    {
-        tryRemoveHoverEffectFromLastIndicatedElement();
-
-        lastIndicatedElement = currentElement;
-            
-        applyHoverEffect(lastIndicatedElement);
-    }
+    HighlightElement(currentElement);
 });
+
+
+function HighlightElement(htmlElement)
+{
+    if (htmlElement === lastIndicatedElement)
+    {
+        return;
+    }
+    
+    if (canApplyHoverEffect(htmlElement) === false)
+    {
+        return;
+    }
+
+    tryRemoveHoverEffectFromLastIndicatedElement();
+
+    lastIndicatedElement = htmlElement;
+            
+    applyHoverEffect(lastIndicatedElement);
+}
+
+window.ReactWithDotNetHighlightElement = HighlightElement;
 
 document.addEventListener("scroll", () =>
 {
