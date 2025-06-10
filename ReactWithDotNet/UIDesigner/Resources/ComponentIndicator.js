@@ -1289,7 +1289,12 @@ function removeHoverEffect(element, level)
     displayNone(marginTopIndicatorBoxElement);
 
     displayNone(marginBottomIndicatorLineElement);
-    displayNone(marginBottomIndicatorBoxElement);    
+    displayNone(marginBottomIndicatorBoxElement);
+
+    displayNone(topLeftCircle);
+    displayNone(topRightCircle);
+    displayNone(bottomLeftCircle);
+    displayNone(bottomRightCircle);
 }
 
 
@@ -1331,6 +1336,8 @@ document.addEventListener("mousemove", (event) =>
 
 function HighlightElement(htmlElement)
 {
+    tryRemoveHoverEffectFromLastIndicatedElement();
+
     if (htmlElement == null)
     {
         return;
@@ -1340,8 +1347,6 @@ function HighlightElement(htmlElement)
     {
         return;
     }
-
-    tryRemoveHoverEffectFromLastIndicatedElement();
 
     lastIndicatedElement = htmlElement;
             
