@@ -81,7 +81,7 @@ public sealed class ReactWithDotNetJavaScriptFiles
                 };
             }
 
-            resourceName = requestPath;
+            resourceName = ReactWithDotNetDesignerComponentPreview.HelperJsFileResourceName;
         }
 
         const string folderName = "/ReactWithDotNet/" + Mixin.Version + "/";
