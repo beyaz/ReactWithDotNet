@@ -504,7 +504,11 @@ function applyCirclesOnCorners(targetElement)
     arrangeTopRight((topRightCircle = topRightCircle ?? createCircle()));
     arrangeBottomLeft((bottomLeftCircle = bottomLeftCircle ?? createCircle()));
     arrangeBottomRight((bottomRightCircle = bottomRightCircle ?? createCircle()));
-    
+
+    topLeftCircle.style.display = 'block';
+    topRightCircle.style.display = 'block';
+    bottomLeftCircle.style.display = 'block';
+    bottomRightCircle.style.display = 'block';    
 
     function arrangeTopLeft(circleElement)
     {
