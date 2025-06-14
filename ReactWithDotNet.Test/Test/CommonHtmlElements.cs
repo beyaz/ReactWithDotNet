@@ -817,6 +817,10 @@ public class ExportingCommonHtmlElements
                     new ()
                     {
                         Name = "strokeLinejoin"
+                    },
+                    new ()
+                    {
+                        Name    = "stroke-dasharray"
                     }
                 ],
                 EnableCastFromString = false

@@ -4213,6 +4213,20 @@ public sealed class path : HtmlElement
     #endregion
 
 
+    #region string strokeDasharray
+    PropertyValueNode<string> _strokeDasharray;
+    static readonly PropertyValueDefinition _strokeDasharray_ = new()
+    {
+        name = nameof(strokeDasharray)
+    };
+    public string strokeDasharray
+    {
+        get => _strokeDasharray?.value;
+        set => SetValue(_strokeDasharray_, ref _strokeDasharray, value);
+    }
+    #endregion
+
+
 
     public path(string className) : base(className) {  }
 
@@ -4265,6 +4279,8 @@ public sealed class path : HtmlElement
     public static HtmlElementModifier StrokeLinecap(string value) => Modify(x => x.strokeLinecap = value);
 
     public static HtmlElementModifier StrokeLinejoin(string value) => Modify(x => x.strokeLinejoin = value);
+
+    public static HtmlElementModifier StrokeDasharray(string value) => Modify(x => x.strokeDasharray = value);
 
 }
 
