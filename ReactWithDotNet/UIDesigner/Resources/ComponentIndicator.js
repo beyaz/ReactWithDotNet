@@ -289,6 +289,8 @@ const SpacingDivs =
             return;
         }
 
+        const zoom = 100 / GetZoom();
+
         const children = container.children;
 
         const containerRect = container.getBoundingClientRect();
@@ -331,7 +333,7 @@ const SpacingDivs =
                 {
                     const label = SpacingDivs.getNewSpacingDiv();
                 
-                    label.textContent = `${Math.round(spacing)}`;
+                    label.textContent = `${Math.round(spacing * zoom)}`;
 
                     const style = label.style;
 
@@ -374,7 +376,7 @@ const SpacingDivs =
                 {
                     const label = SpacingDivs.getNewSpacingDiv();
 
-                    label.textContent = `${Math.round(spacing)}`;
+                    label.textContent = `${Math.round(spacing * zoom)}`;
 
                     const style = label.style;
 
