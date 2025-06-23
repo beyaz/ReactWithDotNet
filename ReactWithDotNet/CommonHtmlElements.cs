@@ -6279,6 +6279,91 @@ public sealed partial class svg : HtmlElement
     #endregion
 
 
+    #region string stroke
+    PropertyValueNode<string> _stroke;
+    static readonly PropertyValueDefinition _stroke_ = new()
+    {
+        name = nameof(stroke)
+    };
+    /// <summary>
+    ///     The stroke color of the ellipse.
+    /// </summary>
+    public string stroke
+    {
+        get => _stroke?.value;
+        set => SetValue(_stroke_, ref _stroke, value);
+    }
+    #endregion
+
+
+    #region string strokeWidth
+    PropertyValueNode<UnionProp<string,double>> _strokeWidth;
+    static readonly PropertyValueDefinition _strokeWidth_ = new()
+    {
+        name = nameof(strokeWidth)
+    };
+    /// <summary>
+    ///     The width of the stroke.
+    /// </summary>
+    public UnionProp<string,double> strokeWidth
+    {
+        get => _strokeWidth?.value;
+        set => SetValue(_strokeWidth_, ref _strokeWidth, value);
+    }
+    #endregion
+
+
+    #region string strokeLinecap
+    PropertyValueNode<string> _strokeLinecap;
+    static readonly PropertyValueDefinition _strokeLinecap_ = new()
+    {
+        name = nameof(strokeLinecap)
+    };
+    /// <summary>
+    ///     The style of the line's endpoints.
+    /// </summary>
+    public string strokeLinecap
+    {
+        get => _strokeLinecap?.value;
+        set => SetValue(_strokeLinecap_, ref _strokeLinecap, value);
+    }
+    #endregion
+
+
+    #region string strokeLinejoin
+    PropertyValueNode<string> _strokeLinejoin;
+    static readonly PropertyValueDefinition _strokeLinejoin_ = new()
+    {
+        name = nameof(strokeLinejoin)
+    };
+    /// <summary>
+    ///     The style of the line's corners.
+    /// </summary>
+    public string strokeLinejoin
+    {
+        get => _strokeLinejoin?.value;
+        set => SetValue(_strokeLinejoin_, ref _strokeLinejoin, value);
+    }
+    #endregion
+
+
+    #region string strokeOpacity
+    PropertyValueNode<string> _strokeOpacity;
+    static readonly PropertyValueDefinition _strokeOpacity_ = new()
+    {
+        name = nameof(strokeOpacity)
+    };
+    /// <summary>
+    ///     The opacity (transparency) of the line's stroke.
+    /// </summary>
+    public string strokeOpacity
+    {
+        get => _strokeOpacity?.value;
+        set => SetValue(_strokeOpacity_, ref _strokeOpacity, value);
+    }
+    #endregion
+
+
 
     public svg(string className) : base(className) {  }
 
@@ -6340,6 +6425,41 @@ public sealed partial class svg : HtmlElement
     public static HtmlElementModifier ViewBox(string value) => Modify(x => x.viewBox = value);
 
     public static HtmlElementModifier Fill(string value) => Modify(x => x.fill = value);
+
+    /// <summary>
+    ///     stroke = <paramref name="value"/>
+    /// <br/>
+    ///     The stroke color of the ellipse.
+    /// </summary>
+    public static HtmlElementModifier Stroke(string value) => Modify(x => x.stroke = value);
+
+    /// <summary>
+    ///     strokeWidth = <paramref name="value"/>
+    /// <br/>
+    ///     The width of the stroke.
+    /// </summary>
+    public static HtmlElementModifier StrokeWidth(UnionProp<string,double> value) => Modify(x => x.strokeWidth = value);
+
+    /// <summary>
+    ///     strokeLinecap = <paramref name="value"/>
+    /// <br/>
+    ///     The style of the line's endpoints.
+    /// </summary>
+    public static HtmlElementModifier StrokeLinecap(string value) => Modify(x => x.strokeLinecap = value);
+
+    /// <summary>
+    ///     strokeLinejoin = <paramref name="value"/>
+    /// <br/>
+    ///     The style of the line's corners.
+    /// </summary>
+    public static HtmlElementModifier StrokeLinejoin(string value) => Modify(x => x.strokeLinejoin = value);
+
+    /// <summary>
+    ///     strokeOpacity = <paramref name="value"/>
+    /// <br/>
+    ///     The opacity (transparency) of the line's stroke.
+    /// </summary>
+    public static HtmlElementModifier StrokeOpacity(string value) => Modify(x => x.strokeOpacity = value);
 
 }
 

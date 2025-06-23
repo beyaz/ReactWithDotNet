@@ -1343,6 +1343,32 @@ public class ExportingCommonHtmlElements
                     new ()
                     {
                         Name = "fill"
+                    },
+                    new ()
+                    {
+                        Name    = "stroke",
+                        Comment = "The stroke color of the ellipse."
+                    },
+                    new ()
+                    {
+                        Name    = "stroke-width",
+                        Comment = "The width of the stroke.",
+                        Type    = "UnionProp<string,double>"
+                    },
+                    new ()
+                    {
+                        Name    = "stroke-linecap",
+                        Comment = "The style of the line's endpoints."
+                    },
+                    new ()
+                    {
+                        Name    = "stroke-linejoin",
+                        Comment = "The style of the line's corners."
+                    },
+                    new ()
+                    {
+                        Name    = "stroke-opacity",
+                        Comment = "The opacity (transparency) of the line's stroke."
                     }
                 ],
                 EnableCastFromString = false
