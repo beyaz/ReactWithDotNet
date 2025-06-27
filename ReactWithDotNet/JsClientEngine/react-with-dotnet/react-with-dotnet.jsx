@@ -1688,7 +1688,9 @@ function ConvertToShadowHtmlElement(htmlElement)
         scrollHeight: htmlElement.scrollHeight,
         scrollLeft: htmlElement.scrollLeft,
         scrollTop: htmlElement.scrollTop,
-        scrollWidth: htmlElement.scrollWidth
+        scrollWidth: htmlElement.scrollWidth,
+
+        boundingClientRect: htmlElement.getBoundingClientRect()
     };
 }
 

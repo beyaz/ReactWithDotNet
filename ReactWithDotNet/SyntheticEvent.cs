@@ -46,6 +46,27 @@ public sealed class ShadowHtmlElement
     public double scrollLeft { get; init; }
     public double scrollTop { get; init; }
     public double scrollWidth { get; init; }
+    
+    public DOMRect boundingClientRect { get; init; }
+}
+
+public sealed record DOMRect
+{
+    public double x { get; init; }
+
+    public double y { get; init; }
+
+    public double width { get; init; }
+
+    public double height { get; init; }
+
+    public double left { get; init; }
+
+    public double right { get; init; }
+
+    public double top { get; init; }
+
+    public double bottom { get; init; }
 }
 
 public sealed class ScrollEvent : UIEvent
