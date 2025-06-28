@@ -2119,7 +2119,7 @@ function DefineComponent(componentDeclaration)
                 {
                     const cuid = props.$jsonNode[DotNetComponentUniqueIdentifier];
 
-                    if (DynamicStyles[cuid] !== styles)
+                    if (!DynamicStyles[cuid])
                     {
                         DynamicStyles[cuid] = styles;
 
@@ -2330,12 +2330,12 @@ function DefinePureComponent(componentDeclaration)
 
             // move styles to dom if not exists
             {
-                const styles = props['$styles'];
+                const styles = props.$styles;
                 if (styles)
                 {
-                    const cuid = props['$jsonNode'][DotNetComponentUniqueIdentifier];
+                    const cuid = props.$jsonNode[DotNetComponentUniqueIdentifier];
 
-                    if (DynamicStyles[cuid] !== styles)
+                    if (!DynamicStyles[cuid])
                     {
                         DynamicStyles[cuid] = styles;
 
