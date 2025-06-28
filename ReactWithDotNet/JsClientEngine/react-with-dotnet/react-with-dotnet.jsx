@@ -3028,7 +3028,7 @@ function CreateNewDeveloperError(message)
 }
 
 /*
-  {  "cuid": [[cssClassInfo]]], ...  }
+  {  "cuid": [[cssClassInfo], [cssClassInfo]], ...  }
 */
 let DynamicStyles = {};
 let ReactWithDotNetDynamicCssElement = null;
