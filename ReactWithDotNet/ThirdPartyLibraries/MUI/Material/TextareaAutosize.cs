@@ -55,7 +55,7 @@ public sealed class TextareaAutosize : ElementBase
     
     
     [ReactProp]
-    [ReactBind(targetProp = nameof(value), jsValueAccess = "e", eventName = "onChange")]
+    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.currentTarget.value", eventName = "onChange")]
     [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
     public Expression<Func<string>> valueBind { get; set; }
 
