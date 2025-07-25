@@ -20,6 +20,7 @@ register("Autocomplete", React.lazy(() => import('./Autocomplete')));
 register("Switch", React.lazy(() => import('./Switch')));
 register("Tooltip",     React.lazy(() => import('./Tooltip')));
 register("Button",      React.lazy(() => import('./Button')));
+register("Box",      React.lazy(() => import('./Box')));
 register("Input",       React.lazy(() => import('./Input')));
 register("InputBase",   React.lazy(() => import('./InputBase')));
 register("Paper",       React.lazy(() => import('./Paper')));
