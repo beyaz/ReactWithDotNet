@@ -4,6 +4,17 @@ namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
 public sealed class Typography : ElementBase
 {
+    [ReactProp]
+    public MouseEventHandler onClick{ get; set; }
+        
+        
+    /// <summary>
+    /// Defines the justification of items along the horizontal axis.
+    /// </summary>
+    [ReactProp]
+    public string id { get; set; }
+    
+    
     /// <summary>
     ///     Set the text-align on the component.
     ///     <br/>
