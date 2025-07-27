@@ -5,6 +5,42 @@ namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 public sealed class Grid : ElementBase
 {
     /// <summary>
+    /// Defines the justification of items along the horizontal axis.
+    /// </summary>
+    [ReactProp]
+    public string justifyContent { get; set; }
+
+    /// <summary>
+    /// Defines the alignment of items along the vertical axis.
+    /// </summary>
+    [ReactProp]
+    public string alignItems { get; set; }
+    
+    /// <summary>
+    /// Defines the alignment of content within the container when there's extra space.
+    /// </summary>
+    [ReactProp]
+    public string alignContent { get; set; }
+
+    /// <summary>
+    /// Reverses the direction of the flex items.
+    /// </summary>
+    [ReactProp]
+    public bool? directionReverse { get; set; }
+    
+    /// <summary>
+    /// If true, the item will grow to fill available space.
+    /// </summary>
+    [ReactProp]
+    public bool? zeroMinWidth { get; set; }
+    
+    /// <summary>
+    /// Defines if the component is an item inside a container.
+    /// </summary>
+    [ReactProp]
+    public bool? item { get; set; }
+    
+    /// <summary>
     /// The number of columns.
     /// </summary>
     [ReactProp]
