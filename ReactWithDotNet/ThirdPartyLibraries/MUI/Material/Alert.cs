@@ -53,4 +53,7 @@ public sealed class Alert : ElementBase
     /// </summary>
     [ReactProp]
     public string id { get; set; }
+    
+    [ReactProp]
+    public MouseEventHandler onClick{ get; set; }
 }
