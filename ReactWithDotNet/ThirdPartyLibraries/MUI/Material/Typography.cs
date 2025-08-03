@@ -6,7 +6,9 @@ public sealed class Typography : ElementBase
 {
     [ReactProp]
     public MouseEventHandler onClick{ get; set; }
-        
+    
+    [ReactProp]
+    public dangerouslySetInnerHTML dangerouslySetInnerHTML{ get; set; }
         
     /// <summary>
     /// Defines the justification of items along the horizontal axis.
