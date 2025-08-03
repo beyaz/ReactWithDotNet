@@ -12,6 +12,7 @@ function register(name, value)
 }
 
 // Connect components as Lazy
+register("Alert", React.lazy(() => import('./Alert')));
 register("Accordion", React.lazy(() => import('./Accordion')));
 register("AccordionSummary", React.lazy(() => import('./AccordionSummary')));
 register("AccordionDetails", React.lazy(() => import('./AccordionDetails')));
