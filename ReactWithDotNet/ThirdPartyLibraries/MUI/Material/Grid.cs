@@ -6,6 +6,22 @@ public sealed class Grid : ElementBase
 {
     
     [ReactProp]
+    public int? xs{ get; set; }
+    
+    [ReactProp]
+    public int? sm{ get; set; }
+    
+    [ReactProp]
+    public int? md{ get; set; }
+    
+    [ReactProp]
+    public int? lg{ get; set; }
+    
+    [ReactProp]
+    public int? xl{ get; set; }
+    
+    
+    [ReactProp]
     public MouseEventHandler onClick{ get; set; }
         
         
