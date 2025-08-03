@@ -1,58 +1,51 @@
 {
-    "name": "react-with-dotnet",
-    "version": "1.0.0",
-    "scripts": {
+  "name": "react-with-dotnet",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "esbuild index.jsx --bundle --splitting --format=esm --outdir=dist",
+    "build": "esbuild index.jsx --bundle --splitting --format=esm --outdir=dist --analyze --minify --target=es2016"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-transition-group": "^4.4.5",
 
-        "dev":   "esbuild index.jsx --bundle --splitting --format=esm --outdir=dist",
-        "build": "esbuild index.jsx --bundle --splitting --format=esm --outdir=dist --analyze --minify --target=es2016"
-    },
-    "dependencies": {
+    "@mui/material": "6.4.3",
+    "@mui/icons-material": "6.4.3",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
 
-        "esbuild": "^0.25.0",
-        "install": "^0.13.0",
-        "npm": "11.1.0",
+    "framer-motion": "^11.18.2",         
 
-        "react": "^18.3.1",
-        "react-dom": "^18.3.1",
-        "react-transition-group": "^4.4.5",
+    "@monaco-editor/react": "^4.6.0",
+    "swiper": "11.2.2",
+    "react-player": "^2.16.0",
 
-        "@heroui/checkbox": "^2.3.16",
-        "@heroui/popover": "^2.3.17",
-        "@heroui/system": "^2.4.13",
-        "@heroui/theme": "^2.4.13",
+    "primereact": "^10.8.5",
+    "primeicons": "^7.0.0",
 
-        "@mui/material": "6.4.3",
-        "@mui/icons-material": "6.4.3",
-        "@emotion/react": "^11.14.0",
-        "@emotion/styled": "^11.14.0",
+    "@rpldy/uploady": "1.9.1",
+    "@rpldy/upload-button": "1.9.1",
 
-        "primeicons": "^7.0.0",
-        "primereact": "^10.8.5",
+    "react-quill": "2.0.0",
+    "quill-image-resize-module-react": "3.0.0",
 
-        "react-awesome-reveal": "4.3.1",
+    "react-awesome-reveal": "4.3.1",
+    "react-xarrows": "^2.0.2",
+    "google-map-react": "^2.2.1",
 
-        "rsuite": "5.77.1",
+    "rsuite": "5.77.1",
 
-        "react-xarrows": "^2.0.2",
+    "@heroui/checkbox": "^2.3.16",
+    "@heroui/popover": "^2.3.17",
+    "@heroui/system": "^2.4.13",
+    "@heroui/theme": "^2.4.13",
 
-        "swiper": "11.2.2",
+    "react-split": "^2.0.14",
 
-        "google-map-react": "^2.2.1",
-
-        "react-free-scrollbar": "0.3.4",
-
-        "react-quill": "2.0.0",
-        "quill-image-resize-module-react": "3.0.0",
-
-        "react-player": "^2.16.0",
-
-        "framer-motion": "12.4.1",
-
-        "@monaco-editor/react": "^4.6.0",
-
-        "react-split": "^2.0.14",
-
-        "@rpldy/uploady": "1.9.1",
-        "@rpldy/upload-button": "1.9.1"
-    }
+    "react-free-scrollbar": "0.3.4" 
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
 }
