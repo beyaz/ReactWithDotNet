@@ -1,3 +1,3 @@
 import { Menu } from '@mui/material';
 
-export default MenuItem;
+export default Menu;
