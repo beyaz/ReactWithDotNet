@@ -43,7 +43,7 @@ register("TextareaAutosize", React.lazy(() => import('./TextareaAutosize')));
 register("Menu", React.lazy(() => import('./Menu')));
 register("MenuItem", React.lazy(() => import('./MenuItem')));
 
-
+register("DynamicMuiIcon", React.lazy(() => import('./DynamicMuiIcon')));
 
 
 
