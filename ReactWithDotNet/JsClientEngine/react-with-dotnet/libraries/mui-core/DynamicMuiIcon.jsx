@@ -1,26 +1,15 @@
-import React, { Suspense } from "react";
+import * as MuiIcons from "@mui/icons-material";
 
-/**
- * DynamicMuiIcon
- * 
- * @param {string} name 
- * @param {object} props
- */
-export default function DynamicMuiIcon({ name, ...props }) {
-  if (!name) return null;
+import React from "react";
 
-  const Icon = React.lazy(() =>
-    import(`@mui/icons-material/${name}`)
-      .then(module => ({ default: module.default }))
-      .catch(() => {
-        console.warn(`Icon "${name}" not found in @mui/icons-material`);
-        return { default: () => null };
-      })
-  );
+export default function DynamicMuiIcon({ name, ...props })
+{
+  const IconComponent = MuiIcons[name];
+  if (!IconComponent) 
+  {
+    console.warn(`Icon "${name}" not found in @mui/icons-material`);
+    return null;
+  }
 
-  return (
-    <Suspense fallback={null}>
-      <Icon {...props} />
-    </Suspense>
-  );
+  return <IconComponent {...props} />;
 }
