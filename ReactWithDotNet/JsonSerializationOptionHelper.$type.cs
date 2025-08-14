@@ -66,6 +66,12 @@ partial class JsonSerializationOptionHelper
                     return false;
                 }
 
+                // todo: fixme why this is needed?
+                if (true == typeToConvert.FullName?.StartsWith("Microsoft.AspNetCore.Http.", StringComparison.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+                
                 return typeToConvert.IsClass;
 
                 static bool isEnumerable(Type type)
