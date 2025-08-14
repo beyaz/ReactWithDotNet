@@ -40,6 +40,12 @@ register("ExpandMoreIcon", React.lazy(() => import('./ExpandMoreIcon')));
 register("Grid", React.lazy(() => import('./Grid')));
 register("TextareaAutosize", React.lazy(() => import('./TextareaAutosize')));
 
+register("Menu", React.lazy(() => import('./Menu')));
+register("MenuItem", React.lazy(() => import('./MenuItem')));
+
+
+
+
 
 
 register("CircularProgress", React.lazy(() => import('./CircularProgress'))); 
