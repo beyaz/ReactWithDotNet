@@ -19,6 +19,8 @@ register("AccordionDetails", React.lazy(() => import('./AccordionDetails')));
 
 register("Autocomplete", React.lazy(() => import('./Autocomplete')));
 register("Chip", React.lazy(() => import('./Chip')));
+register("Dialog", React.lazy(() => import('./Dialog')));
+
 register("Switch", React.lazy(() => import('./Switch')));
 register("Tooltip",     React.lazy(() => import('./Tooltip')));
 register("Button",      React.lazy(() => import('./Button')));
