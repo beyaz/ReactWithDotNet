@@ -4227,6 +4227,48 @@ public sealed class path : HtmlElement
     #endregion
 
 
+    #region string opacity
+    PropertyValueNode<UnionProp<string,double>> _opacity;
+    static readonly PropertyValueDefinition _opacity_ = new()
+    {
+        name = nameof(opacity)
+    };
+    public UnionProp<string,double> opacity
+    {
+        get => _opacity?.value;
+        set => SetValue(_opacity_, ref _opacity, value);
+    }
+    #endregion
+
+
+    #region string fillOpacity
+    PropertyValueNode<UnionProp<string,double>> _fillOpacity;
+    static readonly PropertyValueDefinition _fillOpacity_ = new()
+    {
+        name = nameof(fillOpacity)
+    };
+    public UnionProp<string,double> fillOpacity
+    {
+        get => _fillOpacity?.value;
+        set => SetValue(_fillOpacity_, ref _fillOpacity, value);
+    }
+    #endregion
+
+
+    #region string strokeOpacity
+    PropertyValueNode<UnionProp<string,double>> _strokeOpacity;
+    static readonly PropertyValueDefinition _strokeOpacity_ = new()
+    {
+        name = nameof(strokeOpacity)
+    };
+    public UnionProp<string,double> strokeOpacity
+    {
+        get => _strokeOpacity?.value;
+        set => SetValue(_strokeOpacity_, ref _strokeOpacity, value);
+    }
+    #endregion
+
+
 
     public path(string className) : base(className) {  }
 
@@ -4281,6 +4323,12 @@ public sealed class path : HtmlElement
     public static HtmlElementModifier StrokeLinejoin(string value) => Modify(x => x.strokeLinejoin = value);
 
     public static HtmlElementModifier StrokeDasharray(string value) => Modify(x => x.strokeDasharray = value);
+
+    public static HtmlElementModifier Opacity(UnionProp<string,double> value) => Modify(x => x.opacity = value);
+
+    public static HtmlElementModifier FillOpacity(UnionProp<string,double> value) => Modify(x => x.fillOpacity = value);
+
+    public static HtmlElementModifier StrokeOpacity(UnionProp<string,double> value) => Modify(x => x.strokeOpacity = value);
 
 }
 
