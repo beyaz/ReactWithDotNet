@@ -821,6 +821,24 @@ public class ExportingCommonHtmlElements
                     new ()
                     {
                         Name    = "stroke-dasharray"
+                    },
+                    
+                    new ()
+                    {
+                        Name    = "opacity",
+                        Type    = "UnionProp<string,double>"
+                    },
+                    
+                    new ()
+                    {
+                        Name = "fill-opacity",
+                        Type = "UnionProp<string,double>"
+                    },
+                    
+                    new ()
+                    {
+                        Name = "stroke-opacity",
+                        Type = "UnionProp<string,double>"
                     }
                 ],
                 EnableCastFromString = false
