@@ -48,4 +48,8 @@
 		<Exec Command="dotnet pack $(ProjectPath) -o C:\NugetPackages" />
 	</Target>
 
+	<Target Name="Deploy" AfterTargets="Build">
+		<Exec Command="xcopy &quot;$(TargetDir)*&quot; &quot;C:\github\ReactWithDotNet.VisualDesigner\lib\ReactWithDotNet\&quot; /E /Y /I" />
+	</Target>
+	
 </Project>
