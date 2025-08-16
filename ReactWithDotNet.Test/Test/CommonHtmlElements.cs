@@ -763,6 +763,22 @@ public class ExportingCommonHtmlElements
                 [
                     new ()
                     {
+                        Name    = "id",
+                        Comment = "Unique identifier for referencing this clipPath"
+                    },
+                    new ()
+                    {
+                        Name    = "clipPathUnits",
+                        Comment = "Coordinate system for the contents",
+                    },
+                    new ()
+                    {
+                        Name    = "transform",
+                        Comment = "Apply transformations to the clipping path",
+                    },
+                    
+                    new ()
+                    {
                         Name    = "clip-rule",
                         Comment = "Specifies the fill rule for the clipping path."
                     },
@@ -844,29 +860,7 @@ public class ExportingCommonHtmlElements
                 EnableCastFromString = false
             },
 
-            new()
-            {
-                Tag = "clipPath",
-                Attributes =
-                [
-                    new ()
-                    {
-                        Name    = "id",
-                        Comment = "Unique identifier for referencing this clipPath"
-                    },
-                    new ()
-                    {
-                        Name    = "clipPathUnits",
-                        Comment = "Coordinate system for the contents",
-                    },
-                    new ()
-                    {
-                        Name    = "transform",
-                        Comment = "Apply transformations to the clipping path",
-                    }
-                ],
-                EnableCastFromString = false
-            },
+            
             
             new()
             {
