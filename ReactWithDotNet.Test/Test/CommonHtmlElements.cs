@@ -846,6 +846,30 @@ public class ExportingCommonHtmlElements
 
             new()
             {
+                Tag = "clipPath",
+                Attributes =
+                [
+                    new ()
+                    {
+                        Name    = "id",
+                        Comment = "Unique identifier for referencing this clipPath"
+                    },
+                    new ()
+                    {
+                        Name    = "clipPathUnits",
+                        Comment = "Coordinate system for the contents",
+                    },
+                    new ()
+                    {
+                        Name    = "transform",
+                        Comment = "Apply transformations to the clipping path",
+                    }
+                ],
+                EnableCastFromString = false
+            },
+            
+            new()
+            {
                 Tag = "g",
                 Attributes =
                 [
