@@ -4341,6 +4341,23 @@ public sealed class path : HtmlElement
     #endregion
 
 
+    #region string transform
+    PropertyValueNode<string> _transform;
+    static readonly PropertyValueDefinition _transform_ = new()
+    {
+        name = nameof(transform)
+    };
+    /// <summary>
+    ///     Apply transformations to the path
+    /// </summary>
+    public string transform
+    {
+        get => _transform?.value;
+        set => SetValue(_transform_, ref _transform, value);
+    }
+    #endregion
+
+
 
     public path(string className) : base(className) {  }
 
@@ -4401,6 +4418,13 @@ public sealed class path : HtmlElement
     public static HtmlElementModifier FillOpacity(UnionProp<string,double> value) => Modify(x => x.fillOpacity = value);
 
     public static HtmlElementModifier StrokeOpacity(UnionProp<string,double> value) => Modify(x => x.strokeOpacity = value);
+
+    /// <summary>
+    ///     transform = <paramref name="value"/>
+    /// <br/>
+    ///     Apply transformations to the path
+    /// </summary>
+    public static HtmlElementModifier Transform(string value) => Modify(x => x.transform = value);
 
 }
 

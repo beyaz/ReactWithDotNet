@@ -855,7 +855,13 @@ public class ExportingCommonHtmlElements
                     {
                         Name = "stroke-opacity",
                         Type = "UnionProp<string,double>"
-                    }
+                    },
+                    
+                    new ()
+                    {
+                        Name    = "transform",
+                        Comment = "Apply transformations to the path",
+                    },
                 ],
                 EnableCastFromString = false
             },
