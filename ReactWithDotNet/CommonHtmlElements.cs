@@ -4020,6 +4020,57 @@ public sealed class radialGradient : HtmlElement
 
 public sealed class clipPath : HtmlElement
 {
+    #region string id
+    PropertyValueNode<string> _id;
+    static readonly PropertyValueDefinition _id_ = new()
+    {
+        name = nameof(id)
+    };
+    /// <summary>
+    ///     Unique identifier for referencing this clipPath
+    /// </summary>
+    public string id
+    {
+        get => _id?.value;
+        set => SetValue(_id_, ref _id, value);
+    }
+    #endregion
+
+
+    #region string clipPathUnits
+    PropertyValueNode<string> _clipPathUnits;
+    static readonly PropertyValueDefinition _clipPathUnits_ = new()
+    {
+        name = nameof(clipPathUnits)
+    };
+    /// <summary>
+    ///     Coordinate system for the contents
+    /// </summary>
+    public string clipPathUnits
+    {
+        get => _clipPathUnits?.value;
+        set => SetValue(_clipPathUnits_, ref _clipPathUnits, value);
+    }
+    #endregion
+
+
+    #region string transform
+    PropertyValueNode<string> _transform;
+    static readonly PropertyValueDefinition _transform_ = new()
+    {
+        name = nameof(transform)
+    };
+    /// <summary>
+    ///     Apply transformations to the clipping path
+    /// </summary>
+    public string transform
+    {
+        get => _transform?.value;
+        set => SetValue(_transform_, ref _transform, value);
+    }
+    #endregion
+
+
     #region string clipRule
     PropertyValueNode<string> _clipRule;
     static readonly PropertyValueDefinition _clipRule_ = new()
@@ -4071,6 +4122,27 @@ public sealed class clipPath : HtmlElement
     public clipPath(List<Modifier> modifiers) : base(modifiers) { }
 
     public static HtmlElementModifier Modify(Action<clipPath> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     id = <paramref name="value"/>
+    /// <br/>
+    ///     Unique identifier for referencing this clipPath
+    /// </summary>
+    public static HtmlElementModifier Id(string value) => Modify(x => x.id = value);
+
+    /// <summary>
+    ///     clipPathUnits = <paramref name="value"/>
+    /// <br/>
+    ///     Coordinate system for the contents
+    /// </summary>
+    public static HtmlElementModifier ClipPathUnits(string value) => Modify(x => x.clipPathUnits = value);
+
+    /// <summary>
+    ///     transform = <paramref name="value"/>
+    /// <br/>
+    ///     Apply transformations to the clipping path
+    /// </summary>
+    public static HtmlElementModifier Transform(string value) => Modify(x => x.transform = value);
+
     /// <summary>
     ///     clipRule = <paramref name="value"/>
     /// <br/>
