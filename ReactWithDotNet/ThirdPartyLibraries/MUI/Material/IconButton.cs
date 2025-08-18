@@ -77,17 +77,9 @@ public sealed class IconButton : ButtonBase
     ///     @default null
     /// </summary>
     [ReactProp]
-    public object loading { get; set; }
+    public bool? loading { get; set; }
     
-    /// <summary>
-    ///     If `true`, the loading indicator is visible and the button is disabled.
-    ///     <br/>
-    ///     If `true | false`, the loading wrapper is always rendered before the children to prevent [Google Translation Crash](https://github.com/mui/material-ui/issues/27853).
-    ///     <br/>
-    ///     @default null
-    /// </summary>
-    public static Modifier Loading(object value) => CreateThirdPartyReactComponentModifier<IconButton>(x => x.loading = value);
-    
+   
     /// <summary>
     ///     Element placed before the children if the button is in loading state.
     ///     <br/>
