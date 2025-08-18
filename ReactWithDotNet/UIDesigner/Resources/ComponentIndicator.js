@@ -565,6 +565,8 @@ function applyHoverEffect(targetElement)
     applyCirclesOnCorners(targetElement);
 
     applyBackgroundEffect(targetElement, 1);
+
+    const zoom = GetZoom() / 100;
         
     // Size indicator box
     {
@@ -584,8 +586,8 @@ function applyHoverEffect(targetElement)
 
         sizeIndicatorBoxElement.innerHTML =
             "<div style = 'display: flex; flex-direction: column; line-height: 12px; padding:3px;  font-size:11px;' >" +
-            "    <div style='display: flex; gap: 4px;'><span>W</span>" + WrapInSpanIfHasValue(GetStyleValue(targetElement, 'width')) + NumberToString(rect.width) + "</div>" +
-            "    <div style='display: flex; gap: 4px;'><span>H</span>" + WrapInSpanIfHasValue(GetStyleValue(targetElement, 'height')) + NumberToString(rect.height) + "</div>" +
+            "    <div style='display: flex; gap: 4px;'><span>W</span>" + WrapInSpanIfHasValue(GetStyleValue(targetElement, 'width')) + NumberToString(rect.width * (1/zoom)) + "</div>" +
+            "    <div style='display: flex; gap: 4px;'><span>H</span>" + WrapInSpanIfHasValue(GetStyleValue(targetElement, 'height')) + NumberToString(rect.height * (1/ zoom)) + "</div>" +
             "    <div style='display:flex; justify-content:center;'>" + targetElement.tagName.toLowerCase() + "</div>" +
             "</div>";
 
@@ -737,7 +739,6 @@ function applyHoverEffect(targetElement)
         }
     }
 
-    const zoom = GetZoom() / 100;
 
     // P A D D I N G
     {
