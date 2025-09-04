@@ -286,7 +286,6 @@ public class ExportStyleProperties
                             cursor
                             cx
                             cy
-                            d
                             descentOverride
                             direction
                             display

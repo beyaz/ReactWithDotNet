@@ -155,7 +155,6 @@ partial class Style
         public static readonly StyleAttributeNameInfo cursor = new ("cursor", "cursor");
         public static readonly StyleAttributeNameInfo cx = new ("cx", "cx");
         public static readonly StyleAttributeNameInfo cy = new ("cy", "cy");
-        public static readonly StyleAttributeNameInfo d = new ("d", "d");
         public static readonly StyleAttributeNameInfo descentOverride = new ("descentOverride", "descent-override");
         public static readonly StyleAttributeNameInfo direction = new ("direction", "direction");
         public static readonly StyleAttributeNameInfo display = new ("display", "display");
@@ -790,7 +789,6 @@ partial class Style
             cursor,
             cx,
             cy,
-            d,
             descentOverride,
             direction,
             display,
@@ -1425,7 +1423,6 @@ partial class Style
     public string cursor { get => Get(Names.cursor); set => Set(Names.cursor, value); }
     public string cx { get => Get(Names.cx); set => Set(Names.cx, value); }
     public string cy { get => Get(Names.cy); set => Set(Names.cy, value); }
-    public string d { get => Get(Names.d); set => Set(Names.d, value); }
     public string descentOverride { get => Get(Names.descentOverride); set => Set(Names.descentOverride, value); }
     public string direction { get => Get(Names.direction); set => Set(Names.direction, value); }
     public string display { get => Get(Names.display); set => Set(Names.display, value); }
@@ -2680,11 +2677,6 @@ partial class Mixin
     ///     style.cy = <paramref name="value" />
     /// </summary>
     public static StyleModifier Cy(string value) => new(style => style.cy = value);
-
-    /// <summary>
-    ///     style.d = <paramref name="value" />
-    /// </summary>
-    public static StyleModifier D(string value) => new(style => style.d = value);
 
     /// <summary>
     ///     style.descentOverride = <paramref name="value" />
