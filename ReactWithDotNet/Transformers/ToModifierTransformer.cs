@@ -146,6 +146,42 @@ public static class ToModifierTransformer
                 }
             }
 
+            if (propertyInfo.DeclaringType == typeof(HtmlElement))
+            {
+                if (propertyInfo.Name == nameof(HtmlElement.onClick))
+                {
+                    return success($"{nameof(OnClick)}({value})");
+                }
+                if (propertyInfo.Name == nameof(HtmlElement.onMouseEnter))
+                {
+                    return success($"{nameof(OnMouseEnter)}({value})");
+                }
+                if (propertyInfo.Name == nameof(HtmlElement.onMouseLeave))
+                {
+                    return success($"{nameof(OnMouseLeave)}({value})");
+                }
+                if (propertyInfo.Name == nameof(HtmlElement.onDoubleClick))
+                {
+                    return success($"{nameof(OnDoubleClick)}({value})");
+                }
+                if (propertyInfo.Name == nameof(HtmlElement.onScroll))
+                {
+                    return success($"{nameof(OnScroll)}({value})");
+                }
+                if (propertyInfo.Name == nameof(HtmlElement.onPaste))
+                {
+                    return success($"{nameof(OnPaste)}({value})");
+                }
+                if (propertyInfo.Name == nameof(HtmlElement.onCut))
+                {
+                    return success($"{nameof(OnCut)}({value})");
+                }
+                if (propertyInfo.Name == nameof(HtmlElement.onCopy))
+                {
+                    return success($"{nameof(OnCopy)}({value})");
+                }
+            }
+            
             return success($"{tagName}.{UpperCaseFirstChar(propertyInfo.Name)}(\"{value}\")");
         }
 
@@ -362,7 +398,7 @@ public static class ToModifierTransformer
                 }
             }
 
-            return success($"{CamelCase(name)}(\"{value}\")");
+            return success($"{CamelCase(name)}({value})");
         }
 
         return default;
