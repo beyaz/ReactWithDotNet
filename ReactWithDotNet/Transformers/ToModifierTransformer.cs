@@ -398,7 +398,8 @@ public static class ToModifierTransformer
                 }
             }
 
-            return success($"{CamelCase(name)}({value})");
+            
+            return success($"{CamelCase(name)}(\"{value}\")");
         }
 
         return default;
