@@ -298,11 +298,15 @@ public static class ToModifierTransformer
         {
             var parameters = value.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
 
-            if (parameters.TrueForAll(ToModifierTransformerExtensions.IsEndsWithPixel))
+            if (parameters.TrueForAll(ToModifierTransformerExtensions.IsEndsWithPixel) || 
+                parameters.TrueForAll(ToModifierTransformerExtensions.IsDouble))
             {
                 var methodName = CamelCase(name);
 
-                var joinAllParameters = () => { return $"{methodName}({string.Join(", ", parameters.Select(x => x.RemovePixelFromEnd()))})"; };
+                string joinAllParameters()
+                {
+                    return $"{methodName}({string.Join(", ", parameters.Select(x => x.RemovePixelFromEnd()))})";
+                }
 
                 switch (parameters.Count)
                 {
@@ -542,6 +546,11 @@ static class ToModifierTransformerExtensions
         }
 
         return data;
+    }
+    
+    public static bool IsDouble(this string value)
+    {
+        return double.TryParse(value, out _);
     }
 
     /// <summary>
