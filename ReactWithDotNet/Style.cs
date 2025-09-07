@@ -155,7 +155,7 @@ public sealed partial class Style
         Set(nameInfo, value);
     }
     
-    Exception TrySet(string name, string value)
+    public Exception TrySet(string name, string value)
     {
         name = name.Replace("-", string.Empty);
         

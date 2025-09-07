@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet;
+﻿using System.Reflection;
+
+namespace ReactWithDotNet;
 
 public static class Tailwind
 {
@@ -289,4 +291,9 @@ public static class Tailwind
     public const string Rose800 = "#9f1239";
     public const string Rose900 = "#881337";
     public const string Rose950 = "#4c0519";
+
+    public static string TryGetTailwindColorByName(string colorName)
+    {
+        return (string)typeof(Tailwind).GetField(colorName, BindingFlags.Public | BindingFlags.Static | BindingFlags.IgnoreCase)?.GetValue(null);
+    }
 }

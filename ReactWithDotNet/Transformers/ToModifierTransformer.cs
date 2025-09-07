@@ -48,8 +48,16 @@ public static class ToModifierTransformer
         
         return (false, null);
     }
+
+    static readonly IReadOnlyList<(string Name, string Value)> GlobalDeclaredStringFields =
+        (from type in new[] { typeof(Mixin), typeof(Tailwind) }
+            from f in type.GetFields(BindingFlags.Static | BindingFlags.Public)
+            where f.FieldType == typeof(string)
+            select (f.Name, (string)f.GetValue(null))).ToList(); 
     
-    static readonly IReadOnlyList<(string Name, string Value)> GlobalDeclaredStringFields = typeof(Mixin).GetFields(BindingFlags.Static | BindingFlags.Public).Where(f => f.FieldType == typeof(string)).Select(f => (f.Name, (string)f.GetValue(null))).ToList();
+       
+        
+        
 
     public static (bool success, string modifierCode) TryConvertToModifier(string tagName, string name, string value)
     {
@@ -402,6 +410,11 @@ public static class ToModifierTransformer
                 }
             }
 
+            var isVariableName = value.Contains('.') && double.TryParse(value, out _) is false;
+            if (isVariableName)
+            {
+                return success($"{CamelCase(name)}({value})");
+            }
             
             return success($"{CamelCase(name)}(\"{value}\")");
         }
@@ -470,8 +483,10 @@ public static class ToModifierTransformer
         {
             return item.Name;
         }
-
-        return null;
+        
+        item = GlobalDeclaredStringFields.FirstOrDefault(x => x.Name?.Equals(value, StringComparison.OrdinalIgnoreCase) is true);
+        
+        return item.Name;
     }
 
     static string CamelCase(string str)

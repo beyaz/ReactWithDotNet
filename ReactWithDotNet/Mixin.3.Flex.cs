@@ -99,5 +99,7 @@ partial class Mixin
     #endregion
     
     
+    public static StyleModifier GridRow(int rowNumber) => new(style => style.gridRow = rowNumber.ToString());
+    public static StyleModifier GridColumn(int columnNumber) => new(style => style.gridColumn = columnNumber.ToString());
     
 }
