@@ -45,6 +45,19 @@
 
         || targetElement === marginBottomIndicatorLineElement
         || targetElement === marginBottomIndicatorBoxElement
+
+        // position
+        || targetElement === positionLeftIndicatorLineElement
+        || targetElement === positionLeftIndicatorBoxElement
+
+        || targetElement === positionRightIndicatorLineElement
+        || targetElement === positionRightIndicatorBoxElement
+
+        || targetElement === positionTopIndicatorLineElement
+        || targetElement === positionTopIndicatorBoxElement
+
+        || targetElement === positionBottomIndicatorLineElement
+        || targetElement === positionBottomIndicatorBoxElement
     );
 }
 
