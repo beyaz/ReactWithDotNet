@@ -9717,3 +9717,63 @@ public sealed class canvas : HtmlElement
 
 }
 
+public sealed class colgroup : HtmlElement
+{
+
+    public colgroup(string className) : base(className) {  }
+
+    public colgroup(string className, params Modifier[] modifiers) : base(className, modifiers) {  }
+
+    public static implicit operator colgroup(string text) => new() { text = text };
+    public colgroup() { }
+
+    public colgroup(params Modifier[] modifiers) : base(modifiers) { }
+
+    public colgroup(Style style) : base(style) { }
+
+    public colgroup(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public colgroup(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
+    public colgroup(List<Modifier> modifiers) : base(modifiers) { }
+
+    public static HtmlElementModifier Modify(Action<colgroup> modifyAction) => CreateHtmlElementModifier(modifyAction);
+}
+
+public sealed class col : HtmlElement
+{
+    #region string span
+    PropertyValueNode<UnionProp<string,int>> _span;
+    static readonly PropertyValueDefinition _span_ = new()
+    {
+        name = nameof(span)
+    };
+    public UnionProp<string,int> span
+    {
+        get => _span?.value;
+        set => SetValue(_span_, ref _span, value);
+    }
+    #endregion
+
+
+
+    public col(string className) : base(className) {  }
+
+    public col(string className, params Modifier[] modifiers) : base(className, modifiers) {  }
+    public col() { }
+
+    public col(params Modifier[] modifiers) : base(modifiers) { }
+
+    public col(Style style) : base(style) { }
+
+    public col(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public col(List<StyleModifier> styleModifiers) : base(styleModifiers) { }
+
+    public col(List<Modifier> modifiers) : base(modifiers) { }
+
+    public static HtmlElementModifier Modify(Action<col> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    public static HtmlElementModifier Span(UnionProp<string,int> value) => Modify(x => x.span = value);
+
+}
+
