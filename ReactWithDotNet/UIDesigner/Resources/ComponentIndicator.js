@@ -1319,6 +1319,59 @@ function applyHoverEffect(targetElement)
                 }
             }
         }
+
+        // right
+        {
+            let lineElement = positionRightIndicatorLineElement;
+            let boxElement = positionRightIndicatorBoxElement;
+
+            let computedValue = computedStyle.right;
+            let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
+
+            if (computedValue === '' || computedValue === '0px')
+            {
+                lineElement.style.display = 'none';
+                boxElement.style.display = 'none';
+            }
+            else
+            {
+                // line
+                {
+                    applySharedLineStyles(lineElement.style, 'positionRight');
+
+                    lineElement.style.height = '1px';
+                    lineElement.style.width = computedValueAsNumber * zoom + 'px';
+                    lineElement.style.left = rect.left + rect.width  + 'px';
+                    lineElement.style.top = rect.top + rect.height / 2 + 'px';
+                }
+
+                // box
+                {
+                    applySharedBoxStyles(boxElement.style, 'positionRight');
+
+                    // content
+                    {
+                        let finalInnerHTML = NumberToString(computedValueAsNumber);
+                        {
+                            let valueAsKeyword = GetStyleValue(targetElement, 'positionRight');
+
+                            if (!(valueAsKeyword == null || valueAsKeyword === '' || valueAsKeyword.indexOf('px') > 0))
+                            {
+                                finalInnerHTML += "<br> (" + valueAsKeyword + ")";
+                            }
+                        }
+                        boxElement.innerHTML = finalInnerHTML;
+                    }
+
+                    // align
+                    {
+                        const boxRect = boxElement.getBoundingClientRect();
+                        boxElement.style.left = rect.left + rect.width + computedValueAsNumber * zoom / 2 - boxRect.height / 2 + 'px';
+                        boxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2 + 'px';
+                    }
+                }
+            }
+        }
     }
     
     function getColorFromProperty(targetProperty)
