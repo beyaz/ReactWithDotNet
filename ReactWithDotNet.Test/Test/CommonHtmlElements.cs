@@ -2351,7 +2351,31 @@ public class ExportingCommonHtmlElements
 
 
                 ]
-            }
+            },
+
+            new()
+            {
+                Tag = "colgroup",
+
+                Attributes =
+                [
+
+                ]
+            },
+            
+            new()
+            {
+                Tag = "col",
+                Attributes =
+                [
+                    new()
+                    {
+                        Name = "span",
+                        Type = "UnionProp<string,int>"
+                    }
+                ],
+                EnableCastFromString = false
+            },
         ];
 
         var list = new List<string>
