@@ -1278,7 +1278,7 @@ function applyHoverEffect(targetElement)
             let computedValue = computedStyle.left;
             let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
 
-            if (computedValue === '' || computedValue === '0px')
+            if (computedValue === '' || computedValue === '0px' || isNaN(computedValueAsNumber))
             {
                 lineElement.style.display = 'none';
                 boxElement.style.display = 'none';
@@ -1341,7 +1341,7 @@ function applyHoverEffect(targetElement)
             let computedValue = computedStyle.right;
             let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
 
-            if (computedValue === '' || computedValue === '0px')
+            if (computedValue === '' || computedValue === '0px' || isNaN(computedValueAsNumber))
             {
                 lineElement.style.display = 'none';
                 boxElement.style.display = 'none';
@@ -1394,7 +1394,7 @@ function applyHoverEffect(targetElement)
             let computedValue = computedStyle.top;
             let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
 
-            if (computedValue === '' || computedValue === '0px')
+            if (computedValue === '' || computedValue === '0px' || isNaN(computedValueAsNumber))
             {
                 lineElement.style.display = 'none';
                 boxElement.style.display = 'none';
@@ -1422,7 +1422,7 @@ function applyHoverEffect(targetElement)
                     // align
                     {
                         const boxRect = boxElement.getBoundingClientRect();
-                        boxElement.style.left = rect.left + rect.width / 2 - boxRect.width / 2 + 'px';
+                        boxElement.style.left = rect.left + rect.width / 8 - boxRect.width / 2 + 'px';
                         boxElement.style.top = rect.top - computedValueAsNumber * zoom / 2 - boxRect.height / 2 + 'px';
                     }
                 }
@@ -1434,7 +1434,60 @@ function applyHoverEffect(targetElement)
                     lineElement.style.width = '1px';
                     lineElement.style.height = computedValueAsNumber * zoom + 'px';
                     lineElement.style.top = rect.top - computedValueAsNumber * zoom + 'px';
-                    lineElement.style.left = rect.left + rect.width / 2 + 'px';
+                    lineElement.style.left = rect.left + rect.width / 8 + 'px';
+                }
+            }
+        }
+
+        // bottom
+        {
+            let lineElement = positionBottomIndicatorLineElement;
+            let boxElement = positionBottomIndicatorBoxElement;
+
+            let computedValue = computedStyle.bottom;
+            let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
+
+            if (computedValue === '' || computedValue === '0px' || isNaN(computedValueAsNumber))
+            {
+                lineElement.style.display = 'none';
+                boxElement.style.display = 'none';
+            }
+            else
+            {
+                // box
+                {
+                    applySharedBoxStyles(boxElement.style, 'positionBottom');
+
+                    // content
+                    {
+                        let finalInnerHTML = NumberToString(computedValueAsNumber);
+                        {
+                            let valueAsKeyword = GetStyleValue(targetElement, 'positionBottom');
+
+                            if (!(valueAsKeyword == null || valueAsKeyword === '' || valueAsKeyword.indexOf('px') > 0))
+                            {
+                                finalInnerHTML += "<br> (" + valueAsKeyword + ")";
+                            }
+                        }
+                        boxElement.innerHTML = finalInnerHTML;
+                    }
+
+                    // align
+                    {
+                        const boxRect = boxElement.getBoundingClientRect();
+                        boxElement.style.left = rect.left + rect.width / 8 - boxRect.width / 2 + 'px';
+                        boxElement.style.top = rect.top + rect.height + computedValueAsNumber * zoom / 2 - boxRect.height / 2 + 'px';
+                    }
+                }
+
+                // line
+                {
+                    applySharedLineStyles(lineElement.style, 'positionBottom');
+
+                    lineElement.style.width = '1px';
+                    lineElement.style.height = computedValueAsNumber * zoom + 'px';
+                    lineElement.style.left = rect.left + rect.width / 8 + 'px';
+                    lineElement.style.top = rect.top + rect.height + 'px';
                 }
             }
         }
