@@ -229,6 +229,20 @@ let marginTopIndicatorBoxElement = null;
 let marginBottomIndicatorLineElement = null;
 let marginBottomIndicatorBoxElement = null;
 
+
+// position
+let positionLeftIndicatorLineElement = null;
+let positionLeftIndicatorBoxElement = null;
+
+let positionRightIndicatorLineElement = null;
+let positionRightIndicatorBoxElement = null;
+
+let positionTopIndicatorLineElement = null;
+let positionTopIndicatorBoxElement = null;
+
+let positionBottomIndicatorLineElement = null;
+let positionBottomIndicatorBoxElement = null;
+
 const SpacingDivs =
 {
     clear: [],
@@ -737,6 +751,61 @@ function applyHoverEffect(targetElement)
                 document.body.appendChild(marginBottomIndicatorBoxElement);
             }
         }
+
+        // position
+        {
+            // left
+            if (positionLeftIndicatorLineElement === null)
+            {
+                positionLeftIndicatorLineElement = document.createElement('div');
+                document.body.appendChild(positionLeftIndicatorLineElement);
+            }
+
+            if (positionLeftIndicatorBoxElement === null)
+            {
+                positionLeftIndicatorBoxElement = document.createElement('div');
+                document.body.appendChild(positionLeftIndicatorBoxElement);
+            }
+
+            // right
+            if (positionRightIndicatorLineElement === null)
+            {
+                positionRightIndicatorLineElement = document.createElement('div');
+                document.body.appendChild(positionRightIndicatorLineElement);
+            }
+
+            if (positionRightIndicatorBoxElement === null)
+            {
+                positionRightIndicatorBoxElement = document.createElement('div');
+                document.body.appendChild(positionRightIndicatorBoxElement);
+            }
+
+            // top
+            if (positionTopIndicatorLineElement === null)
+            {
+                positionTopIndicatorLineElement = document.createElement('div');
+                document.body.appendChild(positionTopIndicatorLineElement);
+            }
+
+            if (positionTopIndicatorBoxElement === null)
+            {
+                positionTopIndicatorBoxElement = document.createElement('div');
+                document.body.appendChild(positionTopIndicatorBoxElement);
+            }
+
+            // bottom
+            if (positionBottomIndicatorLineElement === null)
+            {
+                positionBottomIndicatorLineElement = document.createElement('div');
+                document.body.appendChild(positionBottomIndicatorLineElement);
+            }
+
+            if (positionBottomIndicatorBoxElement === null)
+            {
+                positionBottomIndicatorBoxElement = document.createElement('div');
+                document.body.appendChild(positionBottomIndicatorBoxElement);
+            }
+        }
     }
 
 
@@ -1185,6 +1254,93 @@ function applyHoverEffect(targetElement)
         }
     }
 
+
+    // P O S I T I O N
+    {
+        // left
+        {
+            let lineElement = positionLeftIndicatorLineElement;
+            let boxElement = positionLeftIndicatorBoxElement;
+
+            let computedValue = computedStyle.left;
+            let computedValueAsNumber = parseFloat(computedValue.replace('px', ''));
+
+            if (computedValue === '' || computedValue === '0px')
+            {
+                lineElement.style.display = 'none';
+                boxElement.style.display = 'none';
+            }
+            else
+            {
+                let left = rect.left - computedValueAsNumber* zoom;
+
+                let width = computedValueAsNumber * zoom;
+
+                // line
+                {
+                    applySharedLineStyles(lineElement.style, 'positionLeft');
+
+                    lineElement.style.height = '1px';
+                    lineElement.style.width = width + 'px';
+                    lineElement.style.left = left + 'px';
+                    lineElement.style.top = rect.bottom - rect.height / 2 + 'px';
+                }
+
+                 
+                // box
+                {
+                    applySharedBoxStyles(boxElement.style, 'positionLeft');
+
+                    // content
+                    {
+                        let finalInnerHTML = NumberToString(computedValueAsNumber);
+                        {
+                            let valueAsKeyword = GetStyleValue(targetElement, 'left');
+
+                            if (!(valueAsKeyword == null || valueAsKeyword === '' || valueAsKeyword.indexOf('px') > 0))
+                            {
+                                finalInnerHTML += "<br> (" + valueAsKeyword + ")";
+                            }
+                        }
+                        boxElement.innerHTML = finalInnerHTML;
+                    }
+
+                    // align
+                    {
+                        const boxRect = boxElement.getBoundingClientRect();
+                        let positionLeftAsNumber = left + width / 2;
+                        if (positionLeftAsNumber < 0)
+                        {
+                            positionLeftAsNumber = 0;
+                        }
+                        boxElement.style.left = positionLeftAsNumber  + 'px';
+                        boxElement.style.top = rect.bottom - rect.height / 2 - boxRect.height / 2 + 'px';
+                    }
+                }
+            }
+        }
+    }
+    
+    function getColorFromProperty(targetProperty)
+    {
+        if (targetProperty.indexOf('padding') >= 0)
+        {
+            return '#4597F7';
+        }
+        else if (targetProperty.indexOf('margin') >= 0)
+        {
+            return '#EA3FB8';
+        }
+        else if (targetProperty.indexOf('position') >= 0)
+        {
+            return '#1e81b0';
+        }
+        else
+        {
+            throw new Error('Unknown targetProperty: ' + targetProperty);
+        }
+    }
+
     function applySharedBoxStyles(style, targetProperty)
     {
         style.display = 'block';
@@ -1197,18 +1353,13 @@ function applyHoverEffect(targetElement)
         style.paddingTop = '1px';
         style.paddingBottom = '1px';
         
-        style.background = '#4597F7';
+        style.background = getColorFromProperty(targetProperty);
         style.color = '#DECBFC';
         style.fontSize = '10px';
         style.lineHeight = '10px';
         style.textAlign = 'center';
         style.fontFamily = 'monospace';
         style.pointerEvents = 'none';
-
-        if (targetProperty.indexOf('margin') === 0)
-        {
-            style.background = '#EA3FB8';
-        }
     }
 
     function applySharedLineStyles(style, targetProperty)
@@ -1216,12 +1367,7 @@ function applyHoverEffect(targetElement)
         style.display = 'block';
         style.position = 'fixed';
         style.pointerEvents = 'none';
-        style.backgroundColor = '#4597F7';
-
-        if (targetProperty.indexOf('margin') === 0)
-        {
-            style.backgroundColor = '#EA3FB8';
-        }
+        style.backgroundColor = getColorFromProperty(targetProperty);
     }
 }
 
