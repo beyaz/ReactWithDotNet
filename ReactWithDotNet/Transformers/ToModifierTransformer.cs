@@ -359,6 +359,14 @@ public static class ToModifierTransformer
                 return success($"Flex({parameters[0]}, {parameters[1]}, {parameters[2]})");
             }
         }
+        
+        if (name == "flexWrap")
+        {
+            if (value == "wrap")
+            {
+                return success(nameof(FlexWrap));
+            }
+        }
 
         var modifierFullName = $"{CamelCase(name)}{CamelCase(value.RemovePixelFromEnd())}";
 
@@ -414,6 +422,11 @@ public static class ToModifierTransformer
             if (isVariableName)
             {
                 return success($"{CamelCase(name)}({value})");
+            }
+
+            if (value.StartsWith("{") && value.EndsWith("}"))
+            {
+                return success($"{CamelCase(name)}({value.RemoveFromStart("{").RemoveFromEnd("}")})");    
             }
             
             return success($"{CamelCase(name)}(\"{value}\")");

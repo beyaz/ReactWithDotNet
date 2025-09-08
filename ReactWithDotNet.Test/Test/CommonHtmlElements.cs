@@ -27,55 +27,55 @@ public class ExportingCommonHtmlElements
                 Tag = "button",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "type",
                         Type    = "string",
                         Comment = "Specifies the type of button. button, reset, submit"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "value",
                         Type    = "string",
                         Comment = "Specifies an initial value for the button"
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "autofocus",
                         Comment = "Specifies that the button should have input focus when the page loads. Only one element in a document can have this attribute."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "disabled",
                         Comment = "Specifies that the button should be disabled. A disabled button cannot be clicked."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "form",
                         Comment = "Specifies the form that the button is associated with."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "formaction",
                         Comment = "Specifies the URL of the form action when the button is clicked."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "formenctype",
                         Comment = "Specifies the form encoding method (e.g., application/x-www-form-urlencoded, multipart/form-data) when the button is clicked."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "formmethod",
                         Comment = "Specifies the form submission method (e.g., GET, POST) when the button is clicked."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "formnovalidate",
                         Comment = "Specifies that the form should not be validated before submission when the button is clicked."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "name",
                         Comment = "Specifies a name for the button. The name attribute is used to reference form-data after the form has been submitted, or to reference the element in JavaScript."
@@ -100,9 +100,9 @@ public class ExportingCommonHtmlElements
             new()
             {
                 Tag = "time",
-                Attributes = 
+                Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "datetime",
                         Comment = "Represent a machine-readable format of the 'time' element"
@@ -112,8 +112,8 @@ public class ExportingCommonHtmlElements
             },
             new()
             {
-                Tag                  = "dl",
-                Comment              = "Defines a description list."
+                Tag     = "dl",
+                Comment = "Defines a description list."
             },
             new()
             {
@@ -230,12 +230,12 @@ public class ExportingCommonHtmlElements
                 Tag = "table",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name = "cellSpacing",
                         Type = "double?"
                     },
-                    new ()
+                    new()
                     {
                         Name = "cellPadding",
                         Type = "double?"
@@ -253,20 +253,20 @@ public class ExportingCommonHtmlElements
                 Tag = "th",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name = "colSpan",
                         Type = "int?"
                     },
-                    new ()
+                    new()
                     {
                         Name = "rowSpan",
                         Type = "int?"
                     },
-                    new ()
+                    new()
                     {
-                        Name = "scope",
-                        Type = "string",
+                        Name    = "scope",
+                        Type    = "string",
                         Comment = "specifies whether a header cell is a header for a column, row, or group of columns or rows."
                     }
                 ],
@@ -277,12 +277,12 @@ public class ExportingCommonHtmlElements
                 Tag = "td",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name = "colSpan",
                         Type = "int?"
                     },
-                    new ()
+                    new()
                     {
                         Name = "rowSpan",
                         Type = "int?"
@@ -295,12 +295,12 @@ public class ExportingCommonHtmlElements
                 Tag = "tr",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name = "colSpan",
                         Type = "int?"
                     },
-                    new ()
+                    new()
                     {
                         Name = "rowSpan",
                         Type = "int?"
@@ -314,17 +314,17 @@ public class ExportingCommonHtmlElements
                 Tag = "option",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name = "selected",
                         Type = "UnionProp<string, bool?>"
                     },
-                    new ()
+                    new()
                     {
                         Name = "disabled",
                         Type = "string"
                     },
-                    new ()
+                    new()
                     {
                         Name = "value",
                         Type = "string"
@@ -338,37 +338,37 @@ public class ExportingCommonHtmlElements
                 Tag = "ellipse",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "cx",
                         Comment = "The x-coordinate of the center of the ellipse."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "cy",
                         Comment = "The y-coordinate of the center of the ellipse."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "rx",
                         Comment = "The radius of the ellipse along the x-axis."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "ry",
                         Comment = "The radius of the ellipse along the y-axis."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "fill",
                         Comment = "The fill color of the ellipse."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke",
                         Comment = "The stroke color of the ellipse."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke-width",
                         Comment = "The width of the stroke.",
@@ -383,57 +383,57 @@ public class ExportingCommonHtmlElements
                 Tag = "line",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "x1",
                         Comment = "The x-coordinate of the start point of the line.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "y1",
                         Comment = "The y-coordinate of the start point of the line.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "x2",
                         Comment = "The x-coordinate of the end point of the line.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "y2",
                         Comment = "The y-coordinate of the end point of the line.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke",
                         Comment = "The stroke (outline) color of the line."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke-width",
                         Comment = "The width of the line's outline.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke-dasharray",
                         Comment = "Pattern of dashes and gaps used in the line's stroke."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke-linecap",
                         Comment = "The style of the line's endpoints."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke-linejoin",
                         Comment = "The style of the line's corners."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke-opacity",
                         Comment = "The opacity (transparency) of the line's stroke."
@@ -447,22 +447,22 @@ public class ExportingCommonHtmlElements
                 Tag = "polyline",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "points",
                         Comment = "A list of points defining the vertices of the polyline."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "fill",
                         Comment = "The fill color of the polyline."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke",
                         Comment = "The stroke (outline) color of the polyline."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke-width",
                         Comment = "The width of the polyline's outline.",
@@ -477,47 +477,47 @@ public class ExportingCommonHtmlElements
                 Tag = "circle",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "cx",
                         Comment = "The x-coordinate of the center of the circle.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "cy",
                         Comment = "The y-coordinate of the center of the circle.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "r",
                         Comment = "The radius of the circle.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "fill",
                         Comment = "The fill color of the circle."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke",
                         Comment = "The stroke color of the circle."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke-width",
                         Comment = "The width of the stroke of the circle.",
-                        Type = "UnionProp<string,double>"
+                        Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
-                        Name    = "stroke-linecap"
+                        Name = "stroke-linecap"
                     },
-                    new ()
+                    new()
                     {
-                        Name    = "stroke-linejoin"
+                        Name = "stroke-linejoin"
                     },
                 ],
                 EnableCastFromString = false
@@ -528,44 +528,44 @@ public class ExportingCommonHtmlElements
                 Tag = "polygon",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "points",
                         Comment = "Specifies the coordinates of the polygon's vertices, in (x, y) pairs, separated by commas."
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "fill",
                         Comment = "Specifies the fill color of the polygon."
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "stroke",
                         Comment = "Specifies the stroke color of the polygon."
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "stroke-width",
                         Comment = "Specifies the width of the polygon's stroke, in pixels.",
                         Type    = "UnionProp<string,double>"
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "stroke-linecap",
                         Comment = "Specifies the type of line cap used for the polygon's stroke."
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "stroke-linejoin",
                         Comment = "Specifies the type of line join used for the polygon's stroke."
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "fill-rule",
                         Comment = "Specifies how the polygon is filled."
@@ -576,10 +576,11 @@ public class ExportingCommonHtmlElements
             new()
             {
                 Tag = "use",
-                Attributes = [
-                    new ()
+                Attributes =
+                [
+                    new()
                     {
-                        Name    = "xlinkHref"
+                        Name = "xlinkHref"
                     },
                 ],
                 EnableCastFromString = false
@@ -589,64 +590,64 @@ public class ExportingCommonHtmlElements
                 Tag = "rect",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "x",
                         Comment = "The x-coordinate of the top-left corner of the rectangle.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "y",
                         Comment = "The y-coordinate of the top-left corner of the rectangle.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "width",
                         Comment = "The width of the rectangle.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "height",
                         Comment = "The height of the rectangle.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "rx",
                         Comment = "The border radius of the rectangle on the horizontal axis.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "ry",
                         Comment = "The border radius of the rectangle on the vertical axis.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "fill",
                         Comment = "The fill color of the rectangle."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke",
                         Comment = "The stroke color of the rectangle."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke-width",
                         Comment = "The width of the rectangle's stroke.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke-linecap",
                         Comment = "The linecap style of the rectangle's stroke."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke-linejoin",
                         Comment = "The linejoin style of the rectangle's stroke."
@@ -654,52 +655,52 @@ public class ExportingCommonHtmlElements
                 ],
                 EnableCastFromString = false
             },
-             
+
             new()
             {
                 Tag = "marker",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "markerHeight",
                         Comment = "Specifies the height of the marker viewport.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "markerUnits",
                         Comment = "Specifies the coordinate system for the marker width and height. Possible values are 'strokeWidth' or 'userSpaceOnUse'."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "markerWidth",
                         Comment = "Specifies the width of the marker viewport.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "orient",
                         Comment = "Defines the rotation angle for the marker, in degrees. Accepts 'auto', 'auto-start-reverse', or a specific angle."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "preserveAspectRatio",
                         Comment = "Indicates how the marker should scale its dimensions."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "refX",
                         Comment = "Defines the x-coordinate in the marker’s coordinate system.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "refY",
                         Comment = "Defines the y-coordinate in the marker’s coordinate system.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "viewBox",
                         Comment = "Specifies the position and dimension of the marker’s viewport."
@@ -712,42 +713,42 @@ public class ExportingCommonHtmlElements
                 Tag = "radialGradient",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "cx",
                         Comment = "The x-coordinate of the center of the gradient."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "cy",
                         Comment = "The y-coordinate of the center of the gradient."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "fx",
                         Comment = "The x-coordinate of the focal point of the gradient."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "fy",
                         Comment = "The y-coordinate of the focal point of the gradient."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "r",
                         Comment = "The radius of the gradient."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "spreadMethod",
                         Comment = "The method used to spread the gradient."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "gradientUnits",
                         Comment = "The units used to specify the gradient."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "gradientTransform",
                         Comment = "A transform to apply to the gradient."
@@ -761,28 +762,28 @@ public class ExportingCommonHtmlElements
                 Tag = "clipPath",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "id",
                         Comment = "Unique identifier for referencing this clipPath"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "clipPathUnits",
                         Comment = "Coordinate system for the contents",
                     },
-                    new ()
+                    new()
                     {
                         Name    = "transform",
                         Comment = "Apply transformations to the clipping path",
                     },
-                    
-                    new ()
+
+                    new()
                     {
                         Name    = "clip-rule",
                         Comment = "Specifies the fill rule for the clipping path."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "clip-box",
                         Comment = "Specifies the reference box for the clipping path."
@@ -796,68 +797,68 @@ public class ExportingCommonHtmlElements
                 Tag = "path",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "d",
                         Comment = "Path data"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "fill",
                         Comment = "Fill color"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke",
                         Comment = "Stroke color"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke-width",
                         Comment = "Stroke width",
                         Type    = "UnionProp<string,double>"
                     },
 
-                    new ()
+                    new()
                     {
                         Name = "fillRule"
                     },
-                    new ()
+                    new()
                     {
                         Name = "clipRule"
                     },
-                    new ()
+                    new()
                     {
                         Name = "strokeLinecap"
                     },
-                    new ()
+                    new()
                     {
                         Name = "strokeLinejoin"
                     },
-                    new ()
+                    new()
                     {
-                        Name    = "stroke-dasharray"
+                        Name = "stroke-dasharray"
                     },
-                    
-                    new ()
+
+                    new()
                     {
-                        Name    = "opacity",
-                        Type    = "UnionProp<string,double>"
+                        Name = "opacity",
+                        Type = "UnionProp<string,double>"
                     },
-                    
-                    new ()
+
+                    new()
                     {
                         Name = "fill-opacity",
                         Type = "UnionProp<string,double>"
                     },
-                    
-                    new ()
+
+                    new()
                     {
                         Name = "stroke-opacity",
                         Type = "UnionProp<string,double>"
                     },
-                    
-                    new ()
+
+                    new()
                     {
                         Name    = "transform",
                         Comment = "Apply transformations to the path",
@@ -866,23 +867,23 @@ public class ExportingCommonHtmlElements
                 EnableCastFromString = false
             },
 
-            
-            
+
+
             new()
             {
                 Tag = "g",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name = "opacity"
                     },
 
-                    new ()
+                    new()
                     {
                         Name = "clipPath"
                     },
-                    new ()
+                    new()
                     {
                         Name = "transform"
                     }
@@ -895,34 +896,34 @@ public class ExportingCommonHtmlElements
                 Tag = "mask",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "height",
                         Comment = "This attribute defines the height of the masking area. Value type: length ; Default value: 120%; Animatable: yes"
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "maskContentUnits",
                         Comment = "This attribute defines the coordinate system for the contents of the mask. Value type: userSpaceOnUse|objectBoundingBox ; Default value: userSpaceOnUse; Animatable: yes"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "maskUnits",
                         Comment = "This attribute defines the coordinate system for attributes x, y, width and height on the mask. Value type: userSpaceOnUse|objectBoundingBox ; Default value: objectBoundingBox; Animatable: yes"
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "x",
                         Comment = "This attribute defines the x-axis coordinate of the top-left corner of the masking area. Value type: 'coordinate' ; Default value: -10%; Animatable: yes"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "y",
                         Comment = "This attribute defines the y-axis coordinate of the top-left corner of the masking area. Value type: 'coordinate' ; Default value: -10%; Animatable: yes"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "width",
                         Comment = "This attribute defines the width of the masking area. Value type: 'length' ; Default value: 120%; Animatable: yes"
@@ -936,42 +937,42 @@ public class ExportingCommonHtmlElements
                 Tag = "meta",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "charset",
                         Comment = "Specifies the character encoding of the document."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "http-equiv",
                         Comment = "Specifies the name of the HTTP header that the meta tag should be equivalent to."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "name",
                         Comment = "Specifies the name of the metadata property."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "content",
                         Comment = "Specifies the value of the metadata property."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "scheme",
                         Comment = "Specifies the URL scheme for the content attribute of the meta tag."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "itemprop",
                         Comment = "Specifies the Microdata item property that the meta tag represents."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "property",
                         Comment = "Specifies the schema.org property that the meta tag represents."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "src",
                         Comment = "Specifies the URL for a resource associated with the meta tag."
@@ -985,17 +986,17 @@ public class ExportingCommonHtmlElements
                 Tag = "body",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "background",
                         Comment = "Specifies the URL of a background image to be displayed behind the document's content."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "bgcolor",
                         Comment = "Specifies the background color of the document's body."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "link",
                         Comment = "Specifies the color of unvisited links in the document's body."
@@ -1008,37 +1009,37 @@ public class ExportingCommonHtmlElements
                 Tag = "script",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "async",
                         Comment = "Specifies that the script should be executed asynchronously. This means that the browser will not wait for the script to finish executing before continuing to parse the rest of the HTML."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "defer",
                         Comment = "Specifies that the script should be executed after the browser has finished parsing the rest of the HTML. This is similar to async, but it ensures that scripts are executed in the order they are specified in the HTML."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "integrity",
                         Comment = "Specifies a subresource integrity (SRI) hash for the script. This helps to protect against man-in-the-middle attacks."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "language",
                         Comment = "Specifies the scripting language of the script. This is deprecated, but is still supported by most browsers."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "nomodule",
                         Comment = "Specifies that the script should be ignored if the browser does not support modules."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "src",
                         Comment = "Specifies the URL of an external script file."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "type",
                         Comment = "Specifies the type of the script. The most common value is application/javascript."
@@ -1052,7 +1053,7 @@ public class ExportingCommonHtmlElements
                 Tag = "title",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "language",
                         Comment = "Specifies the language of the title."
@@ -1066,29 +1067,29 @@ public class ExportingCommonHtmlElements
                 Tag = "head",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "profile",
                         Comment = "Provides a URL to a profile document for the current document."
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "link",
                         Comment = "Provides a link to an external resource, such as a stylesheet or script file."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "meta",
                         Comment = "Provides metadata about the document, such as the character encoding, author, and keywords."
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "script",
                         Comment = "Provides JavaScript code to be executed in the browser."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "noscript",
                         Comment = "Provides content to be displayed if the browser does not support JavaScript."
@@ -1107,29 +1108,29 @@ public class ExportingCommonHtmlElements
                 Tag = "html",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "hidden",
                         Comment = "Hides the element from display."
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "manifest",
                         Comment = "Specifies the URL of a manifest file, which provides information about the web app."
                     },
-                    new ()
+                    new()
                     {
                         Name         = "xmlns",
                         Comment      = "Specifies the namespace of the element.",
                         DefaultValue = "http://www.w3.org/1999/xhtml"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "prefix",
                         Comment = "Specifies the prefix of the element."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "version",
                         Comment = "Specifies the version of the HTML specification to which the element conforms."
@@ -1142,23 +1143,23 @@ public class ExportingCommonHtmlElements
                 Tag = "style",
                 Attributes =
                 [
-                    new () 
-                    { 
-                        Name    = "type", 
-                        Comment = "Specifies the MIME type of the `style` content.", 
-                        Type    = "string" 
+                    new()
+                    {
+                        Name    = "type",
+                        Comment = "Specifies the MIME type of the `style` content.",
+                        Type    = "string"
                     },
-                    new () 
-                    { 
-                        Name    = "media", 
-                        Comment = "Specifies the media type(s) for which the styles are intended.", 
-                        Type    = "string" 
+                    new()
+                    {
+                        Name    = "media",
+                        Comment = "Specifies the media type(s) for which the styles are intended.",
+                        Type    = "string"
                     },
-                    
-                    new () 
-                    { 
-                        Name    = "scoped", 
-                        Comment = "Indicates that the styles are scoped to the parent element.", 
+
+                    new()
+                    {
+                        Name    = "scoped",
+                        Comment = "Indicates that the styles are scoped to the parent element.",
                         Type    = "UnionProp<string,bool>"
                     }
 
@@ -1172,24 +1173,24 @@ public class ExportingCommonHtmlElements
                 EnableCastFromString = true,
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "htmlFor",
                         Comment = "Specifies which form element a label is bound to."
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "dropzone",
                         Comment = "Specifies whether the element is a drop target."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "hidden",
                         Comment = "Hides the element from view."
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "tabindex",
                         Comment = "Specifies the element's position in the tab order."
@@ -1202,53 +1203,53 @@ public class ExportingCommonHtmlElements
                 Tag = "a",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "href",
                         Comment = "The URL of the linked resource."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "target",
                         Comment = "Specifies where the linked resource should be opened. Can be `_blank`, `_self`, `_parent`, or `_top`."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "rel",
                         Comment = "Specifies the relationship between the current document and the linked resource. Can be `alternate`, `author`, `bookmark`, `canonical`, `external`, `help`, `license`, `next`, `nofollow`, `noreferrer`, `noopener`, `prev`, `search`, `sponsored`, or `stylesheet`."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "type",
                         Comment = "Specifies the MIME type of the linked resource, if applicable."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "download",
                         Comment = "Specifies whether the linked resource should be downloaded or opened in a new browser tab."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "ping",
                         Comment = "A list of URLs to which a ping should be sent when the user clicks on the link."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "media",
                         Comment = "Specifies the media types for which the link is relevant."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "hreflang",
                         Comment = "Specifies the language of the linked resource."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "name",
                         Comment = "Specifies a name for the link. This can be used to target the link with JavaScript."
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "tabindex",
                         Comment = "Specifies the tab order of the link."
@@ -1262,64 +1263,64 @@ public class ExportingCommonHtmlElements
                 Tag = "img",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "src",
                         Comment = "The URL of the image file."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "srcset",
                         Comment = "A list of image files to use in different situations, such as different screen sizes or device types."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "usemap",
                         Comment = "Specifies an image as a client-side image map."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "alt",
                         Comment = "An alternate text for the image, if the image for some reason cannot be displayed."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "width",
                         Comment = "The width of the image, in pixels.",
                         Type    = "UnionProp<string,double?>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "height",
                         Comment = "The height of the image, in pixels.",
                         Type    = "UnionProp<string,double?>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "ismap",
                         Comment = "A Boolean attribute that indicates whether the image is an image map."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "longdesc",
                         Comment = "A longer description of the image, for use by screen readers and other assistive technologies."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "crossorigin",
                         Comment = "A string that specifies the CORS setting for the image."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "loading",
                         Comment = "A string that specifies how the image should be loaded."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "decoding",
                         Comment = "A string that specifies how the image should be decoded."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "referrerpolicy",
                         Comment = "A string that specifies how much referrer information is sent with requests for the image."
@@ -1334,80 +1335,80 @@ public class ExportingCommonHtmlElements
                 CreateClassAsPartial = true,
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name = "focusable"
                     },
-                    new ()
+                    new()
                     {
                         Name = "xlinkHref"
                     },
-                    new ()
+                    new()
                     {
                         Name = "xmlnsXlink"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "preserveAspectRatio",
                         Comment = "Specifies how the SVG element should be scaled and aligned to fit its viewport."
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "width",
                         Comment = "The width of the SVG element in pixels.",
-                        Type = "UnionProp<string, double>"
+                        Type    = "UnionProp<string, double>"
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "height",
                         Comment = "The height of the SVG element in pixels.",
-                        Type = "UnionProp<string, double>"
+                        Type    = "UnionProp<string, double>"
                     },
 
-                    new ()
+                    new()
                     {
                         Name         = "xmlns",
                         Comment      = "The namespace URI for the SVG element.",
                         DefaultValue = "http://www.w3.org/2000/svg"
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "version",
                         Comment = "The SVG version of the element."
                     },
-                    new ()
+                    new()
                     {
                         Name = "viewBox"
                     },
-                    new ()
+                    new()
                     {
                         Name = "fill"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke",
                         Comment = "The stroke color of the ellipse."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke-width",
                         Comment = "The width of the stroke.",
                         Type    = "UnionProp<string,double>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke-linecap",
                         Comment = "The style of the line's endpoints."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke-linejoin",
                         Comment = "The style of the line's corners."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "stroke-opacity",
                         Comment = "The opacity (transparency) of the line's stroke."
@@ -1417,25 +1418,25 @@ public class ExportingCommonHtmlElements
             },
             new()
             {
-                Tag                  = "symbol",
+                Tag = "symbol",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "viewBox",
                         Comment = "Defines the position and dimension, in user space, of an SVG viewport."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "preserveAspectRatio",
                         Comment = "Indicates how an element should preserve its aspect ratio when the viewBox is different from the viewport."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "externalResourcesRequired",
                         Comment = "Specifies whether the rendering of the 'symbol' element is dependent on external resources."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "transform",
                         Comment = "Applies a transformation to the element, such as scaling, rotating, or translating."
@@ -1459,10 +1460,10 @@ public class ExportingCommonHtmlElements
                 ],
                 EnableCastFromString = false
             },
-            
+
             new()
             {
-                Tag                  = "video",
+                Tag = "video",
                 Attributes =
                 [
                     new()
@@ -1523,9 +1524,9 @@ public class ExportingCommonHtmlElements
                 ],
                 EnableCastFromString = false
             },
-             new()
+            new()
             {
-                Tag                  = "source",
+                Tag = "source",
                 Attributes =
                 [
                     new()
@@ -1583,27 +1584,27 @@ public class ExportingCommonHtmlElements
                 CreateClassAsPartial = false,
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name = "offset"
                     },
-                    new ()
+                    new()
                     {
                         Name = "stopColor"
                     },
-                    new ()
+                    new()
                     {
                         Name = "stopOpacity"
                     }
                 ],
                 EnableCastFromString = false
             },
-            
+
             new()
             {
                 Tag                  = "linearGradient",
                 CreateClassAsPartial = false,
-                Attributes = [],
+                Attributes           = [],
                 EnableCastFromString = false
             },
             new()
@@ -1620,50 +1621,50 @@ public class ExportingCommonHtmlElements
                 Attributes           = [],
                 EnableCastFromString = false
             },
-            
+
             new()
             {
-                Tag = "form",
+                Tag                  = "form",
                 CreateClassAsPartial = false,
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "action",
                         Comment = "Specifies the URL of the page where the form data will be submitted."
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "method",
                         Comment = "Specifies how the form data will be sent to the server. Possible values are 'get' and 'post'."
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "enctype",
                         Comment = "Specifies the encoding type for form data. Possible values are 'application/x-www-form-urlencoded' and 'multipart/form-data'."
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "target",
                         Comment = "Specifies the name of the frame where the form will be submitted. The default value is '_self', which means the form will be submitted in the current frame."
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "name",
                         Comment = "Specifies a name for the form. This name is used to reference the form in JavaScript or to reference form data after a form is submitted."
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "novalidate",
                         Comment = "Disables form validation. This attribute is useful when you want to submit the form without validating the user input."
                     },
 
-                    new ()
+                    new()
                     {
                         Name    = "autocomplete",
                         Comment = "Specifies whether the browser should automatically fill in form fields based on the user's past input."
@@ -1671,95 +1672,95 @@ public class ExportingCommonHtmlElements
                 ],
                 EnableCastFromString = false
             },
-            
-             new()
+
+            new()
             {
                 Tag = "textarea",
                 Attributes =
                 [
-                    new ()
+                    new()
                     {
                         Name    = "name",
                         Comment = "Specifies a name for the textarea element."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "cols",
                         Comment = "Specifies the visible width of the textarea element in characters.",
-                        Type = "UnionProp<string,int?>"
+                        Type    = "UnionProp<string,int?>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "rows",
                         Comment = "Specifies the number of visible lines in the textarea element.",
                         Type    = "UnionProp<string,int?>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "placeholder",
                         Comment = "Specifies a short hint that describes the expected value of the textarea element."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "readOnly",
                         Comment = "Disables user input in the textarea element.",
                         Type    = "UnionProp<string,bool>"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "required",
                         Comment = "Indicates that the textarea element must be filled out before the form is submitted."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "autofocus",
                         Comment = "Automatically gives focus to the textarea element when the page loads."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "autocomplete",
                         Comment = "Specifies that the user's browser should automatically complete the textarea element's value."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "dirname",
                         Comment = "Specifies the directory to use as the default value for the 'file' input type."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "form",
                         Comment = "Specifies the ID of the form that the textarea element belongs to."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "maxlength",
                         Comment = "Specifies the maximum number of characters that can be entered into the textarea element."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "minlength",
                         Comment = "Specifies the minimum number of characters that must be entered into the textarea element."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "wrap",
                         Comment = "Specifies whether the text in the textarea element should wrap to the next line when it reaches the end of the visible area."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "defaultValue",
                         Comment = "A string. Specifies the initial value for a text area."
                     },
-                    new ()
+                    new()
                     {
-                        Name    = "value"
+                        Name = "value"
                     },
-                    new ()
+                    new()
                     {
                         Name = "disabled"
                     },
-                    
-                    new ()
+
+                    new()
                     {
                         Name                              = "onBlur",
                         Type                              = "FocusEventHandler",
@@ -1767,156 +1768,158 @@ public class ExportingCommonHtmlElements
                         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments",
                         Comment                           = "Occurs when an element loses focus."
                     },
-                    
-                    new ()
+
+                    new()
                     {
-                        Name                = "valueBind",
-                        Type                = "Expression<Func<InputValueBinder>>",
-                        IsBindingExpression = true,
+                        Name                   = "valueBind",
+                        Type                   = "Expression<Func<InputValueBinder>>",
+                        IsBindingExpression    = true,
                         TransformValueInClient = "ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull",
-                        Bind =new ()
+                        Bind = new()
                         {
                             targetProp = "value", jsValueAccess = "e.target.value", eventName = "onChange"
                         }
                     },
-                    
-                    new ()
+
+                    new()
                     {
                         Name = "valueBindDebounceTimeout",
                         Type = "int?",
-                        Comment ="""
-                                 if you want to handle when user iteraction finished see example below
-                                 component.valueBind = ()=>state.UserInfo.Name
-                                 component.valueBindDebounceTimeout = 600 // milliseconds
-                                 component.valueBindDebounceHandler = OnUserIterationFinished
-                                 """,
+                        Comment = """
+                                  if you want to handle when user iteraction finished see example below
+                                  component.valueBind = ()=>state.UserInfo.Name
+                                  component.valueBindDebounceTimeout = 600 // milliseconds
+                                  component.valueBindDebounceHandler = OnUserIterationFinished
+                                  """,
                         JsonIgnore = true
                     },
-                    
-                    new ()
+
+                    new()
                     {
                         Name = "valueBindDebounceHandler",
                         Type = "Func<Task>",
-                        Comment ="""
-                                 if you want to handle when user iteraction finished see example below
-                                 component.valueBind = ()=>state.UserInfo.Name
-                                 component.valueBindDebounceTimeout = 600 // milliseconds
-                                 component.valueBindDebounceHandler = OnUserIterationFinished
-                                 """ ,
+                        Comment = """
+                                  if you want to handle when user iteraction finished see example below
+                                  component.valueBind = ()=>state.UserInfo.Name
+                                  component.valueBindDebounceTimeout = 600 // milliseconds
+                                  component.valueBindDebounceHandler = OnUserIterationFinished
+                                  """,
                         JsonIgnore = true
                     }
                 ],
                 EnableCastFromString = false
             },
-             
+
             new()
             {
                 Tag                  = "link",
                 CreateClassAsPartial = false,
-                Attributes           = [
-                    new ()
+                Attributes =
+                [
+                    new()
                     {
                         Name = "href"
                     },
-                    new ()
+                    new()
                     {
                         Name = "media"
                     },
-                    new ()
+                    new()
                     {
                         Name = "rel"
                     },
-                    new ()
+                    new()
                     {
                         Name = "sizes"
                     },
-                    new ()
+                    new()
                     {
                         Name = "type"
                     },
-                    new ()
+                    new()
                     {
                         Name = "@as"
                     },
-                    new ()
+                    new()
                     {
                         Name = "integrity"
                     },
-                    new ()
+                    new()
                     {
                         Name = "crossOrigin"
                     },
-                    new ()
+                    new()
                     {
                         Name = "referrerpolicy"
                     }
                 ],
                 EnableCastFromString = false
             },
-            
+
             new()
             {
                 Tag                  = "iframe",
                 CreateClassAsPartial = false,
-                Attributes = [
-                    new ()
+                Attributes =
+                [
+                    new()
                     {
                         Name    = "src",
                         Comment = "Specifies the URL of the document to embed in the iframe"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "srcDoc",
                         Comment = "Provides the HTML content to be embedded directly within the iframe"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "name",
                         Comment = "Assigns a name to the iframe, which can be used for targeting links"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "width",
                         Comment = "Defines the width of the iframe"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "height",
                         Comment = "Defines the height of the iframe"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "sandbox",
                         Comment = "Enables an extra set of restrictions for the content in the iframe"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "allow",
                         Comment = "Controls features within the iframe, such as fullscreen, camera, microphone, etc."
                     },
-                    new ()
+                    new()
                     {
                         Name    = "allowFullScreen",
                         Comment = "Allows the iframe to display content in fullscreen mode"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "referrerPolicy",
                         Comment = "Controls how much referrer information should be included with requests"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "loading",
                         Comment = "Specifies whether the iframe should be loaded lazily or eagerly"
                     },
-                   
-                    
-                    new ()
+
+
+                    new()
                     {
                         Name    = "csp",
                         Comment = "Adds a Content Security Policy for the iframe's content"
                     },
-                    new ()
+                    new()
                     {
                         Name    = "hidden",
                         Comment = "Hides the iframe"
@@ -1925,63 +1928,64 @@ public class ExportingCommonHtmlElements
                 ],
                 EnableCastFromString = false
             },
-            
+
             new()
             {
                 Tag = "select",
-                
+
                 CreateClassAsPartial = false,
-                Attributes = [
-                    new ()
+                Attributes =
+                [
+                    new()
                     {
                         Name = "value"
                     },
-                    new ()
+                    new()
                     {
                         Name = "disabled"
                     },
-                    new ()
+                    new()
                     {
                         Name                = "valueBind",
                         Type                = "Expression<Func<InputValueBinder>>",
                         IsBindingExpression = true,
-                        Bind =new ()
+                        Bind = new()
                         {
                             targetProp = "value", jsValueAccess = "e.target.value", eventName = "onChange"
                         }
                     },
-                    
-                    new ()
+
+                    new()
                     {
                         Name                              = "onChange",
                         Type                              = "ChangeEventHandler",
                         IsIsVoidTaskDelegate              = true,
                         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments"
                     },
-                    
-                    new ()
+
+                    new()
                     {
                         Name = "valueBindDebounceTimeout",
                         Type = "int?",
-                        Comment ="""
-                                 if you want to handle when user iteraction finished see example below
-                                 component.valueBind = ()=>state.UserInfo.Name
-                                 component.valueBindDebounceTimeout = 600 // milliseconds
-                                 component.valueBindDebounceHandler = OnUserIterationFinished
-                                 """ ,
+                        Comment = """
+                                  if you want to handle when user iteraction finished see example below
+                                  component.valueBind = ()=>state.UserInfo.Name
+                                  component.valueBindDebounceTimeout = 600 // milliseconds
+                                  component.valueBindDebounceHandler = OnUserIterationFinished
+                                  """,
                         JsonIgnore = true
                     },
-                    
-                    new ()
+
+                    new()
                     {
                         Name = "valueBindDebounceHandler",
                         Type = "Func<Task>",
-                        Comment ="""
-                                 if you want to handle when user iteraction finished see example below
-                                 component.valueBind = ()=>state.UserInfo.Name
-                                 component.valueBindDebounceTimeout = 600 // milliseconds
-                                 component.valueBindDebounceHandler = OnUserIterationFinished
-                                 """ ,
+                        Comment = """
+                                  if you want to handle when user iteraction finished see example below
+                                  component.valueBind = ()=>state.UserInfo.Name
+                                  component.valueBindDebounceTimeout = 600 // milliseconds
+                                  component.valueBindDebounceHandler = OnUserIterationFinished
+                                  """,
                         JsonIgnore = true
                     }
                 ],
@@ -1990,330 +1994,332 @@ public class ExportingCommonHtmlElements
             new()
             {
                 Tag = "input",
-                
-                Attributes = [
-                    new ()
+
+                Attributes =
+                [
+                    new()
                     {
                         Name = "required"
                     },
-                    new ()
+                    new()
                     {
                         Name = "autoComplete"
                     },
-                    new ()
+                    new()
                     {
                         Name = "@checked",
                         Type = "bool?"
                     },
-                    new ()
+                    new()
                     {
                         Name = "defaultChecked",
                         Type = "bool?"
                     },
-                    new ()
+                    new()
                     {
-                    Name = "defaultValue"
+                        Name = "defaultValue"
                     },
-                    new ()
+                    new()
                     {
                         Name = "disabled",
                         Type = "bool?"
                     },
-                    new ()
+                    new()
                     {
-                        Name = "autoFocus",
-                        Type = "bool?",
+                        Name    = "autoFocus",
+                        Type    = "bool?",
                         Comment = "Element must automatically get focus when the page loads."
                     },
-                    new ()
+                    new()
                     {
                         Name = "name"
                     },
-                    new ()
+                    new()
                     {
                         Name = "placeholder"
                     },
-                    new ()
+                    new()
                     {
                         Name = "readOnly",
                         Type = "bool?"
                     },
-                    new ()
+                    new()
                     {
                         Name = "type"
                     },
-                    new ()
+                    new()
                     {
                         Name = "max",
                         Type = "int?"
                     },
-                    new ()
+                    new()
                     {
                         Name = "maxLength",
                         Type = "int?"
                     },
-                    new ()
+                    new()
                     {
                         Name = "min",
                         Type = "int?"
                     },
-                    new ()
+                    new()
                     {
                         Name = "step",
                         Type = "int?"
                     },
-                    
-                    new ()
+
+                    new()
                     {
                         Name                   = "valueBind",
                         Type                   = "Expression<Func<InputValueBinder>>",
                         IsBindingExpression    = true,
                         TransformValueInClient = "ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull",
-                        Bind =new ()
+                        Bind = new()
                         {
                             targetProp = "value", jsValueAccess = "e.target.value", eventName = "onChange"
                         }
                     },
-                    
-                    new ()
+
+                    new()
                     {
-                        Name                   = "valueBindDebounceTimeout",
-                        Type                   = "int?",
-                        Comment ="""
-                                 if you want to handle when user iteraction finished see example below
-                                 component.valueBind = ()=>state.UserInfo.Name
-                                 component.valueBindDebounceTimeout = 600 // milliseconds
-                                 component.valueBindDebounceHandler = OnUserIterationFinished
-                                 """ ,
+                        Name = "valueBindDebounceTimeout",
+                        Type = "int?",
+                        Comment = """
+                                  if you want to handle when user iteraction finished see example below
+                                  component.valueBind = ()=>state.UserInfo.Name
+                                  component.valueBindDebounceTimeout = 600 // milliseconds
+                                  component.valueBindDebounceHandler = OnUserIterationFinished
+                                  """,
                         JsonIgnore = true
                     },
-                    
-                    new ()
+
+                    new()
                     {
                         Name = "valueBindDebounceHandler",
                         Type = "Func<Task>",
-                        Comment ="""
-                                 if you want to handle when user iteraction finished see example below
-                                 component.valueBind = ()=>state.UserInfo.Name
-                                 component.valueBindDebounceTimeout = 600 // milliseconds
-                                 component.valueBindDebounceHandler = OnUserIterationFinished
-                                 """ ,
+                        Comment = """
+                                  if you want to handle when user iteraction finished see example below
+                                  component.valueBind = ()=>state.UserInfo.Name
+                                  component.valueBindDebounceTimeout = 600 // milliseconds
+                                  component.valueBindDebounceHandler = OnUserIterationFinished
+                                  """,
                         JsonIgnore = true
                     },
-                    
-                    new ()
+
+                    new()
                     {
                         Name                = "checkedBind",
                         Type                = "Expression<Func<bool>>",
                         IsBindingExpression = true,
-                        Bind =new ()
+                        Bind = new()
                         {
                             targetProp = "checked", jsValueAccess = "e.target.value", eventName = "onChange"
                         }
                     },
 
-                    
-                    new ()
+
+                    new()
                     {
                         Name                   = "value",
                         Type                   = "string",
                         TransformValueInClient = "ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull"
                     },
-                    
-                    new ()
+
+                    new()
                     {
-                        Name                 = "onBlur",
-                        Type                 = "FocusEventHandler",
-                        IsIsVoidTaskDelegate = true,
+                        Name                              = "onBlur",
+                        Type                              = "FocusEventHandler",
+                        IsIsVoidTaskDelegate              = true,
                         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments",
-                        Comment = "Occurs when an element loses focus."
+                        Comment                           = "Occurs when an element loses focus."
                     },
-                    new ()
+                    new()
                     {
                         Name                              = "onChange",
                         Type                              = "ChangeEventHandler",
                         IsIsVoidTaskDelegate              = true,
                         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments"
                     },
-                    new ()
+                    new()
                     {
                         Name                              = "onFocus",
                         Type                              = "FocusEventHandler",
                         IsIsVoidTaskDelegate              = true,
                         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments"
                     }
-                    
+
                 ],
                 EnableCastFromString = false
             },
-            
-            
+
+
             new()
             {
                 Tag = "HtmlElement",
-                
+
                 CreateClassAsPartial = true,
-                Attributes = [
-                    new ()
+                Attributes =
+                [
+                    new()
                     {
                         Name = "accesskey"
                     },
-                    new ()
+                    new()
                     {
                         Name = "draggable"
                     },
-                    new ()
+                    new()
                     {
                         Name = "contentEditable",
                         Type = "UnionProp<string,bool>"
                     },
-                    new ()
+                    new()
                     {
                         Name = "suppressContentEditableWarning",
                         Type = "bool?"
                     },
-                    
-                    new ()
+
+                    new()
                     {
                         Name = "className"
                     },
-                    new ()
+                    new()
                     {
                         Name = "dangerouslySetInnerHTML",
                         Type = "dangerouslySetInnerHTML"
                     },
-                    new ()
+                    new()
                     {
                         Name = "dir"
                     },
-                    new ()
+                    new()
                     {
                         Name = "id"
                     },
-                    new ()
+                    new()
                     {
                         Name = "lang"
                     },
-                    new ()
+                    new()
                     {
                         Name = "part"
                     },
-                    new ()
+                    new()
                     {
                         Name = "role"
                     },
-                    new ()
+                    new()
                     {
                         Name = "spellCheck"
                     },
-                    new ()
+                    new()
                     {
                         Name = "tabIndex"
                     },
-                    new ()
+                    new()
                     {
                         Name = "title"
                     },
-                    new ()
+                    new()
                     {
                         Name = "translate"
                     },
-                    new ()
+                    new()
                     {
                         Name                              = "onClick",
                         Type                              = "MouseEventHandler",
-                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+                        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
                         IsIsVoidTaskDelegate              = true,
                     },
-                    new ()
+                    new()
                     {
                         Name                              = "onDoubleClick",
                         Type                              = "MouseEventHandler",
-                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+                        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
                         IsIsVoidTaskDelegate              = true,
                     },
-                    new ()
+                    new()
                     {
                         Name                              = "onMouseEnter",
                         Type                              = "MouseEventHandler",
-                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+                        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
                         IsIsVoidTaskDelegate              = true,
                     },
-                    new ()
+                    new()
                     {
                         Name                              = "onMouseLeave",
                         Type                              = "MouseEventHandler",
-                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+                        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
                         IsIsVoidTaskDelegate              = true,
                     },
-                    new ()
+                    new()
                     {
-                        Name = "onScroll",
-                        Type = "ScrollEventHandler",
+                        Name                 = "onScroll",
+                        Type                 = "ScrollEventHandler",
                         IsIsVoidTaskDelegate = true
                     },
-                    new ()
+                    new()
                     {
                         Name                 = "onKeyDown",
                         Type                 = "KeyboardEventHandler",
                         IsIsVoidTaskDelegate = true,
                     },
-                    new ()
+                    new()
                     {
                         Name                              = "onInput",
                         Type                              = "ChangeEventHandler",
                         IsIsVoidTaskDelegate              = true,
                         GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments"
                     },
-                    
-                    new ()
+
+                    new()
                     {
                         Name                              = "onDragStart",
                         Type                              = "DragEventHandler",
-                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+                        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
                         IsIsVoidTaskDelegate              = true,
                     },
-                    new ()
+                    new()
                     {
                         Name                              = "onDragEnter",
                         Type                              = "DragEventHandler",
-                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+                        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
                         IsIsVoidTaskDelegate              = true,
                     },
-                    new ()
+                    new()
                     {
                         Name                              = "onDragLeave",
                         Type                              = "DragEventHandler",
-                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+                        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
                         IsIsVoidTaskDelegate              = true,
                     },
-                    new ()
+                    new()
                     {
                         Name                              = "onDrop",
                         Type                              = "DragEventHandler",
-                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+                        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
                         IsIsVoidTaskDelegate              = true,
                     },
-                    new ()
+                    new()
                     {
                         Name                              = "onDragEnd",
                         Type                              = "DragEventHandler",
-                        GrabEventArgumentsByUsingFunction ="ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+                        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
                         IsIsVoidTaskDelegate              = true,
                     },
-                    new ()
+                    new()
                     {
                         Name                 = "onCopy",
                         Type                 = "ClipboardEventHandler",
                         IsIsVoidTaskDelegate = true
                     },
-                    new ()
+                    new()
                     {
                         Name                 = "onCut",
                         Type                 = "ClipboardEventHandler",
                         IsIsVoidTaskDelegate = true
                     },
-                    new ()
+                    new()
                     {
                         Name                 = "onPaste",
                         Type                 = "ClipboardEventHandler",
@@ -2322,26 +2328,27 @@ public class ExportingCommonHtmlElements
                 ],
                 EnableCastFromString = false
             },
-            
-               new()
+
+            new()
             {
                 Tag = "canvas",
-                
-                Attributes = [
-                    
-                    new () 
-                    { 
-                        Name    = "width", 
-                        Comment = "Defines the width of the canvas in pixels", 
+
+                Attributes =
+                [
+
+                    new()
+                    {
+                        Name    = "width",
+                        Comment = "Defines the width of the canvas in pixels",
                         Type    = "UnionProp<string,double>"
                     },
-                    new () 
-                    { 
-                        Name    = "height", 
-                        Comment = "Defines the height of the canvas in pixels", 
+                    new()
+                    {
+                        Name    = "height",
+                        Comment = "Defines the height of the canvas in pixels",
                         Type    = "UnionProp<string,double>"
                     },
-                    
+
 
                 ]
             }
