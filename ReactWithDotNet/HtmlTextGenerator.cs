@@ -191,7 +191,6 @@ static class HtmlTextGenerator
             if (value is Style valueAsStyle)
             {
                 AddAttribute(htmlNode, new() { Name = "style", Value = valueAsStyle.ToCss() });
-                return;
             }
 
             return;
