@@ -1,6 +1,6 @@
 ﻿namespace ReactWithDotNet;
 
-partial class Mixin
+public static class WebColors
 {
     public static readonly string AliceBlue = "AliceBlue";
     public static readonly string AntiqueWhite = "AntiqueWhite";
