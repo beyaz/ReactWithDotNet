@@ -1950,12 +1950,12 @@ public sealed class figcaption : HtmlElement
 public sealed class table : HtmlElement
 {
     #region string cellSpacing
-    PropertyValueNode<double?> _cellSpacing;
+    PropertyValueNode<UnionProp<string, double?>> _cellSpacing;
     static readonly PropertyValueDefinition _cellSpacing_ = new()
     {
         name = nameof(cellSpacing)
     };
-    public double? cellSpacing
+    public UnionProp<string, double?> cellSpacing
     {
         get => _cellSpacing?.value;
         set => SetValue(_cellSpacing_, ref _cellSpacing, value);
@@ -1964,15 +1964,71 @@ public sealed class table : HtmlElement
 
 
     #region string cellPadding
-    PropertyValueNode<double?> _cellPadding;
+    PropertyValueNode<UnionProp<string, double?>> _cellPadding;
     static readonly PropertyValueDefinition _cellPadding_ = new()
     {
         name = nameof(cellPadding)
     };
-    public double? cellPadding
+    public UnionProp<string, double?> cellPadding
     {
         get => _cellPadding?.value;
         set => SetValue(_cellPadding_, ref _cellPadding, value);
+    }
+    #endregion
+
+
+    #region string border
+    PropertyValueNode<UnionProp<string, int>> _border;
+    static readonly PropertyValueDefinition _border_ = new()
+    {
+        name = nameof(border)
+    };
+    public UnionProp<string, int> border
+    {
+        get => _border?.value;
+        set => SetValue(_border_, ref _border, value);
+    }
+    #endregion
+
+
+    #region string align
+    PropertyValueNode<string> _align;
+    static readonly PropertyValueDefinition _align_ = new()
+    {
+        name = nameof(align)
+    };
+    public string align
+    {
+        get => _align?.value;
+        set => SetValue(_align_, ref _align, value);
+    }
+    #endregion
+
+
+    #region string rules
+    PropertyValueNode<string> _rules;
+    static readonly PropertyValueDefinition _rules_ = new()
+    {
+        name = nameof(rules)
+    };
+    public string rules
+    {
+        get => _rules?.value;
+        set => SetValue(_rules_, ref _rules, value);
+    }
+    #endregion
+
+
+    #region string frame
+    PropertyValueNode<string> _frame;
+    static readonly PropertyValueDefinition _frame_ = new()
+    {
+        name = nameof(frame)
+    };
+    public string frame
+    {
+        get => _frame?.value;
+        set => SetValue(_frame_, ref _frame, value);
     }
     #endregion
 
@@ -1994,9 +2050,17 @@ public sealed class table : HtmlElement
     public table(List<Modifier> modifiers) : base(modifiers) { }
 
     public static HtmlElementModifier Modify(Action<table> modifyAction) => CreateHtmlElementModifier(modifyAction);
-    public static HtmlElementModifier CellSpacing(double? value) => Modify(x => x.cellSpacing = value);
+    public static HtmlElementModifier CellSpacing(UnionProp<string, double?> value) => Modify(x => x.cellSpacing = value);
 
-    public static HtmlElementModifier CellPadding(double? value) => Modify(x => x.cellPadding = value);
+    public static HtmlElementModifier CellPadding(UnionProp<string, double?> value) => Modify(x => x.cellPadding = value);
+
+    public static HtmlElementModifier Border(UnionProp<string, int> value) => Modify(x => x.border = value);
+
+    public static HtmlElementModifier Align(string value) => Modify(x => x.align = value);
+
+    public static HtmlElementModifier Rules(string value) => Modify(x => x.rules = value);
+
+    public static HtmlElementModifier Frame(string value) => Modify(x => x.frame = value);
 
 }
 
@@ -2110,6 +2174,34 @@ public sealed class th : HtmlElement
     #endregion
 
 
+    #region string align
+    PropertyValueNode<string> _align;
+    static readonly PropertyValueDefinition _align_ = new()
+    {
+        name = nameof(align)
+    };
+    public string align
+    {
+        get => _align?.value;
+        set => SetValue(_align_, ref _align, value);
+    }
+    #endregion
+
+
+    #region string valign
+    PropertyValueNode<string> _valign;
+    static readonly PropertyValueDefinition _valign_ = new()
+    {
+        name = nameof(valign)
+    };
+    public string valign
+    {
+        get => _valign?.value;
+        set => SetValue(_valign_, ref _valign, value);
+    }
+    #endregion
+
+
 
     public th(string className) : base(className) {  }
 
@@ -2137,6 +2229,10 @@ public sealed class th : HtmlElement
     ///     specifies whether a header cell is a header for a column, row, or group of columns or rows.
     /// </summary>
     public static HtmlElementModifier Scope(string value) => Modify(x => x.scope = value);
+
+    public static HtmlElementModifier Align(string value) => Modify(x => x.align = value);
+
+    public static HtmlElementModifier Valign(string value) => Modify(x => x.valign = value);
 
 }
 
@@ -2170,6 +2266,62 @@ public sealed class td : HtmlElement
     #endregion
 
 
+    #region string align
+    PropertyValueNode<string> _align;
+    static readonly PropertyValueDefinition _align_ = new()
+    {
+        name = nameof(align)
+    };
+    public string align
+    {
+        get => _align?.value;
+        set => SetValue(_align_, ref _align, value);
+    }
+    #endregion
+
+
+    #region string valign
+    PropertyValueNode<string> _valign;
+    static readonly PropertyValueDefinition _valign_ = new()
+    {
+        name = nameof(valign)
+    };
+    public string valign
+    {
+        get => _valign?.value;
+        set => SetValue(_valign_, ref _valign, value);
+    }
+    #endregion
+
+
+    #region string nowrap
+    PropertyValueNode<string> _nowrap;
+    static readonly PropertyValueDefinition _nowrap_ = new()
+    {
+        name = nameof(nowrap)
+    };
+    public string nowrap
+    {
+        get => _nowrap?.value;
+        set => SetValue(_nowrap_, ref _nowrap, value);
+    }
+    #endregion
+
+
+    #region string scope
+    PropertyValueNode<string> _scope;
+    static readonly PropertyValueDefinition _scope_ = new()
+    {
+        name = nameof(scope)
+    };
+    public string scope
+    {
+        get => _scope?.value;
+        set => SetValue(_scope_, ref _scope, value);
+    }
+    #endregion
+
+
 
     public td(string className) : base(className) {  }
 
@@ -2192,6 +2344,14 @@ public sealed class td : HtmlElement
     public static HtmlElementModifier ColSpan(int? value) => Modify(x => x.colSpan = value);
 
     public static HtmlElementModifier RowSpan(int? value) => Modify(x => x.rowSpan = value);
+
+    public static HtmlElementModifier Align(string value) => Modify(x => x.align = value);
+
+    public static HtmlElementModifier Valign(string value) => Modify(x => x.valign = value);
+
+    public static HtmlElementModifier Nowrap(string value) => Modify(x => x.nowrap = value);
+
+    public static HtmlElementModifier Scope(string value) => Modify(x => x.scope = value);
 
 }
 
@@ -2225,6 +2385,34 @@ public sealed class tr : HtmlElement
     #endregion
 
 
+    #region string align
+    PropertyValueNode<string> _align;
+    static readonly PropertyValueDefinition _align_ = new()
+    {
+        name = nameof(align)
+    };
+    public string align
+    {
+        get => _align?.value;
+        set => SetValue(_align_, ref _align, value);
+    }
+    #endregion
+
+
+    #region string valign
+    PropertyValueNode<string> _valign;
+    static readonly PropertyValueDefinition _valign_ = new()
+    {
+        name = nameof(valign)
+    };
+    public string valign
+    {
+        get => _valign?.value;
+        set => SetValue(_valign_, ref _valign, value);
+    }
+    #endregion
+
+
 
     public tr(string className) : base(className) {  }
 
@@ -2245,6 +2433,10 @@ public sealed class tr : HtmlElement
     public static HtmlElementModifier ColSpan(int? value) => Modify(x => x.colSpan = value);
 
     public static HtmlElementModifier RowSpan(int? value) => Modify(x => x.rowSpan = value);
+
+    public static HtmlElementModifier Align(string value) => Modify(x => x.align = value);
+
+    public static HtmlElementModifier Valign(string value) => Modify(x => x.valign = value);
 
 }
 
