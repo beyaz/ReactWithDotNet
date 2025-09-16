@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet;
+﻿using System.Reflection;
+
+namespace ReactWithDotNet;
 
 public static class WebColors
 {
@@ -144,4 +146,9 @@ public static class WebColors
     public static readonly string Yellow = "Yellow";
     public static readonly string YellowGreen = "YellowGreen";
 
+    
+    public static string TryGetWebColorByName(string colorName)
+    {
+        return (string)typeof(WebColors).GetField(colorName, BindingFlags.Public | BindingFlags.Static | BindingFlags.IgnoreCase)?.GetValue(null);
+    }
 }
