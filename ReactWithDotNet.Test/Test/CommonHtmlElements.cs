@@ -233,12 +233,32 @@ public class ExportingCommonHtmlElements
                     new()
                     {
                         Name = "cellSpacing",
-                        Type = "double?"
+                        Type = "UnionProp<string, double?>"
                     },
                     new()
                     {
                         Name = "cellPadding",
-                        Type = "double?"
+                        Type = "UnionProp<string, double?>"
+                    },
+                    new()
+                    {
+                        Name = "border",
+                        Type = "UnionProp<string, int>"
+                    },
+                    new()
+                    {
+                        Name = "align",
+                        Type = "string"
+                    },
+                    new()
+                    {
+                        Name = "rules",
+                        Type = "string"
+                    },
+                    new()
+                    {
+                        Name = "frame",
+                        Type = "string"
                     }
                 ],
                 EnableCastFromString = false
@@ -268,6 +288,17 @@ public class ExportingCommonHtmlElements
                         Name    = "scope",
                         Type    = "string",
                         Comment = "specifies whether a header cell is a header for a column, row, or group of columns or rows."
+                    },
+                    
+                    new()
+                    {
+                        Name = "align",
+                        Type = "string"
+                    },
+                    new()
+                    {
+                        Name = "valign",
+                        Type = "string"
                     }
                 ],
                 EnableCastFromString = false
@@ -286,6 +317,26 @@ public class ExportingCommonHtmlElements
                     {
                         Name = "rowSpan",
                         Type = "int?"
+                    },
+                    new()
+                    {
+                        Name = "align",
+                        Type = "string"
+                    },
+                    new()
+                    {
+                        Name = "valign",
+                        Type = "string"
+                    },
+                    new()
+                    {
+                        Name = "nowrap",
+                        Type = "string"
+                    },
+                    new()
+                    {
+                        Name = "scope",
+                        Type = "string"
                     }
                 ],
                 EnableCastFromString = true
@@ -304,6 +355,16 @@ public class ExportingCommonHtmlElements
                     {
                         Name = "rowSpan",
                         Type = "int?"
+                    },
+                    new()
+                    {
+                        Name = "align",
+                        Type = "string"
+                    },
+                    new()
+                    {
+                        Name = "valign",
+                        Type = "string"
                     }
                 ],
                 EnableCastFromString = false
