@@ -11,6 +11,11 @@ partial class Mixin
 {
     internal static object ArrangeValueForTargetType(object value, Type targetType)
     {
+        if (targetType.IsGenericType && targetType.GetGenericTypeDefinition() == typeof(Nullable<>))
+        {
+            targetType = targetType.GetGenericArguments()[0];
+        }
+        
         if (value is null)
         {
             if (targetType.IsClass)
