@@ -47,9 +47,9 @@ partial class Mixin
                     return Activator.CreateInstance(targetType);
                 }
 
-                if (targetType.IsEnum)
+                if (targetType.IsEnum || targetType.BaseType == typeof(Enum))
                 {
-                    return Enum.Parse(targetType, stringValue);
+                    return Enum.Parse(targetType, stringValue, ignoreCase: true);
                 }
 
                 return ReflectionHelper.ConvertNonEmptyOrNullStringValueToPrimitiveType(stringValue, targetType);

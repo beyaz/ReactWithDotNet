@@ -50,7 +50,7 @@ public static class ToModifierTransformer
     }
 
     static readonly IReadOnlyList<(string Name, string Value)> GlobalDeclaredStringFields =
-        (from type in new[] { typeof(Mixin), typeof(Tailwind) }
+        (from type in new[] { typeof(Mixin), typeof(Tailwind), typeof(WebColors) }
             from f in type.GetFields(BindingFlags.Static | BindingFlags.Public)
             where f.FieldType == typeof(string)
             select (f.Name, (string)f.GetValue(null))).ToList(); 
@@ -366,6 +366,13 @@ public static class ToModifierTransformer
             {
                 return success(nameof(FlexWrap));
             }
+            
+            if (value == "nowrap")
+            {
+                return success(nameof(FlexNoWrap));
+            }
+
+
         }
 
         var modifierFullName = $"{CamelCase(name)}{CamelCase(value.RemovePixelFromEnd())}";
@@ -375,6 +382,8 @@ public static class ToModifierTransformer
             return success(modifierFullName);
         }
 
+        
+        
         if (typeof(Mixin).GetMethod(CamelCase(name), [typeof(string)]) is not null)
         {
             if (typeof(Mixin).GetMethod(CamelCase(name), [typeof(double)]) is not null &&
@@ -432,6 +441,16 @@ public static class ToModifierTransformer
             return success($"{CamelCase(name)}(\"{value}\")");
         }
 
+        // try get from Style
+        {
+            var styleField = typeof(Style.Names).GetField(name);
+            
+            if (styleField is not null)
+            {
+                return success($"CreateStyleModifier(x => x.{styleField.Name} = {value})");
+            }
+        }
+        
         return default;
 
         static (bool success, IReadOnlyList<string> parameters) TryParseBoxShadow(string boxShadow)
