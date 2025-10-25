@@ -8,6 +8,29 @@ namespace ReactWithDotNet.Transformers;
 
 public static class ToModifierTransformer
 {
+    public static bool IsVariableName(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return false;
+        }
+
+        // is number
+        if (char.IsDigit(value[0]) || value[0] == '.')
+        {
+            // 2ab = > false
+            if ((from c in value where char.IsLetter(c) select c).Any())
+            {
+                return false;
+            }
+
+            // 2.5 => true
+            return true;
+        }
+
+        return value.All(char.IsLetterOrDigit);
+    }
+    
     public static (bool success, string pseudo) TryGetPseudoForCSharp(string pseudo)
     {
         if (pseudo.Equals(nameof(Hover), StringComparison.OrdinalIgnoreCase))
@@ -427,8 +450,7 @@ public static class ToModifierTransformer
                 }
             }
 
-            var isVariableName = value.Contains('.') && double.TryParse(value, out _) is false;
-            if (isVariableName)
+            if (IsVariableName(value))
             {
                 return success($"{CamelCase(name)}({value})");
             }
