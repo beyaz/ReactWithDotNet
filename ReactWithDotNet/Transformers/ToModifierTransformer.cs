@@ -19,7 +19,7 @@ public static class ToModifierTransformer
         if (char.IsDigit(value[0]) || value[0] == '.')
         {
             // 2ab = > false
-            if ((from c in value where char.IsLetter(c) select c).Any())
+            if ((from c in value where char.IsLetter(c) || c=='%' select c).Any())
             {
                 return false;
             }
@@ -450,7 +450,7 @@ public static class ToModifierTransformer
                 }
             }
 
-            if (IsVariableName(value) && ignoreVariable)
+            if (IsVariableName(value) && !ignoreVariable)
             {
                 return success($"{CamelCase(name)}({value})");
             }
