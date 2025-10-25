@@ -84,61 +84,59 @@ public static class ToModifierTransformer
 
     public static (bool success, string modifierCode) TryConvertToModifier(string tagName, string name, string value, bool ignoreVariable = false)
     {
-        var success = (string modifierCode) => (true, modifierCode);
-
         if ((tagName == "iframe" || tagName == "script") && name.Equals("src", StringComparison.OrdinalIgnoreCase))
         {
-            return success($"{tagName}.Src({value})");
+            return Success($"{tagName}.Src({value})");
         }
 
         if (tagName == "svg" && name.Equals("size", StringComparison.OrdinalIgnoreCase) && double.TryParse(value.RemovePixelFromEnd(), out _))
         {
-            return success($"svg.Size({value.RemovePixelFromEnd()})");
+            return Success($"svg.Size({value.RemovePixelFromEnd()})");
         }
 
         if (tagName == "symbol" && name.Equals("viewBox", StringComparison.OrdinalIgnoreCase))
         {
-            return success($"symbol.ViewBox(\"{value}\")");
+            return Success($"symbol.ViewBox(\"{value}\")");
         }
 
         if (tagName == "source" && name.Equals("src", StringComparison.OrdinalIgnoreCase))
         {
-            return success($"source.Src(\"{value}\")");
+            return Success($"source.Src(\"{value}\")");
         }
 
         if (tagName == "svg" && name.Equals("width", StringComparison.OrdinalIgnoreCase) && double.TryParse(value, out _))
         {
-            return success($"svg.Width({value})");
+            return Success($"svg.Width({value})");
         }
 
         if (tagName == "svg" && name.Equals("height", StringComparison.OrdinalIgnoreCase) && double.TryParse(value, out _))
         {
-            return success($"svg.Height({value})");
+            return Success($"svg.Height({value})");
         }
 
         if (name == "focusable" && tagName == "svg")
         {
             if ("true".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
-                return success($"svg.{nameof(svg.FocusableTrue)}");
+                return Success($"svg.{nameof(svg.FocusableTrue)}");
             }
 
             if ("false".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
-                return success($"svg.{nameof(svg.FocusableFalse)}");
+                return Success($"svg.{nameof(svg.FocusableFalse)}");
             }
 
             if ("auto".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
-                return success($"svg.{nameof(svg.FocusableAuto)}");
+                return Success($"svg.{nameof(svg.FocusableAuto)}");
             }
 
-            return success($"svg.Focusable(\"{value}\")");
+            return Success($"svg.Focusable(\"{value}\")");
         }
 
         if (name == "type" && tagName == "button")
         {
-            return success($"button.Type(\"{value}\")");
+            return Success($"button.Type(\"{value}\")");
         }
 
         if (name.Equals("viewbox", StringComparison.OrdinalIgnoreCase) && tagName == "svg")
@@ -146,10 +144,10 @@ public static class ToModifierTransformer
             var parseResponse = tryParseViewBoxValues(value);
             if (parseResponse.success)
             {
-                return success($"ViewBox({string.Join(", ", parseResponse.parameters)})");
+                return Success($"ViewBox({string.Join(", ", parseResponse.parameters)})");
             }
 
-            return success($"ViewBox(\"{value}\")");
+            return Success($"ViewBox(\"{value}\")");
         }
 
         var response = TryConvertToModifier_From_Mixin_Extension(name, value, ignoreVariable);
@@ -165,7 +163,7 @@ public static class ToModifierTransformer
             {
                 if (double.TryParse(value, out var valueAsDouble))
                 {
-                    return success($"{tagName}.{UpperCaseFirstChar(propertyInfo.Name)}({valueAsDouble})");
+                    return Success($"{tagName}.{UpperCaseFirstChar(propertyInfo.Name)}({valueAsDouble})");
                 }
             }
 
@@ -173,7 +171,7 @@ public static class ToModifierTransformer
             {
                 if (int.TryParse(value, out var valueAsInt32))
                 {
-                    return success($"{tagName}.{UpperCaseFirstChar(propertyInfo.Name)}({valueAsInt32})");
+                    return Success($"{tagName}.{UpperCaseFirstChar(propertyInfo.Name)}({valueAsInt32})");
                 }
             }
 
@@ -181,42 +179,44 @@ public static class ToModifierTransformer
             {
                 if (propertyInfo.Name == nameof(HtmlElement.onClick))
                 {
-                    return success($"{nameof(OnClick)}({value})");
+                    return Success($"{nameof(OnClick)}({value})");
                 }
                 if (propertyInfo.Name == nameof(HtmlElement.onMouseEnter))
                 {
-                    return success($"{nameof(OnMouseEnter)}({value})");
+                    return Success($"{nameof(OnMouseEnter)}({value})");
                 }
                 if (propertyInfo.Name == nameof(HtmlElement.onMouseLeave))
                 {
-                    return success($"{nameof(OnMouseLeave)}({value})");
+                    return Success($"{nameof(OnMouseLeave)}({value})");
                 }
                 if (propertyInfo.Name == nameof(HtmlElement.onDoubleClick))
                 {
-                    return success($"{nameof(OnDoubleClick)}({value})");
+                    return Success($"{nameof(OnDoubleClick)}({value})");
                 }
                 if (propertyInfo.Name == nameof(HtmlElement.onScroll))
                 {
-                    return success($"{nameof(OnScroll)}({value})");
+                    return Success($"{nameof(OnScroll)}({value})");
                 }
                 if (propertyInfo.Name == nameof(HtmlElement.onPaste))
                 {
-                    return success($"{nameof(OnPaste)}({value})");
+                    return Success($"{nameof(OnPaste)}({value})");
                 }
                 if (propertyInfo.Name == nameof(HtmlElement.onCut))
                 {
-                    return success($"{nameof(OnCut)}({value})");
+                    return Success($"{nameof(OnCut)}({value})");
                 }
                 if (propertyInfo.Name == nameof(HtmlElement.onCopy))
                 {
-                    return success($"{nameof(OnCopy)}({value})");
+                    return Success($"{nameof(OnCopy)}({value})");
                 }
             }
             
-            return success($"{tagName}.{UpperCaseFirstChar(propertyInfo.Name)}(\"{value}\")");
+            return Success($"{tagName}.{UpperCaseFirstChar(propertyInfo.Name)}(\"{value}\")");
         }
 
         return (success: false, modifierCode: $"/* {tagName}.{name} = \"{value}\"*/");
+
+        static (bool, string modifierCode) Success(string modifierCode) => (true, modifierCode);
 
         static string UpperCaseFirstChar(string str)
         {
