@@ -220,7 +220,7 @@ public static class ToModifierTransformer
 
         static string UpperCaseFirstChar(string str)
         {
-            return char.ToUpper(str[0], new("en-US")) + str.Substring(1);
+            return char.ToUpper(str[0], new("en-US")) + str[1..];
         }
 
         static (bool success, string[] parameters) tryParseViewBoxValues(string value)
