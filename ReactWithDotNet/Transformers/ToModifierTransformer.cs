@@ -82,7 +82,7 @@ public static class ToModifierTransformer
         
         
 
-    public static (bool success, string modifierCode) TryConvertToModifier(string tagName, string name, string value)
+    public static (bool success, string modifierCode) TryConvertToModifier(string tagName, string name, string value, bool ignoreVariable = false)
     {
         var success = (string modifierCode) => (true, modifierCode);
 
@@ -152,7 +152,7 @@ public static class ToModifierTransformer
             return success($"ViewBox(\"{value}\")");
         }
 
-        var response = TryConvertToModifier_From_Mixin_Extension(name, value);
+        var response = TryConvertToModifier_From_Mixin_Extension(name, value, ignoreVariable);
         if (response.success)
         {
             return response;
@@ -235,7 +235,7 @@ public static class ToModifierTransformer
         }
     }
 
-    public static (bool success, string modifierCode) TryConvertToModifier_From_Mixin_Extension(string name, string value)
+    public static (bool success, string modifierCode) TryConvertToModifier_From_Mixin_Extension(string name, string value, bool ignoreVariable = false)
     {
         var success = (string modifierCode) => (true, modifierCode);
 
@@ -450,7 +450,7 @@ public static class ToModifierTransformer
                 }
             }
 
-            if (IsVariableName(value))
+            if (IsVariableName(value) && ignoreVariable)
             {
                 return success($"{CamelCase(name)}({value})");
             }
