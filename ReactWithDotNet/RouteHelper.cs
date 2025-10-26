@@ -22,10 +22,11 @@ public sealed class RouteInfo
 
 public static class RouteHelper
 {
-    public static IReadOnlyDictionary<string, RouteInfo> GetRoutesFromAssembly(Assembly assembly)
+    public static IReadOnlyDictionary<string, RouteInfo> GetRoutesFrom(params IReadOnlyList<Assembly> assemblies)
     {
         var routes =
         (
+            from assembly in assemblies
             from type in assembly.GetTypes()
             from route in type.GetCustomAttributes<RouteAttribute>()
             select new { Template = route.Url, type }
