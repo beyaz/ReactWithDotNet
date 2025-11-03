@@ -76,14 +76,37 @@ public static class ToModifierTransformer
         (from type in new[] { typeof(Mixin), typeof(Tailwind), typeof(WebColors) }
             from f in type.GetFields(BindingFlags.Static | BindingFlags.Public)
             where f.FieldType == typeof(string)
-            select (f.Name, (string)f.GetValue(null))).ToList(); 
-    
-       
-        
-        
+            select (f.Name, (string)f.GetValue(null))).ToList();
 
-    public static (bool success, string modifierCode) TryConvertToModifier(string tagName, string name, string value, bool ignoreVariable = false)
+
+
+    static (string value, bool valueIsString) ClearString(string value)
     {
+        if (value.Length < 2)
+        {
+            return (value, false);
+        }
+
+        var firstChar = value[0];
+        
+        var lastChar = value[^1];
+        
+        
+        var valueIsString = (firstChar == '"' && lastChar == '"') || (firstChar == '\'' && lastChar == '\'');
+        if (valueIsString)
+        {
+            value = value.Substring(1, value.Length - 2);
+            
+            return (value, true);
+        }
+        
+        return (value, false);
+    }
+
+    public static (bool success, string modifierCode) TryConvertToModifier(string tagName, string name, string originalValue)
+    {
+        var (value, _) = ClearString(originalValue);
+        
         if ((tagName == "iframe" || tagName == "script") && name.Equals("src", StringComparison.OrdinalIgnoreCase))
         {
             return Success($"{tagName}.Src({value})");
@@ -150,7 +173,7 @@ public static class ToModifierTransformer
             return Success($"ViewBox(\"{value}\")");
         }
 
-        var response = TryConvertToModifier_From_Mixin_Extension(name, value, ignoreVariable);
+        var response = TryConvertToModifier_From_Mixin_Extension(name, originalValue);
         if (response.success)
         {
             return response;
@@ -235,8 +258,10 @@ public static class ToModifierTransformer
         }
     }
 
-    public static (bool success, string modifierCode) TryConvertToModifier_From_Mixin_Extension(string name, string value, bool ignoreVariable = false)
+    public static (bool success, string modifierCode) TryConvertToModifier_From_Mixin_Extension(string name, string originalValue)
     {
+        var (value, valueIsString) = ClearString(originalValue);
+        
         var success = (string modifierCode) => (true, modifierCode);
 
         value ??= string.Empty;
@@ -450,7 +475,7 @@ public static class ToModifierTransformer
                 }
             }
 
-            if (IsVariableName(value) && !ignoreVariable)
+            if (!valueIsString && IsVariableName(value))
             {
                 return success($"{CamelCase(name)}({value})");
             }
