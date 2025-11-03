@@ -15,6 +15,11 @@ public static class ToModifierTransformer
             return false;
         }
 
+        if (value.StartsWith("state."))
+        {
+            return true;
+        }
+        
         // is number
         if (char.IsDigit(value[0]) || value[0] == '.')
         {
