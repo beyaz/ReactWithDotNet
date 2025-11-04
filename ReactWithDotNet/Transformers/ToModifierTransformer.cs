@@ -275,8 +275,6 @@ public static class ToModifierTransformer
     public static (bool success, string modifierCode) TryConvertToModifier_From_Mixin_Extension(string name, string originalValue)
     {
         var (value, valueIsString, valueIsVariable) = ParseValue(originalValue);
-        
-        var success = (string modifierCode) => (true, modifierCode);
 
         value ??= string.Empty;
 
@@ -518,6 +516,8 @@ public static class ToModifierTransformer
         }
         
         return default;
+
+        static (bool, string modifierCode) success(string modifierCode) => (true, modifierCode);
 
         static (bool success, IReadOnlyList<string> parameters) TryParseBoxShadow(string boxShadow)
         {
