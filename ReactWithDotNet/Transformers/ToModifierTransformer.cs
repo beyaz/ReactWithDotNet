@@ -116,32 +116,10 @@ public static class ToModifierTransformer
         return (value, false, false);
     }
     
-    static (string value, bool valueIsString) ClearString(string value)
-    {
-        if (value.Length < 2)
-        {
-            return (value, false);
-        }
-
-        var firstChar = value[0];
-        
-        var lastChar = value[^1];
-        
-        
-        var valueIsString = (firstChar == '"' && lastChar == '"') || (firstChar == '\'' && lastChar == '\'');
-        if (valueIsString)
-        {
-            value = value.Substring(1, value.Length - 2);
-            
-            return (value, true);
-        }
-        
-        return (value, false);
-    }
 
     public static (bool success, string modifierCode) TryConvertToModifier(string tagName, string name, string originalValue)
     {
-        var (value, _) = ClearString(originalValue);
+        var (value, valueIsString, valueIsVariable) = ParseValue(originalValue);
         
         if ((tagName == "iframe" || tagName == "script") && name.Equals("src", StringComparison.OrdinalIgnoreCase))
         {
@@ -296,7 +274,7 @@ public static class ToModifierTransformer
 
     public static (bool success, string modifierCode) TryConvertToModifier_From_Mixin_Extension(string name, string originalValue)
     {
-        var (value, valueIsString) = ClearString(originalValue);
+        var (value, valueIsString, valueIsVariable) = ParseValue(originalValue);
         
         var success = (string modifierCode) => (true, modifierCode);
 
@@ -511,7 +489,17 @@ public static class ToModifierTransformer
                 }
             }
 
-            if (!valueIsString && IsVariableName(value))
+            if (valueIsString)
+            {
+                return success($"{CamelCase(name)}(\"{value}\")");
+            }
+
+            if (valueIsVariable)
+            {
+                return success($"{CamelCase(name)}({value})");
+            }
+            
+            if (IsVariableName(value))
             {
                 return success($"{CamelCase(name)}({value})");
             }
