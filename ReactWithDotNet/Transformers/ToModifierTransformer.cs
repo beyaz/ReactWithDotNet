@@ -85,6 +85,37 @@ public static class ToModifierTransformer
 
 
 
+    static (string value, bool valueIsString, bool valueIsVariable) ParseValue(string value)
+    {
+        if (value.Length < 2)
+        {
+            return (value, false, false);
+        }
+
+        var firstChar = value[0];
+        
+        var lastChar = value[^1];
+        
+        
+        var valueIsString = (firstChar == '"' && lastChar == '"') || (firstChar == '\'' && lastChar == '\'');
+        if (valueIsString)
+        {
+            value = value.Substring(1, value.Length - 2);
+            
+            return (value, true, false);
+        }
+
+        var valueIsVariable = firstChar == '{' && lastChar == '}';
+        if (valueIsVariable)
+        {
+            value = value.Substring(1, value.Length - 2);
+            
+            return (value, false, true);
+        }
+        
+        return (value, false, false);
+    }
+    
     static (string value, bool valueIsString) ClearString(string value)
     {
         if (value.Length < 2)
