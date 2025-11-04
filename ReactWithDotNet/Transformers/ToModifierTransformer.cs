@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Globalization;
+using System.Reflection;
 using static ReactWithDotNet.Transformers.AlreadyCalculatedModifierMarker;
 
 namespace ReactWithDotNet.Transformers;
@@ -8,34 +9,6 @@ namespace ReactWithDotNet.Transformers;
 
 public static class ToModifierTransformer
 {
-    public static bool IsVariableName(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return false;
-        }
-
-        if (value.StartsWith("state."))
-        {
-            return true;
-        }
-        
-        // is number
-        if (char.IsDigit(value[0]) || value[0] == '.')
-        {
-            // 2ab = > false
-            if ((from c in value where char.IsLetter(c) || c=='%' select c).Any())
-            {
-                return false;
-            }
-
-            // 2.5 => true
-            return true;
-        }
-
-        return value.All(char.IsLetterOrDigit);
-    }
-    
     public static (bool success, string pseudo) TryGetPseudoForCSharp(string pseudo)
     {
         if (pseudo.Equals(nameof(Hover), StringComparison.OrdinalIgnoreCase))
@@ -117,9 +90,9 @@ public static class ToModifierTransformer
     }
     
 
-    public static (bool success, string modifierCode) TryConvertToModifier(string tagName, string name, string originalValue)
+    public static (bool success, string modifierCode) TryConvertToModifier(bool isStyleValue, string tagName, string name, string originalValue)
     {
-        var (value, valueIsString, valueIsVariable) = ParseValue(originalValue);
+        var (value, _, _) = ParseValue(originalValue);
         
         if ((tagName == "iframe" || tagName == "script") && name.Equals("src", StringComparison.OrdinalIgnoreCase))
         {
@@ -187,7 +160,7 @@ public static class ToModifierTransformer
             return Success($"ViewBox(\"{value}\")");
         }
 
-        var response = TryConvertToModifier_From_Mixin_Extension(name, originalValue);
+        var response = TryConvertToModifier_From_Mixin_Extension(isStyleValue,name, originalValue);
         if (response.success)
         {
             return response;
@@ -272,7 +245,7 @@ public static class ToModifierTransformer
         }
     }
 
-    public static (bool success, string modifierCode) TryConvertToModifier_From_Mixin_Extension(string name, string originalValue)
+    public static (bool success, string modifierCode) TryConvertToModifier_From_Mixin_Extension(bool isStyleValue, string name, string originalValue)
     {
         var (value, valueIsString, valueIsVariable) = ParseValue(originalValue);
 
@@ -496,13 +469,18 @@ public static class ToModifierTransformer
             {
                 return success($"{CamelCase(name)}({value})");
             }
-            
-            if (IsVariableName(value))
+
+            if (isStyleValue)
             {
-                return success($"{CamelCase(name)}({value})");
+                if (IsCSharpNumber(value))
+                {
+                    return success($"{CamelCase(name)}({value})");
+                }
+                
+                return success($"{CamelCase(name)}(\"{value}\")");
             }
             
-            return success($"{CamelCase(name)}(\"{value}\")");
+            return success($"{CamelCase(name)}({value})");
         }
 
         // try get from Style
@@ -548,6 +526,31 @@ public static class ToModifierTransformer
             }
 
             return default;
+        }
+        
+        static bool IsCSharpNumber(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+                return false;
+
+            input = input.Trim();
+
+            // sonek karakter (d, f, m, M) varsa çıkar
+            char last = input[^1];
+            if (last is 'd' or 'D' or 'f' or 'F' or 'm' or 'M')
+                input = input[..^1];
+
+            // nokta ile başlıyorsa (örneğin ".6"), başına 0 ekle
+            if (input.StartsWith('.'))
+                input = "0" + input;
+
+            // TryParse double olarak dener
+            return double.TryParse(
+                input,
+                NumberStyles.Float,
+                CultureInfo.InvariantCulture,
+                out _
+            );
         }
     }
 
