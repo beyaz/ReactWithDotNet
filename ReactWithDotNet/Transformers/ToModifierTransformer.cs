@@ -503,11 +503,6 @@ public static class ToModifierTransformer
             {
                 return success($"{CamelCase(name)}({value})");
             }
-
-            if (value.StartsWith("{") && value.EndsWith("}"))
-            {
-                return success($"{CamelCase(name)}({value.RemoveFromStart("{").RemoveFromEnd("}")})");    
-            }
             
             return success($"{CamelCase(name)}(\"{value}\")");
         }
