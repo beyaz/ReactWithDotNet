@@ -21,15 +21,8 @@ public sealed class Grid : ElementBase
     public int? xl{ get; set; }
     
     
-    [ReactProp]
-    public MouseEventHandler onClick{ get; set; }
         
         
-    /// <summary>
-    /// Defines the justification of items along the horizontal axis.
-    /// </summary>
-    [ReactProp]
-    public string id { get; set; }
     
     /// <summary>
     /// Defines the justification of items along the horizontal axis.

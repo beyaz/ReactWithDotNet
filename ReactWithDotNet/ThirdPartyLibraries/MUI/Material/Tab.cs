@@ -48,12 +48,4 @@ public sealed class Tab : ElementBase
     [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic sx { get; } = new ExpandoObject();
 
-    /// <summary>
-    /// The id of the component.
-    /// </summary>
-    [ReactProp]
-    public string id { get; set; }
-
-    [ReactProp]
-    public MouseEventHandler onClick { get; set; }
 }

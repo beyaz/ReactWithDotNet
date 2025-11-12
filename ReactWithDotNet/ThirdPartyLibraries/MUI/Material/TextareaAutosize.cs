@@ -19,13 +19,8 @@ public sealed class TextareaAutosize : ElementBase
     public int? minRows { get; set; }
     
     [ReactProp]
-    public string id { get; set; }
-    
-    [ReactProp]
     public KeyboardEventHandler onKeyDown { get; set; }
     
-    [ReactProp]
-    public MouseEventHandler onClick { get; set; }
     
     [ReactProp]
     public string autoComplete { get; set; }

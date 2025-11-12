@@ -76,16 +76,4 @@ public sealed class Button : ElementBase
     [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic sx { get; } = new ExpandoObject();
 
-    /// <summary>
-    /// The id of the component.
-    /// </summary>
-    [ReactProp]
-    public string id { get; set; }
-
-    /// <summary>
-    /// Callback fired when the button is clicked.
-    /// </summary>
-    [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
-    public MouseEventHandler onClick { get; set; }
 }

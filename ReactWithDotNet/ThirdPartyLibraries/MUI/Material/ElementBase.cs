@@ -10,6 +10,19 @@ public class ElementBase : ThirdPartyReactComponent
     //[ReactProp]
     //[ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     //public dynamic sx { get; } = new ExpandoObject();
+    
+    /// <summary>
+    ///     The id of the component.
+    /// </summary>
+    [ReactProp]
+    public string id { get; set; }
+
+    /// <summary>
+    ///     Callback fired when the button is clicked.
+    /// </summary>
+    [ReactProp]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
+    public MouseEventHandler onClick { get; set; }
 }
 
 static class convert_mui_style_map_to_class_map

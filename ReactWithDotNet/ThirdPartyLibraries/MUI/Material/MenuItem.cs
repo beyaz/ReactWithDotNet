@@ -26,9 +26,7 @@ public sealed class MenuItem : ElementBase
     [ReactProp] 
     public string selected { get; set; }
 
-    [ReactProp] 
-    public MouseEventHandler onClick { get; set; }
-
+    
     [ReactProp] 
     public object classes { get; set; }
 
