@@ -24,8 +24,6 @@ import "./react-with-dotnet/libraries/_uploady_/all";
 import "./react-with-dotnet/libraries/heroui-popover/all";
 import "./react-with-dotnet/libraries/heroui-checkbox/all";
 
-
-
-
+import "./react-with-dotnet/libraries/google-material-symbols/all";
 
 export { ReactWithDotNet };
