@@ -59,12 +59,20 @@ export default class MaterialSymbol extends React.PureComponent {
 
 function RegisterGlobalStyles()
 {
-    ReactWithDotNet.TryLoadCssByHref("https://fonts.googleapis.com/icon?family=Material+Icons");
-    ReactWithDotNet.TryLoadCssByHref("https://fonts.googleapis.com/icon?family=Material+Icons+Outlined");
-    ReactWithDotNet.TryLoadCssByHref("https://fonts.googleapis.com/icon?family=Material+Icons+Round");
-    ReactWithDotNet.TryLoadCssByHref("https://fonts.googleapis.com/icon?family=Material+Icons+Sharp");
-    ReactWithDotNet.TryLoadCssByHref("https://fonts.googleapis.com/icon?family=Material+Icons+Two+Tone");
+    // Material Symbols - yeni nesil variable font ailesi
+    ReactWithDotNet.TryLoadCssByHref(
+        "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    );
+    
+    ReactWithDotNet.TryLoadCssByHref(
+        "https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    );
+
+    ReactWithDotNet.TryLoadCssByHref(
+        "https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    );
 }
+
 
 
 var isFirstLoad = false;
@@ -84,6 +92,5 @@ ReactWithDotNet.BeforeAnyThirdPartyComponentAccess(dotNetFullClassNameOf3rdParty
         isFirstLoad = true;
 
         RegisterGlobalStyles();
-        RegisterComponents();
     }
 });

@@ -1,12 +1,20 @@
 ﻿namespace ReactWithDotNet.ThirdPartyLibraries.GoogleMaterialSymbols;
 
-public sealed class MaterialSymbol : PureComponent
+
+public enum MaterialSymbolVariant
+{
+    outlined,
+    rounded,
+    sharp,
+}
+
+public sealed class MaterialSymbol : ThirdPartyReactComponent
 {
     [ReactProp]
     public required string name { get; set; }
     
     [ReactProp]
-    public string styleVariant { get; set; }
+    public MaterialSymbolVariant styleVariant { get; set; }
     
     [ReactProp]
     public int? size { get; set; }
