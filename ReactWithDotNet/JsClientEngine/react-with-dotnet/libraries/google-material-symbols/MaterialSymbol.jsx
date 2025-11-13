@@ -42,9 +42,22 @@ export default class MaterialSymbol extends React.PureComponent {
   }
 
   render() {
-    const { name, ariaLabel } = this.props;
+    const { 
+    name,
+    ariaLabel,
+    styleVariant,
+    size,
+    color,
+    fill,
+    weight,
+    grade,
+    opticalSize,
+    className,
+    ...rest 
+    } = this.props;
     return (
       <span
+        {...rest}
         role={ariaLabel ? "img" : undefined}
         aria-label={ariaLabel}
         className={this.getClassName()}
