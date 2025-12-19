@@ -43,7 +43,9 @@
 
     "react-split": "^2.0.14",
 
-    "react-free-scrollbar": "0.3.4" 
+    "react-free-scrollbar": "0.3.4",
+
+    "@xyflow/react": "^12.0.0"
   },
   "devDependencies": {
     "esbuild": "^0.25.0"

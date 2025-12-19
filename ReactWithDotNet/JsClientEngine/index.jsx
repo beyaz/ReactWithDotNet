@@ -26,4 +26,7 @@ import "./react-with-dotnet/libraries/heroui-checkbox/all";
 
 import "./react-with-dotnet/libraries/google-material-symbols/all";
 
+import "./react-with-dotnet/libraries/@xyflow_react/all";
+
+
 export { ReactWithDotNet };
