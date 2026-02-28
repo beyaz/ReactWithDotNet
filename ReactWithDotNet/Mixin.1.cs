@@ -477,8 +477,10 @@ public static partial class Mixin
         return Pseudo(x => x.hover, modifiers);
     }
 
-
-
+    public static StyleModifier Active(params StyleModifier[] modifiers)
+    {
+        return Pseudo(x => x.active, modifiers);
+    }
 
     /// <summary>
     ///     initialize tabIndex attribute of html element
