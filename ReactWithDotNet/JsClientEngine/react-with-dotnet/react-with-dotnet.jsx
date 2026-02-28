@@ -912,13 +912,24 @@ class ComponentCache
 
     GetFreeSpaceOfComponent(dotNetComponentUniqueIdentifier)
     {
+        const freeSpace = this.FindFreeSpaceOfComponent(dotNetComponentUniqueIdentifier);
+        if (freeSpace)
+        {
+            return freeSpace;
+        }
+
+        throw CreateNewDeveloperError('AccessToFreeSpace -> ComponentNotFound. dotNetComponentUniqueIdentifier:' + dotNetComponentUniqueIdentifier);
+    }
+
+    FindFreeSpaceOfComponent(dotNetComponentUniqueIdentifier)
+    {
         const firstItem = this.FindFirstCacheItemByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier);
         if (firstItem)
         {
             return firstItem.freeSpace;
         }
 
-        throw CreateNewDeveloperError('AccessToFreeSpace -> ComponentNotFound. dotNetComponentUniqueIdentifier:' + dotNetComponentUniqueIdentifier);
+        return null;
     }
 
     FindFirstCacheItemByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier)
@@ -2180,69 +2191,76 @@ function DefineComponent(componentDeclaration)
             {
                 return;    
             }
-            
-            if (!this.state['$isUnmounting'])
+
+            const component = this;
+
+            if (!component.state['$didMount'])
             {
-                this.setState({$isUnmounting: 1});
-
-                if (!this.state['$didMount'])
-                {
-                    return;
-                }
-
-                if (this.ComponentWillUnmountIsCalled === true)
-                {
-                    throw 'componentWillUnmount -> ComponentWillUnmountIsCalled called twice';
-                }
-
-                const component = this;
-
-                const componentWillUnmountMethod = component.state[ComponentWillUnmountMethod];
-                if (componentWillUnmountMethod == null)
-                {
-                    // u n r e g i s t e r
-                    component.ComponentWillUnmountIsCalled = true;
-                    DestroyDotNetComponentInstance(component);
-
-                    return;
-                }
-
-                {
-                    // step: 1 start remote call
-                    {
-                        const capturedStateTreeResponse = SafeExecute(() => CaptureStateTreeFromFiberNode(component._reactInternals));
-                        if (capturedStateTreeResponse.fail)
-                        {
-                            throw capturedStateTreeResponse.exception;
-                        }
-
-                        const capturedStateTree = capturedStateTreeResponse.value.stateTree;
-                        const capturedStateTreeRootNodeKey = capturedStateTreeResponse.value.rootNodeKey;
-
-                        /**
-                         * @type {Operation}
-                         */
-                        const operation =
-                        {
-                            component: /** @type {Component}*/component,
-                            remoteMethodName: componentWillUnmountMethod,
-                            remoteMethodArguments: [],
-                            isComponentWillUnmount: 1,
-
-                            capturedStateTree: capturedStateTree,
-                            capturedStateTreeRootNodeKey: capturedStateTreeRootNodeKey,
-                            onCompleted: () =>
-                            {
-                                // u n r e g i s t e r
-                                component.ComponentWillUnmountIsCalled = true;
-                                DestroyDotNetComponentInstance(component);
-                            }
-                        };
-                        StartNewOperation(operation);
-                    }
-                }
-
+                return;
             }
+
+            if (component.ComponentWillUnmountIsCalled === true)
+            {
+                throw 'componentWillUnmount -> ComponentWillUnmountIsCalled called twice';
+            }
+
+            const freeSpace = COMPONENT_CACHE.FindFreeSpaceOfComponent(component[DotNetComponentUniqueIdentifiers][0]);
+            if (freeSpace == null)
+            {
+                return;
+            }
+
+            if (freeSpace.isComponentWillUnmountExecuted)
+            {
+                return;
+            }
+
+            freeSpace.isComponentWillUnmountExecuted = true;
+
+            const componentWillUnmountMethod = component.state[ComponentWillUnmountMethod];
+            if (componentWillUnmountMethod == null)
+            {
+                // u n r e g i s t e r
+                component.ComponentWillUnmountIsCalled = true;
+
+                DestroyDotNetComponentInstance(component);
+
+                return;
+            }
+
+            
+            // start remote call
+            {
+                const capturedStateTreeResponse = SafeExecute(() => CaptureStateTreeFromFiberNode(component._reactInternals));
+                if (capturedStateTreeResponse.fail)
+                {
+                    throw capturedStateTreeResponse.exception;
+                }
+
+                const capturedStateTree = capturedStateTreeResponse.value.stateTree;
+                const capturedStateTreeRootNodeKey = capturedStateTreeResponse.value.rootNodeKey;
+
+                /**
+                 * @type {Operation}
+                 */
+                const operation =
+                {
+                    component: /** @type {Component}*/component,
+                    remoteMethodName: componentWillUnmountMethod,
+                    remoteMethodArguments: [],
+                    isComponentWillUnmount: 1,
+
+                    capturedStateTree: capturedStateTree,
+                    capturedStateTreeRootNodeKey: capturedStateTreeRootNodeKey,
+                    onCompleted: () =>
+                    {
+                        // u n r e g i s t e r
+                        component.ComponentWillUnmountIsCalled = true;
+                        DestroyDotNetComponentInstance(component);
+                    }
+                };
+                StartNewOperation(operation);
+            }            
         }
 
         static getDerivedStateFromProps(nextProps, prevState)
