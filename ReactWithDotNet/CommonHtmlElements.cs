@@ -9603,6 +9603,38 @@ public  partial class HtmlElement
     #endregion
 
 
+    #region string onMouseDown
+    PropertyValueNode<MouseEventHandler> _onMouseDown;
+    static readonly PropertyValueDefinition _onMouseDown_ = new()
+    {
+        name = nameof(onMouseDown),
+        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+        isIsVoidTaskDelegate = true
+    };
+    public MouseEventHandler onMouseDown
+    {
+        get => _onMouseDown?.value;
+        set => SetValue(_onMouseDown_, ref _onMouseDown, value);
+    }
+    #endregion
+
+
+    #region string onMouseUp
+    PropertyValueNode<MouseEventHandler> _onMouseUp;
+    static readonly PropertyValueDefinition _onMouseUp_ = new()
+    {
+        name = nameof(onMouseUp),
+        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+        isIsVoidTaskDelegate = true
+    };
+    public MouseEventHandler onMouseUp
+    {
+        get => _onMouseUp?.value;
+        set => SetValue(_onMouseUp_, ref _onMouseUp, value);
+    }
+    #endregion
+
+
     #region string onScroll
     PropertyValueNode<ScrollEventHandler> _onScroll;
     static readonly PropertyValueDefinition _onScroll_ = new()
@@ -9813,6 +9845,10 @@ public  partial class HtmlElement
     public static HtmlElementModifier OnMouseEnter(MouseEventHandler value) => Modify(x => x.onMouseEnter = value);
 
     public static HtmlElementModifier OnMouseLeave(MouseEventHandler value) => Modify(x => x.onMouseLeave = value);
+
+    public static HtmlElementModifier OnMouseDown(MouseEventHandler value) => Modify(x => x.onMouseDown = value);
+
+    public static HtmlElementModifier OnMouseUp(MouseEventHandler value) => Modify(x => x.onMouseUp = value);
 
     public static HtmlElementModifier OnScroll(ScrollEventHandler value) => Modify(x => x.onScroll = value);
 

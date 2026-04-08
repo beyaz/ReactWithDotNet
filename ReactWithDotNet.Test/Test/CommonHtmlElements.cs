@@ -2315,6 +2315,20 @@ public class ExportingCommonHtmlElements
                     },
                     new()
                     {
+                        Name                              = "onMouseDown",
+                        Type                              = "MouseEventHandler",
+                        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+                        IsIsVoidTaskDelegate              = true,
+                    },
+                    new()
+                    {
+                        Name                              = "onMouseUp",
+                        Type                              = "MouseEventHandler",
+                        GrabEventArgumentsByUsingFunction = "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments",
+                        IsIsVoidTaskDelegate              = true,
+                    },
+                    new()
+                    {
                         Name                 = "onScroll",
                         Type                 = "ScrollEventHandler",
                         IsIsVoidTaskDelegate = true
@@ -2676,7 +2690,7 @@ public class ExportingCommonHtmlElements
             sb.AppendLine(item);
         }
 
-        File.WriteAllText(@"C:\github\ReactWithDotNet\ReactWithDotNet\CommonHtmlElements.cs", sb.ToString());
+        File.WriteAllText(@"D:\workgit\ReactWithDotNet\ReactWithDotNet\CommonHtmlElements.cs", sb.ToString());
 
         static string CamelCase(string str)
         {
