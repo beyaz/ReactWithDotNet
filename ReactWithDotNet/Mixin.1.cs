@@ -637,6 +637,12 @@ public static partial class Mixin
         return JsonSerializationOptionHelper.Modify(options);
     }
 
+    public static HtmlElementModifier OnMouseDown(MouseEventHandler handler)
+        => CreateHtmlElementModifier<HtmlElement>(element => element.onMouseDown = handler);
+    
+    public static HtmlElementModifier OnMouseUp(MouseEventHandler handler)
+        => CreateHtmlElementModifier<HtmlElement>(element => element.onMouseUp = handler);
+    
     public static HtmlElementModifier OnClick(MouseEventHandler onClickHandler)
         => CreateHtmlElementModifier<HtmlElement>(element => element.onClick = onClickHandler);
     
