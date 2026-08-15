@@ -49,7 +49,8 @@
 	</Target>
 
 	<Target Name="Deploy" AfterTargets="Build">
-		<Exec Command="xcopy &quot;$(TargetDir)*&quot; &quot;C:\github\ReactWithDotNet.VisualDesigner\lib\ReactWithDotNet\&quot; /E /Y /I" />
+		<Exec Command="xcopy &quot;$(TargetDir)*&quot; &quot;d:\workgit\ReactWithDotNet.VisualDesigner\lib\ReactWithDotNet\&quot; /E /Y /I" />
+        <Exec Command="xcopy &quot;$(TargetDir)*&quot; &quot;D:\workgit\ApiInspector\ApiInspector.WebUI\lib\ReactWithDotNet\&quot; /E /Y /I" />
 	</Target>
 	
 </Project>

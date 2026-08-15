@@ -26,6 +26,10 @@ public sealed class AutoComplete<TRecord> : AutoComplete
     [ReactProp]
     [ReactTemplate(nameof(data))]
     public Func<TRecord,Element> renderMenuItem { get; set; }
+    
+    [ReactProp]
+    [ReactTransformValueInClient(RunJavascript)]
+    public string filterBy { get; set; }
 }
 
 

@@ -1,4 +1,4 @@
-/**
+﻿/**
  *  == ReactWithDotNet ==
  *  Written by Abdullah Beyaztaş
  *  Manages react ui by using react render information which incoming from server.
@@ -2595,10 +2595,11 @@ RegisterCoreFunction('CopyToClipboard', function (text)
     }
 });
 
-RegisterCoreFunction('RunJavascript', (javascriptCode) => {
-
-    window.eval(javascriptCode)
+RegisterCoreFunction('RunJavascript', (javascriptCode) =>
+{
+    return window.eval(javascriptCode);
 });
+
 
 RegisterCoreFunction('ReplaceNullWhenEmpty', function(value)
 {
