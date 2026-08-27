@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -420,17 +420,50 @@ partial class ElementSerializer
                         }
                     }
 
+                    if (node.IsFunctionalComponent == true)
+                    {
+                        if (node.IsFunctionalComponent == true 
+                            && !node.FunctionalComponent.state.OverrideStateFromPropsBeforeRenderIsCalled 
+                            && node.FunctionalComponent.OverrideStateFromPropsBeforeRender is not null)
+                        {
+                            await node.FunctionalComponent.OverrideStateFromPropsBeforeRender();
+                            
+                            node.FunctionalComponent.state.OverrideStateFromPropsBeforeRenderIsCalled = true;
+                        }
+                    }
+                    
                     node.DotNetComponentRootElement = await reactStatefulComponent.InvokeRender();
                     
                     if (node.IsFunctionalComponent == true)
                     {
+                        // TODO: constructor call must be run before render so we dont need to call constructor manage from OverrideStateFromPropsBeforeRenderIsCalled
+                        bool needToReRender = false;
                         if (node.FunctionalComponent.Constructor is not null &&
                             node.FunctionalComponent.state.Scope is null)
                         {
                             await node.FunctionalComponent.Constructor.Invoke();
+
+                            needToReRender = true;
+                        }
+                        
+                        if (!node.FunctionalComponent.state.OverrideStateFromPropsBeforeRenderIsCalled
+                           && node.FunctionalComponent.OverrideStateFromPropsBeforeRender is not null)
+                        {
+                            await node.FunctionalComponent.OverrideStateFromPropsBeforeRender.Invoke();
+                            
+                            node.FunctionalComponent.state.OverrideStateFromPropsBeforeRenderIsCalled = true;
+                            
+                            needToReRender = true;
                         }
 
                         node.FunctionalComponent.CalculateScopeFromTarget(context);
+
+                        if (needToReRender)
+                        {
+                            node.DotNetComponentRootElement = await reactStatefulComponent.InvokeRender();
+                            
+                            node.FunctionalComponent.CalculateScopeFromTarget(context);
+                        }
                     }
 
                     if (node.DotNetComponentRootElement is not null)

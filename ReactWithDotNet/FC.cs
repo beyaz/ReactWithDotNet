@@ -11,7 +11,9 @@ public interface IFunctionalComponent : IReactComponent
     public Func<Task> ComponentWillUnmount { set; }
 
     public Func<Task> Constructor { set; }
-
+    
+    public Func<Task> OverrideStateFromPropsBeforeRender { set; }
+    
     public bool DesignMode { get; }
 }
 
@@ -202,6 +204,8 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
 
     public Func<Task> ComponentDidMount { internal get; set; }
     
+    public new Func<Task> OverrideStateFromPropsBeforeRender { internal get; set; }
+    
     public Func<Task> ComponentWillUnmount{ internal get; set; }
 
     public Func<Task> Constructor { internal get; set; }
@@ -391,6 +395,8 @@ sealed class FunctionalComponent : Component<FunctionalComponent.State>, IFuncti
         ///     Scope means value of auto generated fields of CompilerGeneratedType instance.
         /// </summary>
         public IReadOnlyDictionary<string, object> Scope { get; set; }
+
+        internal bool OverrideStateFromPropsBeforeRenderIsCalled;
     }
 }
 
