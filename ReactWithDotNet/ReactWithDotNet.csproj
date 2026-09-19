@@ -28,7 +28,7 @@
 
 	<PropertyGroup>
 		<PackageId>ReactWithDotNet</PackageId>
-		<Version>1.0.36</Version>
+		<Version>1.0.37</Version>
 		<Authors>ReactWithDotNet</Authors>
 		<Company>ReactWithDotNet</Company>
 		<Description>Write react app in c# language on .net core server</Description>
@@ -48,9 +48,6 @@
 		<Exec Command="dotnet pack $(ProjectPath) -o C:\NugetPackages" />
 	</Target>
 
-	<Target Name="Deploy" AfterTargets="Build">
-		<Exec Command="xcopy &quot;$(TargetDir)*&quot; &quot;d:\workgit\ReactWithDotNet.VisualDesigner\lib\ReactWithDotNet\&quot; /E /Y /I" />
-        <Exec Command="xcopy &quot;$(TargetDir)*&quot; &quot;D:\workgit\ApiInspector\ApiInspector.WebUI\lib\ReactWithDotNet\&quot; /E /Y /I" />
-	</Target>
+	
 	
 </Project>
